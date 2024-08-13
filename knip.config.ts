@@ -16,8 +16,8 @@ const config: KnipConfig = {
 		},
 		"packages/shared": {
 			entry: ["build/index.js"],
-			includeEntryExports: true,
 			ignore: ["src/**/**"],
+			includeEntryExports: true,
 		},
 	},
 };
