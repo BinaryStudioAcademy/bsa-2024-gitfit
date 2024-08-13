@@ -2,7 +2,6 @@ root:
   - changed-files:
       - any-glob-to-any-file: "*"
 
-workflows: ".github/**/*"
 workflows:
   - changed-files:
       - any-glob-to-any-file:
