@@ -1,0 +1,25 @@
+ls:
+  .dir: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .css: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .ts: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .tsx: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  .md: regex:([.a-z0-9]*)([-.][a-z0-9]+)*
+  apps/backend/src/db/migrations:
+    .ts: snake_case
+  .github/ISSUE_TEMPLATE:
+    .dir: SCREAMING_SNAKE_CASE
+  apps/**:
+    CHANGELOG.md: SCREAMING_SNAKE_CASE
+  packages/**:
+    CHANGELOG.md: SCREAMING_SNAKE_CASE
+
+ignore:
+  - .git
+  - node_modules
+  - CHANGELOG.md
+  - packages/shared/build
+  - packages/shared/node_modules
+  - apps/frontend/build
+  - apps/frontend/node_modules
+  - apps/backend/build
+  - apps/backend/node_modules
