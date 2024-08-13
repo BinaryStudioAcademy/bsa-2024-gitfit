@@ -12,16 +12,9 @@ import unicornPlugin from "eslint-plugin-unicorn";
 import globals from "globals";
 
 const JS_MAX_PARAMS_ALLOWED = 3;
-const JS_CONFIG_FILES = [
-	"eslint.config.js",
-	"lint-staged.config.js",
-	"stylelint.config.js",
-];
 
 /** @typedef {import("eslint").Linter.FlatConfig} */
 let FlatConfig;
-/** @typedef {import("eslint").Linter.ParserModule} */
-let ParserModule;
 /** @typedef {import('eslint').ESLint.Plugin} */
 let Plugin;
 
@@ -32,7 +25,7 @@ const filesConfig = {
 
 /** @type {FlatConfig} */
 const ignoresConfig = {
-	ignores: ["apps", "packages"],
+	ignores: ["apps", "packages", "dangerfile.ts"],
 };
 
 /** @type {FlatConfig} */
@@ -117,7 +110,10 @@ const sonarConfig = {
 	plugins: {
 		sonarjs: /** @type {Plugin} */ (/** @type {unknown} */ (sonarjsPlugin)),
 	},
-	rules: sonarjsPlugin.configs.recommended.rules,
+	rules: {
+		...sonarjsPlugin.configs.recommended.rules,
+		"sonarjs/no-duplicate-string": ["off"],
+	},
 };
 
 /** @type {FlatConfig} */
@@ -170,9 +166,9 @@ const stylisticConfig = {
 
 /** @type {FlatConfig} */
 const typescriptConfig = {
-	ignores: JS_CONFIG_FILES,
+	ignores: ["eslint.config.js", "lint-staged.config.js", "stylelint.config.js"],
 	languageOptions: {
-		parser: /** @type {ParserModule} */ (tsParser),
+		parser: tsParser,
 		parserOptions: {
 			project: "./tsconfig.json",
 		},
@@ -211,7 +207,7 @@ const typescriptConfig = {
 
 /** @type {FlatConfig} */
 const jsdocConfig = {
-	files: JS_CONFIG_FILES,
+	files: ["eslint.config.js", "lint-staged.config.js", "stylelint.config.js"],
 	plugins: {
 		jsdoc: jsdocPlugin,
 	},
