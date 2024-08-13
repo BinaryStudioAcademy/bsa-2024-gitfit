@@ -1,8 +1,18 @@
 root: "*"
+root:
+  - changed-files:
+      - any-glob-to-any-file: "*"
 
 workflows: ".github/**/*"
+workflows:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**/*"
 
-shared: "packages/shared/**/*"
+shared:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "packages/shared/**/*"
 
 backend:
   - changed-files:
