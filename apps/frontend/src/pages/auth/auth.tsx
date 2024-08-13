@@ -10,7 +10,7 @@ import { type UserSignUpRequestDto } from "~/modules/users/users.js";
 
 import { SignInForm, SignUpForm } from "./components/components.js";
 
-const Auth: React.FC = () => {
+const Auth = (): JSX.Element => {
 	const dataStatus = useAppSelector((state) => state.auth.dataStatus);
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();

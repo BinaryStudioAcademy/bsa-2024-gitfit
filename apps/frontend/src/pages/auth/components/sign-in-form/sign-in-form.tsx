@@ -4,7 +4,7 @@ type Properties = {
 	onSubmit: () => void;
 };
 
-const SignInForm: React.FC<Properties> = ({ onSubmit }) => (
+const SignInForm = ({ onSubmit }: Properties): JSX.Element => (
 	<>
 		<h1>Sign In</h1>
 		<form onSubmit={onSubmit}>

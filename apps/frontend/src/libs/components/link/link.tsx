@@ -8,7 +8,7 @@ type Properties = {
 	to: ValueOf<typeof AppRoute>;
 };
 
-const Link: React.FC<Properties> = ({ children, to }: Properties) => (
+const Link = ({ children, to }: Properties): JSX.Element => (
 	<NavLink to={to}>{children}</NavLink>
 );
 

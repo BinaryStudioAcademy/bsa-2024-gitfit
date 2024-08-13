@@ -9,7 +9,7 @@ import {
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-const App: React.FC = () => {
+const App = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
 	const dataStatus = useAppSelector(({ users }) => users.dataStatus);
