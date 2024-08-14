@@ -16,7 +16,7 @@ The application collects and analyzes developers' activity on different projects
 
 - [NodeJS](https://nodejs.org/en) (20.x.x);
 - [npm](https://www.npmjs.com/) (10.x.x);
-- [PostgreSQL](https://www.postgresql.org/) (15.5)
+- [PostgreSQL](https://www.postgresql.org/) (16.4)
 
 ## 4. Database Schema
 
