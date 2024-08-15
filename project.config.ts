@@ -13,7 +13,7 @@ const ProjectPrefix = {
 		"test",
 	],
 	ENVIRONMENT: "main",
-	ISSUE_PREFIXES: ["gf", "project-name-prefix", "release"],
+	ISSUE_PREFIXES: ["gf", "release"],
 	SCOPES: {
 		APPS: ["frontend", "backend"],
 		PACKAGES: ["shared"],

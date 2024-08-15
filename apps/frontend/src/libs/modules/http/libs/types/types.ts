@@ -1,1 +1,1 @@
-export { type HTTP, type HTTPOptions } from "@project-name/shared";
+export { type HTTP, type HTTPOptions } from "@git-fit/shared";

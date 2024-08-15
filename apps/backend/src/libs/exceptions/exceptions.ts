@@ -1,1 +1,1 @@
-export { ValidationError } from "@project-name/shared";
+export { ValidationError } from "@git-fit/shared";

@@ -1,4 +1,4 @@
-import { type Config as LibraryConfig } from "@project-name/shared";
+import { type Config as LibraryConfig } from "@git-fit/shared";
 
 import { type EnvironmentSchema } from "./types.js";
 

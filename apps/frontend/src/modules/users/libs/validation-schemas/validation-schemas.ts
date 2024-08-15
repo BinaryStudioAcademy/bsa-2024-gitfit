@@ -1,1 +1,1 @@
-export { userSignUpValidationSchema } from "@project-name/shared";
+export { userSignUpValidationSchema } from "@git-fit/shared";

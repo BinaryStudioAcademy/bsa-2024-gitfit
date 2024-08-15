@@ -1,1 +1,1 @@
-export { HTTPError } from "@project-name/shared";
+export { HTTPError } from "@git-fit/shared";

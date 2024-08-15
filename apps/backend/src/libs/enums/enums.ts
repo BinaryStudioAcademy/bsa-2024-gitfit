@@ -1,1 +1,1 @@
-export { APIPath, AppEnvironment, ServerErrorType } from "@project-name/shared";
+export { APIPath, AppEnvironment, ServerErrorType } from "@git-fit/shared";

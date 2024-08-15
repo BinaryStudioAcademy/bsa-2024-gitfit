@@ -1,1 +1,1 @@
-export { UsersApiPath } from "@project-name/shared";
+export { UsersApiPath } from "@git-fit/shared";

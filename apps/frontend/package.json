@@ -1,5 +1,5 @@
 {
-	"name": "@project-name/frontend",
+	"name": "@git-fit/frontend",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
@@ -18,7 +18,7 @@
 	},
 	"dependencies": {
 		"@hookform/resolvers": "3.9.0",
-		"@project-name/shared": "*",
+		"@git-fit/shared": "*",
 		"@reduxjs/toolkit": "2.2.7",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",

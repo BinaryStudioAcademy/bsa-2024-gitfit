@@ -5,4 +5,4 @@ export {
 	AppEnvironment,
 	ContentType,
 	ServerErrorType,
-} from "@project-name/shared";
+} from "@git-fit/shared";

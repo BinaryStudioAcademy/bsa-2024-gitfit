@@ -1,4 +1,4 @@
-# ProjectName
+# GitFit
 
 Collect and analyze developers activity on projects.
 
@@ -130,7 +130,7 @@ For the full list of types check [Conventional Commits](https://github.com/conve
 
 Examples:
 
-- `feat: add dashboard screen tm-123`
+- `feat: add dashboard screen gf-123`
 
 ### 7.2 Branch Flow
 
@@ -154,8 +154,8 @@ We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0) to 
 
 Examples:
 
-- `feat: add dashboard component project-name-prefix-45`
-- `fix: update dashboard card size project-name-prefix-212`
+- `feat: add dashboard component gf-45`
+- `fix: update dashboard card size gf-212`
 
 ## 8. Deployment
 

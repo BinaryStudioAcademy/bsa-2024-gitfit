@@ -18,7 +18,7 @@ const serverApplication = new BaseServerApplication({
 	config,
 	database,
 	logger,
-	title: "ProjectName",
+	title: "GitFit",
 });
 
 export { type ServerApplicationRouteParameters } from "./libs/types/types.js";

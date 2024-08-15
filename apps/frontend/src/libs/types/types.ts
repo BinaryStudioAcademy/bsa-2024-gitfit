@@ -4,4 +4,4 @@ export {
 	type ServerErrorResponse,
 	type ValidationSchema,
 	type ValueOf,
-} from "@project-name/shared";
+} from "@git-fit/shared";

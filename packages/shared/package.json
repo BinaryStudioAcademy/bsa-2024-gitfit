@@ -1,5 +1,5 @@
 {
-	"name": "@project-name/shared",
+	"name": "@git-fit/shared",
 	"version": "0.0.0",
 	"type": "module",
 	"main": "build/index.js",

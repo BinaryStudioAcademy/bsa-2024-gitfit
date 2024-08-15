@@ -1,1 +1,1 @@
-export { HTTPCode } from "@project-name/shared";
+export { HTTPCode } from "@git-fit/shared";

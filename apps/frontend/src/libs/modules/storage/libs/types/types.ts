@@ -1,1 +1,1 @@
-export { type Storage } from "@project-name/shared";
+export { type Storage } from "@git-fit/shared";

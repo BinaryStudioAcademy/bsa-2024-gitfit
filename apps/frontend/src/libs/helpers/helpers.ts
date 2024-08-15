@@ -1,1 +1,1 @@
-export { configureString } from "@project-name/shared";
+export { configureString } from "@git-fit/shared";
