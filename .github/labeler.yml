@@ -24,11 +24,6 @@ frontend:
           - "apps/frontend/**/*"
           - "!apps/frontend/.env.example"
 
-beanstalk:
-  - changed-files:
-      - any-glob-to-any-file:
-          - ".ebextensions/**/*"
-
 docs:
   - changed-files:
       - any-glob-to-any-file:

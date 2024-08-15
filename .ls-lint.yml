@@ -11,9 +11,6 @@ ls:
       .dir: SCREAMING_SNAKE_CASE
       .yml: kebab-case
 
-  .ebextensions:
-    .dir: regex:[.]*[a-z]+
-
   "**/migrations":
     .ts: snake_case
 
