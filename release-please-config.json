@@ -1,0 +1,18 @@
+{
+	"group-pull-request-title-pattern": "chore: release-${version}",
+	"packages": {
+		".": {
+			"release-type": "node",
+			"include-component-in-tag": false
+		},
+		"apps/backend": {
+			"release-type": "node"
+		},
+		"apps/frontend": {
+			"release-type": "node"
+		},
+		"packages/shared": {
+			"release-type": "node"
+		}
+	}
+}

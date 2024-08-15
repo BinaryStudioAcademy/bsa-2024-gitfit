@@ -1,0 +1,99 @@
+name: Continuous Integration Pull Request
+
+on:
+  pull_request:
+    types:
+      - assigned
+      - unassigned
+      - opened
+      - edited
+      - synchronize
+      - reopened
+      - labeled
+      - unlabeled
+      - ready_for_review
+
+  workflow_dispatch:
+
+concurrency:
+  group: ci-pr-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  labeler:
+    name: Add PR labels
+    permissions:
+      contents: read
+      pull-requests: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add Folder Labels
+        uses: actions/labeler@v5
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          sync-labels: true
+
+  dependencies:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Cache Dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+          key: ci-pr-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ci-pr-
+
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+  ci-pr:
+    permissions:
+      contents: read
+      pull-requests: write
+
+    name: PR Linting
+    needs: dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Restore Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+          key: ci-pr-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Lint Commits
+        uses: wagoid/commitlint-github-action@v6
+
+      - name: Lint Pull Request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        run: |
+          npx danger ci --failOnErrors --text-only

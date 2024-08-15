@@ -1,0 +1,44 @@
+{
+	"name": "@git-fit/backend",
+	"type": "module",
+	"version": "0.0.0",
+	"engines": {
+		"node": "20.x.x",
+		"npm": "10.x.x"
+	},
+	"scripts": {
+		"lint:type": "npx tsc --noEmit",
+		"lint:js": "npx eslint . --max-warnings=0",
+		"lint": "concurrently \"npm:lint:*\"",
+		"start:dev": "tsx watch src/index.ts",
+		"migrate:dev": "NODE_OPTIONS=\"--import tsx\" npx knex migrate:latest",
+		"migrate:dev:make": "NODE_OPTIONS=\"--import tsx\" npx knex migrate:make -x ts",
+		"migrate:dev:down": "NODE_OPTIONS=\"--import tsx\" npx knex migrate:down",
+		"migrate:dev:rollback": "NODE_OPTIONS=\"--import tsx\" npx knex migrate:rollback --all",
+		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json && npm run build:copy",
+		"build:copy": "cp -r package.json build",
+		"prestart": "npm run migrate",
+		"migrate": "knex migrate:latest",
+		"start": "node ./src/index.js"
+	},
+	"dependencies": {
+		"@fastify/static": "7.0.4",
+		"@fastify/swagger": "8.15.0",
+		"@fastify/swagger-ui": "4.0.1",
+		"@git-fit/shared": "*",
+		"convict": "6.2.4",
+		"dotenv": "16.4.5",
+		"fastify": "4.28.1",
+		"knex": "3.1.0",
+		"objection": "3.1.4",
+		"pg": "8.12.0",
+		"pino": "9.3.2",
+		"pino-pretty": "11.2.2",
+		"swagger-jsdoc": "6.2.8"
+	},
+	"devDependencies": {
+		"@types/convict": "6.1.6",
+		"@types/swagger-jsdoc": "6.0.4",
+		"tsx": "4.17.0"
+	}
+}

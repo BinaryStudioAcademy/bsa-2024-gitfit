@@ -1,0 +1,21 @@
+ls:
+  .dir: kebab-case
+  .*: kebab-case
+  .*.*: kebab-case
+
+  .github:
+    .dir: regex:[.]*[a-z]+
+    .yml: kebab-case
+
+    ISSUE_TEMPLATE:
+      .dir: SCREAMING_SNAKE_CASE
+      .yml: kebab-case
+
+  "**/migrations":
+    .ts: snake_case
+
+ignore:
+  - .git
+  - "**/node_modules"
+  - "**/build"
+  - "**/CHANGELOG.md"
