@@ -234,13 +234,15 @@ You should use .env.example files as a reference.
 
 2. Install pre-commit hooks: `npx simple-git-hooks`. This hook is used to verify code style on commit.
 
-3. Run database. You can run it by installing postgres on your computer.
+3. Build shared: `npm run build:shared`
 
-4. Apply migrations: `npm run migrate:dev -w apps/backend`
+4. Run database. You can run it by installing postgres on your computer.
 
-5. Run backend: `npm run start:dev -w apps/backend`
+5. Apply migrations: `npm run migrate:dev -w apps/backend`
 
-6. Run frontend: `npm run start:dev -w apps/frontend`
+6. Run backend: `npm run start:dev -w apps/backend`
+
+7. Run frontend: `npm run start:dev -w apps/frontend`
 
 ## 7. Development Flow
 
