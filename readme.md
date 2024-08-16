@@ -20,7 +20,131 @@ The application collects and analyzes developers' activity on different projects
 
 ## 4. Database Schema
 
-TBD
+```mermaid
+erDiagram
+   users {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      citext email
+      text password_hash
+      text password_salt
+      varchar name
+      int avatar_file_id FK
+   }
+
+   groups {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      varchar key UK
+      varchar name UK
+   }
+
+   users_to_groups {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      int group_id FK
+      int user_id FK
+   }
+
+   permissions {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      varchar key UK
+      varchar name UK
+   }
+
+   groups_to_permissions {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      int group_id FK
+      int permission_id FK
+   }
+
+   projects {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      varchar name
+      varchar description
+      varchar api_key
+   }
+
+   groups_to_projects {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      int group_id FK
+      int project_id FK
+   }
+
+   contributors {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      varchar name
+      boolean is_hidden
+   }
+
+   git_emails {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      int contributor_id FK
+      varchar email
+   }
+
+   files {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      varchar url
+      enum content_type
+   }
+
+   activity_logs {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      int git_email_id FK
+      int project_id FK
+      int created_by_user_id FK
+      date date
+      int commits_number
+   }
+
+   notifications {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      int receiver_user_id FK
+      enum status
+      enum type
+      varchar payload
+   }
+
+   files }|--|o users : avatar_file_id
+
+   groups ||--|{ groups_to_permissions : group_id
+   permissions ||--|{ groups_to_permissions : permission_id
+
+   groups ||--|{ groups_to_projects : group_id
+   projects ||--|{ groups_to_projects : project_id
+
+   users ||--|{ users_to_groups : user_id
+   groups ||--|{ users_to_groups : group_id
+
+   contributors ||--|{ git_emails : contributor_id
+
+   git_emails }|--|| activity_logs : git_email_id
+   projects }|--|| activity_logs : project_id
+
+   users ||--|{ notifications : receiver_user_id
+```
 
 ## 5. Architecture
 
