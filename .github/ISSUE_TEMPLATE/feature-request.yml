@@ -1,17 +1,17 @@
 name: 💡 Feature Request
 description: Suggest a feature request
-title: "feat:"
-labels: ["feature request"]
+title: "feat: "
+labels: ["feature"]
 body:
   - type: textarea
     id: what-feature
     attributes:
       label: What feature?
-      placeholder: Add descriptions
+      placeholder: Add description
     validations:
       required: true
   - type: textarea
     id: screenshots
     attributes:
-      label: Add screenshots
+      label: Screenshots
       placeholder: Add screenshots, mockups, etc.

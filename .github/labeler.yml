@@ -32,5 +32,5 @@ docs:
 env:
   - changed-files:
       - any-glob-to-any-file:
-          - "backend/.env.example"
-          - "frontend/.env.example"
+          - "apps/backend/.env.example"
+          - "apps/frontend/.env.example"
