@@ -1,3 +1,5 @@
+import React, { useCallback, useState } from "react";
+
 import reactLogo from "~/assets/images/react.svg";
 import { Link, RouterOutlet } from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
@@ -9,11 +11,14 @@ import {
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
+import { Modal } from "../modal/modal.js"; // Ensure this path is correct
+
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
 	const dataStatus = useAppSelector(({ users }) => users.dataStatus);
 	const users = useAppSelector(({ users }) => users.users);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
 	const isRoot = pathname === AppRoute.ROOT;
 
@@ -22,6 +27,15 @@ const App = (): JSX.Element => {
 			void dispatch(userActions.loadAll());
 		}
 	}, [isRoot, dispatch]);
+
+	// Functions to open and close the modal
+	const openModal = useCallback((): void => {
+		setIsModalOpen(true);
+	}, []);
+
+	const closeModal = useCallback((): void => {
+		setIsModalOpen(false);
+	}, []);
 
 	return (
 		<>
@@ -43,6 +57,17 @@ const App = (): JSX.Element => {
 			<div>
 				<RouterOutlet />
 			</div>
+
+			{/* Button to open the modal */}
+			<button onClick={openModal}>Open Modal</button>
+
+			{/* Conditionally render the modal */}
+			{isModalOpen && (
+				<Modal onClose={closeModal} title="Test Modal">
+					<p>This is a test modal content.</p>
+				</Modal>
+			)}
+
 			{isRoot && (
 				<>
 					<h2>Users:</h2>
