@@ -14,13 +14,13 @@ shared:
 
 backend:
   - changed-files:
-      - any-glob-to-any-file:
+      - all-globs-to-any-file:
           - "apps/backend/**/*"
           - "!apps/backend/.env.example"
 
 frontend:
   - changed-files:
-      - any-glob-to-any-file:
+      - all-globs-to-any-file:
           - "apps/frontend/**/*"
           - "!apps/frontend/.env.example"
 
