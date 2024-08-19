@@ -1,12 +1,13 @@
 import { AppRoute } from "~/libs/enums/enums.js";
+import { Icons } from "~/libs/enums/svg-icons.enum.js";
 
 import { SidebarItem } from "./sidebar-item.js";
 
 const sidebarItems = [
-	{ icon: "p", id: "1", text: "Projects", to: AppRoute.ROOT },
-	{ icon: "a", id: "2", text: "Access Management", to: AppRoute.ROOT },
-	{ icon: "c", id: "3", text: "Contributors", to: AppRoute.ROOT },
-	{ icon: "n", id: "4", text: "Analytics", to: AppRoute.ROOT },
+	{ icon: Icons.Project, id: "1", text: "Projects", to: AppRoute.ROOT },
+	{ icon: Icons.Access, id: "2", text: "Access Management" },
+	{ icon: Icons.Contributors, id: "3", text: "Contributors" },
+	{ icon: Icons.Analytics, id: "4", text: "Analytics" },
 ];
 
 const Sidebar = (): JSX.Element => {
@@ -17,7 +18,7 @@ const Sidebar = (): JSX.Element => {
 					icon={item.icon}
 					key={item.id}
 					text={item.text}
-					to={item.to}
+					{...(item.to ? { to: item.to } : {})}
 				/>
 			))}
 		</ul>
