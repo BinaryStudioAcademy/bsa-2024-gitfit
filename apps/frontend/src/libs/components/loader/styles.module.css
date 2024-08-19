@@ -4,7 +4,7 @@
 	justify-content: center;
 	width: 100%;
 	height: 100%;
-	color: var(--color-brand);
+	color: var(--color-brand-primary);
 	background-color: inherit;
 }
 
