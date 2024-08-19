@@ -12,10 +12,16 @@ const signUp = createAsyncThunk<
 	UserSignUpResponseDto,
 	UserSignUpRequestDto,
 	AsyncThunkConfig
->(`${sliceName}/sign-up`, (payload, { extra }) => {
+>(`${sliceName}/sign-up`, async (payload, { extra, rejectWithValue }) => {
 	const { authApi } = extra;
 
-	return authApi.signUp(payload);
+	try {
+		return await authApi.signUp(payload);
+	} catch (error) {
+		return rejectWithValue({
+			message: (error as Error).message,
+		});
+	}
 });
 
 export { signUp };

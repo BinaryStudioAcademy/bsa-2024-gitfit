@@ -1,0 +1,14 @@
+.toast-container {
+	--toastify-color-light: #ffffff;
+	--toastify-color-dark: var(--color-background-primary);
+	--toastify-color-info: var(--color-brand-primary);
+	--toastify-color-success: var(--color-success);
+	--toastify-color-warning: var(--color-warning);
+	--toastify-color-error: var(--color-danger);
+	--toastify-toast-width: 320px;
+	--toastify-toast-min-height: 64px;
+	--toastify-toast-max-height: 800px;
+	--toastify-font-family: sans-serif; /* TODO: change font family */
+	--toastify-text-color-light: #757575;
+	--toastify-text-color-dark: #ffffff;
+}

@@ -10,6 +10,8 @@ import { type Config } from "~/libs/modules/config/config.js";
 import { authApi, reducer as authReducer } from "~/modules/auth/auth.js";
 import { userApi, reducer as usersReducer } from "~/modules/users/users.js";
 
+import { errorHandlingMiddleware } from "./libs/middlewares/middlewares.js";
+
 type RootReducer = {
 	auth: ReturnType<typeof authReducer>;
 	users: ReturnType<typeof usersReducer>;
@@ -37,7 +39,8 @@ class Store {
 					thunk: {
 						extraArgument: this.extraArguments,
 					},
-				});
+					// eslint-disable-next-line unicorn/prefer-spread
+				}).concat(errorHandlingMiddleware);
 			},
 			reducer: {
 				auth: authReducer,

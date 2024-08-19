@@ -1,3 +1,4 @@
+import { ToastContainer } from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -44,6 +45,7 @@ const Auth = (): JSX.Element => {
 		<>
 			State: {dataStatus}
 			{handleScreenRender(pathname)}
+			<ToastContainer />
 		</>
 	);
 };
