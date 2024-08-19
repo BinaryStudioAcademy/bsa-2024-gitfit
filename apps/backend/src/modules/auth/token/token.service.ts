@@ -1,17 +1,19 @@
 import { type JWTPayload, jwtVerify, SignJWT } from "jose";
 
 class TokenService {
+	private expirationTime: string;
 	private secret: Uint8Array;
 
-	public constructor(secret: string) {
+	public constructor(secret: string, expirationTime: string) {
 		this.secret = new TextEncoder().encode(secret);
+		this.expirationTime = expirationTime;
 	}
 
 	public async createToken(userId: number): Promise<string> {
 		return await new SignJWT({ userId })
 			.setProtectedHeader({ alg: "HS256" })
 			.setIssuedAt()
-			.setExpirationTime("24h")
+			.setExpirationTime(this.expirationTime)
 			.sign(this.secret);
 	}
 
