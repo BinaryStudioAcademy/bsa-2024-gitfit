@@ -16,7 +16,7 @@ class AuthService {
 	public signIn(
 		userRequestDto: UserSignInRequestDto,
 	): Promise<UserSignInResponseDto> {
-		return this.userService.findByEmail(userRequestDto);
+		return this.userService.getByEmail(userRequestDto.email);
 	}
 
 	public signUp(

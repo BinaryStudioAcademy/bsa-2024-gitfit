@@ -4,7 +4,6 @@ import { type UserRepository } from "~/modules/users/user.repository.js";
 
 import {
 	type UserGetAllResponseDto,
-	type UserSignInRequestDto,
 	type UserSignInResponseDto,
 	type UserSignUpRequestDto,
 	type UserSignUpResponseDto,
@@ -53,10 +52,7 @@ class UserService implements Service {
 		};
 	}
 
-	public async findByEmail(
-		payload: UserSignInRequestDto,
-	): Promise<UserSignInResponseDto> {
-		const { email } = payload;
+	public async getByEmail(email: string): Promise<UserSignInResponseDto> {
 		const item = await this.userRepository.findByEmail(email);
 
 		if (!item) {
