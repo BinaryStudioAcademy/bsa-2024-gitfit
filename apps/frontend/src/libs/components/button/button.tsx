@@ -1,28 +1,26 @@
 import { NavLink } from "react-router-dom";
 
+import styles from "./button.module.css";
+
 type Properties = {
-	className?: string | undefined;
 	href?: string | undefined;
 	label: string;
 	type?: "button" | "submit";
 };
 
-const Button = ({
-	className = "",
-	href,
-	label,
-	type = "button",
-}: Properties): JSX.Element => {
+const Button = ({ href, label, type = "button" }: Properties): JSX.Element => {
+	const buttonClassName = styles["button"] || "";
+
 	if (href) {
 		return (
-			<NavLink className={className} to={href}>
+			<NavLink className={buttonClassName} to={href}>
 				{label}
 			</NavLink>
 		);
 	}
 
 	return (
-		<button className={className} type={type}>
+		<button className={buttonClassName} type={type}>
 			{label}
 		</button>
 	);
