@@ -4,7 +4,7 @@ import {
 } from "~/modules/users/libs/types/types.js";
 import { type UserService } from "~/modules/users/user.service.js";
 
-import { type TokenService } from "./token/token.service.js";
+import { type TokenService } from "../../libs/modules/token/token.service.js";
 
 class AuthService {
 	private tokenService: TokenService;
@@ -21,7 +21,7 @@ class AuthService {
 		// TODO: should be changed after sign-up implementation
 		const user = await this.userService.create(userRequestDto);
 		// TODO: add token creation to the sign-in method
-		const token = await this.tokenService.createToken(user.id);
+		const token = await this.tokenService.createToken({ userId: user.id });
 
 		return { token, user };
 	}

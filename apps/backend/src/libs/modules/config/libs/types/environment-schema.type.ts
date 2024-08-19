@@ -14,6 +14,7 @@ type EnvironmentSchema = {
 		POOL_MIN: number;
 	};
 	JWT: {
+		ALGORITHM: string;
 		EXPIRATION_TIME: string;
 		SECRET: string;
 	};
