@@ -1,4 +1,4 @@
-import { type UserResponseDto } from "@git-fit/shared/src/modules/users/libs/types/user-response-dto.type.js";
+import { type UserResponseDto } from "@git-fit/shared/src/modules/users/libs/types/types.js";
 
 import { type Service } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
