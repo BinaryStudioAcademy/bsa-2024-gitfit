@@ -1,0 +1,46 @@
+.not-found {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100vh;
+	color: white;
+	background-color: var(--color-background-primary);
+}
+
+.title {
+	margin: 0;
+	font-size: 96px;
+	font-weight: 600;
+}
+
+.subtitle {
+	margin: 0;
+	font-size: 30px;
+	font-weight: 600;
+}
+
+.text {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 400;
+	color: var(--color-text-secondary);
+}
+
+.link {
+	padding: 10px 16px;
+	margin-top: 60px;
+	font-size: 16px;
+	font-weight: 500;
+	color: #ffffff;
+	text-decoration: none;
+	cursor: pointer;
+	background-color: var(--color-brand-primary);
+	border-radius: 6px;
+	transition: background-color 0.3s ease;
+}
+
+.link:hover {
+	background-color: var(--color-brand-primary-hover);
+}
