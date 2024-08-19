@@ -1,2 +1,6 @@
+@import url("./variables.css");
 @import url("./scaffolding.css");
 @import url("./media.css");
+@import url("./sidebar.css");
+@import url("./header.css");
+@import url("./main.css");
