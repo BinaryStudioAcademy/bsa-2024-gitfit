@@ -15,7 +15,9 @@ const ProtectedRoute: FC<ProtectedRouteProperties> = ({
 		(state) => state.auth.authenticatedUser,
 	);
 
-	return authenticatedUser ? (
+    const hasAuthenticatedUser = Boolean(authenticatedUser);
+
+	return hasAuthenticatedUser ? (
 		<>{children}</>
 	) : (
 		<Navigate replace to={AppRoute.SIGN_IN} />
