@@ -20,8 +20,12 @@ const Auth = (): JSX.Element => {
 	}, []);
 
 	const handleSignUpSubmit = useCallback(
-		(payload: UserSignUpRequestDto): void => {
-			void dispatch(authActions.signUp(payload));
+		async (payload: UserSignUpRequestDto): Promise<void> => {
+			const result = await dispatch(authActions.signUp(payload));
+
+			if (result.meta.requestStatus !== "fulfilled") {
+				throw new Error("Sign-up failed");
+			}
 		},
 		[dispatch],
 	);
