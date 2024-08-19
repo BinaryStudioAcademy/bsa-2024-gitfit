@@ -12,14 +12,13 @@
 	margin: 0;
 	font-size: 96px;
 	font-weight: 600;
-	line-height: 116.18px;
 }
 
 .subtitle {
 	margin: 0;
 	font-size: 30px;
 	font-weight: 600;
-	line-height: 36px;
+	line-height: 120%;
 }
 
 .text {
