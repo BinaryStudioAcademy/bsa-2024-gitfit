@@ -4,6 +4,7 @@ import { type Service } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserRepository } from "~/modules/users/user.repository.js";
 
+import { UserServiceMessage } from "./libs/enums/user-service-message.enum.js";
 import {
 	type UserGetAllResponseDto,
 	type UserSignUpRequestDto,
@@ -29,7 +30,7 @@ class UserService implements Service {
 
 		if (existingUser) {
 			throw new ApplicationError({
-				message: "Email address is already in use.",
+				message: UserServiceMessage.EMAIL_USED,
 			});
 		}
 

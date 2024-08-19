@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 
 import { ApplicationError } from "~/libs/exceptions/exceptions.js";
 
+import { EncryptionServiceMessage } from "./libs/enums/enums.js";
+
 const DEFAULT_SALT_ROUNDS = 10;
 
 class EncryptionService {
@@ -22,7 +24,7 @@ class EncryptionService {
 		} catch (error) {
 			throw new ApplicationError({
 				cause: error,
-				message: "Error comparing passwords",
+				message: EncryptionServiceMessage.COMPARE_PASSWORD,
 			});
 		}
 	}
@@ -33,7 +35,7 @@ class EncryptionService {
 		} catch (error) {
 			throw new ApplicationError({
 				cause: error,
-				message: "Error hashing password",
+				message: EncryptionServiceMessage.HASH_PASSWORD,
 			});
 		}
 	}
