@@ -26,6 +26,7 @@
 		"@fastify/swagger": "8.15.0",
 		"@fastify/swagger-ui": "4.0.1",
 		"@git-fit/shared": "*",
+		"bcrypt": "5.1.1",
 		"convict": "6.2.4",
 		"dotenv": "16.4.5",
 		"fastify": "4.28.1",
