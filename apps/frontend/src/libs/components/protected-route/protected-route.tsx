@@ -1,16 +1,14 @@
-import { type FC, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
 import { AppRoute } from "~/libs/enums/app-route.enum.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 
-type ProtectedRouteProperties = {
+type Properties = {
 	children: ReactNode;
 };
 
-const ProtectedRoute: FC<ProtectedRouteProperties> = ({
-	children,
-}: ProtectedRouteProperties): JSX.Element => {
+const ProtectedRoute = ({ children }: Properties): JSX.Element => {
 	const authenticatedUser = useAppSelector(
 		(state) => state.auth.authenticatedUser,
 	);
