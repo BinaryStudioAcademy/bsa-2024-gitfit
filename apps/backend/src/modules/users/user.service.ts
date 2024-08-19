@@ -1,7 +1,7 @@
 import { type Service } from "~/libs/types/types.js";
 import {
+	type UserAuthResponseDto,
 	type UserGetAllResponseDto,
-	type UserResponseDto,
 	type UserSignUpRequestDto,
 } from "~/modules/users/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
@@ -14,7 +14,9 @@ class UserService implements Service {
 		this.userRepository = userRepository;
 	}
 
-	public async create(payload: UserSignUpRequestDto): Promise<UserResponseDto> {
+	public async create(
+		payload: UserSignUpRequestDto,
+	): Promise<UserAuthResponseDto> {
 		const item = await this.userRepository.create(
 			UserEntity.initializeNew({
 				email: payload.email,

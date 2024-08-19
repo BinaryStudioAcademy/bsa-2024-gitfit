@@ -15,7 +15,7 @@ class TokenService {
 		this.algorithm = algorithm;
 	}
 
-	public async createToken<T extends JWTPayload>(payload: T): Promise<string> {
+	public async createToken(payload: JWTPayload): Promise<string> {
 		return await new SignJWT(payload)
 			.setProtectedHeader({ alg: this.algorithm })
 			.setIssuedAt()
