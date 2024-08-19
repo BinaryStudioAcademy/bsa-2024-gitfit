@@ -1,4 +1,6 @@
 @font-face {
 	font-family: Inter;
-	src: url("/fonts/inter-variable.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+	src: url("/assets/fonts/inter/Inter-Regular.ttf") format("truetype");
 }
