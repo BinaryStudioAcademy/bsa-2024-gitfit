@@ -1,3 +1,4 @@
+export { type UserEntityQuery } from "./user-entity-query.type.js";
 export {
 	type UserGetAllResponseDto,
 	type UserSignUpRequestDto,
