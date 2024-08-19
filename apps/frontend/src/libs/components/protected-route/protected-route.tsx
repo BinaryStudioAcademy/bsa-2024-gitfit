@@ -15,7 +15,7 @@ const ProtectedRoute: FC<ProtectedRouteProperties> = ({
 		(state) => state.auth.authenticatedUser,
 	);
 
-    const hasAuthenticatedUser = Boolean(authenticatedUser);
+	const hasAuthenticatedUser = Boolean(authenticatedUser);
 
 	return hasAuthenticatedUser ? (
 		<>{children}</>
