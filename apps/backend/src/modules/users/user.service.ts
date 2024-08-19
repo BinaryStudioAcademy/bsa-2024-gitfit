@@ -1,3 +1,5 @@
+import { type UserResponseDto } from "@git-fit/shared/src/modules/users/libs/types/user-response-dto.type.js";
+
 import { type Service } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserRepository } from "~/modules/users/user.repository.js";
@@ -5,7 +7,6 @@ import { type UserRepository } from "~/modules/users/user.repository.js";
 import {
 	type UserGetAllResponseDto,
 	type UserSignUpRequestDto,
-	type UserSignUpResponseDto,
 } from "./libs/types/types.js";
 
 class UserService implements Service {
@@ -15,9 +16,7 @@ class UserService implements Service {
 		this.userRepository = userRepository;
 	}
 
-	public async create(
-		payload: UserSignUpRequestDto,
-	): Promise<UserSignUpResponseDto> {
+	public async create(payload: UserSignUpRequestDto): Promise<UserResponseDto> {
 		const item = await this.userRepository.create(
 			UserEntity.initializeNew({
 				email: payload.email,

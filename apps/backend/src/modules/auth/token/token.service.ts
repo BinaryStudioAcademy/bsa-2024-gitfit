@@ -1,14 +1,13 @@
-import { jwtVerify, SignJWT } from "jose";
-import { type JWTPayload, type KeyLike } from "jose";
+import { type JWTPayload, jwtVerify, SignJWT } from "jose";
 
 class TokenService {
-	private secret: KeyLike;
+	private secret: Uint8Array;
 
-	public constructor(secret: KeyLike) {
-		this.secret = secret;
+	public constructor(secret: string) {
+		this.secret = new TextEncoder().encode(secret);
 	}
 
-	public async createToken(userId: string): Promise<string> {
+	public async createToken(userId: number): Promise<string> {
 		return await new SignJWT({ userId })
 			.setProtectedHeader({ alg: "HS256" })
 			.setIssuedAt()
