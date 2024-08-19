@@ -7,33 +7,46 @@ import {
 
 import { useFormController } from "~/libs/hooks/hooks.js";
 
+import styles from "./input.module.css";
+
 type Properties<T extends FieldValues> = {
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
+	icon?: JSX.Element;
 	label: string;
 	name: FieldPath<T>;
 	placeholder?: string;
-	type?: "email" | "text";
+	type?: "email" | "password" | "text";
 };
 
 const Input = <T extends FieldValues>({
 	control,
 	errors,
+	icon,
 	label,
 	name,
 	placeholder = "",
 	type = "text",
 }: Properties<T>): JSX.Element => {
 	const { field } = useFormController({ control, name });
-
 	const error = errors[name]?.message;
 	const hasError = Boolean(error);
 
 	return (
-		<label>
-			<span>{label}</span>
-			<input {...field} placeholder={placeholder} type={type} />
-			{hasError && <span>{error as string}</span>}
+		<label className={styles["input-label"]}>
+			<span className={styles["input-label-text"]}>{label}</span>
+			<div className={styles["input-container"]}>
+				<input
+					{...field}
+					className={styles["input-field"]}
+					placeholder={placeholder}
+					type={type}
+				/>
+				{icon && <div className={styles["input-icon"]}>{icon}</div>}
+			</div>
+			{hasError && (
+				<span className={styles["input-error"]}>{error as string}</span>
+			)}
 		</label>
 	);
 };
