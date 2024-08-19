@@ -2,7 +2,6 @@ import { type FC, type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
 import { AppRoute } from "~/libs/enums/app-route.enum.js";
-import { DataStatus } from "~/libs/enums/data-status.enum.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 
 type ProtectedRouteProperties = {
@@ -12,9 +11,11 @@ type ProtectedRouteProperties = {
 const ProtectedRoute: FC<ProtectedRouteProperties> = ({
 	children,
 }: ProtectedRouteProperties): JSX.Element => {
-	const authStatus = useAppSelector((state) => state.auth.dataStatus);
+	const authenticatedUser = useAppSelector(
+		(state) => state.auth.authenticatedUser,
+	);
 
-	return authStatus === DataStatus.FULFILLED ? (
+	return authenticatedUser ? (
 		<>{children}</>
 	) : (
 		<Navigate replace to={AppRoute.SIGN_IN} />
