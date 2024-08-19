@@ -1,0 +1,25 @@
+:root {
+	/* Background Colors */
+	--background-primary: #121415;
+	--background-secondary: #1d1e21;
+	--background-hover: rgba(255 255 255 / 6%);
+	--border-secondary: #303030;
+	--border-primary: #3e424d;
+	--color-overlay: rgba(0 0 0 / 80%);
+
+	/* Typography Colors */
+	--text-primary: #ffffff;
+	--text-secondary: #7e8082;
+
+	/* Brand Colors */
+	--brand-primary: #8860fa;
+	--brand-primary-hover: #7747ff;
+
+	/* State Colors */
+	--success: #0d9c00;
+	--warning: #d3bf06;
+	--danger: #ca4925;
+
+	/* Shadow */
+	--box-shadow: 0px 0px 25px 0px rgba(0 0 0 / 50%);
+}
