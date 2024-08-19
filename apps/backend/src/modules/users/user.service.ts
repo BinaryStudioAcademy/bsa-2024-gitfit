@@ -1,5 +1,5 @@
 import { ApplicationError } from "~/libs/exceptions/exceptions.js";
-import { type Encryption } from "~/libs/modules/encryption/encryption.module.js";
+import { type EncryptionService } from "~/libs/modules/encryption/encryption.js";
 import { type Service } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserRepository } from "~/modules/users/user.repository.js";
@@ -11,12 +11,15 @@ import {
 } from "./libs/types/types.js";
 
 class UserService implements Service {
-	private encryption: Encryption;
+	private encryptionService: EncryptionService;
 	private userRepository: UserRepository;
 
-	public constructor(userRepository: UserRepository, encryption: Encryption) {
+	public constructor(
+		userRepository: UserRepository,
+		encryptionService: EncryptionService,
+	) {
 		this.userRepository = userRepository;
-		this.encryption = encryption;
+		this.encryptionService = encryptionService;
 	}
 
 	public async create(
@@ -30,7 +33,9 @@ class UserService implements Service {
 			});
 		}
 
-		const passwordHash = await this.encryption.hashPassword(payload.password);
+		const passwordHash = await this.encryptionService.hashPassword(
+			payload.password,
+		);
 
 		const item = await this.userRepository.create(
 			UserEntity.initializeNew({

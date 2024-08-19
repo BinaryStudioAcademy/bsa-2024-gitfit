@@ -1,5 +1,6 @@
-import { Encryption } from "./encryption.module.js";
+import { EncryptionService } from "./encryption.service.js";
 
-const encryption = new Encryption();
+const encryptionService = new EncryptionService();
 
-export { encryption };
+export { encryptionService };
+export { type EncryptionService } from "./encryption.service.js";

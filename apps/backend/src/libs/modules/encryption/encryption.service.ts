@@ -4,7 +4,7 @@ import { ApplicationError } from "~/libs/exceptions/exceptions.js";
 
 const DEFAULT_SALT_ROUNDS = 10;
 
-class Encryption {
+class EncryptionService {
 	private saltRounds: number;
 
 	public constructor() {
@@ -39,4 +39,4 @@ class Encryption {
 	}
 }
 
-export { Encryption };
+export { EncryptionService };
