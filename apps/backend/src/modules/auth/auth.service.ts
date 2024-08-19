@@ -1,4 +1,6 @@
 import {
+	type UserSignInRequestDto,
+	type UserSignInResponseDto,
 	type UserSignUpRequestDto,
 	type UserSignUpResponseDto,
 } from "~/modules/users/libs/types/types.js";
@@ -9,6 +11,12 @@ class AuthService {
 
 	public constructor(userService: UserService) {
 		this.userService = userService;
+	}
+
+	public signIn(
+		userRequestDto: UserSignInRequestDto,
+	): Promise<UserSignInResponseDto> {
+		return this.userService.findByEmail(userRequestDto);
 	}
 
 	public signUp(

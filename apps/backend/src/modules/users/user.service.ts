@@ -4,6 +4,8 @@ import { type UserRepository } from "~/modules/users/user.repository.js";
 
 import {
 	type UserGetAllResponseDto,
+	type UserSignInRequestDto,
+	type UserSignInResponseDto,
 	type UserSignUpRequestDto,
 	type UserSignUpResponseDto,
 } from "./libs/types/types.js";
@@ -33,8 +35,14 @@ class UserService implements Service {
 		return Promise.resolve(true);
 	}
 
-	public find(): ReturnType<Service["find"]> {
-		return Promise.resolve(null);
+	public async find(id: number): Promise<UserSignInResponseDto> {
+		const item = await this.userRepository.find(id);
+
+		if (!item) {
+			throw new Error("User doesn't exist");
+		}
+
+		return item.toObject();
 	}
 
 	public async findAll(): Promise<UserGetAllResponseDto> {
@@ -43,6 +51,19 @@ class UserService implements Service {
 		return {
 			items: items.map((item) => item.toObject()),
 		};
+	}
+
+	public async findByEmail(
+		payload: UserSignInRequestDto,
+	): Promise<UserSignInResponseDto> {
+		const { email } = payload;
+		const item = await this.userRepository.findByEmail(email);
+
+		if (!item) {
+			throw new Error("User doesn't exist");
+		}
+
+		return item.toObject();
 	}
 
 	public update(): ReturnType<Service["update"]> {
