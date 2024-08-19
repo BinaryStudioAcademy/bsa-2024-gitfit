@@ -18,9 +18,9 @@ class AuthService {
 	public async signUp(
 		userRequestDto: UserSignUpRequestDto,
 	): Promise<UserSignUpResponseDto> {
-		// the mock of the method. May be changed according to required sign-up flow
+		// TODO: should be changed after sign-up implementation
 		const user = await this.userService.create(userRequestDto);
-		// next line should be used to create token also in the sign-in method
+		// TODO: add token creation to the sign-in method
 		const token = await this.tokenService.createToken(user.id);
 
 		return { token, user };
