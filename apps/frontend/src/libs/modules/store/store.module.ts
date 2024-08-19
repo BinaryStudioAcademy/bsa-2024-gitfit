@@ -35,12 +35,14 @@ class Store {
 		this.instance = configureStore({
 			devTools: config.ENV.APP.ENVIRONMENT !== AppEnvironment.PRODUCTION,
 			middleware: (getDefaultMiddleware) => {
-				return getDefaultMiddleware({
-					thunk: {
-						extraArgument: this.extraArguments,
-					},
-					// eslint-disable-next-line unicorn/prefer-spread
-				}).concat(errorHandlingMiddleware);
+				return [
+					...getDefaultMiddleware({
+						thunk: {
+							extraArgument: this.extraArguments,
+						},
+					}),
+					errorHandlingMiddleware,
+				] as Tuple;
 			},
 			reducer: {
 				auth: authReducer,
