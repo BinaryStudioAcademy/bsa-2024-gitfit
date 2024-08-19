@@ -1,4 +1,5 @@
 import { Button } from "~/libs/components/components.js";
+import { AppRoute } from "~/libs/enums/app-route.enum.js";
 
 import styles from "./styles.module.css";
 
@@ -10,7 +11,7 @@ const NotFound = (): JSX.Element => {
 			<p className={styles["text"]}>
 				Sorry, we can’t find the page you’re looking for.
 			</p>
-			<Button href="/" label="Back to home" />
+			<Button href={AppRoute.ROOT} label="Back to home" />
 		</main>
 	);
 };

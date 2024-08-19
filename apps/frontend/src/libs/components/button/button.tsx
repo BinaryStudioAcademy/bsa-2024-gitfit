@@ -9,18 +9,16 @@ type Properties = {
 };
 
 const Button = ({ href, label, type = "button" }: Properties): JSX.Element => {
-	const buttonClassName = styles["button"] || "";
-
 	if (href) {
 		return (
-			<NavLink className={buttonClassName} to={href}>
+			<NavLink className={styles["button"] ?? ""} to={href}>
 				{label}
 			</NavLink>
 		);
 	}
 
 	return (
-		<button className={buttonClassName} type={type}>
+		<button className={styles["button"]} type={type}>
 			{label}
 		</button>
 	);
