@@ -1,5 +1,85 @@
-.form {
+.auth-container {
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+	color: var(--color-text-primary);
+	background-color: var(--color-background-secondary);
+}
+
+.left-side,
+.right-side {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 50%;
+	height: 100%;
+}
+
+.left-side {
+	background-color: var(--color-background-primary);
+}
+
+.right-side {
+	flex-direction: column;
+}
+
+.logo-wrapper {
+	place-self: center center;
+	width: 200px;
+	height: 100px;
+	object-fit: contain;
+	object-position: center;
+}
+
+.form-title {
+	margin-bottom: 8px;
+	font-size: 30px;
+	font-weight: 600;
+	line-height: 36px;
+}
+
+.form-wrapper {
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+	width: 100%;
+	max-width: 400px;
+}
+
+.form-text {
+	margin-bottom: 16px;
+	color: var(--color-text-secondary);
+}
+
+.form-text > a {
+	color: var(--color-brand-primary);
+	transition: all 0.3s ease;
+}
+
+.form-text > a:hover {
+	color: var(--color-brand-primary-hover);
+}
+
+.password-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+.toggle-password-button {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	padding: 0;
+	cursor: pointer;
+	background: none;
+	border: none;
+	transform: translateY(-50%);
+}
+
+.icon {
+	width: 18px;
+	height: 18px;
+	object-fit: contain;
 }
