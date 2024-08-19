@@ -1,0 +1,33 @@
+.table-container {
+	align-self: center;
+	width: 1000px;
+	color: var(--color-text-primary);
+	background-color: var(--color-background-secondary);
+	border: 1px solid var(--color-border-primary);
+	border-radius: 8px;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table th,
+.table td {
+	padding: 10px 20px;
+	text-align: left;
+	border-bottom: 1px solid var(--color-border-primary);
+}
+
+.table td {
+	height: 60px;
+}
+
+.table th {
+	height: 43px;
+	color: var(--color-text-secondary);
+}
+
+.table tr:last-child td {
+	border-bottom: none;
+}
