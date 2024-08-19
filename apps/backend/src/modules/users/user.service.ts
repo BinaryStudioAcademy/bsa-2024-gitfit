@@ -1,7 +1,9 @@
+import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserRepository } from "~/modules/users/user.repository.js";
 
+import { UserError } from "./libs/exceptions/exceptions.js";
 import {
 	type UserGetAllResponseDto,
 	type UserSignInResponseDto,
@@ -38,7 +40,10 @@ class UserService implements Service {
 		const item = await this.userRepository.find(id);
 
 		if (!item) {
-			throw new Error("User doesn't exist");
+			throw new UserError({
+				message: "User doesn't exist",
+				status: HTTPCode.NOT_FOUND,
+			});
 		}
 
 		return item.toObject();
@@ -52,14 +57,17 @@ class UserService implements Service {
 		};
 	}
 
-	public async getByEmail(email: string): Promise<UserSignInResponseDto> {
+	public async getByEmail(email: string): Promise<UserEntity> {
 		const item = await this.userRepository.findByEmail(email);
 
 		if (!item) {
-			throw new Error("User doesn't exist");
+			throw new UserError({
+				message: "User doesn't exist",
+				status: HTTPCode.NOT_FOUND,
+			});
 		}
 
-		return item.toObject();
+		return item;
 	}
 
 	public update(): ReturnType<Service["update"]> {

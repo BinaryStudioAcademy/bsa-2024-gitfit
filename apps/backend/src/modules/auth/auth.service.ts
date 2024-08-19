@@ -13,10 +13,21 @@ class AuthService {
 		this.userService = userService;
 	}
 
-	public signIn(
+	public async signIn(
 		userRequestDto: UserSignInRequestDto,
 	): Promise<UserSignInResponseDto> {
-		return this.userService.getByEmail(userRequestDto.email);
+		const user = await this.userService.getByEmail(userRequestDto.email);
+
+		const { passwordHash } = user.toNewObject();
+
+		// TODO: compare with encryption service
+		const isPasswordCorrect = userRequestDto.password === passwordHash;
+
+		if (!isPasswordCorrect) {
+			throw new Error("Invalid credentials");
+		}
+
+		return user.toObject();
 	}
 
 	public signUp(
