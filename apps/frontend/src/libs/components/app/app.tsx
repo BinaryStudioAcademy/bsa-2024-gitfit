@@ -1,5 +1,5 @@
 import reactLogo from "~/assets/images/react.svg";
-import { Link, RouterOutlet } from "~/libs/components/components.js";
+import { Link, Loader, RouterOutlet } from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -47,11 +47,16 @@ const App = (): JSX.Element => {
 				<>
 					<h2>Users:</h2>
 					<h3>Status: {dataStatus}</h3>
-					<ul>
-						{users.map((user) => (
-							<li key={user.id}>{user.email}</li>
-						))}
-					</ul>
+
+					{dataStatus === "pending" ? (
+						<Loader />
+					) : (
+						<ul>
+							{users.map((user) => (
+								<li key={user.id}>{user.email}</li>
+							))}
+						</ul>
+					)}
 				</>
 			)}
 		</>
