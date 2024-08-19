@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 
 const NotFound = (): JSX.Element => {
 	return (
-		<section className={styles["not-found"]}>
+		<main className={styles["container"]}>
 			<h1 className={styles["title"]}>404</h1>
 			<h3 className={styles["subtitle"]}>Something went wrong</h3>
 			<p className={styles["text"]}>
@@ -13,7 +13,7 @@ const NotFound = (): JSX.Element => {
 			<Link className={styles["link"]} to="/">
 				Back to home
 			</Link>
-		</section>
+		</main>
 	);
 };
 

@@ -1,11 +1,11 @@
-.not-found {
+.container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	width: 100vw;
 	height: 100vh;
-	color: white;
+	color: var(--color-text-primary);
 	background-color: var(--color-background-primary);
 }
 
@@ -13,12 +13,14 @@
 	margin: 0;
 	font-size: 96px;
 	font-weight: 600;
+	line-height: 116.18px;
 }
 
 .subtitle {
 	margin: 0;
 	font-size: 30px;
 	font-weight: 600;
+	line-height: 36px;
 }
 
 .text {
@@ -33,7 +35,7 @@
 	margin-top: 60px;
 	font-size: 16px;
 	font-weight: 500;
-	color: #ffffff;
+	color: var(--color-text-primary);
 	text-decoration: none;
 	cursor: pointer;
 	background-color: var(--color-brand-primary);
