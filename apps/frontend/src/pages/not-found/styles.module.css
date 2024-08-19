@@ -22,7 +22,8 @@
 }
 
 .text {
-	margin: 0;
+	margin-top: 0;
+	margin-bottom: 50px;
 	font-size: 16px;
 	font-weight: 400;
 	color: var(--color-text-secondary);
