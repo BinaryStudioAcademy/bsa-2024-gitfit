@@ -14,6 +14,9 @@ const userSignUp: z.ZodType<UserSignUpRequestDto> = z
 			.email({
 				message: UserValidationMessage.EMAIL_WRONG,
 			}),
+		name: z.string().trim().min(UserValidationRule.NAME_MINIMUM_LENGTH, {
+			message: UserValidationMessage.NAME_REQUIRED,
+		}),
 		password: z
 			.string()
 			.trim()
