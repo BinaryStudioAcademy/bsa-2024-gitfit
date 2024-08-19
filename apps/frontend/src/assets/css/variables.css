@@ -1,11 +1,11 @@
 :root {
 	/* Background Colors */
-	--background-primary: #121415;
-	--background-secondary: #1d1e21;
-	--background-hover: rgba(255 255 255 / 6%);
-	--border-secondary: #303030;
-	--border-primary: #3e424d;
-	--color-overlay: rgba(0 0 0 / 80%);
+	--color-background-primary: #121415;
+	--color-background-secondary: #1d1e21;
+	--color-background-hover: #ffffff0f;
+	--color-border-secondary: #303030;
+	--color-border-primary: #3e424d;
+	--color-color-overlay: #000000cc;
 
 	/* Typography Colors */
 	--text-primary: #ffffff;
@@ -21,5 +21,5 @@
 	--danger: #ca4925;
 
 	/* Shadow */
-	--box-shadow: 0px 0px 25px 0px rgba(0 0 0 / 50%);
+	--box-shadow: 0px 0px 25px 0px #00000080;
 }
