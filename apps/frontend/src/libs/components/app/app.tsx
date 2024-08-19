@@ -16,6 +16,7 @@ const App = (): JSX.Element => {
 	const users = useAppSelector(({ users }) => users.users);
 
 	const isRoot = pathname === AppRoute.ROOT;
+	const isLoading = dataStatus === "pending";
 
 	useEffect(() => {
 		if (isRoot) {
@@ -48,7 +49,7 @@ const App = (): JSX.Element => {
 					<h2>Users:</h2>
 					<h3>Status: {dataStatus}</h3>
 
-					{dataStatus === "pending" ? (
+					{isLoading ? (
 						<Loader />
 					) : (
 						<ul>
