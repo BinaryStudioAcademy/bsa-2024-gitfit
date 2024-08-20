@@ -78,7 +78,7 @@ class BaseConfig implements Config {
 			},
 			ENCRYPTION: {
 				SALT_ROUNDS: {
-					default: 10,
+					default: null,
 					doc: "Data encryption salt rounds",
 					env: "ENCRYPTION_SALT_ROUNDS",
 					format: Number,

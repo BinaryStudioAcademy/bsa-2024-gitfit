@@ -1,12 +1,13 @@
 import bcrypt from "bcrypt";
 
+import { type Config } from "../config/config.js";
 import { type Encryption, type EncryptionResult } from "./libs/types/types.js";
 
 class BaseEncryption implements Encryption {
 	private saltRounds: number;
 
-	public constructor(saltRounds: number) {
-		this.saltRounds = saltRounds;
+	public constructor(config: Config) {
+		this.saltRounds = config.ENV.ENCRYPTION.SALT_ROUNDS;
 	}
 
 	public async compare(data: string, hash: string): Promise<boolean> {
