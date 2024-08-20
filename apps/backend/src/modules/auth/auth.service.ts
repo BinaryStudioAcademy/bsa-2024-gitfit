@@ -1,16 +1,15 @@
+import { type Token } from "~/libs/modules/token/token.js";
 import {
 	type UserSignUpRequestDto,
 	type UserSignUpResponseDto,
 } from "~/modules/users/libs/types/types.js";
 import { type UserService } from "~/modules/users/user.service.js";
 
-import { type TokenService } from "../../libs/modules/token/token.service.js";
-
 class AuthService {
-	private tokenService: TokenService;
+	private tokenService: Token;
 	private userService: UserService;
 
-	public constructor(userService: UserService, tokenService: TokenService) {
+	public constructor(userService: UserService, tokenService: Token) {
 		this.userService = userService;
 		this.tokenService = tokenService;
 	}

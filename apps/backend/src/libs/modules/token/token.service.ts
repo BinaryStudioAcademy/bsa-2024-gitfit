@@ -1,6 +1,8 @@
 import { type JWTPayload, jwtVerify, SignJWT } from "jose";
 
-class TokenService {
+import { type Token } from "./token.js";
+
+class TokenService implements Token {
 	private algorithm: string;
 	private expirationTime: string;
 	private secret: Uint8Array;
