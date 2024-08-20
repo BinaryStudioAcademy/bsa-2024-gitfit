@@ -1,3 +1,4 @@
+import { type Token } from "~/libs/modules/token/token.js";
 import {
 	type UserSignUpRequestDto,
 	type UserSignUpResponseDto,
@@ -5,16 +6,22 @@ import {
 import { type UserService } from "~/modules/users/user.service.js";
 
 class AuthService {
+	private tokenService: Token;
 	private userService: UserService;
 
-	public constructor(userService: UserService) {
+	public constructor(userService: UserService, tokenService: Token) {
 		this.userService = userService;
+		this.tokenService = tokenService;
 	}
 
-	public signUp(
+	public async signUp(
 		userRequestDto: UserSignUpRequestDto,
 	): Promise<UserSignUpResponseDto> {
-		return this.userService.create(userRequestDto);
+		// TODO: should be changed after sign-up implementation
+		const user = await this.userService.create(userRequestDto);
+		const token = await this.tokenService.createToken({ userId: user.id });
+
+		return { token, user };
 	}
 }
 
