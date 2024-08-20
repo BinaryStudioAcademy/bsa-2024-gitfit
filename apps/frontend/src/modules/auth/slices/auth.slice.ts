@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
-import { type UserSignUpResponseDto } from "~/modules/users/users.js";
 
 import { type UserSignUpResponseDto } from "../libs/types/types.js";
 import { signUp } from "./actions.js";
