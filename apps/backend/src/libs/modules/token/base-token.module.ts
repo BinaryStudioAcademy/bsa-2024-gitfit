@@ -1,23 +1,19 @@
 import { type JWTPayload, jwtVerify, SignJWT } from "jose";
 
-import { type Token } from "./token.js";
+import { type Token } from "./libs/types/types.js";
 
-type TokenServiceOptions = {
+type Constructor = {
 	algorithm: string;
 	expirationTime: string;
 	secret: string;
 };
 
-class TokenService implements Token {
+class BaseToken implements Token {
 	private algorithm: string;
 	private expirationTime: string;
 	private secret: Uint8Array;
 
-	public constructor({
-		algorithm,
-		expirationTime,
-		secret,
-	}: TokenServiceOptions) {
+	public constructor({ algorithm, expirationTime, secret }: Constructor) {
 		this.secret = new TextEncoder().encode(secret);
 		this.expirationTime = expirationTime;
 		this.algorithm = algorithm;
@@ -38,4 +34,4 @@ class TokenService implements Token {
 	}
 }
 
-export { TokenService };
+export { BaseToken };
