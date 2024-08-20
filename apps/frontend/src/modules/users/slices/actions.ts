@@ -9,16 +9,10 @@ const loadAll = createAsyncThunk<
 	UserGetAllResponseDto,
 	undefined,
 	AsyncThunkConfig
->(`${sliceName}/load-all`, async (_, { extra, rejectWithValue }) => {
+>(`${sliceName}/load-all`, (_, { extra }) => {
 	const { userApi } = extra;
 
-	try {
-		return await userApi.getAll();
-	} catch (error) {
-		return rejectWithValue({
-			message: (error as Error).message,
-		});
-	}
+	return userApi.getAll();
 });
 
 export { loadAll };
