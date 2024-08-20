@@ -1,6 +1,6 @@
 .table-container {
 	align-self: center;
-	width: 1000px;
+	width: 65%;
 	color: var(--color-text-primary);
 	background-color: var(--color-background-secondary);
 	border: 1px solid var(--color-border-primary);
@@ -23,12 +23,12 @@
 }
 
 .table td {
-	height: 60px;
+	min-height: 60px;
 	font-weight: 400;
 }
 
 .table th {
-	height: 43px;
+	min-height: 45px;
 	font-weight: 500;
 	color: var(--color-text-secondary);
 }

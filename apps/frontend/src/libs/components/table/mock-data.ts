@@ -7,7 +7,7 @@ type Person = {
 	projects: string;
 };
 
-const data: Person[] = [
+const mockData: Person[] = [
 	{
 		createdAt: "Jan 26, 2008 12:23",
 		name: "Gravida",
@@ -52,11 +52,11 @@ const data: Person[] = [
 	},
 ];
 
-const columns: ColumnDef<Person>[] = [
+const mockColumns: ColumnDef<Person>[] = [
 	{ accessorKey: "name", header: "Name" },
 	{ accessorKey: "permissions", header: "Permissions" },
 	{ accessorKey: "projects", header: "Projects" },
 	{ accessorKey: "createdAt", header: "Created At" },
 ];
 
-export { columns, data, type Person };
+export { mockColumns, mockData, type Person };

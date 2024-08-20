@@ -6,8 +6,8 @@ import {
 	Table,
 } from "~/libs/components/components.js";
 import {
-	columns,
-	data,
+	mockColumns as mockTableColumns,
+	mockData as mockTableData,
 	type Person,
 } from "~/libs/components/table/mock-data.js";
 import { AppRoute } from "~/libs/enums/enums.js";
@@ -68,7 +68,7 @@ const App = (): JSX.Element => {
 							))}
 						</ul>
 					)}
-					<Table<Person> columns={columns} data={data} />
+					<Table<Person> columns={mockTableColumns} data={mockTableData} />
 				</>
 			)}
 		</>
