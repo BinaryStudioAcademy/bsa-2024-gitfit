@@ -1,5 +1,5 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
-import { type BaseEncryption } from "~/libs/modules/encryption/encryption.js";
+import { type Encryption } from "~/libs/modules/encryption/encryption.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Token } from "~/libs/modules/token/token.js";
 import {
@@ -13,14 +13,14 @@ import { type UserService } from "~/modules/users/user.service.js";
 import { AuthError } from "./libs/exceptions/exceptions.js";
 
 class AuthService {
-	private encryptionService: BaseEncryption;
+	private encryptionService: Encryption;
 	private tokenService: Token;
 	private userService: UserService;
 
 	public constructor(
 		userService: UserService,
 		tokenService: Token,
-		encryptionService: BaseEncryption,
+		encryptionService: Encryption,
 	) {
 		this.userService = userService;
 		this.tokenService = tokenService;
