@@ -1,10 +1,11 @@
 import { UserError } from "~/libs/exceptions/exceptions.js";
 import { type BaseEncryption } from "~/libs/modules/encryption/encryption.js";
+import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserRepository } from "~/modules/users/user.repository.js";
 
-import { ExceptionMessage } from "./libs/enums/exception-message.enum.js";
+import { ExceptionMessage } from "./libs/enums/enums.js";
 import {
 	type UserGetAllResponseDto,
 	type UserSignUpRequestDto,
@@ -30,7 +31,10 @@ class UserService implements Service {
 		const existingUser = await this.userRepository.findByEmail(email);
 
 		if (existingUser) {
-			throw new UserError(ExceptionMessage.EMAIL_USED);
+			throw new UserError({
+				message: ExceptionMessage.EMAIL_USED,
+				status: HTTPCode.CONFLICT,
+			});
 		}
 
 		const { encryptedData: passwordHash, salt: passwordSalt } =

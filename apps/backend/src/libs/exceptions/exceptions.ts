@@ -1,2 +1,1 @@
-export { UserError } from "./user-error/user-error.exception.js";
-export { ApplicationError, ValidationError } from "@git-fit/shared";
+export { ApplicationError, UserError, ValidationError } from "@git-fit/shared";
