@@ -16,6 +16,11 @@ type EnvironmentSchema = {
 	ENCRYPTION: {
 		SALT_ROUNDS: number;
 	};
+	JWT: {
+		ALGORITHM: string;
+		EXPIRATION_TIME: string;
+		SECRET: string;
+	};
 };
 
 export { type EnvironmentSchema };
