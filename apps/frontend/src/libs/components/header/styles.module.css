@@ -1,0 +1,42 @@
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 20px;
+	color: var(--color-text-primary);
+	background-color: var(--color-background-primary);
+}
+
+.logo_container {
+	display: inline-flex;
+	gap: 8px;
+	align-items: center;
+	justify-content: center;
+}
+
+.logo_img {
+	width: 24px;
+	height: 24px;
+}
+
+.logo_text {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	color: white;
+	text-align: center;
+	background-color: var(--color-background-secondary);
+	border-radius: 50%;
+}
+
+.avatar_letter {
+	font-size: 18px;
+	user-select: none;
+}
