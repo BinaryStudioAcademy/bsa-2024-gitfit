@@ -1,5 +1,9 @@
-import reactLogo from "~/assets/images/react.svg";
-import { Link, Loader, RouterOutlet } from "~/libs/components/components.js";
+import {
+	Header,
+	Link,
+	Loader,
+	RouterOutlet,
+} from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -26,8 +30,7 @@ const App = (): JSX.Element => {
 
 	return (
 		<>
-			<img alt="logo" src={reactLogo} width="30" />
-
+			<Header />
 			<ul>
 				<li>
 					<Link to={AppRoute.ROOT}>Root</Link>
