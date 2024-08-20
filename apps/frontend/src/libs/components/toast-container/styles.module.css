@@ -3,8 +3,5 @@
 	--toastify-color-success: var(--color-success);
 	--toastify-color-warning: var(--color-warning);
 	--toastify-color-error: var(--color-danger);
-	--toastify-toast-width: 320px;
-	--toastify-toast-min-height: 64px;
-	--toastify-toast-max-height: 800px;
 	--toastify-font-family: "Inter", sans-serif;
 }
