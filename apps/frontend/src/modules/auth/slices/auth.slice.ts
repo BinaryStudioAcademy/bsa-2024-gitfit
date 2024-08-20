@@ -4,14 +4,17 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type UserSignUpResponseDto } from "~/modules/users/users.js";
 
+import { type UserSignUpResponseDto } from "../libs/types/types.js";
 import { signUp } from "./actions.js";
 
 type State = {
+	authenticatedUser: null | UserSignUpResponseDto;
 	dataStatus: ValueOf<typeof DataStatus>;
 	user: null | UserSignUpResponseDto;
 };
 
 const initialState: State = {
+	authenticatedUser: null,
 	dataStatus: DataStatus.IDLE,
 	user: null,
 };
