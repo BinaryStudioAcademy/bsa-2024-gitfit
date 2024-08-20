@@ -76,6 +76,26 @@ class BaseConfig implements Config {
 					format: Number,
 				},
 			},
+			JWT: {
+				ALGORITHM: {
+					default: null,
+					doc: "JWT encryption algorithm",
+					env: "JWT_ALGORITHM",
+					format: String,
+				},
+				EXPIRATION_TIME: {
+					default: null,
+					doc: "JWT expiration time",
+					env: "JWT_EXPIRATION_TIME",
+					format: String,
+				},
+				SECRET: {
+					default: null,
+					doc: "JWT secret",
+					env: "JWT_SECRET",
+					format: String,
+				},
+			},
 		});
 	}
 }
