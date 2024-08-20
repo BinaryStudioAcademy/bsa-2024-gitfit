@@ -2,6 +2,8 @@ import { Link } from "~/libs/components/components.js";
 import { type AppRoute } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
+import styles from "./styles.module.css";
+
 type Properties = {
 	icon: string;
 	text: string;
@@ -11,13 +13,13 @@ type Properties = {
 const SidebarItem = ({ icon, text, to }: Properties): JSX.Element => (
 	<li>
 		{to ? (
-			<Link className="sidebar-link" to={to}>
-				<img alt={text} className="icon-sidebar" src={icon} />
+			<Link className={styles["sidebar-link"] ?? ""} to={to}>
+				<img alt={text} className={styles["icon-sidebar"]} src={icon} />
 				{text}
 			</Link>
 		) : (
-			<span className="sidebar-link">
-				<img alt={text} className="icon-sidebar" src={icon} />
+			<span className={styles["sidebar-link"] ?? ""}>
+				<img alt={text} className={styles["icon-sidebar"]} src={icon} />
 				{text}
 			</span>
 		)}

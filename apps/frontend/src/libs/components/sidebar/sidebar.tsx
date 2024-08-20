@@ -2,6 +2,7 @@ import { AppRoute } from "~/libs/enums/enums.js";
 import { Icons } from "~/libs/enums/svg-icons.enum.js";
 
 import { SidebarItem } from "./sidebar-item.js";
+import styles from "./styles.module.css";
 
 const sidebarItems = [
 	{ icon: Icons.Project, id: "1", text: "Projects", to: AppRoute.ROOT },
@@ -12,7 +13,7 @@ const sidebarItems = [
 
 const Sidebar = (): JSX.Element => {
 	return (
-		<ul className="sidebar">
+		<ul className={styles["sidebar"]}>
 			{sidebarItems.map((item) => (
 				<SidebarItem
 					icon={item.icon}
