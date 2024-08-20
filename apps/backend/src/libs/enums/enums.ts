@@ -1,2 +1,6 @@
-export { ErrorMessages } from "./error-messages.js";
-export { APIPath, AppEnvironment, ServerErrorType } from "@git-fit/shared";
+export {
+	APIPath,
+	AppEnvironment,
+	ErrorMessages,
+	ServerErrorType,
+} from "@git-fit/shared";
