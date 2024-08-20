@@ -1,10 +1,11 @@
 import { isRejected, type Middleware } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
+
+import { notifier } from "~/libs/modules/notifier/notifier.js";
 
 const handleError: Middleware = () => {
 	return (next) => (action) => {
 		if (isRejected(action)) {
-			toast.error(action.error.message);
+			notifier.error(action.error.message);
 		}
 
 		return next(action);
