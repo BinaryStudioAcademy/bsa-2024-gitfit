@@ -3,7 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import styles from "./styles.module.css";
 
-const ToastContainer: React.FC = () => {
+const ToastContainer = (): JSX.Element => {
 	return (
 		<LibraryToastContainer
 			autoClose={5000}
