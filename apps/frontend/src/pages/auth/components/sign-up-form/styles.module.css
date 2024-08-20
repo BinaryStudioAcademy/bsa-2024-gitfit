@@ -70,6 +70,7 @@
 .toggle-password-button {
 	width: 18px;
 	height: 18px;
+	color: var(--color-text-secondary);
 	cursor: pointer;
 	object-fit: contain;
 }
