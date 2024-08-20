@@ -1,16 +1,15 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
-import { UserEntity } from "~/modules/users/user.entity.js";
-import { type UserRepository } from "~/modules/users/user.repository.js";
 
 import { UserError } from "./libs/exceptions/exceptions.js";
 import {
 	type UserAuthResponseDto,
 	type UserGetAllResponseDto,
 	type UserSignUpRequestDto,
-	type UserSignUpResponseDto,
 } from "./libs/types/types.js";
+import { UserEntity } from "./user.entity.js";
+import { type UserRepository } from "./user.repository.js";
 
 class UserService implements Service {
 	private userRepository: UserRepository;
@@ -21,7 +20,7 @@ class UserService implements Service {
 
 	public async create(
 		payload: UserSignUpRequestDto,
-	): Promise<UserSignUpResponseDto> {
+	): Promise<UserAuthResponseDto> {
 		const item = await this.userRepository.create(
 			UserEntity.initializeNew({
 				email: payload.email,
