@@ -34,7 +34,10 @@ class AuthService {
 			});
 		}
 
-		return user.toObject();
+		return {
+			token: "",
+			user: user.toObject(),
+		};
 	}
 
 	public signUp(

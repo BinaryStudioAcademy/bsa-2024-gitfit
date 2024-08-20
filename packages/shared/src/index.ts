@@ -30,6 +30,7 @@ export {
 	AuthErrorMessage,
 } from "./modules/auth/auth.js";
 export {
+	type UserAuthResponseDto,
 	UserError,
 	UserErrorMessage,
 	type UserGetAllItemResponseDto,

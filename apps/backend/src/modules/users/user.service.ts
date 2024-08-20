@@ -6,8 +6,8 @@ import { type UserRepository } from "~/modules/users/user.repository.js";
 import { UserErrorMessage } from "./libs/enums/enums.js";
 import { UserError } from "./libs/exceptions/exceptions.js";
 import {
+	type UserAuthResponseDto,
 	type UserGetAllResponseDto,
-	type UserSignInResponseDto,
 	type UserSignUpRequestDto,
 	type UserSignUpResponseDto,
 } from "./libs/types/types.js";
@@ -37,7 +37,7 @@ class UserService implements Service {
 		return Promise.resolve(true);
 	}
 
-	public async find(id: number): Promise<UserSignInResponseDto> {
+	public async find(id: number): Promise<UserAuthResponseDto> {
 		const item = await this.userRepository.find(id);
 
 		if (!item) {
