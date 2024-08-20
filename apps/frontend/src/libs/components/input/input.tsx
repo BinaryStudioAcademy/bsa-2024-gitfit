@@ -12,37 +12,61 @@ import styles from "./input.module.css";
 type Properties<T extends FieldValues> = {
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
-	icon?: JSX.Element;
 	label: string;
+	leftIcon?: JSX.Element;
 	name: FieldPath<T>;
 	placeholder?: string;
+	rightIcon?: JSX.Element;
 	type?: "email" | "password" | "text";
 };
 
 const Input = <T extends FieldValues>({
 	control,
 	errors,
-	icon,
 	label,
+	leftIcon,
 	name,
 	placeholder = "",
+	rightIcon,
 	type = "text",
 }: Properties<T>): JSX.Element => {
 	const { field } = useFormController({ control, name });
 	const error = errors[name]?.message;
 	const hasError = Boolean(error);
 
+	const inputClassNames = [
+		styles["input-field"],
+		leftIcon && styles["with-left-icon"],
+		rightIcon && styles["with-right-icon"],
+	]
+		.filter(Boolean)
+		.join(" ");
+
 	return (
 		<label className={styles["input-label"]}>
 			<span className={styles["input-label-text"]}>{label}</span>
 			<div className={styles["input-container"]}>
+				{leftIcon && (
+					<div
+						className={`${styles["input-icon"] || ""} ${styles["input-icon-left"] || ""}`}
+					>
+						{leftIcon}
+					</div>
+				)}
+
 				<input
 					{...field}
-					className={styles["input-field"]}
+					className={inputClassNames}
 					placeholder={placeholder}
 					type={type}
 				/>
-				{icon && <div className={styles["input-icon"]}>{icon}</div>}
+				{rightIcon && (
+					<div
+						className={`${styles["input-icon"] || ""} ${styles["input-icon-right"] || ""}`}
+					>
+						{rightIcon}
+					</div>
+				)}
 			</div>
 			{hasError && (
 				<span className={styles["input-error"]}>{error as string}</span>
