@@ -26,7 +26,7 @@ class UserService implements Service {
 	public async create(
 		payload: UserSignUpRequestDto,
 	): Promise<UserSignUpResponseDto> {
-		const { email } = payload;
+		const { email, name, password } = payload;
 		const existingUser = await this.userRepository.find({ email });
 
 		if (existingUser) {
@@ -35,14 +35,12 @@ class UserService implements Service {
 			});
 		}
 
-		const passwordHash = await this.encryptionService.hashPassword(
-			payload.password,
-		);
+		const passwordHash = await this.encryptionService.hashPassword(password);
 
 		const item = await this.userRepository.create(
 			UserEntity.initializeNew({
-				email: payload.email,
-				name: payload.name,
+				email,
+				name,
 				passwordHash,
 				passwordSalt: "", // bcrypt handles salt internally
 			}),
