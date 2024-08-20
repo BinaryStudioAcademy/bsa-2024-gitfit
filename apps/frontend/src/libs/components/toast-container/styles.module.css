@@ -6,5 +6,5 @@
 	--toastify-toast-width: 320px;
 	--toastify-toast-min-height: 64px;
 	--toastify-toast-max-height: 800px;
-	--toastify-font-family: sans-serif; /* TODO: change font family */
+	--toastify-font-family: "Inter", sans-serif;
 }
