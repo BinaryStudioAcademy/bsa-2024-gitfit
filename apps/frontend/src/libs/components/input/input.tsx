@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import {
 	type Control,
 	type FieldErrors,
@@ -7,7 +8,7 @@ import {
 
 import { useFormController } from "~/libs/hooks/hooks.js";
 
-import styles from "./input.module.css";
+import styles from "./styles.module.css";
 
 type Properties<T extends FieldValues> = {
 	control: Control<T, null>;
@@ -34,13 +35,11 @@ const Input = <T extends FieldValues>({
 	const error = errors[name]?.message;
 	const hasError = Boolean(error);
 
-	const inputClassNames = [
+	const inputClassNames = clsx(
 		styles["input-field"],
 		leftIcon && styles["with-left-icon"],
 		rightIcon && styles["with-right-icon"],
-	]
-		.filter(Boolean)
-		.join(" ");
+	);
 
 	return (
 		<label className={styles["input-label"]}>
@@ -48,7 +47,7 @@ const Input = <T extends FieldValues>({
 			<div className={styles["input-container"]}>
 				{leftIcon && (
 					<div
-						className={`${styles["input-icon"] || ""} ${styles["input-icon-left"] || ""}`}
+						className={clsx(styles["input-icon"], styles["input-icon-left"])}
 					>
 						{leftIcon}
 					</div>
@@ -60,14 +59,16 @@ const Input = <T extends FieldValues>({
 					placeholder={placeholder}
 					type={type}
 				/>
+
 				{rightIcon && (
 					<div
-						className={`${styles["input-icon"] || ""} ${styles["input-icon-right"] || ""}`}
+						className={clsx(styles["input-icon"], styles["input-icon-right"])}
 					>
 						{rightIcon}
 					</div>
 				)}
 			</div>
+
 			{hasError && (
 				<span className={styles["input-error"]}>{error as string}</span>
 			)}
