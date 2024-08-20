@@ -1,8 +1,5 @@
-import {
-	type HTTPCode,
-	HTTPError,
-} from "../../../../libs/modules/http/http.js";
-import { type ValueOf } from "../../../../libs/types/value-of.type.js";
+import { type HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
+import { type ValueOf } from "~/libs/types/types.js";
 
 type Constructor = {
 	cause?: unknown;

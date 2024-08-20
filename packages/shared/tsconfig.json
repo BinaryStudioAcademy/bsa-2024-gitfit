@@ -3,6 +3,9 @@
 	"include": ["**/*.ts", "**/*.js"],
 	"exclude": ["node_modules", "build"],
 	"compilerOptions": {
-		"baseUrl": "."
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./src/*"]
+		}
 	}
 }
