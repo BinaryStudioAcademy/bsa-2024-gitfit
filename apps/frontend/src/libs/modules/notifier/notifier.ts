@@ -1,10 +1,5 @@
-import { toast } from "react-toastify";
+import { ToastNotifier } from "./notifier.module.js";
 
-const notifier = {
-	error: (message?: string): void => void toast.error(message),
-	info: (message?: string): void => void toast.info(message),
-	success: (message?: string): void => void toast.success(message),
-	warn: (message?: string): void => void toast.warn(message),
-};
+const notifier = new ToastNotifier();
 
 export { notifier };
