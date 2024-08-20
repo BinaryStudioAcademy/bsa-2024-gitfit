@@ -1,0 +1,33 @@
+.table {
+	width: 100%;
+	font-family: Inter, sans-serif;
+	font-size: 16px;
+	font-style: normal;
+	color: var(--color-text-primary);
+	border-collapse: collapse;
+	background-color: var(--color-background-secondary);
+	border: 1px solid var(--color-border-primary);
+	border-radius: 8px;
+}
+
+.table th,
+.table td {
+	padding: 10px 20px;
+	text-align: left;
+	border-bottom: 1px solid var(--color-border-primary);
+}
+
+.table td {
+	min-height: 60px;
+	font-weight: 400;
+}
+
+.table th {
+	min-height: 45px;
+	font-weight: 500;
+	color: var(--color-text-secondary);
+}
+
+.table tr:last-child td {
+	border-bottom: none;
+}

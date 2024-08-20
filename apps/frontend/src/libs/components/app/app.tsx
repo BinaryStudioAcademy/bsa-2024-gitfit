@@ -3,7 +3,13 @@ import {
 	Link,
 	Loader,
 	RouterOutlet,
+	Table,
 } from "~/libs/components/components.js";
+import {
+	mockColumns as mockTableColumns,
+	mockData as mockTableData,
+	type Person,
+} from "~/libs/components/table/mock-data.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -61,6 +67,7 @@ const App = (): JSX.Element => {
 							))}
 						</ul>
 					)}
+					<Table<Person> columns={mockTableColumns} data={mockTableData} />
 				</>
 			)}
 		</>
