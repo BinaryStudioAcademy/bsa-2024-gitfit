@@ -7,36 +7,19 @@
 	background-color: var(--color-background-primary);
 }
 
-.logo_container {
+.logo-container {
 	display: inline-flex;
 	gap: 8px;
 	align-items: center;
 	justify-content: center;
 }
 
-.logo_img {
+.logo-img {
 	width: 24px;
 	height: 24px;
 }
 
-.logo_text {
+.logo-text {
 	font-size: 16px;
 	font-weight: 500;
-}
-
-.avatar {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 40px;
-	height: 40px;
-	color: white;
-	text-align: center;
-	background-color: var(--color-background-secondary);
-	border-radius: 50%;
-}
-
-.avatar_letter {
-	font-size: 18px;
-	user-select: none;
 }
