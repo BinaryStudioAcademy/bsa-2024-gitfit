@@ -3,6 +3,7 @@ import { type Service } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserRepository } from "~/modules/users/user.repository.js";
 
+import { UserErrorMessage } from "./libs/enums/enums.js";
 import { UserError } from "./libs/exceptions/exceptions.js";
 import {
 	type UserGetAllResponseDto,
@@ -41,7 +42,7 @@ class UserService implements Service {
 
 		if (!item) {
 			throw new UserError({
-				message: "User doesn't exist",
+				message: UserErrorMessage.USER_NOT_FOUND,
 				status: HTTPCode.NOT_FOUND,
 			});
 		}
@@ -62,7 +63,7 @@ class UserService implements Service {
 
 		if (!item) {
 			throw new UserError({
-				message: "User doesn't exist",
+				message: UserErrorMessage.USER_NOT_FOUND,
 				status: HTTPCode.NOT_FOUND,
 			});
 		}

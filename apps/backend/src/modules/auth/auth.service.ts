@@ -1,3 +1,4 @@
+import { HTTPCode } from "~/libs/modules/http/http.js";
 import {
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,
@@ -5,6 +6,9 @@ import {
 	type UserSignUpResponseDto,
 } from "~/modules/users/libs/types/types.js";
 import { type UserService } from "~/modules/users/user.service.js";
+
+import { AuthErrorMessage } from "./libs/enums/enums.js";
+import { AuthError } from "./libs/exceptions/exceptions.js";
 
 class AuthService {
 	private userService: UserService;
@@ -24,7 +28,10 @@ class AuthService {
 		const isPasswordCorrect = userRequestDto.password === passwordHash;
 
 		if (!isPasswordCorrect) {
-			throw new Error("Invalid credentials");
+			throw new AuthError({
+				message: AuthErrorMessage.WRONG_CREDENTIAL,
+				status: HTTPCode.UNAUTHORIZED,
+			});
 		}
 
 		return user.toObject();

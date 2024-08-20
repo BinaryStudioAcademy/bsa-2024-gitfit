@@ -1,1 +1,1 @@
-export { UsersApiPath } from "@git-fit/shared";
+export { UserErrorMessage, UsersApiPath } from "@git-fit/shared";
