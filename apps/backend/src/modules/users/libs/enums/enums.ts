@@ -1,2 +1,2 @@
-export { UserServiceMessage } from "./user-service-message.enum.js";
+export { ExceptionMessage } from "./exception-message.enum.js";
 export { UsersApiPath } from "@git-fit/shared";

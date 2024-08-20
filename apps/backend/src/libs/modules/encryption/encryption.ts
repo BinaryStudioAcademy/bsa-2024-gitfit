@@ -1,6 +1,7 @@
-import { EncryptionService } from "./encryption.service.js";
+import { config } from "../config/config.js";
+import { BaseEncryption } from "./base-encryption.module.js";
 
-const encryptionService = new EncryptionService();
+const encryption = new BaseEncryption(config.ENV.ENCRYPTION.SALT_ROUNDS);
 
-export { encryptionService };
-export { type EncryptionService } from "./encryption.service.js";
+export { encryption };
+export { type BaseEncryption } from "./base-encryption.module.js";

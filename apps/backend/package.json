@@ -38,6 +38,7 @@
 		"swagger-jsdoc": "6.2.8"
 	},
 	"devDependencies": {
+		"@types/bcrypt": "5.0.2",
 		"@types/convict": "6.1.6",
 		"@types/swagger-jsdoc": "6.0.4",
 		"tsx": "4.17.0"

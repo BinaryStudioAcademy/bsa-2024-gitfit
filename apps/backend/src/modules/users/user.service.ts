@@ -1,10 +1,10 @@
 import { ApplicationError } from "~/libs/exceptions/exceptions.js";
-import { type EncryptionService } from "~/libs/modules/encryption/encryption.js";
+import { type BaseEncryption } from "~/libs/modules/encryption/encryption.js";
 import { type Service } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserRepository } from "~/modules/users/user.repository.js";
 
-import { UserServiceMessage } from "./libs/enums/user-service-message.enum.js";
+import { ExceptionMessage } from "./libs/enums/exception-message.enum.js";
 import {
 	type UserGetAllResponseDto,
 	type UserSignUpRequestDto,
@@ -12,15 +12,15 @@ import {
 } from "./libs/types/types.js";
 
 class UserService implements Service {
-	private encryptionService: EncryptionService;
+	private encryption: BaseEncryption;
 	private userRepository: UserRepository;
 
 	public constructor(
 		userRepository: UserRepository,
-		encryptionService: EncryptionService,
+		encryption: BaseEncryption,
 	) {
 		this.userRepository = userRepository;
-		this.encryptionService = encryptionService;
+		this.encryption = encryption;
 	}
 
 	public async create(
@@ -31,15 +31,12 @@ class UserService implements Service {
 
 		if (existingUser) {
 			throw new ApplicationError({
-				message: UserServiceMessage.EMAIL_USED,
+				message: ExceptionMessage.EMAIL_USED,
 			});
 		}
 
-		const passwordSalt = await this.encryptionService.generateSalt();
-		const passwordHash = await this.encryptionService.hashPassword(
-			password,
-			passwordSalt,
-		);
+		const { encryptedData: passwordHash, salt: passwordSalt } =
+			await this.encryption.encrypt(password);
 
 		const item = await this.userRepository.create(
 			UserEntity.initializeNew({
