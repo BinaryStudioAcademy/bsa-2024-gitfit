@@ -38,7 +38,9 @@ class AuthService {
 			});
 		}
 
-		const token = await this.tokenService.createToken({ userId: userObject.id });
+		const token = await this.tokenService.createToken({
+			userId: userObject.id,
+		});
 
 		return {
 			token,
