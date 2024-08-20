@@ -1,6 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
-import { Button, Input, Link } from "~/libs/components/components.js";
+import {
+	Button,
+	Eye,
+	Input,
+	Link,
+	StrikedEye,
+} from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 import { useAppForm, useCallback, useState } from "~/libs/hooks/hooks.js";
 import {
@@ -8,8 +14,6 @@ import {
 	userSignUpValidationSchema,
 } from "~/modules/users/users.js";
 
-import eyeIcon from "../../../../assets/icons/eye.png";
-import strikedEyeIcon from "../../../../assets/icons/striked-eye.png";
 import { DEFAULT_SIGN_UP_PAYLOAD } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
@@ -36,7 +40,7 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 		[handleSubmit, onSubmit, navigate],
 	);
 
-	const togglePasswordVisibility = useCallback(() => {
+	const handleTogglePasswordVisibility = useCallback(() => {
 		setIsPasswordVisible((previousState) => !previousState);
 	}, []);
 
@@ -69,17 +73,21 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 						<Input
 							control={control}
 							errors={errors}
-							icon={
-								<img
-									alt={isPasswordVisible ? "Hide password" : "Show password"}
-									aria-hidden="true"
-									className={styles["icon"]}
-									onClick={togglePasswordVisibility}
-									src={isPasswordVisible ? strikedEyeIcon : eyeIcon}
-								/>
-							}
 							label="Password"
 							name="password"
+							rightIcon={
+								isPasswordVisible ? (
+									<Eye
+										className={styles["toggle-password-button"]}
+										onClick={handleTogglePasswordVisibility}
+									/>
+								) : (
+									<StrikedEye
+										className={styles["toggle-password-button"]}
+										onClick={handleTogglePasswordVisibility}
+									/>
+								)
+							}
 							type={isPasswordVisible ? "text" : "password"}
 						/>
 					</div>
