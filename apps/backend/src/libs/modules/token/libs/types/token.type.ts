@@ -1,12 +1,8 @@
 import { type JWTPayload } from "jose";
 
-type CreateTokenFunction = (payload: JWTPayload) => Promise<string>;
-
-type VerifyFunction = (token: string) => Promise<JWTPayload>;
-
 type Token = {
-	createToken: CreateTokenFunction;
-	verifyToken: VerifyFunction;
+	createToken: (payload: JWTPayload) => Promise<string>;
+	verifyToken: (token: string) => Promise<JWTPayload>;
 };
 
 export { type Token };
