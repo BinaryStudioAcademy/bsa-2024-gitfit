@@ -1,3 +1,4 @@
+import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import {
 	type UserSignInRequestDto,
@@ -7,7 +8,6 @@ import {
 } from "~/modules/users/libs/types/types.js";
 import { type UserService } from "~/modules/users/user.service.js";
 
-import { AuthErrorMessage } from "./libs/enums/enums.js";
 import { AuthError } from "./libs/exceptions/exceptions.js";
 
 class AuthService {
@@ -29,7 +29,7 @@ class AuthService {
 
 		if (!isPasswordCorrect) {
 			throw new AuthError({
-				message: AuthErrorMessage.WRONG_CREDENTIAL,
+				message: ExceptionMessage.INVALID_CREDENTIALS,
 				status: HTTPCode.UNAUTHORIZED,
 			});
 		}

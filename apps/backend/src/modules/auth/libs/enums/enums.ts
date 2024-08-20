@@ -1,1 +1,1 @@
-export { AuthApiPath, AuthErrorMessage } from "@git-fit/shared";
+export { AuthApiPath } from "@git-fit/shared";

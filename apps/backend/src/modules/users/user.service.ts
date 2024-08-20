@@ -1,9 +1,9 @@
+import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserRepository } from "~/modules/users/user.repository.js";
 
-import { UserErrorMessage } from "./libs/enums/enums.js";
 import { UserError } from "./libs/exceptions/exceptions.js";
 import {
 	type UserAuthResponseDto,
@@ -42,7 +42,7 @@ class UserService implements Service {
 
 		if (!item) {
 			throw new UserError({
-				message: UserErrorMessage.USER_NOT_FOUND,
+				message: ExceptionMessage.USER_NOT_FOUND,
 				status: HTTPCode.NOT_FOUND,
 			});
 		}
@@ -63,7 +63,7 @@ class UserService implements Service {
 
 		if (!item) {
 			throw new UserError({
-				message: UserErrorMessage.USER_NOT_FOUND,
+				message: ExceptionMessage.USER_NOT_FOUND,
 				status: HTTPCode.NOT_FOUND,
 			});
 		}
