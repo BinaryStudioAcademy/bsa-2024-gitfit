@@ -1,4 +1,4 @@
-import { ToastNotifier } from "./notifier.module.js";
+import { ToastNotifier } from "./toast-notifier.module.js";
 
 const notifier = new ToastNotifier();
 
