@@ -29,9 +29,20 @@ class EncryptionService {
 		}
 	}
 
-	public async hashPassword(password: string): Promise<string> {
+	public async generateSalt(): Promise<string> {
 		try {
-			return await bcrypt.hash(password, this.saltRounds);
+			return await bcrypt.genSalt(this.saltRounds);
+		} catch (error) {
+			throw new ApplicationError({
+				cause: error,
+				message: EncryptionServiceMessage.GENERATE_SALT,
+			});
+		}
+	}
+
+	public async hashPassword(password: string, salt: string): Promise<string> {
+		try {
+			return await bcrypt.hash(password, salt);
 		} catch (error) {
 			throw new ApplicationError({
 				cause: error,

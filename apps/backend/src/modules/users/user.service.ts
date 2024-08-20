@@ -35,14 +35,18 @@ class UserService implements Service {
 			});
 		}
 
-		const passwordHash = await this.encryptionService.hashPassword(password);
+		const passwordSalt = await this.encryptionService.generateSalt();
+		const passwordHash = await this.encryptionService.hashPassword(
+			password,
+			passwordSalt,
+		);
 
 		const item = await this.userRepository.create(
 			UserEntity.initializeNew({
 				email,
 				name,
 				passwordHash,
-				passwordSalt: "", // bcrypt handles salt internally
+				passwordSalt,
 			}),
 		);
 
