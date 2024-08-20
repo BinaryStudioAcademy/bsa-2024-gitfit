@@ -17,6 +17,7 @@ import {
 	type ValidationSchema,
 } from "~/libs/types/types.js";
 
+import { authPlugin } from "../plugins/auth-plugin.js";
 import {
 	type ServerApplication,
 	type ServerApplicationApi,
@@ -108,6 +109,8 @@ class BaseServerApplication implements ServerApplication {
 			path.dirname(fileURLToPath(import.meta.url)),
 			"../../../../public",
 		);
+
+		this.app.addHook("preHandler", authPlugin);
 
 		await this.app.register(fastifyStatic, {
 			prefix: "/",
