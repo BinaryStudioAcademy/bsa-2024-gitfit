@@ -9,6 +9,9 @@
 
 .table {
 	width: 100%;
+	font-family: Inter, sans-serif;
+	font-size: 16px;
+	font-style: normal;
 	border-collapse: collapse;
 }
 
@@ -21,10 +24,12 @@
 
 .table td {
 	height: 60px;
+	font-weight: 400;
 }
 
 .table th {
 	height: 43px;
+	font-weight: 500;
 	color: var(--color-text-secondary);
 }
 
