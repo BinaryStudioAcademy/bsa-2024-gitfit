@@ -1,6 +1,6 @@
 import { type Entity } from "~/libs/types/types.js";
 
-import { type UserSignUpResponseDto } from "./libs/types/types.js";
+import { type UserAuthResponseDto } from "./libs/types/types.js";
 
 class UserEntity implements Entity {
 	private email: string;
@@ -89,13 +89,11 @@ class UserEntity implements Entity {
 		};
 	}
 
-	public toObject(): UserSignUpResponseDto {
+	public toObject(): UserAuthResponseDto {
 		return {
-			user: {
-				email: this.email,
-				id: this.id as number,
-				name: this.name,
-			},
+			email: this.email,
+			id: this.id as number,
+			name: this.name,
 		};
 	}
 }

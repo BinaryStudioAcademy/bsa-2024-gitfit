@@ -3,9 +3,9 @@ import { type BaseEncryption } from "~/libs/modules/encryption/encryption.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 import {
+	type UserAuthResponseDto,
 	type UserGetAllResponseDto,
 	type UserSignUpRequestDto,
-	type UserSignUpResponseDto,
 } from "~/modules/users/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserRepository } from "~/modules/users/user.repository.js";
@@ -26,7 +26,7 @@ class UserService implements Service {
 
 	public async create(
 		payload: UserSignUpRequestDto,
-	): Promise<UserSignUpResponseDto> {
+	): Promise<UserAuthResponseDto> {
 		const { email, name, password } = payload;
 		const existingUser = await this.userRepository.findByEmail(email);
 
