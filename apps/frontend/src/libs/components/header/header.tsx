@@ -1,27 +1,19 @@
-import { getAvatarInitials } from "~/libs/helpers/helpers.js";
-
+import { Avatar } from "../components.js";
 import styles from "./styles.module.css";
 
 const Header = (): JSX.Element => {
-	const name = "Daniel"; // This is developer data to test getAvatarInitials function
-
 	return (
 		<header className={styles["header"]}>
-			<div className={styles["logo_container"]}>
+			<div className={styles["logo-container"]}>
 				<img
 					alt=""
-					className={styles["logo_img"]}
-					src="/assets/images/timer.svg"
+					className={styles["logo-img"]}
+					src="/assets/images/logo.svg"
 				/>
-				<span className={styles["logo_text"]}>Logo</span>
+				<span className={styles["logo-text"]}>Logo</span>
 			</div>
-
 			<div>
-				<div className={styles["avatar"]}>
-					<span className={styles["avatar_letter"]}>
-						{getAvatarInitials(name)}
-					</span>
-				</div>
+				<Avatar />
 			</div>
 		</header>
 	);

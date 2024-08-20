@@ -1,0 +1,16 @@
+.avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	color: white;
+	text-align: center;
+	background-color: var(--color-background-secondary);
+	border-radius: 50%;
+}
+
+.avatar-letter {
+	font-size: 18px;
+	user-select: none;
+}
