@@ -1,14 +1,20 @@
 import { isRejected, type Middleware } from "@reduxjs/toolkit";
 
-import { notifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
+import { type ToastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
 
-const handleError: Middleware = () => {
-	return (next) => (action) => {
-		if (isRejected(action)) {
-			notifier.showError(action.error.message ?? "Unexpected error");
-		}
+type Argument = {
+	notifier: ToastNotifier;
+};
 
-		return next(action);
+const handleError = ({ notifier }: Argument): Middleware => {
+	return () => {
+		return (next) => (action) => {
+			if (isRejected(action)) {
+				notifier.showError(action.error.message ?? "Unexpected error");
+			}
+
+			return next(action);
+		};
 	};
 };
 

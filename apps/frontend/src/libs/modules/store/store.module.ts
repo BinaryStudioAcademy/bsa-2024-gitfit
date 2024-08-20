@@ -7,6 +7,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import { AppEnvironment } from "~/libs/enums/enums.js";
 import { type Config } from "~/libs/modules/config/config.js";
+import { notifier as toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
 import { authApi, reducer as authReducer } from "~/modules/auth/auth.js";
 import { userApi, reducer as usersReducer } from "~/modules/users/users.js";
 
@@ -39,7 +40,11 @@ class Store {
 					thunk: {
 						extraArgument: this.extraArguments,
 					},
-				}).prepend(handleErrorMiddleware);
+				}).prepend(
+					handleErrorMiddleware({
+						notifier: toastNotifier,
+					}),
+				);
 			},
 			reducer: {
 				auth: authReducer,

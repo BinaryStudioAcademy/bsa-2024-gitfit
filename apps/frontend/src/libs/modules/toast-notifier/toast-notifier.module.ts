@@ -1,6 +1,8 @@
 import { toast } from "react-toastify";
 
-class ToastNotifier {
+import { type ToastNotifier as ToastNotifierInterface } from "./libs/types/types.js";
+
+class ToastNotifier implements ToastNotifierInterface {
 	public showError(message: string): void {
 		toast.error(message);
 	}
