@@ -42,7 +42,7 @@ class Store {
 					},
 				}).prepend(
 					handleErrorMiddleware({
-						notifier: toastNotifier,
+						toastNotifier,
 					}),
 				);
 			},
