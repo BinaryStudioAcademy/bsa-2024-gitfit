@@ -34,6 +34,5 @@
 }
 
 .sidebar-link:hover .icon-sidebar {
-	filter: brightness(0) saturate(100%) invert(43%) sepia(75%) saturate(4015%)
-		hue-rotate(236deg) brightness(101%) contrast(96%);
+	color: var(--color-brand-primary);
 }

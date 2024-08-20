@@ -1,3 +1,5 @@
+import { type FC } from "react";
+
 import { AppRoute } from "~/libs/enums/enums.js";
 import { Icons } from "~/libs/enums/svg-icons.enum.js";
 
@@ -5,10 +7,27 @@ import { SidebarItem } from "./sidebar-item.js";
 import styles from "./styles.module.css";
 
 const sidebarItems = [
-	{ icon: Icons.Project, id: "1", text: "Projects", to: AppRoute.ROOT },
-	{ icon: Icons.Access, id: "2", text: "Access Management" },
-	{ icon: Icons.Contributors, id: "3", text: "Contributors" },
-	{ icon: Icons.Analytics, id: "4", text: "Analytics" },
+	{
+		icon: Icons.Project as FC<React.SVGProps<SVGSVGElement>>,
+		id: "1",
+		text: "Projects",
+		to: AppRoute.ROOT,
+	},
+	{
+		icon: Icons.Access as FC<React.SVGProps<SVGSVGElement>>,
+		id: "2",
+		text: "Access Management",
+	},
+	{
+		icon: Icons.Contributors as FC<React.SVGProps<SVGSVGElement>>,
+		id: "3",
+		text: "Contributors",
+	},
+	{
+		icon: Icons.Analytics as FC<React.SVGProps<SVGSVGElement>>,
+		id: "4",
+		text: "Analytics",
+	},
 ];
 
 const Sidebar = (): JSX.Element => {
