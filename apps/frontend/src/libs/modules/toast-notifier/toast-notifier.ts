@@ -1,6 +1,6 @@
 import { ToastNotifier } from "./toast-notifier.module.js";
 
-const notifier = new ToastNotifier();
+const toastNotifier = new ToastNotifier();
 
-export { notifier };
+export { toastNotifier };
 export { type ToastNotifier } from "./libs/types/types.js";
