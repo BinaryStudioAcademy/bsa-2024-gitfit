@@ -1,7 +1,9 @@
 type UserGetAllItemResponseDto = {
-	email: string;
-	id: number;
-	name: string;
+	user: {
+		email: string;
+		id: number;
+		name: string;
+	};
 };
 
 export { type UserGetAllItemResponseDto };

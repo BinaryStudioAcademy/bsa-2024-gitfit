@@ -89,19 +89,7 @@ class UserEntity implements Entity {
 		};
 	}
 
-	public toObject(): {
-		email: string;
-		id: number;
-		name: string;
-	} {
-		return {
-			email: this.email,
-			id: this.id as number,
-			name: this.name,
-		};
-	}
-
-	public toSignUpResponseDto(): UserSignUpResponseDto {
+	public toObject(): UserSignUpResponseDto {
 		return {
 			user: {
 				email: this.email,

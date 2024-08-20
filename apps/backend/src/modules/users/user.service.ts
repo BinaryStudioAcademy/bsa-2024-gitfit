@@ -1,4 +1,4 @@
-import { ApplicationError } from "~/libs/exceptions/exceptions.js";
+import { UserError } from "~/libs/exceptions/exceptions.js";
 import { type BaseEncryption } from "~/libs/modules/encryption/encryption.js";
 import { type Service } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
@@ -27,12 +27,10 @@ class UserService implements Service {
 		payload: UserSignUpRequestDto,
 	): Promise<UserSignUpResponseDto> {
 		const { email, name, password } = payload;
-		const existingUser = await this.userRepository.find({ email });
+		const existingUser = await this.userRepository.findByEmail(email);
 
 		if (existingUser) {
-			throw new ApplicationError({
-				message: ExceptionMessage.EMAIL_USED,
-			});
+			throw new UserError(ExceptionMessage.EMAIL_USED);
 		}
 
 		const { encryptedData: passwordHash, salt: passwordSalt } =
@@ -47,7 +45,7 @@ class UserService implements Service {
 			}),
 		);
 
-		return item.toSignUpResponseDto();
+		return item.toObject();
 	}
 
 	public delete(): ReturnType<Service["delete"]> {
