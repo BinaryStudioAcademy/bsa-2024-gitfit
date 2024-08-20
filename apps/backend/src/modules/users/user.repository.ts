@@ -40,7 +40,7 @@ class UserRepository implements Repository {
 	}
 
 	public async findByEmail(email: string): Promise<null | UserEntity> {
-		const user = await this.userModel.query().where({ email }).first();
+		const user = await this.userModel.query().findOne({ email });
 
 		return user ? UserEntity.initialize(user) : null;
 	}

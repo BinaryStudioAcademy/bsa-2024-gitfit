@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
 import { type Config } from "../config/config.js";
-import { type Encryption, type EncryptionResult } from "./libs/types/types.js";
+import { type Encryption, type EncryptResult } from "./libs/types/types.js";
 
 class BaseEncryption implements Encryption {
 	private saltRounds: number;
@@ -14,7 +14,7 @@ class BaseEncryption implements Encryption {
 		return await bcrypt.compare(data, hash);
 	}
 
-	public async encrypt(data: string): Promise<EncryptionResult> {
+	public async encrypt(data: string): Promise<EncryptResult> {
 		const salt = await bcrypt.genSalt(this.saltRounds);
 		const encryptedData = await bcrypt.hash(data, salt);
 

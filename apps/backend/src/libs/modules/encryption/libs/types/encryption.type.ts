@@ -1,8 +1,8 @@
-import { type EncryptionResult } from "./encryption-result.type.js";
+import { type EncryptResult } from "./encrypt-result.type.js";
 
 type Encryption = {
 	compare: (data: string, hash: string) => Promise<boolean>;
-	encrypt: (data: string) => Promise<EncryptionResult>;
+	encrypt: (data: string) => Promise<EncryptResult>;
 };
 
 export { type Encryption };
