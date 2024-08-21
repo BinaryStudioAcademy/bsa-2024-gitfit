@@ -39,7 +39,6 @@ const App = (): JSX.Element => {
 		}
 	}, [isRoot, dispatch]);
 
-	// Functions to open and close the modal
 	const openModal = useCallback((): void => {
 		setIsModalOpen(true);
 	}, []);
@@ -50,6 +49,7 @@ const App = (): JSX.Element => {
 
 	return (
 		<>
+			<h1>Test Heading: If you can see this, your setup works!</h1>
 			<img alt="logo" src={reactLogo} width="30" />
 
 			<ul>
@@ -69,10 +69,8 @@ const App = (): JSX.Element => {
 				<RouterOutlet />
 			</div>
 
-			{/* Button to open the modal */}
 			<button onClick={openModal}>Open Modal</button>
 
-			{/* Conditionally render the modal */}
 			{isModalOpen && (
 				<Modal onClose={closeModal} title="Test Modal">
 					<p>This is a test modal content.</p>

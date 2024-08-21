@@ -1,6 +1,6 @@
-import React, { type ReactNode, useCallback } from "react";
+import React, { type ReactNode } from "react";
 
-import "./modal.css";
+import styles from "./modal.module.css";
 
 interface ModalProperties {
 	children: ReactNode;
@@ -8,46 +8,40 @@ interface ModalProperties {
 	title: string;
 }
 
+const handleOverlayClick =
+	(onClose: () => void) =>
+	(clickEvent: React.MouseEvent<HTMLDivElement>): void => {
+		if (clickEvent.target === clickEvent.currentTarget) {
+			onClose();
+		}
+	};
+
+const handleOverlayKeyDown =
+	(onClose: () => void) =>
+	(keyEvent: React.KeyboardEvent<HTMLDivElement>): void => {
+		if (keyEvent.key === "Escape") {
+			onClose();
+		}
+	};
+
 const Modal: React.FC<ModalProperties> = ({ children, onClose, title }) => {
-	const handleOverlayClick = useCallback(
-		(clickEvent: React.MouseEvent<HTMLDivElement>): void => {
-			if (clickEvent.target === clickEvent.currentTarget) {
-				onClose();
-			}
-		},
-		[onClose],
-	);
-
-	const handleOverlayKeyDown = useCallback(
-		(keyEvent: React.KeyboardEvent<HTMLDivElement>): void => {
-			if (
-				keyEvent.key === "Escape" ||
-				keyEvent.key === "Enter" ||
-				keyEvent.key === " "
-			) {
-				onClose();
-			}
-		},
-		[onClose],
-	);
-
 	return (
 		<div
 			aria-label="Close Modal"
-			className="modal-overlay"
-			onClick={handleOverlayClick}
-			onKeyDown={handleOverlayKeyDown}
+			className={styles["modalOverlay"]}
+			onClick={handleOverlayClick(onClose)}
+			onKeyDown={handleOverlayKeyDown(onClose)}
 			role="button"
 			tabIndex={0}
 		>
-			<div className="modal-content">
-				<div className="modal-header">
+			<div className={styles["modalContent"]}>
+				<div className={styles["modalHeader"]}>
 					<h2>{title}</h2>
-					<button className="modal-close" onClick={onClose}>
+					<button className={styles["modalClose"]} onClick={onClose}>
 						×
 					</button>
 				</div>
-				<div className="modal-body">{children}</div>
+				<div className={styles["modalBody"]}>{children}</div>
 			</div>
 		</div>
 	);

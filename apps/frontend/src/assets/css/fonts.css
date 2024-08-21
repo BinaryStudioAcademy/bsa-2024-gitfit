@@ -2,14 +2,14 @@
 	font-family: Inter;
 	font-style: normal;
 	font-weight: 400;
-	src: url("/assets/fonts/inter/inter-medium.ttf") format("truetype");
+	src: url("/assets/fonts/inter/inter-regular.ttf") format("truetype");
 }
 
 @font-face {
 	font-family: Inter;
 	font-style: normal;
 	font-weight: 500;
-	src: url("/assets/fonts/inter/inter-regular.ttf") format("truetype");
+	src: url("/assets/fonts/inter/inter-medium.tt") format("truetype");
 }
 
 @font-face {
