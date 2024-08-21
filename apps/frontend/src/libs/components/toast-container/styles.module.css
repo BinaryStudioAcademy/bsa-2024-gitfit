@@ -1,0 +1,7 @@
+.toast-container {
+	--toastify-color-info: var(--color-brand-primary);
+	--toastify-color-success: var(--color-success);
+	--toastify-color-warning: var(--color-warning);
+	--toastify-color-error: var(--color-danger);
+	--toastify-font-family: "Inter", sans-serif;
+}

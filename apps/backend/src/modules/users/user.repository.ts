@@ -9,12 +9,13 @@ class UserRepository implements Repository {
 	}
 
 	public async create(entity: UserEntity): Promise<UserEntity> {
-		const { email, passwordHash, passwordSalt } = entity.toNewObject();
+		const { email, name, passwordHash, passwordSalt } = entity.toNewObject();
 
 		const user = await this.userModel
 			.query()
 			.insert({
 				email,
+				name,
 				passwordHash,
 				passwordSalt,
 			})
@@ -28,14 +29,26 @@ class UserRepository implements Repository {
 		return Promise.resolve(true);
 	}
 
-	public find(): ReturnType<Repository["find"]> {
-		return Promise.resolve(null);
+	public async find(id: number): Promise<null | UserEntity> {
+		const user = await this.userModel
+			.query()
+			.findById(id)
+			.returning("*")
+			.execute();
+
+		return user ? UserEntity.initialize(user) : null;
 	}
 
 	public async findAll(): Promise<UserEntity[]> {
 		const users = await this.userModel.query().execute();
 
 		return users.map((user) => UserEntity.initialize(user));
+	}
+
+	public async findByEmail(email: string): Promise<null | UserEntity> {
+		const user = await this.userModel.query().findOne({ email });
+
+		return user ? UserEntity.initialize(user) : null;
 	}
 
 	public update(): ReturnType<Repository["update"]> {
