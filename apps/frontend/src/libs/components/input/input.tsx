@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import {
 	type Control,
 	type FieldErrors,
@@ -6,6 +5,7 @@ import {
 	type FieldValues,
 } from "react-hook-form";
 
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { useFormController } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
@@ -35,7 +35,7 @@ const Input = <T extends FieldValues>({
 	const error = errors[name]?.message;
 	const hasError = Boolean(error);
 
-	const inputClassNames = clsx(
+	const inputClassNames = getValidClassNames(
 		styles["input-field"],
 		leftIcon && styles["with-left-icon"],
 		rightIcon && styles["with-right-icon"],
@@ -47,7 +47,10 @@ const Input = <T extends FieldValues>({
 			<div className={styles["input-container"]}>
 				{leftIcon && (
 					<div
-						className={clsx(styles["input-icon"], styles["input-icon-left"])}
+						className={getValidClassNames(
+							styles["input-icon"],
+							styles["input-icon-left"],
+						)}
 					>
 						{leftIcon}
 					</div>
@@ -62,7 +65,10 @@ const Input = <T extends FieldValues>({
 
 				{rightIcon && (
 					<div
-						className={clsx(styles["input-icon"], styles["input-icon-right"])}
+						className={getValidClassNames(
+							styles["input-icon"],
+							styles["input-icon-right"],
+						)}
 					>
 						{rightIcon}
 					</div>
