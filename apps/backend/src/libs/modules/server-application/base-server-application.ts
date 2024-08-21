@@ -104,13 +104,15 @@ class BaseServerApplication implements ServerApplication {
 		);
 	}
 
+	private initHooks(): void {
+		this.app.addHook("preHandler", authPlugin);
+	}
+
 	private async initServe(): Promise<void> {
 		const staticPath = path.join(
 			path.dirname(fileURLToPath(import.meta.url)),
 			"../../../../public",
 		);
-
-		this.app.addHook("preHandler", authPlugin);
 
 		await this.app.register(fastifyStatic, {
 			prefix: "/",
@@ -153,6 +155,8 @@ class BaseServerApplication implements ServerApplication {
 
 	public async init(): Promise<void> {
 		this.logger.info("Application initialization...");
+
+		this.initHooks();
 
 		await this.initServe();
 
