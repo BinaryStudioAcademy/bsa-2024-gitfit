@@ -1,10 +1,9 @@
-import { type FastifyReply } from "fastify";
+import { type FastifyReply, type FastifyRequest } from "fastify";
 
 import { AuthErrorMessages } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 
 import { token } from "../token/token.js";
-import { type CustomFastifyRequest } from "./libs/types/types.js";
 
 const openRoutes: Set<RegExp> = new Set([
 	/^\/api\/[^/]+\/sign-up$/,
@@ -12,7 +11,7 @@ const openRoutes: Set<RegExp> = new Set([
 ]);
 
 const authPlugin = async (
-	request: CustomFastifyRequest,
+	request: FastifyRequest,
 	reply: FastifyReply,
 ): Promise<void> => {
 	const { url } = request.raw;
