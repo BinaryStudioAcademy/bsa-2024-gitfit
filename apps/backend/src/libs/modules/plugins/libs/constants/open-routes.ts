@@ -1,6 +1,6 @@
-const openRoutes: Set<RegExp> = new Set([
+const OPEN_ROUTES: Set<RegExp> = new Set([
 	/^\/api\/[^/]+\/sign-up$/,
 	/^\/api\/[^/]+\/sign-in$/,
 ]);
 
-export { openRoutes };
+export { OPEN_ROUTES };

@@ -4,7 +4,7 @@ import { AuthErrorMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 
 import { token } from "../token/token.js";
-import { openRoutes } from "./libs/constants/constants.js";
+import { OPEN_ROUTES } from "./libs/constants/constants.js";
 
 const authPlugin = async (
 	request: FastifyRequest,
@@ -12,7 +12,7 @@ const authPlugin = async (
 ): Promise<void> => {
 	const { url } = request.raw;
 
-	for (const openRoute of openRoutes) {
+	for (const openRoute of OPEN_ROUTES) {
 		if (openRoute.test(url as string)) {
 			return;
 		}

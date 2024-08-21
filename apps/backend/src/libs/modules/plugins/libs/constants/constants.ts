@@ -1,1 +1,1 @@
-export { openRoutes } from "./open-routes.js";
+export { OPEN_ROUTES } from "./open-routes.js";
