@@ -32,20 +32,22 @@ const Input = <T extends FieldValues>({
 	type = "text",
 }: Properties<T>): JSX.Element => {
 	const { field } = useFormController({ control, name });
+
 	const error = errors[name]?.message;
 	const hasError = Boolean(error);
-
+	const hasLeftIcon = Boolean(leftIcon);
+	const hasRightIcon = Boolean(rightIcon);
 	const inputClassNames = getValidClassNames(
 		styles["input-field"],
-		leftIcon && styles["with-left-icon"],
-		rightIcon && styles["with-right-icon"],
+		hasLeftIcon && styles["with-left-icon"],
+		hasRightIcon && styles["with-right-icon"],
 	);
 
 	return (
 		<label className={styles["input-label"]}>
-			<span className={styles["input-label-text"]}>{label}</span>
+			{label}
 			<div className={styles["input-container"]}>
-				{leftIcon && (
+				{hasLeftIcon && (
 					<div
 						className={getValidClassNames(
 							styles["input-icon"],
@@ -57,13 +59,15 @@ const Input = <T extends FieldValues>({
 				)}
 
 				<input
-					{...field}
 					className={inputClassNames}
+					name={field.name}
+					onChange={field.onChange}
 					placeholder={placeholder}
 					type={type}
+					value={field.value}
 				/>
 
-				{rightIcon && (
+				{hasRightIcon && (
 					<div
 						className={getValidClassNames(
 							styles["input-icon"],
