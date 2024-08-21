@@ -5,20 +5,15 @@ import { type FC } from "react";
 import Eye from "~/assets/images/icons/eye.svg?react";
 import StrikedEye from "~/assets/images/icons/striked-eye.svg?react";
 
-type IconName = "eye" | "strikedEye";
+import { mapIconNameToSvg } from "./helpers/helpers.js";
+import { type IconName, type Icon as Properties } from "./types/types.js";
 
-const iconNameToSvg: Record<IconName, FC<React.SVGProps<SVGSVGElement>>> = {
+const iconNameToSvg = mapIconNameToSvg<IconName>({
 	eye: Eye,
 	strikedEye: StrikedEye,
-};
+});
 
-interface Properties {
-	className?: string | undefined;
-	name: IconName;
-	onClick?: () => void;
-}
-
-const Icon: FC<Properties> = ({ className, name, onClick }: Properties) => {
+const Icon: FC<Properties> = ({ className, name, onClick }) => {
 	const IconComponent = iconNameToSvg[name];
 
 	return <IconComponent className={className} onClick={onClick} />;
