@@ -1,5 +1,5 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
-import { type BaseEncryption } from "~/libs/modules/encryption/encryption.js";
+import { type Encryption } from "~/libs/modules/encryption/encryption.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 
@@ -13,13 +13,10 @@ import { UserEntity } from "./user.entity.js";
 import { type UserRepository } from "./user.repository.js";
 
 class UserService implements Service {
-	private encryption: BaseEncryption;
+	private encryption: Encryption;
 	private userRepository: UserRepository;
 
-	public constructor(
-		userRepository: UserRepository,
-		encryption: BaseEncryption,
-	) {
+	public constructor(userRepository: UserRepository, encryption: Encryption) {
 		this.userRepository = userRepository;
 		this.encryption = encryption;
 	}
