@@ -1,7 +1,6 @@
 export {
 	APIPath,
 	AppEnvironment,
-	AuthErrorMessage,
 	ContentType,
 	ExceptionMessage,
 	ServerErrorType,
