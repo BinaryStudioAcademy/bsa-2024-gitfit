@@ -4,11 +4,7 @@ import { AUTHErrorMessages } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 
 import { token } from "../token/token.js";
-
-const openRoutes: Set<RegExp> = new Set([
-	/^\/api\/[^/]+\/sign-up$/,
-	/^\/api\/[^/]+\/sign-in$/,
-]);
+import { openRoutes } from "./libs/constants/constants.js";
 
 const authPlugin = async (
 	request: FastifyRequest,
