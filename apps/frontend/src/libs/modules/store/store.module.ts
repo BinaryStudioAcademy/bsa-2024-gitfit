@@ -7,7 +7,10 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import { AppEnvironment } from "~/libs/enums/enums.js";
 import { type Config } from "~/libs/modules/config/config.js";
-import { toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
+import {
+	toastNotifier,
+	type ToastNotifier,
+} from "~/libs/modules/toast-notifier/toast-notifier.js";
 import { authApi, reducer as authReducer } from "~/modules/auth/auth.js";
 import { userApi, reducer as usersReducer } from "~/modules/users/users.js";
 
@@ -20,6 +23,7 @@ type RootReducer = {
 
 type ExtraArguments = {
 	authApi: typeof authApi;
+	toastNotifier: ToastNotifier;
 	userApi: typeof userApi;
 };
 
@@ -40,11 +44,7 @@ class Store {
 					thunk: {
 						extraArgument: this.extraArguments,
 					},
-				}).prepend(
-					handleErrorMiddleware({
-						toastNotifier,
-					}),
-				);
+				}).prepend(handleErrorMiddleware(this.extraArguments));
 			},
 			reducer: {
 				auth: authReducer,
@@ -56,6 +56,7 @@ class Store {
 	public get extraArguments(): ExtraArguments {
 		return {
 			authApi,
+			toastNotifier,
 			userApi,
 		};
 	}
