@@ -1,1 +1,1 @@
-export { OPEN_ROUTES } from "./open-routes.js";
+export { WHITE_ROUTES } from "./white-routes.js";
