@@ -1,7 +1,6 @@
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
-	useAppSelector,
 	useCallback,
 	useLocation,
 } from "~/libs/hooks/hooks.js";
@@ -11,7 +10,6 @@ import { type UserSignUpRequestDto } from "~/modules/users/users.js";
 import { SignInForm, SignUpForm } from "./components/components.js";
 
 const Auth = (): JSX.Element => {
-	const dataStatus = useAppSelector((state) => state.auth.dataStatus);
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
 
@@ -40,12 +38,7 @@ const Auth = (): JSX.Element => {
 		return null;
 	};
 
-	return (
-		<>
-			State: {dataStatus}
-			{handleScreenRender(pathname)}
-		</>
-	);
+	return <>{handleScreenRender(pathname)}</>;
 };
 
 export { Auth };
