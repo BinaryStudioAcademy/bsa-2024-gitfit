@@ -7,21 +7,13 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import { AppEnvironment } from "~/libs/enums/enums.js";
 import { type Config } from "~/libs/modules/config/config.js";
+import { storage } from "~/libs/modules/storage/storage.js";
+import { toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
 import { authApi, reducer as authReducer } from "~/modules/auth/auth.js";
 import { userApi, reducer as usersReducer } from "~/modules/users/users.js";
 
-import { storage } from "../storage/storage.js";
-
-type RootReducer = {
-	auth: ReturnType<typeof authReducer>;
-	users: ReturnType<typeof usersReducer>;
-};
-
-type ExtraArguments = {
-	authApi: typeof authApi;
-	storage: typeof storage;
-	userApi: typeof userApi;
-};
+import { handleErrorMiddleware } from "./libs/middlewares/middlewares.js";
+import { type ExtraArguments, type RootReducer } from "./libs/types/types.js";
 
 class Store {
 	public instance: ReturnType<
@@ -40,7 +32,7 @@ class Store {
 					thunk: {
 						extraArgument: this.extraArguments,
 					},
-				});
+				}).prepend(handleErrorMiddleware(this.extraArguments));
 			},
 			reducer: {
 				auth: authReducer,
@@ -53,6 +45,7 @@ class Store {
 		return {
 			authApi,
 			storage,
+			toastNotifier,
 			userApi,
 		};
 	}
