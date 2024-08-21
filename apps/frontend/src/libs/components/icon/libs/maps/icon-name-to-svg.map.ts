@@ -1,5 +1,3 @@
-/// <reference types="vite-plugin-svgr/client" />
-
 import { type FC } from "react";
 
 import Eye from "~/assets/images/icons/eye.svg?react";
