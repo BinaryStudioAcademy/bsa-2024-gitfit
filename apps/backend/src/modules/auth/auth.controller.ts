@@ -35,6 +35,43 @@ class AuthController extends BaseController {
 				body: userSignUpValidationSchema,
 			},
 		});
+
+		this.addRoute({
+			handler: (options) => this.getAuthenticatedUser(options),
+			method: "GET",
+			path: AuthApiPath.AUTHENTICATED_USER,
+		});
+	}
+
+	/**
+	 * @swagger
+	 * /auth/authenticated-user:
+	 *    get:
+	 *      description: Get authenticated user's data
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 *                properties:
+	 *                  message:
+	 *                    type: object
+	 *                    $ref: "#/components/schemas/User"
+	 */
+	private async getAuthenticatedUser(
+		options: APIHandlerOptions,
+	): Promise<APIHandlerResponse> {
+		const userId = options; // TODO: redo after route protection merge (userId should be injected into request)
+		const user = await this.authService.getAuthenticatedUser(
+			userId as unknown as number,
+		);
+
+		return {
+			payload: user,
+			status: HTTPCode.OK,
+		};
 	}
 
 	/**
