@@ -9,6 +9,24 @@ import {
 
 import { name as sliceName } from "./auth.slice.js";
 
+const getAuthenticatedUser = createAsyncThunk<
+	null | UserAuthResponseDto,
+	undefined,
+	AsyncThunkConfig
+>(`${sliceName}/get-authenticated-user`, async (_payload, { extra }) => {
+	const { authApi, storage } = extra;
+
+	const token = await storage.get(StorageKey.TOKEN);
+
+	const hasToken = Boolean(token);
+
+	if (!hasToken) {
+		return null;
+	}
+
+	return await authApi.getAuthenticatedUser();
+});
+
 const signUp = createAsyncThunk<
 	UserAuthResponseDto,
 	UserSignUpRequestDto,
@@ -17,10 +35,9 @@ const signUp = createAsyncThunk<
 	const { authApi, storage } = extra;
 
 	const { token, user } = await authApi.signUp(payload);
-
 	await storage.set(StorageKey.TOKEN, token);
 
 	return user;
 });
 
-export { signUp };
+export { getAuthenticatedUser, signUp };

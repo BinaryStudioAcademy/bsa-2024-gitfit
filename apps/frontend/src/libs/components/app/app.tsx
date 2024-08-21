@@ -17,6 +17,7 @@ import {
 	useEffect,
 	useLocation,
 } from "~/libs/hooks/hooks.js";
+import { actions as authActions } from "~/modules/auth/auth.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
 const App = (): JSX.Element => {
@@ -27,6 +28,10 @@ const App = (): JSX.Element => {
 
 	const isRoot = pathname === AppRoute.ROOT;
 	const isLoading = dataStatus === "pending";
+
+	useEffect(() => {
+		void dispatch(authActions.getAuthenticatedUser());
+	}, [dispatch]);
 
 	useEffect(() => {
 		if (isRoot) {
