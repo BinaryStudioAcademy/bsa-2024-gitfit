@@ -12,7 +12,7 @@ import { DEFAULT_SIGN_UP_PAYLOAD } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	onSubmit: (payload: UserSignUpRequestDto) => Promise<void>;
+	onSubmit: (payload: UserSignUpRequestDto) => void;
 };
 
 const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
@@ -26,8 +26,8 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit(async (formData: UserSignUpRequestDto) => {
-				await onSubmit(formData);
+			void handleSubmit((formData: UserSignUpRequestDto) => {
+				onSubmit(formData);
 				navigate(AppRoute.ROOT);
 			})(event_);
 		},
