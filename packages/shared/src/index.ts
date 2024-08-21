@@ -1,8 +1,8 @@
 export {
 	APIPath,
 	AppEnvironment,
+	AuthErrorMessages,
 	ContentType,
-	ErrorMessages,
 	ServerErrorType,
 } from "./libs/enums/enums.js";
 export { ValidationError } from "./libs/exceptions/exceptions.js";

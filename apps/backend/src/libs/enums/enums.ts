@@ -1,6 +1,6 @@
 export {
 	APIPath,
 	AppEnvironment,
-	ErrorMessages,
+	AuthErrorMessages,
 	ServerErrorType,
 } from "@git-fit/shared";
