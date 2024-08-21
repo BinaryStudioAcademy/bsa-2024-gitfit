@@ -5,6 +5,7 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 
 import { token } from "../token/token.js";
 import { WHITE_ROUTES } from "./libs/constants/constants.js";
+import { extractUser } from "./libs/helpers/helpers.js";
 
 const authPlugin = async (
 	request: FastifyRequest,
@@ -28,10 +29,7 @@ const authPlugin = async (
 
 	try {
 		const decoded = await token.verifyToken(authToken);
-
-		if (typeof decoded === "object" && "userId" in decoded) {
-			request.user = { userId: decoded["userId"] as string };
-		}
+		request.user = extractUser(decoded);
 	} catch {
 		return await reply
 			.code(HTTPCode.UNAUTHORIZED)
