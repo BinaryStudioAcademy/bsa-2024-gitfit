@@ -1,6 +1,6 @@
 import { type FastifyReply, type FastifyRequest } from "fastify";
 
-import { AUTHErrorMessages } from "~/libs/enums/enums.js";
+import { AuthErrorMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 
 import { token } from "../token/token.js";
@@ -23,7 +23,7 @@ const authPlugin = async (
 	if (!authToken) {
 		return await reply
 			.code(HTTPCode.UNAUTHORIZED)
-			.send({ error: AUTHErrorMessages.NO_TOKEN_PROVIDED });
+			.send({ error: AuthErrorMessage.NO_TOKEN_PROVIDED });
 	}
 
 	try {
@@ -35,7 +35,7 @@ const authPlugin = async (
 	} catch {
 		return await reply
 			.code(HTTPCode.UNAUTHORIZED)
-			.send({ error: AUTHErrorMessages.INVALID_TOKEN });
+			.send({ error: AuthErrorMessage.INVALID_TOKEN });
 	}
 };
 
