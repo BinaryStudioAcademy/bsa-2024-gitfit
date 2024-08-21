@@ -156,11 +156,11 @@ class BaseServerApplication implements ServerApplication {
 	public async init(): Promise<void> {
 		this.logger.info("Application initialization...");
 
-		this.initHooks();
-
 		await this.initServe();
 
 		await this.initMiddlewares();
+
+		this.initHooks();
 
 		this.initValidationCompiler();
 

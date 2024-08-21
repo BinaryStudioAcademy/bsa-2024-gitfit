@@ -1,7 +1,7 @@
 export {
 	APIPath,
 	AppEnvironment,
-	AuthErrorMessages,
+	AUTHErrorMessages,
 	ContentType,
 	ServerErrorType,
 } from "./libs/enums/enums.js";
