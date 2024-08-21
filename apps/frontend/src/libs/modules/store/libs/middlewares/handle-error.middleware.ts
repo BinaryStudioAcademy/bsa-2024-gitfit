@@ -1,12 +1,8 @@
 import { isRejected, type Middleware } from "@reduxjs/toolkit";
 
-import { type ToastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
+import { type ExtraArguments } from "../types/types.js";
 
-type Parameters = {
-	toastNotifier: ToastNotifier;
-};
-
-const handleError = ({ toastNotifier }: Parameters): Middleware => {
+const handleError = ({ toastNotifier }: ExtraArguments): Middleware => {
 	return () => {
 		return (next) => (action) => {
 			if (isRejected(action)) {
