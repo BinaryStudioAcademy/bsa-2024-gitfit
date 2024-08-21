@@ -1,22 +1,20 @@
-/// <reference types="vite-plugin-svgr/client" />
+import { iconNameToSvg } from "./libs/maps/maps.js";
+import { type IconName } from "./types/types.js";
 
-import { type FC } from "react";
+type Properties = {
+	height?: string;
+	name: IconName;
+	width?: string;
+};
 
-import Eye from "~/assets/images/icons/eye.svg?react";
-import StrikedEye from "~/assets/images/icons/striked-eye.svg?react";
+const Icon = ({
+	height = "22px",
+	name,
+	width = "22px",
+}: Properties): JSX.Element => {
+	const SvgComponent = iconNameToSvg[name];
 
-import { mapIconNameToSvg } from "./helpers/helpers.js";
-import { type IconName, type Icon as Properties } from "./types/types.js";
-
-const iconNameToSvg = mapIconNameToSvg<IconName>({
-	eye: Eye,
-	strikedEye: StrikedEye,
-});
-
-const Icon: FC<Properties> = ({ className, name, onClick }) => {
-	const IconComponent = iconNameToSvg[name];
-
-	return <IconComponent className={className} onClick={onClick} />;
+	return <SvgComponent height={height} width={width} />;
 };
 
 export { Icon };

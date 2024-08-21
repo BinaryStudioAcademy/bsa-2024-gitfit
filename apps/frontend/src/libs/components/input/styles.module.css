@@ -44,8 +44,7 @@
 .input-icon {
 	position: absolute;
 	top: 50%;
-	width: 18px;
-	height: 18px;
+	color: var(--color-text-secondary);
 	transform: translateY(-50%);
 }
 

@@ -70,19 +70,17 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 							label="Password"
 							name="password"
 							rightIcon={
-								isPasswordVisible ? (
-									<Icon
-										className={styles["toggle-password-button"]}
-										name="eye"
-										onClick={handleTogglePasswordVisibility}
-									/>
-								) : (
-									<Icon
-										className={styles["toggle-password-button"]}
-										name="strikedEye"
-										onClick={handleTogglePasswordVisibility}
-									/>
-								)
+								<button
+									className={styles["toggle-password-button"]}
+									onClick={handleTogglePasswordVisibility}
+									type="button"
+								>
+									{isPasswordVisible ? (
+										<Icon height="18px" name="eye" width="18px" />
+									) : (
+										<Icon height="18px" name="strikedEye" width="18px" />
+									)}
+								</button>
 							}
 							type={isPasswordVisible ? "text" : "password"}
 						/>

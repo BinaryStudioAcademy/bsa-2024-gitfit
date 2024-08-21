@@ -68,9 +68,11 @@
 }
 
 .toggle-password-button {
-	width: 18px;
-	height: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	color: var(--color-text-secondary);
 	cursor: pointer;
-	object-fit: contain;
+	background-color: inherit;
+	border: 0;
 }
