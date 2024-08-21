@@ -1,1 +1,1 @@
-export { mapIconNameToSvg } from "./icon-name-to-svg.helper.js";
+export { mapIconNameToSvg } from "./map-icon-name-to-svg.helper.js";
