@@ -4,4 +4,4 @@ import { BaseEncryption } from "./base-encryption.module.js";
 const encryption = new BaseEncryption(config);
 
 export { encryption };
-export { type BaseEncryption } from "./base-encryption.module.js";
+export { type Encryption } from "./libs/types/types.js";
