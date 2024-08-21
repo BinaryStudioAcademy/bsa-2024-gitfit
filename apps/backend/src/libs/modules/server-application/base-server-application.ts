@@ -11,13 +11,13 @@ import { type Config } from "~/libs/modules/config/config.js";
 import { type Database } from "~/libs/modules/database/database.js";
 import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { authorization } from "~/libs/plugins/authorization/authorization.plugin.js";
 import {
 	type ServerCommonErrorResponse,
 	type ServerValidationErrorResponse,
 	type ValidationSchema,
 } from "~/libs/types/types.js";
 
-import { authPlugin } from "../plugins/auth-plugin.js";
 import {
 	type ServerApplication,
 	type ServerApplicationApi,
@@ -104,8 +104,8 @@ class BaseServerApplication implements ServerApplication {
 		);
 	}
 
-	private initHooks(): void {
-		this.app.addHook("preHandler", authPlugin);
+	private initPlugins(): void {
+		this.app.register(authorization);
 	}
 
 	private async initServe(): Promise<void> {
@@ -160,7 +160,7 @@ class BaseServerApplication implements ServerApplication {
 
 		await this.initMiddlewares();
 
-		this.initHooks();
+		this.initPlugins();
 
 		this.initValidationCompiler();
 

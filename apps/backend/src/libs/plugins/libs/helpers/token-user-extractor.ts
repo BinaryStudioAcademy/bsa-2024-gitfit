@@ -14,7 +14,7 @@ function isUserAuthResponseDto(object: unknown): object is UserAuthResponseDto {
 	);
 }
 
-function extractUser(payload: JWTPayload): null | UserAuthResponseDto {
+function extractUserFromToken(payload: JWTPayload): null | UserAuthResponseDto {
 	if (isUserAuthResponseDto(payload)) {
 		const { email, id, name } = payload;
 
@@ -24,4 +24,4 @@ function extractUser(payload: JWTPayload): null | UserAuthResponseDto {
 	return null;
 }
 
-export { extractUser };
+export { extractUserFromToken };
