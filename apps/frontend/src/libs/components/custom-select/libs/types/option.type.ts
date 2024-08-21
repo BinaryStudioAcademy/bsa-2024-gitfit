@@ -1,6 +1,6 @@
-type Option = {
+type Option<T = string> = {
 	label: string;
-	value: string;
+	value: T;
 };
 
 export { type Option };
