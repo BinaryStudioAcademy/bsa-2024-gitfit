@@ -1,6 +1,7 @@
-import { Encryption } from "./base-encryption.module.js";
+import { config } from "../config/config.js";
+import { BaseEncryption } from "./base-encryption.module.js";
 
-const encryption = new Encryption();
+const encryption = new BaseEncryption(config);
 
 export { encryption };
-export { type Encryption } from "./base-encryption.module.js";
+export { type BaseEncryption } from "./base-encryption.module.js";

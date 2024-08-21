@@ -5,7 +5,10 @@ export {
 	ExceptionMessage,
 	ServerErrorType,
 } from "./libs/enums/enums.js";
-export { ValidationError } from "./libs/exceptions/exceptions.js";
+export {
+	ApplicationError,
+	ValidationError,
+} from "./libs/exceptions/exceptions.js";
 export { configureString } from "./libs/helpers/helpers.js";
 export { type Config } from "./libs/modules/config/config.js";
 export {

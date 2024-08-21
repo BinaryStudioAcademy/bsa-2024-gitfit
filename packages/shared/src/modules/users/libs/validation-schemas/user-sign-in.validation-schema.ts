@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 import { UserValidationMessage, UserValidationRule } from "../enums/enums.js";
-import { type UserSignUpRequestDto } from "../types/types.js";
+import { type UserSignInRequestDto } from "../types/types.js";
 
-const userSignIn: z.ZodType<UserSignUpRequestDto> = z
+const userSignIn: z.ZodType<UserSignInRequestDto> = z
 	.object({
 		email: z
 			.string()

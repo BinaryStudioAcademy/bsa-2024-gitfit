@@ -1,4 +1,5 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
+import { type BaseEncryption } from "~/libs/modules/encryption/encryption.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 
@@ -12,20 +13,39 @@ import { UserEntity } from "./user.entity.js";
 import { type UserRepository } from "./user.repository.js";
 
 class UserService implements Service {
+	private encryption: BaseEncryption;
 	private userRepository: UserRepository;
 
-	public constructor(userRepository: UserRepository) {
+	public constructor(
+		userRepository: UserRepository,
+		encryption: BaseEncryption,
+	) {
 		this.userRepository = userRepository;
+		this.encryption = encryption;
 	}
 
 	public async create(
 		payload: UserSignUpRequestDto,
 	): Promise<UserAuthResponseDto> {
+		const { email, name, password } = payload;
+		const existingUser = await this.userRepository.findByEmail(email);
+
+		if (existingUser) {
+			throw new UserError({
+				message: ExceptionMessage.EMAIL_USED,
+				status: HTTPCode.CONFLICT,
+			});
+		}
+
+		const { encryptedData: passwordHash, salt: passwordSalt } =
+			await this.encryption.encrypt(password);
+
 		const item = await this.userRepository.create(
 			UserEntity.initializeNew({
-				email: payload.email,
-				passwordHash: "HASH", // TODO
-				passwordSalt: "SALT", // TODO
+				email,
+				name,
+				passwordHash,
+				passwordSalt,
 			}),
 		);
 
