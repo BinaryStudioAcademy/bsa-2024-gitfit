@@ -51,15 +51,6 @@
 	color: var(--color-text-secondary);
 }
 
-.form-text > a {
-	color: var(--color-brand-primary);
-	transition: all 0.3s ease;
-}
-
-.form-text > a:hover {
-	color: var(--color-brand-primary-hover);
-}
-
 .password-container {
 	position: relative;
 	display: flex;
