@@ -28,13 +28,16 @@ export {
 	type ValidationSchema,
 	type ValueOf,
 } from "./libs/types/types.js";
-export { AuthApiPath } from "./modules/auth/auth.js";
+export { AuthApiPath, AuthError } from "./modules/auth/auth.js";
 export {
 	type UserAuthResponseDto,
 	UserError,
 	type UserGetAllItemResponseDto,
 	type UserGetAllResponseDto,
 	UsersApiPath,
+	type UserSignInRequestDto,
+	type UserSignInResponseDto,
+	userSignInValidationSchema,
 	type UserSignUpRequestDto,
 	type UserSignUpResponseDto,
 	userSignUpValidationSchema,
