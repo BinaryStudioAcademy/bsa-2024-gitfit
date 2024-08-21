@@ -17,7 +17,6 @@ class AuthService {
 	public async signUp(
 		userRequestDto: UserSignUpRequestDto,
 	): Promise<UserSignUpResponseDto> {
-		// TODO: should be changed after sign-up implementation
 		const user = await this.userService.create(userRequestDto);
 		const token = await this.tokenService.createToken({ userId: user.id });
 
