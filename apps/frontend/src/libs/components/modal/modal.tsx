@@ -2,11 +2,11 @@ import React, { type ReactNode } from "react";
 
 import styles from "./modal.module.css";
 
-interface ModalProperties {
+type Properties = {
 	children: ReactNode;
 	onClose: () => void;
 	title: string;
-}
+};
 
 const handleOverlayClick =
 	(onClose: () => void) =>
@@ -24,7 +24,7 @@ const handleOverlayKeyDown =
 		}
 	};
 
-const Modal: React.FC<ModalProperties> = ({ children, onClose, title }) => {
+const Modal: React.FC<Properties> = ({ children, onClose, title }) => {
 	return (
 		<div
 			aria-label="Close Modal"
