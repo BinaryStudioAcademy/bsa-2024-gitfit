@@ -31,15 +31,12 @@ type Constructor = {
 	config: Config;
 	database: Database;
 	logger: Logger;
-	options: Options;
-	title: string;
-};
-
-type Options = {
 	services: {
 		userService: UserService;
 	};
+	title: string;
 	token: Token;
+	whiteRoutes: readonly RegExp[];
 };
 
 class BaseServerApplication implements ServerApplication {
@@ -53,24 +50,34 @@ class BaseServerApplication implements ServerApplication {
 
 	private logger: Logger;
 
-	private options: Options;
+	private services: {
+		userService: UserService;
+	};
 
 	private title: string;
+
+	private token: Token;
+
+	private whiteRoutes: readonly RegExp[];
 
 	public constructor({
 		apis,
 		config,
 		database,
 		logger,
-		options,
+		services,
 		title,
+		token,
+		whiteRoutes,
 	}: Constructor) {
 		this.apis = apis;
 		this.config = config;
 		this.database = database;
 		this.logger = logger;
+		this.services = services;
 		this.title = title;
-		this.options = options;
+		this.token = token;
+		this.whiteRoutes = whiteRoutes;
 
 		this.app = Fastify({
 			ignoreTrailingSlash: true,
@@ -125,10 +132,13 @@ class BaseServerApplication implements ServerApplication {
 	}
 
 	private initPlugins(): void {
-		const { services, token } = this.options;
-		const { userService } = services;
+		const { userService } = this.services;
 
-		this.app.register(authorization, { token, userService });
+		this.app.register(authorization, {
+			token: this.token,
+			userService,
+			whiteRoutes: this.whiteRoutes,
+		});
 	}
 
 	private async initServe(): Promise<void> {
