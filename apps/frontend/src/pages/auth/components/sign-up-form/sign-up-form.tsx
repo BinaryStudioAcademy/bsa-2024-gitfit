@@ -41,6 +41,7 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 	return (
 		<section className={styles["auth-container"]}>
 			<div className={styles["left-side"]}>
+				{/* //TODO: replace logo */}
 				<img alt="logo" className={styles["logo-wrapper"]} src="" />
 			</div>
 			<div className={styles["right-side"]}>
@@ -79,9 +80,9 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 									type="button"
 								>
 									{isPasswordVisible ? (
-										<Icon height="18px" name="eye" width="18px" />
+										<Icon height={18} name="eye" width={18} />
 									) : (
-										<Icon height="18px" name="strikedEye" width="18px" />
+										<Icon height={18} name="strikedEye" width={18} />
 									)}
 								</button>
 							}
