@@ -36,8 +36,10 @@ type Constructor = {
 };
 
 type Options = {
+	services: {
+		userService: UserService;
+	};
 	token: Token;
-	userService: UserService;
 };
 
 class BaseServerApplication implements ServerApplication {
@@ -123,7 +125,8 @@ class BaseServerApplication implements ServerApplication {
 	}
 
 	private initPlugins(): void {
-		const { token, userService } = this.options;
+		const { services, token } = this.options;
+		const { userService } = services;
 
 		this.app.register(authorization, { token, userService });
 	}

@@ -19,7 +19,7 @@ const serverApplication = new BaseServerApplication({
 	config,
 	database,
 	logger,
-	options: { token, userService },
+	options: { services: { userService }, token },
 	title: "GitFit",
 });
 
