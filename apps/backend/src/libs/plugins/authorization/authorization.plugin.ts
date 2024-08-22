@@ -6,7 +6,7 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { token } from "~/libs/modules/token/token.js";
 import { UserError, userService } from "~/modules/users/users.js";
 
-import { WHITE_ROUTES } from "../libs/constants/constants.js";
+import { WHITE_ROUTES } from "../libs/enums/enums.js";
 
 const authorization = fp((fastify, _, done) => {
 	fastify.decorateRequest("user", null);
