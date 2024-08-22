@@ -50,6 +50,7 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 						Have an account? <Link to={AppRoute.SIGN_IN}>Log in</Link>
 					</p>
 					<Input
+						autoComplete="given-name"
 						control={control}
 						errors={errors}
 						label="Name"
@@ -57,6 +58,7 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 						type="text"
 					/>
 					<Input
+						autoComplete="username"
 						control={control}
 						errors={errors}
 						label="Email"
@@ -65,6 +67,7 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 					/>
 					<div className={styles["password-container"]}>
 						<Input
+							autoComplete="one-time-code"
 							control={control}
 							errors={errors}
 							label="Password"

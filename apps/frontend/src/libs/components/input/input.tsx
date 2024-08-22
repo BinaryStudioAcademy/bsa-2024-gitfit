@@ -11,6 +11,7 @@ import { useFormController } from "~/libs/hooks/hooks.js";
 import styles from "./styles.module.css";
 
 type Properties<T extends FieldValues> = {
+	autoComplete?: string;
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
 	label: string;
@@ -22,6 +23,7 @@ type Properties<T extends FieldValues> = {
 };
 
 const Input = <T extends FieldValues>({
+	autoComplete,
 	control,
 	errors,
 	label,
@@ -59,6 +61,7 @@ const Input = <T extends FieldValues>({
 				)}
 
 				<input
+					autoComplete={autoComplete}
 					className={inputClassNames}
 					name={field.name}
 					onChange={field.onChange}
