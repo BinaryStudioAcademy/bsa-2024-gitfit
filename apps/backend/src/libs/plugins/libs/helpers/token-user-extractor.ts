@@ -1,5 +1,6 @@
-import { type UserAuthResponseDto } from "@git-fit/shared";
 import { type JWTPayload } from "jose";
+
+import { type UserAuthResponseDto } from "../../../../modules/users/libs/types/types.js";
 
 function isUserAuthResponseDto(object: unknown): object is UserAuthResponseDto {
 	return (
