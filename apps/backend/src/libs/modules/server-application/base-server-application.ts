@@ -17,7 +17,9 @@ import {
 	type ServerValidationErrorResponse,
 	type ValidationSchema,
 } from "~/libs/types/types.js";
+import { type UserService } from "~/modules/users/users.js";
 
+import { type Token } from "../token/token.js";
 import {
 	type ServerApplication,
 	type ServerApplicationApi,
@@ -29,7 +31,13 @@ type Constructor = {
 	config: Config;
 	database: Database;
 	logger: Logger;
+	options: Options;
 	title: string;
+};
+
+type Options = {
+	token: Token;
+	userService: UserService;
 };
 
 class BaseServerApplication implements ServerApplication {
@@ -43,14 +51,24 @@ class BaseServerApplication implements ServerApplication {
 
 	private logger: Logger;
 
+	private options: Options;
+
 	private title: string;
 
-	public constructor({ apis, config, database, logger, title }: Constructor) {
+	public constructor({
+		apis,
+		config,
+		database,
+		logger,
+		options,
+		title,
+	}: Constructor) {
 		this.apis = apis;
 		this.config = config;
 		this.database = database;
 		this.logger = logger;
 		this.title = title;
+		this.options = options;
 
 		this.app = Fastify({
 			ignoreTrailingSlash: true,
@@ -105,7 +123,9 @@ class BaseServerApplication implements ServerApplication {
 	}
 
 	private initPlugins(): void {
-		this.app.register(authorization);
+		const { token, userService } = this.options;
+
+		this.app.register(authorization, { token, userService });
 	}
 
 	private async initServe(): Promise<void> {
