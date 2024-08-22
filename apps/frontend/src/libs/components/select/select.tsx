@@ -8,6 +8,7 @@ import ReactSelect, {
 	type OptionsOrGroups,
 } from "react-select";
 
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { useFormController } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
@@ -34,40 +35,34 @@ const Select = <T extends FieldValues>({
 		name,
 	});
 
-	const getClassName = (
-		baseClass: string,
-		conditionClass?: string,
-		condition = false,
-	): string => {
-		const base = styles[baseClass] || "";
-		const conditional =
-			condition && conditionClass ? styles[conditionClass] || "" : "";
-
-		return `${base} ${conditional}`.trim();
-	};
-
 	return (
 		<div className={styles["container"]}>
 			{title && <span className={styles["title"]}>{title}</span>}
 			<ReactSelect
 				classNames={{
 					control: (state) =>
-						getClassName("control", "control--focused", state.isFocused),
-					indicatorsContainer: () => getClassName("indicators-container"),
-					input: () => getClassName("input"),
-					menu: () => getClassName("menu"),
-					multiValue: () => getClassName("multi-value"),
-					multiValueLabel: () => getClassName("multi-value-label"),
-					noOptionsMessage: () => getClassName("no-options-message"),
-					option: (state) =>
-						getClassName(
-							"option",
-							state.isSelected ? "option--selected" : "option--focused",
-							state.isSelected || state.isFocused,
+						getValidClassNames(
+							styles["control"],
+							state.isFocused && styles["control--focused"],
 						),
-					placeholder: () => getClassName("placeholder"),
-					singleValue: () => getClassName("single-value"),
-					valueContainer: () => getClassName("value-container"),
+					indicatorsContainer: () =>
+						getValidClassNames(styles["indicators-container"]),
+					input: () => getValidClassNames(styles["input"]),
+					menu: () => getValidClassNames(styles["menu"]),
+					multiValue: () => getValidClassNames(styles["multi-value"]),
+					multiValueLabel: () =>
+						getValidClassNames(styles["multi-value-label"]),
+					noOptionsMessage: () =>
+						getValidClassNames(styles["no-options-message"]),
+					option: (state) =>
+						getValidClassNames(
+							styles["option"],
+							state.isSelected && styles["option--selected"],
+							state.isFocused && styles["option--focused"],
+						),
+					placeholder: () => getValidClassNames(styles["placeholder"]),
+					singleValue: () => getValidClassNames(styles["single-value"]),
+					valueContainer: () => getValidClassNames(styles["value-container"]),
 				}}
 				isClearable={false}
 				isMulti={isMulti}
