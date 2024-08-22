@@ -1,0 +1,9 @@
+.icon-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--color-text-secondary);
+	cursor: pointer;
+	background-color: inherit;
+	border: 0;
+}
