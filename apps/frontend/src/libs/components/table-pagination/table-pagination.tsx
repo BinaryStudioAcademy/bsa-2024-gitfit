@@ -11,25 +11,32 @@ const options = [
 
 type Properties = {
 	onPageChange: (page: number) => void;
-	onPerPageChange: (event: React.FormEvent<HTMLSelectElement>) => void;
+	onPageSizeChange: (pageSize: number) => void;
 	page: number;
-	perPage: number;
+	pageSize: number;
 	totalItems: number;
 };
 
 // TODO: replace this select with app select
 // ===>
 type MockSelectProperties = {
-	onChange: (event: React.FormEvent<HTMLSelectElement>) => void;
-	options: { label: string; value: number | string }[];
+	onChange: (value: number) => void;
+	options: { label: string; value: number }[];
 };
 
 const MockSelect = ({
 	onChange,
 	options,
 }: MockSelectProperties): JSX.Element => {
+	const handleOnChange = useCallback(
+		(event: React.ChangeEvent<HTMLSelectElement>) => {
+			onChange(Number(event.target.value));
+		},
+		[onChange],
+	);
+
 	return (
-		<select onChange={onChange}>
+		<select onChange={handleOnChange}>
 			{options.map(({ label, value }) => (
 				<option key={label} value={value}>
 					{label}
@@ -45,18 +52,25 @@ const PAGE_INCREMENT = 1;
 
 const TablePagination = ({
 	onPageChange,
-	onPerPageChange,
+	onPageSizeChange,
 	page,
-	perPage,
+	pageSize,
 	totalItems,
 }: Properties): JSX.Element => {
 	const totalPages = useMemo(
-		() => Math.ceil(totalItems / perPage),
-		[totalItems, perPage],
+		() => Math.ceil(totalItems / pageSize),
+		[totalItems, pageSize],
 	);
 
 	const hasNextPage = useMemo(() => page < totalPages, [page, totalPages]);
 	const hasPreviousPage = useMemo(() => page > FIRST_PAGE, [page]);
+
+	const handlePageSizeChange = useCallback(
+		(newPageSize: number) => {
+			onPageSizeChange(newPageSize);
+		},
+		[onPageSizeChange],
+	);
 
 	const handleFirstPageClick = useCallback(() => {
 		onPageChange(FIRST_PAGE);
@@ -80,7 +94,7 @@ const TablePagination = ({
 			<div className={styles["pagination-container"]}>
 				<div className={styles["rows-per-page"]}>
 					<p>Rows per page:</p>
-					<MockSelect onChange={onPerPageChange} options={options} />
+					<MockSelect onChange={handlePageSizeChange} options={options} />
 				</div>
 				<p>
 					Page {page} of {totalPages}

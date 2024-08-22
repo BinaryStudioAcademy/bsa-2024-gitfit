@@ -15,7 +15,6 @@ import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
-	useCallback,
 	useEffect,
 	useLocation,
 	usePagination,
@@ -37,21 +36,10 @@ const App = (): JSX.Element => {
 		}
 	}, [isRoot, dispatch]);
 
-	// TODO: remove following lines and TablePagination component usage after its visual testing
-	// ===>
-	const TOTAL_ITEMS = 100;
-
-	const { onPageChange, onPerPageChange, page, perPage } = usePagination({
+	const TOTAL_ITEMS = 100; // Temporary
+	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
 		totalItems: TOTAL_ITEMS,
 	});
-
-	const handlePerPageChange = useCallback(
-		(event: React.FormEvent<HTMLSelectElement>) => {
-			onPerPageChange(Number(event.currentTarget.value));
-		},
-		[onPerPageChange],
-	);
-	// <===
 
 	return (
 		<>
@@ -90,9 +78,9 @@ const App = (): JSX.Element => {
 					<Table<Person> columns={mockTableColumns} data={mockTableData} />
 					<TablePagination
 						onPageChange={onPageChange}
-						onPerPageChange={handlePerPageChange}
+						onPageSizeChange={onPageSizeChange}
 						page={page}
-						perPage={perPage}
+						pageSize={pageSize}
 						totalItems={TOTAL_ITEMS}
 					/>
 				</>

@@ -11,9 +11,9 @@ type Parameters = {
 
 type ReturnType = {
 	onPageChange: (page: number) => void;
-	onPerPageChange: (perPage: number) => void;
+	onPageSizeChange: (pageSize: number) => void;
 	page: number;
-	perPage: number;
+	pageSize: number;
 };
 
 const FIRST_PAGE = 1;
@@ -30,40 +30,40 @@ const usePagination = ({ totalItems }: Parameters): ReturnType => {
 	// There is no check for page and pageSize to be in available range
 	const pageQueryParameter =
 		Number(searchParameters.get(QUERY_PARAMS.page)) || DEFAULT_PAGE;
-	const perPageQueryParameter =
+	const pageSizeQueryParameter =
 		Number(searchParameters.get(QUERY_PARAMS.pageSize)) || DEFAULT_PAGE_SIZE;
 
 	const [page, setPage] = useState<number>(pageQueryParameter);
-	const [perPage, setPerPage] = useState<number>(perPageQueryParameter);
+	const [pageSize, setPageSize] = useState<number>(pageSizeQueryParameter);
 
 	useEffect(() => {
 		setSearchParameters({
 			[QUERY_PARAMS.page]: String(page),
-			[QUERY_PARAMS.pageSize]: String(perPage),
+			[QUERY_PARAMS.pageSize]: String(pageSize),
 		});
-	}, [page, perPage, setSearchParameters]);
+	}, [page, pageSize, setSearchParameters]);
 
 	const calculateTotalPages = useCallback(
-		(perPage: number) => Math.ceil(totalItems / perPage),
+		(pageSize: number) => Math.ceil(totalItems / pageSize),
 		[totalItems],
 	);
 
 	const onPageChange = useCallback(
 		(newPage: number) => {
-			const totalPages = calculateTotalPages(perPage);
+			const totalPages = calculateTotalPages(pageSize);
 
 			if (page >= FIRST_PAGE && page <= totalPages) {
 				setPage(newPage);
 			}
 		},
-		[page, perPage],
+		[page, pageSize],
 	);
 
-	const onPerPageChange = useCallback(
-		(newPerPage: number) => {
-			setPerPage(newPerPage);
+	const onPageSizeChange = useCallback(
+		(newPageSize: number) => {
+			setPageSize(newPageSize);
 
-			const totalPages = calculateTotalPages(newPerPage);
+			const totalPages = calculateTotalPages(newPageSize);
 
 			if (page > totalPages) {
 				setPage(totalPages);
@@ -74,9 +74,9 @@ const usePagination = ({ totalItems }: Parameters): ReturnType => {
 
 	return {
 		onPageChange,
-		onPerPageChange,
+		onPageSizeChange,
 		page,
-		perPage,
+		pageSize,
 	};
 };
 
