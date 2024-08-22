@@ -72,7 +72,7 @@ const App = (): JSX.Element => {
 			<button onClick={openModal}>Open Modal</button>
 
 			{isModalOpen && (
-				<Modal onClose={closeModal} title="Test Modal">
+				<Modal onClose={closeModal} open={isModalOpen} title="Test Modal">
 					<p>This is a test modal content.</p>
 				</Modal>
 			)}
