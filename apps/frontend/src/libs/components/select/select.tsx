@@ -9,26 +9,26 @@ import ReactSelect from "react-select";
 import { type Option } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
-type Properties = {
+type Properties<T = string> = {
 	isMulti?: boolean;
 	onChange: (
-		newValue: MultiValue<Option> | SingleValue<Option>,
-		actionMeta: ActionMeta<Option>,
+		newValue: MultiValue<Option<T>> | SingleValue<Option<T>>,
+		actionMeta: ActionMeta<Option<T>>,
 	) => void;
-	options: Option[];
+	options: Option<T>[];
 	placeholder?: string;
 	title?: string;
-	value: PropsValue<Option>;
+	value: PropsValue<Option<T>>;
 };
 
-const Select = ({
+const Select = <T = string,>({
 	isMulti = false,
 	onChange,
 	options,
 	placeholder,
 	title,
 	value,
-}: Properties): JSX.Element => {
+}: Properties<T>): JSX.Element => {
 	const getClassName = (
 		baseClass: string,
 		conditionClass?: string,
