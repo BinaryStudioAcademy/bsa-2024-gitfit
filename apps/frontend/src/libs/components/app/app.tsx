@@ -3,10 +3,10 @@ import { type MultiValue, type SingleValue } from "react-select";
 
 import reactLogo from "~/assets/images/react.svg";
 import {
-	CustomSelect,
 	Link,
 	Loader,
 	RouterOutlet,
+	Select,
 	Table,
 } from "~/libs/components/components.js";
 import {
@@ -23,7 +23,7 @@ import {
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-import { type Option } from "../custom-select/libs/types/option.type.js";
+import { type Option } from "../select/libs/types/option.type.js";
 
 const App = (): JSX.Element => {
 	// Following code is for CustomSelect testing
@@ -97,7 +97,7 @@ const App = (): JSX.Element => {
 					<Table<Person> columns={mockTableColumns} data={mockTableData} />
 				</>
 			)}
-			<CustomSelect
+			<Select
 				// eslint-disable-next-line react/jsx-no-bind
 				onChange={handleSingleChange}
 				options={options}

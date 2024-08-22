@@ -1,9 +1,10 @@
-import Select, {
+import {
 	type ActionMeta,
 	type MultiValue,
 	type PropsValue,
 	type SingleValue,
 } from "react-select";
+import ReactSelect from "react-select";
 
 import { type Option } from "./libs/types/types.js";
 import styles from "./styles.module.css";
@@ -20,7 +21,7 @@ type Properties = {
 	value: PropsValue<Option>;
 };
 
-const CustomSelect = ({
+const Select = ({
 	isMulti = false,
 	onChange,
 	options,
@@ -43,7 +44,7 @@ const CustomSelect = ({
 	return (
 		<div className={styles["container"]}>
 			{title && <span className={styles["title"]}>{title}</span>}
-			<Select
+			<ReactSelect
 				classNames={{
 					clearIndicator: () => getClassName("clear-indicator"),
 					control: (state) =>
@@ -77,4 +78,4 @@ const CustomSelect = ({
 	);
 };
 
-export { CustomSelect };
+export { Select };
