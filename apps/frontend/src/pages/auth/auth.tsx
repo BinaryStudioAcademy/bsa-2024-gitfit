@@ -8,6 +8,7 @@ import { actions as authActions } from "~/modules/auth/auth.js";
 import { type UserSignUpRequestDto } from "~/modules/users/users.js";
 
 import { SignInForm, SignUpForm } from "./components/components.js";
+import styles from "./styles.module.css";
 
 const Auth = (): JSX.Element => {
 	const dispatch = useAppDispatch();
@@ -38,7 +39,9 @@ const Auth = (): JSX.Element => {
 		return null;
 	};
 
-	return <main>{handleScreenRender(pathname)}</main>;
+	return (
+		<main className={styles["container"]}>{handleScreenRender(pathname)}</main>
+	);
 };
 
 export { Auth };
