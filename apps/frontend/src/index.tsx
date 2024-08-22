@@ -11,7 +11,9 @@ import {
 } from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 import { store } from "~/libs/modules/store/store.js";
+import { AccessManagement } from "~/pages/access-management/access-management.jsx";
 import { Auth } from "~/pages/auth/auth.jsx";
+import { CommonLayout } from "~/pages/common-layout/common-layout.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
 createRoot(document.querySelector("#root") as HTMLElement).render(
@@ -38,6 +40,14 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 					{
 						element: <NotFound />,
 						path: AppRoute.ANY,
+					},
+					{
+						element: (
+							<CommonLayout>
+								<AccessManagement />
+							</CommonLayout>
+						),
+						path: AppRoute.ACCESS_MANAGEMENT,
 					},
 				]}
 			/>

@@ -1,0 +1,22 @@
+.content {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding-left: 10%;
+}
+
+.content__title {
+	font-size: 30px;
+	font-weight: 600;
+	line-height: 120%;
+}
+
+.content__sub-title {
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 120%;
+}
+
+.content__table {
+	width: 70%;
+}
