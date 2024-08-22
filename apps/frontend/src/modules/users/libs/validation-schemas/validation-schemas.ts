@@ -1,1 +1,4 @@
-export { userSignUpValidationSchema } from "@git-fit/shared";
+export {
+	userSignInValidationSchema,
+	userSignUpValidationSchema,
+} from "@git-fit/shared";
