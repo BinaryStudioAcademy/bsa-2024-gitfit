@@ -1,4 +1,4 @@
-.sidebar-link {
+.sidebar-item > * {
 	display: flex;
 	flex-direction: row;
 	gap: 8px;
@@ -8,13 +8,13 @@
 	text-decoration: none;
 }
 
-.sidebar-link:hover {
+.sidebar-item > *:hover {
 	color: var(--color-text-primary);
 	background-color: var(--color-background-secondary);
 	border-radius: 6px;
 }
 
-.sidebar-link:hover svg {
+.sidebar-item > *:hover svg {
 	color: var(--color-brand-primary);
 }
 

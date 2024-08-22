@@ -1,5 +1,5 @@
-import reactLogo from "~/assets/images/react.svg";
 import {
+	Header,
 	Link,
 	Loader,
 	RouterOutlet,
@@ -39,24 +39,23 @@ const App = (): JSX.Element => {
 
 	return (
 		<>
-			<div className="header">
-				<img alt="logo" src={reactLogo} width="30" />
-				<ul className="header-nav">
-					<li>
-						<Link to={AppRoute.ROOT}>Root</Link>
-					</li>
-					<li>
-						<Link to={AppRoute.SIGN_IN}>Sign in</Link>
-					</li>
-					<li>
-						<Link to={AppRoute.SIGN_UP}>Sign up</Link>
-					</li>
-				</ul>
-			</div>
+			<Header />
+			<ul>
+				<li>
+					<Link to={AppRoute.ROOT}>Root</Link>
+				</li>
+				<li>
+					<Link to={AppRoute.SIGN_IN}>Sign in</Link>
+				</li>
+				<li>
+					<Link to={AppRoute.SIGN_UP}>Sign up</Link>
+				</li>
+			</ul>
+			<p>Current path: {pathname}</p>
 
 			<main>
 				<Sidebar items={sidebarItems} />
-				<div>
+				<div className="main">
 					<p>Current path: {pathname}</p>
 
 					<div>

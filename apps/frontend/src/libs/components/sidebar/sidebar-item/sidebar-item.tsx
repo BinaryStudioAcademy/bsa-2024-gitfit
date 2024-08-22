@@ -14,13 +14,13 @@ type Properties = {
 const SidebarItem = ({ href, icon, label }: Properties): JSX.Element => (
 	<li className={styles["sidebar-item"]}>
 		{href ? (
-			<Link className={styles["sidebar-link"] ?? ""} to={href}>
-				<Icon name={icon} />
+			<Link to={href}>
+				<Icon height={17} name={icon} width={17} />
 				<label>{label}</label>
 			</Link>
 		) : (
 			<span className={styles["sidebar-link"] ?? ""}>
-				<Icon name={icon} />
+				<Icon height={17} name={icon} width={17} />
 				<label>{label}</label>
 			</span>
 		)}

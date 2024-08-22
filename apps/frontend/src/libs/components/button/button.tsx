@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-import styles from "./button.module.css";
+import styles from "./styles.module.css";
 
 type Properties = {
 	href?: string | undefined;
