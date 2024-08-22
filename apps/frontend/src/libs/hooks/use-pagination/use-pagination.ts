@@ -23,6 +23,8 @@ const QUERY_PARAMS = {
 	page: "page",
 	pageSize: "pageSize",
 };
+const calculateTotalPages = (pageSize: number, totalItems: number): number =>
+	Math.ceil(totalItems / pageSize);
 
 const usePagination = ({ totalItems }: Parameters): ReturnType => {
 	const [searchParameters, setSearchParameters] = useSearchParams();
@@ -43,33 +45,28 @@ const usePagination = ({ totalItems }: Parameters): ReturnType => {
 		});
 	}, [page, pageSize, setSearchParameters]);
 
-	const calculateTotalPages = useCallback(
-		(pageSize: number) => Math.ceil(totalItems / pageSize),
-		[totalItems],
-	);
-
 	const onPageChange = useCallback(
 		(newPage: number) => {
-			const totalPages = calculateTotalPages(pageSize);
+			const totalPages = calculateTotalPages(pageSize, totalItems);
 
 			if (page >= FIRST_PAGE && page <= totalPages) {
 				setPage(newPage);
 			}
 		},
-		[page, pageSize],
+		[page, pageSize, totalItems],
 	);
 
 	const onPageSizeChange = useCallback(
 		(newPageSize: number) => {
 			setPageSize(newPageSize);
 
-			const totalPages = calculateTotalPages(newPageSize);
+			const totalPages = calculateTotalPages(newPageSize, totalItems);
 
 			if (page > totalPages) {
 				setPage(totalPages);
 			}
 		},
-		[page],
+		[page, totalItems],
 	);
 
 	return {
