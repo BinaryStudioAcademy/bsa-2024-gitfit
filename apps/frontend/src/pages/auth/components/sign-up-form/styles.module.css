@@ -59,13 +59,3 @@
 	width: 100%;
 	margin-bottom: 16px;
 }
-
-.toggle-password-button {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: var(--color-text-secondary);
-	cursor: pointer;
-	background-color: inherit;
-	border: 0;
-}

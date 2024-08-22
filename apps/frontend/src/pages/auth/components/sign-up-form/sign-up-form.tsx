@@ -1,6 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
-import { Button, Icon, Input, Link } from "~/libs/components/components.js";
+import {
+	Button,
+	Icon,
+	IconButton,
+	Input,
+	Link,
+} from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 import { useAppForm, useCallback, useState } from "~/libs/hooks/hooks.js";
 import {
@@ -74,17 +80,17 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 							label="Password"
 							name="password"
 							rightIcon={
-								<button
-									className={styles["toggle-password-button"]}
+								<IconButton
+									icon={
+										isPasswordVisible ? (
+											<Icon height={18} name="strikedEye" width={18} />
+										) : (
+											<Icon height={18} name="eye" width={18} />
+										)
+									}
+									label={isPasswordVisible ? "Hide password" : "Show password"}
 									onClick={handleTogglePasswordVisibility}
-									type="button"
-								>
-									{isPasswordVisible ? (
-										<Icon height={18} name="eye" width={18} />
-									) : (
-										<Icon height={18} name="strikedEye" width={18} />
-									)}
-								</button>
+								/>
 							}
 							type={isPasswordVisible ? "text" : "password"}
 						/>
