@@ -9,7 +9,7 @@
 	font-family: Inter;
 	font-style: normal;
 	font-weight: 500;
-	src: url("/assets/fonts/inter/inter-medium.tt") format("truetype");
+	src: url("/assets/fonts/inter/inter-medium.ttf") format("truetype");
 }
 
 @font-face {
