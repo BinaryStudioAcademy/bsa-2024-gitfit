@@ -1,12 +1,15 @@
-import { type FC } from "react";
+import { iconNameToSvg } from "./libs/maps/icon-name-to-svg.map.js";
+import { type IconName } from "./types/icon-name.type.js";
 
 interface IconProperties {
 	className?: string;
-	Icon: FC<React.SVGProps<SVGSVGElement>>;
+	name: IconName;
 }
 
-const Icon: FC<IconProperties> = ({ className, Icon }: IconProperties) => {
-	return <Icon className={className} />;
+const Icon = ({ className, name }: IconProperties): JSX.Element => {
+	const SvgComponent = iconNameToSvg[name];
+
+	return <SvgComponent className={className} />;
 };
 
 export { Icon };
