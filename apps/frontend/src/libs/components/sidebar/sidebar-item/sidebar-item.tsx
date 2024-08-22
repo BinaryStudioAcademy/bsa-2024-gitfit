@@ -17,12 +17,12 @@ const SidebarItem = ({ icon, text, to }: Properties): JSX.Element => (
 		{to ? (
 			<Link className={styles["sidebar-link"] ?? ""} to={to}>
 				<Icon className={styles["icon-sidebar"] ?? ""} name={icon} />
-				{text}
+				<label>{text}</label>
 			</Link>
 		) : (
 			<span className={styles["sidebar-link"] ?? ""}>
 				<Icon className={styles["icon-sidebar"] ?? ""} name={icon} />
-				{text}
+				<label>{text}</label>
 			</span>
 		)}
 	</li>
