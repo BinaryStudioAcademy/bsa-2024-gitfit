@@ -1,4 +1,4 @@
-import { type JWTPayload, jwtVerify, SignJWT } from "jose";
+import { decodeJwt, type JWTPayload, jwtVerify, SignJWT } from "jose";
 
 import { type Token } from "./libs/types/types.js";
 
@@ -25,6 +25,10 @@ class BaseToken implements Token {
 			.setIssuedAt()
 			.setExpirationTime(this.expirationTime)
 			.sign(this.secret);
+	}
+
+	public decodeToken(token: string): JWTPayload {
+		return decodeJwt(token);
 	}
 
 	public async verifyToken(token: string): Promise<JWTPayload> {
