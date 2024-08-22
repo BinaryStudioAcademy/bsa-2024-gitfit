@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { type MultiValue, type SingleValue } from "react-select";
 
 import reactLogo from "~/assets/images/react.svg";
@@ -17,8 +16,11 @@ import {
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
+	useCallback,
 	useEffect,
+	useFormController,
 	useLocation,
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
@@ -26,25 +28,27 @@ import { actions as userActions } from "~/modules/users/users.js";
 import { type Option } from "../select/libs/types/option.type.js";
 
 const App = (): JSX.Element => {
-	// Following code is for CustomSelect testing
-	const options = [
-		{ label: "1", value: "1" },
-		{ label: "2", value: "2" },
-		{ label: "3", value: "3" },
-		{ label: "4", value: "4" },
-		{ label: "5", value: "5" },
-	];
-	const [singleValue, setSingleValue] = useState<Option>({
-		label: "1",
-		value: "1",
+	// Following code is for Select testing
+	const options: Option<number>[] = [];
+
+	const { control } = useAppForm({
+		defaultValues: {
+			singleSelect: null,
+		},
 	});
 
-	function handleSingleChange(
-		newValue: MultiValue<Option> | SingleValue<Option>,
-	): void {
-		setSingleValue(newValue as Option);
-	}
-	// End of CustomSelect testing
+	const { field } = useFormController({
+		control,
+		name: "singleSelect",
+	});
+
+	const handleSelectChange = useCallback(
+		(newValue: MultiValue<Option<number>> | SingleValue<Option<number>>) => {
+			field.onChange(newValue);
+		},
+		[field],
+	);
+	// End of Select testing
 
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
@@ -97,11 +101,10 @@ const App = (): JSX.Element => {
 					<Table<Person> columns={mockTableColumns} data={mockTableData} />
 				</>
 			)}
-			<Select
-				// eslint-disable-next-line react/jsx-no-bind
-				onChange={handleSingleChange}
+			<Select<number>
+				{...field}
+				onChange={handleSelectChange}
 				options={options}
-				value={singleValue}
 			/>
 		</>
 	);
