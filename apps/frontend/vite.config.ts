@@ -3,6 +3,7 @@ import browserslist from "browserslist";
 import { browserslistToTargets, Features } from "lightningcss";
 import { fileURLToPath } from "node:url";
 import { type ConfigEnv, defineConfig, loadEnv } from "vite";
+import svgr from "vite-plugin-svgr";
 
 const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
 	const {
@@ -28,7 +29,12 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
 			},
 			transformer: "lightningcss",
 		},
-		plugins: [reactPlugin()],
+		plugins: [
+			reactPlugin(),
+			svgr({
+				include: "**/*.svg?react",
+			}),
+		],
 		resolve: {
 			alias: [
 				{
