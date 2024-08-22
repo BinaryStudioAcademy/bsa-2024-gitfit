@@ -1,4 +1,4 @@
-import { useMemo } from "~/libs/hooks/hooks.js";
+import { useCallback, useMemo } from "~/libs/hooks/hooks.js";
 
 import { ChangePageButton } from "./components/components.js";
 import styles from "./styles.module.css";
@@ -10,13 +10,10 @@ const options = [
 ];
 
 type Properties = {
-	onFirstPageClick: () => void;
-	onLastPageClick: () => void;
-	onNextPageClick: () => void;
-	onPreviousPageClick: () => void;
-	onRowsPerPageChange: (event: React.FormEvent<HTMLSelectElement>) => void;
+	onPageChange: (page: number) => void;
+	onPerPageChange: (event: React.FormEvent<HTMLSelectElement>) => void;
 	page: number;
-	rowsPerPage: number;
+	perPage: number;
 	totalItems: number;
 };
 
@@ -44,24 +41,38 @@ const MockSelect = ({
 // <===
 
 const FIRST_PAGE = 1;
+const PAGE_INCREMENT = 1;
 
 const TablePagination = ({
-	onFirstPageClick,
-	onLastPageClick,
-	onNextPageClick,
-	onPreviousPageClick,
-	onRowsPerPageChange,
+	onPageChange,
+	onPerPageChange,
 	page,
-	rowsPerPage,
+	perPage,
 	totalItems,
 }: Properties): JSX.Element => {
 	const totalPages = useMemo(
-		() => Math.ceil(totalItems / rowsPerPage),
-		[totalItems, rowsPerPage],
+		() => Math.ceil(totalItems / perPage),
+		[totalItems, perPage],
 	);
 
 	const hasNextPage = useMemo(() => page < totalPages, [page, totalPages]);
 	const hasPreviousPage = useMemo(() => page > FIRST_PAGE, [page]);
+
+	const handleFirstPageClick = useCallback(() => {
+		onPageChange(FIRST_PAGE);
+	}, [onPageChange]);
+
+	const handlePreviousPageClick = useCallback(() => {
+		onPageChange(page - PAGE_INCREMENT);
+	}, [onPageChange, page]);
+
+	const handleNextPageClick = useCallback(() => {
+		onPageChange(page + PAGE_INCREMENT);
+	}, [onPageChange, page]);
+
+	const handleLastPageClick = useCallback(() => {
+		onPageChange(totalPages);
+	}, [onPageChange, totalPages]);
 
 	return (
 		<div className={styles["container"]}>
@@ -69,7 +80,7 @@ const TablePagination = ({
 			<div className={styles["pagination-container"]}>
 				<div className={styles["rows-per-page"]}>
 					<p>Rows per page:</p>
-					<MockSelect onChange={onRowsPerPageChange} options={options} />
+					<MockSelect onChange={onPerPageChange} options={options} />
 				</div>
 				<p>
 					Page {page} of {totalPages}
@@ -78,22 +89,22 @@ const TablePagination = ({
 					<ChangePageButton
 						disabled={!hasPreviousPage}
 						icon="<<"
-						onClick={onFirstPageClick}
+						onClick={handleFirstPageClick}
 					/>
 					<ChangePageButton
 						disabled={!hasPreviousPage}
 						icon="<"
-						onClick={onPreviousPageClick}
+						onClick={handlePreviousPageClick}
 					/>
 					<ChangePageButton
 						disabled={!hasNextPage}
 						icon=">"
-						onClick={onNextPageClick}
+						onClick={handleNextPageClick}
 					/>
 					<ChangePageButton
 						disabled={!hasNextPage}
 						icon=">>"
-						onClick={onLastPageClick}
+						onClick={handleLastPageClick}
 					/>
 				</div>
 			</div>

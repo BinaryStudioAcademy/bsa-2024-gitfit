@@ -18,13 +18,15 @@ import {
 	useCallback,
 	useEffect,
 	useLocation,
-	useTablePagination,
+	usePagination,
+	useSearchParams,
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
+	const [searchParameters, setSearchParameters] = useSearchParams();
 	const dataStatus = useAppSelector(({ users }) => users.dataStatus);
 	const users = useAppSelector(({ users }) => users.users);
 
@@ -39,30 +41,35 @@ const App = (): JSX.Element => {
 
 	// TODO: remove following lines and TablePagination component usage after its visual testing
 	// ===>
-	const TOTAL_ITEMS = 100; // Temp mock data
-	const STARTING_PAGE = 1; // Temp mock data
-	const STARTING_ROWS_PER_PAGE = 10; // Temp mock data
+	const TOTAL_ITEMS = 100;
+	const DEFAULT_PAGE = 1; // Not sure where to put this
+	const DEFAULT_PAGE_SIZE = 10; // Not sure where to put this
 
-	const {
-		changeRowsPerPage,
-		openFirstPage: handleFirstPageClick,
-		openLastPage: handleLastPageClick,
-		openNextPage: handleNextPageClick,
-		openPreviousPage: handlePreviousPageClick,
-		page,
-		rowsPerPage,
-	} = useTablePagination({
-		startingPage: STARTING_PAGE,
-		startingRowsPerPage: STARTING_ROWS_PER_PAGE,
+	// This solution still passes negative parameters values.
+	// And there is no checks for page to be in range of totalPages
+	// inside usePagination for now.
+	// Also not sure where to store `"page"` and `"pageSize"` literal constants
+	const pageQueryParameter =
+		Number(searchParameters.get("page")) || DEFAULT_PAGE;
+	const perPageQueryParameter =
+		Number(searchParameters.get("pageSize")) || DEFAULT_PAGE_SIZE;
+
+	const { onPageChange, onPerPageChange, page, perPage } = usePagination({
+		pageQueryParameter,
+		perPageQueryParameter,
 		totalItems: TOTAL_ITEMS,
 	});
 
-	const handleRowsPerPageChange = useCallback(
+	const handlePerPageChange = useCallback(
 		(event: React.FormEvent<HTMLSelectElement>) => {
-			changeRowsPerPage(Number(event.currentTarget.value));
+			onPerPageChange(Number(event.currentTarget.value));
 		},
-		[changeRowsPerPage],
+		[onPerPageChange],
 	);
+
+	useEffect(() => {
+		setSearchParameters({ page: String(page), pageSize: String(perPage) });
+	}, [page, perPage, setSearchParameters]);
 	// <===
 
 	return (
@@ -101,13 +108,10 @@ const App = (): JSX.Element => {
 					)}
 					<Table<Person> columns={mockTableColumns} data={mockTableData} />
 					<TablePagination
-						onFirstPageClick={handleFirstPageClick}
-						onLastPageClick={handleLastPageClick}
-						onNextPageClick={handleNextPageClick}
-						onPreviousPageClick={handlePreviousPageClick}
-						onRowsPerPageChange={handleRowsPerPageChange}
+						onPageChange={onPageChange}
+						onPerPageChange={handlePerPageChange}
 						page={page}
-						rowsPerPage={rowsPerPage}
+						perPage={perPage}
 						totalItems={TOTAL_ITEMS}
 					/>
 				</>

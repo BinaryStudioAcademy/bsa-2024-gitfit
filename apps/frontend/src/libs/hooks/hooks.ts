@@ -1,7 +1,7 @@
 export { useAppDispatch } from "./use-app-dispatch/use-app-dispatch.hook.js";
 export { useAppForm } from "./use-app-form/use-app-form.hook.js";
 export { useAppSelector } from "./use-app-selector/use-app-selector.hook.js";
-export { useTablePagination } from "./use-table-pagination/use-table-pagination.js";
+export { usePagination } from "./use-pagination/use-pagination.js";
 export { useCallback, useEffect, useMemo, useState } from "react";
 export { useController as useFormController } from "react-hook-form";
-export { useLocation } from "react-router-dom";
+export { useLocation, useSearchParams } from "react-router-dom";
