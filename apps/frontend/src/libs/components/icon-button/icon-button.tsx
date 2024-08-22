@@ -1,29 +1,32 @@
-import { getValidClassNames } from "~/libs/helpers/helpers.js";
+import { Icon } from "~/libs/components/components.js";
 
+import { type IconName } from "../icon/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	className?: string | undefined;
-	icon: JSX.Element;
+	iconHeight: number;
+	iconName: IconName;
+	iconWidth: number;
 	label: string;
 	onClick: () => void;
 };
 
 const IconButton = ({
-	className = "",
-	icon,
+	iconHeight,
+	iconName,
+	iconWidth,
 	label,
 	onClick,
 }: Properties): JSX.Element => {
 	return (
 		<button
 			aria-label={label}
-			className={getValidClassNames(styles["icon-button"], className)}
+			className={styles["icon-button"]}
 			onClick={onClick}
 			type="button"
 		>
 			<span className="visually-hidden">{label}</span>
-			{icon}
+			<Icon height={iconHeight} name={iconName} width={iconWidth} />
 		</button>
 	);
 };
