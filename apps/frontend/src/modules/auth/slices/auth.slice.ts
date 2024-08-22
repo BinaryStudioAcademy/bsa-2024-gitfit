@@ -18,21 +18,20 @@ const initialState: State = {
 
 const { actions, name, reducer } = createSlice({
 	extraReducers(builder) {
+		builder.addCase(getAuthenticatedUser.pending, (state) => {
+			state.dataStatus = DataStatus.PENDING;
+		});
 		builder.addCase(getAuthenticatedUser.rejected, (state) => {
 			state.authenticatedUser = null;
 			state.dataStatus = DataStatus.REJECTED;
 		});
 
+		builder.addCase(signUp.pending, (state) => {
+			state.dataStatus = DataStatus.PENDING;
+		});
 		builder.addCase(signUp.rejected, (state) => {
 			state.dataStatus = DataStatus.REJECTED;
 		});
-
-		builder.addMatcher(
-			isAnyOf(getAuthenticatedUser.pending, signUp.pending),
-			(state) => {
-				state.dataStatus = DataStatus.PENDING;
-			},
-		);
 
 		builder.addMatcher(
 			isAnyOf(getAuthenticatedUser.fulfilled, signUp.fulfilled),
