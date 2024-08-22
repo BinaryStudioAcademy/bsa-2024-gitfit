@@ -4,6 +4,7 @@ import { type IconName } from "../icon/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	iconColor?: string | undefined;
 	iconHeight: number;
 	iconName: IconName;
 	iconWidth: number;
@@ -12,6 +13,7 @@ type Properties = {
 };
 
 const IconButton = ({
+	iconColor,
 	iconHeight,
 	iconName,
 	iconWidth,
@@ -26,7 +28,12 @@ const IconButton = ({
 			type="button"
 		>
 			<span className="visually-hidden">{label}</span>
-			<Icon height={iconHeight} name={iconName} width={iconWidth} />
+			<Icon
+				color={iconColor}
+				height={iconHeight}
+				name={iconName}
+				width={iconWidth}
+			/>
 		</button>
 	);
 };
