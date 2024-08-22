@@ -1,8 +1,11 @@
-import { useCallback, useState } from "~/libs/hooks/hooks.js";
+import {
+	useCallback,
+	useEffect,
+	useSearchParams,
+	useState,
+} from "~/libs/hooks/hooks.js";
 
 type Parameters = {
-	pageQueryParameter: number;
-	perPageQueryParameter: number;
 	totalItems: number;
 };
 
@@ -14,14 +17,31 @@ type ReturnType = {
 };
 
 const FIRST_PAGE = 1;
+const DEFAULT_PAGE = 1;
+const DEFAULT_PAGE_SIZE = 10;
+const QUERY_PARAMS = {
+	page: "page",
+	pageSize: "pageSize",
+};
 
-const usePagination = ({
-	pageQueryParameter,
-	perPageQueryParameter,
-	totalItems,
-}: Parameters): ReturnType => {
+const usePagination = ({ totalItems }: Parameters): ReturnType => {
+	const [searchParameters, setSearchParameters] = useSearchParams();
+
+	// There is no check for page and pageSize to be in available range
+	const pageQueryParameter =
+		Number(searchParameters.get(QUERY_PARAMS.page)) || DEFAULT_PAGE;
+	const perPageQueryParameter =
+		Number(searchParameters.get(QUERY_PARAMS.pageSize)) || DEFAULT_PAGE_SIZE;
+
 	const [page, setPage] = useState<number>(pageQueryParameter);
 	const [perPage, setPerPage] = useState<number>(perPageQueryParameter);
+
+	useEffect(() => {
+		setSearchParameters({
+			[QUERY_PARAMS.page]: String(page),
+			[QUERY_PARAMS.pageSize]: String(perPage),
+		});
+	}, [page, perPage, setSearchParameters]);
 
 	const calculateTotalPages = useCallback(
 		(perPage: number) => Math.ceil(totalItems / perPage),

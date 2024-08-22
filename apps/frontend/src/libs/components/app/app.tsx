@@ -19,14 +19,12 @@ import {
 	useEffect,
 	useLocation,
 	usePagination,
-	useSearchParams,
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
-	const [searchParameters, setSearchParameters] = useSearchParams();
 	const dataStatus = useAppSelector(({ users }) => users.dataStatus);
 	const users = useAppSelector(({ users }) => users.users);
 
@@ -42,21 +40,8 @@ const App = (): JSX.Element => {
 	// TODO: remove following lines and TablePagination component usage after its visual testing
 	// ===>
 	const TOTAL_ITEMS = 100;
-	const DEFAULT_PAGE = 1; // Not sure where to put this
-	const DEFAULT_PAGE_SIZE = 10; // Not sure where to put this
-
-	// This solution still passes negative parameters values.
-	// And there is no checks for page to be in range of totalPages
-	// inside usePagination for now.
-	// Also not sure where to store `"page"` and `"pageSize"` literal constants
-	const pageQueryParameter =
-		Number(searchParameters.get("page")) || DEFAULT_PAGE;
-	const perPageQueryParameter =
-		Number(searchParameters.get("pageSize")) || DEFAULT_PAGE_SIZE;
 
 	const { onPageChange, onPerPageChange, page, perPage } = usePagination({
-		pageQueryParameter,
-		perPageQueryParameter,
 		totalItems: TOTAL_ITEMS,
 	});
 
@@ -66,10 +51,6 @@ const App = (): JSX.Element => {
 		},
 		[onPerPageChange],
 	);
-
-	useEffect(() => {
-		setSearchParameters({ page: String(page), pageSize: String(perPage) });
-	}, [page, perPage, setSearchParameters]);
 	// <===
 
 	return (
