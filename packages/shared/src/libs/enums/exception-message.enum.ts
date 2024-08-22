@@ -1,6 +1,7 @@
 const ExceptionMessage = {
 	EMAIL_USED: "Email address is already in use.",
-	USER_NOT_FOUND: "Requested user does not exist.",
+	INVALID_CREDENTIALS: "Invalid credentials.",
+	USER_NOT_FOUND: "User not found.",
 } as const;
 
 export { ExceptionMessage };

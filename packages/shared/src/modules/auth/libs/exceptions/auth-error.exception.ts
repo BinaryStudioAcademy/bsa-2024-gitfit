@@ -10,7 +10,7 @@ type Constructor = {
 	status: ValueOf<typeof HTTPCode>;
 };
 
-class UserError extends HTTPError {
+class AuthError extends HTTPError {
 	public constructor({ cause, message, status }: Constructor) {
 		super({
 			cause,
@@ -20,4 +20,4 @@ class UserError extends HTTPError {
 	}
 }
 
-export { UserError };
+export { AuthError };

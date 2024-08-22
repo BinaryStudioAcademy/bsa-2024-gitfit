@@ -1,16 +1,16 @@
-import { UserError } from "~/libs/exceptions/exceptions.js";
-import { type Encryption } from "~/libs/modules/encryption/libs/types/types.js";
+import { ExceptionMessage } from "~/libs/enums/enums.js";
+import { type Encryption } from "~/libs/modules/encryption/encryption.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
+
+import { UserError } from "./libs/exceptions/exceptions.js";
 import {
 	type UserAuthResponseDto,
 	type UserGetAllResponseDto,
 	type UserSignUpRequestDto,
-} from "~/modules/users/libs/types/types.js";
-import { UserEntity } from "~/modules/users/user.entity.js";
-import { type UserRepository } from "~/modules/users/user.repository.js";
-
-import { ExceptionMessage } from "./libs/enums/enums.js";
+} from "./libs/types/types.js";
+import { UserEntity } from "./user.entity.js";
+import { type UserRepository } from "./user.repository.js";
 
 class UserService implements Service {
 	private encryption: Encryption;
@@ -53,14 +53,17 @@ class UserService implements Service {
 		return Promise.resolve(true);
 	}
 
-	public async find(id: number): Promise<null | UserEntity> {
-		const user = await this.userRepository.find(id);
+	public async find(id: number): Promise<UserAuthResponseDto> {
+		const item = await this.userRepository.find(id);
 
-		if (!user) {
-			return null;
+		if (!item) {
+			throw new UserError({
+				message: ExceptionMessage.USER_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
 		}
 
-		return user;
+		return item.toObject();
 	}
 
 	public async findAll(): Promise<UserGetAllResponseDto> {
@@ -69,6 +72,19 @@ class UserService implements Service {
 		return {
 			items: items.map((item) => item.toObject()),
 		};
+	}
+
+	public async getByEmail(email: string): Promise<UserEntity> {
+		const item = await this.userRepository.findByEmail(email);
+
+		if (!item) {
+			throw new UserError({
+				message: ExceptionMessage.USER_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		return item;
 	}
 
 	public update(): ReturnType<Service["update"]> {
