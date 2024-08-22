@@ -1,34 +1,39 @@
 import {
-	type ActionMeta,
-	type MultiValue,
-	type PropsValue,
-	type SingleValue,
+	type Control,
+	type FieldPath,
+	type FieldValues,
+} from "react-hook-form";
+import ReactSelect, {
+	type GroupBase,
+	type OptionsOrGroups,
 } from "react-select";
-import ReactSelect from "react-select";
 
-import { type Option } from "./libs/types/types.js";
+import { useFormController } from "~/libs/hooks/hooks.js";
+
 import styles from "./styles.module.css";
 
-type Properties<T = string> = {
+type Properties<T extends FieldValues> = {
+	control: Control<T, null>;
 	isMulti?: boolean;
-	onChange: (
-		newValue: MultiValue<Option<T>> | SingleValue<Option<T>>,
-		actionMeta: ActionMeta<Option<T>>,
-	) => void;
-	options: Option<T>[];
+	name: FieldPath<T>;
+	options: OptionsOrGroups<unknown, GroupBase<unknown>> | undefined;
 	placeholder?: string;
 	title?: string;
-	value: PropsValue<Option<T>>;
 };
 
-const Select = <T = string,>({
+const Select = <T extends FieldValues>({
+	control,
 	isMulti = false,
-	onChange,
+	name,
 	options,
 	placeholder,
 	title,
-	value,
 }: Properties<T>): JSX.Element => {
+	const { field } = useFormController({
+		control,
+		name,
+	});
+
 	const getClassName = (
 		baseClass: string,
 		conditionClass?: string,
@@ -46,11 +51,9 @@ const Select = <T = string,>({
 			{title && <span className={styles["title"]}>{title}</span>}
 			<ReactSelect
 				classNames={{
-					clearIndicator: () => getClassName("clear-indicator"),
 					control: (state) =>
 						getClassName("control", "control--focused", state.isFocused),
 					indicatorsContainer: () => getClassName("indicators-container"),
-					indicatorSeparator: () => getClassName("indicator-separator"),
 					input: () => getClassName("input"),
 					menu: () => getClassName("menu"),
 					multiValue: () => getClassName("multi-value"),
@@ -68,14 +71,16 @@ const Select = <T = string,>({
 				}}
 				isClearable={false}
 				isMulti={isMulti}
-				onChange={onChange}
+				name={name}
+				onChange={field.onChange}
 				options={options}
 				placeholder={placeholder}
 				unstyled
-				value={value}
+				value={field.value}
 			/>
 		</div>
 	);
 };
 
 export { Select };
+export { type Option } from "./libs/types/types.js";

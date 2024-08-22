@@ -1,5 +1,3 @@
-import { type MultiValue, type SingleValue } from "react-select";
-
 import reactLogo from "~/assets/images/react.svg";
 import {
 	Link,
@@ -18,37 +16,23 @@ import {
 	useAppDispatch,
 	useAppForm,
 	useAppSelector,
-	useCallback,
 	useEffect,
-	useFormController,
 	useLocation,
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-import { type Option } from "../select/libs/types/option.type.js";
+import { type Option } from "../select/select.js";
 
 const App = (): JSX.Element => {
-	// Following code is for Select testing
-	const options: Option<number>[] = [];
+	type SelectData = {
+		options: Option<number>[];
+	};
 
-	const { control } = useAppForm({
+	const { control } = useAppForm<SelectData>({
 		defaultValues: {
-			singleSelect: null,
+			options: [],
 		},
 	});
-
-	const { field } = useFormController({
-		control,
-		name: "singleSelect",
-	});
-
-	const handleSelectChange = useCallback(
-		(newValue: MultiValue<Option<number>> | SingleValue<Option<number>>) => {
-			field.onChange(newValue);
-		},
-		[field],
-	);
-	// End of Select testing
 
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
@@ -101,10 +85,11 @@ const App = (): JSX.Element => {
 					<Table<Person> columns={mockTableColumns} data={mockTableData} />
 				</>
 			)}
-			<Select<number>
-				{...field}
-				onChange={handleSelectChange}
-				options={options}
+			<Select<SelectData>
+				control={control}
+				isMulti
+				name="options"
+				options={[]}
 			/>
 		</>
 	);
