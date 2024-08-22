@@ -4,11 +4,13 @@ import fp from "fastify-plugin";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { token } from "~/libs/modules/token/token.js";
+import { UserError, userService } from "~/modules/users/users.js";
 
 import { WHITE_ROUTES } from "../libs/constants/constants.js";
-import { extractUserFromToken } from "../libs/helpers/helpers.js";
 
 const authorization = fp((fastify, _, done) => {
+	fastify.decorateRequest("user", null);
+
 	fastify.addHook(
 		"preHandler",
 		async (request: FastifyRequest, reply: FastifyReply) => {
@@ -29,9 +31,17 @@ const authorization = fp((fastify, _, done) => {
 			}
 
 			try {
-				const decoded = await token.verifyToken(authToken);
-				request.user = extractUserFromToken(decoded);
-			} catch {
+				const { userId } = token.decodeToken(authToken);
+				const user = await userService.find(userId as number);
+
+				request.user = user;
+			} catch (error) {
+				if (error instanceof UserError) {
+					return await reply
+						.code(HTTPCode.NOT_FOUND)
+						.send({ error: ExceptionMessage.USER_NOT_FOUND });
+				}
+
 				return await reply
 					.code(HTTPCode.UNAUTHORIZED)
 					.send({ error: ExceptionMessage.INVALID_TOKEN });
