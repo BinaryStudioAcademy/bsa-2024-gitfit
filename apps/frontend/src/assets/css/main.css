@@ -2,7 +2,3 @@ main {
 	display: flex;
 	flex: 1;
 }
-
-.main {
-	flex: 80%;
-}

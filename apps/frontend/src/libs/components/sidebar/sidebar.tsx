@@ -1,16 +1,16 @@
 import { SidebarItem } from "./sidebar-item/sidebar-item.js";
-import { sidebarItems } from "./sidebar-items.js";
+import { type NavigationItem } from "./sidebar-item/type.js";
 import styles from "./styles.module.css";
 
-const Sidebar = (): JSX.Element => {
+const Sidebar = ({ items }: { items: NavigationItem[] }): JSX.Element => {
 	return (
 		<ul className={styles["sidebar"]}>
-			{sidebarItems.map((item) => (
+			{items.map((item) => (
 				<SidebarItem
+					href={item.href}
 					icon={item.icon}
-					key={item.id}
-					text={item.text}
-					{...(item.to ? { to: item.to } : {})}
+					key={item.label}
+					label={item.label}
 				/>
 			))}
 		</ul>

@@ -3,11 +3,10 @@ import { type ValueOf } from "@git-fit/shared";
 import { type IconName } from "~/libs/components/icon/types/types.js";
 import { type AppRoute } from "~/libs/enums/app-route.enum.js";
 
-type sidebarItemType = {
+type NavigationItem = {
+	href?: ValueOf<typeof AppRoute>;
 	icon: IconName;
-	id: string;
-	text: string;
-	to?: ValueOf<typeof AppRoute>;
+	label: string;
 };
 
-export { type sidebarItemType };
+export { type NavigationItem };

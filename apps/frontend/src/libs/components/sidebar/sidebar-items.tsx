@@ -1,28 +1,24 @@
 import { AppRoute } from "~/libs/enums/app-route.enum.js";
 
-import { type sidebarItemType } from "./sidebar-item/type.js";
+import { type NavigationItem } from "./sidebar-item/type.js";
 
-const sidebarItems: sidebarItemType[] = [
+const sidebarItems: NavigationItem[] = [
 	{
+		href: AppRoute.ROOT,
 		icon: "project",
-		id: "1",
-		text: "Projects",
-		to: AppRoute.ROOT,
+		label: "Projects",
 	},
 	{
 		icon: "access",
-		id: "2",
-		text: "Access Management",
+		label: "Access Management",
 	},
 	{
 		icon: "contributors",
-		id: "3",
-		text: "Contributors",
+		label: "Contributors",
 	},
 	{
 		icon: "analytics",
-		id: "4",
-		text: "Analytics",
+		label: "Analytics",
 	},
 ];
 

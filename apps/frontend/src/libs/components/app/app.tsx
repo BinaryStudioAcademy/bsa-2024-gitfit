@@ -20,6 +20,8 @@ import {
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
+import { sidebarItems } from "../sidebar/sidebar-items.js";
+
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
@@ -53,8 +55,8 @@ const App = (): JSX.Element => {
 			</div>
 
 			<main>
-				<Sidebar />
-				<div className="main">
+				<Sidebar items={sidebarItems} />
+				<div>
 					<p>Current path: {pathname}</p>
 
 					<div>

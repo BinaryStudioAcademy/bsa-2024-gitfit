@@ -6,22 +6,22 @@ import { type ValueOf } from "~/libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	href: undefined | ValueOf<typeof AppRoute>;
 	icon: IconName;
-	text: string;
-	to?: ValueOf<typeof AppRoute>;
+	label: string;
 };
 
-const SidebarItem = ({ icon, text, to }: Properties): JSX.Element => (
-	<li>
-		{to ? (
-			<Link className={styles["sidebar-link"] ?? ""} to={to}>
-				<Icon className={styles["icon-sidebar"] ?? ""} name={icon} />
-				<label>{text}</label>
+const SidebarItem = ({ href, icon, label }: Properties): JSX.Element => (
+	<li className={styles["sidebar-item"]}>
+		{href ? (
+			<Link className={styles["sidebar-link"] ?? ""} to={href}>
+				<Icon name={icon} />
+				<label>{label}</label>
 			</Link>
 		) : (
 			<span className={styles["sidebar-link"] ?? ""}>
-				<Icon className={styles["icon-sidebar"] ?? ""} name={icon} />
-				<label>{text}</label>
+				<Icon name={icon} />
+				<label>{label}</label>
 			</span>
 		)}
 	</li>
