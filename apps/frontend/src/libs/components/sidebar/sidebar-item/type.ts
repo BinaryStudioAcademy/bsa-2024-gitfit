@@ -1,8 +1,7 @@
 import { type ValueOf } from "@git-fit/shared";
 
+import { type IconName } from "~/libs/components/icon/types/types.js";
 import { type AppRoute } from "~/libs/enums/app-route.enum.js";
-
-import { type IconName } from "../../icon/types/icon-name.type.js";
 
 type sidebarItemType = {
 	icon: IconName;

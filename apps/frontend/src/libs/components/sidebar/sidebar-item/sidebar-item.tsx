@@ -1,9 +1,8 @@
-import { Link } from "~/libs/components/components.js";
+import { Icon, Link } from "~/libs/components/components.js";
+import { type IconName } from "~/libs/components/icon/types/types.js";
 import { type AppRoute } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
-import { Icon } from "../../icon/icon.js";
-import { type IconName } from "../../icon/types/icon-name.type.js";
 import styles from "./styles.module.css";
 
 type Properties = {
