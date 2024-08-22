@@ -47,7 +47,7 @@ const Input = <T extends FieldValues>({
 
 	return (
 		<label className={styles["input-label"]}>
-			{label}
+			<span className={styles["input-label-text"]}>{label}</span>
 			<div className={styles["input-container"]}>
 				{hasLeftIcon && (
 					<div

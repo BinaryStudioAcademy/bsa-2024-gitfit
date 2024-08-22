@@ -38,7 +38,7 @@ const Auth = (): JSX.Element => {
 		return null;
 	};
 
-	return <>{handleScreenRender(pathname)}</>;
+	return <main>{handleScreenRender(pathname)}</main>;
 };
 
 export { Auth };
