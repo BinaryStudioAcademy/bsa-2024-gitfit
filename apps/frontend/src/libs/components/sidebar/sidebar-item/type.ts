@@ -1,10 +1,9 @@
-import { type ValueOf } from "@git-fit/shared";
-
 import { type IconName } from "~/libs/components/icon/types/types.js";
 import { type AppRoute } from "~/libs/enums/app-route.enum.js";
+import { type ValueOf } from "~/libs/types/types.js";
 
 type NavigationItem = {
-	href?: ValueOf<typeof AppRoute>;
+	href: "#" | ValueOf<typeof AppRoute>;
 	icon: IconName;
 	label: string;
 };

@@ -22,3 +22,7 @@ label {
 	font-size: 16px;
 	line-height: 120%;
 }
+
+.sidebar-item > *:hover label {
+	cursor: pointer;
+}
