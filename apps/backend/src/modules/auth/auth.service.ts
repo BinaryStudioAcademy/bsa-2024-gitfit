@@ -3,6 +3,7 @@ import { type Encryption } from "~/libs/modules/encryption/encryption.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Token } from "~/libs/modules/token/token.js";
 import {
+	type UserAuthResponseDto,
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,
 	type UserSignUpRequestDto,
@@ -25,6 +26,12 @@ class AuthService {
 		this.userService = userService;
 		this.tokenService = tokenService;
 		this.encryptionService = encryptionService;
+	}
+
+	public async getAuthenticatedUser(
+		userId: number,
+	): Promise<UserAuthResponseDto> {
+		return await this.userService.find(userId);
 	}
 
 	public async signIn(
