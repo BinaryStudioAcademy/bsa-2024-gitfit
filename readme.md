@@ -33,7 +33,7 @@ erDiagram
       int avatar_file_id FK
    }
 
-   groups {
+   user_groups {
       int id PK
       dateTime created_at
       dateTime updated_at
@@ -41,11 +41,11 @@ erDiagram
       varchar name UK
    }
 
-   users_to_groups {
+   users_to_user_groups {
       int id PK
       dateTime created_at
       dateTime updated_at
-      int group_id FK
+      int user_group_id FK
       int user_id FK
    }
 
@@ -57,11 +57,11 @@ erDiagram
       varchar name UK
    }
 
-   groups_to_permissions {
+   user_groups_to_permissions {
       int id PK
       dateTime created_at
       dateTime updated_at
-      int group_id FK
+      int user_group_id FK
       int permission_id FK
    }
 
@@ -74,11 +74,11 @@ erDiagram
       varchar api_key
    }
 
-   groups_to_projects {
+   user_groups_to_projects {
       int id PK
       dateTime created_at
       dateTime updated_at
-      int group_id FK
+      int user_group_id FK
       int project_id FK
    }
 
@@ -129,14 +129,14 @@ erDiagram
 
    files }|--|o users : avatar_file_id
 
-   groups ||--|{ groups_to_permissions : group_id
-   permissions ||--|{ groups_to_permissions : permission_id
+   user_groups ||--|{ user_groups_to_permissions : user_group_id
+   permissions ||--|{ user_groups_to_permissions : permission_id
 
-   groups ||--|{ groups_to_projects : group_id
-   projects ||--|{ groups_to_projects : project_id
+   user_groups ||--|{ user_groups_to_projects : user_group_id
+   projects ||--|{ user_groups_to_projects : project_id
 
-   users ||--|{ users_to_groups : user_id
-   groups ||--|{ users_to_groups : group_id
+   users ||--|{ users_to_user_groups : user_id
+   user_groups ||--|{ users_to_user_groups : user_group_id
 
    contributors ||--|{ git_emails : contributor_id
 
