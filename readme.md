@@ -6,6 +6,7 @@ Collect and analyze developers activity on projects.
 
 ### 1.1 Useful Links
 
+- [Project specification](./docs/specification.md).
 - Pay attention, that we have certain [quality criteria](https://github.com/BinaryStudioAcademy/quality-criteria/blob/production/src/javascript.md), which we should follow during application development.
 
 ## 2. Domain
