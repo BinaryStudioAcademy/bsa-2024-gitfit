@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback, useEffect, useRef } from "react";
+import { type ReactNode, useEffect, useRef } from "react";
 
 import styles from "./modal.module.css";
 
@@ -10,41 +10,37 @@ type Properties = {
 };
 
 const Modal = ({ children, onClose, open, title }: Properties): JSX.Element => {
-	const dialogReference = useRef<HTMLDialogElement>(null);
+	const dialogReference_ = useRef<HTMLDialogElement>(null);
 
-	const handleClickOutside = useCallback(
-		(event: MouseEvent): void => {
-			const dialog = dialogReference.current;
+	useEffect(() => {
+		const dialog = dialogReference_.current;
 
-			if (dialog && event.target === dialog) {
-				onClose();
+		if (dialog) {
+			if (open) {
+				dialog.showModal();
+			} else {
+				dialog.close();
 			}
-		},
-		[onClose],
-	);
 
-	useEffect((): (() => void) | undefined => {
-		const dialog = dialogReference.current;
+			const handleClickOutside = (event: MouseEvent): void => {
+				if (event.target === dialog) {
+					onClose();
+				}
+			};
 
-		if (open && dialog) {
-			dialog.showModal();
 			dialog.addEventListener("click", handleClickOutside);
 
-			return () => {
+			return (): void => {
 				dialog.removeEventListener("click", handleClickOutside);
 			};
-		} else if (dialog) {
-			dialog.close();
 		}
-
-		return undefined;
-	}, [open, onClose, handleClickOutside]);
+	}, [open, onClose]);
 
 	return (
 		<dialog
 			aria-label={title}
 			className={styles["modal-container"]}
-			ref={dialogReference}
+			ref={dialogReference_}
 		>
 			<div className={styles["modal-content"]}>
 				<div className={styles["modal-header-title"]}>

@@ -1,3 +1,7 @@
+.modal-container::backdrop {
+	background-color: var(--color-overlay);
+}
+
 .modal-container {
 	position: relative;
 	box-sizing: border-box;
