@@ -24,13 +24,13 @@ type Properties<TFieldValues extends FieldValues, TValue> = {
 	title?: string;
 };
 
-const Select = <TTFieldValues extends FieldValues, TValue>({
+const Select = <TFieldValues extends FieldValues, TValue>({
 	control,
 	isMulti = false,
 	name,
 	options,
 	title,
-}: Properties<TTFieldValues, TValue>): JSX.Element => {
+}: Properties<TFieldValues, TValue>): JSX.Element => {
 	const { field } = useFormController({
 		control,
 		name,
