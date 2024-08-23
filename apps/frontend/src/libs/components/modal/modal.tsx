@@ -12,10 +12,10 @@ type Properties = {
 };
 
 const Modal = ({ children, onClose, open, title }: Properties): JSX.Element => {
-	const dialogReference_ = useRef<HTMLDialogElement>(null);
+	const dialogReference = useRef<HTMLDialogElement>(null);
 
 	useEffect(() => {
-		const dialog = dialogReference_.current;
+		const dialog = dialogReference.current;
 
 		if (dialog) {
 			if (open) {
@@ -42,7 +42,7 @@ const Modal = ({ children, onClose, open, title }: Properties): JSX.Element => {
 		<dialog
 			aria-label={title}
 			className={styles["modal-container"]}
-			ref={dialogReference_}
+			ref={dialogReference}
 		>
 			<div className={styles["modal-content"]}>
 				<div className={styles["modal-header-title"]}>
