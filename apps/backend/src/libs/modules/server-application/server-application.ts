@@ -2,6 +2,7 @@ import { config } from "~/libs/modules/config/config.js";
 import { database } from "~/libs/modules/database/database.js";
 import { logger } from "~/libs/modules/logger/logger.js";
 import { authController } from "~/modules/auth/auth.js";
+import { projectController } from "~/modules/projects/projects.js";
 import { userController, userService } from "~/modules/users/users.js";
 
 import { token } from "../token/token.js";
@@ -13,6 +14,7 @@ const apiV1 = new BaseServerApplicationApi(
 	"v1",
 	config,
 	...authController.routes,
+	...projectController.routes,
 	...userController.routes,
 );
 const serverApplication = new BaseServerApplication({
