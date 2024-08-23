@@ -189,7 +189,7 @@ The "Project" page includes:
 - “Contributors” list: Displays a list of contributors, each containing:
   - Contributor name.
   - Last commit relative date (e.g., “15 minutes ago”).
-  The time limits for color indicators are as follows:
+    The time limits for color indicators are as follows:
   - Green: < 2 days
   - Yellow: <5 days
   - Red: >=5 days or more
@@ -206,8 +206,8 @@ The "Edit" icon should be accessible only to users with the appropriate permissi
 The "Update Project Modal" includes:
 
 - “Name” field (prefilled). The "Name" field should have a character limit between 1 and 50 characters.
-- “Description” field (prefilled). The "Description" field is optional and should allow up to 1000 characters. 
-A character counter should be displayed below the text area, indicating the current character count (e.g., "100/1000").
+- “Description” field (prefilled). The "Description" field is optional and should allow up to 1000 characters.
+  A character counter should be displayed below the text area, indicating the current character count (e.g., "100/1000").
 - “Update” button: When clicked, submits the form, closes the modal, and updates the project data on the page.
 - “Close” icon: When clicked, the modal is closed.
 
