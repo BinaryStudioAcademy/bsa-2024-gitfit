@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "~/libs/hooks/hooks.js";
 
-import { ChangePageButton } from "./components/components.js";
+import { ChangePageButton } from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const options = [

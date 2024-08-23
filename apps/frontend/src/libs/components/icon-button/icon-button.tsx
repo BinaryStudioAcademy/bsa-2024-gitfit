@@ -2,7 +2,7 @@ import { Icon } from "~/libs/components/components.js";
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { type Color } from "~/libs/types/types.js";
 
-import { type IconName } from "../icon/types/types.js";
+import { type IconName } from "../icon/libs/types/types.js";
 import { ICON_SIZE } from "./libs/constants/constants.js";
 import { type ButtonVariant } from "./libs/types/types.js";
 import styles from "./styles.module.css";

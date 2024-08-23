@@ -1,5 +1,5 @@
 import { IconButton } from "~/libs/components/components.js";
-import { type IconName } from "~/libs/components/icon/types/types.js";
+import { type IconName } from "~/libs/components/icon/libs/types/types.js";
 
 type Properties = {
 	disabled?: boolean;

@@ -2,7 +2,7 @@ import { colorToCss } from "~/libs/maps/maps.js";
 import { type Color } from "~/libs/types/types.js";
 
 import { iconNameToSvg } from "./libs/maps/maps.js";
-import { type IconName } from "./types/types.js";
+import { type IconName } from "./libs/types/types.js";
 
 type Properties = {
 	color?: Color;
