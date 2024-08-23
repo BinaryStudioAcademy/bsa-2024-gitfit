@@ -7,7 +7,7 @@
 .label-text {
 	font-size: 16px;
 	font-weight: 500;
-	line-height: 19.2px;
+	line-height: 1.2;
 	color: var(--color-text-primary);
 }
 
@@ -21,7 +21,7 @@
 .single-value {
 	font-size: 16px;
 	font-weight: 500;
-	line-height: 19.2px;
+	line-height: 1.2;
 	color: var(--color-text-primary);
 }
 
@@ -40,7 +40,7 @@
 .multi-value-label {
 	font-size: 16px;
 	font-weight: 400;
-	line-height: 19.2px;
+	line-height: 1.5;
 	color: var(--color-text-primary);
 }
 
@@ -51,6 +51,7 @@
 .placeholder {
 	font-size: 16px;
 	font-weight: 400;
+	line-height: 1.5;
 	color: var(--color-text-secondary);
 }
 
@@ -70,7 +71,9 @@
 .option {
 	width: 100%;
 	padding: 8px 12px;
-	font-size: inherit;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 1.5;
 	color: var(--color-text-primary);
 	border-radius: 4px;
 }
@@ -95,7 +98,7 @@
 	padding: 20px;
 	font-size: 16px;
 	font-weight: 400;
-	line-height: 19.2px;
+	line-height: 1.2;
 	color: var(--color-text-secondary);
 }
 

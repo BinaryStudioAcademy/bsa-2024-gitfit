@@ -2,35 +2,32 @@ import {
 	type Control,
 	type FieldPath,
 	type FieldValues,
+	type Path,
+	type PathValue,
 } from "react-hook-form";
-import ReactSelect, {
-	type GroupBase,
-	type OptionsOrGroups,
-} from "react-select";
+import ReactSelect from "react-select";
 
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { useFormController } from "~/libs/hooks/hooks.js";
 
-import { type Option } from "./select.js";
+import { type Option } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
-type Properties<TFieldValues extends FieldValues, TValue> = {
+type Properties<TFieldValues extends FieldValues, TOptionValue> = {
 	control: Control<TFieldValues, null>;
 	isMulti?: boolean;
+	label: string;
 	name: FieldPath<TFieldValues>;
-	options:
-		| OptionsOrGroups<Option<TValue>, GroupBase<Option<TValue>>>
-		| undefined;
-	title?: string;
+	options: Option<TOptionValue>[];
 };
 
-const Select = <TFieldValues extends FieldValues, TValue>({
+const Select = <TFieldValues extends FieldValues, TOptionValue>({
 	control,
 	isMulti = false,
+	label,
 	name,
 	options,
-	title,
-}: Properties<TFieldValues, TValue>): JSX.Element => {
+}: Properties<TFieldValues, TOptionValue>): JSX.Element => {
 	const { field } = useFormController({
 		control,
 		name,
@@ -38,7 +35,7 @@ const Select = <TFieldValues extends FieldValues, TValue>({
 
 	return (
 		<label className={styles["label"]}>
-			<span className={styles["label-text"]}>{title}</span>
+			<span className={styles["label-text"]}>{label}</span>
 			<ReactSelect
 				classNames={{
 					control: (state) =>
@@ -66,7 +63,7 @@ const Select = <TFieldValues extends FieldValues, TValue>({
 				isMulti={isMulti}
 				name={name}
 				onChange={field.onChange}
-				options={options}
+				options={options as PathValue<TFieldValues, Path<TFieldValues>>}
 				unstyled
 				value={field.value}
 			/>
