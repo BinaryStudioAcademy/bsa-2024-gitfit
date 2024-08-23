@@ -1,12 +1,13 @@
-.container {
+.label {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
 }
 
-.title {
+.label-text {
 	font-size: 16px;
 	font-weight: 500;
+	line-height: 19.2px;
 	color: var(--color-text-primary);
 }
 
@@ -20,6 +21,7 @@
 .single-value {
 	font-size: 16px;
 	font-weight: 500;
+	line-height: 19.2px;
 	color: var(--color-text-primary);
 }
 
@@ -38,6 +40,7 @@
 .multi-value-label {
 	font-size: 16px;
 	font-weight: 400;
+	line-height: 19.2px;
 	color: var(--color-text-primary);
 }
 
@@ -58,12 +61,6 @@
 		0deg 4px 11px var(--box-shadow);
 }
 
-.placeholder {
-	font-size: 16px;
-	font-weight: 400;
-	color: var(--color-text-secondary);
-}
-
 .option {
 	width: 100%;
 	padding: 8px 12px;
@@ -72,15 +69,19 @@
 	border-radius: 4px;
 }
 
-.control--focused {
-	border-color: var(--color-brand-primary-hover);
+.control-focused {
+	border-color: var(--color-brand-primary);
 }
 
-.option--focused {
-	background-color: var(--color-brand-primary-hover);
+.option-focused {
+	background-color: color-mix(
+		in srgb,
+		var(--color-brand-primary-hover),
+		black 40%
+	);
 }
 
-.option--selected {
+.option-selected {
 	background-color: var(--color-brand-primary);
 }
 
@@ -88,6 +89,7 @@
 	padding: 20px;
 	font-size: 16px;
 	font-weight: 400;
+	line-height: 19.2px;
 	color: var(--color-text-secondary);
 }
 

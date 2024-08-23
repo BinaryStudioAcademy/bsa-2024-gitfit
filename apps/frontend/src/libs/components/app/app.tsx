@@ -23,14 +23,19 @@ import { actions as userActions } from "~/modules/users/users.js";
 
 import { type Option } from "../select/select.js";
 
-const App = (): JSX.Element => {
-	type SelectData = {
-		options: Option<number>[];
-	};
+type SelectData = {
+	options: Option<number>[];
+};
 
+const App = (): JSX.Element => {
+	const options = [
+		{ label: "Option1", value: 1 },
+		{ label: "Option2", value: 2 },
+		{ label: "Option3", value: 3 },
+	];
 	const { control } = useAppForm<SelectData>({
 		defaultValues: {
-			options: [],
+			options: [{ label: "Option1", value: 1 }],
 		},
 	});
 
@@ -85,11 +90,12 @@ const App = (): JSX.Element => {
 					<Table<Person> columns={mockTableColumns} data={mockTableData} />
 				</>
 			)}
-			<Select<SelectData>
+			<Select<SelectData, number>
 				control={control}
 				isMulti
 				name="options"
-				options={[]}
+				options={options}
+				title="gdhgf"
 			/>
 		</>
 	);

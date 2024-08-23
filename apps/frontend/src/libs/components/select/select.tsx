@@ -11,39 +11,40 @@ import ReactSelect, {
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { useFormController } from "~/libs/hooks/hooks.js";
 
+import { type Option } from "./select.js";
 import styles from "./styles.module.css";
 
-type Properties<T extends FieldValues> = {
-	control: Control<T, null>;
+type Properties<TFieldValues extends FieldValues, TValue> = {
+	control: Control<TFieldValues, null>;
 	isMulti?: boolean;
-	name: FieldPath<T>;
-	options: OptionsOrGroups<unknown, GroupBase<unknown>> | undefined;
-	placeholder?: string;
+	name: FieldPath<TFieldValues>;
+	options:
+		| OptionsOrGroups<Option<TValue>, GroupBase<Option<TValue>>>
+		| undefined;
 	title?: string;
 };
 
-const Select = <T extends FieldValues>({
+const Select = <TTFieldValues extends FieldValues, TValue>({
 	control,
 	isMulti = false,
 	name,
 	options,
-	placeholder,
 	title,
-}: Properties<T>): JSX.Element => {
+}: Properties<TTFieldValues, TValue>): JSX.Element => {
 	const { field } = useFormController({
 		control,
 		name,
 	});
 
 	return (
-		<div className={styles["container"]}>
-			{title && <span className={styles["title"]}>{title}</span>}
+		<label className={styles["label"]}>
+			<span className={styles["label-text"]}>{title}</span>
 			<ReactSelect
 				classNames={{
 					control: (state) =>
 						getValidClassNames(
 							styles["control"],
-							state.isFocused && styles["control--focused"],
+							state.isFocused && styles["control-focused"],
 						),
 					indicatorsContainer: () =>
 						getValidClassNames(styles["indicators-container"]),
@@ -57,8 +58,8 @@ const Select = <T extends FieldValues>({
 					option: (state) =>
 						getValidClassNames(
 							styles["option"],
-							state.isSelected && styles["option--selected"],
-							state.isFocused && styles["option--focused"],
+							state.isSelected && styles["option-selected"],
+							state.isFocused && styles["option-focused"],
 						),
 					placeholder: () => getValidClassNames(styles["placeholder"]),
 					singleValue: () => getValidClassNames(styles["single-value"]),
@@ -69,11 +70,10 @@ const Select = <T extends FieldValues>({
 				name={name}
 				onChange={field.onChange}
 				options={options}
-				placeholder={placeholder}
 				unstyled
 				value={field.value}
 			/>
-		</div>
+		</label>
 	);
 };
 
