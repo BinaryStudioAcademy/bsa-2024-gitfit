@@ -2,7 +2,7 @@ import { type ReactNode, useEffect, useRef } from "react";
 
 import crossIconSrc from "~/assets/images/icons/cross.svg";
 
-import styles from "./modal.module.css";
+import styles from "./styles.module.css";
 
 type Properties = {
 	children: ReactNode;
