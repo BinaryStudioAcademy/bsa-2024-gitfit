@@ -1,38 +1,48 @@
 import { Icon } from "~/libs/components/components.js";
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 
 import { type IconName } from "../icon/types/types.js";
+import { ICON_SIZE } from "./libs/constants/constants.js";
+import { type ButtonVariant } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	iconColor?: string | undefined;
-	iconHeight: number;
+	disabled?: boolean;
+	iconColor?: string;
 	iconName: IconName;
-	iconWidth: number;
 	label: string;
 	onClick: () => void;
+	variant?: ButtonVariant;
 };
 
 const IconButton = ({
+	disabled = false,
 	iconColor,
-	iconHeight,
 	iconName,
-	iconWidth,
 	label,
 	onClick,
+	variant = "primary",
 }: Properties): JSX.Element => {
+	const hasBorder = variant === "outlined";
+	const buttonClasses = getValidClassNames({
+		[styles["icon-button"] ?? ""]: true,
+		[styles["with-border"] ?? ""]: hasBorder,
+	});
+
 	return (
 		<button
 			aria-label={label}
-			className={styles["icon-button"]}
+			className={buttonClasses}
+			disabled={disabled}
 			onClick={onClick}
 			type="button"
 		>
 			<span className="visually-hidden">{label}</span>
 			<Icon
 				color={iconColor}
-				height={iconHeight}
+				height={ICON_SIZE.HEIGHT}
 				name={iconName}
-				width={iconWidth}
+				width={ICON_SIZE.WIDTH}
 			/>
 		</button>
 	);

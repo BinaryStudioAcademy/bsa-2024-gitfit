@@ -2,8 +2,24 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: var(--color-text-secondary);
+	width: 32px;
+	height: 32px;
 	cursor: pointer;
 	background-color: inherit;
 	border: 0;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+}
+
+.icon-button:disabled {
+	cursor: default;
+	opacity: 0.5;
+}
+
+.icon-button:hover:not(:disabled) {
+	background-color: var(--color-background-hover);
+}
+
+.with-border {
+	border: 1px solid var(--color-border-secondary);
 }
