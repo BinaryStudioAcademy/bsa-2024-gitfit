@@ -1,5 +1,7 @@
 import { type ReactNode, useEffect, useRef } from "react";
 
+import crossIconSrc from "~/assets/images/icons/cross.svg";
+
 import styles from "./modal.module.css";
 
 type Properties = {
@@ -46,7 +48,7 @@ const Modal = ({ children, onClose, open, title }: Properties): JSX.Element => {
 				<div className={styles["modal-header-title"]}>
 					<h2>{title}</h2>
 					<button className={styles["modal-close"]} onClick={onClose}>
-						×
+						<img alt="Close" height="20" src={crossIconSrc} width="20" />
 					</button>
 				</div>
 				<div className={styles["modal-body"]}>{children}</div>
