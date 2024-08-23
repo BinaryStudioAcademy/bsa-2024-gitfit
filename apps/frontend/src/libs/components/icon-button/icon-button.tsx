@@ -1,5 +1,6 @@
 import { Icon } from "~/libs/components/components.js";
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
+import { type Color } from "~/libs/types/types.js";
 
 import { type IconName } from "../icon/types/types.js";
 import { ICON_SIZE } from "./libs/constants/constants.js";
@@ -8,7 +9,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	disabled?: boolean;
-	iconColor?: string;
+	iconColor?: Color;
 	iconName: IconName;
 	label: string;
 	onClick: () => void;
@@ -17,7 +18,7 @@ type Properties = {
 
 const IconButton = ({
 	disabled = false,
-	iconColor,
+	iconColor = "textSecondary",
 	iconName,
 	label,
 	onClick,
