@@ -1,6 +1,7 @@
-import { type ReactNode, useEffect, useRef } from "react";
+import { type ReactNode, useRef } from "react";
 
 import crossIconSrc from "~/assets/images/icons/cross.svg";
+import { useHandleClickOutside } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
 
@@ -19,29 +20,7 @@ const Modal = ({
 }: Properties): JSX.Element | null => {
 	const dialogReference = useRef<HTMLDialogElement>(null);
 
-	useEffect(() => {
-		const dialog = dialogReference.current;
-
-		if (dialog) {
-			if (isOpened) {
-				dialog.showModal();
-			} else {
-				dialog.close();
-			}
-
-			const handleClickOutside = (event: MouseEvent): void => {
-				if (event.target === dialog) {
-					onClose();
-				}
-			};
-
-			dialog.addEventListener("click", handleClickOutside);
-
-			return (): void => {
-				dialog.removeEventListener("click", handleClickOutside);
-			};
-		}
-	}, [isOpened, onClose]);
+	useHandleClickOutside(dialogReference, onClose);
 
 	if (!isOpened) {
 		return null;
