@@ -3,7 +3,7 @@ import { type Entity } from "~/libs/types/types.js";
 import { type UserAuthResponseDto } from "./libs/types/types.js";
 
 class UserEntity implements Entity {
-	private createdAt?: string;
+	private createdAt: string;
 
 	private email: string;
 
@@ -23,7 +23,7 @@ class UserEntity implements Entity {
 		passwordHash,
 		passwordSalt,
 	}: {
-		createdAt?: string | undefined;
+		createdAt: string;
 		email: string;
 		id: null | number;
 		name: string;
@@ -35,7 +35,7 @@ class UserEntity implements Entity {
 		this.name = name;
 		this.passwordHash = passwordHash;
 		this.passwordSalt = passwordSalt;
-		this.createdAt = createdAt ?? new Date().toISOString();
+		this.createdAt = createdAt;
 	}
 
 	public static initialize({
@@ -75,6 +75,7 @@ class UserEntity implements Entity {
 		passwordSalt: string;
 	}): UserEntity {
 		return new UserEntity({
+			createdAt: "",
 			email,
 			id: null,
 			name,
@@ -99,7 +100,7 @@ class UserEntity implements Entity {
 
 	public toObject(): UserAuthResponseDto {
 		return {
-			createdAt: this.createdAt ?? new Date().toISOString(),
+			createdAt: this.createdAt,
 			email: this.email,
 			id: this.id as number,
 			name: this.name,
