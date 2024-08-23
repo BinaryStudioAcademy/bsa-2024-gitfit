@@ -28,14 +28,9 @@ type SelectData = {
 };
 
 const App = (): JSX.Element => {
-	const options = [
-		{ label: "Option1", value: 1 },
-		{ label: "Option2", value: 2 },
-		{ label: "Option3", value: 3 },
-	];
 	const { control } = useAppForm<SelectData>({
 		defaultValues: {
-			options: [{ label: "Option1", value: 1 }],
+			options: [],
 		},
 	});
 
@@ -94,7 +89,7 @@ const App = (): JSX.Element => {
 				control={control}
 				isMulti
 				name="options"
-				options={options}
+				options={[]}
 				title="gdhgf"
 			/>
 		</>
