@@ -19,14 +19,14 @@ import {
 	useLocation,
 	useModal,
 } from "~/libs/hooks/hooks.js";
-import { actions as userActions } from "~/modules/users/users.js"; // Import the new hook
+import { actions as userActions } from "~/modules/users/users.js";
 
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
 	const dataStatus = useAppSelector(({ users }) => users.dataStatus);
 	const users = useAppSelector(({ users }) => users.users);
-	const { closeModal, isOpened, showModal } = useModal(); // Use the new hook
+	const { closeModal, isOpened, showModal } = useModal();
 
 	const isRoot = pathname === AppRoute.ROOT;
 	const isLoading = dataStatus === "pending";
