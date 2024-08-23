@@ -1,19 +1,29 @@
-.modal-container::backdrop {
+.modal-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	width: 100vw;
+	height: 100vh;
 	background-color: var(--color-overlay);
 }
 
 .modal-container {
-	position: relative;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 1000;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
-	width: 800px;
-	height: 190px;
+	min-width: 800px;
+	min-height: 190px;
 	padding: 24px;
 	background: var(--color-background-secondary);
 	border: 1px solid var(--color-border-secondary);
 	border-radius: 8px;
+	transform: translate(-50%, -50%);
 }
 
 .modal-header {

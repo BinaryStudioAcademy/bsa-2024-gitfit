@@ -27,27 +27,32 @@ const Modal = ({
 	}
 
 	return (
-		<dialog
-			aria-label={title}
-			className={styles["modal-container"]}
-			ref={dialogReference}
-		>
-			<div className={styles["modal-content"]}>
-				<div className={styles["modal-header-title"]}>
-					<h3>{title}</h3>
-					<div className={styles["modal-close"]}>
-						<IconButton
-							iconHeight={10.61}
-							iconName="cross"
-							iconWidth={10.61}
-							label="Close"
-							onClick={onClose}
-						/>
+		<>
+			{/* Backdrop element */}
+			<div className={styles["modal-backdrop"]} />
+
+			<dialog
+				aria-label={title}
+				className={styles["modal-container"]}
+				ref={dialogReference}
+			>
+				<div className={styles["modal-content"]}>
+					<div className={styles["modal-header-title"]}>
+						<h3>{title}</h3>
+						<div className={styles["modal-close"]}>
+							<IconButton
+								iconHeight={10.61}
+								iconName="cross"
+								iconWidth={10.61}
+								label="Close"
+								onClick={onClose}
+							/>
+						</div>
 					</div>
+					<div className={styles["modal-body"]}>{children}</div>
 				</div>
-				<div className={styles["modal-body"]}>{children}</div>
-			</div>
-		</dialog>
+			</dialog>
+		</>
 	);
 };
 
