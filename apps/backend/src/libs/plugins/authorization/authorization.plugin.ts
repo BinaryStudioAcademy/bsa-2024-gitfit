@@ -41,10 +41,15 @@ const authorization = fp<Options>((fastify, options, done) => {
 			const payload = await token.verifyToken(jwtToken);
 			const { userId } = payload;
 
-			if (userId) {
-				const user = await userService.find(userId as number);
-				request.user = user;
+			if (!userId) {
+				throw new AuthError({
+					message: ExceptionMessage.INVALID_TOKEN_NO_USER_ID,
+					status: HTTPCode.UNAUTHORIZED,
+				});
 			}
+
+			const user = await userService.find(userId as number);
+			request.user = user;
 		} catch (error) {
 			const isTokenExpiredError = error instanceof JWTExpired;
 
@@ -54,6 +59,10 @@ const authorization = fp<Options>((fastify, options, done) => {
 					message: ExceptionMessage.TOKEN_EXPIRED,
 					status: HTTPCode.UNAUTHORIZED,
 				});
+			}
+
+			if (error instanceof AuthError) {
+				throw error;
 			}
 
 			throw new AuthError({
