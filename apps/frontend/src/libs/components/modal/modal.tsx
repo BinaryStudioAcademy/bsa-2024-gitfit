@@ -1,8 +1,8 @@
 import { type ReactNode, useRef } from "react";
 
-import crossIconSrc from "~/assets/images/icons/cross.svg";
 import { useHandleClickOutside } from "~/libs/hooks/hooks.js";
 
+import { IconButton } from "../components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
@@ -34,10 +34,16 @@ const Modal = ({
 		>
 			<div className={styles["modal-content"]}>
 				<div className={styles["modal-header-title"]}>
-					<h2>{title}</h2>
-					<button className={styles["modal-close"]} onClick={onClose}>
-						<img alt="Close" height="20" src={crossIconSrc} width="20" />
-					</button>
+					<h3>{title}</h3>
+					<div className={styles["modal-close"]}>
+						<IconButton
+							iconHeight={10.61}
+							iconName="cross"
+							iconWidth={10.61}
+							label="Close"
+							onClick={onClose}
+						/>
+					</div>
 				</div>
 				<div className={styles["modal-body"]}>{children}</div>
 			</div>
