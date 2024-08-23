@@ -102,22 +102,26 @@ const TablePagination = ({
 				<div className={styles["change-page-buttons"]}>
 					<ChangePageButton
 						disabled={!hasPreviousPage}
-						icon="<<"
+						iconName="leftDoubleArrow"
+						label="Open first page"
 						onClick={handleFirstPageClick}
 					/>
 					<ChangePageButton
 						disabled={!hasPreviousPage}
-						icon="<"
+						iconName="leftArrow"
+						label="Open previous page"
 						onClick={handlePreviousPageClick}
 					/>
 					<ChangePageButton
 						disabled={!hasNextPage}
-						icon=">"
+						iconName="rightArrow"
+						label="Open next page"
 						onClick={handleNextPageClick}
 					/>
 					<ChangePageButton
 						disabled={!hasNextPage}
-						icon=">>"
+						iconName="rightDoubleArrow"
+						label="Open last page"
 						onClick={handleLastPageClick}
 					/>
 				</div>

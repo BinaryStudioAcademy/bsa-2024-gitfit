@@ -1,20 +1,28 @@
-import styles from "./styles.module.css";
+import { IconButton } from "~/libs/components/components.js";
+import { type IconName } from "~/libs/components/icon/types/types.js";
 
 type Properties = {
 	disabled?: boolean;
-	icon: string; // TODO: expect Icon component here
+	iconName: IconName;
+	label: string;
 	onClick: () => void;
 };
 
 const ChangePageButton = ({
-	disabled,
-	icon,
+	disabled = false,
+	iconName,
+	label,
 	onClick,
 }: Properties): JSX.Element => {
 	return (
-		<button className={styles["button"]} disabled={disabled} onClick={onClick}>
-			{icon}
-		</button>
+		<IconButton
+			disabled={disabled}
+			iconColor="textPrimary"
+			iconName={iconName}
+			label={label}
+			onClick={onClick}
+			variant="outlined"
+		/>
 	);
 };
 
