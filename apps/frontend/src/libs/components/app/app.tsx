@@ -4,6 +4,7 @@ import {
 	Header,
 	Link,
 	Loader,
+	Modal,
 	RouterOutlet,
 	Table,
 } from "~/libs/components/components.js";
@@ -20,8 +21,6 @@ import {
 	useLocation,
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
-
-import { Modal } from "../modal/modal.js";
 
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch();
