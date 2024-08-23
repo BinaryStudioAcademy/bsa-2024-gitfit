@@ -28,14 +28,21 @@ const authorization = fp<Options>((fastify, options, done) => {
 			}
 		}
 
-		const jwtToken = request.headers["authorization"];
+		const authHeader = request.headers["authorization"];
 
-		if (!jwtToken) {
+		if (!authHeader) {
 			throw new AuthError({
 				message: ExceptionMessage.NO_TOKEN_PROVIDED,
 				status: HTTPCode.UNAUTHORIZED,
 			});
 		}
+
+		const BEARER_PREFIX = "Bearer ";
+		const BEARER_PREFIX_LENGTH = BEARER_PREFIX.length;
+
+		const jwtToken = authHeader.startsWith(BEARER_PREFIX)
+			? authHeader.slice(BEARER_PREFIX_LENGTH)
+			: authHeader;
 
 		try {
 			const payload = await token.verifyToken(jwtToken);
