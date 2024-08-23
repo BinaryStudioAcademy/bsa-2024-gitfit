@@ -1,5 +1,13 @@
-import { Button, Input } from "~/libs/components/components.js";
-import { useAppForm, useCallback } from "~/libs/hooks/hooks.js";
+import { useNavigate } from "react-router-dom";
+
+import {
+	Button,
+	IconButton,
+	Input,
+	Link,
+} from "~/libs/components/components.js";
+import { AppRoute } from "~/libs/enums/enums.js";
+import { useAppForm, useCallback, useState } from "~/libs/hooks/hooks.js";
 import {
 	type UserSignUpRequestDto,
 	userSignUpValidationSchema,
@@ -18,36 +26,74 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 		validationSchema: userSignUpValidationSchema,
 	});
 
+	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+	const navigate = useNavigate();
+
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit(onSubmit)(event_);
+			void handleSubmit((formData: UserSignUpRequestDto) => {
+				onSubmit(formData);
+				navigate(AppRoute.ROOT);
+			})(event_);
 		},
-		[handleSubmit, onSubmit],
+		[handleSubmit, onSubmit, navigate],
 	);
 
+	const handleTogglePasswordVisibility = useCallback(() => {
+		setIsPasswordVisible((previousState) => !previousState);
+	}, []);
+
 	return (
-		<>
-			<h1>Sign Up</h1>
-			<form className={styles["form"]} onSubmit={handleFormSubmit}>
-				<Input
-					control={control}
-					errors={errors}
-					label="Email"
-					name="email"
-					placeholder="email@example.com"
-					type="text"
-				/>
-				<Input
-					control={control}
-					errors={errors}
-					label="Password"
-					name="password"
-					placeholder="••••••••"
-					type="text"
-				/>
-				<Button label="Sign up" type="submit" />
-			</form>
-		</>
+		<section className={styles["auth-container"]}>
+			<div className={styles["left-side"]}>
+				{/* TODO: replace logo */}
+				<img alt="logo" className={styles["logo-wrapper"]} src="" />
+			</div>
+			<div className={styles["right-side"]}>
+				<h3 className={styles["form-title"]}>Create an account</h3>
+				<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>
+					<p className={styles["form-text"]}>
+						Have an account? <Link to={AppRoute.SIGN_IN}>Log in</Link>
+					</p>
+					<Input
+						autoComplete="given-name"
+						control={control}
+						errors={errors}
+						label="Name"
+						name="name"
+						type="text"
+					/>
+					<Input
+						autoComplete="username"
+						control={control}
+						errors={errors}
+						label="Email"
+						name="email"
+						type="email"
+					/>
+					<div className={styles["password-container"]}>
+						<Input
+							autoComplete="one-time-code"
+							control={control}
+							errors={errors}
+							label="Password"
+							name="password"
+							rightIcon={
+								<IconButton
+									iconHeight={18}
+									iconName={isPasswordVisible ? "strikedEye" : "eye"}
+									iconWidth={18}
+									label={isPasswordVisible ? "Hide password" : "Show password"}
+									onClick={handleTogglePasswordVisibility}
+								/>
+							}
+							type={isPasswordVisible ? "text" : "password"}
+						/>
+					</div>
+					<Button label="Sign up" type="submit" />
+				</form>
+			</div>
+		</section>
 	);
 };
 

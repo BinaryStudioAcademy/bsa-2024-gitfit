@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 
-import reactLogo from "~/assets/images/react.svg";
 import {
+	Header,
 	Link,
 	Loader,
 	RouterOutlet,
@@ -49,9 +49,7 @@ const App = (): JSX.Element => {
 
 	return (
 		<>
-			<h1>Test Heading: If you can see this, your setup works!</h1>
-			<img alt="logo" src={reactLogo} width="30" />
-
+			<Header />
 			<ul>
 				<li>
 					<Link to={AppRoute.ROOT}>Root</Link>
