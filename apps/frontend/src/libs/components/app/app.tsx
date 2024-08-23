@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
 import reactLogo from "~/assets/images/react.svg";
 import {
@@ -21,7 +21,7 @@ import {
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-import { Modal } from "../modal/modal.js"; // Ensure this path is correct
+import { Modal } from "../modal/modal.js";
 
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch();

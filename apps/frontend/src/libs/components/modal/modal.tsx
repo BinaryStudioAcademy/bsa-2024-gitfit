@@ -23,11 +23,11 @@ const Modal = ({ children, onClose, open, title }: Properties): JSX.Element => {
 	return (
 		<dialog
 			aria-label={title}
-			className={styles["modal-overlay"]}
+			className={styles["modal-container"]}
 			ref={dialogReference}
 		>
 			<div className={styles["modal-content"]}>
-				<div className={styles["modal-header"]}>
+				<div className={styles["modal-header-title"]}>
 					<h2>{title}</h2>
 					<button className={styles["modal-close"]} onClick={onClose}>
 						×
