@@ -1,5 +1,5 @@
-import reactLogo from "~/assets/images/react.svg";
 import {
+	Header,
 	Link,
 	Loader,
 	RouterOutlet,
@@ -41,8 +41,7 @@ const App = (): JSX.Element => {
 
 	return (
 		<>
-			<img alt="logo" src={reactLogo} width="30" />
-
+			<Header />
 			<ul>
 				<li>
 					<Link to={AppRoute.ROOT}>Root</Link>
