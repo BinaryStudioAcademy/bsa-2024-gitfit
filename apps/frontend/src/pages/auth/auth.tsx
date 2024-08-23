@@ -60,7 +60,22 @@ const Auth = (): JSX.Element => {
 	};
 
 	return (
-		<main className={styles["container"]}>{handleScreenRender(pathname)}</main>
+		<main className={styles["container"]}>
+			<section className={styles["auth-container"]}>
+				<div className={styles["left-side"]}>
+					{/* TODO: replace logo */}
+					<img alt="logo" className={styles["logo-wrapper"]} src="" />
+				</div>
+				<div className={styles["right-side"]}>
+					<h3 className={styles["form-title"]}>
+						{pathname === AppRoute.SIGN_IN
+							? "Welcome back"
+							: "Create an account"}
+					</h3>
+					{handleScreenRender(pathname)}
+				</div>
+			</section>
+		</main>
 	);
 };
 

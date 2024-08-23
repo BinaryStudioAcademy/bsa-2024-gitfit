@@ -40,49 +40,40 @@ const SignInForm = ({ onSubmit }: Properties): JSX.Element => {
 	}, []);
 
 	return (
-		<section className={styles["auth-container"]}>
-			<div className={styles["left-side"]}>
-				{/* TODO: replace logo */}
-				<img alt="logo" className={styles["logo-wrapper"]} src="" />
-			</div>
-			<div className={styles["right-side"]}>
-				<h3 className={styles["form-title"]}>Welcome back</h3>
-				<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>
-					<p className={styles["form-text"]}>
-						Don&apos;t have an account?{" "}
-						<Link to={AppRoute.SIGN_UP}>Create new</Link>
-					</p>
-					<Input
-						autoComplete="username"
-						control={control}
-						errors={errors}
-						label="Email"
-						name="email"
-						type="email"
-					/>
-					<div className={styles["password-container"]}>
-						<Input
-							autoComplete="one-time-code"
-							control={control}
-							errors={errors}
-							label="Password"
-							name="password"
-							rightIcon={
-								<IconButton
-									iconHeight={18}
-									iconName={isPasswordVisible ? "strikedEye" : "eye"}
-									iconWidth={18}
-									label={isPasswordVisible ? "Hide password" : "Show password"}
-									onClick={handleTogglePasswordVisibility}
-								/>
-							}
-							type={isPasswordVisible ? "text" : "password"}
+		<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>
+			<p className={styles["form-text"]}>
+				Don&apos;t have an account?{" "}
+				<Link to={AppRoute.SIGN_UP}>Create new</Link>
+			</p>
+			<Input
+				autoComplete="username"
+				control={control}
+				errors={errors}
+				label="Email"
+				name="email"
+				type="email"
+			/>
+			<div className={styles["password-container"]}>
+				<Input
+					autoComplete="one-time-code"
+					control={control}
+					errors={errors}
+					label="Password"
+					name="password"
+					rightIcon={
+						<IconButton
+							iconHeight={18}
+							iconName={isPasswordVisible ? "strikedEye" : "eye"}
+							iconWidth={18}
+							label={isPasswordVisible ? "Hide password" : "Show password"}
+							onClick={handleTogglePasswordVisibility}
 						/>
-					</div>
-					<Button label="Log in" type="submit" />
-				</form>
+					}
+					type={isPasswordVisible ? "text" : "password"}
+				/>
 			</div>
-		</section>
+			<Button label="Log in" type="submit" />
+		</form>
 	);
 };
 
