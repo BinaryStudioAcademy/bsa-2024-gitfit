@@ -1,5 +1,3 @@
-import { useCallback, useState } from "react";
-
 import {
 	Header,
 	Link,
@@ -19,15 +17,16 @@ import {
 	useAppSelector,
 	useEffect,
 	useLocation,
+	useModal,
 } from "~/libs/hooks/hooks.js";
-import { actions as userActions } from "~/modules/users/users.js";
+import { actions as userActions } from "~/modules/users/users.js"; // Import the new hook
 
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
 	const dataStatus = useAppSelector(({ users }) => users.dataStatus);
 	const users = useAppSelector(({ users }) => users.users);
-	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	const { closeModal, isOpened, showModal } = useModal(); // Use the new hook
 
 	const isRoot = pathname === AppRoute.ROOT;
 	const isLoading = dataStatus === "pending";
@@ -37,14 +36,6 @@ const App = (): JSX.Element => {
 			void dispatch(userActions.loadAll());
 		}
 	}, [isRoot, dispatch]);
-
-	const openModal = useCallback((): void => {
-		setIsModalOpen(true);
-	}, []);
-
-	const closeModal = useCallback((): void => {
-		setIsModalOpen(false);
-	}, []);
 
 	return (
 		<>
@@ -66,13 +57,11 @@ const App = (): JSX.Element => {
 				<RouterOutlet />
 			</div>
 
-			<button onClick={openModal}>Open Modal</button>
+			<button onClick={showModal}>Open Modal</button>
 
-			{isModalOpen && (
-				<Modal onClose={closeModal} open={isModalOpen} title="Test Modal">
-					<p>This is a test modal content.</p>
-				</Modal>
-			)}
+			<Modal isOpened={isOpened} onClose={closeModal} title="Test Modal">
+				<p>This is a test modal content.</p>
+			</Modal>
 
 			{isRoot && (
 				<>

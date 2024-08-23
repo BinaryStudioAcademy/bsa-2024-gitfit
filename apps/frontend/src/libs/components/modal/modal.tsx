@@ -6,19 +6,24 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	children: ReactNode;
+	isOpened: boolean;
 	onClose: () => void;
-	open: boolean;
 	title: string;
 };
 
-const Modal = ({ children, onClose, open, title }: Properties): JSX.Element => {
+const Modal = ({
+	children,
+	isOpened,
+	onClose,
+	title,
+}: Properties): JSX.Element | null => {
 	const dialogReference = useRef<HTMLDialogElement>(null);
 
 	useEffect(() => {
 		const dialog = dialogReference.current;
 
 		if (dialog) {
-			if (open) {
+			if (isOpened) {
 				dialog.showModal();
 			} else {
 				dialog.close();
@@ -36,7 +41,11 @@ const Modal = ({ children, onClose, open, title }: Properties): JSX.Element => {
 				dialog.removeEventListener("click", handleClickOutside);
 			};
 		}
-	}, [open, onClose]);
+	}, [isOpened, onClose]);
+
+	if (!isOpened) {
+		return null;
+	}
 
 	return (
 		<dialog
