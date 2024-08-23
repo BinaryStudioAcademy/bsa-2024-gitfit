@@ -46,24 +46,21 @@ const Select = <TFieldValues extends FieldValues, TValue>({
 							styles["control"],
 							state.isFocused && styles["control-focused"],
 						),
-					indicatorsContainer: () =>
-						getValidClassNames(styles["indicators-container"]),
-					input: () => getValidClassNames(styles["input"]),
-					menu: () => getValidClassNames(styles["menu"]),
-					multiValue: () => getValidClassNames(styles["multi-value"]),
-					multiValueLabel: () =>
-						getValidClassNames(styles["multi-value-label"]),
-					noOptionsMessage: () =>
-						getValidClassNames(styles["no-options-message"]),
+					indicatorsContainer: () => styles["indicators-container"] as string,
+					input: () => styles["input"] as string,
+					menu: () => styles["menu"] as string,
+					multiValue: () => styles["multi-value"] as string,
+					multiValueLabel: () => styles["multi-value-label"] as string,
+					noOptionsMessage: () => styles["no-options-message"] as string,
 					option: (state) =>
 						getValidClassNames(
 							styles["option"],
 							state.isSelected && styles["option-selected"],
 							state.isFocused && styles["option-focused"],
 						),
-					placeholder: () => getValidClassNames(styles["placeholder"]),
-					singleValue: () => getValidClassNames(styles["single-value"]),
-					valueContainer: () => getValidClassNames(styles["value-container"]),
+					placeholder: () => styles["placeholder"] as string,
+					singleValue: () => styles["single-value"] as string,
+					valueContainer: () => styles["value-container"] as string,
 				}}
 				isClearable={false}
 				isMulti={isMulti}
