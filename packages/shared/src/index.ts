@@ -30,6 +30,10 @@ export {
 } from "./libs/types/types.js";
 export { AuthApiPath, AuthError } from "./modules/auth/auth.js";
 export {
+	type GroupCreateRequestDto,
+	groupCreateValidationSchema,
+} from "./modules/groups/groups.js";
+export {
 	type UserAuthResponseDto,
 	UserError,
 	type UserGetAllItemResponseDto,
