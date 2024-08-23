@@ -4,3 +4,4 @@ export {
 	type ProjectCreateRequestDto,
 	type ProjectCreateResponseDto,
 } from "./libs/types/types.js";
+export { projectCreate as projectCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";

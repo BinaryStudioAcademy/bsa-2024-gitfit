@@ -9,6 +9,7 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { ProjectsApiPath } from "./libs/enums/enums.js";
 import { type ProjectCreateRequestDto } from "./libs/types/types.js";
+import { projectCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectService } from "./project.service.js";
 
 /**
@@ -52,6 +53,9 @@ class ProjectController extends BaseController {
 				),
 			method: "POST",
 			path: ProjectsApiPath.ROOT,
+			validation: {
+				body: projectCreateValidationSchema,
+			},
 		});
 	}
 
