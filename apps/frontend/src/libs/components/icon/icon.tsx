@@ -3,9 +3,9 @@ import { type IconName } from "./types/types.js";
 
 type Properties = {
 	color?: string | undefined;
-	height?: number;
+	height: number;
 	name: IconName;
-	width?: number;
+	width: number;
 };
 
 const Icon = ({ color, height, name, width }: Properties): JSX.Element => {

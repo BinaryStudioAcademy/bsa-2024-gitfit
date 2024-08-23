@@ -1,8 +1,13 @@
+import { type NavigationItem } from "~/libs/types/navigation-item.type.js";
+
 import { SidebarItem } from "./sidebar-item/sidebar-item.js";
-import { type NavigationItem } from "./sidebar-item/type.js";
 import styles from "./styles.module.css";
 
-const Sidebar = ({ items }: { items: NavigationItem[] }): JSX.Element => {
+type Properties = {
+	items: NavigationItem[];
+};
+
+const Sidebar = ({ items }: Properties): JSX.Element => {
 	return (
 		<ul className={styles["sidebar"]}>
 			{items.map((item) => (

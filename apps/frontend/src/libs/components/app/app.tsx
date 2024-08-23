@@ -11,6 +11,7 @@ import {
 	mockData as mockTableData,
 	type Person,
 } from "~/libs/components/table/mock-data.js";
+import { sidebarItems } from "~/libs/constants/navigation-items.constants.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -19,8 +20,6 @@ import {
 	useLocation,
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
-
-import { sidebarItems } from "../sidebar/sidebar-items.js";
 
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch();
@@ -55,7 +54,7 @@ const App = (): JSX.Element => {
 
 			<main>
 				<Sidebar items={sidebarItems} />
-				<div className="main">
+				<div>
 					<p>Current path: {pathname}</p>
 
 					<div>

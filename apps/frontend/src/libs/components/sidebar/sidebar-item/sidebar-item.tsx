@@ -6,7 +6,7 @@ import { type ValueOf } from "~/libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	href: "#" | ValueOf<typeof AppRoute>;
+	href: ValueOf<typeof AppRoute>;
 	icon: IconName;
 	label: string;
 };
@@ -14,7 +14,7 @@ type Properties = {
 const SidebarItem = ({ href, icon, label }: Properties): JSX.Element => (
 	<li className={styles["sidebar-item"]}>
 		<Link to={href}>
-			<Icon height={17} name={icon} width={17} />
+			<Icon height={20} name={icon} width={20} />
 			<label>{label}</label>
 		</Link>
 	</li>
