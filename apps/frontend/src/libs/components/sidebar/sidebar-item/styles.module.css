@@ -1,4 +1,4 @@
-.sidebar-item > * {
+.navigation-link {
 	display: flex;
 	flex-direction: row;
 	gap: 8px;
@@ -8,21 +8,21 @@
 	text-decoration: none;
 }
 
-.sidebar-item > *:hover {
+.navigation-link:hover {
 	color: var(--color-text-primary);
 	background-color: var(--color-background-secondary);
 	border-radius: 6px;
 }
 
-.sidebar-item > *:hover svg {
+.navigation-link:hover svg {
 	color: var(--color-brand-primary);
 }
 
-label {
+.navigation-item-label {
 	font-size: 16px;
 	line-height: 120%;
 }
 
-.sidebar-item > *:hover label {
+.navigation-link:hover .navigation-item-label {
 	cursor: pointer;
 }

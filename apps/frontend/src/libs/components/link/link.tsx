@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
-	to: "#" | ValueOf<typeof AppRoute>;
+	to: ValueOf<typeof AppRoute>;
 };
 
 const Link = ({ children, to }: Properties): JSX.Element => (

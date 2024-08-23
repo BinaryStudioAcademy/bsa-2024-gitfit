@@ -1,5 +1,5 @@
 import { AppRoute } from "~/libs/enums/enums.js";
-import { type NavigationItem } from "~/libs/types/navigation-item.type.js";
+import { type NavigationItem } from "~/libs/types/types.js";
 
 const sidebarItems: NavigationItem[] = [
 	{

@@ -11,7 +11,7 @@ import {
 	mockData as mockTableData,
 	type Person,
 } from "~/libs/components/table/mock-data.js";
-import { sidebarItems } from "~/libs/constants/navigation-items.constants.js";
+import { sidebarItems } from "~/libs/constants/constants.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -51,8 +51,8 @@ const App = (): JSX.Element => {
 				</li>
 			</ul>
 			<p>Current path: {pathname}</p>
-
-			<main>
+			{/* TODO: Delete inline styles after implementation */}
+			<main style={{ display: "flex", flex: "1" }}>
 				<Sidebar items={sidebarItems} />
 				<div>
 					<p>Current path: {pathname}</p>
