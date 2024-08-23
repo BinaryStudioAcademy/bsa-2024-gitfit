@@ -5,6 +5,10 @@ import {
 	useState,
 } from "~/libs/hooks/hooks.js";
 
+import { DEFAULT_VALUES, FIRST_PAGE } from "./libs/constants/constants.js";
+import { QueryParameter } from "./libs/enums/enums.js";
+import { calculateTotalPages } from "./libs/helpers/helpers.js";
+
 type Parameters = {
 	totalItems: number;
 };
@@ -16,32 +20,23 @@ type ReturnType = {
 	pageSize: number;
 };
 
-const FIRST_PAGE = 1;
-const DEFAULT_PAGE = 1;
-const DEFAULT_PAGE_SIZE = 10;
-const QUERY_PARAMS = {
-	page: "page",
-	pageSize: "pageSize",
-};
-const calculateTotalPages = (pageSize: number, totalItems: number): number =>
-	Math.ceil(totalItems / pageSize);
-
 const usePagination = ({ totalItems }: Parameters): ReturnType => {
 	const [searchParameters, setSearchParameters] = useSearchParams();
 
 	// There is no check for page and pageSize to be in available range
 	const pageQueryParameter =
-		Number(searchParameters.get(QUERY_PARAMS.page)) || DEFAULT_PAGE;
+		Number(searchParameters.get(QueryParameter.page)) || DEFAULT_VALUES.PAGE;
 	const pageSizeQueryParameter =
-		Number(searchParameters.get(QUERY_PARAMS.pageSize)) || DEFAULT_PAGE_SIZE;
+		Number(searchParameters.get(QueryParameter.pageSize)) ||
+		DEFAULT_VALUES.PAGE_SIZE;
 
 	const [page, setPage] = useState<number>(pageQueryParameter);
 	const [pageSize, setPageSize] = useState<number>(pageSizeQueryParameter);
 
 	useEffect(() => {
 		setSearchParameters({
-			[QUERY_PARAMS.page]: String(page),
-			[QUERY_PARAMS.pageSize]: String(pageSize),
+			[QueryParameter.page]: String(page),
+			[QueryParameter.pageSize]: String(pageSize),
 		});
 	}, [page, pageSize, setSearchParameters]);
 
