@@ -1,7 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
+	useAppSelector,
 	useCallback,
+	useEffect,
 	useLocation,
 } from "~/libs/hooks/hooks.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
@@ -16,6 +20,16 @@ import styles from "./styles.module.css";
 const Auth = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
+	const authenticatedUser = useAppSelector(
+		(state) => state.auth.authenticatedUser,
+	);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (authenticatedUser) {
+			navigate(AppRoute.ROOT);
+		}
+	}, [authenticatedUser, navigate]);
 
 	const handleSignInSubmit = useCallback(
 		(payload: UserSignInRequestDto): void => {

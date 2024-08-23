@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-
 import {
 	Button,
 	IconButton,
@@ -27,16 +25,14 @@ const SignInForm = ({ onSubmit }: Properties): JSX.Element => {
 	});
 
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-	const navigate = useNavigate();
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData: UserSignInRequestDto) => {
 				onSubmit(formData);
-				navigate(AppRoute.ROOT);
 			})(event_);
 		},
-		[handleSubmit, onSubmit, navigate],
+		[handleSubmit, onSubmit],
 	);
 
 	const handleTogglePasswordVisibility = useCallback(() => {
