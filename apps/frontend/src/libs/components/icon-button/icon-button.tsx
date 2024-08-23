@@ -8,18 +8,18 @@ import { type ButtonVariant } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	disabled?: boolean;
 	iconColor?: Color;
 	iconName: IconName;
+	isDisabled?: boolean;
 	label: string;
 	onClick: () => void;
 	variant?: ButtonVariant;
 };
 
 const IconButton = ({
-	disabled = false,
 	iconColor = "textSecondary",
 	iconName,
+	isDisabled = false,
 	label,
 	onClick,
 	variant = "primary",
@@ -34,7 +34,7 @@ const IconButton = ({
 		<button
 			aria-label={label}
 			className={buttonClasses}
-			disabled={disabled}
+			disabled={isDisabled}
 			onClick={onClick}
 			type="button"
 		>
