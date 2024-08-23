@@ -6,7 +6,7 @@
 	background-color: var(--color-background-primary);
 }
 
-.container__sidebar-content {
+.container-sidebar-content {
 	display: flex;
 	flex-direction: row;
 	width: 100%;

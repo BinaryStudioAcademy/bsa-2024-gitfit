@@ -8,7 +8,7 @@ import {
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-import { columns as nameOfColumns } from "./libs/enums/enums.js";
+import { columnHeader } from "./libs/constants/constants.js";
 import { transformUserData } from "./libs/helpers/helpers.js";
 import { type User } from "./libs/types/types.js";
 import styles from "./styles.module.css";
@@ -28,10 +28,10 @@ const AccessManagement = (): JSX.Element => {
 
 	return (
 		<div className={styles["content"]}>
-			<p className={styles["content__title"]}>Access Management</p>
-			<p className={styles["content__sub-title"]}>Users</p>
-			<div className={styles["content__table"]}>
-				<Table<User> columns={nameOfColumns} data={transformedData} />
+			<p className={styles["title"]}>Access Management</p>
+			<p className={styles["sub-title"]}>Users</p>
+			<div className={styles["table-container"]}>
+				<Table<User> columns={columnHeader} data={transformedData} />
 			</div>
 		</div>
 	);

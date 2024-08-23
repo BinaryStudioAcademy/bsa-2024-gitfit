@@ -43,9 +43,11 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 					},
 					{
 						element: (
-							<CommonLayout>
-								<AccessManagement />
-							</CommonLayout>
+							<ProtectedRoute>
+								<CommonLayout>
+									<AccessManagement />
+								</CommonLayout>
+							</ProtectedRoute>
 						),
 						path: AppRoute.ACCESS_MANAGEMENT,
 					},

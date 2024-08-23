@@ -1,4 +1,4 @@
-const formatUserDate = (createdAt: string): string => {
+const formatDate = (createdAt: string): string => {
 	const date = new Date(createdAt);
 
 	return date.toLocaleString("en-US", {
@@ -11,4 +11,4 @@ const formatUserDate = (createdAt: string): string => {
 	});
 };
 
-export { formatUserDate };
+export { formatDate };
