@@ -26,7 +26,7 @@ const App = (): JSX.Element => {
 	const { pathname } = useLocation();
 	const dataStatus = useAppSelector(({ users }) => users.dataStatus);
 	const users = useAppSelector(({ users }) => users.users);
-	const { closeModal, isOpened, showModal } = useModal();
+	const { handleCloseModal, handleShowModal, isOpened } = useModal();
 
 	const isRoot = pathname === AppRoute.ROOT;
 	const isLoading = dataStatus === "pending";
@@ -57,9 +57,9 @@ const App = (): JSX.Element => {
 				<RouterOutlet />
 			</div>
 
-			<button onClick={showModal}>Open Modal</button>
+			<button onClick={handleShowModal}>Open Modal</button>
 
-			<Modal isOpened={isOpened} onClose={closeModal} title="Test Modal">
+			<Modal isOpened={isOpened} onClose={handleCloseModal} title="Test Modal">
 				<p>This is a test modal content.</p>
 			</Modal>
 
