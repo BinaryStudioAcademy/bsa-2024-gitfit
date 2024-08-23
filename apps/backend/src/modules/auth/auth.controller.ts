@@ -76,18 +76,15 @@ class AuthController extends BaseController {
 	 *                    type: object
 	 *                    $ref: "#/components/schemas/User"
 	 */
-	private async getAuthenticatedUser(
+	private getAuthenticatedUser(
 		options: APIHandlerOptions,
 	): Promise<APIHandlerResponse> {
-		const userId = options; // TODO: redo after route protection merge (userId should be injected into request)
-		const user = await this.authService.getAuthenticatedUser(
-			userId as unknown as number,
-		);
+		const { user } = options;
 
-		return {
+		return Promise.resolve({
 			payload: user,
 			status: HTTPCode.OK,
-		};
+		});
 	}
 
 	/**
