@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "~/libs/hooks/hooks.js";
 
-import { ChangePageButton } from "./libs/components/components.js";
+import { IconButton } from "../components.js";
 import styles from "./styles.module.css";
 
 const options = [
@@ -100,29 +100,37 @@ const TablePagination = ({
 					Page {page} of {totalPages}
 				</p>
 				<div className={styles["change-page-buttons"]}>
-					<ChangePageButton
+					<IconButton
 						disabled={!hasPreviousPage}
+						iconColor="textPrimary"
 						iconName="leftDoubleArrow"
 						label="Open first page"
 						onClick={handleFirstPageClick}
+						variant="outlined"
 					/>
-					<ChangePageButton
+					<IconButton
 						disabled={!hasPreviousPage}
+						iconColor="textPrimary"
 						iconName="leftArrow"
 						label="Open previous page"
 						onClick={handlePreviousPageClick}
+						variant="outlined"
 					/>
-					<ChangePageButton
+					<IconButton
 						disabled={!hasNextPage}
+						iconColor="textPrimary"
 						iconName="rightArrow"
 						label="Open next page"
 						onClick={handleNextPageClick}
+						variant="outlined"
 					/>
-					<ChangePageButton
+					<IconButton
 						disabled={!hasNextPage}
+						iconColor="textPrimary"
 						iconName="rightDoubleArrow"
 						label="Open last page"
 						onClick={handleLastPageClick}
+						variant="outlined"
 					/>
 				</div>
 			</div>
