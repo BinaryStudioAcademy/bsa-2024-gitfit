@@ -19,10 +19,6 @@ const SidebarItem = ({ href, icon, label }: Properties): JSX.Element => (
 			<Icon height={20} name={icon} width={20} />
 			<label className={styles["navigation-item-label"]}>{label}</label>
 		</NavLink>
-		{/* <Link to={href}>
-			<Icon height={20} name={icon} width={20} />
-			<label>{label}</label>
-		</Link> */}
 	</li>
 );
 

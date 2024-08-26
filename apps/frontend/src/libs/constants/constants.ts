@@ -1,1 +1,1 @@
-export { sidebarItems } from "./navigation-items.constants.js";
+export { SIDEBAR_ITEMS } from "./navigation-items.constant.js";
