@@ -1,46 +1,45 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
-import { ApplicationError } from "~/libs/exceptions/exceptions.js";
-import { changeToSnakeCase } from "~/libs/helpers/helpers.js";
-import { type Service } from "~/libs/types/service.type.js";
+import { HTTPCode } from "~/libs/modules/http/http.js";
+import { type Service } from "~/libs/types/types.js";
 
-import { type GroupCreateRequestDto } from "./libs/types/types.js";
-import { UserGroupModel } from "./user-group.model.js";
-import { UserGroupsToPermissionsModel } from "./user-groups-to-permissions.model.js";
-import { UsersToUserGroupModel } from "./users-to-user-group.model.js";
+import { GroupEntity } from "./group.entity.js";
+import { type GroupRepository } from "./group.repository.js";
+import { GroupError } from "./libs/exceptions/exceptions.js";
+import {
+	type GroupCreateRequestDto,
+	type GroupCreateResponseDto,
+} from "./libs/types/types.js";
 
 class GroupService implements Service {
-	public async create(payload: GroupCreateRequestDto): Promise<void> {
-		const { name, permissionIds, userIds } = payload;
-		const key = changeToSnakeCase(name);
+	private groupRepository: GroupRepository;
 
-		const existingGroup = await UserGroupModel.query().findOne({ key });
+	public constructor(groupRepository: GroupRepository) {
+		this.groupRepository = groupRepository;
+	}
+
+	public async create(
+		payload: GroupCreateRequestDto,
+	): Promise<GroupCreateResponseDto> {
+		const { name, permissionIds, userIds } = payload;
+
+		const existingGroup = await this.groupRepository.findByName(name);
 
 		if (existingGroup) {
-			throw new ApplicationError({
-				message: ExceptionMessage.NAME_NOT_UNIQUE,
+			throw new GroupError({
+				message: ExceptionMessage.GROUP_NAME_USED,
+				status: HTTPCode.CONFLICT,
 			});
 		}
 
-		await UserGroupModel.transaction(async (trx) => {
-			const userGroup = await UserGroupModel.query(trx).insert({
-				key,
+		const item = await this.groupRepository.create(
+			GroupEntity.initializeNew({
 				name,
-			});
+				permissionIds,
+				userIds,
+			}),
+		);
 
-			await UserGroupsToPermissionsModel.query(trx).insert(
-				permissionIds.map((permissionId) => ({
-					permissionId,
-					userGroupId: userGroup.id,
-				})),
-			);
-
-			await UsersToUserGroupModel.query(trx).insert(
-				userIds.map((userId) => ({
-					userGroupId: userGroup.id,
-					userId,
-				})),
-			);
-		});
+		return item.toObject();
 	}
 
 	public delete(): ReturnType<Service["delete"]> {
