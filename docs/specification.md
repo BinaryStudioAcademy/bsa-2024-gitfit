@@ -25,7 +25,7 @@ The application is designed to collect and analyze developer activity in Git-bas
 
 **Element:** Header component.
 
-**How to reach:** Present on all pages except for auth pages (Sign In/Sign Up). Header should not be fixed on page.
+**How to reach:** Present on all pages except for auth pages (Sign In/Sign Up).
 
 The header component includes:
 
