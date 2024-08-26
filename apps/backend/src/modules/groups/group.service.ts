@@ -1,6 +1,6 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { ApplicationError } from "~/libs/exceptions/exceptions.js";
-import { transformToSnakeCase } from "~/libs/helpers/helpers.js";
+import { changeToSnakeCase } from "~/libs/helpers/helpers.js";
 import { type Service } from "~/libs/types/service.type.js";
 
 import { type GroupCreateRequestDto } from "./libs/types/types.js";
@@ -11,7 +11,7 @@ import { UsersToUserGroupModel } from "./users-to-user-group.model.js";
 class GroupService implements Service {
 	public async create(payload: GroupCreateRequestDto): Promise<void> {
 		const { name, permissionIds, userIds } = payload;
-		const key = transformToSnakeCase(name);
+		const key = changeToSnakeCase(name);
 
 		const existingGroup = await UserGroupModel.query().findOne({ key });
 
