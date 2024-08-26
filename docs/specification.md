@@ -132,7 +132,6 @@ Domain part (after the “@”):
 - At least 1 number ;
 - At least 1 special character (e.g., !@#$%)"
 
-When a user enters data in the password field an Informative message with password requirements must be shown under the field.
 
 ### 2.4 Access Management
 
