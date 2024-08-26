@@ -3,6 +3,9 @@ import { BaseHTTPApi } from "~/libs/modules/api/api.js";
 import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
 import {
+	type UserAuthResponseDto,
+	type UserSignInRequestDto,
+	type UserSignInResponseDto,
 	type UserSignUpRequestDto,
 	type UserSignUpResponseDto,
 } from "~/modules/users/users.js";
@@ -18,6 +21,34 @@ type Constructor = {
 class AuthApi extends BaseHTTPApi {
 	public constructor({ baseUrl, http, storage }: Constructor) {
 		super({ baseUrl, http, path: APIPath.AUTH, storage });
+	}
+
+	public async getAuthenticatedUser(): Promise<UserAuthResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(AuthApiPath.AUTHENTICATED_USER, {}),
+			{
+				hasAuth: true,
+				method: "GET",
+			},
+		);
+
+		return await response.json<UserAuthResponseDto>();
+	}
+
+	public async signIn(
+		payload: UserSignInRequestDto,
+	): Promise<UserSignInResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(AuthApiPath.SIGN_IN, {}),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: false,
+				method: "POST",
+				payload: JSON.stringify(payload),
+			},
+		);
+
+		return await response.json<UserSignInResponseDto>();
 	}
 
 	public async signUp(
