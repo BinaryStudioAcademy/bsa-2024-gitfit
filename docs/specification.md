@@ -176,7 +176,7 @@ The "Create Group Modal" includes:
 
 **Element:** Modal component
 
-**How to reach:** Opened by clicking the “Edit" button in the “Groups” table row on the "Access Management" page.
+**How to reach:** Opened by clicking the “Edit" button in the “Groups” table row on the "Access Management" page. Accessible for users with “Manage User Access” permission.
 
 The "Update Group Modal" includes:
 
