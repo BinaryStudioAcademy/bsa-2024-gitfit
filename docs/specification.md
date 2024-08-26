@@ -230,13 +230,11 @@ Allows to view and analyze commit data.
 The "Analytics" page includes:
 
 - "Search” field: Allows the user to search for contributors by name.
-- “Project” select.
+- “Project” select. Displays list of all projects.
 - “Date” field: Allows the user to select a period.
   The period for viewing data is limited to a maximum of 1 month. Users can select specific months rather than a custom date range.
   The application does not allow selecting future dates for viewing data.
-- “Analytics” table: Displays selected dates as columns and contributors as rows. Each cell shows the number of commits made by the contributor on that date. If there are no commits, a minus sign is displayed.
-  The "Select project" dropdown list displays all projects with a scroll function if there are many. It should also allow users to search by typing the project name.
-  When no projects are available or a project isn't chosen, the Analytics page displays a "No projects" message that covers the entire screen, without filtering options.
+- “Analytics” table: Displays selected dates as columns and contributors as rows. Each cell shows the number of commits made by the contributor on that date. If there are no commits, a minus sign is displayed. When no projects are available or a project isn't chosen, the Analytics page displays a "No projects" message that covers the entire screen, without filtering options.
 
 ### 2.8 Contributors
 
