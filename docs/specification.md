@@ -215,8 +215,9 @@ The "Projects" page includes:
 
 The "Create Project Modal" includes:
 
-- “Name” field.
-- “Description” field.
+- “Name” field. The "Name" field should have a character limit between 1 and 50 characters. This should be synchronized with the database field. The field is required.
+  When user attempts to create a project without completing required fields, a red validation message should appear below the "Project Name" field.
+- “Description” field. The field is optional and should allow up to 1000 characters. A character counter should be displayed below the text area, indicating the current character count (e.g., "100/1000").
 - “Create” button: When clicked, submits the form, closes the modal, and adds the new project to the top of the "Projects" list.
 - “Close” icon: When clicked, the modal is closed.
 
