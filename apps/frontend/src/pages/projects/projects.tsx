@@ -13,7 +13,7 @@ import {
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-const DefaultPage = (): JSX.Element => {
+const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
 	const dataStatus = useAppSelector(({ users }) => users.dataStatus);
@@ -48,6 +48,7 @@ const DefaultPage = (): JSX.Element => {
 							))}
 						</ul>
 					)}
+
 					<Table<Person> columns={mockTableColumns} data={mockTableData} />
 				</>
 			)}
@@ -55,4 +56,4 @@ const DefaultPage = (): JSX.Element => {
 	);
 };
 
-export { DefaultPage };
+export { Projects };

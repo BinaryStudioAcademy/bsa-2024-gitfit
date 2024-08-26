@@ -12,8 +12,8 @@ import {
 import { AppRoute } from "~/libs/enums/enums.js";
 import { store } from "~/libs/modules/store/store.js";
 import { Auth } from "~/pages/auth/auth.jsx";
-import { DefaultPage } from "~/pages/default/default.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
+import { Projects } from "~/pages/projects/projects.jsx";
 
 createRoot(document.querySelector("#root") as HTMLElement).render(
 	<StrictMode>
@@ -25,7 +25,7 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: (
 									<ProtectedRoute>
-										<DefaultPage />
+										<Projects />
 									</ProtectedRoute>
 								),
 								path: AppRoute.ROOT,
