@@ -25,11 +25,11 @@ The application is designed to collect and analyze developer activity in Git-bas
 
 **Element:** Header component.
 
-**How to reach:** Present on all pages except for auth pages (Sign In/Sign Up).
+**How to reach:** Present on all pages except for auth pages (Sign In/Sign Up). Header should not be fixed on page.
 
 The header component includes:
 
-- Logo.
+- Logo: Redirects to the main “Projects page”.
 - “Notifications” icon: Displays a popup with an unread notifications count. When clicked, the "Notifications Popup" is shown.
 - “Avatar” icon: When clicked, the "User Popup" is shown.
 
