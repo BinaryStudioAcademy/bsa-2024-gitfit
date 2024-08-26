@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 type Properties = {
 	handleCloseModal: () => void;
@@ -9,13 +9,13 @@ type Properties = {
 const useModal = (): Properties => {
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 
-	const handleShowModal = useCallback((): void => {
+	const handleShowModal = (): void => {
 		setIsOpened(true);
-	}, []);
+	};
 
-	const handleCloseModal = useCallback((): void => {
+	const handleCloseModal = (): void => {
 		setIsOpened(false);
-	}, []);
+	};
 
 	return { handleCloseModal, handleShowModal, isOpened };
 };
