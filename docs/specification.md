@@ -49,9 +49,9 @@ The "User Popup" includes:
 
 **Element:** Sidebar component.
 
-**How to reach:** Present on all pages except for auth pages.
+**How to reach:** Present on all pages except for auth pages.Fixed on the page and does not change its appearance.
 
-Provides quick access to primary application pages.
+Provides quick access to primary application pages. Transition might appear when an active item changes in the sidebar.
 
 The sidebar component includes:
 
