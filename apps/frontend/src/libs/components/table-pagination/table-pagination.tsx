@@ -1,15 +1,14 @@
 import { useAppForm, useCallback, useMemo } from "~/libs/hooks/hooks.js";
 import { calculateTotalPages } from "~/libs/hooks/use-pagination/libs/helpers/helpers.js";
-import { type SelectOption } from "~/libs/types/types.js";
 
 import { IconButton, Select } from "../components.js";
+import {
+	FIRST_PAGE,
+	PAGE_INCREMENT,
+	PAGE_SIZE_OPTIONS,
+} from "./libs/constants/constants.js";
+import { type FormData, type PageSizeOption } from "./libs/types/types.js";
 import styles from "./styles.module.css";
-
-const options = [
-	{ label: "10", value: 10 },
-	{ label: "25", value: 25 },
-	{ label: "50", value: 50 },
-];
 
 type Properties = {
 	onPageChange: (page: number) => void;
@@ -18,13 +17,6 @@ type Properties = {
 	pageSize: number;
 	totalItems: number;
 };
-
-type FormData = {
-	pageSize: SelectOption<number>;
-};
-
-const FIRST_PAGE = 1;
-const PAGE_INCREMENT = 1;
 
 const TablePagination = ({
 	onPageChange,
@@ -48,7 +40,7 @@ const TablePagination = ({
 	const hasPreviousPage = useMemo(() => page > FIRST_PAGE, [page]);
 
 	const handlePageSizeChange = useCallback(
-		(option: SelectOption<number>) => {
+		(option: PageSizeOption) => {
 			onPageSizeChange(option.value);
 		},
 		[onPageSizeChange],
@@ -76,13 +68,13 @@ const TablePagination = ({
 			<div className={styles["pagination-container"]}>
 				<div className={styles["rows-per-page"]}>
 					<p>Rows per page:</p>
-					<Select<FormData, number>
+					<Select<FormData, PageSizeOption["value"]>
 						control={control}
 						isLabelVissible={false}
 						label="Rows per page"
 						name="pageSize"
 						onChange={handlePageSizeChange}
-						options={options}
+						options={PAGE_SIZE_OPTIONS}
 						placeholder=""
 						variant="small"
 					/>
