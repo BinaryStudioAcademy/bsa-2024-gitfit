@@ -138,7 +138,7 @@ When a user enters data in the password field an Informative message with passwo
 
 **Element:** Separate page.
 
-**How to reach:** Accessible from the sidebar by clicking the "Access Management" link for users with "View and Edit" and "Manage" access granted.
+**How to reach:** Accessible from the sidebar by clicking the "Access Management" link for users with access granted.
 
 **Page appearance for users with no access**
 Header is shown.
@@ -162,7 +162,7 @@ The "Access Management" page includes:
 
 **Element:** Modal component
 
-**How to reach:** Opened by clicking the “Create new" button in the “Groups” table on the "Access Management" page.
+**How to reach:** Opened by clicking the “Create new" button in the “Groups” table on the "Access Management" page. Accessible for users with “Manage User Access” permission.
 
 The "Create Group Modal" includes:
 
@@ -172,7 +172,7 @@ The "Create Group Modal" includes:
 - “Create” button: When clicked, submits the form, closes the modal, and adds the new group to the top of the "Groups" list.
 - “Close” icon: When clicked, the modal is closed.
 
-#### 2.4.1 Update Group Modal
+#### 2.4.2 Update Group Modal
 
 **Element:** Modal component
 
