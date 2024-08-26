@@ -99,7 +99,6 @@ Hide/Show password toggle must be located on the right side of a Password input 
 
 Red validation message (‘Field cannot be empty’) appears below the inputs when fields are empty. (for both SignIn, SignUp including Name, Email and Password fields).
 
-When attempting to log in with invalid data a Red validation message appears under the Password filed (‘Invalid login credentials. Please try again’)
 
 **Fields validation rules**
 
