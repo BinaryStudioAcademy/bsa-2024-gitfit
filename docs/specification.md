@@ -189,6 +189,10 @@ The "Project" page includes:
 - “Contributors” list: Displays a list of contributors, each containing:
   - Contributor name.
   - Last commit relative date (e.g., “15 minutes ago”).
+    The time limits for color indicators are as follows:
+    - Green: < 2 days
+    - Yellow: < 5 days
+    - Red: >= 5 days
   - Activity graph: When clicked, the user is redirected to the “Analytics page” with the "Project" and "Search" fields preselected.
   - “Edit” icon: When clicked, the “Update Contributor Modal” is opened.
 
@@ -198,10 +202,13 @@ The "Project" page includes:
 
 **How to reach:** Opened by clicking the "Edit" icon on the "Project" page.
 
+The "Edit" icon should be accessible only to users with the appropriate permissions.
+
 The "Update Project Modal" includes:
 
-- “Name” field (prefilled).
-- “Description” field (prefilled).
+- “Name” field (prefilled). The "Name" field should have a character limit between 1 and 50 characters.
+- “Description” field (prefilled). The "Description" field is optional and should allow up to 1000 characters.
+  A character counter should be displayed below the text area, indicating the current character count (e.g., "100/1000").
 - “Update” button: When clicked, submits the form, closes the modal, and updates the project data on the page.
 - “Close” icon: When clicked, the modal is closed.
 
@@ -214,7 +221,7 @@ The "Update Project Modal" includes:
 The "Setup Analytics Modal" includes:
 
 - Instructions paragraph: Provides instructions on setting up analytics.
-- “API Key” field: Automatically generated API key that stores user id and project id.
+- “API Key” field: Automatically generated API key that stores user id and project id. There is no limit to the number of times the API key can be regenerated, and there is no time limit for its use.
 - “Regenerate” button: When clicked, the “API Key” should be regenerated and the “Script” should be updated.
 - “Script” field: Contains a script for setting up statistics, with the API key (prefilled) and repository path as parameters. The script runs in the background, collects repository statistics, and periodically sends them to the backend.
 - “Close” icon: When clicked, the modal is closed.
