@@ -93,6 +93,35 @@ The "Sign In" page includes:
 - "Password" field.
 - "Log In" button: Submits the form and redirects the user to the "Projects" page.
 
+Hide/Show password toggle must be located on the right side of a Password input field. Single-click to expose/hide password. (For both SignIn and SignUp)
+
+**Field validation rules:**
+
+1. Email field:
+
+- The format should include a local part, an "@" symbol, and a domain part.
+- The length < 50.
+  Local part (before the “@”) :
+  - should contain alphanumeric characters, optionally separated by dots, underscores, or hyphens;
+  - cannot start or end with a dot or contain consecutive dots.
+    Domain part (after the “@”):
+  - must contain at least two characters;
+  - must contain at least one dot;
+  - should consist of alphanumeric characters (A-Z, a-z, 0-9) and hyphens;
+
+2. Name field:
+
+- the name can contain any characters, including letters, numbers, spaces, and special characters;
+- at least 3 characters;
+
+3. Password must include:
+
+- At least 5 characters;
+- At least 1 uppercase letter (A-Z);
+- At least 1 lowercase letter (a-z);
+- At least 1 number;
+- At least 1 special character (e.g., !@#$%)"
+
 ### 2.4 Access Management
 
 **Element:** Separate page.
