@@ -1,12 +1,10 @@
-import { type ReactNode } from "react";
-
 import { Header, Sidebar } from "~/libs/components/components.js";
 import { SIDEBAR_ITEMS } from "~/libs/constants/navigation-items.constant.js";
 
 import styles from "./styles.module.css";
 
 type CommonLayoutProperties = {
-	children: ReactNode;
+	children: React.ReactNode;
 };
 
 const CommonLayout = ({ children }: CommonLayoutProperties): JSX.Element => {
