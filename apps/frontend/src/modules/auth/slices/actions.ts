@@ -4,10 +4,24 @@ import { StorageKey } from "~/libs/modules/storage/storage.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import {
 	type UserAuthResponseDto,
+	type UserSignInRequestDto,
 	type UserSignUpRequestDto,
 } from "~/modules/users/users.js";
 
 import { name as sliceName } from "./auth.slice.js";
+
+const signIn = createAsyncThunk<
+	UserAuthResponseDto,
+	UserSignInRequestDto,
+	AsyncThunkConfig
+>(`${sliceName}/sign-in`, async (payload, { extra }) => {
+	const { authApi, storage } = extra;
+
+	const { token, user } = await authApi.signIn(payload);
+	await storage.set(StorageKey.TOKEN, token);
+
+	return user;
+});
 
 const getAuthenticatedUser = createAsyncThunk<
 	null | UserAuthResponseDto,
@@ -40,4 +54,4 @@ const signUp = createAsyncThunk<
 	return user;
 });
 
-export { getAuthenticatedUser, signUp };
+export { getAuthenticatedUser, signIn, signUp };
