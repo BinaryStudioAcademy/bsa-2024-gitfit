@@ -5,7 +5,9 @@ import { Avatar, Popup, UserPopup } from "../components.js";
 import styles from "./styles.module.css";
 
 const Header = (): JSX.Element => {
-	let authenticatedUser = useAppSelector(({ auth }) => auth.authenticatedUser);
+	const authenticatedUser = useAppSelector(
+		({ auth }) => auth.authenticatedUser,
+	);
 
 	if (!authenticatedUser) {
 		return <></>;

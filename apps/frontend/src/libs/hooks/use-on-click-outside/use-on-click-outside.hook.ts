@@ -1,8 +1,8 @@
-import { type RefObject, useLayoutEffect } from "react";
+import { useLayoutEffect } from "~/libs/hooks/hooks.js";
 
 type Parameters = {
 	callback: () => void;
-	ref: RefObject<HTMLElement>;
+	ref: React.RefObject<HTMLElement>;
 };
 
 const useOnClickOutside = ({ callback, ref }: Parameters): void => {
