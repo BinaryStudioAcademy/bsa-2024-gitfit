@@ -80,6 +80,8 @@ The "Sign Up" page includes:
 - "Password" field.
 - "Create Account" button: Submits the form and redirects the user to the "Projects" page.
 
+When attempting to Sign Up with credentials of already existing user a toast notification "Credentials are invalid" is shown in the lower right corner.
+
 #### 2.3.2 Sign In
 
 **Element:** Separate page.
@@ -92,6 +94,45 @@ The "Sign In" page includes:
 - "Email" field.
 - "Password" field.
 - "Log In" button: Submits the form and redirects the user to the "Projects" page.
+
+Hide/Show password toggle must be located on the right side of a Password input field. Single-click to expose/hide password. (For both SignIn and SignUp)
+
+Red validation message (‘Field cannot be empty’) appears below the inputs when fields are empty. (for both SignIn, SignUp including Name, Email and Password fields).
+
+When attempting to log in with invalid data a Red validation message appears under the Password filed (‘Invalid login credentials. Please try again’)
+
+**Fields validation rules**
+
+1. Email field:
+
+- The format should include a local part, an "@" symbol, and a domain part.
+- The length < 50.
+
+Local part (before the “@”) :
+
+- should contain alphanumeric characters, optionally separated by dots, underscores, or hyphens;
+- cannot start or end with a dot or contain consecutive dots.
+
+Domain part (after the “@”):
+
+- must contain at least two characters;
+- must contain at least one dot;
+- should consist of alphanumeric characters (A-Z, a-z, 0-9) and hyphens.
+
+2. Name field:
+
+- The name can contain any characters, including letters, numbers, spaces, and special characters;
+- Length > 0.
+
+3. Password must include:
+
+- At least 5 characters ;
+- At least 1 uppercase letter (A-Z);
+- At least 1 lowercase letter (a-z);
+- At least 1 number ;
+- At least 1 special character (e.g., !@#$%)"
+
+When a user enters data in the password field an Informative message with password requirements must be shown under the field.
 
 ### 2.4 Access Management
 
