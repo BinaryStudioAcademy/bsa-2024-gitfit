@@ -18,11 +18,22 @@
 	border-radius: 6px;
 }
 
+.control-small {
+	min-height: 32px;
+	padding: 4.5px 7px;
+	border-radius: 4px;
+}
+
 .single-value {
 	font-size: 16px;
 	font-weight: 500;
-	line-height: 1.2;
+	line-height: 1.5;
 	color: var(--color-text-primary);
+}
+
+.single-value-small {
+	font-size: 14px;
+	font-weight: 400;
 }
 
 .multi-value {

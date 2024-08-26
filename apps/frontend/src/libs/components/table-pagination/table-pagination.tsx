@@ -1,6 +1,7 @@
-import { useCallback, useMemo } from "~/libs/hooks/hooks.js";
+import { useAppForm, useCallback, useMemo } from "~/libs/hooks/hooks.js";
+import { type SelectOption } from "~/libs/types/types.js";
 
-import { IconButton } from "../components.js";
+import { IconButton, Select } from "../components.js";
 import styles from "./styles.module.css";
 
 const options = [
@@ -17,35 +18,9 @@ type Properties = {
 	totalItems: number;
 };
 
-// TODO: replace this select with app select
-// ===>
-type MockSelectProperties = {
-	onChange: (value: number) => void;
-	options: { label: string; value: number }[];
+type FormData = {
+	pageSize: SelectOption<number>;
 };
-
-const MockSelect = ({
-	onChange,
-	options,
-}: MockSelectProperties): JSX.Element => {
-	const handleOnChange = useCallback(
-		(event: React.ChangeEvent<HTMLSelectElement>) => {
-			onChange(Number(event.target.value));
-		},
-		[onChange],
-	);
-
-	return (
-		<select onChange={handleOnChange}>
-			{options.map(({ label, value }) => (
-				<option key={label} value={value}>
-					{label}
-				</option>
-			))}
-		</select>
-	);
-};
-// <===
 
 const FIRST_PAGE = 1;
 const PAGE_INCREMENT = 1;
@@ -57,6 +32,12 @@ const TablePagination = ({
 	pageSize,
 	totalItems,
 }: Properties): JSX.Element => {
+	const { control } = useAppForm<FormData>({
+		defaultValues: {
+			pageSize: { label: String(pageSize), value: pageSize },
+		},
+	});
+
 	const totalPages = useMemo(
 		() => Math.ceil(totalItems / pageSize),
 		[totalItems, pageSize],
@@ -66,8 +47,8 @@ const TablePagination = ({
 	const hasPreviousPage = useMemo(() => page > FIRST_PAGE, [page]);
 
 	const handlePageSizeChange = useCallback(
-		(newPageSize: number) => {
-			onPageSizeChange(newPageSize);
+		(option: SelectOption<number>) => {
+			onPageSizeChange(option.value);
 		},
 		[onPageSizeChange],
 	);
@@ -94,7 +75,16 @@ const TablePagination = ({
 			<div className={styles["pagination-container"]}>
 				<div className={styles["rows-per-page"]}>
 					<p>Rows per page:</p>
-					<MockSelect onChange={handlePageSizeChange} options={options} />
+					<Select<FormData, number>
+						control={control}
+						isLabelVissible={false}
+						label="Rows per page"
+						name="pageSize"
+						onChange={handlePageSizeChange}
+						options={options}
+						placeholder=""
+						variant="small"
+					/>
 				</div>
 				<p>
 					Page {page} of {totalPages}
