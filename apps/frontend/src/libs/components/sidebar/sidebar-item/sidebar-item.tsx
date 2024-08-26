@@ -1,19 +1,11 @@
 import { NavLink } from "react-router-dom";
 
 import { Icon } from "~/libs/components/components.js";
-import { type IconName } from "~/libs/components/icon/types/types.js";
-import { type AppRoute } from "~/libs/enums/enums.js";
-import { type ValueOf } from "~/libs/types/types.js";
+import { type NavigationItem } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
 
-type Properties = {
-	href: ValueOf<typeof AppRoute>;
-	icon: IconName;
-	label: string;
-};
-
-const SidebarItem = ({ href, icon, label }: Properties): JSX.Element => (
+const SidebarItem = ({ href, icon, label }: NavigationItem): JSX.Element => (
 	<li className={styles["sidebar-item"]}>
 		<NavLink className={styles["navigation-link"] ?? ""} to={href}>
 			<span className={styles["navigation-icon"]}>
