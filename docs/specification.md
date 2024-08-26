@@ -196,14 +196,14 @@ Allows to view, create, and edit projects.
 
 The "Projects" page includes:
 
-- "Search” field: Allows the user to search by project name.
+- "Search” field: Allows the user to search by project name.Entering text displays results on-the-fly in a pop-up window. When no results matching the entered query found the "No projects found matching your search criteria. Please try different keywords." message is shown.
 - “Create New” button: When clicked, the “Create Project Modal” is opened.
 - “Projects” list: Displays a list of projects, each containing:
 
   - Project name.
   - Last commit relative date (e.g., "15 minutes ago").
   - Activity graph: When clicked, it redirects the user to the "Analytics" page with the "Project" field preselected.
-  - "Options" icon: When clicked, a menu with the "Edit" and “Delete” options is shown. When the “Edit” option is clicked, the “Update Project Modal” is opened. When the “Delete” option is clicked, a confirmation modal is opened before deleting the group.
+  - "Options" icon: When clicked, a menu with the "Edit" and “Delete” options is shown. When the “Edit” option is clicked, the “Update Project Modal” is opened. When the “Delete” option is clicked, a confirmation modal is opened before deleting the project. Deleting a project requires admin rights or "Manage Project" access permissions.
 
   When an item is clicked, the user is redirected to the specific “Project” page.
 
