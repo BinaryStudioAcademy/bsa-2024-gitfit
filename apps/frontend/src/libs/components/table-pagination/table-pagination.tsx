@@ -101,7 +101,6 @@ const TablePagination = ({
 				</p>
 				<div className={styles["change-page-buttons"]}>
 					<IconButton
-						iconColor="textPrimary"
 						iconName="leftDoubleArrow"
 						isDisabled={!hasPreviousPage}
 						label="Open first page"
@@ -109,7 +108,6 @@ const TablePagination = ({
 						variant="outlined"
 					/>
 					<IconButton
-						iconColor="textPrimary"
 						iconName="leftArrow"
 						isDisabled={!hasPreviousPage}
 						label="Open previous page"
@@ -117,7 +115,6 @@ const TablePagination = ({
 						variant="outlined"
 					/>
 					<IconButton
-						iconColor="textPrimary"
 						iconName="rightArrow"
 						isDisabled={!hasNextPage}
 						label="Open next page"
@@ -125,7 +122,6 @@ const TablePagination = ({
 						variant="outlined"
 					/>
 					<IconButton
-						iconColor="textPrimary"
 						iconName="rightDoubleArrow"
 						isDisabled={!hasNextPage}
 						label="Open last page"
