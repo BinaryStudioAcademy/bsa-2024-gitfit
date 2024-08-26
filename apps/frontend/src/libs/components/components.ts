@@ -10,6 +10,8 @@ export { Loader } from "./loader/loader.js";
 export { Popup } from "./popup/popup.js";
 export { ProtectedRoute } from "./protected-route/protected-route.js";
 export { RouterProvider } from "./router-provider/router-provider.js";
+export { Select } from "./select/select.js";
+export { Sidebar } from "./sidebar/sidebar.js";
 export { Table } from "./table/table.js";
 export { ToastContainer } from "./toast-container/toast-container.js";
 export { UserPopup } from "./user-popup/user-popup.js";

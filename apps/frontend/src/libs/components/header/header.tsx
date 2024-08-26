@@ -11,7 +11,7 @@ const Header = (): JSX.Element => {
 		return <></>;
 	}
 
-	const { email, name } = authenticatedUser.user;
+	const { email, name } = authenticatedUser;
 
 	return (
 		<header className={styles["header"]}>

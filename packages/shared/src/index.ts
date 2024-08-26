@@ -30,6 +30,13 @@ export {
 } from "./libs/types/types.js";
 export { AuthApiPath, AuthError } from "./modules/auth/auth.js";
 export {
+	type ProjectCreateRequestDto,
+	type ProjectCreateResponseDto,
+	projectCreateValidationSchema,
+	ProjectError,
+	ProjectsApiPath,
+} from "./modules/projects/projects.js";
+export {
 	type UserAuthResponseDto,
 	UserError,
 	type UserGetAllItemResponseDto,
