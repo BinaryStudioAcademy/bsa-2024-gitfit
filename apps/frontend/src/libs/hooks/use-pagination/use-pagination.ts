@@ -53,7 +53,7 @@ const usePagination = ({ totalItems }: Parameters): ReturnType => {
 		) {
 			setPage(pageParameter);
 		}
-	}, [pageQueryParameter, pageSizeQueryParameter]);
+	}, []);
 
 	useEffect(() => {
 		setSearchParameters({
