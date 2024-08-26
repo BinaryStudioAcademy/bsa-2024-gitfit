@@ -14,7 +14,7 @@
 	border-radius: 6px;
 }
 
-.navigation-link:hover svg {
+.navigation-link:hover .navigation-icon {
 	color: var(--color-brand-primary);
 }
 

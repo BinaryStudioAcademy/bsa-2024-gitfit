@@ -16,7 +16,9 @@ type Properties = {
 const SidebarItem = ({ href, icon, label }: Properties): JSX.Element => (
 	<li className={styles["sidebar-item"]}>
 		<NavLink className={styles["navigation-link"] ?? ""} to={href}>
-			<Icon height={20} name={icon} width={20} />
+			<span className={styles["navigation-icon"]}>
+				<Icon height={20} name={icon} width={20} />
+			</span>
 			<label className={styles["navigation-item-label"]}>{label}</label>
 		</NavLink>
 	</li>
