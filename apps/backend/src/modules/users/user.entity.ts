@@ -3,7 +3,7 @@ import { type Entity } from "~/libs/types/types.js";
 import { type UserAuthResponseDto } from "./libs/types/types.js";
 
 class UserEntity implements Entity {
-	private createdAt: string;
+	private createdAt: null | string;
 
 	private email: string;
 
@@ -23,7 +23,7 @@ class UserEntity implements Entity {
 		passwordHash,
 		passwordSalt,
 	}: {
-		createdAt: string;
+		createdAt: null | string;
 		email: string;
 		id: null | number;
 		name: string;
@@ -75,7 +75,7 @@ class UserEntity implements Entity {
 		passwordSalt: string;
 	}): UserEntity {
 		return new UserEntity({
-			createdAt: "",
+			createdAt: null,
 			email,
 			id: null,
 			name,
@@ -100,7 +100,7 @@ class UserEntity implements Entity {
 
 	public toObject(): UserAuthResponseDto {
 		return {
-			createdAt: this.createdAt,
+			createdAt: this.createdAt as string,
 			email: this.email,
 			id: this.id as number,
 			name: this.name,

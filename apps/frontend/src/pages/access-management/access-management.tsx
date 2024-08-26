@@ -1,3 +1,5 @@
+import { formatDate, type UserAuthResponseDto } from "@git-fit/shared";
+
 import { Table } from "~/libs/components/components.js";
 import {
 	useAppDispatch,
@@ -6,8 +8,7 @@ import {
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-import { columnHeader as headers } from "./libs/constants/constants.js";
-import { transformUserData } from "./libs/helpers/helpers.js";
+import { TABLE_COLUMNS as headers } from "./libs/constants/constants.js";
 import { type User } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
@@ -19,7 +20,10 @@ const AccessManagement = (): JSX.Element => {
 		void dispatch(userActions.loadAll());
 	}, [dispatch]);
 
-	const columns: User[] = transformUserData(users);
+	const columns: UserAuthResponseDto[] = users.map((user) => ({
+		...user,
+		createdAt: formatDate(new Date(user.createdAt), "d MMM yyyy HH:mm"),
+	}));
 
 	return (
 		<div className={styles["content"]}>

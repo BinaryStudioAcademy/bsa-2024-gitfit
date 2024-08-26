@@ -13,8 +13,8 @@ import { AppRoute } from "~/libs/enums/enums.js";
 import { store } from "~/libs/modules/store/store.js";
 import { AccessManagement } from "~/pages/access-management/access-management.jsx";
 import { Auth } from "~/pages/auth/auth.jsx";
-import { CommonLayout } from "~/pages/common-layout/common-layout.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
+import { PageLayout } from "~/pages/page-layout/page-layout.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
 
 createRoot(document.querySelector("#root") as HTMLElement).render(
@@ -51,9 +51,9 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 					{
 						element: (
 							<ProtectedRoute>
-								<CommonLayout>
+								<PageLayout>
 									<AccessManagement />
-								</CommonLayout>
+								</PageLayout>
 							</ProtectedRoute>
 						),
 						path: AppRoute.ACCESS_MANAGEMENT,

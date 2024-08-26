@@ -3,11 +3,11 @@ import { SIDEBAR_ITEMS } from "~/libs/constants/navigation-items.constant.js";
 
 import styles from "./styles.module.css";
 
-type CommonLayoutProperties = {
+type Properties = {
 	children: React.ReactNode;
 };
 
-const CommonLayout = ({ children }: CommonLayoutProperties): JSX.Element => {
+const PageLayout = ({ children }: Properties): JSX.Element => {
 	return (
 		<div className={styles["container"]}>
 			<Header />
@@ -19,4 +19,4 @@ const CommonLayout = ({ children }: CommonLayoutProperties): JSX.Element => {
 	);
 };
 
-export { CommonLayout };
+export { PageLayout };

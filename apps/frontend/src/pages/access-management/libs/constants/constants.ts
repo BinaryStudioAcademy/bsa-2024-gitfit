@@ -1,1 +1,1 @@
-export { columnHeader } from "./column-header.constant.js";
+export { TABLE_COLUMNS } from "./column-header.constant.js";
