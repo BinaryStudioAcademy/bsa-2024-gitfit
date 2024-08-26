@@ -97,7 +97,6 @@ The "Sign In" page includes:
 
 Hide/Show password toggle must be located on the right side of a Password input field. Single-click to expose/hide password. (For both SignIn and SignUp)
 
-Red validation message (‘Field cannot be empty’) appears below the inputs when fields are empty. (for both SignIn, SignUp including Name, Email and Password fields).
 
 
 **Fields validation rules**
