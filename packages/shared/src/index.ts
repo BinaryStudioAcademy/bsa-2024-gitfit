@@ -34,6 +34,7 @@ export {
 	type GroupCreateResponseDto,
 	groupCreateValidationSchema,
 	GroupError,
+	GroupsApiPath,
 } from "./modules/groups/groups.js";
 export {
 	type UserAuthResponseDto,

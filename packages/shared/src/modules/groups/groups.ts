@@ -1,3 +1,4 @@
+export { GroupsApiPath } from "./libs/enums/enums.js";
 export { GroupError } from "./libs/exceptions/exceptions.js";
 export {
 	type GroupCreateRequestDto,

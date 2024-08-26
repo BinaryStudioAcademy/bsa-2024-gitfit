@@ -8,6 +8,7 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { type GroupService } from "./group.service.js";
+import { GroupsApiPath } from "./libs/enums/enum.js";
 import { type GroupCreateRequestDto } from "./libs/types/types.js";
 import { groupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 
@@ -54,7 +55,7 @@ class GroupController extends BaseController {
 					options as APIHandlerOptions<{ body: GroupCreateRequestDto }>,
 				),
 			method: "POST",
-			path: "/",
+			path: GroupsApiPath.ROOT,
 			validation: {
 				body: groupCreateValidationSchema,
 			},
