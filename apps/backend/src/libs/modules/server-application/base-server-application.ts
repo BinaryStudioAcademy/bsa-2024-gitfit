@@ -11,12 +11,15 @@ import { type Config } from "~/libs/modules/config/config.js";
 import { type Database } from "~/libs/modules/database/database.js";
 import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { authorization } from "~/libs/plugins/authorization/authorization.plugin.js";
 import {
 	type ServerCommonErrorResponse,
 	type ServerValidationErrorResponse,
 	type ValidationSchema,
 } from "~/libs/types/types.js";
+import { type UserService } from "~/modules/users/users.js";
 
+import { type Token } from "../token/token.js";
 import {
 	type ServerApplication,
 	type ServerApplicationApi,
@@ -28,7 +31,12 @@ type Constructor = {
 	config: Config;
 	database: Database;
 	logger: Logger;
+	services: {
+		userService: UserService;
+	};
 	title: string;
+	token: Token;
+	whiteRoutes: readonly RegExp[];
 };
 
 class BaseServerApplication implements ServerApplication {
@@ -42,14 +50,34 @@ class BaseServerApplication implements ServerApplication {
 
 	private logger: Logger;
 
+	private services: {
+		userService: UserService;
+	};
+
 	private title: string;
 
-	public constructor({ apis, config, database, logger, title }: Constructor) {
+	private token: Token;
+
+	private whiteRoutes: readonly RegExp[];
+
+	public constructor({
+		apis,
+		config,
+		database,
+		logger,
+		services,
+		title,
+		token,
+		whiteRoutes,
+	}: Constructor) {
 		this.apis = apis;
 		this.config = config;
 		this.database = database;
 		this.logger = logger;
+		this.services = services;
 		this.title = title;
+		this.token = token;
+		this.whiteRoutes = whiteRoutes;
 
 		this.app = Fastify({
 			ignoreTrailingSlash: true,
@@ -103,6 +131,16 @@ class BaseServerApplication implements ServerApplication {
 		);
 	}
 
+	private initPlugins(): void {
+		const { userService } = this.services;
+
+		this.app.register(authorization, {
+			token: this.token,
+			userService,
+			whiteRoutes: this.whiteRoutes,
+		});
+	}
+
 	private async initServe(): Promise<void> {
 		const staticPath = path.join(
 			path.dirname(fileURLToPath(import.meta.url)),
@@ -154,6 +192,8 @@ class BaseServerApplication implements ServerApplication {
 		await this.initServe();
 
 		await this.initMiddlewares();
+
+		this.initPlugins();
 
 		this.initValidationCompiler();
 
