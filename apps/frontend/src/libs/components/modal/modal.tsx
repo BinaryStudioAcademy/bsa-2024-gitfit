@@ -6,22 +6,22 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	children: ReactNode;
-	isOpened: boolean;
-	onClose: () => void;
+	isModalOpened: boolean;
+	onModalClose: () => void;
 	title: string;
 };
 
 const Modal = ({
 	children,
-	isOpened,
-	onClose,
+	isModalOpened,
+	onModalClose,
 	title,
 }: Properties): JSX.Element | null => {
 	const dialogReference = useRef<HTMLDialogElement>(null);
 
-	useClickOutside(dialogReference, onClose);
+	useClickOutside(dialogReference, onModalClose);
 
-	if (!isOpened) {
+	if (!isModalOpened) {
 		return null;
 	}
 
@@ -43,7 +43,7 @@ const Modal = ({
 								iconName="cross"
 								iconWidth={20}
 								label="Close"
-								onClick={onClose}
+								onClick={onModalClose}
 							/>
 						</div>
 					</div>
