@@ -1,19 +1,17 @@
 import logoSrc from "~/assets/images/logo.svg";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 
-import { Avatar } from "../components.js";
+import { Avatar, Popup, UserPopup } from "../components.js";
 import styles from "./styles.module.css";
 
 const Header = (): JSX.Element => {
-	const authenticatedUser = useAppSelector(
-		({ auth }) => auth.authenticatedUser,
-	);
+	let authenticatedUser = useAppSelector(({ auth }) => auth.authenticatedUser);
 
 	if (!authenticatedUser) {
 		return <></>;
 	}
 
-	const userName = authenticatedUser.user.name;
+	const { email, name } = authenticatedUser.user;
 
 	return (
 		<header className={styles["header"]}>
@@ -21,7 +19,9 @@ const Header = (): JSX.Element => {
 				<img alt="GitFit logo" className={styles["logo-img"]} src={logoSrc} />
 				<span className={styles["logo-text"]}>Logo</span>
 			</div>
-			<Avatar name={userName} />
+			<Popup content={<UserPopup email={email} name={name} />}>
+				<Avatar name={name} />
+			</Popup>
 		</header>
 	);
 };
