@@ -4,7 +4,7 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
 import { type UserAuthResponseDto } from "../libs/types/types.js";
-import { getAuthenticatedUser, signUp } from "./actions.js";
+import { getAuthenticatedUser, signIn, signUp } from "./actions.js";
 
 type State = {
 	authenticatedUser: null | UserAuthResponseDto;
@@ -18,6 +18,16 @@ const initialState: State = {
 
 const { actions, name, reducer } = createSlice({
 	extraReducers(builder) {
+		builder.addCase(signIn.pending, (state) => {
+			state.dataStatus = DataStatus.PENDING;
+		});
+		builder.addCase(signIn.fulfilled, (state) => {
+			state.dataStatus = DataStatus.FULFILLED;
+		});
+		builder.addCase(signIn.rejected, (state) => {
+			state.dataStatus = DataStatus.REJECTED;
+		});
+
 		builder.addCase(getAuthenticatedUser.fulfilled, (state) => {
 			state.dataStatus = DataStatus.FULFILLED;
 		});
@@ -40,7 +50,11 @@ const { actions, name, reducer } = createSlice({
 		});
 
 		builder.addMatcher(
-			isAnyOf(getAuthenticatedUser.fulfilled, signUp.fulfilled),
+			isAnyOf(
+				getAuthenticatedUser.fulfilled,
+				signIn.fulfilled,
+				signUp.fulfilled,
+			),
 			(state, action) => {
 				state.authenticatedUser = action.payload;
 			},

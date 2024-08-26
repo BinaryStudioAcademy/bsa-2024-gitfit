@@ -1,9 +1,16 @@
-import { Header, Loader, Select, Table } from "~/libs/components/components.js";
+import {
+	Header,
+	Loader,
+	Select,
+	Sidebar,
+	Table,
+} from "~/libs/components/components.js";
 import {
 	mockColumns as mockTableColumns,
 	mockData as mockTableData,
 	type Person,
 } from "~/libs/components/table/mock-data.js";
+import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -39,40 +46,46 @@ const Projects = (): JSX.Element => {
 	return (
 		<>
 			<Header />
-
 			<p>Current path: {pathname}</p>
 
-			{isRoot && (
-				<>
-					<h2>Users:</h2>
-					<h3>Status: {dataStatus}</h3>
+			{/* TODO: Delete inline styles after implementation */}
+			<main style={{ display: "flex", flex: "1" }}>
+				<Sidebar items={SIDEBAR_ITEMS} />
+				{/* TODO: Delete inline styles after implementation */}
+				<div style={{ display: "flex", flexDirection: "column" }}>
+					{isRoot && (
+						<>
+							<h2>Users:</h2>
+							<h3>Status: {dataStatus}</h3>
 
-					{isLoading ? (
-						<Loader />
-					) : (
-						<ul>
-							{users.map((user) => (
-								<li key={user.id}>{user.email}</li>
-							))}
-						</ul>
+							{isLoading ? (
+								<Loader />
+							) : (
+								<ul>
+									{users.map((user) => (
+										<li key={user.id}>{user.email}</li>
+									))}
+								</ul>
+							)}
+
+							<Table<Person> columns={mockTableColumns} data={mockTableData} />
+						</>
 					)}
 
-					<Table<Person> columns={mockTableColumns} data={mockTableData} />
-				</>
-			)}
-
-			<Select<
-				{
-					options: SelectOption<number>[];
-				},
-				number
-			>
-				control={control}
-				isMulti
-				label="Options"
-				name="options"
-				options={[]}
-			/>
+					<Select<
+						{
+							options: SelectOption<number>[];
+						},
+						number
+					>
+						control={control}
+						isMulti
+						label="Options"
+						name="options"
+						options={[]}
+					/>
+				</div>
+			</main>
 		</>
 	);
 };
