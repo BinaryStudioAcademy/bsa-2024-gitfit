@@ -1,6 +1,7 @@
+import { type ReactNode } from "react";
+
 import { IconButton } from "~/libs/components/components.js";
 import { useClickOutside, useRef } from "~/libs/hooks/hooks.js";
-import { type ReactNode } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
 
