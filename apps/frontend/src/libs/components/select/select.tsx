@@ -9,8 +9,8 @@ import ReactSelect from "react-select";
 
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { useFormController } from "~/libs/hooks/hooks.js";
+import { type SelectOption } from "~/libs/types/types.js";
 
-import { type Option } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties<TFieldValues extends FieldValues, TOptionValue> = {
@@ -18,7 +18,7 @@ type Properties<TFieldValues extends FieldValues, TOptionValue> = {
 	isMulti?: boolean;
 	label: string;
 	name: FieldPath<TFieldValues>;
-	options: Option<TOptionValue>[];
+	options: SelectOption<TOptionValue>[];
 };
 
 const Select = <TFieldValues extends FieldValues, TOptionValue>({
@@ -72,4 +72,3 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 };
 
 export { Select };
-export { type Option } from "./libs/types/types.js";

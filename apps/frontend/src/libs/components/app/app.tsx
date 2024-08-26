@@ -19,9 +19,8 @@ import {
 	useEffect,
 	useLocation,
 } from "~/libs/hooks/hooks.js";
+import { type SelectOption } from "~/libs/types/types.js";
 import { actions as userActions } from "~/modules/users/users.js";
-
-import { type Option } from "../select/select.js";
 
 const App = (): JSX.Element => {
 	const { control } = useAppForm({
@@ -82,7 +81,7 @@ const App = (): JSX.Element => {
 			)}
 			<Select<
 				{
-					options: Option<number>[];
+					options: SelectOption<number>[];
 				},
 				number
 			>
