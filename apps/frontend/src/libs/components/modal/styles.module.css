@@ -60,14 +60,14 @@
 
 .modal-close {
 	position: absolute;
-	top: 16px;
-	right: 16px;
+	top: 20px;
+	right: 20px;
 	z-index: 1;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 24px;
-	height: 24px;
+	width: 20px;
+	height: 20px;
 	padding: 0;
 	color: var(--color-text-secondary);
 	background: transparent;
