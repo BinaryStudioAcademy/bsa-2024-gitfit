@@ -61,19 +61,6 @@ class ProjectService implements Service {
 		return Promise.resolve({ items: [] });
 	}
 
-	public async getByName(name: string): Promise<ProjectCreateResponseDto> {
-		const item = await this.projectRepository.findByName(name);
-
-		if (!item) {
-			throw new ProjectError({
-				message: ExceptionMessage.PROJECT_NOT_FOUND,
-				status: HTTPCode.NOT_FOUND,
-			});
-		}
-
-		return item.toObject();
-	}
-
 	public update(): ReturnType<Service["update"]> {
 		return Promise.resolve(null);
 	}
