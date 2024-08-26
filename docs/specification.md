@@ -148,14 +148,14 @@ Allows to view, create, and edit projects.
 
 The "Projects" page includes:
 
-- "Search” field: Allows the user to search by project name.
+- "Search” field: Allows the user to search by project name. Entering text displays results on-the-fly in a pop-up window. When no results matching the entered query found the "No projects found matching your search criteria. Please try different keywords." message is shown.
 - “Create New” button: When clicked, the “Create Project Modal” is opened.
 - “Projects” list: Displays a list of projects, each containing:
 
   - Project name.
   - Last commit relative date (e.g., "15 minutes ago").
   - Activity graph: When clicked, it redirects the user to the "Analytics" page with the "Project" field preselected.
-  - "Options" icon: When clicked, a menu with the "Edit" and “Delete” options is shown. When the “Edit” option is clicked, the “Update Project Modal” is opened. When the “Delete” option is clicked, a confirmation modal is opened before deleting the group.
+  - "Options" icon: When clicked, a menu with the "Edit" and “Delete” options is shown. When the “Edit” option is clicked, the “Update Project Modal” is opened. When the “Delete” option is clicked, a confirmation modal is opened before deleting the project. Deleting a project requires admin rights or "Manage User Access" global permissions
 
   When an item is clicked, the user is redirected to the specific “Project” page.
 
@@ -167,8 +167,8 @@ The "Projects" page includes:
 
 The "Create Project Modal" includes:
 
-- “Name” field.
-- “Description” field.
+- “Name” field. The "Name" field should have a character limit between 1 and 50 characters. This should be synchronized with the database field. The field is required.
+- “Description” field. The field is optional and should allow up to 1000 characters. A character counter should be displayed below the text area, indicating the current character count (e.g., "100/1000").
 - “Create” button: When clicked, submits the form, closes the modal, and adds the new project to the top of the "Projects" list.
 - “Close” icon: When clicked, the modal is closed.
 
