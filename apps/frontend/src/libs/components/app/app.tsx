@@ -3,6 +3,7 @@ import {
 	Link,
 	Loader,
 	RouterOutlet,
+	Select,
 	Table,
 } from "~/libs/components/components.js";
 import {
@@ -13,13 +14,21 @@ import {
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useEffect,
 	useLocation,
 } from "~/libs/hooks/hooks.js";
+import { type SelectOption } from "~/libs/types/types.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
 const App = (): JSX.Element => {
+	const { control } = useAppForm({
+		defaultValues: {
+			options: [],
+		},
+	});
+
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
 	const dataStatus = useAppSelector(({ users }) => users.dataStatus);
@@ -70,6 +79,18 @@ const App = (): JSX.Element => {
 					<Table<Person> columns={mockTableColumns} data={mockTableData} />
 				</>
 			)}
+			<Select<
+				{
+					options: SelectOption<number>[];
+				},
+				number
+			>
+				control={control}
+				isMulti
+				label="Options"
+				name="options"
+				options={[]}
+			/>
 		</>
 	);
 };
