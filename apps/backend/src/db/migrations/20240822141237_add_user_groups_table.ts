@@ -1,4 +1,3 @@
-import { UserValidationRule } from "@git-fit/shared/src/modules/users/libs/enums/enums.js";
 import { type Knex } from "knex";
 
 const TABLE_NAME = "user_groups";
@@ -11,13 +10,15 @@ const ColumnName = {
 	UPDATED_AT: "updated_at",
 } as const;
 
+const FieldLimit = {
+	NAME: 100,
+} as const;
+
 function up(knex: Knex): Promise<void> {
 	return knex.schema.createTable(TABLE_NAME, (table) => {
 		table.increments(ColumnName.ID).primary();
 		table.string(ColumnName.KEY).notNullable().unique();
-		table
-			.string(ColumnName.NAME, UserValidationRule.NAME_MAXIMUM_LENGTH)
-			.notNullable();
+		table.string(ColumnName.NAME, FieldLimit.NAME).notNullable();
 		table
 			.dateTime(ColumnName.CREATED_AT)
 			.notNullable()
