@@ -1,4 +1,4 @@
 export {
+	type UserAuthResponseDto,
 	type UserSignInResponseDto,
-	type UserSignUpResponseDto,
 } from "@git-fit/shared";
