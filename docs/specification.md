@@ -126,10 +126,10 @@ Domain part (after the “@”):
 
 3. Password must include:
 
-- At least 5 characters ;
+- At least 5 characters;
 - At least 1 uppercase letter (A-Z);
 - At least 1 lowercase letter (a-z);
-- At least 1 number ;
+- At least 1 number;
 - At least 1 special character (e.g., !@#$%)"
 
 
