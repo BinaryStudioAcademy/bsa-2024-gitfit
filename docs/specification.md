@@ -122,7 +122,7 @@ Domain part (after the “@”):
 2. Name field:
 
 - The name can contain any characters, including letters, numbers, spaces, and special characters;
-- Length > 0.
+- At least 3 characters.
 
 3. Password must include:
 
