@@ -1,12 +1,10 @@
-import { type ReactNode } from "react";
-
 import { IconButton } from "~/libs/components/components.js";
 import { useClickOutside, useRef } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
-	children: ReactNode;
+	children: React.ReactNode;
 	isModalOpened: boolean;
 	onModalClose: () => void;
 	title: string;
