@@ -1,4 +1,5 @@
 import { useAppForm, useCallback, useMemo } from "~/libs/hooks/hooks.js";
+import { calculateTotalPages } from "~/libs/hooks/use-pagination/libs/helpers/helpers.js";
 import { type SelectOption } from "~/libs/types/types.js";
 
 import { IconButton, Select } from "../components.js";
@@ -39,7 +40,7 @@ const TablePagination = ({
 	});
 
 	const totalPages = useMemo(
-		() => Math.ceil(totalItems / pageSize),
+		() => calculateTotalPages(pageSize, totalItems),
 		[totalItems, pageSize],
 	);
 
