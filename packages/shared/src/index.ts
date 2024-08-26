@@ -31,7 +31,9 @@ export {
 export { AuthApiPath, AuthError } from "./modules/auth/auth.js";
 export {
 	type GroupCreateRequestDto,
+	type GroupCreateResponseDto,
 	groupCreateValidationSchema,
+	GroupError,
 } from "./modules/groups/groups.js";
 export {
 	type UserAuthResponseDto,
