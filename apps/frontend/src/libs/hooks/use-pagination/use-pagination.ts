@@ -7,7 +7,11 @@ import {
 
 import { DEFAULT_VALUES, FIRST_PAGE } from "./libs/constants/constants.js";
 import { QueryParameter } from "./libs/enums/enums.js";
-import { calculateTotalPages } from "./libs/helpers/helpers.js";
+import {
+	calculateTotalPages,
+	isNumberInRange,
+	parseQueryParameterToNumber,
+} from "./libs/helpers/helpers.js";
 
 type Parameters = {
 	totalItems: number;
@@ -21,17 +25,35 @@ type ReturnType = {
 };
 
 const usePagination = ({ totalItems }: Parameters): ReturnType => {
+	const [page, setPage] = useState<number>(DEFAULT_VALUES.PAGE);
+	const [pageSize, setPageSize] = useState<number>(DEFAULT_VALUES.PAGE_SIZE);
+
 	const [searchParameters, setSearchParameters] = useSearchParams();
+	const pageQueryParameter = searchParameters.get(QueryParameter.page);
+	const pageSizeQueryParameter = searchParameters.get(QueryParameter.pageSize);
 
-	// There is no check for page and pageSize to be in available range
-	const pageQueryParameter =
-		Number(searchParameters.get(QueryParameter.page)) || DEFAULT_VALUES.PAGE;
-	const pageSizeQueryParameter =
-		Number(searchParameters.get(QueryParameter.pageSize)) ||
-		DEFAULT_VALUES.PAGE_SIZE;
+	useEffect(() => {
+		const pageParameter = parseQueryParameterToNumber(pageQueryParameter);
+		let pageSizeParameter = parseQueryParameterToNumber(pageSizeQueryParameter);
 
-	const [page, setPage] = useState<number>(pageQueryParameter);
-	const [pageSize, setPageSize] = useState<number>(pageSizeQueryParameter);
+		if (
+			pageSizeParameter !== null &&
+			isNumberInRange(pageSizeParameter, { min: 1 })
+		) {
+			setPageSize(pageSizeParameter);
+		} else {
+			pageSizeParameter = DEFAULT_VALUES.PAGE_SIZE;
+		}
+
+		const totalPages = calculateTotalPages(pageSizeParameter, totalItems);
+
+		if (
+			pageParameter !== null &&
+			isNumberInRange(pageParameter, { max: totalPages, min: FIRST_PAGE })
+		) {
+			setPage(pageParameter);
+		}
+	}, [pageQueryParameter, pageSizeQueryParameter]);
 
 	useEffect(() => {
 		setSearchParameters({
