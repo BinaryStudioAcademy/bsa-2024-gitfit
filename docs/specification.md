@@ -97,7 +97,10 @@ The "Sign In" page includes:
 
 **Element:** Separate page.
 
-**How to reach:** Accessible from the sidebar by clicking the "Access Management" link.
+**How to reach:** Accessible from the sidebar by clicking the "Access Management" link for users with access granted.
+
+**Page appearance for users with no access**
+Helper text is shown on the middle of the page "You don't have access to the pages yet. Please contact an admin to grant you access".
 
 Controls user group access to specific actions and projects.
 
