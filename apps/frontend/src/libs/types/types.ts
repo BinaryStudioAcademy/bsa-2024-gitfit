@@ -5,3 +5,4 @@ export {
 	type ValidationSchema,
 	type ValueOf,
 } from "@git-fit/shared";
+export { type ReactNode } from "react";

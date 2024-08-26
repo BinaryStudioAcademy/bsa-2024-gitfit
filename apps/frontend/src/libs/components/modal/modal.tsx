@@ -1,8 +1,7 @@
-import { type ReactNode, useRef } from "react";
+import { IconButton } from "~/libs/components/components.js";
+import { useHandleClickOutside, useRef } from "~/libs/hooks/hooks.js";
+import { type ReactNode } from "~/libs/types/types.js";
 
-import { useHandleClickOutside } from "~/libs/hooks/hooks.js";
-
-import { IconButton } from "../components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
@@ -28,7 +27,6 @@ const Modal = ({
 
 	return (
 		<>
-			{/* Backdrop element */}
 			<div className={styles["modal-backdrop"]} />
 
 			<dialog
