@@ -1,23 +1,27 @@
 import { useState } from "react";
 
 type Properties = {
-	handleCloseModal: () => void;
-	handleShowModal: () => void;
-	isOpened: boolean;
+	isModalOpened: boolean;
+	onModalClose: () => void;
+	onModalOpen: () => void;
 };
 
 const useModal = (): Properties => {
-	const [isOpened, setIsOpened] = useState<boolean>(false);
+	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 
-	const handleShowModal = (): void => {
-		setIsOpened(true);
+	const handleModalOpen = (): void => {
+		setIsModalOpened(true);
 	};
 
-	const handleCloseModal = (): void => {
-		setIsOpened(false);
+	const handleModalClose = (): void => {
+		setIsModalOpened(false);
 	};
 
-	return { handleCloseModal, handleShowModal, isOpened };
+	return {
+		isModalOpened,
+		onModalClose: handleModalClose,
+		onModalOpen: handleModalOpen,
+	};
 };
 
 export { useModal };

@@ -1,5 +1,5 @@
 import { IconButton } from "~/libs/components/components.js";
-import { useHandleClickOutside, useRef } from "~/libs/hooks/hooks.js";
+import { useClickOutside, useRef } from "~/libs/hooks/hooks.js";
 import { type ReactNode } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -19,7 +19,7 @@ const Modal = ({
 }: Properties): JSX.Element | null => {
 	const dialogReference = useRef<HTMLDialogElement>(null);
 
-	useHandleClickOutside(dialogReference, onClose);
+	useClickOutside(dialogReference, onClose);
 
 	if (!isOpened) {
 		return null;
