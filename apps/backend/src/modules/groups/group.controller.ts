@@ -6,10 +6,39 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
-import { groupCreateValidationSchema } from "~/modules/groups/groups.js";
 
 import { type GroupService } from "./group.service.js";
 import { type GroupCreateRequestDto } from "./libs/types/types.js";
+import { groupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Group:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           minimum: 1
+ *         name:
+ *           type: string
+ *           maxLength: 100
+ *         userIds:
+ *           type: array
+ *           items:
+ *             type: number
+ *         permissionIds:
+ *           type: array
+ *           items:
+ *             type: number
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ */
 
 class GroupController extends BaseController {
 	private groupService: GroupService;
@@ -25,7 +54,7 @@ class GroupController extends BaseController {
 					options as APIHandlerOptions<{ body: GroupCreateRequestDto }>,
 				),
 			method: "POST",
-			path: "/create",
+			path: "/",
 			validation: {
 				body: groupCreateValidationSchema,
 			},
@@ -58,17 +87,30 @@ class GroupController extends BaseController {
 	 *     responses:
 	 *       201:
 	 *         description: Group created successfully
-	 *       500:
-	 *         description: Failed to create group
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: object
+	 *               properties:
+	 *                 id:
+	 *                   type: number
+	 *                 name:
+	 *                   type: string
+	 *                 permissionIds:
+	 *                   type: array
+	 *                   items:
+	 *                     type: number
+	 *                 userIds:
+	 *                   type: array
+	 *                   items:
+	 *                     type: number
 	 */
 
 	private async createGroup(
 		options: APIHandlerOptions<{ body: GroupCreateRequestDto }>,
 	): Promise<APIHandlerResponse> {
-		await this.groupService.create(options.body);
-
 		return {
-			payload: { message: "Group created successfully" },
+			payload: await this.groupService.create(options.body),
 			status: HTTPCode.CREATED,
 		};
 	}
