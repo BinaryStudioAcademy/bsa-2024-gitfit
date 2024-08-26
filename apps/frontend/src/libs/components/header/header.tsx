@@ -13,7 +13,7 @@ const Header = (): JSX.Element => {
 		return <></>;
 	}
 
-	const userName = authenticatedUser.user.name;
+	const userName = authenticatedUser.name;
 
 	return (
 		<header className={styles["header"]}>

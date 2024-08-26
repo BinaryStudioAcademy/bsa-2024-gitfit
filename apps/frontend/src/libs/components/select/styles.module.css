@@ -1,0 +1,107 @@
+.label {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.label-text {
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 1.2;
+	color: var(--color-text-primary);
+}
+
+.control {
+	padding: 10px 16px 10px 10px;
+	background-color: var(--color-background-secondary);
+	border: var(--color-border-primary) 1px solid;
+	border-radius: 6px;
+}
+
+.single-value {
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 1.2;
+	color: var(--color-text-primary);
+}
+
+.multi-value {
+	display: flex;
+	gap: 4px;
+	padding-right: 4px;
+	padding-left: 4px;
+	margin-right: 2px;
+	margin-left: 2px;
+	color: var(--color-text-primary);
+	background-color: var(--color-background-hover);
+	border-radius: 4px;
+}
+
+.multi-value-label {
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--color-text-primary);
+}
+
+.indicators-container {
+	color: var(--color-text-secondary);
+}
+
+.placeholder {
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--color-text-secondary);
+}
+
+.menu {
+	position: absolute;
+	top: 100%;
+	z-index: 1;
+	width: 100%;
+	margin-bottom: 8px;
+	background-color: var(--color-background-secondary);
+	border-radius: 4px;
+	box-shadow:
+		0deg 0deg 0deg 1px var(--box-shadow),
+		0deg 4px 11px var(--box-shadow);
+}
+
+.option {
+	width: 100%;
+	padding: 8px 12px;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 1.5;
+	color: var(--color-text-primary);
+	border-radius: 4px;
+}
+
+.control-focused {
+	border-color: var(--color-brand-primary);
+}
+
+.option-focused {
+	background-color: color-mix(
+		in srgb,
+		var(--color-brand-primary-hover),
+		black 40%
+	);
+}
+
+.option-selected {
+	background-color: var(--color-brand-primary);
+}
+
+.no-options-message {
+	padding: 20px;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.2;
+	color: var(--color-text-secondary);
+}
+
+.input {
+	color: var(--color-text-primary);
+}
