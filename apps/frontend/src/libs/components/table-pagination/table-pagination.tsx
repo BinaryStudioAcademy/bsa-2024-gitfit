@@ -64,10 +64,10 @@ const TablePagination = ({
 
 	return (
 		<div className={styles["container"]}>
-			<p>{totalItems} items total</p>
+			<p className={styles["total-items-text"]}>{totalItems} items total</p>
 			<div className={styles["pagination-container"]}>
 				<div className={styles["rows-per-page"]}>
-					<p>Rows per page:</p>
+					<p className={styles["rows-per-page-text"]}>Rows per page:</p>
 					<Select<FormData, PageSizeOption["value"]>
 						control={control}
 						isLabelVissible={false}
@@ -79,7 +79,7 @@ const TablePagination = ({
 						variant="small"
 					/>
 				</div>
-				<p>
+				<p className={styles["page-text"]}>
 					Page {page} of {totalPages}
 				</p>
 				<div className={styles["change-page-buttons"]}>

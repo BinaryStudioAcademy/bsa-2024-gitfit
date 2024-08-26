@@ -11,6 +11,7 @@
 	height: 32px;
 	font-size: 14px;
 	font-weight: 400;
+	line-height: 1.5;
 	color: var(--color-text-primary);
 
 	/* TODO: remove the folowing bg-color style after visual testing */
@@ -27,4 +28,11 @@
 
 .change-page-buttons {
 	column-gap: 7px;
+}
+
+.total-items-text,
+.rows-per-page-text,
+.page-text {
+	padding: 5.5px 0;
+	margin: 0;
 }
