@@ -148,8 +148,11 @@ Controls user group access to specific actions and projects.
 
 The "Access Management" page includes:
 
-- "Users” table: Displays columns for "Name", "Groups" and "Created At".
-- “Groups” Table: Displays the “Create new” button and columns for "Name", "Permissions", "Created At" and an "Options" icon. When the “Create new” button is clicked, a “Create Group Modal” is opened. When the "Options" icon is clicked, a menu with the "Edit" and “Delete” options is shown. When the “Edit” option is clicked, the “Update Group Modal” is opened. When the “Delete” option is clicked, a confirmation modal is opened before deleting the group.
+- "Users” table: Displays columns for "Name", "Groups" and "Created At".Click on “User” redirects to user profile page.
+- “Groups” Table: Displays the “Create new” button and columns for "Name", "Permissions", "Created At" and an "Options" icon.
+  A “Table paginator" element is placed under each Table.
+  When changing the amount of rows in a Table a scroll function appears at the right side of the Table.
+  When the “Create new” button is clicked, a “Create Group Modal” is opened. When the "Options" icon is clicked, a menu with the "Edit" and “Delete” options is shown. When the “Edit” option is clicked, the “Update Group Modal” is opened. When the “Delete” option is clicked, a confirmation modal is opened before deleting the group.
 - “Permissions” list contains:
   - Manage User Access: See the “Access Management” page and manage groups.
   - View All Projects: See all projects.
