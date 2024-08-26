@@ -1,7 +1,7 @@
-import { type RefObject, useEffect } from "react";
+import { useEffect } from "~/libs/hooks/hooks.js";
 
 const useClickOutside = <T extends HTMLElement>(
-	reference: RefObject<T>,
+	reference: React.RefObject<T>,
 	onOutsideClick: () => void,
 ): void => {
 	useEffect(() => {

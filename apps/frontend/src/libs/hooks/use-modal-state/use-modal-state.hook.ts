@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	isModalOpened: boolean;
