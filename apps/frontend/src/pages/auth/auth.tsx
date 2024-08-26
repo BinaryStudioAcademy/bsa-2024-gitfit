@@ -1,11 +1,18 @@
+import { useNavigate } from "react-router-dom";
+
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
+	useAppSelector,
 	useCallback,
+	useEffect,
 	useLocation,
 } from "~/libs/hooks/hooks.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
-import { type UserSignUpRequestDto } from "~/modules/users/users.js";
+import {
+	type UserSignInRequestDto,
+	type UserSignUpRequestDto,
+} from "~/modules/users/users.js";
 
 import { SignInForm, SignUpForm } from "./components/components.js";
 import styles from "./styles.module.css";
@@ -13,10 +20,23 @@ import styles from "./styles.module.css";
 const Auth = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
+	const authenticatedUser = useAppSelector(
+		(state) => state.auth.authenticatedUser,
+	);
+	const navigate = useNavigate();
 
-	const handleSignInSubmit = useCallback((): void => {
-		// handle sign in
-	}, []);
+	useEffect(() => {
+		if (authenticatedUser) {
+			navigate(AppRoute.ROOT);
+		}
+	}, [authenticatedUser, navigate]);
+
+	const handleSignInSubmit = useCallback(
+		(payload: UserSignInRequestDto): void => {
+			void dispatch(authActions.signIn(payload));
+		},
+		[dispatch],
+	);
 
 	const handleSignUpSubmit = useCallback(
 		(payload: UserSignUpRequestDto): void => {
@@ -40,7 +60,22 @@ const Auth = (): JSX.Element => {
 	};
 
 	return (
-		<main className={styles["container"]}>{handleScreenRender(pathname)}</main>
+		<main className={styles["container"]}>
+			<section className={styles["auth-container"]}>
+				<div className={styles["left-side"]}>
+					{/* TODO: replace logo */}
+					<img alt="logo" className={styles["logo-wrapper"]} src="" />
+				</div>
+				<div className={styles["right-side"]}>
+					<h3 className={styles["form-title"]}>
+						{pathname === AppRoute.SIGN_IN
+							? "Welcome back"
+							: "Create an account"}
+					</h3>
+					{handleScreenRender(pathname)}
+				</div>
+			</section>
+		</main>
 	);
 };
 
