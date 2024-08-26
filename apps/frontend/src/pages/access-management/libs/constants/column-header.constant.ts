@@ -1,6 +1,6 @@
 import { type ColumnDef } from "@tanstack/react-table";
 
-import { type User } from "../types/user.type.js";
+import { type User } from "../types/types.js";
 
 const columnHeader: ColumnDef<User>[] = [
 	{ accessorKey: "name", header: "Name" },
