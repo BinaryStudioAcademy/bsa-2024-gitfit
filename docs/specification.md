@@ -49,9 +49,9 @@ The "User Popup" includes:
 
 **Element:** Sidebar component.
 
-**How to reach:** Present on all pages except for auth pages.Fixed on the page and does not change its appearance.
+**How to reach:** Present on all pages except for auth pages.
 
-Provides quick access to primary application pages. Transition might appear when an active item changes in the sidebar.
+Provides quick access to primary application pages.
 
 The sidebar component includes:
 
@@ -80,8 +80,6 @@ The "Sign Up" page includes:
 - "Password" field.
 - "Create Account" button: Submits the form and redirects the user to the "Projects" page.
 
-When attempting to Sign Up with credentials of already existing user a toast notification "Credentials are invalid" is shown in the lower right corner.
-
 #### 2.3.2 Sign In
 
 **Element:** Separate page.
@@ -96,8 +94,6 @@ The "Sign In" page includes:
 - "Log In" button: Submits the form and redirects the user to the "Projects" page.
 
 Hide/Show password toggle must be located on the right side of a Password input field. Single-click to expose/hide password. (For both SignIn and SignUp)
-
-
 
 **Fields validation rules**
 
@@ -129,7 +125,6 @@ Domain part (after the “@”):
 - At least 1 lowercase letter (a-z);
 - At least 1 number;
 - At least 1 special character (e.g., !@#$%)"
-
 
 ### 2.4 Access Management
 
