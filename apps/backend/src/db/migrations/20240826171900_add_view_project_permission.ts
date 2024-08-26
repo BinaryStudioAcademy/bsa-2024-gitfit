@@ -1,6 +1,6 @@
 import { type Knex } from "knex";
 
-const TABLE_NAME = "permissions";
+const TABLE_NAME = "project_permissions";
 
 const PermissionName = {
 	VIEW_PROJECT: "View Project",
