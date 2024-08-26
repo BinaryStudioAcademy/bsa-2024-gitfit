@@ -1,5 +1,5 @@
 import { Button } from "~/libs/components/components.js";
-import { AppRoute } from "~/libs/enums/app-route.enum.js";
+import { AppRoute } from "~/libs/enums/enums.js";
 
 import styles from "./styles.module.css";
 

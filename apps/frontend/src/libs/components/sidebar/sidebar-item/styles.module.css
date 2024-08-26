@@ -1,0 +1,28 @@
+.navigation-link {
+	display: flex;
+	flex-direction: row;
+	gap: 8px;
+	align-items: center;
+	padding: 12px 16px;
+	color: var(--color-text-secondary);
+	text-decoration: none;
+}
+
+.navigation-link:hover {
+	color: var(--color-text-primary);
+	background-color: var(--color-background-secondary);
+	border-radius: 6px;
+}
+
+.navigation-link:hover .navigation-icon {
+	color: var(--color-brand-primary);
+}
+
+.navigation-item-label {
+	font-size: 16px;
+	line-height: 120%;
+}
+
+.navigation-link:hover .navigation-item-label {
+	cursor: pointer;
+}
