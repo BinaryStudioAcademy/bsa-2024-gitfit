@@ -1,4 +1,5 @@
-import { useCallback } from "~/libs/hooks/hooks.js";
+import { useAppDispatch, useCallback } from "~/libs/hooks/hooks.js";
+import { actions as authActions } from "~/modules/auth/auth.js";
 
 import styles from "./styles.module.css";
 
@@ -8,9 +9,11 @@ type Properties = {
 };
 
 const UserPopup = ({ email, name }: Properties): JSX.Element => {
+	const dispatch = useAppDispatch();
+
 	const handleLogout = useCallback((): void => {
-		//TODO: handle logout
-	}, []);
+		void dispatch(authActions.logout());
+	}, [dispatch]);
 
 	return (
 		<div className={styles["user-popup"]}>
