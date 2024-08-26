@@ -2,7 +2,6 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	padding-left: 10%;
 }
 
 .title {
@@ -15,8 +14,4 @@
 	font-size: 24px;
 	font-weight: 600;
 	line-height: 120%;
-}
-
-.table-container {
-	width: 70%;
 }

@@ -25,9 +25,7 @@ const AccessManagement = (): JSX.Element => {
 		<div className={styles["content"]}>
 			<p className={styles["title"]}>Access Management</p>
 			<p className={styles["sub-title"]}>Users</p>
-			<div className={styles["table-container"]}>
-				<Table<User> columns={headers} data={columns} />
-			</div>
+			<Table<User> columns={headers} data={columns} />
 		</div>
 	);
 };
