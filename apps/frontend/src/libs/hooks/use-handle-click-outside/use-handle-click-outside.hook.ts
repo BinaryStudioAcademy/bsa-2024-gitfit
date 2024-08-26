@@ -1,6 +1,6 @@
 import { useEffect } from "~/libs/hooks/hooks.js";
 
-const useClickOutside = <T extends HTMLElement>(
+const useHandleClickOutside = <T extends HTMLElement>(
 	reference: React.RefObject<T>,
 	onOutsideClick: () => void,
 ): void => {
@@ -22,4 +22,4 @@ const useClickOutside = <T extends HTMLElement>(
 	}, [reference, onOutsideClick]);
 };
 
-export { useClickOutside };
+export { useHandleClickOutside };
