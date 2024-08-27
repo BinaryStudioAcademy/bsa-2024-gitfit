@@ -13,6 +13,7 @@ import styles from "./styles.module.css";
 type Properties<T extends FieldValues> = {
 	autoComplete?: string;
 	control: Control<T, null>;
+	disabled?: boolean;
 	errors: FieldErrors<T>;
 	label: string;
 	leftIcon?: JSX.Element;
@@ -25,6 +26,7 @@ type Properties<T extends FieldValues> = {
 const Input = <T extends FieldValues>({
 	autoComplete,
 	control,
+	disabled,
 	errors,
 	label,
 	leftIcon,
@@ -63,6 +65,7 @@ const Input = <T extends FieldValues>({
 				<input
 					autoComplete={autoComplete}
 					className={inputClassNames}
+					disabled={disabled}
 					name={field.name}
 					onChange={field.onChange}
 					placeholder={placeholder}

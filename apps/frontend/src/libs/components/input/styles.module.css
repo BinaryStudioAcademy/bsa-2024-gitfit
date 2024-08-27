@@ -3,6 +3,7 @@
 	flex-direction: column;
 	gap: 8px;
 	width: 100%;
+	color: var(--color-text-primary);
 }
 
 .input-label-text {
@@ -27,19 +28,22 @@
 	font-weight: 400;
 	line-height: 1.5;
 	color: inherit;
-	background-color: inherit;
+	background-color: var(--color-background-secondary);
 	border: 1px solid var(--color-border-primary);
 	border-radius: 6px;
 	transition: all 0.3s ease;
 }
 
+.input-field:disabled {
+	opacity: 0.8;
+}
+
 .input-field:focus {
-	background-color: inherit;
 	border-color: var(--color-brand-primary);
 	outline: none;
 }
 
-.input-field:hover {
+.input-field:hover:not(:disabled) {
 	border-color: var(--color-brand-primary-hover);
 }
 
