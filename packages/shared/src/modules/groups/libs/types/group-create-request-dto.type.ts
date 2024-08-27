@@ -1,6 +1,6 @@
 type GroupCreateRequestDto = {
 	name: string;
-	permissionIds?: number[] | undefined;
+	permissionIds: number[];
 	userIds: number[];
 };
 

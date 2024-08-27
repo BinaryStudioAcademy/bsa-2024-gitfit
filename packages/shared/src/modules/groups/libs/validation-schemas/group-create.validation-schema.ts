@@ -13,7 +13,7 @@ const groupCreate: z.ZodType<GroupCreateRequestDto> = z.object({
 		.max(GroupValidationRule.NAME_MAXIMUM_LENGTH, {
 			message: GroupValidationMessage.NAME_TOO_LONG,
 		}),
-	permissionIds: z.array(z.number().int().positive()).optional(),
+	permissionIds: z.array(z.number().int().positive()),
 	userIds: z.array(z.number().int().positive()).nonempty({
 		message: GroupValidationMessage.USER_IDS_REQUIRED,
 	}),
