@@ -14,6 +14,7 @@ import { type SelectOption } from "~/libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties<TFieldValues extends FieldValues, TOptionValue> = {
+	background?: "primary" | "secondary";
 	control: Control<TFieldValues, null>;
 	isLabelHidden?: boolean;
 	isMulti?: boolean;
@@ -25,6 +26,7 @@ type Properties<TFieldValues extends FieldValues, TOptionValue> = {
 };
 
 const Select = <TFieldValues extends FieldValues, TOptionValue>({
+	background = "secondary",
 	control,
 	isLabelHidden = false,
 	isMulti = false,
@@ -39,6 +41,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		name,
 	});
 
+	const isBackgroundPrimary = background === "primary";
 	const isSmall = size === "small";
 	const labelClassName = getValidClassNames(
 		styles["label-text"],
@@ -55,10 +58,15 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 							styles["control"],
 							state.isFocused && styles["control-focused"],
 							isSmall && styles["control-small"],
+							isBackgroundPrimary && styles["control-primary"],
 						),
 					indicatorsContainer: () => styles["indicators-container"] as string,
 					input: () => styles["input"] as string,
-					menu: () => styles["menu"] as string,
+					menu: () =>
+						getValidClassNames(
+							styles["menu"],
+							isBackgroundPrimary && styles["menu-primary"],
+						),
 					multiValue: () => styles["multi-value"] as string,
 					multiValueLabel: () => styles["multi-value-label"] as string,
 					noOptionsMessage: () => styles["no-options-message"] as string,
@@ -68,6 +76,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 							state.isSelected && styles["option-selected"],
 							state.isFocused && styles["option-focused"],
 							isSmall && styles["option-small"],
+							isBackgroundPrimary && styles["option-primary"],
 						),
 					placeholder: () => styles["placeholder"] as string,
 					singleValue: () =>

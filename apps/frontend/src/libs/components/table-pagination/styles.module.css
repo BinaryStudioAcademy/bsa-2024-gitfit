@@ -3,6 +3,8 @@
 	font-weight: 400;
 	line-height: 1.5;
 	color: var(--color-text-primary);
+	background-color: var(--color-background-primary);
+	border-radius: 4px;
 }
 
 .pagination-container {
@@ -25,4 +27,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+
+.container-secondary {
+	background-color: var(--color-background-secondary);
 }

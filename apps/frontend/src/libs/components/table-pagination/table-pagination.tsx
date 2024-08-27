@@ -18,6 +18,7 @@ import {
 import styles from "./styles.module.css";
 
 type Properties = {
+	background?: "primary" | "secondary";
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
@@ -32,6 +33,7 @@ type FormData = {
 };
 
 const TablePagination = ({
+	background = "primary",
 	onPageChange,
 	onPageSizeChange,
 	page,
@@ -75,11 +77,14 @@ const TablePagination = ({
 		onPageChange(totalPages);
 	}, [onPageChange, totalPages]);
 
+	const isBackgroundSecondary = background === "secondary";
+
 	return (
 		<div
 			className={getValidClassNames(
 				styles["main-container"],
 				styles["container"],
+				isBackgroundSecondary && styles["container-secondary"],
 			)}
 		>
 			<p className={styles["text"]}>{totalItems} items total</p>
@@ -97,6 +102,7 @@ const TablePagination = ({
 				>
 					<p className={styles["text"]}>Rows per page:</p>
 					<Select<FormData, PageSizeOption["value"]>
+						background={background}
 						control={control}
 						isLabelHidden
 						label="Rows per page"
