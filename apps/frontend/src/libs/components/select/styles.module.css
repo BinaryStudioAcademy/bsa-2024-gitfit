@@ -118,4 +118,5 @@
 
 .input {
 	color: var(--color-text-primary);
+	caret-color: transparent;
 }
