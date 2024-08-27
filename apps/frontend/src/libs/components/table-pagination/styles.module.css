@@ -1,12 +1,8 @@
-.container {
-	height: 32px;
+.main-container {
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 1.5;
 	color: var(--color-text-primary);
-
-	/* TODO: remove the folowing bg-color style after visual testing */
-	background-color: var(--color-background-secondary);
 }
 
 .pagination-container {
@@ -21,11 +17,11 @@
 	column-gap: 7px;
 }
 
-.no-margin {
+.text {
 	margin: 0;
 }
 
-.space-between {
+.container {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;

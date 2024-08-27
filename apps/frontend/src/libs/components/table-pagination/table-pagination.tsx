@@ -78,24 +78,24 @@ const TablePagination = ({
 	return (
 		<div
 			className={getValidClassNames(
+				styles["main-container"],
 				styles["container"],
-				styles["space-between"],
 			)}
 		>
-			<p className={styles["no-margin"]}>{totalItems} items total</p>
+			<p className={styles["text"]}>{totalItems} items total</p>
 			<div
 				className={getValidClassNames(
 					styles["pagination-container"],
-					styles["space-between"],
+					styles["container"],
 				)}
 			>
 				<div
 					className={getValidClassNames(
 						styles["rows-per-page-container"],
-						styles["space-between"],
+						styles["container"],
 					)}
 				>
-					<p className={styles["no-margin"]}>Rows per page:</p>
+					<p className={styles["text"]}>Rows per page:</p>
 					<Select<FormData, PageSizeOption["value"]>
 						control={control}
 						isLabelHidden
@@ -105,13 +105,13 @@ const TablePagination = ({
 						size="small"
 					/>
 				</div>
-				<p className={styles["no-margin"]}>
+				<p className={styles["text"]}>
 					Page {page} of {totalPages}
 				</p>
 				<div
 					className={getValidClassNames(
 						styles["change-page-buttons-container"],
-						styles["space-between"],
+						styles["container"],
 					)}
 				>
 					<IconButton
