@@ -4,8 +4,8 @@ type IconName =
 	| "contributors"
 	| "cross"
 	| "eye"
-	| "lessThan"
 	| "project"
+	| "rightArrow"
 	| "strikedEye";
 
 export { type IconName };

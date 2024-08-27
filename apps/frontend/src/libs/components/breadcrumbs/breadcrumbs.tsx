@@ -1,4 +1,5 @@
 import { Icon } from "~/libs/components/components.js";
+import { getBreadcrumbName } from "~/libs/helpers/helpers.js";
 import { useLocation } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
@@ -15,26 +16,16 @@ type Properties = {
 const FIRST_ITEM_INDEX = 0;
 const SINGLE_ITEM_OFFSET = 1;
 
-const formatBreadcrumbName = (name: string): string => {
-	return (
-		name
-			.replaceAll("-", " ")
-			// eslint-disable-next-line unicorn/prefer-string-replace-all
-			.replace(/\b\w/g, (char) => char.toUpperCase())
-	); // Title Case
-};
-
 const Breadcrumbs = ({ items }: Properties): JSX.Element => {
 	const location = useLocation();
 	const pathnames = location.pathname.split("/").filter(Boolean);
 
-	const generatedItems = pathnames.map((_, index) => {
-		const currentPathname = pathnames[index];
+	const generatedItems = pathnames.map((currentPathname, index) => {
 		const link = `/${pathnames.slice(FIRST_ITEM_INDEX, index + SINGLE_ITEM_OFFSET).join("/")}`;
 
 		return {
 			link,
-			name: currentPathname ? formatBreadcrumbName(currentPathname) : "",
+			name: getBreadcrumbName(currentPathname),
 		};
 	});
 
@@ -62,7 +53,7 @@ const Breadcrumbs = ({ items }: Properties): JSX.Element => {
 									<Icon
 										color="var(--color-border-primary)"
 										height={20}
-										name="lessThan"
+										name="rightArrow"
 										width={20}
 									/>
 								</span>
