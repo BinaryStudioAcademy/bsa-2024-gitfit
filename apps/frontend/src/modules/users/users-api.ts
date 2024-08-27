@@ -6,6 +6,7 @@ import { type Storage } from "~/libs/modules/storage/storage.js";
 import { UsersApiPath } from "./libs/enums/enums.js";
 import {
 	type UserGetAllResponseDto,
+	type UserInfoRequestDto,
 	type UserInfoResponseDto,
 } from "./libs/types/types.js";
 
@@ -35,7 +36,7 @@ class UserApi extends BaseHTTPApi {
 
 	public async update(
 		id: number,
-		userPayload: UserInfoResponseDto,
+		userPayload: UserInfoRequestDto,
 	): Promise<UserInfoResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(UsersApiPath.$ID, { id: String(id) }),

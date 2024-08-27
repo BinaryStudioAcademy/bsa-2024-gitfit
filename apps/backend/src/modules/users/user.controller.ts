@@ -1,5 +1,6 @@
 import { APIPath } from "~/libs/enums/enums.js";
 import {
+	type APIHandlerOptions,
 	type APIHandlerResponse,
 	BaseController,
 } from "~/libs/modules/controller/controller.js";
@@ -8,6 +9,10 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 import { type UserService } from "~/modules/users/user.service.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
+import {
+	type UserInfoRequestDto,
+	type UserInfoResponseDto,
+} from "./libs/types/types.js";
 
 /**
  * @swagger
@@ -41,6 +46,18 @@ class UserController extends BaseController {
 			method: "GET",
 			path: UsersApiPath.ROOT,
 		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.update(
+					options as APIHandlerOptions<{
+						body: UserInfoResponseDto;
+						params: { id: string };
+					}>,
+				),
+			method: "PATCH",
+			path: UsersApiPath.$ID,
+		});
 	}
 
 	/**
@@ -61,6 +78,57 @@ class UserController extends BaseController {
 	private async findAll(): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.userService.findAll(),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /users/{id}:
+	 *    patch:
+	 *      tags:
+	 *        - Users
+	 *      description: Update user info
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          description: ID of the user to update\
+	 *          schema:
+	 *            type: string
+	 *      requestBody:
+	 *        description: Updated user object\
+	 *        content:
+	 *          application/json:
+	 *            schema:
+	 *              type: object
+	 *              properties:
+	 *                name:
+	 *                  type: string
+	 *                email:
+	 *                  type: string
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 *                properties:
+	 *                  message:
+	 *                    type: object
+	 *                    $ref: "#/components/schemas/User"
+	 */
+
+	private async update(
+		options: APIHandlerOptions<{
+			body: UserInfoRequestDto;
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		const userId = Number(options.params.id);
+
+		return {
+			payload: await this.userService.update(userId, options.body),
 			status: HTTPCode.OK,
 		};
 	}

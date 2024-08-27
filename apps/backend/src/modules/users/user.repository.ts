@@ -2,6 +2,8 @@ import { type Repository } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserModel } from "~/modules/users/user.model.js";
 
+import { type UserInfoRequestDto } from "./libs/types/types.js";
+
 class UserRepository implements Repository {
 	private userModel: typeof UserModel;
 	public constructor(userModel: typeof UserModel) {
@@ -51,8 +53,16 @@ class UserRepository implements Repository {
 		return user ? UserEntity.initialize(user) : null;
 	}
 
-	public update(): ReturnType<Repository["update"]> {
-		return Promise.resolve(null);
+	public async update(
+		userId: number,
+		data: UserInfoRequestDto,
+	): Promise<UserEntity> {
+		const user = await this.userModel.query().patchAndFetchById(userId, {
+			email: data.email,
+			name: data.name,
+		});
+
+		return UserEntity.initialize(user);
 	}
 }
 
