@@ -1,5 +1,5 @@
 import { Icon } from "~/libs/components/components.js";
-import { IconSize } from "~/libs/enums/icon-size.enum.js";
+import { IconSize } from "~/libs/enums/enums.js";
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
 
 import { type IconName } from "../icon/libs/types/types.js";
