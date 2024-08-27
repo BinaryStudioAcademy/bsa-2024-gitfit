@@ -1,12 +1,3 @@
-.container,
-.pagination-container,
-.rows-per-page,
-.change-page-buttons {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
 .container {
 	height: 32px;
 	font-size: 14px;
@@ -22,17 +13,20 @@
 	column-gap: 32px;
 }
 
-.rows-per-page {
+.rows-per-page-container {
 	column-gap: 8px;
 }
 
-.change-page-buttons {
+.change-page-buttons-container {
 	column-gap: 7px;
 }
 
-.total-items-text,
-.rows-per-page-text,
-.page-text {
-	padding: 5.5px 0;
+.no-margin {
 	margin: 0;
+}
+
+.space-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }

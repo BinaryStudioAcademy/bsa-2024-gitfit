@@ -1,3 +1,4 @@
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import {
 	useAppForm,
 	useCallback,
@@ -69,11 +70,26 @@ const TablePagination = ({
 	}, [onPageChange, totalPages]);
 
 	return (
-		<div className={styles["container"]}>
-			<p className={styles["total-items-text"]}>{totalItems} items total</p>
-			<div className={styles["pagination-container"]}>
-				<div className={styles["rows-per-page"]}>
-					<p className={styles["rows-per-page-text"]}>Rows per page:</p>
+		<div
+			className={getValidClassNames(
+				styles["container"],
+				styles["space-between"],
+			)}
+		>
+			<p className={styles["no-margin"]}>{totalItems} items total</p>
+			<div
+				className={getValidClassNames(
+					styles["pagination-container"],
+					styles["space-between"],
+				)}
+			>
+				<div
+					className={getValidClassNames(
+						styles["rows-per-page-container"],
+						styles["space-between"],
+					)}
+				>
+					<p className={styles["no-margin"]}>Rows per page:</p>
 					<Select<FormData, PageSizeOption["value"]>
 						control={control}
 						isLabelHidden
@@ -83,10 +99,15 @@ const TablePagination = ({
 						size="small"
 					/>
 				</div>
-				<p className={styles["page-text"]}>
+				<p className={styles["no-margin"]}>
 					Page {page} of {totalPages}
 				</p>
-				<div className={styles["change-page-buttons"]}>
+				<div
+					className={getValidClassNames(
+						styles["change-page-buttons-container"],
+						styles["space-between"],
+					)}
+				>
 					<IconButton
 						iconName="leftDoubleArrow"
 						isDisabled={!hasPreviousPage}
