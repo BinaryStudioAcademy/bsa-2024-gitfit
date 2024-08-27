@@ -1,24 +1,39 @@
 import { Button, Input } from "~/libs/components/components.js";
-import { useAppForm, useCallback } from "~/libs/hooks/hooks.js";
-import { type UserAuthResponseDto } from "~/modules/users/users.js";
+import { compareObjects } from "~/libs/helpers/helpers.js";
+import {
+	useAppForm,
+	useCallback,
+	useEffect,
+	useState,
+} from "~/libs/hooks/hooks.js";
+import { type UserData } from "~/modules/users/users.js";
 
-import { DEFAULT_USER_PAYLOAD } from "./libs/constants/constants.js";
+type Properties = {
+	defaultValues: UserData;
+};
 
-type User = Omit<UserAuthResponseDto, "id">;
-
-const EditUserForm = (): JSX.Element => {
-	const { control, errors, handleSubmit } = useAppForm<User>({
-		defaultValues: DEFAULT_USER_PAYLOAD,
+const EditUserForm = ({ defaultValues }: Properties): JSX.Element => {
+	const { control, errors, handleSubmit, watch } = useAppForm<UserData>({
+		defaultValues,
 	});
+
+	const [isChanged, setIsChanged] = useState<boolean>(false);
+
+	const watchedValues = watch();
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit((formData: User) => {
+			void handleSubmit((formData: UserData) => {
 				return formData;
 			})(event_);
 		},
 		[handleSubmit],
 	);
+
+	useEffect(() => {
+		const isEqual = compareObjects(watchedValues, defaultValues);
+		setIsChanged(!isEqual);
+	}, [watchedValues, defaultValues]);
 
 	return (
 		<form onSubmit={handleFormSubmit}>
@@ -39,7 +54,7 @@ const EditUserForm = (): JSX.Element => {
 				name="email"
 			/>
 
-			<Button label="Update Profile" type="submit" />
+			<Button disabled={!isChanged} label="Update Profile" type="submit" />
 		</form>
 	);
 };

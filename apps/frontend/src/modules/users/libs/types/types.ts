@@ -1,3 +1,4 @@
+export { type UserData } from "./user-data.type.js";
 export {
 	type UserAuthResponseDto,
 	type UserGetAllItemResponseDto,

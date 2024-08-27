@@ -3,12 +3,18 @@ import { NavLink } from "react-router-dom";
 import styles from "./styles.module.css";
 
 type Properties = {
+	disabled?: boolean;
 	href?: string | undefined;
 	label: string;
 	type?: "button" | "submit";
 };
 
-const Button = ({ href, label, type = "button" }: Properties): JSX.Element => {
+const Button = ({
+	disabled,
+	href,
+	label,
+	type = "button",
+}: Properties): JSX.Element => {
 	if (href) {
 		return (
 			<NavLink className={styles["button"] ?? ""} to={href}>
@@ -18,7 +24,7 @@ const Button = ({ href, label, type = "button" }: Properties): JSX.Element => {
 	}
 
 	return (
-		<button className={styles["button"]} type={type}>
+		<button className={styles["button"]} disabled={disabled} type={type}>
 			{label}
 		</button>
 	);

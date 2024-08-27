@@ -13,6 +13,6 @@
 	transition: background-color 0.3s ease;
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
 	background-color: var(--color-brand-primary-hover);
 }

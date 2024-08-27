@@ -9,6 +9,10 @@ const Profile = (): JSX.Element => {
 		({ auth }) => auth.authenticatedUser,
 	);
 
+	if (!authenticatedUser) {
+		return <></>;
+	}
+
 	return (
 		<>
 			<Header />
@@ -17,8 +21,13 @@ const Profile = (): JSX.Element => {
 				<Sidebar items={SIDEBAR_ITEMS} />
 
 				<div style={{ display: "flex", flexDirection: "column" }}>
-					Profile: {authenticatedUser?.name}
-					<EditUserForm />
+					Profile: {authenticatedUser.name}
+					<EditUserForm
+						defaultValues={{
+							email: authenticatedUser.email,
+							name: authenticatedUser.name,
+						}}
+					/>
 				</div>
 			</main>
 		</>
