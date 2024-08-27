@@ -3,6 +3,7 @@ type IconName =
 	| "analytics"
 	| "contributors"
 	| "eye"
+	| "lessThan"
 	| "project"
 	| "strikedEye";
 

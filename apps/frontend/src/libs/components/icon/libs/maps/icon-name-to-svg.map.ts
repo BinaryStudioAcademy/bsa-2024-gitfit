@@ -4,6 +4,7 @@ import Access from "~/assets/images/icons/access.svg?react";
 import Analytics from "~/assets/images/icons/analytics.svg?react";
 import Contributors from "~/assets/images/icons/contributors.svg?react";
 import Eye from "~/assets/images/icons/eye.svg?react";
+import LessThan from "~/assets/images/icons/less-than.svg?react";
 import Project from "~/assets/images/icons/project.svg?react";
 import StrikedEye from "~/assets/images/icons/striked-eye.svg?react";
 import { type IconName } from "~/libs/components/icon/types/types.js";
@@ -13,6 +14,7 @@ const iconNameToSvg: Record<IconName, FC<React.SVGProps<SVGSVGElement>>> = {
 	analytics: Analytics,
 	contributors: Contributors,
 	eye: Eye,
+	lessThan: LessThan,
 	project: Project,
 	strikedEye: StrikedEye,
 };
