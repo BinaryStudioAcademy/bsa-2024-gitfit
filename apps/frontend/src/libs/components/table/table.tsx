@@ -1,9 +1,10 @@
 import {
 	flexRender,
 	getCoreRowModel,
-	type TableColumn,
 	useReactTable,
-} from "~/libs/types/types.js";
+} from "@tanstack/react-table";
+
+import { type TableColumn } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
 
