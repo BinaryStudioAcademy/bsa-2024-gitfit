@@ -3,7 +3,6 @@ import { IconSize } from "~/libs/enums/icon-size.enum.js";
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
 
 import { type IconName } from "../icon/libs/types/types.js";
-import { type ButtonVariant } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
@@ -11,7 +10,7 @@ type Properties = {
 	isDisabled?: boolean;
 	label: string;
 	onClick: () => void;
-	variant?: ButtonVariant;
+	variant?: "outlined" | "primary";
 };
 
 const IconButton = ({
