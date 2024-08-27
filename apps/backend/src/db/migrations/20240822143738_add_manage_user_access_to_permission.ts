@@ -2,13 +2,17 @@ import { type Knex } from "knex";
 
 const TABLE_NAME = "permissions";
 
+const PermissionKey = {
+	MANAGE_USER_ACCESS: "manage_user_access",
+};
+
 const PermissionName = {
 	MANAGE_USER_ACCESS: "Manage User Access",
 };
 
 function up(knex: Knex): Promise<void> {
 	return knex(TABLE_NAME).insert({
-		key: "manage_user_access",
+		key: PermissionKey.MANAGE_USER_ACCESS,
 		name: PermissionName.MANAGE_USER_ACCESS,
 	});
 }
@@ -16,7 +20,7 @@ function up(knex: Knex): Promise<void> {
 function down(knex: Knex): Promise<void> {
 	return knex(TABLE_NAME)
 		.where({
-			name: PermissionName.MANAGE_USER_ACCESS,
+			key: PermissionKey.MANAGE_USER_ACCESS,
 		})
 		.del();
 }
