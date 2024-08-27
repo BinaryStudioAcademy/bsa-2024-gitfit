@@ -5,10 +5,10 @@ import {
 	type Path,
 	type PathValue,
 } from "react-hook-form";
-import ReactSelect, { type ActionMeta, type OnChangeValue } from "react-select";
+import ReactSelect from "react-select";
 
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
-import { useCallback, useFormController } from "~/libs/hooks/hooks.js";
+import { useFormController } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -19,7 +19,6 @@ type Properties<TFieldValues extends FieldValues, TOptionValue> = {
 	isMulti?: boolean;
 	label: string;
 	name: FieldPath<TFieldValues>;
-	onChange?: (option: SelectOption<TOptionValue>) => void;
 	options: SelectOption<TOptionValue>[];
 	placeholder?: string;
 	size?: "default" | "small";
@@ -31,7 +30,6 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 	isMulti = false,
 	label,
 	name,
-	onChange = (): void => {},
 	options,
 	placeholder,
 	size = "default",
@@ -40,25 +38,6 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		control,
 		name,
 	});
-
-	type Option = SelectOption<TOptionValue>;
-
-	const handleOnChange = useCallback(
-		(
-			option: OnChangeValue<Option, typeof isMulti>,
-			actionMeta: ActionMeta<Option>,
-		): void => {
-			if (actionMeta.action === "select-option") {
-				const selectedOption = (isMulti ? actionMeta.option : option) as Option;
-				onChange(selectedOption);
-			} else if (actionMeta.action === "remove-value") {
-				onChange(actionMeta.removedValue);
-			}
-
-			field.onChange(option, actionMeta);
-		},
-		[onChange, isMulti, field],
-	);
 
 	const labelClassName = isLabelHidden
 		? "visually-hidden"
@@ -100,7 +79,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				isClearable={false}
 				isMulti={isMulti}
 				name={name}
-				onChange={handleOnChange}
+				onChange={field.onChange}
 				options={options as PathValue<TFieldValues, Path<TFieldValues>>}
 				placeholder={placeholder}
 				styles={{

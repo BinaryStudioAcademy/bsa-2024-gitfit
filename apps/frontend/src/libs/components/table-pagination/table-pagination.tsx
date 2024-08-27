@@ -1,4 +1,10 @@
-import { useAppForm, useCallback, useMemo } from "~/libs/hooks/hooks.js";
+import {
+	useAppForm,
+	useCallback,
+	useEffect,
+	useFormWatch,
+	useMemo,
+} from "~/libs/hooks/hooks.js";
 import { calculateTotalPages } from "~/libs/hooks/use-pagination/libs/helpers/helpers.js";
 
 import { IconButton, Select } from "../components.js";
@@ -39,12 +45,12 @@ const TablePagination = ({
 	const hasNextPage = useMemo(() => page < totalPages, [page, totalPages]);
 	const hasPreviousPage = useMemo(() => page > FIRST_PAGE, [page]);
 
-	const handlePageSizeChange = useCallback(
-		(option: PageSizeOption) => {
-			onPageSizeChange(option.value);
-		},
-		[onPageSizeChange],
-	);
+	const { pageSize: changedPageSize } = useFormWatch({ control });
+
+	useEffect(() => {
+		const newPageSize = changedPageSize?.value as number;
+		onPageSizeChange(newPageSize);
+	}, [changedPageSize, onPageSizeChange]);
 
 	const handleFirstPageClick = useCallback(() => {
 		onPageChange(FIRST_PAGE);
@@ -73,7 +79,6 @@ const TablePagination = ({
 						isLabelHidden
 						label="Rows per page"
 						name="pageSize"
-						onChange={handlePageSizeChange}
 						options={PAGE_SIZE_OPTIONS}
 						size="small"
 					/>
