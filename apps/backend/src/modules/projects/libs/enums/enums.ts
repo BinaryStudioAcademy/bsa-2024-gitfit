@@ -1,1 +1,1 @@
-export { ExceptionMessage, ProjectsApiPath } from "@git-fit/shared";
+export { ProjectsApiPath } from "@git-fit/shared";
