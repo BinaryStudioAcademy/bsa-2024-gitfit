@@ -1,8 +1,8 @@
 import { Icon } from "~/libs/components/components.js";
-import { IconSize } from "~/libs/enums/enums.js";
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
 
 import { type IconName } from "../icon/libs/types/types.js";
+import { ICON_SIZE } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties = {
@@ -35,11 +35,7 @@ const IconButton = ({
 			type="button"
 		>
 			<span className="visually-hidden">{label}</span>
-			<Icon
-				height={IconSize.DEFAULT}
-				name={iconName}
-				width={IconSize.DEFAULT}
-			/>
+			<Icon height={ICON_SIZE} name={iconName} width={ICON_SIZE} />
 		</button>
 	);
 };
