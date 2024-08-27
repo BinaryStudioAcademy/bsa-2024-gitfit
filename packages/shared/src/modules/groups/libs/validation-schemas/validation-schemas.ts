@@ -1,1 +1,1 @@
-export { groupCreate } from "./create-group.validation-schema.js";
+export { groupCreate } from "./group-create.validation-schema.js";
