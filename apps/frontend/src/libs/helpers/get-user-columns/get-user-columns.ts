@@ -1,9 +1,8 @@
-import { type ColumnDef } from "@tanstack/react-table";
-
 import { formatDate } from "~/libs/helpers/helpers.js";
+import { type TableColumn } from "~/libs/types/types.js";
 import { type UserAuthResponseDto } from "~/modules/users/users.js";
 
-const getUserColumns = (): ColumnDef<UserAuthResponseDto>[] => {
+const getUserColumns = (): TableColumn<UserAuthResponseDto>[] => {
 	return [
 		{
 			accessorKey: "name",
