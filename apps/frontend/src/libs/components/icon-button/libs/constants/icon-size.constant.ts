@@ -1,6 +1,3 @@
-const ICON_SIZE = {
-	HEIGHT: 20,
-	WIDTH: 20,
-};
+const ICON_SIZE = 20;
 
 export { ICON_SIZE };

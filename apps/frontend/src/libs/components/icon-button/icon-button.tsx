@@ -36,7 +36,7 @@ const IconButton = ({
 			type="button"
 		>
 			<span className="visually-hidden">{label}</span>
-			<Icon height={ICON_SIZE.HEIGHT} name={iconName} width={ICON_SIZE.WIDTH} />
+			<Icon height={ICON_SIZE} name={iconName} width={ICON_SIZE} />
 		</button>
 	);
 };
