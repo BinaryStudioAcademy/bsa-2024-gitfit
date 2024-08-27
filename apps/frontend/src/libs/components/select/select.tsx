@@ -39,10 +39,11 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		name,
 	});
 
-	const labelClassName = isLabelHidden
-		? "visually-hidden"
-		: styles["label-text"];
 	const isSmall = size === "small";
+	const labelClassName = getValidClassNames(
+		styles["label-text"],
+		isLabelHidden && "visually-hidden",
+	);
 
 	return (
 		<label className={styles["label"]}>
