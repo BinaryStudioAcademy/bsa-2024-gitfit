@@ -7,6 +7,7 @@ import {
 	useMemo,
 } from "~/libs/hooks/hooks.js";
 import { calculateTotalPages } from "~/libs/hooks/use-pagination/libs/helpers/helpers.js";
+import { type SelectOption } from "~/libs/types/types.js";
 
 import { IconButton, Select } from "../components.js";
 import {
@@ -14,7 +15,6 @@ import {
 	PAGE_INCREMENT,
 	PAGE_SIZE_OPTIONS,
 } from "./libs/constants/constants.js";
-import { type FormData, type PageSizeOption } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
@@ -23,6 +23,12 @@ type Properties = {
 	page: number;
 	pageSize: number;
 	totalItems: number;
+};
+
+type PageSizeOption = SelectOption<number>;
+
+type FormData = {
+	pageSize: PageSizeOption;
 };
 
 const TablePagination = ({
