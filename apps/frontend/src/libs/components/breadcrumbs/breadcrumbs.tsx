@@ -41,22 +41,24 @@ const Breadcrumbs = ({ items }: Properties): JSX.Element => {
 	const breadcrumbs = items || generatedItems;
 
 	return (
-		<nav aria-label="breadcrumb" className={styles["breadcrumbContainer"]}>
-			<ol className={styles["breadcrumbList"]}>
+		<nav aria-label="breadcrumb" className={styles["breadcrumb-container"]}>
+			<ol className={styles["breadcrumb-list"]}>
 				{breadcrumbs.map((item, index) => {
 					const isLastItem = index === breadcrumbs.length - SINGLE_ITEM_OFFSET;
 
 					return (
-						<li className={styles["breadcrumbItem"]} key={index}>
+						<li className={styles["breadcrumb-item"]} key={index}>
 							{isLastItem ? (
-								<span className={styles["breadcrumbCurrent"]}>{item.name}</span>
+								<span className={styles["breadcrumb-current"]}>
+									{item.name}
+								</span>
 							) : (
-								<a className={styles["breadcrumbLink"]} href={item.link}>
+								<a className={styles["breadcrumb-link"]} href={item.link}>
 									{item.name}
 								</a>
 							)}
 							{!isLastItem && (
-								<span className={styles["breadcrumbSeparator"]}>
+								<span className={styles["breadcrumb-separator"]}>
 									<Icon
 										color="var(--color-border-primary)"
 										height={20}

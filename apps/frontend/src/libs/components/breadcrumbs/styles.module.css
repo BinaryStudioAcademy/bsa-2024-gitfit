@@ -1,4 +1,4 @@
-.breadcrumbContainer {
+.breadcrumb-container {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -8,7 +8,7 @@
 	padding: 0;
 }
 
-.breadcrumbList {
+.breadcrumb-list {
 	display: flex;
 	flex-direction: row;
 	padding: 0;
@@ -16,7 +16,7 @@
 	list-style: none;
 }
 
-.breadcrumbItem {
+.breadcrumb-item {
 	display: flex;
 	flex-grow: 0;
 	align-items: center;
@@ -28,7 +28,7 @@
 	line-height: 120%;
 }
 
-.breadcrumbLink {
+.breadcrumb-link {
 	color: var(--color-brand-primary);
 	text-decoration: none;
 	transition:
@@ -36,17 +36,17 @@
 		text-decoration 0.3s;
 }
 
-.breadcrumbLink:hover {
+.breadcrumb-link:hover {
 	color: var(--color-brand-primary-hover);
 	text-decoration: underline;
 }
 
-.breadcrumbCurrent {
+.breadcrumb-current {
 	font-weight: 500;
 	color: var(--color-text-secondary);
 }
 
-.breadcrumbSeparator {
+.breadcrumb-separator {
 	display: flex;
 	align-items: center;
 	padding: 0 8px;
