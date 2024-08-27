@@ -14,16 +14,15 @@ import { store } from "~/libs/modules/store/store.js";
 import { Auth } from "~/pages/auth/auth.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
-
-import { getDevelopmentRoutes } from "./libs/helpers/helpers.js";
-import { Ui } from "./pages/ui/ui.js";
+import { Ui } from "~/pages/ui/ui.jsx";
 
 createRoot(document.querySelector("#root") as HTMLElement).render(
 	<StrictMode>
 		<StoreProvider store={store.instance}>
 			<RouterProvider
 				routes={[
-					...getDevelopmentRoutes({ element: <Ui />, path: AppRoute.UI }),
+					/* TO DO: Remove page as soon as there is no unused exports */
+					{ element: <Ui />, path: AppRoute.UI },
 					{
 						children: [
 							{
