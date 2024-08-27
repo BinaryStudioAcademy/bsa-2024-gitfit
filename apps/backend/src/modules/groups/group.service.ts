@@ -20,7 +20,7 @@ class GroupService implements Service {
 	public async create(
 		payload: GroupCreateRequestDto,
 	): Promise<GroupCreateResponseDto> {
-		const { name, permissionIds, userIds } = payload;
+		const { name, permissionIds = [], userIds } = payload;
 
 		const existingGroup = await this.groupRepository.findByName(name);
 

@@ -6,6 +6,8 @@ import { type UserGroupModel } from "./user-group.model.js";
 import { UserGroupsToPermissionsModel } from "./user-groups-to-permissions.model.js";
 import { UsersToUserGroupModel } from "./users-to-user-group.model.js";
 
+const MINIMUM_PERMISSIONS = 0;
+
 class GroupRepository implements Repository {
 	private groupModel: typeof UserGroupModel;
 
@@ -23,12 +25,14 @@ class GroupRepository implements Repository {
 				name,
 			});
 
-			await UserGroupsToPermissionsModel.query(trx).insert(
-				permissionIds.map((permissionId) => ({
-					permissionId,
-					userGroupId: createdGroup.id,
-				})),
-			);
+			if (permissionIds.length > MINIMUM_PERMISSIONS) {
+				await UserGroupsToPermissionsModel.query(trx).insert(
+					permissionIds.map((permissionId) => ({
+						permissionId,
+						userGroupId: createdGroup.id,
+					})),
+				);
+			}
 
 			await UsersToUserGroupModel.query(trx).insert(
 				userIds.map((userId) => ({
