@@ -1,10 +1,15 @@
-import { Select, Table } from "~/libs/components/components.js";
+import { Modal, Select, Table } from "~/libs/components/components.js";
 import {
 	mockColumns as mockTableColumns,
 	mockData as mockTableData,
 	type Person,
 } from "~/libs/components/table/mock-data.js";
-import { useAppDispatch, useAppForm, useEffect } from "~/libs/hooks/hooks.js";
+import {
+	useAppDispatch,
+	useAppForm,
+	useEffect,
+	useModal,
+} from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
@@ -15,6 +20,9 @@ const Ui = (): JSX.Element => {
 			options: [],
 		},
 	});
+
+	const modal = useModal();
+
 	useEffect(() => {
 		void dispatch(userActions.loadAll());
 	}, [dispatch]);
@@ -34,6 +42,9 @@ const Ui = (): JSX.Element => {
 				options={[]}
 			/>
 			<Table<Person> columns={mockTableColumns} data={mockTableData} />
+			<Modal title="Title" {...modal}>
+				children
+			</Modal>
 		</>
 	);
 };
