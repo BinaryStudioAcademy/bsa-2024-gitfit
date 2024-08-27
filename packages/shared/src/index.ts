@@ -41,6 +41,7 @@ export {
 	UserError,
 	type UserGetAllItemResponseDto,
 	type UserGetAllResponseDto,
+	type UserInfoResponseDto,
 	UsersApiPath,
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,

@@ -1,21 +1,28 @@
 import { Button, Input } from "~/libs/components/components.js";
 import { compareObjects } from "~/libs/helpers/helpers.js";
 import {
+	useAppDispatch,
 	useAppForm,
 	useCallback,
 	useEffect,
 	useState,
 } from "~/libs/hooks/hooks.js";
-import { type UserData } from "~/modules/users/users.js";
+import {
+	type UserInfoResponseDto,
+	actions as usersActions,
+} from "~/modules/users/users.js";
 
 type Properties = {
-	defaultValues: UserData;
+	defaultValues: UserInfoResponseDto;
+	userId: number;
 };
 
-const EditUserForm = ({ defaultValues }: Properties): JSX.Element => {
-	const { control, errors, handleSubmit, watch } = useAppForm<UserData>({
-		defaultValues,
-	});
+const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
+	const dispatch = useAppDispatch();
+	const { control, errors, handleSubmit, watch } =
+		useAppForm<UserInfoResponseDto>({
+			defaultValues,
+		});
 
 	const [isChanged, setIsChanged] = useState<boolean>(false);
 
@@ -23,11 +30,16 @@ const EditUserForm = ({ defaultValues }: Properties): JSX.Element => {
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit((formData: UserData) => {
-				return formData;
+			void handleSubmit((formData: UserInfoResponseDto) => {
+				void dispatch(
+					usersActions.updateUser({
+						id: userId,
+						userPayload: formData,
+					}),
+				);
 			})(event_);
 		},
-		[handleSubmit],
+		[dispatch, handleSubmit, userId],
 	);
 
 	useEffect(() => {
@@ -46,7 +58,7 @@ const EditUserForm = ({ defaultValues }: Properties): JSX.Element => {
 			/>
 
 			<Input
-				autoComplete="username"
+				autoComplete="email"
 				control={control}
 				disabled
 				errors={errors}

@@ -27,6 +27,7 @@ const Profile = (): JSX.Element => {
 							email: authenticatedUser.email,
 							name: authenticatedUser.name,
 						}}
+						userId={authenticatedUser.id}
 					/>
 				</div>
 			</main>

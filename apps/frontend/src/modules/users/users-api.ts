@@ -4,7 +4,10 @@ import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
-import { type UserGetAllResponseDto } from "./libs/types/types.js";
+import {
+	type UserGetAllResponseDto,
+	type UserInfoResponseDto,
+} from "./libs/types/types.js";
 
 type Constructor = {
 	baseUrl: string;
@@ -28,6 +31,23 @@ class UserApi extends BaseHTTPApi {
 		);
 
 		return await response.json<UserGetAllResponseDto>();
+	}
+
+	public async update(
+		id: number,
+		userPayload: UserInfoResponseDto,
+	): Promise<UserInfoResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(UsersApiPath.$ID, { id: String(id) }),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "PATCH",
+				payload: JSON.stringify(userPayload),
+			},
+		);
+
+		return await response.json<UserInfoResponseDto>();
 	}
 }
 
