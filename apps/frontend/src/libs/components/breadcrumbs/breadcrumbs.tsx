@@ -3,15 +3,6 @@ import { useLocation } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
 
-const FIRST_ITEM_INDEX = 0;
-const SINGLE_ITEM_OFFSET = 1;
-
-const formatBreadcrumbName = (name: string): string => {
-	return name
-		.replaceAll("-", " ")
-		.replaceAll(/\b\w/g, (char) => char.toUpperCase()); // Title Case
-};
-
 type BreadcrumbItem = {
 	link?: string;
 	name: string;
@@ -19,6 +10,18 @@ type BreadcrumbItem = {
 
 type Properties = {
 	items?: BreadcrumbItem[];
+};
+
+const FIRST_ITEM_INDEX = 0;
+const SINGLE_ITEM_OFFSET = 1;
+
+const formatBreadcrumbName = (name: string): string => {
+	return (
+		name
+			.replaceAll("-", " ")
+			// eslint-disable-next-line unicorn/prefer-string-replace-all
+			.replace(/\b\w/g, (char) => char.toUpperCase())
+	); // Title Case
 };
 
 const Breadcrumbs = ({ items }: Properties): JSX.Element => {
