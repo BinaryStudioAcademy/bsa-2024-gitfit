@@ -15,11 +15,15 @@ import { Auth } from "~/pages/auth/auth.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
 
+import { getDevelopmentRoutes } from "./libs/helpers/helpers.js";
+import { Ui } from "./pages/ui/ui.js";
+
 createRoot(document.querySelector("#root") as HTMLElement).render(
 	<StrictMode>
 		<StoreProvider store={store.instance}>
 			<RouterProvider
 				routes={[
+					...getDevelopmentRoutes({ element: <Ui />, path: AppRoute.UI }),
 					{
 						children: [
 							{
