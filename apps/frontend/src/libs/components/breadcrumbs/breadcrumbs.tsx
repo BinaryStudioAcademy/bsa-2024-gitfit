@@ -21,7 +21,7 @@ const formatBreadcrumbName = (name: string): string => {
 			.replaceAll("-", " ")
 			// eslint-disable-next-line unicorn/prefer-string-replace-all
 			.replace(/\b\w/g, (char) => char.toUpperCase())
-	); // Title Case
+	);
 };
 
 const Breadcrumbs = ({ items }: Properties): JSX.Element => {
