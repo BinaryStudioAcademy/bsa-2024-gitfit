@@ -1,4 +1,5 @@
 import {
+	Breadcrumbs,
 	Header,
 	Loader,
 	Select,
@@ -43,10 +44,22 @@ const Projects = (): JSX.Element => {
 		}
 	}, [isRoot, dispatch]);
 
+	{
+		/*  Breadcrumbs test here */
+	}
+
+	const breadcrumbItems = [
+		{ link: "/", name: "Home" },
+		{ link: "/projects", name: "Projects" },
+		{ name: "Current Project" },
+	];
+
 	return (
 		<>
 			<Header />
 			<p>Current path: {pathname}</p>
+			{/*  Breadcrumbs test here */}
+			<Breadcrumbs items={breadcrumbItems} />
 
 			{/* TODO: Delete inline styles after implementation */}
 			<main style={{ display: "flex", flex: "1" }}>

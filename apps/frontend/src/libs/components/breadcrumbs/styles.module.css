@@ -1,7 +1,6 @@
 .breadcrumbContainer {
 	display: flex;
 	flex-direction: row;
-	gap: 8px;
 	align-items: center;
 	width: 100%;
 	max-width: 1000px;
@@ -9,9 +8,16 @@
 	padding: 0;
 }
 
+.breadcrumbList {
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
 .breadcrumbItem {
 	display: flex;
-	flex: none;
 	flex-grow: 0;
 	align-items: center;
 	height: 19px;
@@ -41,10 +47,7 @@
 }
 
 .breadcrumbSeparator {
-	flex: none;
-	flex-grow: 0;
-	order: 1;
-	width: 20px;
-	height: 20px;
-	background-color: var(--color-border-primary);
+	display: flex;
+	align-items: center;
+	padding: 0 8px;
 }
