@@ -1,5 +1,5 @@
 import { Header, Sidebar } from "~/libs/components/components.js";
-import { SIDEBAR_ITEMS } from "~/libs/constants/navigation-items.constant.js";
+import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
 
 import styles from "./styles.module.css";
 
