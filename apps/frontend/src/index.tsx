@@ -14,7 +14,6 @@ import { store } from "~/libs/modules/store/store.js";
 import { AccessManagement } from "~/pages/access-management/access-management.jsx";
 import { Auth } from "~/pages/auth/auth.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
-import { PageLayout } from "~/pages/page-layout/page-layout.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
 
 createRoot(document.querySelector("#root") as HTMLElement).render(
@@ -51,9 +50,7 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 					{
 						element: (
 							<ProtectedRoute>
-								<PageLayout>
-									<AccessManagement />
-								</PageLayout>
+								<AccessManagement />
 							</ProtectedRoute>
 						),
 						path: AppRoute.ACCESS_MANAGEMENT,

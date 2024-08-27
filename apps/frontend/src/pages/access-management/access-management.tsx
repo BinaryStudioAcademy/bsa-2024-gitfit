@@ -8,6 +8,7 @@ import {
 	useEffect,
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
+import { PageLayout } from "~/pages/page-layout/page-layout.jsx";
 
 import styles from "./styles.module.css";
 
@@ -23,11 +24,11 @@ const AccessManagement = (): JSX.Element => {
 	const data: UserAuthResponseDto[] = users;
 
 	return (
-		<div className={styles["content"]}>
+		<PageLayout>
 			<p className={styles["title"]}>Access Management</p>
 			<p className={styles["sub-title"]}>Users</p>
 			<Table<UserAuthResponseDto> columns={columns} data={data} />
-		</div>
+		</PageLayout>
 	);
 };
 
