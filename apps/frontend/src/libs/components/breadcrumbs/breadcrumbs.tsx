@@ -1,8 +1,16 @@
-import React from "react";
+import { Icon } from "~/libs/components/components.js";
+import { useLocation } from "~/libs/hooks/hooks.js";
 
-import { Icon } from "~/libs/components/components.js"; // Ensure the correct path to your Icon component
-import { useLocation } from "~/libs/hooks/hooks.js"; // Assuming you're using react-router
 import styles from "./styles.module.css";
+
+const FIRST_ITEM_INDEX = 0;
+const SINGLE_ITEM_OFFSET = 1;
+
+const formatBreadcrumbName = (name: string): string => {
+	return name
+		.replaceAll("-", " ")
+		.replaceAll(/\b\w/g, (char) => char.toUpperCase()); // Title Case
+};
 
 type BreadcrumbItem = {
 	link?: string;
@@ -10,23 +18,34 @@ type BreadcrumbItem = {
 };
 
 type Properties = {
-	items: BreadcrumbItem[];
+	items?: BreadcrumbItem[];
 };
 
 const Breadcrumbs = ({ items }: Properties): JSX.Element => {
 	const location = useLocation();
-	const LAST_ITEM_OFFSET = 1;
+	const pathnames = location.pathname.split("/").filter(Boolean);
+
+	const generatedItems = pathnames.map((_, index) => {
+		const currentPathname = pathnames[index];
+		const link = `/${pathnames.slice(FIRST_ITEM_INDEX, index + SINGLE_ITEM_OFFSET).join("/")}`;
+
+		return {
+			link,
+			name: currentPathname ? formatBreadcrumbName(currentPathname) : "",
+		};
+	});
+
+	const breadcrumbs = items || generatedItems;
 
 	return (
 		<nav aria-label="breadcrumb" className={styles["breadcrumbContainer"]}>
 			<ol className={styles["breadcrumbList"]}>
-				{items.map((item, index) => {
-					const isCurrentPage = location.pathname === item.link;
-					const isLastItem = index === items.length - LAST_ITEM_OFFSET;
+				{breadcrumbs.map((item, index) => {
+					const isLastItem = index === breadcrumbs.length - SINGLE_ITEM_OFFSET;
 
 					return (
 						<li className={styles["breadcrumbItem"]} key={index}>
-							{isCurrentPage ? (
+							{isLastItem ? (
 								<span className={styles["breadcrumbCurrent"]}>{item.name}</span>
 							) : (
 								<a className={styles["breadcrumbLink"]} href={item.link}>
