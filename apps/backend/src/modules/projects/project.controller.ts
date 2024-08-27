@@ -8,7 +8,10 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { ProjectsApiPath } from "./libs/enums/enums.js";
-import { type ProjectCreateRequestDto } from "./libs/types/types.js";
+import {
+	type ProjectCreateRequestDto,
+	type ProjectFindRequestDto,
+} from "./libs/types/types.js";
 import { projectCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectService } from "./project.service.js";
 
@@ -57,6 +60,17 @@ class ProjectController extends BaseController {
 				body: projectCreateValidationSchema,
 			},
 		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.getById(
+					options as APIHandlerOptions<{
+						params: ProjectFindRequestDto;
+					}>,
+				),
+			method: "GET",
+			path: ProjectsApiPath.BY_ID,
+		});
 	}
 
 	/**
@@ -95,6 +109,41 @@ class ProjectController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.projectService.create(options.body),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /projects/{id}:
+	 *    get:
+	 *      description: Get project by ID
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          schema:
+	 *            type: integer
+	 *          required: true
+	 *          description: Numeric ID of the project to retrieve
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 *                properties:
+	 *                  message:
+	 *                    type: object
+	 *                    $ref: "#/components/schemas/Project"
+	 */
+	private async getById(
+		options: APIHandlerOptions<{
+			params: ProjectFindRequestDto;
+		}>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.projectService.find(Number(options.params.id)),
 			status: HTTPCode.OK,
 		};
 	}
