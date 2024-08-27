@@ -13,6 +13,7 @@ import { AppRoute } from "~/libs/enums/enums.js";
 import { store } from "~/libs/modules/store/store.js";
 import { Auth } from "~/pages/auth/auth.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
+import { Profile } from "~/pages/profile/profile.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
 
 createRoot(document.querySelector("#root") as HTMLElement).render(
@@ -29,6 +30,14 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 									</ProtectedRoute>
 								),
 								path: AppRoute.ROOT,
+							},
+							{
+								element: (
+									<ProtectedRoute>
+										<Profile />
+									</ProtectedRoute>
+								),
+								path: AppRoute.PROFILE,
 							},
 							{
 								element: <Auth />,
