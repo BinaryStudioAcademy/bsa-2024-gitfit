@@ -77,11 +77,11 @@ class GroupController extends BaseController {
 	 *             properties:
 	 *               name:
 	 *                 type: string
-	 *               user_ids:
+	 *               userIds:
 	 *                 type: array
 	 *                 items:
 	 *                   type: number
-	 *               permission_ids:
+	 *               permissionIds:
 	 *                 type: array
 	 *                 items:
 	 *                   type: number
