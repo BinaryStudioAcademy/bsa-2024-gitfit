@@ -87,6 +87,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 							styles["option"],
 							state.isSelected && styles["option-selected"],
 							state.isFocused && styles["option-focused"],
+							isSmall && styles["option-small"],
 						),
 					placeholder: () => styles["placeholder"] as string,
 					singleValue: () =>
@@ -102,6 +103,12 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				onChange={handleOnChange}
 				options={options as PathValue<TFieldValues, Path<TFieldValues>>}
 				placeholder={placeholder}
+				styles={{
+					control: (base) => ({
+						...base,
+						minHeight: "32px",
+					}),
+				}}
 				unstyled
 				value={field.value}
 			/>

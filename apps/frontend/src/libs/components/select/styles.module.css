@@ -19,7 +19,6 @@
 }
 
 .control-small {
-	min-height: 32px;
 	padding: 4.5px 7px;
 	border-radius: 4px;
 }
@@ -87,6 +86,10 @@
 	line-height: 1.5;
 	color: var(--color-text-primary);
 	border-radius: 4px;
+}
+
+.option-small {
+	padding: 4.5px 8px;
 }
 
 .control-focused {
