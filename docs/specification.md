@@ -256,7 +256,7 @@ The "Contributors" page includes:
 - "Search” field: Allows the user to search for contributors by name.
 - “Contributors” table: Displays columns for "Name", "Git Emails", "Projects", "Is Hidden" and “Options” icon. When the “Is Hidden” column is checked, the contributor is excluded from all app metrics and pages (except for the "Contributors" page). When the "Options" icon is clicked, a menu with the "Edit" and “Merge” options is shown. When the “Edit” option is clicked, the “Update Contributor Modal” is opened. When the “Merge” option is clicked, the “Merge Contributors Modal” is opened.
 
-The "Contributors" page displays includes pagination or infinite scroll to manage the number of entries shown.
+The "Contributors" page displays pagination to manage the number of entries shown.
 
 #### 2.8.1 Update Contributor Modal
 
@@ -270,7 +270,7 @@ The "Update Contributor Modal" includes:
 - “Git Emails” field (prefilled, disabled).
 - “Projects” field (prefilled, disabled).
 - “Is Hidden” checkbox (prefilled).
-- “Update” button: When clicked, submits the form, closes the modal, and updates the contributor's data on the page. After clicking the "Update" button, the notification "Contributor information successfully updated" appears.
+- “Update” button: When clicked, submits the form, closes the modal, and updates the contributor's data on the page. After clicking the "Update" button, the notification "Contributor information successfully updated." appears.
 - “Close” icon: When clicked, the modal is closed.
 
 #### 2.8.2 Merge Contributors Modal
@@ -283,7 +283,7 @@ The "Merge Contributors Modal" includes:
 
 - “Current contributor” field (disabled): Prefilled with current contributor name and git email.
 - “Contributor to merge with” select: Has contributors list as options with their git emails in the parenthesis.
-- “Merge” button: When clicked, submits the form, closes the modal, and updates the contributor's data on the page, the message "Contributors successfully merged" appears. After merge, the selected contributor is deleted and his git emails are transferred to the current contributor.
+- “Merge” button: When clicked, submits the form, closes the modal, and updates the contributor's data on the page, the message "Contributors successfully merged." appears. After merge, the selected contributor is deleted and his git emails are transferred to the current contributor.
 - “Close” icon: When clicked, the modal is closed.
 
 ### 2.9 Profile
