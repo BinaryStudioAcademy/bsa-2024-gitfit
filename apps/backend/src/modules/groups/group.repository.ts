@@ -1,4 +1,4 @@
-import { changeToSnakeCase } from "~/libs/helpers/helpers.js";
+import { changeCase } from "~/libs/helpers/helpers.js";
 import { type Repository } from "~/libs/types/types.js";
 
 import { GroupEntity } from "./group.entity.js";
@@ -15,7 +15,7 @@ class GroupRepository implements Repository {
 
 	public async create(entity: GroupEntity): Promise<GroupEntity> {
 		const { name, permissionIds, userIds } = entity.toNewObject();
-		const key = changeToSnakeCase(name);
+		const key = changeCase(name, "snakeCase");
 
 		const group = await this.groupModel.transaction(async (trx) => {
 			const createdGroup = await this.groupModel.query(trx).insert({
@@ -61,7 +61,7 @@ class GroupRepository implements Repository {
 	}
 
 	public async findByName(name: string): Promise<GroupEntity | null> {
-		const key = changeToSnakeCase(name);
+		const key = changeCase(name, "snakeCase");
 		const group = await this.groupModel.query().findOne({ key });
 
 		if (!group) {

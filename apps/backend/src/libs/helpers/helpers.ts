@@ -1,1 +1,1 @@
-export { changeToSnakeCase } from "@git-fit/shared";
+export { changeCase } from "@git-fit/shared";
