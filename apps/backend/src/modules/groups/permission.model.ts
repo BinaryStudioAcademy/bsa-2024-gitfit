@@ -3,14 +3,14 @@ import {
 	DatabaseTableName,
 } from "~/libs/modules/database/database.js";
 
-class UserGroupModel extends AbstractModel {
+class PermissionModel extends AbstractModel {
 	public key!: string;
 
 	public name!: string;
 
 	public static override get tableName(): string {
-		return DatabaseTableName.USER_GROUPS;
+		return DatabaseTableName.PERMISSIONS;
 	}
 }
 
-export { UserGroupModel };
+export { PermissionModel };

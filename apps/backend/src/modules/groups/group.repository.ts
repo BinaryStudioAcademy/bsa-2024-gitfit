@@ -2,16 +2,12 @@ import { changeCase } from "~/libs/helpers/helpers.js";
 import { type Repository } from "~/libs/types/types.js";
 
 import { GroupEntity } from "./group.entity.js";
-import { type UserGroupModel } from "./user-group.model.js";
-import { UserGroupsToPermissionsModel } from "./user-groups-to-permissions.model.js";
-import { UsersToUserGroupModel } from "./users-to-user-group.model.js";
-
-const MINIMUM_PERMISSIONS = 0;
+import { type GroupModel } from "./group.model.js";
 
 class GroupRepository implements Repository {
-	private groupModel: typeof UserGroupModel;
+	private groupModel: typeof GroupModel;
 
-	public constructor(groupModel: typeof UserGroupModel) {
+	public constructor(groupModel: typeof GroupModel) {
 		this.groupModel = groupModel;
 	}
 
@@ -19,30 +15,18 @@ class GroupRepository implements Repository {
 		const { name, permissionIds, userIds } = entity.toNewObject();
 		const key = changeCase(name, "snakeCase");
 
-		const group = await this.groupModel.transaction(async (trx) => {
-			const createdGroup = await this.groupModel.query(trx).insert({
-				key,
-				name,
-			});
+		const groupData = {
+			key,
+			name,
+			permissions: permissionIds.map((id) => ({ id })),
+			users: userIds.map((id) => ({ id })),
+		};
 
-			if (permissionIds.length > MINIMUM_PERMISSIONS) {
-				await UserGroupsToPermissionsModel.query(trx).insert(
-					permissionIds.map((permissionId) => ({
-						permissionId,
-						userGroupId: createdGroup.id,
-					})),
-				);
-			}
-
-			await UsersToUserGroupModel.query(trx).insert(
-				userIds.map((userId) => ({
-					userGroupId: createdGroup.id,
-					userId,
-				})),
-			);
-
-			return createdGroup;
-		});
+		const group = await this.groupModel
+			.query()
+			.insertGraph(groupData, { relate: true })
+			.returning("*")
+			.withGraphJoined("[permissions, users]");
 
 		return GroupEntity.initialize({
 			id: group.id,
@@ -66,7 +50,10 @@ class GroupRepository implements Repository {
 
 	public async findByName(name: string): Promise<GroupEntity | null> {
 		const key = changeCase(name, "snakeCase");
-		const group = await this.groupModel.query().findOne({ key });
+		const group = await this.groupModel
+			.query()
+			.findOne({ key })
+			.withGraphFetched("[permissions, users]");
 
 		if (!group) {
 			return null;
@@ -75,8 +62,8 @@ class GroupRepository implements Repository {
 		return GroupEntity.initialize({
 			id: group.id,
 			name: group.name,
-			permissionIds: [],
-			userIds: [],
+			permissionIds: group.permissions.map((permission) => permission.id),
+			userIds: group.users.map((user) => user.id),
 		});
 	}
 
