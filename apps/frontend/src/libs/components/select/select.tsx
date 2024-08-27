@@ -15,26 +15,26 @@ import styles from "./styles.module.css";
 
 type Properties<TFieldValues extends FieldValues, TOptionValue> = {
 	control: Control<TFieldValues, null>;
-	isLabelVissible?: boolean;
+	isLabelHidden?: boolean;
 	isMulti?: boolean;
 	label: string;
 	name: FieldPath<TFieldValues>;
 	onChange?: (option: SelectOption<TOptionValue>) => void;
 	options: SelectOption<TOptionValue>[];
 	placeholder?: string;
-	variant?: "primary" | "small";
+	size?: "default" | "small";
 };
 
 const Select = <TFieldValues extends FieldValues, TOptionValue>({
 	control,
-	isLabelVissible = true,
+	isLabelHidden = false,
 	isMulti = false,
 	label,
 	name,
 	onChange = (): void => {},
 	options,
-	placeholder = "Select...",
-	variant = "primary",
+	placeholder,
+	size = "default",
 }: Properties<TFieldValues, TOptionValue>): JSX.Element => {
 	const { field } = useFormController({
 		control,
@@ -60,10 +60,10 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		[onChange, isMulti, field],
 	);
 
-	const labelClassName = isLabelVissible
-		? styles["label-text"]
-		: "visually-hidden";
-	const isSmall = variant === "small";
+	const labelClassName = isLabelHidden
+		? "visually-hidden"
+		: styles["label-text"];
+	const isSmall = size === "small";
 
 	return (
 		<label className={styles["label"]}>

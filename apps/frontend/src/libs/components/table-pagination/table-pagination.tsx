@@ -70,13 +70,12 @@ const TablePagination = ({
 					<p className={styles["rows-per-page-text"]}>Rows per page:</p>
 					<Select<FormData, PageSizeOption["value"]>
 						control={control}
-						isLabelVissible={false}
+						isLabelHidden
 						label="Rows per page"
 						name="pageSize"
 						onChange={handlePageSizeChange}
 						options={PAGE_SIZE_OPTIONS}
-						placeholder=""
-						variant="small"
+						size="small"
 					/>
 				</div>
 				<p className={styles["page-text"]}>

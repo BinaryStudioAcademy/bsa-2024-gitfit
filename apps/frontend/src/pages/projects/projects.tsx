@@ -39,9 +39,9 @@ const Projects = (): JSX.Element => {
 		},
 	});
 
-	const TOTAL_PAGINATION_ITEMS = 100;
+	const TABLE_TOTAL_ITEMS = 100;
 	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
-		totalItems: TOTAL_PAGINATION_ITEMS,
+		totalItems: TABLE_TOTAL_ITEMS,
 	});
 
 	useEffect(() => {
@@ -81,7 +81,7 @@ const Projects = (): JSX.Element => {
 								onPageSizeChange={onPageSizeChange}
 								page={page}
 								pageSize={pageSize}
-								totalItems={TOTAL_PAGINATION_ITEMS}
+								totalItems={TABLE_TOTAL_ITEMS}
 							/>
 						</>
 					)}

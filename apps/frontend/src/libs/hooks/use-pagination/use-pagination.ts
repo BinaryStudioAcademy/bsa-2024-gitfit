@@ -1,3 +1,4 @@
+import { QueryParameterName } from "~/libs/enums/enums.js";
 import {
 	useCallback,
 	useEffect,
@@ -6,7 +7,6 @@ import {
 } from "~/libs/hooks/hooks.js";
 
 import { FIRST_PAGE } from "./libs/constants/constants.js";
-import { QueryParameter } from "./libs/enums/enums.js";
 import {
 	calculateTotalPages,
 	getInitialPage,
@@ -27,20 +27,24 @@ type ReturnType = {
 const usePagination = ({ totalItems }: Parameters): ReturnType => {
 	const [searchParameters, setSearchParameters] = useSearchParams();
 
-	const pageQueryParameter = searchParameters.get(QueryParameter.page);
-	const pageSizeQueryParameter = searchParameters.get(QueryParameter.pageSize);
+	const pageQueryParameter = searchParameters.get(QueryParameterName.PAGE);
+	const pageSizeQueryParameter = searchParameters.get(
+		QueryParameterName.PAGE_SIZE,
+	);
 
-	const initialPageSize = getInitialPageSize(pageSizeQueryParameter);
-	const initialTotalPages = calculateTotalPages(initialPageSize, totalItems);
-	const initialPage = getInitialPage(pageQueryParameter, initialTotalPages);
+	const [pageSize, setPageSize] = useState<number>(() =>
+		getInitialPageSize(pageSizeQueryParameter),
+	);
+	const [page, setPage] = useState<number>(() => {
+		const initialTotalPages = calculateTotalPages(pageSize, totalItems);
 
-	const [page, setPage] = useState<number>(initialPage);
-	const [pageSize, setPageSize] = useState<number>(initialPageSize);
+		return getInitialPage(pageQueryParameter, initialTotalPages);
+	});
 
 	useEffect(() => {
 		setSearchParameters({
-			[QueryParameter.page]: String(page),
-			[QueryParameter.pageSize]: String(pageSize),
+			[QueryParameterName.PAGE]: String(page),
+			[QueryParameterName.PAGE_SIZE]: String(pageSize),
 		});
 	}, [page, pageSize, setSearchParameters]);
 

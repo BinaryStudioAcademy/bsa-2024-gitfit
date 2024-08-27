@@ -1,20 +1,16 @@
-import { DEFAULT_VALUES, FIRST_PAGE } from "../constants/constants.js";
-import { isNumberInRange, parseQueryParameterToNumber } from "./helpers.js";
+import { FIRST_PAGE } from "../constants/constants.js";
 
 const getInitialPage = (
 	pageQueryParameter: null | string,
 	totalPages: number,
 ): number => {
-	const pageParameter = parseQueryParameterToNumber(pageQueryParameter);
+	const page = Number(pageQueryParameter);
 
-	if (
-		pageParameter !== null &&
-		isNumberInRange(pageParameter, { max: totalPages, min: FIRST_PAGE })
-	) {
-		return pageParameter;
+	if (Number.isInteger(page) && page <= totalPages && page >= FIRST_PAGE) {
+		return page;
 	}
 
-	return DEFAULT_VALUES.PAGE;
+	return FIRST_PAGE;
 };
 
 export { getInitialPage };

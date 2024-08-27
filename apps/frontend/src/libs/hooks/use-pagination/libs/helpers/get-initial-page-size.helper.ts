@@ -1,17 +1,13 @@
-import { DEFAULT_VALUES } from "../constants/constants.js";
-import { isNumberInRange, parseQueryParameterToNumber } from "./helpers.js";
+import { DEFAULT_PAGE_SIZE, FIRST_PAGE } from "../constants/constants.js";
 
 const getInitialPageSize = (pageSizeQueryParameter: null | string): number => {
-	const pageSizeParameter = parseQueryParameterToNumber(pageSizeQueryParameter);
+	const pageSize = Number(pageSizeQueryParameter);
 
-	if (
-		pageSizeParameter !== null &&
-		isNumberInRange(pageSizeParameter, { min: 1 })
-	) {
-		return pageSizeParameter;
+	if (Number.isInteger(pageSize) && pageSize >= FIRST_PAGE) {
+		return pageSize;
 	}
 
-	return DEFAULT_VALUES.PAGE_SIZE;
+	return DEFAULT_PAGE_SIZE;
 };
 
 export { getInitialPageSize };
