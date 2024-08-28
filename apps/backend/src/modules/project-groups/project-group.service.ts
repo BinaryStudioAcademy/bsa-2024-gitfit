@@ -35,9 +35,9 @@ class ProjectGroupService implements Service {
 		const item = await this.projectGroupRepository.create(
 			ProjectGroupEntity.initializeNew({
 				name,
-				permissionIds,
-				projectId,
-				userIds,
+				permissionIds: permissionIds.map((id) => ({ id })),
+				projectId: { id: projectId },
+				userIds: userIds.map((id) => ({ id })),
 			}),
 		);
 

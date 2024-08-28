@@ -16,7 +16,6 @@ class ProjectGroupRepository implements Repository {
 		const { name, permissionIds, projectId, userIds } = entity.toNewObject();
 
 		//TODO: change with changeCase helper
-		// const key = changeCase(name, "snakeCase");
 		const key = this.generateKeyFromName(name);
 
 		const trx = await transaction.start(this.projectGroupModel.knex());
@@ -24,9 +23,9 @@ class ProjectGroupRepository implements Repository {
 		const projectGroupData = {
 			key,
 			name,
-			permissions: permissionIds.map((id) => ({ id })),
-			projects: [{ id: projectId }],
-			users: userIds.map((id) => ({ id })),
+			permissions: permissionIds,
+			projects: projectId,
+			users: userIds,
 		};
 
 		const createdProjectGroup = await this.projectGroupModel
@@ -62,7 +61,7 @@ class ProjectGroupRepository implements Repository {
 		//TODO: change with changeCase helper
 		const key = this.generateKeyFromName(name);
 
-		return (await this.projectGroupModel.query().findOne({ key })) || null;
+		return (await this.projectGroupModel.query().findOne({ key })) ?? null;
 	}
 
 	//TODO: remove after adding changeCase helper

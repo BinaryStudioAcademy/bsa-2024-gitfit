@@ -6,14 +6,10 @@ const PermissionKey = {
 	VIEW_PROJECT: "view_project",
 } as const;
 
-const PermissionName = {
-	VIEW_PROJECT: "View Project",
-} as const;
-
 function up(knex: Knex): Promise<void> {
 	return knex(TABLE_NAME).insert({
 		key: PermissionKey.VIEW_PROJECT,
-		name: PermissionName.VIEW_PROJECT,
+		name: "View Project",
 	});
 }
 

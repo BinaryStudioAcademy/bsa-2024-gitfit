@@ -5,9 +5,9 @@ import { type ProjectGroupCreateResponseDto } from "./libs/types/types.js";
 class ProjectGroupEntity implements Entity {
 	private id: null | number;
 	private name!: string;
-	private permissionIds!: number[];
-	private projectId!: number;
-	private userIds!: number[];
+	private permissionIds!: { id: number }[];
+	private projectId!: { id: number };
+	private userIds!: { id: number }[];
 
 	private constructor({
 		id,
@@ -18,9 +18,9 @@ class ProjectGroupEntity implements Entity {
 	}: {
 		id: null | number;
 		name: string;
-		permissionIds: number[];
-		projectId: number;
-		userIds: number[];
+		permissionIds: { id: number }[];
+		projectId: { id: number };
+		userIds: { id: number }[];
 	}) {
 		this.id = id;
 		this.name = name;
@@ -38,9 +38,9 @@ class ProjectGroupEntity implements Entity {
 	}: {
 		id: number;
 		name: string;
-		permissionIds: number[];
-		projectId: number;
-		userIds: number[];
+		permissionIds: { id: number }[];
+		projectId: { id: number };
+		userIds: { id: number }[];
 	}): ProjectGroupEntity {
 		return new ProjectGroupEntity({
 			id,
@@ -58,9 +58,9 @@ class ProjectGroupEntity implements Entity {
 		userIds,
 	}: {
 		name: string;
-		permissionIds: number[];
-		projectId: number;
-		userIds: number[];
+		permissionIds: { id: number }[];
+		projectId: { id: number };
+		userIds: { id: number }[];
 	}): ProjectGroupEntity {
 		return new ProjectGroupEntity({
 			id: null,
@@ -73,9 +73,9 @@ class ProjectGroupEntity implements Entity {
 
 	public toNewObject(): {
 		name: string;
-		permissionIds: number[];
-		projectId: number;
-		userIds: number[];
+		permissionIds: { id: number }[];
+		projectId: { id: number };
+		userIds: { id: number }[];
 	} {
 		return {
 			name: this.name,
@@ -89,9 +89,9 @@ class ProjectGroupEntity implements Entity {
 		return {
 			id: this.id as number,
 			name: this.name,
-			permissionIds: this.permissionIds,
-			projectId: this.projectId,
-			userIds: this.userIds,
+			permissionIds: this.permissionIds.map((perm) => perm.id),
+			projectId: this.projectId.id,
+			userIds: this.userIds.map((user) => user.id),
 		};
 	}
 }
