@@ -31,10 +31,10 @@ export {
 export { AuthApiPath, AuthError } from "./modules/auth/auth.js";
 export {
 	type ProjectCreateRequestDto,
-	type ProjectCreateResponseDto,
 	projectCreateValidationSchema,
 	ProjectError,
 	type ProjectFindRequestDto,
+	type ProjectResponseDto,
 	ProjectsApiPath,
 } from "./modules/projects/projects.js";
 export {

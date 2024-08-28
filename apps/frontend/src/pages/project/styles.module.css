@@ -1,0 +1,19 @@
+.project-name {
+	font-size: 30px;
+	line-height: 120%;
+	color: #ffffff;
+}
+
+.project-description-title {
+	font-size: 20px;
+	line-height: 130%;
+
+	color: var(--color-text-primary);
+}
+
+.project-description {
+	font-size: 16px;
+	line-height: 150%;
+
+	color: var(--color-text-primary);
+}
