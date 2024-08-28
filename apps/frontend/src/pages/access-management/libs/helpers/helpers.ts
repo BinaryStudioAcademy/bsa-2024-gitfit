@@ -1,1 +1,1 @@
-export { getUserRows } from "./get-user-rows.helpers.js";
+export { getUserRows } from "./get-user-rows.helper.js";
