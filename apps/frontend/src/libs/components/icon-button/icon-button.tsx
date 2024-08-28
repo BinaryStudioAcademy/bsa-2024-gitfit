@@ -1,39 +1,41 @@
 import { Icon } from "~/libs/components/components.js";
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 
-import { type IconName } from "../icon/types/types.js";
+import { type IconName } from "../icon/libs/types/types.js";
+import { ICON_SIZE } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	iconColor?: string | undefined;
-	iconHeight: number;
 	iconName: IconName;
-	iconWidth: number;
+	isDisabled?: boolean;
 	label: string;
 	onClick: () => void;
+	variant?: "outlined" | "primary";
 };
 
 const IconButton = ({
-	iconColor,
-	iconHeight,
 	iconName,
-	iconWidth,
+	isDisabled = false,
 	label,
 	onClick,
+	variant = "primary",
 }: Properties): JSX.Element => {
+	const isOutlined = variant === "outlined";
+	const buttonClasses = getValidClassNames({
+		[styles["icon-button"] as string]: true,
+		[styles["outlined"] as string]: isOutlined,
+	});
+
 	return (
 		<button
 			aria-label={label}
-			className={styles["icon-button"]}
+			className={buttonClasses}
+			disabled={isDisabled}
 			onClick={onClick}
 			type="button"
 		>
 			<span className="visually-hidden">{label}</span>
-			<Icon
-				color={iconColor}
-				height={iconHeight}
-				name={iconName}
-				width={iconWidth}
-			/>
+			<Icon height={ICON_SIZE} name={iconName} width={ICON_SIZE} />
 		</button>
 	);
 };
