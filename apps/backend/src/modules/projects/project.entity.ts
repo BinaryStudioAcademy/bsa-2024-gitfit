@@ -1,6 +1,6 @@
 import { type Entity } from "~/libs/types/types.js";
 
-import { type ProjectCreateResponseDto } from "./libs/types/types.js";
+import { type ProjectResponseDto } from "./libs/types/types.js";
 
 class ProjectEntity implements Entity {
 	private description!: string;
@@ -63,7 +63,7 @@ class ProjectEntity implements Entity {
 		};
 	}
 
-	public toObject(): ProjectCreateResponseDto {
+	public toObject(): ProjectResponseDto {
 		return {
 			description: this.description,
 			id: this.id as number,

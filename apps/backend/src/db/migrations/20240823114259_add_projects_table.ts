@@ -12,7 +12,7 @@ const ColumnName = {
 } as const;
 
 const FieldLimit = {
-	DESCRIPTION: 50,
+	DESCRIPTION: 200,
 	NAME: 50,
 } as const;
 

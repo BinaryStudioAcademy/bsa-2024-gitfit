@@ -1,0 +1,44 @@
+:root {
+	--header-height: 73px;
+	--sidebar-width: max(280px, 20%);
+}
+
+.page-sidebar {
+	position: fixed;
+	left: 0;
+	width: var(--sidebar-width);
+	height: 100%;
+}
+
+.page-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	width: 100%;
+	height: var(--header-height);
+	border-bottom: 1px solid var(--color-border-primary);
+}
+
+.page-content {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	padding: 32px 80px 0;
+}
+
+.page {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	padding-top: var(--header-height);
+	padding-left: var(--sidebar-width);
+	color: var(--color-text-primary);
+	background-color: var(--color-background-primary);
+}
+
+/* @media (--large-screen) {
+	.page-sidebar {
+		width: calc(var(--sidebar-width) - 80px);
+	}
+} */
