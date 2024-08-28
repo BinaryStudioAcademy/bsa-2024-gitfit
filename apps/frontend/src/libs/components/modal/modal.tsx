@@ -38,9 +38,7 @@ const Modal = ({
 						<h3>{title}</h3>
 						<div className={styles["modal-close"]}>
 							<IconButton
-								iconHeight={20}
 								iconName="cross"
-								iconWidth={20}
 								label="Close"
 								onClick={onModalClose}
 							/>

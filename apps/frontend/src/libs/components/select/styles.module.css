@@ -18,11 +18,26 @@
 	border-radius: 6px;
 }
 
+.control-small {
+	padding: 5px 7px;
+	border-radius: 4px;
+}
+
+.control-primary {
+	background-color: var(--color-background-primary);
+	border-color: var(--color-border-secondary);
+}
+
 .single-value {
 	font-size: 16px;
 	font-weight: 500;
-	line-height: 1.2;
+	line-height: 1.5;
 	color: var(--color-text-primary);
+}
+
+.single-value-small {
+	font-size: 14px;
+	font-weight: 400;
 }
 
 .multi-value {
@@ -62,10 +77,16 @@
 	width: 100%;
 	margin-bottom: 8px;
 	background-color: var(--color-background-secondary);
+	border: var(--color-border-primary) 1px solid;
 	border-radius: 4px;
 	box-shadow:
 		0deg 0deg 0deg 1px var(--box-shadow),
 		0deg 4px 11px var(--box-shadow);
+}
+
+.menu-primary {
+	background-color: var(--color-background-primary);
+	border-color: var(--color-border-secondary);
 }
 
 .option {
@@ -75,7 +96,16 @@
 	font-weight: 500;
 	line-height: 1.5;
 	color: var(--color-text-primary);
+	border-bottom: var(--color-border-primary) 1px solid;
 	border-radius: 4px;
+}
+
+.option-small {
+	padding: 5px 8px;
+}
+
+.option-primary {
+	border-color: var(--color-border-secondary);
 }
 
 .control-focused {
@@ -104,4 +134,5 @@
 
 .input {
 	color: var(--color-text-primary);
+	caret-color: transparent;
 }
