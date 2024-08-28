@@ -1,4 +1,4 @@
-import { Model, type RelationMappings } from "objection";
+import { type RelationMappings } from "objection";
 
 import {
 	AbstractModel,
@@ -28,7 +28,7 @@ class GroupModel extends AbstractModel {
 					to: `${DatabaseTableName.PERMISSIONS}.id`,
 				},
 				modelClass: PermissionModel,
-				relation: Model.ManyToManyRelation,
+				relation: AbstractModel.ManyToManyRelation,
 			},
 			users: {
 				join: {
@@ -40,7 +40,7 @@ class GroupModel extends AbstractModel {
 					to: `${DatabaseTableName.USERS}.id`,
 				},
 				modelClass: UserModel,
-				relation: Model.ManyToManyRelation,
+				relation: AbstractModel.ManyToManyRelation,
 			},
 		};
 	}

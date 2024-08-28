@@ -48,23 +48,11 @@ class GroupRepository implements Repository {
 		return Promise.resolve([]);
 	}
 
-	public async findByName(name: string): Promise<GroupEntity | null> {
+	public async findByName(name: string): Promise<GroupModel | null> {
 		const key = changeCase(name, "snakeCase");
-		const group = await this.groupModel
-			.query()
-			.findOne({ key })
-			.withGraphFetched("[permissions, users]");
+		const group = await this.groupModel.query().findOne({ key });
 
-		if (!group) {
-			return null;
-		}
-
-		return GroupEntity.initialize({
-			id: group.id,
-			name: group.name,
-			permissionIds: group.permissions.map((permission) => permission.id),
-			userIds: group.users.map((user) => user.id),
-		});
+		return group || null;
 	}
 
 	public update(): ReturnType<Repository["update"]> {
