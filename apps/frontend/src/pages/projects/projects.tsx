@@ -26,6 +26,8 @@ import {
 import { type SelectOption } from "~/libs/types/types.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
+const TABLE_TOTAL_ITEMS_COUNT = 100;
+
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
@@ -42,7 +44,6 @@ const Projects = (): JSX.Element => {
 		},
 	});
 
-	const TABLE_TOTAL_ITEMS_COUNT = 100;
 	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
 		totalItemsCount: TABLE_TOTAL_ITEMS_COUNT,
 	});

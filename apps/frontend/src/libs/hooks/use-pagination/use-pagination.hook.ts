@@ -13,18 +13,14 @@ import {
 	getInitialPageSize,
 } from "./libs/helpers/helpers.js";
 
-type Parameters = {
-	totalItemsCount: number;
-};
-
-type ReturnType = {
+type UsePagination = (parameters: { totalItemsCount: number }) => {
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
 	pageSize: number;
 };
 
-const usePagination = ({ totalItemsCount }: Parameters): ReturnType => {
+const usePagination: UsePagination = ({ totalItemsCount }) => {
 	const [searchParameters, setSearchParameters] = useSearchParams();
 
 	const pageQueryParameter = searchParameters.get(QueryParameterName.PAGE);
