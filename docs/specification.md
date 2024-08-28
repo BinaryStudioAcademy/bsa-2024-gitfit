@@ -121,7 +121,8 @@ The "Access Management" page includes:
 
 The "Create Group Modal" includes:
 
-- “Name” field. Validation: Field should not be empty.
+- “Name” field.
+  Validation: Field should not be empty. The field may encompass alphanumeric characters. Maximum legnth is 50.
 - “Users” table: Includes “Checkbox”, “Name”, “Groups” and “Created At” columns.
 - “Permissions” multi-select: Contains a list of permissions as options.
 - “Create” button: When clicked, submits the form, closes the modal, and adds the new group to the top of the "Groups" list.
