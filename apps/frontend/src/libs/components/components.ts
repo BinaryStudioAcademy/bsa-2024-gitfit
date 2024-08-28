@@ -15,6 +15,5 @@ export { Select } from "./select/select.js";
 export { Sidebar } from "./sidebar/sidebar.js";
 export { Table } from "./table/table.js";
 export { ToastContainer } from "./toast-container/toast-container.js";
-export { UserPopover } from "./user-popover/user-popover.js";
 export { Provider as StoreProvider } from "react-redux";
 export { Outlet as RouterOutlet } from "react-router-dom";

@@ -15,15 +15,15 @@ type Properties = {
 };
 
 const Popover = ({ children, content }: Properties): JSX.Element => {
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const popoverReference = useRef<HTMLDivElement>(null);
 
 	const handleOpen = useCallback((): void => {
-		setIsOpen(true);
+		setIsOpened(true);
 	}, []);
 
 	const handleClose = (): void => {
-		setIsOpen(false);
+		setIsOpened(false);
 	};
 
 	const handleKeyDown = useCallback(
@@ -47,7 +47,7 @@ const Popover = ({ children, content }: Properties): JSX.Element => {
 			>
 				{children}
 			</div>
-			{isOpen && (
+			{isOpened && (
 				<div className={styles["popover-content-wrapper"]}>{content}</div>
 			)}
 		</div>
