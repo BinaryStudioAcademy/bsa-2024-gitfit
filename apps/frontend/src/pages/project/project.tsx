@@ -8,7 +8,7 @@ import {
 	useAppSelector,
 	useEffect,
 } from "~/libs/hooks/hooks.js";
-import { getById } from "~/modules/projects/slices/actions.js";
+import { actions as projectActions } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
 import styles from "./styles.module.css";
@@ -24,7 +24,7 @@ const Project = (): JSX.Element => {
 
 	useEffect(() => {
 		if (projectId) {
-			void dispatch(getById({ id: projectId }));
+			void dispatch(projectActions.getById({ id: projectId }));
 		}
 	}, [dispatch, projectId]);
 
