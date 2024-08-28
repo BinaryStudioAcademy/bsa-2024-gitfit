@@ -1,6 +1,7 @@
 import {
 	Header,
 	Loader,
+	Modal,
 	Select,
 	Sidebar,
 	Table,
@@ -18,6 +19,7 @@ import {
 	useAppSelector,
 	useEffect,
 	useLocation,
+	useModal,
 } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 import { actions as userActions } from "~/modules/users/users.js";
@@ -27,6 +29,7 @@ const Projects = (): JSX.Element => {
 	const { pathname } = useLocation();
 	const dataStatus = useAppSelector(({ users }) => users.dataStatus);
 	const users = useAppSelector(({ users }) => users.users);
+	const { isModalOpened, onModalClose, onModalOpen } = useModal();
 
 	const isRoot = pathname === AppRoute.ROOT;
 	const isLoading = dataStatus === "pending";
@@ -85,6 +88,29 @@ const Projects = (): JSX.Element => {
 						options={[]}
 					/>
 				</div>
+
+				<button onClick={onModalOpen}>Open Modal</button>
+
+				<Modal
+					isModalOpened={isModalOpened}
+					onModalClose={onModalClose}
+					title="Test Modal"
+				>
+					<p>This is a test modal content.</p>
+					<Table<Person> columns={mockTableColumns} data={mockTableData} />
+					<Select<
+						{
+							options: SelectOption<number>[];
+						},
+						number
+					>
+						control={control}
+						isMulti
+						label="Options"
+						name="options"
+						options={[]}
+					/>
+				</Modal>
 			</main>
 		</>
 	);
