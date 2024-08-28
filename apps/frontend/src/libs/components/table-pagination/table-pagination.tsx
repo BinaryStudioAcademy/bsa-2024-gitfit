@@ -23,7 +23,7 @@ type Properties = {
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
 	pageSize: number;
-	totalItems: number;
+	totalItemsCount: number;
 };
 
 type PageSizeOption = SelectOption<number>;
@@ -38,7 +38,7 @@ const TablePagination = ({
 	onPageSizeChange,
 	page,
 	pageSize,
-	totalItems,
+	totalItemsCount,
 }: Properties): JSX.Element => {
 	const { control } = useAppForm<FormData>({
 		defaultValues: {
@@ -47,8 +47,8 @@ const TablePagination = ({
 	});
 
 	const totalPages = useMemo(
-		() => calculateTotalPages(pageSize, totalItems),
-		[totalItems, pageSize],
+		() => calculateTotalPages(pageSize, totalItemsCount),
+		[totalItemsCount, pageSize],
 	);
 
 	const hasNextPage = useMemo(() => page < totalPages, [page, totalPages]);
@@ -87,7 +87,7 @@ const TablePagination = ({
 				isBackgroundSecondary && styles["container-secondary"],
 			)}
 		>
-			<p className={styles["text"]}>{totalItems} items total</p>
+			<p className={styles["text"]}>{totalItemsCount} items total</p>
 			<div
 				className={getValidClassNames(
 					styles["pagination-container"],

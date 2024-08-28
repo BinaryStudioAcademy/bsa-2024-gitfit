@@ -14,7 +14,7 @@ import {
 } from "./libs/helpers/helpers.js";
 
 type Parameters = {
-	totalItems: number;
+	totalItemsCount: number;
 };
 
 type ReturnType = {
@@ -24,7 +24,7 @@ type ReturnType = {
 	pageSize: number;
 };
 
-const usePagination = ({ totalItems }: Parameters): ReturnType => {
+const usePagination = ({ totalItemsCount }: Parameters): ReturnType => {
 	const [searchParameters, setSearchParameters] = useSearchParams();
 
 	const pageQueryParameter = searchParameters.get(QueryParameterName.PAGE);
@@ -36,7 +36,7 @@ const usePagination = ({ totalItems }: Parameters): ReturnType => {
 		getInitialPageSize(pageSizeQueryParameter),
 	);
 	const [page, setPage] = useState<number>(() => {
-		const initialTotalPages = calculateTotalPages(pageSize, totalItems);
+		const initialTotalPages = calculateTotalPages(pageSize, totalItemsCount);
 
 		return getInitialPage(pageQueryParameter, initialTotalPages);
 	});
@@ -50,26 +50,26 @@ const usePagination = ({ totalItems }: Parameters): ReturnType => {
 
 	const onPageChange = useCallback(
 		(newPage: number) => {
-			const totalPages = calculateTotalPages(pageSize, totalItems);
+			const totalPages = calculateTotalPages(pageSize, totalItemsCount);
 
 			if (page >= FIRST_PAGE && page <= totalPages) {
 				setPage(newPage);
 			}
 		},
-		[page, pageSize, totalItems],
+		[page, pageSize, totalItemsCount],
 	);
 
 	const onPageSizeChange = useCallback(
 		(newPageSize: number) => {
 			setPageSize(newPageSize);
 
-			const totalPages = calculateTotalPages(newPageSize, totalItems);
+			const totalPages = calculateTotalPages(newPageSize, totalItemsCount);
 
 			if (page > totalPages) {
 				setPage(totalPages);
 			}
 		},
-		[page, totalItems],
+		[page, totalItemsCount],
 	);
 
 	return {
