@@ -1,15 +1,14 @@
 import { formatDate } from "~/libs/helpers/helpers.js";
-import { type TableColumn } from "~/libs/types/types.js";
-import { type UserAuthResponseDto } from "~/modules/users/users.js";
+import { type TableColumn, type TableUser } from "~/libs/types/types.js";
 
-const getUserColumns = (): TableColumn<UserAuthResponseDto>[] => {
+const getUserColumns = (): TableColumn<TableUser>[] => {
 	return [
 		{
 			accessorKey: "name",
 			header: "Name",
 		},
 		{
-			accessorFn: (user: UserAuthResponseDto): string =>
+			accessorFn: (user: TableUser): string =>
 				formatDate(new Date(user.createdAt), "d MMM yyyy HH:mm"),
 			header: "Created At",
 		},
