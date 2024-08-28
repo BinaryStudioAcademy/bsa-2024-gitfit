@@ -22,8 +22,8 @@ class GroupRepository implements Repository {
 		const groupData = {
 			key,
 			name,
-			permissions: permissionIds.map((id) => ({ id })),
-			users: userIds.map((id) => ({ id })),
+			permissions: permissionIds,
+			users: userIds,
 		};
 
 		const group = await this.groupModel
@@ -58,7 +58,7 @@ class GroupRepository implements Repository {
 		const key = changeCase(name, "snakeCase");
 		const group = await this.groupModel.query().findOne({ key });
 
-		return group || null;
+		return group ?? null;
 	}
 
 	public update(): ReturnType<Repository["update"]> {

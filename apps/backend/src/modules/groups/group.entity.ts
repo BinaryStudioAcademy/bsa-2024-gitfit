@@ -5,8 +5,8 @@ import { type GroupCreateResponseDto } from "./libs/types/types.js";
 class GroupEntity implements Entity {
 	private id: null | number;
 	private name!: string;
-	private permissionIds!: number[];
-	private userIds!: number[];
+	private permissionIds!: { id: number }[];
+	private userIds!: { id: number }[];
 
 	private constructor({
 		id,
@@ -16,13 +16,13 @@ class GroupEntity implements Entity {
 	}: {
 		id: null | number;
 		name: string;
-		permissionIds: number[];
-		userIds: number[];
+		permissionIds: { id: number }[];
+		userIds: { id: number }[];
 	}) {
 		this.id = id;
 		this.name = name;
-		this.userIds = userIds;
 		this.permissionIds = permissionIds;
+		this.userIds = userIds;
 	}
 
 	public static initialize({
@@ -33,8 +33,8 @@ class GroupEntity implements Entity {
 	}: {
 		id: number;
 		name: string;
-		permissionIds: number[];
-		userIds: number[];
+		permissionIds: { id: number }[];
+		userIds: { id: number }[];
 	}): GroupEntity {
 		return new GroupEntity({
 			id,
@@ -50,8 +50,8 @@ class GroupEntity implements Entity {
 		userIds,
 	}: {
 		name: string;
-		permissionIds: number[];
-		userIds: number[];
+		permissionIds: { id: number }[];
+		userIds: { id: number }[];
 	}): GroupEntity {
 		return new GroupEntity({
 			id: null,
@@ -63,8 +63,8 @@ class GroupEntity implements Entity {
 
 	public toNewObject(): {
 		name: string;
-		permissionIds: number[];
-		userIds: number[];
+		permissionIds: { id: number }[];
+		userIds: { id: number }[];
 	} {
 		return {
 			name: this.name,
@@ -77,8 +77,8 @@ class GroupEntity implements Entity {
 		return {
 			id: this.id as number,
 			name: this.name,
-			permissionIds: this.permissionIds,
-			userIds: this.userIds,
+			permissionIds: this.permissionIds.map((perm) => perm.id),
+			userIds: this.userIds.map((user) => user.id),
 		};
 	}
 }
