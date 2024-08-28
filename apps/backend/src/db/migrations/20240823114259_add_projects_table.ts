@@ -12,7 +12,6 @@ const ColumnName = {
 } as const;
 
 const FieldLimit = {
-	DESCRIPTION: 200,
 	NAME: 50,
 } as const;
 
@@ -20,7 +19,7 @@ function up(knex: Knex): Promise<void> {
 	return knex.schema.createTable(TABLE_NAME, (table) => {
 		table.increments(ColumnName.ID).primary();
 		table.string(ColumnName.NAME, FieldLimit.NAME).unique().notNullable();
-		table.string(ColumnName.DESCRIPTION, FieldLimit.DESCRIPTION);
+		table.text(ColumnName.DESCRIPTION);
 		table
 			.dateTime(ColumnName.CREATED_AT)
 			.notNullable()
