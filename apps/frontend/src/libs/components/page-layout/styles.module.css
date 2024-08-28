@@ -1,8 +1,6 @@
-:root {
-	--header-height: 73px;
-}
-
 .page {
+	--header-height: 73px;
+
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
