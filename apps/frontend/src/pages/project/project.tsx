@@ -31,29 +31,29 @@ const Project = (): JSX.Element => {
 	const isLoading =
 		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
 
-	if (!project) {
-		return <NotFound />;
-	}
+	const isRejected = dataStatus === DataStatus.REJECTED;
 
 	return (
 		<>
-			{isLoading ? (
-				<div className={styles["projects-loader"]}>
-					<Loader />
-				</div>
+			{isRejected ? (
+				<NotFound />
 			) : (
 				<PageLayout>
-					<div className={styles["project-layout"]}>
-						<h1 className={styles["project-name"]}>{project.name}</h1>
-						<div className={styles["project-description-layout"]}>
-							<h3 className={styles["project-description-title"]}>
-								Description
-							</h3>
-							<p className={styles["project-description"]}>
-								{project.description}
-							</p>
+					{isLoading ? (
+						<Loader />
+					) : (
+						<div className={styles["project-layout"]}>
+							<h1 className={styles["project-name"]}>{project?.name}</h1>
+							<div className={styles["project-description-layout"]}>
+								<h3 className={styles["project-description-title"]}>
+									Description
+								</h3>
+								<p className={styles["project-description"]}>
+									{project?.description}
+								</p>
+							</div>
 						</div>
-					</div>
+					)}
 				</PageLayout>
 			)}
 		</>
