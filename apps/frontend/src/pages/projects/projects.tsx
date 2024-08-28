@@ -6,6 +6,7 @@ import {
 	Select,
 	Sidebar,
 	Table,
+	TablePagination,
 } from "~/libs/components/components.js";
 import {
 	mockColumns as mockTableColumns,
@@ -21,9 +22,12 @@ import {
 	useEffect,
 	useLocation,
 	useModal,
+	usePagination,
 } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 import { actions as userActions } from "~/modules/users/users.js";
+
+const TABLE_TOTAL_ITEMS_COUNT = 100;
 
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
@@ -39,6 +43,10 @@ const Projects = (): JSX.Element => {
 		defaultValues: {
 			options: [],
 		},
+	});
+
+	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+		totalItemsCount: TABLE_TOTAL_ITEMS_COUNT,
 	});
 
 	useEffect(() => {
@@ -75,9 +83,15 @@ const Projects = (): JSX.Element => {
 							)}
 
 							<Table<Person> columns={mockTableColumns} data={mockTableData} />
+							<TablePagination
+								onPageChange={onPageChange}
+								onPageSizeChange={onPageSizeChange}
+								page={page}
+								pageSize={pageSize}
+								totalItemsCount={TABLE_TOTAL_ITEMS_COUNT}
+							/>
 						</>
 					)}
-
 					<Select<
 						{
 							options: SelectOption<number>[];

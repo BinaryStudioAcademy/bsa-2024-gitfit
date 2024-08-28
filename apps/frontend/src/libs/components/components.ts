@@ -14,6 +14,7 @@ export { RouterProvider } from "./router-provider/router-provider.js";
 export { Select } from "./select/select.js";
 export { Sidebar } from "./sidebar/sidebar.js";
 export { Table } from "./table/table.js";
+export { TablePagination } from "./table-pagination/table-pagination.js";
 export { ToastContainer } from "./toast-container/toast-container.js";
 export { Provider as StoreProvider } from "react-redux";
 export { Outlet as RouterOutlet } from "react-router-dom";

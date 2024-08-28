@@ -1,10 +1,15 @@
+const FIRST_CHARACTER_INDEX = 0;
+const SECOND_CHARACTER_INDEX = 1;
+
 const getBreadcrumbName = (name: string): string => {
-	return (
-		name
-			.replaceAll("-", " ")
-			// eslint-disable-next-line unicorn/prefer-string-replace-all
-			.replace(/\b\w/g, (char) => char.toUpperCase())
-	);
+	return name
+		.split("-")
+		.map(
+			(word) =>
+				word.charAt(FIRST_CHARACTER_INDEX).toUpperCase() +
+				word.slice(SECOND_CHARACTER_INDEX),
+		)
+		.join(" ");
 };
 
 export { getBreadcrumbName };
