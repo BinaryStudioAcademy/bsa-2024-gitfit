@@ -113,10 +113,12 @@ Hide/Show password toggle must be located on the right side of a Password input 
 
 - the name can contain any characters, including letters, numbers, spaces, and special characters;
 - at least 3 characters;
+- max 50 characters;
 
 3. Password must include:
 
 - At least 5 characters;
+- Not more than 50 characters
 - At least 1 uppercase letter (A-Z);
 - At least 1 lowercase letter (a-z);
 - At least 1 number;
