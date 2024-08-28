@@ -1,3 +1,5 @@
+import { transaction } from "objection";
+
 import { changeCase } from "~/libs/helpers/helpers.js";
 import { type Repository } from "~/libs/types/types.js";
 
@@ -15,6 +17,8 @@ class GroupRepository implements Repository {
 		const { name, permissionIds, userIds } = entity.toNewObject();
 		const key = changeCase(name, "snakeCase");
 
+		const trx = await transaction.start(this.groupModel.knex());
+
 		const groupData = {
 			key,
 			name,
@@ -23,10 +27,12 @@ class GroupRepository implements Repository {
 		};
 
 		const group = await this.groupModel
-			.query()
+			.query(trx)
 			.insertGraph(groupData, { relate: true })
 			.returning("*")
 			.withGraphJoined("[permissions, users]");
+
+		await trx.commit();
 
 		return GroupEntity.initialize({
 			id: group.id,
