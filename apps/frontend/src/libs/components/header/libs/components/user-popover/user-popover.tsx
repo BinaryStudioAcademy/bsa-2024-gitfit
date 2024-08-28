@@ -20,7 +20,7 @@ const UserPopover = ({ children, email, name }: Properties): JSX.Element => {
 	return (
 		<Popover
 			content={
-				<div className={styles["user-popup"]}>
+				<div className={styles["user-popover"]}>
 					<div className={styles["user-info"]}>
 						<p className={styles["user-name"]}>{name}</p>
 						<p className={styles["user-email"]}>{email}</p>
