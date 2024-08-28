@@ -9,11 +9,15 @@ type Properties = {
 
 const PageLayout = ({ children }: Properties): JSX.Element => {
 	return (
-		<div className={styles["container"]}>
-			<Header />
-			<div className={styles["container-sidebar-content"]}>
-				<Sidebar items={SIDEBAR_ITEMS} />
-				<main className={styles["content-container"]}>{children}</main>
+		<div className={styles["page"]}>
+			<div className={styles["page-header"]}>
+				<Header />
+			</div>
+			<div className={styles["page-body"]}>
+				<aside className={styles["page-sidebar"]}>
+					<Sidebar items={SIDEBAR_ITEMS} />
+				</aside>
+				<main className={styles["page-content"]}>{children}</main>
 			</div>
 		</div>
 	);

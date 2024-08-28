@@ -1,6 +1,6 @@
 import { type UserAuthResponseDto } from "@git-fit/shared";
 
-import { Table } from "~/libs/components/components.js";
+import { PageLayout, Table } from "~/libs/components/components.js";
 import { getUserColumns } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
@@ -8,7 +8,6 @@ import {
 	useEffect,
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
-import { PageLayout } from "~/pages/page-layout/page-layout.jsx";
 
 import styles from "./styles.module.css";
 
