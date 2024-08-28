@@ -14,9 +14,9 @@ type Properties = {
 	content: React.ReactNode;
 };
 
-const Popup = ({ children, content }: Properties): JSX.Element => {
+const Popover = ({ children, content }: Properties): JSX.Element => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const popupReference = useRef<HTMLDivElement>(null);
+	const popoverReference = useRef<HTMLDivElement>(null);
 
 	const handleOpen = useCallback((): void => {
 		setIsOpen(true);
@@ -37,11 +37,11 @@ const Popup = ({ children, content }: Properties): JSX.Element => {
 
 	useOnClickOutside({
 		callback: handleClose,
-		ref: popupReference,
+		ref: popoverReference,
 	});
 
 	return (
-		<div className={styles["popup-wrapper"]} ref={popupReference}>
+		<div className={styles["popover-wrapper"]} ref={popoverReference}>
 			<div
 				onClick={handleOpen}
 				onKeyDown={handleKeyDown}
@@ -51,10 +51,10 @@ const Popup = ({ children, content }: Properties): JSX.Element => {
 				{children}
 			</div>
 			{isOpen && (
-				<div className={styles["popup-content-wrapper"]}>{content}</div>
+				<div className={styles["popover-content-wrapper"]}>{content}</div>
 			)}
 		</div>
 	);
 };
 
-export { Popup };
+export { Popover };

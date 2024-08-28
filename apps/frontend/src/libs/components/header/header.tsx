@@ -1,7 +1,7 @@
 import logoSrc from "~/assets/images/logo.svg";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 
-import { Avatar, Popup, UserPopup } from "../components.js";
+import { Avatar, Popover, UserPopover } from "../components.js";
 import styles from "./styles.module.css";
 
 const Header = (): JSX.Element => {
@@ -21,9 +21,9 @@ const Header = (): JSX.Element => {
 				<img alt="GitFit logo" className={styles["logo-img"]} src={logoSrc} />
 				<span className={styles["logo-text"]}>Logo</span>
 			</div>
-			<Popup content={<UserPopup email={email} name={name} />}>
+			<Popover content={<UserPopover email={email} name={name} />}>
 				<Avatar name={name} />
-			</Popup>
+			</Popover>
 		</header>
 	);
 };

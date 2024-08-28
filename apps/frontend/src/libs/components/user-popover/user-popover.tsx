@@ -8,7 +8,7 @@ type Properties = {
 	name: string;
 };
 
-const UserPopup = ({ email, name }: Properties): JSX.Element => {
+const UserPopover = ({ email, name }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const handleLogout = useCallback((): void => {
@@ -31,4 +31,4 @@ const UserPopup = ({ email, name }: Properties): JSX.Element => {
 	);
 };
 
-export { UserPopup };
+export { UserPopover };

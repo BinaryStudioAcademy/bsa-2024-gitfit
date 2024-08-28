@@ -1,8 +1,8 @@
-.popup-wrapper {
+.popover-wrapper {
 	position: relative;
 }
 
-.popup-content-wrapper {
+.popover-content-wrapper {
 	position: absolute;
 	top: 100%;
 	right: 0;
