@@ -2,7 +2,7 @@ import logoSrc from "~/assets/images/logo.svg";
 import { Avatar } from "~/libs/components/components.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 
-import { UserPopover } from "./libs/components/user-popover/user-popover.js";
+import { UserPopover } from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const Header = (): JSX.Element => {

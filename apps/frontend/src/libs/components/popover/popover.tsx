@@ -1,3 +1,4 @@
+import { EventKey } from "~/libs/enums/enums.js";
 import {
 	useCallback,
 	useHandleClickOutside,
@@ -6,8 +7,6 @@ import {
 } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
-
-const ESCAPE_KEY = "Escape";
 
 type Properties = {
 	children: React.ReactNode;
@@ -28,7 +27,7 @@ const Popover = ({ children, content }: Properties): JSX.Element => {
 
 	const handleKeyDown = useCallback(
 		(event: React.KeyboardEvent<HTMLDivElement>): void => {
-			if (event.key === ESCAPE_KEY) {
+			if (event.key === EventKey.ESCAPE) {
 				handleClose();
 			}
 		},
