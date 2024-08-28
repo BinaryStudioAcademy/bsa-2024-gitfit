@@ -69,9 +69,7 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 					name="password"
 					rightIcon={
 						<IconButton
-							iconHeight={18}
 							iconName={isPasswordVisible ? "strikedEye" : "eye"}
-							iconWidth={18}
 							label={isPasswordVisible ? "Hide password" : "Show password"}
 							onClick={handleTogglePasswordVisibility}
 						/>
