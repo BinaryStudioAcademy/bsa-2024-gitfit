@@ -1,6 +1,6 @@
 import {
 	useCallback,
-	useOnClickOutside,
+	useHandleClickOutside,
 	useRef,
 	useState,
 } from "~/libs/hooks/hooks.js";
@@ -35,10 +35,7 @@ const Popover = ({ children, content }: Properties): JSX.Element => {
 		[],
 	);
 
-	useOnClickOutside({
-		callback: handleClose,
-		ref: popoverReference,
-	});
+	useHandleClickOutside(popoverReference, handleClose);
 
 	return (
 		<div className={styles["popover-wrapper"]} ref={popoverReference}>
