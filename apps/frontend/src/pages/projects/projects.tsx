@@ -13,10 +13,7 @@ import styles from "./styles.module.css";
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { dataStatus, projects } = useAppSelector(({ projects }) => ({
-		dataStatus: projects.dataStatus,
-		projects: projects.projects,
-	}));
+	const { dataStatus, projects } = useAppSelector(({ projects }) => projects);
 
 	useEffect(() => {
 		void dispatch(projectActions.loadAll());
