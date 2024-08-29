@@ -93,18 +93,52 @@ The "Sign In" page includes:
 - "Password" field.
 - "Log In" button: Submits the form and redirects the user to the "Projects" page.
 
+Hide/Show password toggle must be located on the right side of a Password input field. Single-click to expose/hide password. (For both SignIn and SignUp)
+
+**Field validation rules:**
+
+1. Email field:
+
+- The format should include a local part, an "@" symbol, and a domain part.
+- The length < 50.
+  Local part (before the “@”) :
+  - should contain alphanumeric characters, optionally separated by dots, underscores, or hyphens;
+  - cannot start or end with a dot or contain consecutive dots.
+    Domain part (after the “@”):
+  - must contain at least two characters;
+  - must contain at least one dot;
+  - should consist of alphanumeric characters (A-Z, a-z, 0-9) and hyphens;
+
+2. Name field:
+
+- the name can contain any characters, including letters, numbers, spaces, and special characters;
+- at least 3 characters;
+- max 50 characters;
+
+3. Password must include:
+
+- At least 5 characters;
+- Not more than 50 characters
+- At least 1 uppercase letter (A-Z);
+- At least 1 lowercase letter (a-z);
+- At least 1 number;
+- At least 1 special character (e.g., !@#$%)"
+
 ### 2.4 Access Management
 
 **Element:** Separate page.
 
-**How to reach:** Accessible from the sidebar by clicking the "Access Management" link.
+**How to reach:** Accessible from the sidebar by clicking the "Access Management" link for users with access granted.
+
+**Page appearance for users with no access**
+Helper text is shown on the middle of the page "You don't have access to the pages yet. Please contact an admin to grant you access".
 
 Controls user group access to specific actions and projects.
 
 The "Access Management" page includes:
 
-- "Users” table: Displays columns for "Name", "Groups" and "Created At".
-- “Groups” Table: Displays the “Create new” button and columns for "Name", "Permissions", "Created At" and an "Options" icon. When the “Create new” button is clicked, a “Create Group Modal” is opened. When the "Options" icon is clicked, a menu with the "Edit" and “Delete” options is shown. When the “Edit” option is clicked, the “Update Group Modal” is opened. When the “Delete” option is clicked, a confirmation modal is opened before deleting the group.
+- "Users” table: Displays columns for "Name", "Groups" and "Created At". Click on “User” redirects to user profile page.
+- “Groups” Table: Displays the “Create new” button and columns for "Name", "Permissions", "Created At" and an "Options" icon. A “Table paginator" element is placed under each Table. When changing the amount of rows in a Table a scroll function appears. When the “Create new” button is clicked, a “Create Group Modal” is opened. When the "Options" icon is clicked, a menu with the "Edit" and “Delete” options is shown. When the “Edit” option is clicked, the “Update Group Modal” is opened. When the “Delete” option is clicked, a confirmation modal is opened before deleting the group.
 - “Permissions” list contains:
   - Manage User Access: See the “Access Management” page and manage groups.
   - View All Projects: See all projects.
@@ -119,12 +153,13 @@ The "Access Management" page includes:
 The "Create Group Modal" includes:
 
 - “Name” field.
+  Validation: Field should not be empty. The field may encompass alphanumeric characters. Maximum legnth is 50.
 - “Users” table: Includes “Checkbox”, “Name”, “Groups” and “Created At” columns.
 - “Permissions” multi-select: Contains a list of permissions as options.
 - “Create” button: When clicked, submits the form, closes the modal, and adds the new group to the top of the "Groups" list.
 - “Close” icon: When clicked, the modal is closed.
 
-#### 2.4.1 Update Group Modal
+#### 2.4.2 Update Group Modal
 
 **Element:** Modal component
 
@@ -148,14 +183,14 @@ Allows to view, create, and edit projects.
 
 The "Projects" page includes:
 
-- "Search” field: Allows the user to search by project name.
+- "Search” field: Allows the user to search by project name. Entering text displays results on-the-fly in a pop-up window. When no results matching the entered query found the "No projects found matching your search criteria. Please try different keywords." message is shown.
 - “Create New” button: When clicked, the “Create Project Modal” is opened.
 - “Projects” list: Displays a list of projects, each containing:
 
   - Project name.
   - Last commit relative date (e.g., "15 minutes ago").
   - Activity graph: When clicked, it redirects the user to the "Analytics" page with the "Project" field preselected.
-  - "Options" icon: When clicked, a menu with the "Edit" and “Delete” options is shown. When the “Edit” option is clicked, the “Update Project Modal” is opened. When the “Delete” option is clicked, a confirmation modal is opened before deleting the group.
+  - "Options" icon: When clicked, a menu with the "Edit" and “Delete” options is shown. When the “Edit” option is clicked, the “Update Project Modal” is opened. When the “Delete” option is clicked, a confirmation modal is opened before deleting the project. Deleting a project requires admin rights or "Manage User Access" global permissions
 
   When an item is clicked, the user is redirected to the specific “Project” page.
 
@@ -167,8 +202,8 @@ The "Projects" page includes:
 
 The "Create Project Modal" includes:
 
-- “Name” field.
-- “Description” field.
+- “Name” field. The "Name" field should have a character limit between 1 and 50 characters. This should be synchronized with the database field. The field is required.
+- “Description” field. The field is optional and should allow up to 1000 characters. A character counter should be displayed below the text area, indicating the current character count (e.g., "100/1000").
 - “Create” button: When clicked, submits the form, closes the modal, and adds the new project to the top of the "Projects" list.
 - “Close” icon: When clicked, the modal is closed.
 
@@ -256,6 +291,8 @@ The "Contributors" page includes:
 - "Search” field: Allows the user to search for contributors by name.
 - “Contributors” table: Displays columns for "Name", "Git Emails", "Projects", "Is Hidden" and “Options” icon. When the “Is Hidden” column is checked, the contributor is excluded from all app metrics and pages (except for the "Contributors" page). When the "Options" icon is clicked, a menu with the "Edit" and “Merge” options is shown. When the “Edit” option is clicked, the “Update Contributor Modal” is opened. When the “Merge” option is clicked, the “Merge Contributors Modal” is opened.
 
+The "Contributors" page displays pagination to manage the number of entries shown.
+
 #### 2.8.1 Update Contributor Modal
 
 **Element:** Modal component
@@ -268,7 +305,7 @@ The "Update Contributor Modal" includes:
 - “Git Emails” field (prefilled, disabled).
 - “Projects” field (prefilled, disabled).
 - “Is Hidden” checkbox (prefilled).
-- “Update” button: When clicked, submits the form, closes the modal, and updates the contributor's data on the page.
+- “Update” button: When clicked, submits the form, closes the modal, and updates the contributor's data on the page. After clicking the "Update" button, the notification "Contributor information successfully updated." appears.
 - “Close” icon: When clicked, the modal is closed.
 
 #### 2.8.2 Merge Contributors Modal
@@ -281,7 +318,7 @@ The "Merge Contributors Modal" includes:
 
 - “Current contributor” field (disabled): Prefilled with current contributor name and git email.
 - “Contributor to merge with” select: Has contributors list as options with their git emails in the parenthesis.
-- “Merge” button: When clicked, submits the form, closes the modal, and updates the contributor's data on the page. After merge, the selected contributor is deleted and his git emails are transferred to the current contributor.
+- “Merge” button: When clicked, submits the form, closes the modal, and updates the contributor's data on the page, the message "Contributors successfully merged." appears. After merge, the selected contributor is deleted and his git emails are transferred to the current contributor.
 - “Close” icon: When clicked, the modal is closed.
 
 ### 2.9 Profile
