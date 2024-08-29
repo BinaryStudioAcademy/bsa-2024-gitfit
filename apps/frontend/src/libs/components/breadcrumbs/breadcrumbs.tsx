@@ -7,26 +7,13 @@ type Properties = {
 	items: BreadcrumbItemType[];
 };
 
-const firstItemOffset = 0;
-const lastItemOffset = -1;
-
 const Breadcrumbs = ({ items }: Properties): JSX.Element => {
-	const breadcrumbsExceptLast = items.slice(firstItemOffset, lastItemOffset);
-	const lastBreadcrumb = items.at(lastItemOffset);
-
 	return (
 		<nav aria-label="breadcrumb" className={styles["breadcrumb-container"]}>
 			<ol className={styles["breadcrumb-list"]}>
-				{breadcrumbsExceptLast.map((item, index) => (
-					<BreadcrumbItem key={index} {...item} isCurrentPage={false} />
+				{items.map((item, index) => (
+					<BreadcrumbItem key={index} {...item} />
 				))}
-				{lastBreadcrumb && (
-					<BreadcrumbItem
-						key={breadcrumbsExceptLast.length}
-						{...lastBreadcrumb}
-						isCurrentPage
-					/>
-				)}
 			</ol>
 		</nav>
 	);

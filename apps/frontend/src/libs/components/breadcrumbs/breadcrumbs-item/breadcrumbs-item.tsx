@@ -3,18 +3,12 @@ import { type BreadcrumbItemType } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
 
-type Properties = {
-	isCurrentPage: boolean;
-} & BreadcrumbItemType;
+type Properties = BreadcrumbItemType;
 
-const BreadcrumbItem = ({
-	href,
-	isCurrentPage,
-	label,
-}: Properties): JSX.Element => {
+const BreadcrumbItem = ({ href, label }: Properties): JSX.Element => {
 	return (
 		<li className={styles["breadcrumb-item"]}>
-			{href && !isCurrentPage ? (
+			{href ? (
 				<a aria-label={label} className={styles["breadcrumb-link"]} href={href}>
 					{label}
 				</a>
@@ -23,7 +17,7 @@ const BreadcrumbItem = ({
 					{label}
 				</span>
 			)}
-			{!isCurrentPage && (
+			{href && (
 				<span className={styles["breadcrumb-separator"]}>
 					<Icon height={11} name="rightArrow" width={7} />
 				</span>
