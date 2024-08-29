@@ -1,5 +1,11 @@
-.label {
+.title {
 	margin: 0;
+}
+
+.projects-header {
+	display: flex;
+	justify-content: space-between;
+	min-height: 44px;
 }
 
 .projects-list {

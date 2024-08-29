@@ -12,7 +12,10 @@ const projectApi = new ProjectApi({
 
 export { projectApi };
 export {
+	type ProjectCreateRequestDto,
+	type ProjectCreateResponseDto,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
 } from "./libs/types/types.js";
+export { projectCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 export { actions, reducer } from "./slices/projects.js";
