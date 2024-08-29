@@ -47,9 +47,5 @@
 }
 
 .button:hover {
-	background-color: color-mix(
-		in srgb,
-		var(--color-brand-primary-hover),
-		black 40%
-	);
+	background-color: var(--color-background-hover);
 }
