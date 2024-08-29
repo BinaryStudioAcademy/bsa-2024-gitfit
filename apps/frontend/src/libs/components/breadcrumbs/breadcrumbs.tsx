@@ -3,15 +3,14 @@ import { Icon } from "~/libs/components/components.js";
 import styles from "./styles.module.css";
 
 type BreadcrumbItem = {
-	href?: string; // Optional href property for the link
-	label: string; // Label text for the breadcrumb item
+	href?: string;
+	label: string;
 };
 
 type Properties = {
-	items: BreadcrumbItem[]; // Breadcrumb items passed as a prop
+	items: BreadcrumbItem[];
 };
 
-// Constants to avoid magic numbers
 const FIRST_ITEM_INDEX = 0;
 const LAST_ITEM_OFFSET = -1;
 
