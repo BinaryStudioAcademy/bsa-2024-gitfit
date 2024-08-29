@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 import { Popover } from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 
@@ -19,9 +21,9 @@ const UserPopover = ({ children, email, name }: Properties): JSX.Element => {
 						<p className={styles["user-email"]}>{email}</p>
 					</div>
 					<div className={styles["buttons"]}>
-						<a className={styles["button"]} href={AppRoute.PROFILE}>
+						<NavLink className={styles["button"] ?? ""} to={AppRoute.PROFILE}>
 							Profile
-						</a>
+						</NavLink>
 						<button className={styles["button"]}>Log out</button>
 					</div>
 				</div>

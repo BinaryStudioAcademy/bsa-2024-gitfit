@@ -5,7 +5,7 @@ import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	className?: string | undefined;
+	className?: string;
 	disabled?: boolean;
 	href?: string | undefined;
 	label: string;

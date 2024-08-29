@@ -7,6 +7,7 @@ import {
 	useEffect,
 	useState,
 } from "~/libs/hooks/hooks.js";
+import { actions as authActions } from "~/modules/auth/auth.js";
 import {
 	type UserInfoResponseDto,
 	actions as usersActions,
@@ -21,6 +22,7 @@ type Properties = {
 
 const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
+
 	const { control, errors, handleSubmit, watch } =
 		useAppForm<UserInfoResponseDto>({
 			defaultValues,
@@ -32,13 +34,15 @@ const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit((formData: UserInfoResponseDto) => {
-				void dispatch(
+			void handleSubmit(async (formData: UserInfoResponseDto) => {
+				await dispatch(
 					usersActions.updateUser({
 						id: userId,
 						userPayload: formData,
 					}),
 				);
+
+				void dispatch(authActions.getAuthenticatedUser());
 			})(event_);
 		},
 		[dispatch, handleSubmit, userId],
@@ -71,7 +75,7 @@ const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
 			</div>
 
 			<Button
-				className={styles["submit-button"]}
+				className={styles["submit-button"] ?? ""}
 				disabled={!isChanged}
 				label="Update Profile"
 				type="submit"
