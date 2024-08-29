@@ -14,7 +14,7 @@ type Properties<T extends FieldValues> = {
 	autoComplete?: string;
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
-	label: string;
+	label?: string;
 	leftIcon?: JSX.Element;
 	name: FieldPath<T>;
 	placeholder?: string;
@@ -47,7 +47,7 @@ const Input = <T extends FieldValues>({
 
 	return (
 		<label className={styles["input-label"]}>
-			<span className={styles["input-label-text"]}>{label}</span>
+			{label && <span className={styles["input-label-text"]}>{label}</span>}
 			<div className={styles["input-container"]}>
 				{hasLeftIcon && (
 					<div
