@@ -36,7 +36,7 @@ type Constructor = {
 	};
 	title: string;
 	token: Token;
-	whiteRoutes: readonly RegExp[];
+	whiteRoutes: string[];
 };
 
 class BaseServerApplication implements ServerApplication {
@@ -58,7 +58,7 @@ class BaseServerApplication implements ServerApplication {
 
 	private token: Token;
 
-	private whiteRoutes: readonly RegExp[];
+	private whiteRoutes: string[];
 
 	public constructor({
 		apis,
