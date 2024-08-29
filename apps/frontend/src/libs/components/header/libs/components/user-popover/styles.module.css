@@ -1,5 +1,5 @@
-.user-popup {
-	width: 250px;
+.user-popover {
+	max-width: 250px;
 }
 
 .user-info {
@@ -48,9 +48,5 @@
 }
 
 .button:hover {
-	background-color: color-mix(
-		in srgb,
-		var(--color-brand-primary-hover),
-		black 40%
-	);
+	background-color: var(--color-background-hover);
 }

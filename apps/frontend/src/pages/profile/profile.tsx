@@ -1,27 +1,25 @@
-import { Header, Sidebar } from "~/libs/components/components.js";
-import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
+import { Loader, PageLayout } from "~/libs/components/components.js";
+import { DataStatus } from "~/libs/enums/data-status.enum.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 
 import { EditUserForm } from "./components/components.js";
 
 const Profile = (): JSX.Element => {
-	const authenticatedUser = useAppSelector(
-		({ auth }) => auth.authenticatedUser,
-	);
+	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
 
-	if (!authenticatedUser) {
-		return <></>;
-	}
+	const isLoading =
+		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
 
 	return (
-		<>
-			<Header />
+		<PageLayout>
+			<h1>Profile</h1>
 
-			<main style={{ display: "flex", flex: "1" }}>
-				<Sidebar items={SIDEBAR_ITEMS} />
-
-				<div style={{ display: "flex", flexDirection: "column" }}>
-					Profile: {authenticatedUser.name}
+			{isLoading ? (
+				<div>
+					<Loader />
+				</div>
+			) : (
+				authenticatedUser && (
 					<EditUserForm
 						defaultValues={{
 							email: authenticatedUser.email,
@@ -29,9 +27,9 @@ const Profile = (): JSX.Element => {
 						}}
 						userId={authenticatedUser.id}
 					/>
-				</div>
-			</main>
-		</>
+				)
+			)}
+		</PageLayout>
 	);
 };
 
