@@ -13,14 +13,13 @@ import {
 import {
 	DEFAULT_PROJECT_CREATE_PAYLOAD,
 	DESCRIPTION_ROWS_COUNT,
+	EMPTY_STRING_LENGTH,
 } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties = {
 	onSubmit: (payload: ProjectCreateRequestDto) => void;
 };
-
-const EMPTY_STRING_LENGTH = 0;
 
 const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 	const { control, errors, handleSubmit } = useAppForm<ProjectCreateRequestDto>(
