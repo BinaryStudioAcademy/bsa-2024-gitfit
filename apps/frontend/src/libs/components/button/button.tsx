@@ -10,7 +10,7 @@ type Properties = {
 };
 
 const Button = ({
-	disabled,
+	disabled = false,
 	href,
 	label,
 	type = "button",

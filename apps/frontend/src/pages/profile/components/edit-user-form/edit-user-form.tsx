@@ -1,5 +1,5 @@
 import { Button, Input } from "~/libs/components/components.js";
-import { compareObjects } from "~/libs/helpers/helpers.js";
+import { areObjectsEqual } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
 	useAppForm,
@@ -43,7 +43,7 @@ const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
 	);
 
 	useEffect(() => {
-		const isEqual = compareObjects(watchedValues, defaultValues);
+		const isEqual = areObjectsEqual(watchedValues, defaultValues);
 		setIsChanged(!isEqual);
 	}, [watchedValues, defaultValues]);
 
