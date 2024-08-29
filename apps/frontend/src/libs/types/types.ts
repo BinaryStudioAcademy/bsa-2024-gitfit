@@ -7,3 +7,4 @@ export {
 	type ValidationSchema,
 	type ValueOf,
 } from "@git-fit/shared";
+export { type ColumnDef as TableColumn } from "@tanstack/react-table";

@@ -62,6 +62,12 @@ class ProjectController extends BaseController {
 		});
 
 		this.addRoute({
+			handler: () => this.findAll(),
+			method: "GET",
+			path: ProjectsApiPath.ROOT,
+		});
+
+		this.addRoute({
 			handler: (options) =>
 				this.getById(
 					options as APIHandlerOptions<{
@@ -109,6 +115,31 @@ class ProjectController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.projectService.create(options.body),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /projects:
+	 *    get:
+	 *      description: Returns an array of projects
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 * 								properties:
+	 * 									items:
+	 * 										type: array
+	 *                		items:
+	 *                  		$ref: "#/components/schemas/Project"
+	 */
+	private async findAll(): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.projectService.findAll(),
 			status: HTTPCode.OK,
 		};
 	}

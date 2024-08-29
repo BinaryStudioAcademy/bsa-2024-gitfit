@@ -6,6 +6,7 @@ import { type Storage } from "~/libs/modules/storage/storage.js";
 import { ProjectsApiPath } from "./libs/enums/enums.js";
 import {
 	type ProjectFindRequestDto,
+	type ProjectGetAllResponseDto,
 	type ProjectResponseDto,
 } from "./libs/types/types.js";
 
@@ -18,6 +19,19 @@ type Constructor = {
 class ProjectApi extends BaseHTTPApi {
 	public constructor({ baseUrl, http, storage }: Constructor) {
 		super({ baseUrl, http, path: APIPath.PROJECTS, storage });
+	}
+
+	public async getAll(): Promise<ProjectGetAllResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(ProjectsApiPath.ROOT, {}),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "GET",
+			},
+		);
+
+		return await response.json<ProjectGetAllResponseDto>();
 	}
 
 	public async getById(

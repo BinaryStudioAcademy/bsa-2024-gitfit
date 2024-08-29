@@ -1,0 +1,62 @@
+name: Continuous Delivery
+
+env:
+  EBS_ENVIRONMENT_NAME: development
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Release
+        id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          manifest-file: .release-please-manifest.json
+          config-file: release-please-config.json
+
+  deploy:
+    name: Deploy
+    needs: release
+    if: ${{ needs.release.outputs.release_created }}
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: http://git-fit-development.eu-central-1.elasticbeanstalk.com/
+
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare deployment package
+        run: |
+          zip -r build.zip . -x .github
+
+      - name: Deploy to Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v22
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: ${{ secrets.AWS_REGION }}
+          application_name: ${{ secrets.EBS_APPLICATION_NAME }}
+          environment_name: ${{ env.EBS_ENVIRONMENT_NAME }}
+          version_label: ${{ github.sha }}
+          deployment_package: ./build.zip
