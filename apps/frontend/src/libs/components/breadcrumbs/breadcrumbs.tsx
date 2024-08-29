@@ -36,7 +36,7 @@ const Breadcrumbs = ({ items }: Properties): JSX.Element => {
 							{label}
 						</a>
 						<span className={styles["breadcrumb-separator"]}>
-							<Icon height={20} name="rightArrow" width={20} />
+							<Icon height={11} name="rightArrow" width={7} />
 						</span>
 					</li>
 				))}
