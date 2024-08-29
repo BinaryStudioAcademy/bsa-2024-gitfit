@@ -7,12 +7,12 @@ import { name as sliceName } from "./project.slice.js";
 
 const loadAll = createAsyncThunk<
 	ProjectGetAllResponseDto,
-	undefined,
+	string | undefined,
 	AsyncThunkConfig
->(`${sliceName}/load-all`, async (_, { extra }) => {
+>(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { projectApi } = extra;
 
-	return await projectApi.getAll();
+	return await projectApi.getAll(query);
 });
 
 export { loadAll };

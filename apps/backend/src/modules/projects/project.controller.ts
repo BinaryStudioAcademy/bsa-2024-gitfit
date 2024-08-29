@@ -8,7 +8,10 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { ProjectsApiPath } from "./libs/enums/enums.js";
-import { type ProjectCreateRequestDto } from "./libs/types/types.js";
+import {
+	type ProjectCreateRequestDto,
+	type ProjectGetAllRequestDto,
+} from "./libs/types/types.js";
 import { projectCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectService } from "./project.service.js";
 
@@ -59,7 +62,12 @@ class ProjectController extends BaseController {
 		});
 
 		this.addRoute({
-			handler: () => this.findAll(),
+			handler: (options) =>
+				this.findAll(
+					options as APIHandlerOptions<{
+						query: ProjectGetAllRequestDto;
+					}>,
+				),
 			method: "GET",
 			path: ProjectsApiPath.ROOT,
 		});
@@ -123,9 +131,15 @@ class ProjectController extends BaseController {
 	 *                		items:
 	 *                  		$ref: "#/components/schemas/Project"
 	 */
-	private async findAll(): Promise<APIHandlerResponse> {
+	private async findAll(
+		options: APIHandlerOptions<{
+			query: ProjectGetAllRequestDto;
+		}>,
+	): Promise<APIHandlerResponse> {
+		const { query } = options;
+
 		return {
-			payload: await this.projectService.findAll(),
+			payload: await this.projectService.findAll(query),
 			status: HTTPCode.OK,
 		};
 	}
