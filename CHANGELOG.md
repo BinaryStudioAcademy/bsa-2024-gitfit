@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.0.0...v1.1.0) (2024-08-29)
+
+
+### Features
+
+* add user popup gf-58 ([#95](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/95)) ([cde1fa5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/cde1fa5777f6c41313d548216a9d39945d0847d8))
+
 ## 1.0.0 (2024-08-29)
 
 
