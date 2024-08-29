@@ -23,7 +23,7 @@ const BreadcrumbItem = ({
 			)}
 			{!isLastItem && (
 				<span className={styles["breadcrumb-separator"]}>
-					<Icon height={11} name="rightArrow" width={7} />
+					<Icon height={20} name="rightArrow" width={20} />
 				</span>
 			)}
 		</li>
