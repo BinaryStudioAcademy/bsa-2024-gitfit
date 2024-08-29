@@ -3,11 +3,7 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-start;
-	width: 100%;
-	max-width: 1000px;
-	height: 20px;
 	padding: 0;
-	margin-bottom: 24px;
 }
 
 .breadcrumb-list {
