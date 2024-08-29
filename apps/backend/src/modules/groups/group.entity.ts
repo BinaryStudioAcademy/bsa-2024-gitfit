@@ -1,8 +1,8 @@
 import { type Entity } from "~/libs/types/types.js";
+import { type PermissionModel } from "~/modules/groups/permission.model.js";
 import { type UserModel } from "~/modules/users/user.model.js";
 
 import { type GroupCreateResponseDto } from "./libs/types/types.js";
-import { type PermissionModel } from "./permission.model.js";
 
 class GroupEntity implements Entity {
 	private id: null | number;
