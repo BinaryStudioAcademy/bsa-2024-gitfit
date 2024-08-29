@@ -11,15 +11,19 @@ import {
 } from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 import { store } from "~/libs/modules/store/store.js";
+import { AccessManagement } from "~/pages/access-management/access-management.jsx";
 import { Auth } from "~/pages/auth/auth.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
+import { Ui } from "~/pages/ui/ui.jsx";
 
 createRoot(document.querySelector("#root") as HTMLElement).render(
 	<StrictMode>
 		<StoreProvider store={store.instance}>
 			<RouterProvider
 				routes={[
+					/* TO DO: Remove page as soon as there is no unused exports */
+					{ element: <Ui />, path: AppRoute.UI },
 					{
 						children: [
 							{
@@ -45,6 +49,14 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 					{
 						element: <NotFound />,
 						path: AppRoute.ANY,
+					},
+					{
+						element: (
+							<ProtectedRoute>
+								<AccessManagement />
+							</ProtectedRoute>
+						),
+						path: AppRoute.ACCESS_MANAGEMENT,
 					},
 				]}
 			/>
