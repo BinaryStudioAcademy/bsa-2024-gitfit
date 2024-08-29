@@ -1,5 +1,4 @@
 import { PageLayout, Table } from "~/libs/components/components.js";
-import { getUserColumns } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -7,6 +6,7 @@ import {
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
+import { getUserColumns } from "./libs/helpers/get-user-columns.helper.js";
 import { getUserRows } from "./libs/helpers/helpers.js";
 import { type UserRow } from "./libs/types/types.js";
 import styles from "./styles.module.css";
