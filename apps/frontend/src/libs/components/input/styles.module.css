@@ -20,8 +20,10 @@
 }
 
 .input-field {
+	--padding-y: 16px;
+
 	width: 100%;
-	padding: 10px 16px;
+	padding: 10px var(--padding-y);
 	font-family: Inter, sans-serif;
 	font-size: 16px;
 	font-weight: 400;
@@ -41,6 +43,22 @@
 
 .input-field:hover {
 	border-color: var(--color-brand-primary-hover);
+}
+
+.input-textarea {
+	min-height: calc(1lh * var(--rows) + 2 * var(--padding-y));
+	resize: none;
+}
+
+.input-textarea::-webkit-scrollbar {
+	cursor: default;
+	background-color: inherit;
+}
+
+.input-textarea::-webkit-scrollbar-thumb {
+	cursor: default;
+	background-color: var(--color-border-secondary);
+	border-radius: 6px;
 }
 
 .input-icon {
