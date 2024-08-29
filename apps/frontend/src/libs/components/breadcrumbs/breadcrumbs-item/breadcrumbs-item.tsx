@@ -3,21 +3,27 @@ import { type BreadcrumbNavigationItem } from "~/libs/components/types/breadcrum
 
 import styles from "./styles.module.css";
 
-type Properties = BreadcrumbNavigationItem;
+type Properties = {
+	isLastItem: boolean;
+} & BreadcrumbNavigationItem;
 
-const BreadcrumbItem = ({ href, label }: Properties): JSX.Element => {
+const BreadcrumbItem = ({
+	href,
+	isLastItem,
+	label,
+}: Properties): JSX.Element => {
 	return (
 		<li className={styles["breadcrumb-item"]}>
-			{href ? (
-				<a aria-label={label} className={styles["breadcrumb-link"]} href={href}>
-					{label}
-				</a>
-			) : (
+			{isLastItem ? (
 				<span aria-label={label} className={styles["breadcrumb-current"]}>
 					{label}
 				</span>
+			) : (
+				<a aria-label={label} className={styles["breadcrumb-link"]} href={href}>
+					{label}
+				</a>
 			)}
-			{href && (
+			{!isLastItem && (
 				<span className={styles["breadcrumb-separator"]}>
 					<Icon height={11} name="rightArrow" width={7} />
 				</span>

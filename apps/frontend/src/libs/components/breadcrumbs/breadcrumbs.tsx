@@ -7,12 +7,19 @@ type Properties = {
 	items: BreadcrumbNavigationItem[];
 };
 
+const lastBreadcrumbItemOffset = 1;
+
 const Breadcrumbs = ({ items }: Properties): JSX.Element => {
 	return (
 		<nav aria-label="breadcrumb" className={styles["breadcrumb-container"]}>
 			<ol className={styles["breadcrumb-list"]}>
 				{items.map((item, index) => (
-					<BreadcrumbItem key={index} {...item} />
+					<BreadcrumbItem
+						href={item.href}
+						isLastItem={index === items.length - lastBreadcrumbItemOffset}
+						key={index}
+						label={item.label}
+					/>
 				))}
 			</ol>
 		</nav>
