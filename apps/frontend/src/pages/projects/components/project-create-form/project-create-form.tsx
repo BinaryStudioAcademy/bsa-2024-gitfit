@@ -62,7 +62,7 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 				rows={DESCRIPTION_ROWS_COUNT}
 			/>
 			<div className={styles["button-wrapper"]}>
-				<Button disabled={isButtonDisabled} label="Create" type="submit" />
+				<Button isDisabled={isButtonDisabled} label="Create" type="submit" />
 			</div>
 		</form>
 	);

@@ -7,8 +7,8 @@ import styles from "./styles.module.css";
 type ButtonVariant = "danger" | "default" | "outlined";
 
 type Properties = {
-	disabled?: boolean;
 	href?: string | undefined;
+	isDisabled?: boolean;
 	label: string;
 	onClick?: () => void;
 	type?: "button" | "submit";
@@ -16,8 +16,8 @@ type Properties = {
 };
 
 const Button = ({
-	disabled = false,
 	href,
+	isDisabled = false,
 	label,
 	onClick,
 	type = "button",
@@ -39,7 +39,7 @@ const Button = ({
 	return (
 		<button
 			className={buttonClassName}
-			disabled={disabled}
+			disabled={isDisabled}
 			onClick={onClick}
 			type={type}
 		>
