@@ -1,7 +1,6 @@
+import { Header, Sidebar } from "~/libs/components/components.js";
 import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
 
-import { Header } from "../header/header.js";
-import { Sidebar } from "../sidebar/sidebar.js";
 import styles from "./styles.module.css";
 
 type Properties = {
