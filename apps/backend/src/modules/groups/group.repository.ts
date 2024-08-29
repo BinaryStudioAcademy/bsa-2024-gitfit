@@ -14,7 +14,7 @@ class GroupRepository implements Repository {
 	}
 
 	public async create(entity: GroupEntity): Promise<GroupEntity> {
-		const { name, permissionIds, userIds } = entity.toNewObject();
+		const { name, permissions, users } = entity.toNewObject();
 		const key = changeCase(name, "snakeCase");
 
 		const trx = await transaction.start(this.groupModel.knex());
@@ -22,8 +22,8 @@ class GroupRepository implements Repository {
 		const groupData = {
 			key,
 			name,
-			permissions: permissionIds,
-			users: userIds,
+			permissions,
+			users,
 		};
 
 		const group = await this.groupModel
@@ -37,8 +37,8 @@ class GroupRepository implements Repository {
 		return GroupEntity.initialize({
 			id: group.id,
 			name: group.name,
-			permissionIds,
-			userIds,
+			permissions,
+			users,
 		});
 	}
 

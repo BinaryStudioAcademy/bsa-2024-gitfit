@@ -31,14 +31,14 @@ class GroupService implements Service {
 			});
 		}
 
-		const mappedPermissions = permissionIds.map((id) => ({ id }));
-		const mappedUsers = userIds.map((id) => ({ id }));
+		const permissions = permissionIds.map((id) => ({ id }));
+		const users = userIds.map((id) => ({ id }));
 
 		const item = await this.groupRepository.create(
 			GroupEntity.initializeNew({
 				name,
-				permissionIds: mappedPermissions,
-				userIds: mappedUsers,
+				permissions,
+				users,
 			}),
 		);
 
