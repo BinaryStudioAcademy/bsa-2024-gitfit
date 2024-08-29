@@ -1,4 +1,3 @@
-import { EventKey } from "~/libs/enums/enums.js";
 import {
 	useCallback,
 	useHandleClickOutside,
@@ -17,35 +16,21 @@ const Popover = ({ children, content }: Properties): JSX.Element => {
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 	const popoverReference = useRef<HTMLDivElement>(null);
 
-	const handleOpen = useCallback((): void => {
-		setIsOpened(true);
+	const handleToggle = useCallback((): void => {
+		setIsOpened((previousState) => !previousState);
 	}, []);
 
 	const handleClose = (): void => {
 		setIsOpened(false);
 	};
 
-	const handleKeyDown = useCallback(
-		(event: React.KeyboardEvent<HTMLDivElement>): void => {
-			if (event.key === EventKey.ESCAPE) {
-				handleClose();
-			}
-		},
-		[],
-	);
-
 	useHandleClickOutside(popoverReference, handleClose);
 
 	return (
 		<div className={styles["popover-wrapper"]} ref={popoverReference}>
-			<div
-				onClick={handleOpen}
-				onKeyDown={handleKeyDown}
-				role="button"
-				tabIndex={0}
-			>
+			<button className={styles["trigger-wrapper"]} onClick={handleToggle}>
 				{children}
-			</div>
+			</button>
 			{isOpened && (
 				<div className={styles["popover-content-wrapper"]}>{content}</div>
 			)}
