@@ -7,6 +7,11 @@ const SIDEBAR_ITEMS: NavigationItem[] = [
 		icon: "project",
 		label: "Projects",
 	},
+	{
+		href: AppRoute.ACCESS_MANAGEMENT,
+		icon: "access",
+		label: "Access Management",
+	},
 ];
 
 export { SIDEBAR_ITEMS };
