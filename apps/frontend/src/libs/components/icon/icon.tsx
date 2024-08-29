@@ -1,17 +1,19 @@
 import { iconNameToSvg } from "./libs/maps/maps.js";
-import { type IconName } from "./types/types.js";
+import { type IconName } from "./libs/types/types.js";
+import styles from "./styles.module.css";
 
 type Properties = {
-	color?: string | undefined;
 	height: number;
 	name: IconName;
 	width: number;
 };
 
-const Icon = ({ color, height, name, width }: Properties): JSX.Element => {
+const Icon = ({ height, name, width }: Properties): JSX.Element => {
 	const SvgComponent = iconNameToSvg[name];
 
-	return <SvgComponent color={color} height={height} width={width} />;
+	return (
+		<SvgComponent className={styles["icon"]} height={height} width={width} />
+	);
 };
 
 export { Icon };
