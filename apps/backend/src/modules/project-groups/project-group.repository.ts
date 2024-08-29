@@ -1,5 +1,6 @@
 import { transaction } from "objection";
 
+import { changeCase } from "~/libs/helpers/helpers.js";
 import { type Repository } from "~/libs/types/types.js";
 
 import { ProjectGroupEntity } from "./project-group.entity.js";
@@ -14,9 +15,7 @@ class ProjectGroupRepository implements Repository {
 
 	public async create(entity: ProjectGroupEntity): Promise<ProjectGroupEntity> {
 		const { name, permissionIds, projectId, userIds } = entity.toNewObject();
-
-		//TODO: change with changeCase helper
-		const key = this.generateKeyFromName(name);
+		const key = changeCase(name, "snakeCase");
 
 		const trx = await transaction.start(this.projectGroupModel.knex());
 
@@ -58,15 +57,9 @@ class ProjectGroupRepository implements Repository {
 	}
 
 	public async findByName(name: string): Promise<null | ProjectGroupModel> {
-		//TODO: change with changeCase helper
-		const key = this.generateKeyFromName(name);
+		const key = changeCase(name, "snakeCase");
 
 		return (await this.projectGroupModel.query().findOne({ key })) ?? null;
-	}
-
-	//TODO: remove after adding changeCase helper
-	public generateKeyFromName(name: string): string {
-		return name.replaceAll(/\s+/g, "_").toLowerCase();
 	}
 
 	public update(): ReturnType<Repository["update"]> {

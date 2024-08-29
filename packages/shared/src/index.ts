@@ -9,7 +9,11 @@ export {
 	ApplicationError,
 	ValidationError,
 } from "./libs/exceptions/exceptions.js";
-export { configureString } from "./libs/helpers/helpers.js";
+export {
+	changeCase,
+	configureString,
+	formatDate,
+} from "./libs/helpers/helpers.js";
 export { type Config } from "./libs/modules/config/config.js";
 export {
 	type HTTP,
@@ -30,6 +34,13 @@ export {
 } from "./libs/types/types.js";
 export { AuthApiPath, AuthError } from "./modules/auth/auth.js";
 export {
+	type GroupCreateRequestDto,
+	type GroupCreateResponseDto,
+	groupCreateValidationSchema,
+	GroupError,
+	GroupsApiPath,
+} from "./modules/groups/groups.js";
+export {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupCreateResponseDto,
 	projectGroupCreateValidationSchema,
@@ -41,6 +52,8 @@ export {
 	type ProjectCreateResponseDto,
 	projectCreateValidationSchema,
 	ProjectError,
+	type ProjectGetAllItemResponseDto,
+	type ProjectGetAllResponseDto,
 	ProjectsApiPath,
 } from "./modules/projects/projects.js";
 export {
