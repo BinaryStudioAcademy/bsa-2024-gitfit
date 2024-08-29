@@ -15,11 +15,9 @@ const BreadcrumbItem = ({
 	return (
 		<li className={styles["breadcrumb-item"]}>
 			{isLastItem ? (
-				<span aria-label={label} className={styles["breadcrumb-current"]}>
-					{label}
-				</span>
+				<span className={styles["breadcrumb-current"]}>{label}</span>
 			) : (
-				<a aria-label={label} className={styles["breadcrumb-link"]} href={href}>
+				<a className={styles["breadcrumb-link"]} href={href}>
 					{label}
 				</a>
 			)}
