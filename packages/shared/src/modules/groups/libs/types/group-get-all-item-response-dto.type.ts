@@ -1,4 +1,5 @@
 type GroupGetAllItemResponseDto = {
+	createdAt: string;
 	id: number;
 	name: string;
 	permissions: { id: number }[];

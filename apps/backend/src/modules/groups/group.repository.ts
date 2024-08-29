@@ -34,12 +34,7 @@ class GroupRepository implements Repository {
 
 		await trx.commit();
 
-		return GroupEntity.initialize({
-			id: group.id,
-			name: group.name,
-			permissions,
-			users,
-		});
+		return GroupEntity.initialize(group);
 	}
 
 	public delete(): ReturnType<Repository["delete"]> {
