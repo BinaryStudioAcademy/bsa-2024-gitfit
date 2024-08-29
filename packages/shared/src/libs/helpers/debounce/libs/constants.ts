@@ -1,0 +1,3 @@
+const DEBOUNCE_TIMEOUT = 300;
+
+export { DEBOUNCE_TIMEOUT };
