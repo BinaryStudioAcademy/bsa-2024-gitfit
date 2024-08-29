@@ -60,10 +60,9 @@ const Ui = (): JSX.Element => {
 			</Modal>
 			<Breadcrumbs
 				items={[
-					{ href: "/ui", label: "Home" },
-					{ href: "/", label: "projects" },
-					{ href: "/sign-up", label: "projectname" },
-					{ label: "project details" },
+					{ href: "/", label: "GitFit" },
+					{ href: "/", label: "Projects" },
+					{ label: "User Interface" },
 				]}
 			/>
 
