@@ -1,4 +1,5 @@
 const AppRoute = {
+	ACCESS_MANAGEMENT: "/access-management",
 	ANY: "*",
 	ROOT: "/",
 	SIGN_IN: "/sign-in",

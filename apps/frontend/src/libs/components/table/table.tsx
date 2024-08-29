@@ -1,21 +1,22 @@
 import {
-	type ColumnDef,
 	flexRender,
 	getCoreRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
 
+import { type TableColumn } from "~/libs/types/types.js";
+
 import styles from "./styles.module.css";
 
-interface TableProperties<T extends object> {
-	columns: ColumnDef<T>[];
+type Properties<T extends object> = {
+	columns: TableColumn<T>[];
 	data: T[];
-}
+};
 
 const Table = <T extends object>({
 	columns,
 	data,
-}: TableProperties<T>): JSX.Element => {
+}: Properties<T>): JSX.Element => {
 	const table = useReactTable({
 		columns,
 		data,
