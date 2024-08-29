@@ -15,12 +15,15 @@ import { AccessManagement } from "~/pages/access-management/access-management.js
 import { Auth } from "~/pages/auth/auth.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
+import { Ui } from "~/pages/ui/ui.jsx";
 
 createRoot(document.querySelector("#root") as HTMLElement).render(
 	<StrictMode>
 		<StoreProvider store={store.instance}>
 			<RouterProvider
 				routes={[
+					/* TO DO: Remove page as soon as there is no unused exports */
+					{ element: <Ui />, path: AppRoute.UI },
 					{
 						children: [
 							{
