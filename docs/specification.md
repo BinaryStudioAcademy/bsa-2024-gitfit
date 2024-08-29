@@ -292,7 +292,7 @@ The "Merge Contributors Modal" includes:
 
 The "Profile" page includes:
 
-- "Info" block: Includes prefilled “Name” and “Email” Fields and “Update Profile” button. The “Email” field is disabled. The “Update Profile” button becomes active after the user changes fields. When clicked, profile data should be updated. After updating the profile data, the message "Your profile has been successfully updated." appears.
+- "Info" block: Includes prefilled “Name” and “Email” Fields and “Update Profile” button. The “Email” field is disabled. The “Update Profile” button becomes active after the user changes fields. When clicked, profile data should be updated. After updating the profile data, the message "Your profile has been successfully updated." appears. The user is able to edit the profile picture. The profile picture must be in JPG or PNG format with a maximum size of 2MB.
 - “Password” block: Includes “Password” and “Confirm password” fields and “Update Password” button. The “Update Password” button becomes active after the user inputs something into the “Password” field. After submission user password should be updated. Red validation message (‘Field cannot be empty’) appears below the inputs when fields are empty.
 - “Delete account” block: Includes “Delete your account” button. When the “Delete your account” button is clicked, a confirmation modal is opened. After confirming the action, the account should be deleted as well as data related to it. Account deletion is irreversible, and there is no option to recover the account or data afterward.
 
