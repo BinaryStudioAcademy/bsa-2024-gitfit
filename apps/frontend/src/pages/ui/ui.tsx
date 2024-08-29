@@ -63,7 +63,7 @@ const Ui = (): JSX.Element => {
 					{ href: "/home", label: "Home" },
 					{ href: "/projects", label: "projects" },
 					{ href: "/products/projectname", label: "projectname" },
-					{ label: "project details" }, // Current page, no href
+					{ label: "project details" },
 				]}
 			/>
 
