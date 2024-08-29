@@ -69,7 +69,7 @@ class ProjectController extends BaseController {
 					}>,
 				),
 			method: "GET",
-			path: ProjectsApiPath.BY_ID,
+			path: ProjectsApiPath.$ID,
 		});
 	}
 

@@ -1,5 +1,5 @@
 const ProjectsApiPath = {
-	BY_ID: "/:id",
+	$ID: "/:id",
 	ROOT: "/",
 } as const;
 

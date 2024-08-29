@@ -24,7 +24,7 @@ class ProjectApi extends BaseHTTPApi {
 		payload: ProjectFindRequestDto,
 	): Promise<ProjectResponseDto> {
 		const response = await this.load(
-			this.getFullEndpoint(ProjectsApiPath.BY_ID, { id: payload.id }),
+			this.getFullEndpoint(ProjectsApiPath.$ID, { id: payload.id }),
 			{
 				contentType: ContentType.JSON,
 				hasAuth: true,
