@@ -1,9 +1,9 @@
 import { Icon } from "~/libs/components/components.js";
-import { type BreadcrumbItemType } from "~/libs/types/types.js";
+import { type BreadcrumbNavigationItem } from "~/libs/components/types/breadcrumb-navigation-item.type.js";
 
 import styles from "./styles.module.css";
 
-type Properties = BreadcrumbItemType;
+type Properties = BreadcrumbNavigationItem;
 
 const BreadcrumbItem = ({ href, label }: Properties): JSX.Element => {
 	return (

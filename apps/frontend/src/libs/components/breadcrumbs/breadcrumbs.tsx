@@ -1,10 +1,10 @@
-import { type BreadcrumbItemType } from "~/libs/types/types.js";
+import { type BreadcrumbNavigationItem } from "~/libs/components/types/breadcrumb-navigation-item.type.js";
 
 import { BreadcrumbItem } from "./breadcrumbs-item/breadcrumbs-item.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	items: BreadcrumbItemType[];
+	items: BreadcrumbNavigationItem[];
 };
 
 const Breadcrumbs = ({ items }: Properties): JSX.Element => {
