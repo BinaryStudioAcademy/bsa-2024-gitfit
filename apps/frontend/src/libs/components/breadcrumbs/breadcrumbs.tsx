@@ -1,65 +1,32 @@
-import { Icon } from "~/libs/components/components.js";
+import { type BreadcrumbItemType } from "~/libs/types/types.js";
 
+import { BreadcrumbItem } from "./breadcrumbs-item/breadcrumbs-item.js";
 import styles from "./styles.module.css";
 
-type BreadcrumbItem = {
-	href?: string;
-	label: string;
-};
-
 type Properties = {
-	items: BreadcrumbItem[];
+	items: BreadcrumbItemType[];
 };
 
 const firstItemOffset = 0;
 const lastItemOffset = -1;
 
 const Breadcrumbs = ({ items }: Properties): JSX.Element => {
-	const breadcrumbs = items;
-
-	const breadcrumbsExceptLast = breadcrumbs.slice(
-		firstItemOffset,
-		lastItemOffset,
-	);
-	const lastBreadcrumb = breadcrumbs.slice(lastItemOffset);
+	const breadcrumbsExceptLast = items.slice(firstItemOffset, lastItemOffset);
+	const lastBreadcrumb = items.at(lastItemOffset);
 
 	return (
 		<nav aria-label="breadcrumb" className={styles["breadcrumb-container"]}>
 			<ol className={styles["breadcrumb-list"]}>
-				{breadcrumbsExceptLast.map(({ href, label }, index) => (
-					<li className={styles["breadcrumb-item"]} key={index}>
-						<a
-							aria-label={label}
-							className={styles["breadcrumb-link"]}
-							href={href}
-						>
-							{label}
-						</a>
-						<span className={styles["breadcrumb-separator"]}>
-							<Icon height={11} name="rightArrow" width={7} />
-						</span>
-					</li>
+				{breadcrumbsExceptLast.map((item, index) => (
+					<BreadcrumbItem key={index} {...item} isCurrentPage={false} />
 				))}
-				{lastBreadcrumb.map(({ href, label }, index) => (
-					<li
-						className={styles["breadcrumb-item"]}
-						key={breadcrumbsExceptLast.length + index}
-					>
-						{href ? (
-							<a
-								aria-label={label}
-								className={styles["breadcrumb-link"]}
-								href={href}
-							>
-								{label}
-							</a>
-						) : (
-							<span aria-label={label} className={styles["breadcrumb-current"]}>
-								{label}
-							</span>
-						)}
-					</li>
-				))}
+				{lastBreadcrumb && (
+					<BreadcrumbItem
+						key={breadcrumbsExceptLast.length}
+						{...lastBreadcrumb}
+						isCurrentPage
+					/>
+				)}
 			</ol>
 		</nav>
 	);
