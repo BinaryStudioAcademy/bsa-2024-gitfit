@@ -23,8 +23,6 @@ type Properties<T extends FieldValues> = {
 	type?: "email" | "password" | "text";
 };
 
-const MIN_ROWS_TO_BE_TEXTAREA = 2;
-
 const Input = <T extends FieldValues>({
 	autoComplete,
 	control,
@@ -43,7 +41,7 @@ const Input = <T extends FieldValues>({
 	const hasError = Boolean(error);
 	const hasLeftIcon = Boolean(leftIcon);
 	const hasRightIcon = Boolean(rightIcon);
-	const isTextArea = rows && rows >= MIN_ROWS_TO_BE_TEXTAREA;
+	const isTextArea = Boolean(rows);
 
 	return (
 		<label className={styles["input-label"]}>
@@ -69,11 +67,7 @@ const Input = <T extends FieldValues>({
 						name={field.name}
 						onChange={field.onChange}
 						placeholder={placeholder}
-						style={
-							{
-								"--rows": rows,
-							} as React.CSSProperties
-						}
+						rows={rows}
 						value={field.value}
 					/>
 				) : (
