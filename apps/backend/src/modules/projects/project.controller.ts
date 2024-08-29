@@ -57,6 +57,12 @@ class ProjectController extends BaseController {
 				body: projectCreateValidationSchema,
 			},
 		});
+
+		this.addRoute({
+			handler: () => this.findAll(),
+			method: "GET",
+			path: ProjectsApiPath.ROOT,
+		});
 	}
 
 	/**
@@ -95,6 +101,31 @@ class ProjectController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.projectService.create(options.body),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /projects:
+	 *    get:
+	 *      description: Returns an array of projects
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 * 								properties:
+	 * 									items:
+	 * 										type: array
+	 *                		items:
+	 *                  		$ref: "#/components/schemas/Project"
+	 */
+	private async findAll(): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.projectService.findAll(),
 			status: HTTPCode.OK,
 		};
 	}
