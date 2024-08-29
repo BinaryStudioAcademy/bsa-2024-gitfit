@@ -1,24 +1,48 @@
 import { NavLink } from "react-router-dom";
 
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
+
 import styles from "./styles.module.css";
 
+type ButtonVariant = "danger" | "default" | "outlined";
+
 type Properties = {
+	disabled?: boolean;
 	href?: string | undefined;
 	label: string;
+	onClick?: () => void;
 	type?: "button" | "submit";
+	variant?: ButtonVariant;
 };
 
-const Button = ({ href, label, type = "button" }: Properties): JSX.Element => {
+const Button = ({
+	disabled = false,
+	href,
+	label,
+	onClick,
+	type = "button",
+	variant = "default",
+}: Properties): JSX.Element => {
+	const buttonClassName = getValidClassNames(
+		styles["button"],
+		styles[`button-${variant}`],
+	);
+
 	if (href) {
 		return (
-			<NavLink className={styles["button"] ?? ""} to={href}>
+			<NavLink className={buttonClassName} to={href}>
 				{label}
 			</NavLink>
 		);
 	}
 
 	return (
-		<button className={styles["button"]} type={type}>
+		<button
+			className={buttonClassName}
+			disabled={disabled}
+			onClick={onClick}
+			type={type}
+		>
 			{label}
 		</button>
 	);
