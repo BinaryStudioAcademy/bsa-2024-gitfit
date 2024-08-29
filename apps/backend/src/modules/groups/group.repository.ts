@@ -50,8 +50,12 @@ class GroupRepository implements Repository {
 		return Promise.resolve(null);
 	}
 
-	public findAll(): ReturnType<Repository["findAll"]> {
-		return Promise.resolve([]);
+	public async findAll(): Promise<GroupEntity[]> {
+		const groups = await this.groupModel
+			.query()
+			.withGraphFetched("[permissions, users]");
+
+		return groups.map((group) => GroupEntity.initialize(group));
 	}
 
 	public async findByName(name: string): Promise<GroupModel | null> {
