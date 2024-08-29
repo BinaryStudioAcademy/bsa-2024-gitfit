@@ -59,7 +59,14 @@ const Projects = (): JSX.Element => {
 		<>
 			<Header />
 			<p>Current path: {pathname}</p>
-			<Breadcrumbs items={[]} />
+			<Breadcrumbs
+				items={[
+					{ href: "/home", label: "Home" },
+					{ href: "/tests", label: "tests" },
+					{ href: "/tests/test", label: "test" },
+					{ label: "test1" },
+				]}
+			/>
 
 			{/* TODO: Delete inline styles after implementation */}
 			<main style={{ display: "flex", flex: "1" }}>
