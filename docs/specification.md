@@ -128,14 +128,17 @@ Hide/Show password toggle must be located on the right side of a Password input 
 
 **Element:** Separate page.
 
-**How to reach:** Accessible from the sidebar by clicking the "Access Management" link.
+**How to reach:** Accessible from the sidebar by clicking the "Access Management" link for users with access granted.
+
+**Page appearance for users with no access**
+Helper text is shown on the middle of the page "You don't have access to the pages yet. Please contact an admin to grant you access".
 
 Controls user group access to specific actions and projects.
 
 The "Access Management" page includes:
 
-- "Users” table: Displays columns for "Name", "Groups" and "Created At".
-- “Groups” Table: Displays the “Create new” button and columns for "Name", "Permissions", "Created At" and an "Options" icon. When the “Create new” button is clicked, a “Create Group Modal” is opened. When the "Options" icon is clicked, a menu with the "Edit" and “Delete” options is shown. When the “Edit” option is clicked, the “Update Group Modal” is opened. When the “Delete” option is clicked, a confirmation modal is opened before deleting the group.
+- "Users” table: Displays columns for "Name", "Groups" and "Created At". Click on “User” redirects to user profile page.
+- “Groups” Table: Displays the “Create new” button and columns for "Name", "Permissions", "Created At" and an "Options" icon. A “Table paginator" element is placed under each Table. When changing the amount of rows in a Table a scroll function appears. When the “Create new” button is clicked, a “Create Group Modal” is opened. When the "Options" icon is clicked, a menu with the "Edit" and “Delete” options is shown. When the “Edit” option is clicked, the “Update Group Modal” is opened. When the “Delete” option is clicked, a confirmation modal is opened before deleting the group.
 - “Permissions” list contains:
   - Manage User Access: See the “Access Management” page and manage groups.
   - View All Projects: See all projects.
@@ -150,12 +153,13 @@ The "Access Management" page includes:
 The "Create Group Modal" includes:
 
 - “Name” field.
+  Validation: Field should not be empty. The field may encompass alphanumeric characters. Maximum legnth is 50.
 - “Users” table: Includes “Checkbox”, “Name”, “Groups” and “Created At” columns.
 - “Permissions” multi-select: Contains a list of permissions as options.
 - “Create” button: When clicked, submits the form, closes the modal, and adds the new group to the top of the "Groups" list.
 - “Close” icon: When clicked, the modal is closed.
 
-#### 2.4.1 Update Group Modal
+#### 2.4.2 Update Group Modal
 
 **Element:** Modal component
 
