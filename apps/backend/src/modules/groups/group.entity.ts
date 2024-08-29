@@ -79,8 +79,8 @@ class GroupEntity implements Entity {
 		return {
 			id: this.id as number,
 			name: this.name,
-			permissionIds: this.permissions.map((perm) => perm.id),
-			userIds: this.users.map((user) => user.id),
+			permissions: this.permissions,
+			users: this.users,
 		};
 	}
 }

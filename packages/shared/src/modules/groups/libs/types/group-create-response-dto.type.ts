@@ -1,8 +1,8 @@
 type GroupCreateResponseDto = {
 	id: number;
 	name: string;
-	permissionIds: number[];
-	userIds: number[];
+	permissions: { id: number }[];
+	users: { id: number }[];
 };
 
 export { type GroupCreateResponseDto };
