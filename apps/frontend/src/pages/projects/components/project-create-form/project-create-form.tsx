@@ -1,5 +1,10 @@
 import { Button, Input } from "~/libs/components/components.js";
-import { useAppForm, useCallback } from "~/libs/hooks/hooks.js";
+import {
+	useAppForm,
+	useCallback,
+	useFormWatch,
+	useMemo,
+} from "~/libs/hooks/hooks.js";
 import {
 	type ProjectCreateRequestDto,
 	projectCreateValidationSchema,
@@ -15,12 +20,21 @@ type Properties = {
 	onSubmit: (payload: ProjectCreateRequestDto) => void;
 };
 
+const EMPTY_STRING_LENGTH = 0;
+
 const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 	const { control, errors, handleSubmit } = useAppForm<ProjectCreateRequestDto>(
 		{
 			defaultValues: DEFAULT_PROJECT_CREATE_PAYLOAD,
 			validationSchema: projectCreateValidationSchema,
 		},
+	);
+
+	const { name: enteredName } = useFormWatch({ control });
+
+	const isButtonDisabled = useMemo(
+		() => enteredName?.length === EMPTY_STRING_LENGTH,
+		[enteredName],
 	);
 
 	const handleFormSubmit = useCallback(
@@ -49,7 +63,7 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 				rows={DESCRIPTION_ROWS_COUNT}
 			/>
 			<div className={styles["button-wrapper"]}>
-				<Button label="Create" type="submit" />
+				<Button disabled={isButtonDisabled} label="Create" type="submit" />
 			</div>
 		</form>
 	);
