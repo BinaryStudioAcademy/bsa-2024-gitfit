@@ -12,6 +12,8 @@ import {
 	actions as usersActions,
 } from "~/modules/users/users.js";
 
+import styles from "./styles.module.css";
+
 type Properties = {
 	defaultValues: UserInfoResponseDto;
 	userId: number;
@@ -48,25 +50,32 @@ const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
 	}, [watchedValues, defaultValues]);
 
 	return (
-		<form onSubmit={handleFormSubmit}>
-			<Input
-				autoComplete="username"
-				control={control}
-				errors={errors}
-				label="Name"
-				name="name"
-			/>
+		<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>
+			<div className={styles["inputs-wrapper"]}>
+				<Input
+					autoComplete="username"
+					control={control}
+					errors={errors}
+					label="Name"
+					name="name"
+				/>
 
-			<Input
-				autoComplete="email"
-				control={control}
-				disabled
-				errors={errors}
-				label="Email"
-				name="email"
-			/>
+				<Input
+					autoComplete="email"
+					control={control}
+					disabled
+					errors={errors}
+					label="Email"
+					name="email"
+				/>
+			</div>
 
-			<Button disabled={!isChanged} label="Update Profile" type="submit" />
+			<Button
+				className={styles["submit-button"]}
+				disabled={!isChanged}
+				label="Update Profile"
+				type="submit"
+			/>
 		</form>
 	);
 };

@@ -3,6 +3,7 @@ import { DataStatus } from "~/libs/enums/data-status.enum.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 
 import { EditUserForm } from "./components/components.js";
+import styles from "./styles.module.css";
 
 const Profile = (): JSX.Element => {
 	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
@@ -12,23 +13,25 @@ const Profile = (): JSX.Element => {
 
 	return (
 		<PageLayout>
-			<h1>Profile</h1>
+			<div className={styles["profile-content"]}>
+				<h1 className={styles["label"]}>Profile</h1>
 
-			{isLoading ? (
-				<div>
-					<Loader />
-				</div>
-			) : (
-				authenticatedUser && (
-					<EditUserForm
-						defaultValues={{
-							email: authenticatedUser.email,
-							name: authenticatedUser.name,
-						}}
-						userId={authenticatedUser.id}
-					/>
-				)
-			)}
+				{isLoading ? (
+					<div className={styles["profile-loader"]}>
+						<Loader />
+					</div>
+				) : (
+					authenticatedUser && (
+						<EditUserForm
+							defaultValues={{
+								email: authenticatedUser.email,
+								name: authenticatedUser.name,
+							}}
+							userId={authenticatedUser.id}
+						/>
+					)
+				)}
+			</div>
 		</PageLayout>
 	);
 };
