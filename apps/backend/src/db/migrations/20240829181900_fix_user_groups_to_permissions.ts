@@ -3,11 +3,7 @@ import { type Knex } from "knex";
 const TABLE_NAME = "user_groups_to_permissions";
 
 const ColumnName = {
-	CREATED_AT: "created_at",
-	ID: "id",
 	PERMISSION_ID: "permission_id",
-	UPDATED_AT: "updated_at",
-	USER_GROUP_ID: "user_group_id",
 } as const;
 
 const PERMISSIONS_TABLE = "permissions";
