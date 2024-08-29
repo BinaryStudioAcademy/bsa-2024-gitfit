@@ -1,5 +1,3 @@
-import { type FormEvent } from "react";
-
 import { Search } from "~/libs/components/components.js";
 import { useCallback } from "~/libs/hooks/hooks.js";
 
@@ -10,7 +8,7 @@ type Properties = {
 };
 
 const ProjectsSearch = ({ onValueChange }: Properties): JSX.Element => {
-	const handleSubmit = useCallback((event: FormEvent) => {
+	const handleSubmit = useCallback((event: React.FormEvent) => {
 		event.preventDefault();
 	}, []);
 
