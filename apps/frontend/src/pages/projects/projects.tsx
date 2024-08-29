@@ -1,8 +1,4 @@
-import {
-	Breadcrumbs,
-	Loader,
-	PageLayout,
-} from "~/libs/components/components.js";
+import { Loader, PageLayout } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -28,8 +24,6 @@ const Projects = (): JSX.Element => {
 
 	return (
 		<PageLayout>
-			<Breadcrumbs items={[{ label: "Projects" }]} />
-
 			<h1 className={styles["label"]}>Projects</h1>
 			{isLoading ? (
 				<div className={styles["projects-loader"]}>
