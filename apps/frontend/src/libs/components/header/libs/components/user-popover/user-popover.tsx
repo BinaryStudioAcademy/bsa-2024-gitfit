@@ -2,6 +2,8 @@ import { NavLink } from "react-router-dom";
 
 import { Popover } from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
+import { useAppDispatch, useCallback } from "~/libs/hooks/hooks.js";
+import { actions as authActions } from "~/modules/auth/auth.js";
 
 import styles from "./styles.module.css";
 
@@ -12,6 +14,12 @@ type Properties = {
 };
 
 const UserPopover = ({ children, email, name }: Properties): JSX.Element => {
+	const dispatch = useAppDispatch();
+
+	const handleLogout = useCallback((): void => {
+		void dispatch(authActions.logout());
+	}, [dispatch]);
+
 	return (
 		<Popover
 			content={
@@ -24,7 +32,9 @@ const UserPopover = ({ children, email, name }: Properties): JSX.Element => {
 						<NavLink className={styles["button"] ?? ""} to={AppRoute.PROFILE}>
 							Profile
 						</NavLink>
-						<button className={styles["button"]}>Log out</button>
+						<button className={styles["button"]} onClick={handleLogout}>
+							Log out
+						</button>
 					</div>
 				</div>
 			}

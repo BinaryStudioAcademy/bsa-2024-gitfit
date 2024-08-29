@@ -1,6 +1,8 @@
+import { APIPath, AuthApiPath } from "@git-fit/shared";
+
 const WHITE_ROUTES = [
-	/^\/api\/v1\/[^/]+\/sign-up\/?$/,
-	/^\/api\/v1\/[^/]+\/sign-in\/?$/,
-] as const;
+	`${APIPath.AUTH}${AuthApiPath.SIGN_UP}`,
+	`${APIPath.AUTH}${AuthApiPath.SIGN_IN}`,
+];
 
 export { WHITE_ROUTES };
