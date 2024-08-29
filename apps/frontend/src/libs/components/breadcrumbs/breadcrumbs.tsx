@@ -1,36 +1,23 @@
 import { Icon } from "~/libs/components/components.js";
-import { getBreadcrumbName } from "~/libs/helpers/helpers.js";
-import { useLocation } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
 
 type BreadcrumbItem = {
-	link?: string;
-	name: string;
+	href?: string; // Optional href property for the link
+	label: string; // Label text for the breadcrumb item
 };
 
 type Properties = {
-	items?: BreadcrumbItem[];
+	items: BreadcrumbItem[]; // Breadcrumb items passed as a prop
 };
 
+// Constants to avoid magic numbers
 const FIRST_ITEM_INDEX = 0;
 const LAST_ITEM_OFFSET = -1;
-const SINGLE_ITEM_OFFSET = 1;
 
 const Breadcrumbs = ({ items }: Properties): JSX.Element => {
-	const location = useLocation();
-	const pathnames = location.pathname.split("/").filter(Boolean);
+	const breadcrumbs = items;
 
-	const generatedItems = pathnames.map((currentPathname, index) => {
-		const link = `/${pathnames.slice(FIRST_ITEM_INDEX, index + SINGLE_ITEM_OFFSET).join("/")}`;
-
-		return {
-			link,
-			name: getBreadcrumbName(currentPathname),
-		};
-	});
-
-	const breadcrumbs = items || generatedItems;
 	const breadcrumbsExceptLast = breadcrumbs.slice(
 		FIRST_ITEM_INDEX,
 		LAST_ITEM_OFFSET,
@@ -40,22 +27,38 @@ const Breadcrumbs = ({ items }: Properties): JSX.Element => {
 	return (
 		<nav aria-label="breadcrumb" className={styles["breadcrumb-container"]}>
 			<ol className={styles["breadcrumb-list"]}>
-				{breadcrumbsExceptLast.map(({ link, name }, index) => (
+				{breadcrumbsExceptLast.map(({ href, label }, index) => (
 					<li className={styles["breadcrumb-item"]} key={index}>
-						<a className={styles["breadcrumb-link"]} href={link}>
-							{name}
+						<a
+							aria-label={label}
+							className={styles["breadcrumb-link"]}
+							href={href}
+						>
+							{label}
 						</a>
 						<span className={styles["breadcrumb-separator"]}>
 							<Icon height={20} name="rightArrow" width={20} />
 						</span>
 					</li>
 				))}
-				{lastBreadcrumb.map(({ name }, index) => (
+				{lastBreadcrumb.map(({ href, label }, index) => (
 					<li
 						className={styles["breadcrumb-item"]}
 						key={breadcrumbsExceptLast.length + index}
 					>
-						<span className={styles["breadcrumb-current"]}>{name}</span>
+						{href ? (
+							<a
+								aria-label={label}
+								className={styles["breadcrumb-link"]}
+								href={href}
+							>
+								{label}
+							</a>
+						) : (
+							<span aria-label={label} className={styles["breadcrumb-current"]}>
+								{label}
+							</span>
+						)}
 					</li>
 				))}
 			</ol>

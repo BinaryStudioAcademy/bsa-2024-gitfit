@@ -59,8 +59,7 @@ const Projects = (): JSX.Element => {
 		<>
 			<Header />
 			<p>Current path: {pathname}</p>
-			{/*  Breadcrumbs test here */}
-			<Breadcrumbs />
+			<Breadcrumbs items={[]} />
 
 			{/* TODO: Delete inline styles after implementation */}
 			<main style={{ display: "flex", flex: "1" }}>
