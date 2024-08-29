@@ -4,7 +4,8 @@
 	font-size: 16px;
 	font-style: normal;
 	color: var(--color-text-primary);
-	border-collapse: collapse;
+	border-spacing: 0;
+	border-collapse: separate;
 	background-color: var(--color-background-secondary);
 	border: 1px solid var(--color-border-primary);
 	border-radius: 8px;
@@ -20,11 +21,13 @@
 .table td {
 	min-height: 60px;
 	font-weight: 400;
+	line-height: 150%;
 }
 
 .table th {
 	min-height: 45px;
 	font-weight: 500;
+	line-height: 120%;
 	color: var(--color-text-secondary);
 }
 
