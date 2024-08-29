@@ -11,17 +11,17 @@ type Properties = {
 	items: BreadcrumbItem[];
 };
 
-const FIRST_ITEM_INDEX = 0;
-const LAST_ITEM_OFFSET = -1;
+const firstItemOffset = 0;
+const lastItemOffset = -1;
 
 const Breadcrumbs = ({ items }: Properties): JSX.Element => {
 	const breadcrumbs = items;
 
 	const breadcrumbsExceptLast = breadcrumbs.slice(
-		FIRST_ITEM_INDEX,
-		LAST_ITEM_OFFSET,
+		firstItemOffset,
+		lastItemOffset,
 	);
-	const lastBreadcrumb = breadcrumbs.slice(LAST_ITEM_OFFSET);
+	const lastBreadcrumb = breadcrumbs.slice(lastItemOffset);
 
 	return (
 		<nav aria-label="breadcrumb" className={styles["breadcrumb-container"]}>
