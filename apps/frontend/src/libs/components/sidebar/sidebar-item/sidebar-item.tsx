@@ -3,8 +3,11 @@ import { NavLink } from "react-router-dom";
 import { Icon } from "~/libs/components/components.js";
 import { type NavigationItem } from "~/libs/types/types.js";
 
-import { getClassName } from "./helper/get-class-name-nav.helper.js";
 import styles from "./styles.module.css";
+
+const getClassName = ({ isActive }: { isActive: boolean }): string => {
+	return `${styles["navigation-link"] ?? ""} ${isActive ? (styles["active"] ?? "") : ""}`;
+};
 
 const SidebarItem = ({ href, icon, label }: NavigationItem): JSX.Element => {
 	return (
