@@ -1,10 +1,14 @@
 import { Icon, NavLink } from "~/libs/components/components.js";
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { type NavigationItem } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
 
 const getClassName = ({ isActive }: { isActive: boolean }): string => {
-	return `${styles["navigation-link"] ?? ""} ${isActive ? (styles["active"] ?? "") : ""}`;
+	return getValidClassNames(
+		styles["navigation-link"],
+		isActive && styles["active"],
+	);
 };
 
 const SidebarItem = ({ href, icon, label }: NavigationItem): JSX.Element => {
