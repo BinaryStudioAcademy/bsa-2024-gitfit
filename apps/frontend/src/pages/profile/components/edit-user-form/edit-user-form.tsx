@@ -74,12 +74,9 @@ const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
 				/>
 			</div>
 
-			<Button
-				className={styles["submit-button"] ?? ""}
-				disabled={!isChanged}
-				label="Update Profile"
-				type="submit"
-			/>
+			<div className={styles["button-wrapper"]}>
+				<Button disabled={!isChanged} label="Update Profile" type="submit" />
+			</div>
 		</form>
 	);
 };
