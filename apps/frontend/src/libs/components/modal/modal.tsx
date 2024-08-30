@@ -34,8 +34,8 @@ const Modal = ({
 				ref={dialogReference}
 			>
 				<div className={styles["modal-content"]}>
-					<div className={styles["modal-header-title"]}>
-						<h3>{title}</h3>
+					<div>
+						<h3 className={styles["modal-title"]}>{title}</h3>
 						<div className={styles["modal-close"]}>
 							<IconButton
 								iconName="cross"
