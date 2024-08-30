@@ -1,2 +1,3 @@
+export { debounce } from "./debounce/debounce.js";
 export { getValidClassNames } from "./get-valid-classes/get-valid-classes.helper.js";
-export { configureString, debounce, formatDate } from "@git-fit/shared";
+export { configureString, formatDate } from "@git-fit/shared";
