@@ -10,7 +10,7 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 import { ProjectsApiPath } from "./libs/enums/enums.js";
 import {
 	type ProjectCreateRequestDto,
-	type ProjectFindRequestDto,
+	type ProjectGetByIdRequestDto,
 } from "./libs/types/types.js";
 import { projectCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectService } from "./project.service.js";
@@ -71,7 +71,7 @@ class ProjectController extends BaseController {
 			handler: (options) =>
 				this.getById(
 					options as APIHandlerOptions<{
-						params: ProjectFindRequestDto;
+						params: ProjectGetByIdRequestDto;
 					}>,
 				),
 			method: "GET",
@@ -170,7 +170,7 @@ class ProjectController extends BaseController {
 	 */
 	private async getById(
 		options: APIHandlerOptions<{
-			params: ProjectFindRequestDto;
+			params: ProjectGetByIdRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
 		return {

@@ -1,5 +1,5 @@
-type ProjectFindRequestDto = {
+type ProjectGetByIdRequestDto = {
 	id: string;
 };
 
-export { type ProjectFindRequestDto };
+export { type ProjectGetByIdRequestDto };
