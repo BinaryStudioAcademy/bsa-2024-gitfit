@@ -9,12 +9,17 @@
 }
 
 .navigation-link:hover {
+	background-color: var(--color-background-secondary);
+	border-radius: 6px;
+}
+
+.navigation-link.active {
 	color: var(--color-text-primary);
 	background-color: var(--color-background-secondary);
 	border-radius: 6px;
 }
 
-.navigation-link:hover .navigation-icon {
+.navigation-link.active .navigation-icon {
 	color: var(--color-brand-primary);
 }
 
