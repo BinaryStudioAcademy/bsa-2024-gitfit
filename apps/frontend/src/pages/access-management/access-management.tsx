@@ -7,10 +7,12 @@ import {
 import { actions as groupActions } from "~/modules/groups/groups.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-import { getGroupColumns } from "./libs/helpers/get-group-columns.helper.js";
-import { getGroupRows } from "./libs/helpers/get-group-rows.helper.js";
-import { getUserColumns } from "./libs/helpers/get-user-columns.helper.js";
-import { getUserRows } from "./libs/helpers/helpers.js";
+import {
+	getGroupColumns,
+	getGroupRows,
+	getUserColumns,
+	getUserRows,
+} from "./libs/helpers/helpers.js";
 import { type GroupRow, type UserRow } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
@@ -32,11 +34,15 @@ const AccessManagement = (): JSX.Element => {
 
 	return (
 		<PageLayout>
-			<p className={styles["title"]}>Access Management</p>
-			<p className={styles["sub-title"]}>Users</p>
-			<Table<UserRow> columns={userColumns} data={userData} />
-			<p className={styles["sub-title"]}>Groups</p>
-			<Table<GroupRow> columns={groupColumns} data={groupData} />
+			<h1 className={styles["title"]}>Access Management</h1>
+			<section>
+				<h2 className={styles["section-title"]}>Users</h2>
+				<Table<UserRow> columns={userColumns} data={userData} />
+			</section>
+			<section>
+				<h2 className={styles["section-title"]}>Groups</h2>
+				<Table<GroupRow> columns={groupColumns} data={groupData} />
+			</section>
 		</PageLayout>
 	);
 };
