@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+import logoSrc from "~/assets/images/icons/logo.svg";
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -7,7 +8,6 @@ import {
 	useCallback,
 	useEffect,
 	useLocation,
-	useState,
 } from "~/libs/hooks/hooks.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
 import {
@@ -15,7 +15,7 @@ import {
 	type UserSignUpRequestDto,
 } from "~/modules/users/users.js";
 
-import { Logo, SignInForm, SignUpForm } from "./components/components.js";
+import { SignInForm, SignUpForm } from "./components/components.js";
 import styles from "./styles.module.css";
 
 const Auth = (): JSX.Element => {
@@ -25,7 +25,6 @@ const Auth = (): JSX.Element => {
 		(state) => state.auth.authenticatedUser,
 	);
 	const navigate = useNavigate();
-	const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
 
 	useEffect(() => {
 		if (authenticatedUser) {
@@ -61,20 +60,12 @@ const Auth = (): JSX.Element => {
 		return null;
 	};
 
-	const handleImageError = useCallback(() => {
-		setIsImageLoaded(false);
-	}, []);
-
 	return (
 		<main className={styles["container"]}>
 			<section className={styles["auth-container"]}>
 				<div className={styles["left-side"]}>
-					{/* TODO: add logoSrc */}
-					<Logo
-						isImageLoaded={isImageLoaded}
-						logoSrc=""
-						onImageError={handleImageError}
-					/>
+					{/* TODO: replace logo */}
+					<img alt="logo" className={styles["logo-wrapper"]} src={logoSrc} />
 				</div>
 				<div className={styles["right-side"]}>
 					<h3 className={styles["form-title"]}>
