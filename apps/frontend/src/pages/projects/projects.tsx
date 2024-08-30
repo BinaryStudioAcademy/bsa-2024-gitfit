@@ -23,7 +23,7 @@ import styles from "./styles.module.css";
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { projectCreateStatus, projects, projectsStatus } = useAppSelector(
+	const { dataStatus, projectCreateStatus, projects } = useAppSelector(
 		({ projects }) => projects,
 	);
 
@@ -47,7 +47,7 @@ const Projects = (): JSX.Element => {
 	);
 
 	const isLoading =
-		projectsStatus === DataStatus.PENDING || projectsStatus === DataStatus.IDLE;
+		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
 
 	return (
 		<PageLayout>

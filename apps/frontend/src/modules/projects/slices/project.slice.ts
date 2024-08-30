@@ -7,29 +7,29 @@ import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.j
 import { create, loadAll } from "./actions.js";
 
 type State = {
+	dataStatus: ValueOf<typeof DataStatus>;
 	projectCreateStatus: ValueOf<typeof DataStatus>;
 	projects: ProjectGetAllItemResponseDto[];
-	projectsStatus: ValueOf<typeof DataStatus>;
 };
 
 const initialState: State = {
+	dataStatus: DataStatus.IDLE,
 	projectCreateStatus: DataStatus.IDLE,
 	projects: [],
-	projectsStatus: DataStatus.IDLE,
 };
 
 const { actions, name, reducer } = createSlice({
 	extraReducers(builder) {
 		builder.addCase(loadAll.pending, (state) => {
-			state.projectsStatus = DataStatus.PENDING;
+			state.dataStatus = DataStatus.PENDING;
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
 			state.projects = action.payload.items;
-			state.projectsStatus = DataStatus.FULFILLED;
+			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadAll.rejected, (state) => {
 			state.projects = [];
-			state.projectsStatus = DataStatus.REJECTED;
+			state.dataStatus = DataStatus.REJECTED;
 		});
 		builder.addCase(create.pending, (state) => {
 			state.projectCreateStatus = DataStatus.PENDING;
