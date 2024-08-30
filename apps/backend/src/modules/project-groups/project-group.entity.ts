@@ -1,87 +1,90 @@
 import { type Entity } from "~/libs/types/types.js";
 
+import { type ProjectModel } from "../projects/project.model.js";
+import { type UserModel } from "../users/user.model.js";
 import { type ProjectGroupCreateResponseDto } from "./libs/types/types.js";
+import { type ProjectPermissionModel } from "./project-permission.model.js";
 
 class ProjectGroupEntity implements Entity {
 	private id: null | number;
 	private name!: string;
-	private permissionIds!: { id: number }[];
-	private projectId!: { id: number };
-	private userIds!: { id: number }[];
+	private permissions!: Pick<ProjectPermissionModel, "id">[];
+	private projectId!: Pick<ProjectModel, "id">;
+	private users!: Pick<UserModel, "id">[];
 
 	private constructor({
 		id,
 		name,
-		permissionIds,
+		permissions,
 		projectId,
-		userIds,
+		users,
 	}: {
 		id: null | number;
 		name: string;
-		permissionIds: { id: number }[];
-		projectId: { id: number };
-		userIds: { id: number }[];
+		permissions: Pick<ProjectPermissionModel, "id">[];
+		projectId: Pick<ProjectModel, "id">;
+		users: Pick<UserModel, "id">[];
 	}) {
 		this.id = id;
 		this.name = name;
-		this.permissionIds = permissionIds;
+		this.permissions = permissions;
 		this.projectId = projectId;
-		this.userIds = userIds;
+		this.users = users;
 	}
 
 	public static initialize({
 		id,
 		name,
-		permissionIds,
+		permissions,
 		projectId,
-		userIds,
+		users,
 	}: {
 		id: number;
 		name: string;
-		permissionIds: { id: number }[];
-		projectId: { id: number };
-		userIds: { id: number }[];
+		permissions: Pick<ProjectPermissionModel, "id">[];
+		projectId: Pick<ProjectModel, "id">;
+		users: Pick<UserModel, "id">[];
 	}): ProjectGroupEntity {
 		return new ProjectGroupEntity({
 			id,
 			name,
-			permissionIds,
+			permissions,
 			projectId,
-			userIds,
+			users,
 		});
 	}
 
 	public static initializeNew({
 		name,
-		permissionIds,
+		permissions,
 		projectId,
-		userIds,
+		users,
 	}: {
 		name: string;
-		permissionIds: { id: number }[];
-		projectId: { id: number };
-		userIds: { id: number }[];
+		permissions: Pick<ProjectPermissionModel, "id">[];
+		projectId: Pick<ProjectModel, "id">;
+		users: Pick<UserModel, "id">[];
 	}): ProjectGroupEntity {
 		return new ProjectGroupEntity({
 			id: null,
 			name,
-			permissionIds,
+			permissions,
 			projectId,
-			userIds,
+			users,
 		});
 	}
 
 	public toNewObject(): {
 		name: string;
-		permissionIds: { id: number }[];
-		projectId: { id: number };
-		userIds: { id: number }[];
+		permissions: Pick<ProjectPermissionModel, "id">[];
+		projectId: Pick<ProjectModel, "id">;
+		users: Pick<UserModel, "id">[];
 	} {
 		return {
 			name: this.name,
-			permissionIds: this.permissionIds,
+			permissions: this.permissions,
 			projectId: this.projectId,
-			userIds: this.userIds,
+			users: this.users,
 		};
 	}
 
@@ -89,9 +92,9 @@ class ProjectGroupEntity implements Entity {
 		return {
 			id: this.id as number,
 			name: this.name,
-			permissionIds: this.permissionIds.map((perm) => perm.id),
-			projectId: this.projectId.id,
-			userIds: this.userIds.map((user) => user.id),
+			permissions: this.permissions,
+			projectId: this.projectId,
+			users: this.users,
 		};
 	}
 }

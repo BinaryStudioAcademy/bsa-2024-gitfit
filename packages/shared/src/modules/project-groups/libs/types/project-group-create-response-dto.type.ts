@@ -1,9 +1,9 @@
 type ProjectGroupCreateResponseDto = {
 	id: number;
 	name: string;
-	permissionIds: number[];
-	projectId: number;
-	userIds: number[];
+	permissions: { id: number }[];
+	projectId: { id: number };
+	users: { id: number }[];
 };
 
 export { type ProjectGroupCreateResponseDto };

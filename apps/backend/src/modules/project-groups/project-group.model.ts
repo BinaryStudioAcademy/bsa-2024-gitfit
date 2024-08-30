@@ -12,9 +12,6 @@ import { ProjectPermissionModel } from "./project-permission.model.js";
 class ProjectGroupModel extends AbstractModel {
 	public key!: string;
 	public name!: string;
-	public permissions!: { id: number }[];
-	public projectId!: number;
-	public users!: { id: number }[];
 
 	public static override get relationMappings(): RelationMappings {
 		return {
