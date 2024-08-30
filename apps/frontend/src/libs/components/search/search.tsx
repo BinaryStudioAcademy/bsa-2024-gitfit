@@ -40,7 +40,7 @@ const Search = ({
 			leftIcon={<Icon height={20} name="search" width={20} />}
 			name="search"
 			placeholder="Enter project name"
-			type="text"
+			type="search"
 		/>
 	);
 };

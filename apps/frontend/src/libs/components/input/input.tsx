@@ -20,7 +20,7 @@ type Properties<T extends FieldValues> = {
 	name: FieldPath<T>;
 	placeholder?: string;
 	rightIcon?: JSX.Element;
-	type?: "email" | "password" | "text";
+	type?: "email" | "password" | "search" | "text";
 };
 
 const Input = <T extends FieldValues>({
