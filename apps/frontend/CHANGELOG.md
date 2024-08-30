@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.1.0...frontend-v1.1.1) (2024-08-30)
+
+
+### Bug Fixes
+
+* fixed 'no token provided' error on 'access management' page gf-117 ([#125](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/125)) ([667be01](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/667be01f574c0d516f5adfc61a84d56f72ab2f9e))
+* Inconsistent layout on the Projects and Access Managment page gf-120 ([#126](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/126)) ([1777928](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1777928094417a5db688b8db4deb238d2a940c38))
+
 ## [1.1.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.0.0...frontend-v1.1.0) (2024-08-29)
 
 
