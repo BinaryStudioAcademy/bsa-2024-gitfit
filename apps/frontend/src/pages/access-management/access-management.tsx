@@ -1,5 +1,5 @@
 import { Loader, PageLayout, Table } from "~/libs/components/components.js";
-import { isDataLoading } from "~/libs/helpers/helpers.js";
+import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -23,7 +23,8 @@ const AccessManagement = (): JSX.Element => {
 	const columns = getUserColumns();
 	const data: UserRow[] = getUserRows(users);
 
-	const isLoading = isDataLoading(dataStatus);
+	const isLoading =
+		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
 	return (
 		<PageLayout>
