@@ -1,5 +1,5 @@
 import { Loader, PageLayout } from "~/libs/components/components.js";
-import { DataStatus } from "~/libs/enums/enums.js";
+import { isDataLoading } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -19,8 +19,7 @@ const Projects = (): JSX.Element => {
 		void dispatch(projectActions.loadAll());
 	}, [dispatch]);
 
-	const isLoading =
-		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
+	const isLoading = isDataLoading(dataStatus);
 
 	return (
 		<PageLayout>
