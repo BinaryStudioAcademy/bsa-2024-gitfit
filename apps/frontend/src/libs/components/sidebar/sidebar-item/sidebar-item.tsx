@@ -1,6 +1,4 @@
-import { NavLink } from "react-router-dom";
-
-import { Icon } from "~/libs/components/components.js";
+import { Icon, NavLink } from "~/libs/components/components.js";
 import { type NavigationItem } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";

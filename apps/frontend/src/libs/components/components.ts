@@ -5,7 +5,7 @@ export { Header } from "./header/header.js";
 export { Icon } from "./icon/icon.js";
 export { IconButton } from "./icon-button/icon-button.js";
 export { Input } from "./input/input.js";
-export { Link } from "./link/link.js";
+export { Link, NavLink } from "./link/link.js";
 export { Loader } from "./loader/loader.js";
 export { Modal } from "./modal/modal.js";
 export { PageLayout } from "./page-layout/page-layout.js";
