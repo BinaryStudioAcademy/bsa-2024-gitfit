@@ -1,5 +1,5 @@
 type ProjectGetAllRequestDto = {
-	name?: string;
+	name: string;
 };
 
 export { type ProjectGetAllRequestDto };
