@@ -26,9 +26,7 @@ const Projects = (): JSX.Element => {
 		<PageLayout>
 			<h1 className={styles["label"]}>Projects</h1>
 			{isLoading ? (
-				<div className={styles["projects-loader"]}>
-					<Loader />
-				</div>
+				<Loader />
 			) : (
 				<div className={styles["projects-list"]}>
 					{projects.map((project) => (
