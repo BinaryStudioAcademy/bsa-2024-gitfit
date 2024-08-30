@@ -27,14 +27,15 @@ const Projects = (): JSX.Element => {
 		[dispatch],
 	);
 
+	const hasProject = projects.length === EMPTY_ARRAY_LENGTH;
+
 	const isLoading =
 		dataStatus === DataStatus.IDLE ||
-		(dataStatus === DataStatus.PENDING &&
-			projects.length === EMPTY_ARRAY_LENGTH);
+		(dataStatus === DataStatus.PENDING && hasProject);
 
 	return (
 		<PageLayout isLoading={isLoading}>
-			<h1 className={styles["label"]}>Projects</h1>
+			<h1 className={styles["title"]}>Projects</h1>
 			<ProjectsSearch onChange={handleSearchChange} />
 			<div className={styles["projects-list"]}>
 				{projects.map((project) => (
