@@ -34,10 +34,10 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 	);
 
 	const handleFormSubmit = useCallback(
-		(event: React.BaseSyntheticEvent): void => {
+		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData: ProjectCreateRequestDto) => {
 				onSubmit(formData);
-			})(event);
+			})(event_);
 		},
 		[handleSubmit, onSubmit],
 	);
