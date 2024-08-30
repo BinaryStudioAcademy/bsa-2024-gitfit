@@ -1,5 +1,5 @@
 export {
 	type ProjectFindRequestDto,
+	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
-	type ProjectResponseDto,
 } from "@git-fit/shared";

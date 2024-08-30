@@ -45,8 +45,8 @@ export {
 	projectCreateValidationSchema,
 	ProjectError,
 	type ProjectFindRequestDto,
+	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
-	type ProjectResponseDto,
 	ProjectsApiPath,
 } from "./modules/projects/projects.js";
 export {

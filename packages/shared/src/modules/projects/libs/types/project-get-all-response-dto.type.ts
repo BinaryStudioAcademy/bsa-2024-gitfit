@@ -1,7 +1,7 @@
-import { type ProjectResponseDto } from "./project-response-dto.type.js";
+import { type ProjectGetAllItemResponseDto } from "./project-response-dto.type.js";
 
 type ProjectGetAllResponseDto = {
-	items: ProjectResponseDto[];
+	items: ProjectGetAllItemResponseDto[];
 };
 
 export { type ProjectGetAllResponseDto };

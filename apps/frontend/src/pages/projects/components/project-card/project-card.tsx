@@ -1,12 +1,12 @@
 import { NavLink } from "react-router-dom";
 
 import { AppRoute } from "~/libs/enums/enums.js";
-import { type ProjectResponseDto } from "~/modules/projects/projects.js";
+import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
-	project: ProjectResponseDto;
+	project: ProjectGetAllItemResponseDto;
 };
 
 const ProjectCard = ({ project }: Properties): JSX.Element => {

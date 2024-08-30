@@ -6,8 +6,8 @@ import { type Storage } from "~/libs/modules/storage/storage.js";
 import { ProjectsApiPath } from "./libs/enums/enums.js";
 import {
 	type ProjectFindRequestDto,
+	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
-	type ProjectResponseDto,
 } from "./libs/types/types.js";
 
 type Constructor = {
@@ -36,7 +36,7 @@ class ProjectApi extends BaseHTTPApi {
 
 	public async getById(
 		payload: ProjectFindRequestDto,
-	): Promise<ProjectResponseDto> {
+	): Promise<ProjectGetAllItemResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(ProjectsApiPath.$ID, { id: payload.id }),
 			{
@@ -46,7 +46,7 @@ class ProjectApi extends BaseHTTPApi {
 			},
 		);
 
-		return await response.json<ProjectResponseDto>();
+		return await response.json<ProjectGetAllItemResponseDto>();
 	}
 }
 

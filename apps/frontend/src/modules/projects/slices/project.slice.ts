@@ -2,14 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
-import { type ProjectResponseDto } from "~/modules/projects/projects.js";
+import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
 import { getById, loadAll } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
-	project: null | ProjectResponseDto;
-	projects: ProjectResponseDto[];
+	project: null | ProjectGetAllItemResponseDto;
+	projects: ProjectGetAllItemResponseDto[];
 };
 
 const initialState: State = {
