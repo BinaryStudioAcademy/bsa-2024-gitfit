@@ -1,13 +1,17 @@
-import { Header, Sidebar } from "~/libs/components/components.js";
+import { Header, Loader, Sidebar } from "~/libs/components/components.js";
 import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
+	isLoading?: boolean;
 };
 
-const PageLayout = ({ children }: Properties): JSX.Element => {
+const PageLayout = ({
+	children,
+	isLoading = false,
+}: Properties): JSX.Element => {
 	return (
 		<div className={styles["page"]}>
 			<div className={styles["page-header"]}>
@@ -17,7 +21,9 @@ const PageLayout = ({ children }: Properties): JSX.Element => {
 				<aside className={styles["page-sidebar"]}>
 					<Sidebar items={SIDEBAR_ITEMS} />
 				</aside>
-				<main className={styles["page-content"]}>{children}</main>
+				<main className={styles["page-content"]}>
+					{isLoading ? <Loader /> : <>{children}</>}
+				</main>
 			</div>
 		</div>
 	);

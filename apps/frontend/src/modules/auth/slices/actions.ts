@@ -54,4 +54,12 @@ const signUp = createAsyncThunk<
 	return user;
 });
 
-export { getAuthenticatedUser, signIn, signUp };
+const logout = createAsyncThunk<undefined, undefined, AsyncThunkConfig>(
+	`${sliceName}/logout`,
+	async (_payload, { extra }): Promise<undefined> => {
+		const { storage } = extra;
+		await storage.drop(StorageKey.TOKEN);
+	},
+);
+
+export { getAuthenticatedUser, logout, signIn, signUp };
