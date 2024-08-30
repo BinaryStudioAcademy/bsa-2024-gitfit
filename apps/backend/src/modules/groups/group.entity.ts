@@ -1,14 +1,16 @@
 import { type Entity } from "~/libs/types/types.js";
-import { type PermissionModel } from "~/modules/groups/permission.model.js";
-import { type UserModel } from "~/modules/users/user.model.js";
 
-import { type GroupCreateResponseDto } from "./libs/types/types.js";
+import { type UserModel } from "../users/user.model.js";
+import {
+	type GroupCreateResponseDto,
+	type GroupGetAllItemResponseDto,
+} from "./libs/types/types.js";
 
 class GroupEntity implements Entity {
 	private createdAt: null | string;
 	private id: null | number;
 	private name!: string;
-	private permissions!: Pick<PermissionModel, "id">[];
+	private permissions!: Array<{ id: number; name?: string }>;
 	private users!: Pick<UserModel, "id">[];
 
 	private constructor({
@@ -21,7 +23,7 @@ class GroupEntity implements Entity {
 		createdAt: null | string;
 		id: null | number;
 		name: string;
-		permissions: Pick<PermissionModel, "id">[];
+		permissions: Array<{ id: number; name?: string }>;
 		users: Pick<UserModel, "id">[];
 	}) {
 		this.createdAt = createdAt;
@@ -41,7 +43,7 @@ class GroupEntity implements Entity {
 		createdAt: string;
 		id: null | number;
 		name: string;
-		permissions: Pick<PermissionModel, "id">[];
+		permissions: Array<{ id: number; name: string }>;
 		users: Pick<UserModel, "id">[];
 	}): GroupEntity {
 		return new GroupEntity({ createdAt, id, name, permissions, users });
@@ -53,7 +55,7 @@ class GroupEntity implements Entity {
 		users,
 	}: {
 		name: string;
-		permissions: Pick<PermissionModel, "id">[];
+		permissions: Array<{ id: number }>;
 		users: Pick<UserModel, "id">[];
 	}): GroupEntity {
 		return new GroupEntity({
@@ -65,14 +67,27 @@ class GroupEntity implements Entity {
 		});
 	}
 
+	public toGetAllItemObject(): GroupGetAllItemResponseDto {
+		return {
+			createdAt: this.createdAt as string,
+			id: this.id as number,
+			name: this.name,
+			permissions: this.permissions.map((permission) => ({
+				id: permission.id,
+				name: permission.name,
+			})) as Array<{ id: number; name: string }>,
+			users: this.users.map((user) => ({ id: user.id })),
+		};
+	}
+
 	public toNewObject(): {
 		name: string;
-		permissions: Pick<PermissionModel, "id">[];
+		permissions: Array<{ id: number }>;
 		users: Pick<UserModel, "id">[];
 	} {
 		return {
 			name: this.name,
-			permissions: this.permissions,
+			permissions: this.permissions.map(({ id }) => ({ id })),
 			users: this.users,
 		};
 	}
@@ -82,7 +97,7 @@ class GroupEntity implements Entity {
 			createdAt: this.createdAt as string,
 			id: this.id as number,
 			name: this.name,
-			permissions: this.permissions,
+			permissions: this.permissions.map(({ id }) => ({ id })),
 			users: this.users,
 		};
 	}
