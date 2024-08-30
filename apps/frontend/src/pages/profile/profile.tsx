@@ -8,6 +8,10 @@ import styles from "./styles.module.css";
 const Profile = (): JSX.Element => {
 	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
 
+	if (!authenticatedUser) {
+		return <></>;
+	}
+
 	const isLoading =
 		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
 
@@ -21,15 +25,13 @@ const Profile = (): JSX.Element => {
 						<Loader />
 					</div>
 				) : (
-					authenticatedUser && (
-						<EditUserForm
-							defaultValues={{
-								email: authenticatedUser.email,
-								name: authenticatedUser.name,
-							}}
-							userId={authenticatedUser.id}
-						/>
-					)
+					<EditUserForm
+						defaultValues={{
+							email: authenticatedUser.email,
+							name: authenticatedUser.name,
+						}}
+						userId={authenticatedUser.id}
+					/>
 				)}
 			</div>
 		</PageLayout>

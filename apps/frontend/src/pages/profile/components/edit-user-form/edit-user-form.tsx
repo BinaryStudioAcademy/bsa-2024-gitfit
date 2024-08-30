@@ -36,7 +36,7 @@ const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
 		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit(async (formData: UserInfoResponseDto) => {
 				await dispatch(
-					usersActions.updateUser({
+					usersActions.updateProfile({
 						id: userId,
 						userPayload: formData,
 					}),

@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+import { NotificationMessage } from "~/libs/enums/enums.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import {
 	type UserGetAllResponseDto,
 	type UserInfoResponseDto,
 } from "~/modules/users/users.js";
 
-import { UsersActionMessage } from "../libs/enums/enums.js";
 import { name as sliceName } from "./users.slice.js";
 
 const loadAll = createAsyncThunk<
@@ -19,7 +19,7 @@ const loadAll = createAsyncThunk<
 	return userApi.getAll();
 });
 
-const updateUser = createAsyncThunk<
+const updateProfile = createAsyncThunk<
 	UserInfoResponseDto,
 	{ id: number; userPayload: UserInfoResponseDto },
 	AsyncThunkConfig
@@ -27,9 +27,9 @@ const updateUser = createAsyncThunk<
 	const { toastNotifier, userApi } = extra;
 
 	const user = await userApi.update(id, userPayload);
-	toastNotifier.showSuccess(UsersActionMessage.SUCCESS_PROFILE_UPDATE);
+	toastNotifier.showSuccess(NotificationMessage.SUCCESS_PROFILE_UPDATE);
 
 	return user;
 });
 
-export { loadAll, updateUser };
+export { loadAll, updateProfile };
