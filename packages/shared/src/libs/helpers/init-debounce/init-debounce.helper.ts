@@ -1,7 +1,5 @@
 import libraryDebounce from "debounce";
 
-// import { DEBOUNCE_TIMEOUT } from "./libs/constants.js";
-
 type FunctionWithArguments<T> = (...arguments_: T[]) => void;
 
 const initDebounce = <T>(
