@@ -3,12 +3,15 @@ type IconName =
 	| "analytics"
 	| "contributors"
 	| "cross"
+	| "ellipsis"
 	| "eye"
 	| "leftArrow"
 	| "leftDoubleArrow"
+	| "pen"
 	| "project"
 	| "rightArrow"
 	| "rightDoubleArrow"
-	| "strikedEye";
+	| "strikedEye"
+	| "trash";
 
 export { type IconName };
