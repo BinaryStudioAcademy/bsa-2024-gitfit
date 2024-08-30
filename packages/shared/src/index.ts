@@ -1,3 +1,4 @@
+export { EMPTY_LENGTH } from "./libs/constants/constants.js";
 export {
 	APIPath,
 	AppEnvironment,
