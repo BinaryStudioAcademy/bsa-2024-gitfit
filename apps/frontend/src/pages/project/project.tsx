@@ -37,25 +37,21 @@ const Project = (): JSX.Element => {
 	}
 
 	return (
-		<>
-			<PageLayout>
-				{isLoading ? (
-					<Loader />
-				) : (
-					<div className={styles["project-layout"]}>
-						<h1 className={styles["project-name"]}>{project?.name}</h1>
-						<div className={styles["project-description-layout"]}>
-							<h3 className={styles["project-description-title"]}>
-								Description
-							</h3>
-							<p className={styles["project-description"]}>
-								{project?.description}
-							</p>
-						</div>
+		<PageLayout>
+			{isLoading ? (
+				<Loader />
+			) : (
+				<div className={styles["project-layout"]}>
+					<h1 className={styles["project-name"]}>{project?.name}</h1>
+					<div className={styles["project-description-layout"]}>
+						<h3 className={styles["project-description-title"]}>Description</h3>
+						<p className={styles["project-description"]}>
+							{project?.description}
+						</p>
 					</div>
-				)}
-			</PageLayout>
-		</>
+				</div>
+			)}
+		</PageLayout>
 	);
 };
 
