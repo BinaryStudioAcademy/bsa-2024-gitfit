@@ -1,3 +1,4 @@
+export { SortType } from "./sort-type.enum.js";
 export {
 	APIPath,
 	AppEnvironment,

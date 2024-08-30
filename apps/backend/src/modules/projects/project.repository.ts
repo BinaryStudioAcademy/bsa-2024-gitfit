@@ -1,3 +1,4 @@
+import { SortType } from "~/libs/enums/enums.js";
 import { type Repository } from "~/libs/types/types.js";
 
 import { ProjectEntity } from "./project.entity.js";
@@ -38,7 +39,7 @@ class ProjectRepository implements Repository {
 	public async findAll(): Promise<ProjectEntity[]> {
 		const projects = await this.projectModel
 			.query()
-			.orderBy("created_at", "desc")
+			.orderBy("created_at", SortType.DESCENDING)
 			.execute();
 
 		return projects.map((project) => ProjectEntity.initialize(project));
