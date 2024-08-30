@@ -8,11 +8,13 @@ import { loadAll } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
+	totalUsers: number;
 	users: UserGetAllItemResponseDto[];
 };
 
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
+	totalUsers: 0,
 	users: [],
 };
 
@@ -23,6 +25,7 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
 			state.users = action.payload.items;
+			state.totalUsers = action.payload.totalItems;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadAll.rejected, (state) => {

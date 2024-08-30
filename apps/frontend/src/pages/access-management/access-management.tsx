@@ -1,8 +1,13 @@
-import { PageLayout, Table } from "~/libs/components/components.js";
+import {
+	PageLayout,
+	Table,
+	TablePagination,
+} from "~/libs/components/components.js";
 import {
 	useAppDispatch,
 	useAppSelector,
 	useEffect,
+	usePagination,
 } from "~/libs/hooks/hooks.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
@@ -13,11 +18,19 @@ import styles from "./styles.module.css";
 
 const AccessManagement = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const users = useAppSelector(({ users }) => users.users);
+
+	const { totalUsers, users } = useAppSelector(({ users }) => ({
+		totalUsers: users.totalUsers,
+		users: users.users,
+	}));
+
+	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+		totalItemsCount: totalUsers,
+	});
 
 	useEffect(() => {
-		void dispatch(userActions.loadAll());
-	}, [dispatch]);
+		void dispatch(userActions.loadAll({ page, pageSize }));
+	}, [dispatch, page, pageSize]);
 
 	const columns = getUserColumns();
 	const data: UserRow[] = getUserRows(users);
@@ -27,6 +40,13 @@ const AccessManagement = (): JSX.Element => {
 			<p className={styles["title"]}>Access Management</p>
 			<p className={styles["sub-title"]}>Users</p>
 			<Table<UserRow> columns={columns} data={data} />
+			<TablePagination
+				onPageChange={onPageChange}
+				onPageSizeChange={onPageSizeChange}
+				page={page}
+				pageSize={pageSize}
+				totalItemsCount={totalUsers}
+			/>
 		</PageLayout>
 	);
 };
