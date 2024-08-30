@@ -1,3 +1,0 @@
-const EMPTY_STRING_LENGTH = 0;
-
-export { EMPTY_STRING_LENGTH };

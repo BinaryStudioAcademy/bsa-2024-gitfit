@@ -1,4 +1,5 @@
 import { Button, Input } from "~/libs/components/components.js";
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import {
 	useAppForm,
 	useCallback,
@@ -13,7 +14,6 @@ import {
 import {
 	DEFAULT_PROJECT_CREATE_PAYLOAD,
 	DESCRIPTION_ROWS_COUNT,
-	EMPTY_STRING_LENGTH,
 } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
@@ -32,7 +32,7 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 	const { name: enteredName } = useFormWatch({ control });
 
 	const isButtonDisabled = useMemo(
-		() => enteredName?.length === EMPTY_STRING_LENGTH,
+		() => enteredName?.length === EMPTY_LENGTH,
 		[enteredName],
 	);
 
