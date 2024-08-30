@@ -49,17 +49,38 @@ class UserController extends BaseController {
 	 * @swagger
 	 * /users:
 	 *    get:
-	 *      description: Returns an array of users
+	 *      description: Returns a paginated array of users
+	 *      parameters:
+	 *        - in: query
+	 *          name: page
+	 *          schema:
+	 *            type: integer
+	 *          description: Page number
+	 *        - in: query
+	 *          name: pageSize
+	 *          schema:
+	 *            type: integer
+	 *          description: Number of items per page
 	 *      responses:
 	 *        200:
 	 *          description: Successful operation
 	 *          content:
 	 *            application/json:
 	 *              schema:
-	 *                type: array
-	 *                items:
-	 *                  $ref: "#/components/schemas/User"
+	 *                type: object
+	 *                properties:
+	 *                  items:
+	 *                    type: array
+	 *                    items:
+	 *                      $ref: "#/components/schemas/User"
+	 *                  currentPage:
+	 *                    type: integer
+	 *                  totalItems:
+	 *                    type: integer
+	 *                  totalPages:
+	 *                    type: integer
 	 */
+
 	private async findAll({
 		query,
 	}: APIHandlerOptions): Promise<APIHandlerResponse> {
