@@ -1,5 +1,12 @@
 import { Button, Input } from "~/libs/components/components.js";
-import { useAppDispatch, useAppForm, useCallback } from "~/libs/hooks/hooks.js";
+import { DataStatus } from "~/libs/enums/enums.js";
+import {
+	useAppDispatch,
+	useAppForm,
+	useAppSelector,
+	useCallback,
+	useEffect,
+} from "~/libs/hooks/hooks.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
 import {
 	type UserAuthResponseDto,
@@ -16,6 +23,8 @@ type Properties = {
 
 const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
+	// if not to run users `loadAll`, dataStatus works properly
+	const { dataStatus } = useAppSelector(({ users }) => users);
 
 	const { control, errors, handleSubmit, isDirty } =
 		useAppForm<UserAuthResponseDto>({
@@ -24,19 +33,24 @@ const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit(async (formData: UserPatchResponseDto) => {
-				await dispatch(
+			void handleSubmit((formData: UserPatchResponseDto) => {
+				void dispatch(
 					usersActions.updateProfile({
 						id: userId,
 						userPayload: formData,
 					}),
 				);
-
-				void dispatch(authActions.getAuthenticatedUser());
 			})(event_);
 		},
 		[dispatch, handleSubmit, userId],
 	);
+
+	// it didn't work
+	useEffect(() => {
+		if (dataStatus === DataStatus.FULFILLED) {
+			void dispatch(authActions.getAuthenticatedUser());
+		}
+	}, [dispatch, dataStatus]);
 
 	return (
 		<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>

@@ -12,6 +12,7 @@ export {
 	type UserSignUpResponseDto,
 } from "./libs/types/types.js";
 export {
+	userPatch as userPatchValidationSchema,
 	userSignIn as userSignInValidationSchema,
 	userSignUp as userSignUpValidationSchema,
 } from "./libs/validation-schemas/validation-schemas.js";
