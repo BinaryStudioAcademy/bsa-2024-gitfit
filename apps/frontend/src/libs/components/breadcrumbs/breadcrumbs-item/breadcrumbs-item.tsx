@@ -1,6 +1,6 @@
-import { type BreadcrumbNavigationItem } from "~/libs/components/breadcrumbs/libs/types/breadcrumb-navigation-item.type.js";
 import { Icon } from "~/libs/components/components.js";
 
+import { type BreadcrumbNavigationItem } from "../libs/types/breadcrumb-navigation-item.type.js";
 import styles from "./styles.module.css";
 
 type Properties = {
