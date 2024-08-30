@@ -1,4 +1,4 @@
-import { Loader, PageLayout, Table } from "~/libs/components/components.js";
+import { PageLayout, Table } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -27,16 +27,10 @@ const AccessManagement = (): JSX.Element => {
 		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
 	return (
-		<PageLayout>
+		<PageLayout isLoading={isLoading}>
 			<p className={styles["title"]}>Access Management</p>
-			{isLoading ? (
-				<Loader />
-			) : (
-				<>
-					<p className={styles["sub-title"]}>Users</p>
-					<Table<UserRow> columns={columns} data={data} />
-				</>
-			)}
+			<p className={styles["sub-title"]}>Users</p>
+			<Table<UserRow> columns={columns} data={data} />
 		</PageLayout>
 	);
 };
