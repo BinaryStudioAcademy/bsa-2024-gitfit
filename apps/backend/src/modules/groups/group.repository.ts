@@ -42,12 +42,17 @@ class GroupRepository implements Repository {
 		});
 	}
 
-	public delete(): ReturnType<Repository["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const ROWS_DELETED = 0;
+		const numberDeleted = await this.groupModel.query().deleteById(id);
+
+		return numberDeleted > ROWS_DELETED;
 	}
 
-	public find(): ReturnType<Repository["find"]> {
-		return Promise.resolve(null);
+	public async find(id: number): Promise<GroupModel | null> {
+		const group = await this.groupModel.query().findById(id);
+
+		return group ?? null;
 	}
 
 	public findAll(): ReturnType<Repository["findAll"]> {

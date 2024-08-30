@@ -60,6 +60,15 @@ class GroupController extends BaseController {
 				body: groupCreateValidationSchema,
 			},
 		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.deleteGroup(
+					options as APIHandlerOptions<{ params: { id: number } }>,
+				),
+			method: "POST",
+			path: GroupsApiPath.$ID,
+		});
 	}
 
 	/**
@@ -113,6 +122,36 @@ class GroupController extends BaseController {
 		return {
 			payload: await this.groupService.create(options.body),
 			status: HTTPCode.CREATED,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /groups/{name}:
+	 *   delete:
+	 *     description: Delete a group by its name
+	 *     parameters:
+	 *       - in: path
+	 *         name: name
+	 *         required: true
+	 *         schema:
+	 *           type: string
+	 *     responses:
+	 *       204:
+	 *         description: Group deleted successfully
+	 *       404:
+	 *         description: Group not found
+	 */
+
+	private async deleteGroup(
+		options: APIHandlerOptions<{ params: { id: number } }>,
+	): Promise<APIHandlerResponse> {
+		const { id } = options.params;
+		await this.groupService.delete(Number(id));
+
+		return {
+			payload: null,
+			status: HTTPCode.NO_CONTENT,
 		};
 	}
 }
