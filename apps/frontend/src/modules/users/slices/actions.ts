@@ -4,6 +4,7 @@ import { NotificationMessage } from "~/libs/enums/enums.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import {
 	type UserGetAllResponseDto,
+	type UserPatchRequestDto,
 	type UserPatchResponseDto,
 } from "~/modules/users/users.js";
 
@@ -21,7 +22,7 @@ const loadAll = createAsyncThunk<
 
 const updateProfile = createAsyncThunk<
 	UserPatchResponseDto,
-	{ id: number; userPayload: UserPatchResponseDto },
+	{ id: number; userPayload: UserPatchRequestDto },
 	AsyncThunkConfig
 >(`${sliceName}/profile`, async ({ id, userPayload }, { extra }) => {
 	const { toastNotifier, userApi } = extra;

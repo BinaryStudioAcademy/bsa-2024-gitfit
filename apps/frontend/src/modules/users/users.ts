@@ -23,6 +23,7 @@ export {
 	type UserSignUpResponseDto,
 } from "./libs/types/types.js";
 export {
+	userPatchValidationSchema,
 	userSignInValidationSchema,
 	userSignUpValidationSchema,
 } from "./libs/validation-schemas/validation-schemas.js";

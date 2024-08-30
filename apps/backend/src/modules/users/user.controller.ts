@@ -9,10 +9,8 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 import { type UserService } from "~/modules/users/user.service.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
-import {
-	type UserPatchRequestDto,
-	type UserPatchResponseDto,
-} from "./libs/types/types.js";
+import { type UserPatchRequestDto } from "./libs/types/types.js";
+import { userPatchValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 
 /**
  * @swagger
@@ -51,12 +49,15 @@ class UserController extends BaseController {
 			handler: (options) =>
 				this.patch(
 					options as APIHandlerOptions<{
-						body: UserPatchResponseDto;
+						body: UserPatchRequestDto;
 						params: { id: string };
 					}>,
 				),
 			method: "PATCH",
 			path: UsersApiPath.$ID,
+			validation: {
+				body: userPatchValidationSchema,
+			},
 		});
 	}
 

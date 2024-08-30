@@ -8,11 +8,13 @@ import { loadAll, updateProfile } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
+	updateProfileStatus: ValueOf<typeof DataStatus>;
 	users: UserGetAllItemResponseDto[];
 };
 
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
+	updateProfileStatus: DataStatus.IDLE,
 	users: [],
 };
 
@@ -30,13 +32,13 @@ const { actions, name, reducer } = createSlice({
 		});
 
 		builder.addCase(updateProfile.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
+			state.updateProfileStatus = DataStatus.PENDING;
 		});
 		builder.addCase(updateProfile.fulfilled, (state) => {
-			state.dataStatus = DataStatus.FULFILLED;
+			state.updateProfileStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(updateProfile.rejected, (state) => {
-			state.dataStatus = DataStatus.REJECTED;
+			state.updateProfileStatus = DataStatus.REJECTED;
 		});
 	},
 	initialState,
