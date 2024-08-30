@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+import logoSrc from "~/assets/images/logo-default.svg";
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -64,7 +65,7 @@ const Auth = (): JSX.Element => {
 			<section className={styles["auth-container"]}>
 				<div className={styles["left-side"]}>
 					{/* TODO: replace logo */}
-					<img alt="logo" className={styles["logo-wrapper"]} src="" />
+					<img alt="logo" className={styles["logo-wrapper"]} src={logoSrc} />
 				</div>
 				<div className={styles["right-side"]}>
 					<h3 className={styles["form-title"]}>
