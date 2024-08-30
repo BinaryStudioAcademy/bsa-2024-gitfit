@@ -7,19 +7,21 @@ const ColumnName = {
 } as const;
 
 const FieldLimit = {
-	DOWN_DESCRIPTION: 50,
-	UP_DESCRIPTION: 1000,
+	DESCRIPTION: 1000,
+	DESCRIPTION_PREVIOUS: 50,
 } as const;
 
 function up(knex: Knex): Promise<void> {
 	return knex.schema.alterTable(TABLE_NAME, (table) => {
-		table.string(ColumnName.DESCRIPTION, FieldLimit.UP_DESCRIPTION).alter();
+		table.string(ColumnName.DESCRIPTION, FieldLimit.DESCRIPTION).alter();
 	});
 }
 
 function down(knex: Knex): Promise<void> {
 	return knex.schema.alterTable(TABLE_NAME, (table) => {
-		table.string(ColumnName.DESCRIPTION, FieldLimit.DOWN_DESCRIPTION).alter();
+		table
+			.string(ColumnName.DESCRIPTION, FieldLimit.DESCRIPTION_PREVIOUS)
+			.alter();
 	});
 }
 
