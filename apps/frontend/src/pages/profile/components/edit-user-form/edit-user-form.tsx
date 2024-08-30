@@ -52,15 +52,15 @@ const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
 				<Input
 					autoComplete="email"
 					control={control}
-					disabled
 					errors={errors}
+					isDisabled
 					label="Email"
 					name="email"
 				/>
 			</div>
 
 			<div className={styles["button-wrapper"]}>
-				<Button disabled={!isDirty} label="Update Profile" type="submit" />
+				<Button isDisabled={!isDirty} label="Update Profile" type="submit" />
 			</div>
 		</form>
 	);

@@ -3,15 +3,15 @@ import { NavLink } from "react-router-dom";
 import styles from "./styles.module.css";
 
 type Properties = {
-	disabled?: boolean;
 	href?: string | undefined;
+	isDisabled?: boolean;
 	label: string;
 	type?: "button" | "submit";
 };
 
 const Button = ({
-	disabled = false,
 	href,
+	isDisabled = false,
 	label,
 	type = "button",
 }: Properties): JSX.Element => {
@@ -24,7 +24,7 @@ const Button = ({
 	}
 
 	return (
-		<button className={styles["button"]} disabled={disabled} type={type}>
+		<button className={styles["button"]} disabled={isDisabled} type={type}>
 			{label}
 		</button>
 	);
