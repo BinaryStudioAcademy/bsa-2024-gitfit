@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import logoSrc from "~/assets/images/icons/logo.svg";
+import logoSrc from "~/assets/images/logo-default.svg";
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
