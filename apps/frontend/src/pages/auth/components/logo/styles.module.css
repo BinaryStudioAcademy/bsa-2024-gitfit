@@ -1,0 +1,12 @@
+.logo-wrapper {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+}
+
+.logo-text {
+	font-size: 64px;
+	font-weight: 700;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
