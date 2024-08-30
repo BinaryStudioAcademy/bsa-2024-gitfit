@@ -4,17 +4,17 @@ import { useCallback } from "~/libs/hooks/hooks.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	onValueChange: (search: string) => void;
+	onChange: (search: string) => void;
 };
 
-const ProjectsSearch = ({ onValueChange }: Properties): JSX.Element => {
+const ProjectsSearch = ({ onChange }: Properties): JSX.Element => {
 	const handleSubmit = useCallback((event: React.FormEvent) => {
 		event.preventDefault();
 	}, []);
 
 	return (
 		<form className={styles["form-wrapper"]} onSubmit={handleSubmit}>
-			<Search onValueChange={onValueChange} />
+			<Search onChange={onChange} />
 		</form>
 	);
 };

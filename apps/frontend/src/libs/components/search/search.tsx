@@ -3,10 +3,10 @@ import { debounce } from "~/libs/helpers/helpers.js";
 import { useAppForm, useEffect } from "~/libs/hooks/hooks.js";
 
 type Properties = {
-	onValueChange: (search: string) => void;
+	onChange: (search: string) => void;
 };
 
-const Search = ({ onValueChange }: Properties): JSX.Element => {
+const Search = ({ onChange }: Properties): JSX.Element => {
 	const { control, errors, watch } = useAppForm({
 		defaultValues: { search: "" },
 		mode: "onChange",
@@ -15,15 +15,15 @@ const Search = ({ onValueChange }: Properties): JSX.Element => {
 	const value = watch("search");
 
 	useEffect(() => {
-		const debouncedOnValueChange = debounce(() => {
-			onValueChange(value);
+		const debouncedOnChange = debounce(() => {
+			onChange(value);
 		});
-		debouncedOnValueChange(value);
+		debouncedOnChange(value);
 
 		return (): void => {
-			debouncedOnValueChange.clear();
+			debouncedOnChange.clear();
 		};
-	}, [onValueChange, value]);
+	}, [onChange, value]);
 
 	return (
 		<Input

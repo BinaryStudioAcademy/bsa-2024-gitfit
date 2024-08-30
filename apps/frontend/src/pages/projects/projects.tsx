@@ -35,7 +35,7 @@ const Projects = (): JSX.Element => {
 	return (
 		<PageLayout>
 			<h1 className={styles["label"]}>Projects</h1>
-			<ProjectsSearch onValueChange={handleSearchChange} />
+			<ProjectsSearch onChange={handleSearchChange} />
 			{isLoading ? (
 				<div className={styles["projects-loader"]}>
 					<Loader />
