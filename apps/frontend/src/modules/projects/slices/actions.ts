@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { SuccessMessage } from "~/libs/enums/enums.js";
+import { NotificationMessage } from "~/libs/enums/enums.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import {
 	type ProjectCreateRequestDto,
@@ -29,7 +29,7 @@ const create = createAsyncThunk<
 
 	const response = await projectApi.create(payload);
 
-	toastNotifier.showSuccess(SuccessMessage.PROJECT_CREATE);
+	toastNotifier.showSuccess(NotificationMessage.PROJECT_CREATE_SUCCESS);
 
 	return response;
 });
