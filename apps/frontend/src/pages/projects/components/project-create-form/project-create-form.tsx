@@ -56,7 +56,7 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 				errors={errors}
 				label="Description"
 				name="description"
-				rows={4}
+				rowsCount={4}
 			/>
 			<div className={styles["button-wrapper"]}>
 				<Button isDisabled={isButtonDisabled} label="Create" type="submit" />

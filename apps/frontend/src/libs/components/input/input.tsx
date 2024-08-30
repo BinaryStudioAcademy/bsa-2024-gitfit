@@ -19,7 +19,7 @@ type Properties<T extends FieldValues> = {
 	name: FieldPath<T>;
 	placeholder?: string;
 	rightIcon?: JSX.Element;
-	rows?: number;
+	rowsCount?: number;
 	type?: "email" | "password" | "text";
 };
 
@@ -32,7 +32,7 @@ const Input = <T extends FieldValues>({
 	name,
 	placeholder = "",
 	rightIcon,
-	rows,
+	rowsCount,
 	type = "text",
 }: Properties<T>): JSX.Element => {
 	const { field } = useFormController({ control, name });
@@ -41,7 +41,7 @@ const Input = <T extends FieldValues>({
 	const hasError = Boolean(error);
 	const hasLeftIcon = Boolean(leftIcon);
 	const hasRightIcon = Boolean(rightIcon);
-	const isTextArea = Boolean(rows);
+	const isTextArea = Boolean(rowsCount);
 
 	return (
 		<label className={styles["input-label"]}>
@@ -67,7 +67,7 @@ const Input = <T extends FieldValues>({
 						name={field.name}
 						onChange={field.onChange}
 						placeholder={placeholder}
-						rows={rows}
+						rows={rowsCount}
 						value={field.value}
 					/>
 				) : (
