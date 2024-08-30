@@ -1,4 +1,5 @@
 import {
+	Breadcrumbs,
 	Modal,
 	Select,
 	Table,
@@ -57,6 +58,14 @@ const Ui = (): JSX.Element => {
 			<Modal title="Title" {...modal}>
 				children
 			</Modal>
+			<Breadcrumbs
+				items={[
+					{ href: "/", label: "GitFit" },
+					{ href: "/", label: "Projects" },
+					{ label: "User Interface" },
+				]}
+			/>
+
 			<TablePagination
 				onPageChange={onPageChange}
 				onPageSizeChange={onPageSizeChange}
