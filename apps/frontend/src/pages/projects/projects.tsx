@@ -23,7 +23,9 @@ import styles from "./styles.module.css";
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { dataStatus, projects } = useAppSelector(({ projects }) => projects);
+	const { projectCreateStatus, projects, projectsStatus } = useAppSelector(
+		({ projects }) => projects,
+	);
 
 	useEffect(() => {
 		void dispatch(projectActions.loadAll());
@@ -31,16 +33,21 @@ const Projects = (): JSX.Element => {
 
 	const { isModalOpened, onModalClose, onModalOpen } = useModal();
 
+	useEffect(() => {
+		if (projectCreateStatus === DataStatus.FULFILLED) {
+			onModalClose();
+		}
+	}, [projectCreateStatus, onModalClose]);
+
 	const handleProjectCreateSubmit = useCallback(
 		(payload: ProjectCreateRequestDto) => {
 			void dispatch(projectActions.create(payload));
-			onModalClose();
 		},
-		[dispatch, onModalClose],
+		[dispatch],
 	);
 
 	const isLoading =
-		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
+		projectsStatus === DataStatus.PENDING || projectsStatus === DataStatus.IDLE;
 
 	return (
 		<PageLayout>
