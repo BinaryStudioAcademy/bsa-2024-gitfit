@@ -1,4 +1,3 @@
-import { type ProjectFindRequestDto } from "@git-fit/shared";
 import { useParams } from "react-router-dom";
 
 import { Loader, PageLayout } from "~/libs/components/components.js";
@@ -15,7 +14,7 @@ import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { id: projectId } = useParams<ProjectFindRequestDto>();
+	const { id: projectId } = useParams<{ id: string }>();
 
 	const { dataStatus, project } = useAppSelector(({ projects }) => ({
 		dataStatus: projects.dataStatus,
@@ -33,29 +32,29 @@ const Project = (): JSX.Element => {
 
 	const isRejected = dataStatus === DataStatus.REJECTED;
 
+	if (isRejected) {
+		return <NotFound />;
+	}
+
 	return (
 		<>
-			{isRejected ? (
-				<NotFound />
-			) : (
-				<PageLayout>
-					{isLoading ? (
-						<Loader />
-					) : (
-						<div className={styles["project-layout"]}>
-							<h1 className={styles["project-name"]}>{project?.name}</h1>
-							<div className={styles["project-description-layout"]}>
-								<h3 className={styles["project-description-title"]}>
-									Description
-								</h3>
-								<p className={styles["project-description"]}>
-									{project?.description}
-								</p>
-							</div>
+			<PageLayout>
+				{isLoading ? (
+					<Loader />
+				) : (
+					<div className={styles["project-layout"]}>
+						<h1 className={styles["project-name"]}>{project?.name}</h1>
+						<div className={styles["project-description-layout"]}>
+							<h3 className={styles["project-description-title"]}>
+								Description
+							</h3>
+							<p className={styles["project-description"]}>
+								{project?.description}
+							</p>
 						</div>
-					)}
-				</PageLayout>
-			)}
+					</div>
+				)}
+			</PageLayout>
 		</>
 	);
 };
