@@ -1,18 +1,18 @@
 import { Icon, Input } from "~/libs/components/components.js";
 import { debounce } from "~/libs/helpers/helpers.js";
-import { useAppForm, useEffect } from "~/libs/hooks/hooks.js";
+import { useAppForm, useEffect, useFormWatch } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	onChange: (search: string) => void;
 };
 
 const Search = ({ onChange }: Properties): JSX.Element => {
-	const { control, errors, watch } = useAppForm({
+	const { control, errors } = useAppForm({
 		defaultValues: { search: "" },
 		mode: "onChange",
 	});
 
-	const value = watch("search");
+	const value = useFormWatch({ control, name: "search" });
 
 	useEffect(() => {
 		const debouncedOnChange = debounce(() => {
