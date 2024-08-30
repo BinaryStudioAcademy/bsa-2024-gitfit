@@ -1,4 +1,4 @@
-import { type BreadcrumbNavigationItem } from "~/libs/components/types/breadcrumb-navigation-item.type.js";
+import { type BreadcrumbNavigationItem } from "~/libs/components/breadcrumbs/libs/types/breadcrumb-navigation-item.type.js";
 
 import { BreadcrumbItem } from "./breadcrumbs-item/breadcrumbs-item.js";
 import styles from "./styles.module.css";
@@ -7,16 +7,16 @@ type Properties = {
 	items: BreadcrumbNavigationItem[];
 };
 
-const lastBreadcrumbItemOffset = 1;
+const ITEM_INDEX_OFFSET = 1;
 
 const Breadcrumbs = ({ items }: Properties): JSX.Element => {
 	return (
-		<nav aria-label="breadcrumb" className={styles["breadcrumb-container"]}>
+		<nav className={styles["breadcrumb-container"]}>
 			<ol className={styles["breadcrumb-list"]}>
 				{items.map((item, index) => (
 					<BreadcrumbItem
 						href={item.href}
-						isLastItem={index === items.length - lastBreadcrumbItemOffset}
+						isLastItem={index === items.length - ITEM_INDEX_OFFSET}
 						key={index}
 						label={item.label}
 					/>
