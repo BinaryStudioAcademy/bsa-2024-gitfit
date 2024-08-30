@@ -1,9 +1,4 @@
-import {
-	Button,
-	Loader,
-	Modal,
-	PageLayout,
-} from "~/libs/components/components.js";
+import { Button, Modal, PageLayout } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -47,25 +42,19 @@ const Projects = (): JSX.Element => {
 	);
 
 	const isLoading =
-		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
+		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
 	return (
-		<PageLayout>
+		<PageLayout isLoading={isLoading}>
 			<header className={styles["projects-header"]}>
 				<h1 className={styles["title"]}>Projects</h1>
 				<Button label="Create New" onClick={onModalOpen} />
 			</header>
-			{isLoading ? (
-				<div className={styles["projects-loader"]}>
-					<Loader />
-				</div>
-			) : (
-				<div className={styles["projects-list"]}>
-					{projects.map((project) => (
-						<ProjectCard key={project.id} project={project} />
-					))}
-				</div>
-			)}
+			<div className={styles["projects-list"]}>
+				{projects.map((project) => (
+					<ProjectCard key={project.id} project={project} />
+				))}
+			</div>
 			<Modal
 				isModalOpened={isModalOpened}
 				onModalClose={onModalClose}
