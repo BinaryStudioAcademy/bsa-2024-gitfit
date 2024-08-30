@@ -36,7 +36,7 @@ class UserApi extends BaseHTTPApi {
 
 	public async patch(
 		id: number,
-		userPayload: UserPatchRequestDto,
+		payload: UserPatchRequestDto,
 	): Promise<UserPatchResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(UsersApiPath.$ID, { id: String(id) }),
@@ -44,7 +44,7 @@ class UserApi extends BaseHTTPApi {
 				contentType: ContentType.JSON,
 				hasAuth: true,
 				method: "PATCH",
-				payload: JSON.stringify(userPayload),
+				payload: JSON.stringify(payload),
 			},
 		);
 

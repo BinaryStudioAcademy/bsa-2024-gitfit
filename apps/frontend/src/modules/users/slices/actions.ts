@@ -22,12 +22,12 @@ const loadAll = createAsyncThunk<
 
 const updateProfile = createAsyncThunk<
 	UserPatchResponseDto,
-	{ id: number; userPayload: UserPatchRequestDto },
+	{ id: number; payload: UserPatchRequestDto },
 	AsyncThunkConfig
->(`${sliceName}/profile`, async ({ id, userPayload }, { extra }) => {
+>(`${sliceName}/profile`, async ({ id, payload }, { extra }) => {
 	const { toastNotifier, userApi } = extra;
 
-	const user = await userApi.patch(id, userPayload);
+	const user = await userApi.patch(id, payload);
 	toastNotifier.showSuccess(NotificationMessage.SUCCESS_PROFILE_UPDATE);
 
 	return user;

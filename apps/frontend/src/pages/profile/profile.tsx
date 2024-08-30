@@ -25,10 +25,7 @@ const Profile = (): JSX.Element => {
 						<Loader />
 					</div>
 				) : (
-					<EditUserForm
-						defaultValues={authenticatedUser}
-						userId={authenticatedUser.id}
-					/>
+					<EditUserForm user={authenticatedUser} />
 				)}
 			</div>
 		</PageLayout>

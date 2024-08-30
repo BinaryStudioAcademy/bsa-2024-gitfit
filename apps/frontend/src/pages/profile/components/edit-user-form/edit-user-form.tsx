@@ -10,16 +10,19 @@ import {
 import styles from "./styles.module.css";
 
 type Properties = {
-	defaultValues: UserAuthResponseDto;
-	userId: number;
+	user: UserAuthResponseDto;
 };
 
-const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
+const EditUserForm = ({ user }: Properties): JSX.Element => {
+	const { email, id: userId, name } = user;
 	const dispatch = useAppDispatch();
 
 	const { control, errors, handleSubmit, isDirty } =
 		useAppForm<UserAuthResponseDto>({
-			defaultValues,
+			defaultValues: {
+				email,
+				name,
+			},
 			validationSchema: userPatchValidationSchema,
 		});
 
@@ -29,7 +32,7 @@ const EditUserForm = ({ defaultValues, userId }: Properties): JSX.Element => {
 				void dispatch(
 					usersActions.updateProfile({
 						id: userId,
-						userPayload: formData,
+						payload: formData,
 					}),
 				);
 			})(event_);
