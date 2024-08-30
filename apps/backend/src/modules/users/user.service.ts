@@ -5,6 +5,7 @@ import { type Service } from "~/libs/types/types.js";
 
 import { UserError } from "./libs/exceptions/exceptions.js";
 import {
+	type PaginationParameters,
 	type UserAuthResponseDto,
 	type UserGetAllResponseDto,
 	type UserSignUpRequestDto,
@@ -66,11 +67,19 @@ class UserService implements Service {
 		return item.toObject();
 	}
 
-	public async findAll(): Promise<UserGetAllResponseDto> {
-		const items = await this.userRepository.findAll();
+	public async findAll(
+		parameters: PaginationParameters,
+	): Promise<UserGetAllResponseDto> {
+		const { page, pageSize } = parameters;
+
+		const [items, totalItems] = await Promise.all([
+			this.userRepository.findAll(page, pageSize),
+			this.userRepository.count(),
+		]);
 
 		return {
 			items: items.map((item) => item.toObject()),
+			totalItems,
 		};
 	}
 

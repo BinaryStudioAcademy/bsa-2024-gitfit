@@ -8,6 +8,10 @@ class UserRepository implements Repository {
 		this.userModel = userModel;
 	}
 
+	public async count(): Promise<number> {
+		return await this.userModel.query().resultSize();
+	}
+
 	public async create(entity: UserEntity): Promise<UserEntity> {
 		const { email, name, passwordHash, passwordSalt } = entity.toNewObject();
 
@@ -39,8 +43,13 @@ class UserRepository implements Repository {
 		return user ? UserEntity.initialize(user) : null;
 	}
 
-	public async findAll(): Promise<UserEntity[]> {
-		const users = await this.userModel.query().execute();
+	public async findAll(page: number, pageSize: number): Promise<UserEntity[]> {
+		const offset = --page * pageSize;
+		const users = await this.userModel
+			.query()
+			.offset(offset)
+			.limit(pageSize)
+			.execute();
 
 		return users.map((user) => UserEntity.initialize(user));
 	}

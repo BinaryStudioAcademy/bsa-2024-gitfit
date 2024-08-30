@@ -1,5 +1,6 @@
 import { APIPath } from "~/libs/enums/enums.js";
 import {
+	type APIHandlerOptions,
 	type APIHandlerResponse,
 	BaseController,
 } from "~/libs/modules/controller/controller.js";
@@ -8,6 +9,7 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 import { type UserService } from "~/modules/users/user.service.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
+import { type PaginationParameters } from "./libs/types/types.js";
 
 /**
  * @swagger
@@ -37,7 +39,7 @@ class UserController extends BaseController {
 		this.userService = userService;
 
 		this.addRoute({
-			handler: () => this.findAll(),
+			handler: (request) => this.findAll(request),
 			method: "GET",
 			path: UsersApiPath.ROOT,
 		});
@@ -58,9 +60,11 @@ class UserController extends BaseController {
 	 *                items:
 	 *                  $ref: "#/components/schemas/User"
 	 */
-	private async findAll(): Promise<APIHandlerResponse> {
+	private async findAll({
+		query,
+	}: APIHandlerOptions): Promise<APIHandlerResponse> {
 		return {
-			payload: await this.userService.findAll(),
+			payload: await this.userService.findAll(query as PaginationParameters),
 			status: HTTPCode.OK,
 		};
 	}
