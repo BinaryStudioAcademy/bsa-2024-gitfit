@@ -1,4 +1,4 @@
-import { Loader, PageLayout } from "~/libs/components/components.js";
+import { PageLayout } from "~/libs/components/components.js";
 import { EMPTY_ARRAY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
@@ -33,20 +33,14 @@ const Projects = (): JSX.Element => {
 			projects.length === EMPTY_ARRAY_LENGTH);
 
 	return (
-		<PageLayout>
-			<h1 className={styles["title"]}>Projects</h1>
+		<PageLayout isLoading={isLoading}>
+			<h1 className={styles["label"]}>Projects</h1>
 			<ProjectsSearch onChange={handleSearchChange} />
-			{isLoading ? (
-				<div className={styles["projects-loader"]}>
-					<Loader />
-				</div>
-			) : (
-				<div className={styles["projects-list"]}>
-					{projects.map((project) => (
-						<ProjectCard key={project.id} project={project} />
-					))}
-				</div>
-			)}
+			<div className={styles["projects-list"]}>
+				{projects.map((project) => (
+					<ProjectCard key={project.id} project={project} />
+				))}
+			</div>
 		</PageLayout>
 	);
 };

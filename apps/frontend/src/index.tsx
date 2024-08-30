@@ -35,6 +35,14 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 								path: AppRoute.ROOT,
 							},
 							{
+								element: (
+									<ProtectedRoute>
+										<AccessManagement />
+									</ProtectedRoute>
+								),
+								path: AppRoute.ACCESS_MANAGEMENT,
+							},
+							{
 								element: <Auth />,
 								path: AppRoute.SIGN_IN,
 							},
@@ -50,17 +58,8 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 						element: <NotFound />,
 						path: AppRoute.ANY,
 					},
-					{
-						element: (
-							<ProtectedRoute>
-								<AccessManagement />
-							</ProtectedRoute>
-						),
-						path: AppRoute.ACCESS_MANAGEMENT,
-					},
 				]}
 			/>
-
 			<ToastContainer />
 		</StoreProvider>
 	</StrictMode>,
