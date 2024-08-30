@@ -1,4 +1,5 @@
 import {
+	ConfirmationModal,
 	Modal,
 	Select,
 	Table,
@@ -12,6 +13,7 @@ import {
 import {
 	useAppDispatch,
 	useAppForm,
+	useCallback,
 	useEffect,
 	useModal,
 	usePagination,
@@ -39,6 +41,10 @@ const Ui = (): JSX.Element => {
 		totalItemsCount: TABLE_TOTAL_ITEMS_COUNT,
 	});
 
+	const handleDeleteConfirm = useCallback(() => {
+		modal.onModalClose();
+	}, [modal]);
+
 	return (
 		<>
 			<Select<
@@ -57,6 +63,15 @@ const Ui = (): JSX.Element => {
 			<Modal title="Title" {...modal}>
 				children
 			</Modal>
+			<ConfirmationModal
+				cancelLabel="Cancel"
+				confirmationText="This group will be deleted. This action cannot be undone. Do you want to continue?"
+				confirmLabel="Yes, Delete it"
+				isModalOpened={modal.isModalOpened}
+				onConfirm={handleDeleteConfirm}
+				onModalClose={modal.onModalClose}
+				title="Are you sure?"
+			/>
 			<TablePagination
 				onPageChange={onPageChange}
 				onPageSizeChange={onPageSizeChange}
