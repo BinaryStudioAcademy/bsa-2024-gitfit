@@ -26,10 +26,7 @@ const Profile = (): JSX.Element => {
 					</div>
 				) : (
 					<EditUserForm
-						defaultValues={{
-							email: authenticatedUser.email,
-							name: authenticatedUser.name,
-						}}
+						defaultValues={authenticatedUser}
 						userId={authenticatedUser.id}
 					/>
 				)}

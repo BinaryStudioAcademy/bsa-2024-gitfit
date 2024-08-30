@@ -1,8 +1,8 @@
-import { type UserInfoResponseDto } from "./user-info-response-dto.type.js";
-
 type UserAuthResponseDto = {
 	createdAt: string;
+	email: string;
 	id: number;
-} & UserInfoResponseDto;
+	name: string;
+};
 
 export { type UserAuthResponseDto };

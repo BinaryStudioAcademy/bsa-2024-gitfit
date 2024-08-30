@@ -7,8 +7,8 @@ import { UserError } from "./libs/exceptions/exceptions.js";
 import {
 	type UserAuthResponseDto,
 	type UserGetAllResponseDto,
-	type UserInfoRequestDto,
-	type UserInfoResponseDto,
+	type UserPatchRequestDto,
+	type UserPatchResponseDto,
 	type UserSignUpRequestDto,
 } from "./libs/types/types.js";
 import { UserEntity } from "./user.entity.js";
@@ -89,12 +89,10 @@ class UserService implements Service {
 		return item;
 	}
 
-	public async update(
+	public async patch(
 		userId: number,
-		userInfo: UserInfoRequestDto,
-	): Promise<UserInfoResponseDto> {
-		const { email, name } = userInfo;
-
+		userInfo: UserPatchRequestDto,
+	): Promise<UserPatchResponseDto> {
 		const user = await this.userRepository.find(userId);
 
 		if (!user) {
@@ -104,22 +102,13 @@ class UserService implements Service {
 			});
 		}
 
-		const userWithEmail = await this.userRepository.findByEmail(email);
-		const isSameUser = userWithEmail?.toObject().id === userId;
-
-		if (userWithEmail && !isSameUser) {
-			throw new UserError({
-				message: ExceptionMessage.EMAIL_USED,
-				status: HTTPCode.CONFLICT,
-			});
-		}
-
-		const updatedUser = await this.userRepository.update(userId, {
-			email,
-			name,
-		});
+		const updatedUser = await this.userRepository.patch(userId, userInfo);
 
 		return updatedUser.toObject();
+	}
+
+	public update(): ReturnType<Service["update"]> {
+		return Promise.resolve();
 	}
 }
 

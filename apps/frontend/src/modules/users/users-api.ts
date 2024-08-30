@@ -6,8 +6,8 @@ import { type Storage } from "~/libs/modules/storage/storage.js";
 import { UsersApiPath } from "./libs/enums/enums.js";
 import {
 	type UserGetAllResponseDto,
-	type UserInfoRequestDto,
-	type UserInfoResponseDto,
+	type UserPatchRequestDto,
+	type UserPatchResponseDto,
 } from "./libs/types/types.js";
 
 type Constructor = {
@@ -34,10 +34,10 @@ class UserApi extends BaseHTTPApi {
 		return await response.json<UserGetAllResponseDto>();
 	}
 
-	public async update(
+	public async patch(
 		id: number,
-		userPayload: UserInfoRequestDto,
-	): Promise<UserInfoResponseDto> {
+		userPayload: UserPatchRequestDto,
+	): Promise<UserPatchResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(UsersApiPath.$ID, { id: String(id) }),
 			{
@@ -48,7 +48,7 @@ class UserApi extends BaseHTTPApi {
 			},
 		);
 
-		return await response.json<UserInfoResponseDto>();
+		return await response.json<UserPatchResponseDto>();
 	}
 }
 

@@ -14,8 +14,8 @@ export { userController, userService };
 export { UserError } from "./libs/exceptions/exceptions.js";
 export {
 	type UserAuthResponseDto,
-	type UserInfoRequestDto,
-	type UserInfoResponseDto,
+	type UserPatchRequestDto,
+	type UserPatchResponseDto,
 	type UserSignInRequestDto,
 	type UserSignUpRequestDto,
 } from "./libs/types/types.js";

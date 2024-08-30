@@ -4,7 +4,7 @@ import { NotificationMessage } from "~/libs/enums/enums.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import {
 	type UserGetAllResponseDto,
-	type UserInfoResponseDto,
+	type UserPatchResponseDto,
 } from "~/modules/users/users.js";
 
 import { name as sliceName } from "./users.slice.js";
@@ -20,13 +20,13 @@ const loadAll = createAsyncThunk<
 });
 
 const updateProfile = createAsyncThunk<
-	UserInfoResponseDto,
-	{ id: number; userPayload: UserInfoResponseDto },
+	UserPatchResponseDto,
+	{ id: number; userPayload: UserPatchResponseDto },
 	AsyncThunkConfig
 >(`${sliceName}/profile`, async ({ id, userPayload }, { extra }) => {
 	const { toastNotifier, userApi } = extra;
 
-	const user = await userApi.update(id, userPayload);
+	const user = await userApi.patch(id, userPayload);
 	toastNotifier.showSuccess(NotificationMessage.SUCCESS_PROFILE_UPDATE);
 
 	return user;

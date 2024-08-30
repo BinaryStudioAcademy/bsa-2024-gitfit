@@ -10,8 +10,8 @@ import { type UserService } from "~/modules/users/user.service.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
 import {
-	type UserInfoRequestDto,
-	type UserInfoResponseDto,
+	type UserPatchRequestDto,
+	type UserPatchResponseDto,
 } from "./libs/types/types.js";
 
 /**
@@ -49,9 +49,9 @@ class UserController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
-				this.update(
+				this.patch(
 					options as APIHandlerOptions<{
-						body: UserInfoResponseDto;
+						body: UserPatchResponseDto;
 						params: { id: string };
 					}>,
 				),
@@ -119,16 +119,16 @@ class UserController extends BaseController {
 	 *                    $ref: "#/components/schemas/User"
 	 */
 
-	private async update(
+	private async patch(
 		options: APIHandlerOptions<{
-			body: UserInfoRequestDto;
+			body: UserPatchRequestDto;
 			params: { id: string };
 		}>,
 	): Promise<APIHandlerResponse> {
 		const userId = Number(options.params.id);
 
 		return {
-			payload: await this.userService.update(userId, options.body),
+			payload: await this.userService.patch(userId, options.body),
 			status: HTTPCode.OK,
 		};
 	}
