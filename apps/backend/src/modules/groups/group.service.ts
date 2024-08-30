@@ -58,7 +58,7 @@ class GroupService implements Service {
 		const items = await this.groupRepository.findAll();
 
 		return {
-			items: items.map((item) => item.toGetAllItemObject()),
+			items: items.map((item) => item.toObject()),
 		};
 	}
 

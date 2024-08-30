@@ -2,7 +2,7 @@ type GroupCreateResponseDto = {
 	createdAt: string;
 	id: number;
 	name: string;
-	permissions: { id: number }[];
+	permissions: { id: number; name: string }[];
 	users: { id: number }[];
 };
 

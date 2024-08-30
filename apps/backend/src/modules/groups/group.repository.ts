@@ -30,7 +30,7 @@ class GroupRepository implements Repository {
 			.query(trx)
 			.insertGraph(groupData, { relate: true })
 			.returning("*")
-			.withGraphJoined("[permissions, users]");
+			.withGraphFetched("[permissions, users]");
 
 		await trx.commit();
 
