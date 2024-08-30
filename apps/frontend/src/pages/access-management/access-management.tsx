@@ -1,4 +1,5 @@
 import { PageLayout, Table } from "~/libs/components/components.js";
+import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -13,7 +14,7 @@ import styles from "./styles.module.css";
 
 const AccessManagement = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const users = useAppSelector(({ users }) => users.users);
+	const { dataStatus, users } = useAppSelector(({ users }) => users);
 
 	useEffect(() => {
 		void dispatch(userActions.loadAll());
@@ -22,8 +23,11 @@ const AccessManagement = (): JSX.Element => {
 	const columns = getUserColumns();
 	const data: UserRow[] = getUserRows(users);
 
+	const isLoading =
+		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
+
 	return (
-		<PageLayout>
+		<PageLayout isLoading={isLoading}>
 			<p className={styles["title"]}>Access Management</p>
 			<p className={styles["sub-title"]}>Users</p>
 			<Table<UserRow> columns={columns} data={data} />

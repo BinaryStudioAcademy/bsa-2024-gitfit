@@ -11,9 +11,3 @@
 	gap: 12px;
 	padding: 20px 0;
 }
-
-.projects-loader {
-	display: flex;
-	flex: 1;
-	align-items: center;
-}
