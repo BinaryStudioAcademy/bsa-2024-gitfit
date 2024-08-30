@@ -27,11 +27,11 @@
 	border-radius: 50%;
 	opacity: 0;
 	transform: translate(-50%, -50%) scale(0);
-	animation: puff var(--animation-time) linear infinite;
+	animation: puff var(--animation-duration) linear infinite;
 }
 
 .loader::after {
-	animation-delay: calc(var(--animation-time) / -2);
+	animation-delay: calc(var(--animation-duration) / -2);
 }
 
 @keyframes puff {
