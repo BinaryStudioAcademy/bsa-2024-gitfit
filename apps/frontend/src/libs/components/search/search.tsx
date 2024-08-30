@@ -1,5 +1,6 @@
 import { Icon, Input } from "~/libs/components/components.js";
-import { debounce } from "~/libs/helpers/helpers.js";
+import { DEBOUNCE_TIMEOUT } from "~/libs/constants/constants.js";
+import { initDebounce } from "~/libs/helpers/helpers.js";
 import { useAppForm, useEffect, useFormWatch } from "~/libs/hooks/hooks.js";
 
 type Properties = {
@@ -21,9 +22,9 @@ const Search = ({
 	const value = useFormWatch({ control, name: "search" });
 
 	useEffect(() => {
-		const debouncedOnChange = debounce(() => {
+		const debouncedOnChange = initDebounce(() => {
 			onChange(value);
-		});
+		}, DEBOUNCE_TIMEOUT);
 		debouncedOnChange(value);
 
 		return (): void => {
