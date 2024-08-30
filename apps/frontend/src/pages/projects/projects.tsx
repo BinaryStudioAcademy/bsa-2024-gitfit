@@ -24,7 +24,7 @@ const Projects = (): JSX.Element => {
 
 	return (
 		<PageLayout>
-			<h1 className={styles["label"]}>Projects</h1>
+			<h1 className={styles["title"]}>Projects</h1>
 			{isLoading ? (
 				<div className={styles["projects-loader"]}>
 					<Loader />
