@@ -3,10 +3,16 @@ import { debounce } from "~/libs/helpers/helpers.js";
 import { useAppForm, useEffect, useFormWatch } from "~/libs/hooks/hooks.js";
 
 type Properties = {
+	isLabelVisible: boolean;
+	label: string;
 	onChange: (search: string) => void;
 };
 
-const Search = ({ onChange }: Properties): JSX.Element => {
+const Search = ({
+	isLabelVisible,
+	label,
+	onChange,
+}: Properties): JSX.Element => {
 	const { control, errors } = useAppForm({
 		defaultValues: { search: "" },
 		mode: "onChange",
@@ -29,6 +35,8 @@ const Search = ({ onChange }: Properties): JSX.Element => {
 		<Input
 			control={control}
 			errors={errors}
+			isLabelVisible={isLabelVisible}
+			label={label}
 			leftIcon={<Icon height={20} name="search" width={20} />}
 			name="search"
 			placeholder="Enter project name"

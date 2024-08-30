@@ -14,7 +14,11 @@ const ProjectsSearch = ({ onChange }: Properties): JSX.Element => {
 
 	return (
 		<form className={styles["form-wrapper"]} onSubmit={handleSubmit}>
-			<Search onChange={onChange} />
+			<Search
+				isLabelVisible={false}
+				label="Projects search"
+				onChange={onChange}
+			/>
 		</form>
 	);
 };

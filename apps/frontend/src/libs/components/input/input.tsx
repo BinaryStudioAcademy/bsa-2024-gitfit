@@ -14,7 +14,8 @@ type Properties<T extends FieldValues> = {
 	autoComplete?: string;
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
-	label?: string;
+	isLabelVisible?: boolean;
+	label: string;
 	leftIcon?: JSX.Element;
 	name: FieldPath<T>;
 	placeholder?: string;
@@ -26,6 +27,7 @@ const Input = <T extends FieldValues>({
 	autoComplete,
 	control,
 	errors,
+	isLabelVisible = true,
 	label,
 	leftIcon,
 	name,
@@ -47,7 +49,13 @@ const Input = <T extends FieldValues>({
 
 	return (
 		<label className={styles["input-label"]}>
-			{label && <span className={styles["input-label-text"]}>{label}</span>}
+			<span
+				className={
+					isLabelVisible ? styles["input-label-text"] : "visually-hidden"
+				}
+			>
+				{label}
+			</span>
 			<div className={styles["input-container"]}>
 				{hasLeftIcon && (
 					<div
