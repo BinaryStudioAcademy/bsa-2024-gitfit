@@ -1,4 +1,5 @@
 import { PageLayout, Table } from "~/libs/components/components.js";
+import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -18,9 +19,12 @@ import styles from "./styles.module.css";
 
 const AccessManagement = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const users = useAppSelector(({ users }) => users.users);
-	const groups = useAppSelector(({ groups }) => groups.groups);
-
+	const { dataStatus: usersDataStatus, users } = useAppSelector(
+		({ users }) => users,
+	);
+	const { dataStatus: groupsDataStatus, groups } = useAppSelector(
+		({ groups }) => groups,
+	);
 	useEffect(() => {
 		void dispatch(userActions.loadAll());
 		void dispatch(groupActions.loadAll());
@@ -32,8 +36,12 @@ const AccessManagement = (): JSX.Element => {
 	const groupColumns = getGroupColumns();
 	const groupData: GroupRow[] = getGroupRows(groups);
 
+	const isLoading = [usersDataStatus, groupsDataStatus].some(
+		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
+	);
+
 	return (
-		<PageLayout>
+		<PageLayout isLoading={isLoading}>
 			<h1 className={styles["title"]}>Access Management</h1>
 			<section>
 				<h2 className={styles["section-title"]}>Users</h2>
