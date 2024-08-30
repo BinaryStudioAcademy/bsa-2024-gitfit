@@ -11,10 +11,7 @@ import {
 	projectCreateValidationSchema,
 } from "~/modules/projects/projects.js";
 
-import {
-	DEFAULT_PROJECT_CREATE_PAYLOAD,
-	DESCRIPTION_ROWS_COUNT,
-} from "./libs/constants/constants.js";
+import { DEFAULT_PROJECT_CREATE_PAYLOAD } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties = {
@@ -59,7 +56,7 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 				errors={errors}
 				label="Description"
 				name="description"
-				rows={DESCRIPTION_ROWS_COUNT}
+				rows={4}
 			/>
 			<div className={styles["button-wrapper"]}>
 				<Button isDisabled={isButtonDisabled} label="Create" type="submit" />
