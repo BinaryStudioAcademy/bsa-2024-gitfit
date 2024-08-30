@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.0.0...backend-v1.0.1) (2024-08-30)
+
+
+### Bug Fixes
+
+* refactor user groups to permissions relation gf-78 ([#116](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/116)) ([9bcbf98](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9bcbf98870a11adc7edd9e9bb28db0e23bc8c841))
+
 ## 1.0.0 (2024-08-29)
 
 
