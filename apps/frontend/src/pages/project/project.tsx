@@ -16,9 +16,9 @@ const Project = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { id: projectId } = useParams<{ id: string }>();
 
-	const { dataStatus, project } = useAppSelector(({ projects }) => ({
-		dataStatus: projects.dataStatus,
+	const { project, projectStatus } = useAppSelector(({ projects }) => ({
 		project: projects.project,
+		projectStatus: projects.projectStatus,
 	}));
 
 	useEffect(() => {
@@ -28,9 +28,9 @@ const Project = (): JSX.Element => {
 	}, [dispatch, projectId]);
 
 	const isLoading =
-		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
+		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
 
-	const isRejected = dataStatus === DataStatus.REJECTED;
+	const isRejected = projectStatus === DataStatus.REJECTED;
 
 	if (isRejected) {
 		return <NotFound />;
