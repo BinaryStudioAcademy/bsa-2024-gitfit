@@ -7,6 +7,8 @@ import {
 	type ProjectCreateRequestDto,
 	type ProjectCreateResponseDto,
 	type ProjectGetAllResponseDto,
+	type ProjectUpdateRequestDto,
+	type ProjectUpdateResponseDto,
 } from "./libs/types/types.js";
 import { ProjectEntity } from "./project.entity.js";
 import { type ProjectRepository } from "./project.repository.js";
@@ -66,8 +68,22 @@ class ProjectService implements Service {
 		};
 	}
 
-	public update(): ReturnType<Service["update"]> {
-		return Promise.resolve(null);
+	public async update(
+		id: number,
+		projectData: ProjectUpdateRequestDto,
+	): Promise<ProjectUpdateResponseDto> {
+		const existingProject = await this.projectRepository.find(id);
+
+		if (!existingProject) {
+			throw new ProjectError({
+				message: ExceptionMessage.PROJECT_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		const updatedItem = await this.projectRepository.update(id, projectData);
+
+		return updatedItem.toObject();
 	}
 }
 

@@ -1,5 +1,6 @@
 import { type Repository } from "~/libs/types/types.js";
 
+import { type ProjectUpdateRequestDto } from "./libs/types/types.js";
 import { ProjectEntity } from "./project.entity.js";
 import { type ProjectModel } from "./project.model.js";
 
@@ -47,8 +48,17 @@ class ProjectRepository implements Repository {
 		return item ? ProjectEntity.initialize(item) : null;
 	}
 
-	public update(): ReturnType<Repository["update"]> {
-		return Promise.resolve(null);
+	public async update(
+		id: number,
+		projectData: ProjectUpdateRequestDto,
+	): Promise<ProjectEntity> {
+		const { description, name } = projectData;
+
+		const updatedItem = await this.projectModel
+			.query()
+			.patchAndFetchById(id, { description, name });
+
+		return ProjectEntity.initialize(updatedItem);
 	}
 }
 

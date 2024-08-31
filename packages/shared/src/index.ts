@@ -48,6 +48,9 @@ export {
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
 	ProjectsApiPath,
+	type ProjectUpdateRequestDto,
+	type ProjectUpdateResponseDto,
+	projectUpdateValidationSchema,
 } from "./modules/projects/projects.js";
 export {
 	type UserAuthResponseDto,
