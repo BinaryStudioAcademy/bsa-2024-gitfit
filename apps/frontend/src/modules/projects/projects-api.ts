@@ -4,7 +4,11 @@ import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
 
 import { ProjectsApiPath } from "./libs/enums/enums.js";
-import { type ProjectGetAllResponseDto } from "./libs/types/types.js";
+import {
+	type ProjectGetAllResponseDto,
+	type ProjectUpdateRequestDto,
+	type ProjectUpdateResponseDto,
+} from "./libs/types/types.js";
 
 type Constructor = {
 	baseUrl: string;
@@ -27,6 +31,23 @@ class ProjectApi extends BaseHTTPApi {
 		);
 
 		return await response.json<ProjectGetAllResponseDto>();
+	}
+
+	public async update(
+		id: number,
+		payload: ProjectUpdateRequestDto,
+	): Promise<ProjectUpdateResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(ProjectsApiPath.$ID, { id: String(id) }),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "PATCH",
+				payload: JSON.stringify(payload),
+			},
+		);
+
+		return await response.json<ProjectUpdateResponseDto>();
 	}
 }
 

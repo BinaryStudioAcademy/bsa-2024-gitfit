@@ -1,7 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+import { NotificationMessage } from "~/libs/enums/enums.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
-import { type ProjectGetAllResponseDto } from "~/modules/projects/projects.js";
+import {
+	type ProjectGetAllResponseDto,
+	type ProjectUpdateRequestDto,
+	type ProjectUpdateResponseDto,
+} from "~/modules/projects/projects.js";
 
 import { name as sliceName } from "./project.slice.js";
 
@@ -15,4 +20,16 @@ const loadAll = createAsyncThunk<
 	return await projectApi.getAll();
 });
 
-export { loadAll };
+const update = createAsyncThunk<
+	ProjectUpdateResponseDto,
+	{ id: number; payload: ProjectUpdateRequestDto },
+	AsyncThunkConfig
+>(`${sliceName}/update`, async ({ id, payload }, { extra }) => {
+	const { projectApi, toastNotifier } = extra;
+
+	toastNotifier.showSuccess(NotificationMessage.SUCCESS_PROJECT_UPDATE);
+
+	return await projectApi.update(id, payload);
+});
+
+export { loadAll, update };
