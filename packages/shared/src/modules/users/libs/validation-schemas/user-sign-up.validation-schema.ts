@@ -14,21 +14,9 @@ const userSignUp: z.ZodType<UserSignUpRequestDto> = z
 			.max(UserValidationRule.EMAIL_MAXIMUM_LENGTH, {
 				message: UserValidationMessage.EMAIL_TOO_LONG,
 			})
-			.refine(
-				(email) => {
-					const [localPart, domainPart] = email.split("@");
-
-					return (
-						!!localPart &&
-						!!domainPart &&
-						UserValidationRule.EMAIL_LOCAL_PART_PATTERN.test(localPart) &&
-						UserValidationRule.EMAIL_DOMAIN_PART_PATTERN.test(domainPart)
-					);
-				},
-				{
-					message: UserValidationMessage.EMAIL_WRONG,
-				},
-			),
+			.email({
+				message: UserValidationMessage.EMAIL_WRONG,
+			}),
 		name: z
 			.string()
 			.trim()

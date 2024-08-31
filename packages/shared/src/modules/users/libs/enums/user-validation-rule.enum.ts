@@ -1,6 +1,4 @@
 const UserValidationRule = {
-	EMAIL_DOMAIN_PART_PATTERN: /^[\dA-Za-z-]+\.[A-Za-z]{2,}$/,
-	EMAIL_LOCAL_PART_PATTERN: /^[\dA-Za-z]+([._-][\dA-Za-z]+)*$/,
 	EMAIL_MAXIMUM_LENGTH: 50,
 	EMAIL_MINIMUM_LENGTH: 6,
 	NAME_MAXIMUM_LENGTH: 50,
@@ -9,7 +7,7 @@ const UserValidationRule = {
 	PASSWORD_MAXIMUM_LENGTH: 50,
 	PASSWORD_MINIMUM_LENGTH: 5,
 	PASSWORD_NUMBER_PATTERN: /\d/,
-	PASSWORD_SPECIAL_CHAR_PATTERN: /[!"#$%&'()*+,./:;<=>?@[\]^`{|}~-]/,
+	PASSWORD_SPECIAL_CHAR_PATTERN: /[!"#$%&'()*+,./:;<=>?@[\]^_`{|}~-]/,
 	PASSWORD_UPPERCASE_PATTERN: /[A-Z]/,
 } as const;
 
