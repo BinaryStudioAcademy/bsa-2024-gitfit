@@ -1,11 +1,5 @@
 import { Button, Input } from "~/libs/components/components.js";
-import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
-import {
-	useAppForm,
-	useCallback,
-	useFormWatch,
-	useMemo,
-} from "~/libs/hooks/hooks.js";
+import { useAppForm, useCallback } from "~/libs/hooks/hooks.js";
 import {
 	type ProjectCreateRequestDto,
 	projectCreateValidationSchema,
@@ -26,13 +20,6 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 		},
 	);
 
-	const { name: enteredName } = useFormWatch({ control });
-
-	const isButtonDisabled = useMemo(
-		() => enteredName?.length === EMPTY_LENGTH,
-		[enteredName],
-	);
-
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData: ProjectCreateRequestDto) => {
@@ -41,6 +28,8 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 		},
 		[handleSubmit, onSubmit],
 	);
+
+	const isButtonDisabled = Boolean(errors.name) || Boolean(errors.description);
 
 	return (
 		<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>
