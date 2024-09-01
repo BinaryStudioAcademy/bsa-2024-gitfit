@@ -1,11 +1,10 @@
-import { useParams } from "react-router-dom";
-
 import { PageLayout } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
 	useEffect,
+	useParams,
 } from "~/libs/hooks/hooks.js";
 import { actions as projectActions } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
