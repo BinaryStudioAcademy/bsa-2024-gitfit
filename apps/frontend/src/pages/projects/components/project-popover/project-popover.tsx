@@ -1,8 +1,10 @@
 import { Icon, Modal, Popover } from "~/libs/components/components.js";
-// import { useAppDispatch, useCallback } from "~/libs/hooks/hooks.js";
-// import { actions as authActions } from "~/modules/auth/auth.js";
-import { useCallback, useModal } from "~/libs/hooks/hooks.js";
-import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
+import { useAppDispatch, useCallback, useModal } from "~/libs/hooks/hooks.js";
+import {
+	actions as projectActions,
+	type ProjectGetAllItemResponseDto,
+	type ProjectUpdateRequestDto,
+} from "~/modules/projects/projects.js";
 
 import { ProjectUpdateForm } from "../components.js";
 import styles from "./styles.module.css";
@@ -13,11 +15,21 @@ type Properties = {
 };
 
 const ProjectPopover = ({ children, project }: Properties): JSX.Element => {
+	const dispatch = useAppDispatch();
+
 	const { isModalOpened, onModalClose, onModalOpen } = useModal();
 
 	const handleEditClick = useCallback((): void => {
 		onModalOpen();
 	}, [onModalOpen]);
+
+	const handleProjectEditSubmit = useCallback(
+		(id: number, payload: ProjectUpdateRequestDto) => {
+			void dispatch(projectActions.update({ id, payload }));
+			onModalClose();
+		},
+		[dispatch, onModalClose],
+	);
 
 	return (
 		<>
@@ -43,7 +55,10 @@ const ProjectPopover = ({ children, project }: Properties): JSX.Element => {
 				onModalClose={onModalClose}
 				title="Update project"
 			>
-				<ProjectUpdateForm project={project} />
+				<ProjectUpdateForm
+					onSubmit={handleProjectEditSubmit}
+					project={project}
+				/>
 			</Modal>
 		</>
 	);

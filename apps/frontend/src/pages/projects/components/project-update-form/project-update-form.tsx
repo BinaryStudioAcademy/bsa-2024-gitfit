@@ -1,7 +1,6 @@
 import { Button, Input } from "~/libs/components/components.js";
-import { useAppDispatch, useAppForm, useCallback } from "~/libs/hooks/hooks.js";
+import { useAppForm, useCallback } from "~/libs/hooks/hooks.js";
 import {
-	actions as projectActions,
 	type ProjectGetAllItemResponseDto,
 	type ProjectUpdateRequestDto,
 	projectUpdateValidationSchema,
@@ -10,12 +9,11 @@ import {
 import styles from "./styles.module.css";
 
 type Properties = {
+	onSubmit: (id: number, payload: ProjectUpdateRequestDto) => void;
 	project: ProjectGetAllItemResponseDto;
 };
 
-const ProjectUpdateForm = ({ project }: Properties): JSX.Element => {
-	const dispatch = useAppDispatch();
-
+const ProjectUpdateForm = ({ onSubmit, project }: Properties): JSX.Element => {
 	const { description, id, name } = project;
 
 	const { control, errors, handleSubmit } = useAppForm<ProjectUpdateRequestDto>(
@@ -28,10 +26,10 @@ const ProjectUpdateForm = ({ project }: Properties): JSX.Element => {
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData: ProjectUpdateRequestDto) => {
-				void dispatch(projectActions.update({ id, payload: formData }));
+				onSubmit(id, formData);
 			})(event_);
 		},
-		[handleSubmit],
+		[handleSubmit, id, onSubmit],
 	);
 
 	return (
