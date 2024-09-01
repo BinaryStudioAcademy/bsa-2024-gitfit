@@ -9,7 +9,6 @@ const ExceptionMessage = {
 	PROJECT_NAME_USED: "Project name is already in use.",
 	PROJECT_NOT_FOUND: "Project not found.",
 	TOKEN_EXPIRED: "Token is expired.",
-	UPDATE_PROJECT_FAILED: "Failed to update project.",
 	USER_NOT_FOUND: "User not found.",
 } as const;
 
