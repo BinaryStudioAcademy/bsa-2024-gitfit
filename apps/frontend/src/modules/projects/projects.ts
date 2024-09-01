@@ -14,6 +14,5 @@ export { projectApi };
 export {
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
-	type ProjectGetByIdRequestDto,
 } from "./libs/types/types.js";
 export { actions, reducer } from "./slices/projects.js";
