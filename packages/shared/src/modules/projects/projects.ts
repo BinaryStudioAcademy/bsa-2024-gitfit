@@ -7,5 +7,7 @@ export {
 	type ProjectUpdateRequestDto,
 	type ProjectUpdateResponseDto,
 } from "./libs/types/types.js";
-export { projectCreate as projectCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
-export { projectUpdate as projectUpdateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+export {
+	projectCreate as projectCreateValidationSchema,
+	projectUpdate as projectUpdateValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
