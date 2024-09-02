@@ -1,4 +1,7 @@
-import { type Repository } from "~/libs/types/types.js";
+import {
+	type PaginationParameters,
+	type Repository,
+} from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserModel } from "~/modules/users/user.model.js";
 
@@ -45,7 +48,10 @@ class UserRepository implements Repository {
 		return user ? UserEntity.initialize(user) : null;
 	}
 
-	public async findAll(page: number, pageSize: number): Promise<UserEntity[]> {
+	public async findAll({
+		page,
+		pageSize,
+	}: PaginationParameters): Promise<UserEntity[]> {
 		const offset = --page * pageSize;
 		const users = await this.userModel
 			.query()

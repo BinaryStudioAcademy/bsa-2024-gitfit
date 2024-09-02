@@ -1,8 +1,10 @@
+import { type PaginationParameters } from "~/libs/types/types.js";
+
 type Repository<T = unknown> = {
 	create(payload: unknown): Promise<T>;
 	delete(id: number): Promise<boolean>;
 	find(id: number): Promise<null | T>;
-	findAll(page: number, size: number): Promise<T[]>;
+	findAll(parameters: PaginationParameters): Promise<T[]>;
 	update(id: number, payload: unknown): Promise<null | T>;
 };
 

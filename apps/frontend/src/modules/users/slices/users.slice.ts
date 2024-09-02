@@ -8,16 +8,16 @@ import { loadAll, updateProfile } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
-	totalUsers: number;
 	updateProfileStatus: ValueOf<typeof DataStatus>;
 	users: UserGetAllItemResponseDto[];
+	usersTotalCount: number;
 };
 
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
-	totalUsers: 0,
 	updateProfileStatus: DataStatus.IDLE,
 	users: [],
+	usersTotalCount: 0,
 };
 
 const { actions, name, reducer } = createSlice({
@@ -27,7 +27,7 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
 			state.users = action.payload.items;
-			state.totalUsers = action.payload.totalItems;
+			state.usersTotalCount = action.payload.totalItems;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadAll.rejected, (state) => {

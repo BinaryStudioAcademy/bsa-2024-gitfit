@@ -71,10 +71,8 @@ class UserService implements Service {
 	public async findAll(
 		parameters: PaginationParameters,
 	): Promise<UserGetAllResponseDto> {
-		const { page, pageSize } = parameters;
-
 		const [items, totalItems] = await Promise.all([
-			this.userRepository.findAll(page, pageSize),
+			this.userRepository.findAll(parameters),
 			this.userRepository.count(),
 		]);
 
