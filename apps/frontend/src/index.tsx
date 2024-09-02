@@ -15,6 +15,7 @@ import { AccessManagement } from "~/pages/access-management/access-management.js
 import { Auth } from "~/pages/auth/auth.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { Profile } from "~/pages/profile/profile.jsx";
+import { Project } from "~/pages/project/project.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
 import { Ui } from "~/pages/ui/ui.jsx";
 
@@ -58,6 +59,10 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: <Auth />,
 								path: AppRoute.SIGN_UP,
+							},
+							{
+								element: <Project />,
+								path: AppRoute.PROJECT,
 							},
 						],
 						element: <App />,

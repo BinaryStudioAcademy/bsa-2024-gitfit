@@ -9,7 +9,7 @@ const userPatch: z.ZodType<UserPatchRequestDto> = z
 			.string()
 			.trim()
 			.min(UserValidationRule.NAME_MINIMUM_LENGTH, {
-				message: UserValidationMessage.NAME_REQUIRED,
+				message: UserValidationMessage.NAME_TOO_SHORT,
 			})
 			.max(UserValidationRule.NAME_MAXIMUM_LENGTH, {
 				message: UserValidationMessage.NAME_TOO_LONG,

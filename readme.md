@@ -83,6 +83,46 @@ erDiagram
       int project_id FK
    }
 
+   project_groups {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      varchar key UK
+      varchar name UK
+   }
+
+   users_to_project_groups {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      int project_group_id FK
+      int user_id FK
+   }
+
+   project_permissions {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      varchar key UK
+      varchar name UK
+   }
+
+   project_groups_to_project_permissions {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      int project_group_id FK
+      int project_permission_id FK
+   }
+
+   projects_to_project_groups {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      int project_group_id FK
+      int project_id FK
+   }
+
    contributors {
       int id PK
       dateTime created_at
@@ -138,6 +178,15 @@ erDiagram
 
    users ||--|{ users_to_user_groups : user_id
    user_groups ||--|{ users_to_user_groups : user_group_id
+
+   project_groups ||--|{ project_groups_to_project_permissions : project_group_id
+   project_permissions ||--|{ project_groups_to_project_permissions : project_permission_id
+
+   project_groups ||--|{ projects_to_project_groups : project_group_id
+   projects ||--|{ projects_to_project_groups : project_id
+
+   users ||--|{ users_to_project_groups : user_id
+   project_groups ||--|{ users_to_project_groups : project_group_id
 
    contributors ||--|{ git_emails : contributor_id
 
