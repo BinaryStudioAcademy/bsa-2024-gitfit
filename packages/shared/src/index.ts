@@ -40,6 +40,8 @@ export {
 	type GroupCreateResponseDto,
 	groupCreateValidationSchema,
 	GroupError,
+	type GroupGetAllItemResponseDto,
+	type GroupGetAllResponseDto,
 	GroupsApiPath,
 } from "./modules/groups/groups.js";
 export {
@@ -62,6 +64,9 @@ export {
 	UserError,
 	type UserGetAllItemResponseDto,
 	type UserGetAllResponseDto,
+	type UserPatchRequestDto,
+	type UserPatchResponseDto,
+	userPatchValidationSchema,
 	UsersApiPath,
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,

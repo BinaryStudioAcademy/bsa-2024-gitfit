@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	href?: string | undefined;
+	isDisabled?: boolean;
 	label: string;
 	onClick?: () => void;
 	type?: "button" | "submit";
@@ -13,6 +14,7 @@ type Properties = {
 
 const Button = ({
 	href,
+	isDisabled,
 	label,
 	onClick,
 	type = "button",
@@ -32,7 +34,12 @@ const Button = ({
 	}
 
 	return (
-		<button className={buttonClassName} onClick={onClick} type={type}>
+		<button
+			className={buttonClassName}
+			disabled={isDisabled}
+			onClick={onClick}
+			type={type}
+		>
 			{label}
 		</button>
 	);

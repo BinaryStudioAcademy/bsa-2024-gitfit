@@ -14,10 +14,13 @@ export { userController, userService };
 export { UserError } from "./libs/exceptions/exceptions.js";
 export {
 	type UserAuthResponseDto,
+	type UserPatchRequestDto,
+	type UserPatchResponseDto,
 	type UserSignInRequestDto,
 	type UserSignUpRequestDto,
 } from "./libs/types/types.js";
 export {
+	userPatchValidationSchema,
 	userSignInValidationSchema,
 	userSignUpValidationSchema,
 } from "./libs/validation-schemas/validation-schemas.js";

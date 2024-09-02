@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.0.1...backend-v1.1.0) (2024-09-02)
+
+
+### Features
+
+* add an ability to create a project group gf-71 ([#108](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/108)) ([4ceb575](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/4ceb575bf603508a6a3942aa2592cb29f0b5adcb))
+* Add project page gf-86 ([#109](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/109)) ([ba11d74](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ba11d74366764dfafef62b367cd5f66a7182f0a9))
+
 ## [1.0.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.0.0...backend-v1.0.1) (2024-08-30)
 
 
