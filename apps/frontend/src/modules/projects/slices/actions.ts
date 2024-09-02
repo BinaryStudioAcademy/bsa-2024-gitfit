@@ -4,7 +4,6 @@ import { NotificationMessage } from "~/libs/enums/enums.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import {
 	type ProjectCreateRequestDto,
-	type ProjectCreateResponseDto,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
 } from "~/modules/projects/projects.js";
@@ -32,7 +31,7 @@ const loadAll = createAsyncThunk<
 });
 
 const create = createAsyncThunk<
-	ProjectCreateResponseDto,
+	ProjectGetAllItemResponseDto,
 	ProjectCreateRequestDto,
 	AsyncThunkConfig
 >(`${sliceName}/create`, async (payload, { extra }) => {
