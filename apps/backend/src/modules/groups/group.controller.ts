@@ -9,7 +9,10 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { type GroupService } from "./group.service.js";
 import { GroupsApiPath } from "./libs/enums/enum.js";
-import { type GroupCreateRequestDto } from "./libs/types/types.js";
+import {
+	type GroupCreateRequestDto,
+	type GroupUpdateRequestDto,
+} from "./libs/types/types.js";
 import { groupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 
 /**
@@ -65,6 +68,18 @@ class GroupController extends BaseController {
 			handler: () => this.findAll(),
 			method: "GET",
 			path: GroupsApiPath.ROOT,
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.update(
+					options as APIHandlerOptions<{
+						body: GroupUpdateRequestDto;
+						params: { id: string };
+					}>,
+				),
+			method: "PUT",
+			path: GroupsApiPath.$ID,
 		});
 	}
 
@@ -145,6 +160,57 @@ class GroupController extends BaseController {
 
 		return {
 			payload: groups,
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /groups/{id}:
+	 *    update:
+	 *      tags:
+	 *        - Groups
+	 *      description: Update group info
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          description: ID of the group to update\
+	 *          schema:
+	 *            type: string
+	 *      requestBody:
+	 *        description: Updated group object\
+	 *        content:
+	 *          application/json:
+	 *            schema:
+	 *              type: object
+	 *              properties:
+	 *                name:
+	 *                  type: string
+	 *                description:
+	 *                  type: string
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 *                properties:
+	 *                  message:
+	 *                    type: object
+	 *                    $ref: "#/components/schemas/Group"
+	 */
+
+	private async update(
+		options: APIHandlerOptions<{
+			body: GroupUpdateRequestDto;
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		const groupId = Number(options.params.id);
+
+		return {
+			payload: await this.groupService.update(groupId, options.body),
 			status: HTTPCode.OK,
 		};
 	}

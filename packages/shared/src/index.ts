@@ -43,6 +43,8 @@ export {
 	type GroupGetAllItemResponseDto,
 	type GroupGetAllResponseDto,
 	GroupsApiPath,
+	type GroupUpdateRequestDto,
+	type GroupUpdateResponseDto,
 } from "./modules/groups/groups.js";
 export {
 	type ProjectGroupCreateRequestDto,
