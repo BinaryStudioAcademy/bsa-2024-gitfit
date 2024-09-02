@@ -14,12 +14,7 @@
 	transition: background-color 0.3s ease;
 }
 
-.button:disabled {
-	cursor: not-allowed;
-	opacity: 0.5;
-}
-
-.button:hover:not(:disabled) {
+.button:hover {
 	background-color: var(--color-brand-primary-hover);
 }
 
@@ -27,7 +22,7 @@
 	background-color: var(--color-danger);
 }
 
-.button-danger:hover:not(:disabled) {
+.button-danger:hover {
 	background-color: var(--color-danger-hover);
 }
 
@@ -36,6 +31,6 @@
 	border: 1px solid var(--color-brand-primary);
 }
 
-.button-outlined:hover:not(:disabled) {
+.button-outlined:hover {
 	background-color: var(--color-background-hover);
 }

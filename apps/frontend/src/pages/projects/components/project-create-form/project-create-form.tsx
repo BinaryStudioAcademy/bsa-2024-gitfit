@@ -29,8 +29,6 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 		[handleSubmit, onSubmit],
 	);
 
-	const isButtonDisabled = Boolean(errors.name) || Boolean(errors.description);
-
 	return (
 		<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>
 			<Input
@@ -48,7 +46,7 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 				rowsCount={4}
 			/>
 			<div className={styles["button-wrapper"]}>
-				<Button isDisabled={isButtonDisabled} label="Create" type="submit" />
+				<Button label="Create" type="submit" />
 			</div>
 		</form>
 	);

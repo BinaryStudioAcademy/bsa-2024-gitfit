@@ -8,7 +8,6 @@ type ButtonVariant = "danger" | "default" | "outlined";
 
 type Properties = {
 	href?: string | undefined;
-	isDisabled?: boolean;
 	label: string;
 	onClick?: () => void;
 	type?: "button" | "submit";
@@ -17,7 +16,6 @@ type Properties = {
 
 const Button = ({
 	href,
-	isDisabled = false,
 	label,
 	onClick,
 	type = "button",
@@ -37,12 +35,7 @@ const Button = ({
 	}
 
 	return (
-		<button
-			className={buttonClassName}
-			disabled={isDisabled}
-			onClick={onClick}
-			type={type}
-		>
+		<button className={buttonClassName} onClick={onClick} type={type}>
 			{label}
 		</button>
 	);
