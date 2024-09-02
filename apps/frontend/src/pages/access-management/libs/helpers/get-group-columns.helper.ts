@@ -9,7 +9,7 @@ const getGroupColumns = (): TableColumn<GroupRow>[] => [
 		header: "Name",
 	},
 	{
-		accessorKey: "permissions",
+		accessorFn: (group: GroupRow): string => group.permissions.join(", "),
 		header: "Permissions",
 	},
 	{

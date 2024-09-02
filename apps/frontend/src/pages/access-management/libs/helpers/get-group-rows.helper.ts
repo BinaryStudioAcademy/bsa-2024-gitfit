@@ -6,9 +6,7 @@ const getGroupRows = (groups: GroupGetAllItemResponseDto[]): GroupRow[] =>
 	groups.map((group) => ({
 		createdAt: group.createdAt,
 		name: group.name,
-		permissions: group.permissions
-			.map((permission) => permission.name)
-			.join(", "),
+		permissions: group.permissions.map((permission) => permission.name),
 	}));
 
 export { getGroupRows };
