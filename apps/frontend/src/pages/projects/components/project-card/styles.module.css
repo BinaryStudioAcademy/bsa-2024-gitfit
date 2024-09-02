@@ -4,8 +4,13 @@
 	justify-content: space-between;
 	height: 81px;
 	padding: 0 24px;
-	font-size: 16px;
 	background-color: var(--color-background-secondary);
 	border: 1px solid var(--color-border-secondary);
 	border-radius: 8px;
+}
+
+.project-link {
+	font-size: 16px;
+	color: var(--color-text-primary);
+	text-decoration: none;
 }

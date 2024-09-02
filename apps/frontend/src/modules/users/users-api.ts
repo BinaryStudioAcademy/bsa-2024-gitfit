@@ -4,7 +4,11 @@ import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
-import { type UserGetAllResponseDto } from "./libs/types/types.js";
+import {
+	type UserGetAllResponseDto,
+	type UserPatchRequestDto,
+	type UserPatchResponseDto,
+} from "./libs/types/types.js";
 
 type Constructor = {
 	baseUrl: string;
@@ -22,12 +26,29 @@ class UserApi extends BaseHTTPApi {
 			this.getFullEndpoint(UsersApiPath.ROOT, {}),
 			{
 				contentType: ContentType.JSON,
-				hasAuth: false,
+				hasAuth: true,
 				method: "GET",
 			},
 		);
 
 		return await response.json<UserGetAllResponseDto>();
+	}
+
+	public async patch(
+		id: number,
+		payload: UserPatchRequestDto,
+	): Promise<UserPatchResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(UsersApiPath.$ID, { id: String(id) }),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "PATCH",
+				payload: JSON.stringify(payload),
+			},
+		);
+
+		return await response.json<UserPatchResponseDto>();
 	}
 }
 

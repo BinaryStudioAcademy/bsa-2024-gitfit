@@ -1,4 +1,4 @@
-import { useState } from "~/libs/hooks/hooks.js";
+import { useCallback, useState } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	isModalOpened: boolean;
@@ -9,13 +9,13 @@ type Properties = {
 const useModal = (): Properties => {
 	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
 
-	const handleModalOpen = (): void => {
+	const handleModalOpen = useCallback(() => {
 		setIsModalOpened(true);
-	};
+	}, []);
 
-	const handleModalClose = (): void => {
+	const handleModalClose = useCallback(() => {
 		setIsModalOpened(false);
-	};
+	}, []);
 
 	return {
 		isModalOpened,

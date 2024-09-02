@@ -1,5 +1,12 @@
 import { Icon, Modal, Popover } from "~/libs/components/components.js";
-import { useAppDispatch, useCallback, useModal } from "~/libs/hooks/hooks.js";
+import { DataStatus } from "~/libs/enums/enums.js";
+import {
+	useAppDispatch,
+	useAppSelector,
+	useCallback,
+	useEffect,
+	useModal,
+} from "~/libs/hooks/hooks.js";
 import {
 	actions as projectActions,
 	type ProjectGetAllItemResponseDto,
@@ -17,18 +24,29 @@ type Properties = {
 const ProjectPopover = ({ children, project }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
+	const { projectUpdateStatus } = useAppSelector(({ projects }) => projects);
+
 	const { isModalOpened, onModalClose, onModalOpen } = useModal();
 
-	const handleEditClick = useCallback((): void => {
-		onModalOpen();
-	}, [onModalOpen]);
+	const handleEditClick = useCallback(
+		(event: React.MouseEvent): void => {
+			event.stopPropagation();
+			onModalOpen();
+		},
+		[onModalOpen],
+	);
+
+	useEffect(() => {
+		if (projectUpdateStatus === DataStatus.FULFILLED) {
+			onModalClose();
+		}
+	}, [projectUpdateStatus, onModalClose]);
 
 	const handleProjectEditSubmit = useCallback(
 		(id: number, payload: ProjectUpdateRequestDto) => {
 			void dispatch(projectActions.update({ id, payload }));
-			onModalClose();
 		},
-		[dispatch, onModalClose],
+		[dispatch],
 	);
 
 	return (

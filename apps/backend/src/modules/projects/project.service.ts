@@ -5,7 +5,7 @@ import { type Service } from "~/libs/types/types.js";
 import { ProjectError } from "./libs/exceptions/exceptions.js";
 import {
 	type ProjectCreateRequestDto,
-	type ProjectCreateResponseDto,
+	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
 	type ProjectUpdateRequestDto,
 	type ProjectUpdateResponseDto,
@@ -22,7 +22,7 @@ class ProjectService implements Service {
 
 	public async create(
 		payload: ProjectCreateRequestDto,
-	): Promise<ProjectCreateResponseDto> {
+	): Promise<ProjectGetAllItemResponseDto> {
 		const { description, name } = payload;
 		const existingProject = await this.projectRepository.findByName(name);
 
@@ -47,7 +47,7 @@ class ProjectService implements Service {
 		return Promise.resolve(true);
 	}
 
-	public async find(id: number): Promise<ProjectCreateResponseDto> {
+	public async find(id: number): Promise<ProjectGetAllItemResponseDto> {
 		const item = await this.projectRepository.find(id);
 
 		if (!item) {

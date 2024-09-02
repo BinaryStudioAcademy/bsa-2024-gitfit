@@ -1,4 +1,8 @@
+import { NavLink } from "react-router-dom";
+
 import { Icon } from "~/libs/components/components.js";
+import { AppRoute } from "~/libs/enums/enums.js";
+import { configureString } from "~/libs/helpers/helpers.js";
 import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
 import { ProjectPopover } from "../components.js";
@@ -9,9 +13,15 @@ type Properties = {
 };
 
 const ProjectCard = ({ project }: Properties): JSX.Element => {
+	const projectRoute = configureString(AppRoute.PROJECT, {
+		id: project.id.toString(),
+	});
+
 	return (
-		<div className={styles["project"]}>
-			{project.name}
+		<div className={styles["project"] ?? ""}>
+			<NavLink className={styles["project-link"] ?? ""} to={projectRoute}>
+				{project.name}
+			</NavLink>
 			<ProjectPopover project={project}>
 				<Icon height={20} name="options" width={20} />
 			</ProjectPopover>

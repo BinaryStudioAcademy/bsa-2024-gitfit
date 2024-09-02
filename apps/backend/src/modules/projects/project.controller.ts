@@ -72,6 +72,17 @@ class ProjectController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
+				this.getById(
+					options as APIHandlerOptions<{
+						params: { id: string };
+					}>,
+				),
+			method: "GET",
+			path: ProjectsApiPath.$ID,
+		});
+
+		this.addRoute({
+			handler: (options) =>
 				this.update(
 					options as APIHandlerOptions<{
 						body: ProjectUpdateRequestDto;
@@ -153,9 +164,51 @@ class ProjectController extends BaseController {
 
 	/**
 	 * @swagger
-	 * /projects/:id:
+	 * /projects/{id}:
+	 *    get:
+	 *      description: Get project by ID
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          schema:
+	 *            type: integer
+	 *          required: true
+	 *          description: Numeric ID of the project to retrieve
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 *                properties:
+	 *                  message:
+	 *                    type: object
+	 *                    $ref: "#/components/schemas/Project"
+	 */
+	private async getById(
+		options: APIHandlerOptions<{
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.projectService.find(Number(options.params.id)),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /projects/{id}:
 	 *    patch:
 	 *      description: Update project info
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          required: true
+	 *          description: The ID of the project to update
+	 *          schema:
+	 *            type: integer
 	 *      requestBody:
 	 *        description: Project data
 	 *        required: true
