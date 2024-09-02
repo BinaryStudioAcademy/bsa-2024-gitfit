@@ -12,6 +12,10 @@ class GroupModel extends AbstractModel {
 
 	public name!: string;
 
+	public permissions!: PermissionModel[];
+
+	public users!: UserModel[];
+
 	public static override get relationMappings(): RelationMappings {
 		return {
 			permissions: {

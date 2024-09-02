@@ -60,6 +60,12 @@ class GroupController extends BaseController {
 				body: groupCreateValidationSchema,
 			},
 		});
+
+		this.addRoute({
+			handler: () => this.findAll(),
+			method: "GET",
+			path: GroupsApiPath.ROOT,
+		});
 	}
 
 	/**
@@ -113,6 +119,33 @@ class GroupController extends BaseController {
 		return {
 			payload: await this.groupService.create(options.body),
 			status: HTTPCode.CREATED,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /groups:
+	 *   get:
+	 *     description: Returns an array of groups
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: object
+	 *               properties:
+	 *                 items:
+	 *                   type: array
+	 *                   items:
+	 *                     $ref: "#/components/schemas/Group"
+	 */
+	private async findAll(): Promise<APIHandlerResponse> {
+		const groups = await this.groupService.findAll();
+
+		return {
+			payload: groups,
+			status: HTTPCode.OK,
 		};
 	}
 }
