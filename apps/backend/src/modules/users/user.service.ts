@@ -1,11 +1,10 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { type Encryption } from "~/libs/modules/encryption/encryption.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
-import { type Service } from "~/libs/types/types.js";
+import { type PaginationParameters, type Service } from "~/libs/types/types.js";
 
 import { UserError } from "./libs/exceptions/exceptions.js";
 import {
-	type PaginationParameters,
 	type UserAuthResponseDto,
 	type UserGetAllResponseDto,
 	type UserPatchRequestDto,

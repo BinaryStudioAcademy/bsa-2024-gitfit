@@ -1,7 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { NotificationMessage } from "~/libs/enums/enums.js";
-import { type AsyncThunkConfig } from "~/libs/types/types.js";
+import {
+	type AsyncThunkConfig,
+	type PaginationParameters,
+} from "~/libs/types/types.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
 import {
 	type UserGetAllResponseDto,
@@ -9,7 +12,6 @@ import {
 	type UserPatchResponseDto,
 } from "~/modules/users/users.js";
 
-import { type PaginationParameters } from "../libs/types/types.js";
 import { name as sliceName } from "./users.slice.js";
 
 const loadAll = createAsyncThunk<
