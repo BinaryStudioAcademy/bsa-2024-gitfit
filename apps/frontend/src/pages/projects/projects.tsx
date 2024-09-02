@@ -1,4 +1,9 @@
-import { Button, Modal, PageLayout } from "~/libs/components/components.js";
+import {
+	Button,
+	Loader,
+	Modal,
+	PageLayout,
+} from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
@@ -60,16 +65,20 @@ const Projects = (): JSX.Element => {
 		(dataStatus === DataStatus.PENDING && hasProject);
 
 	return (
-		<PageLayout isLoading={isLoading}>
+		<PageLayout>
 			<header className={styles["projects-header"]}>
 				<h1 className={styles["title"]}>Projects</h1>
 				<Button label="Create New" onClick={onModalOpen} />
 			</header>
 			<ProjectsSearch onChange={handleSearchChange} />
 			<div className={styles["projects-list"]}>
-				{projects.map((project) => (
-					<ProjectCard key={project.id} project={project} />
-				))}
+				{isLoading ? (
+					<Loader />
+				) : (
+					projects.map((project) => (
+						<ProjectCard key={project.id} project={project} />
+					))
+				)}
 			</div>
 			<Modal
 				isModalOpened={isModalOpened}

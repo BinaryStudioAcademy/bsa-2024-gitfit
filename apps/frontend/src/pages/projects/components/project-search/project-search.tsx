@@ -1,5 +1,4 @@
 import { Search } from "~/libs/components/components.js";
-import { useCallback } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
 
@@ -8,14 +7,10 @@ type Properties = {
 };
 
 const ProjectsSearch = ({ onChange }: Properties): JSX.Element => {
-	const handleSubmit = useCallback((event: React.FormEvent) => {
-		event.preventDefault();
-	}, []);
-
 	return (
-		<form className={styles["form-wrapper"]} onSubmit={handleSubmit}>
+		<div className={styles["search-container"]}>
 			<Search isLabelHidden label="Projects search" onChange={onChange} />
-		</form>
+		</div>
 	);
 };
 
