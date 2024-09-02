@@ -66,7 +66,7 @@ class GroupController extends BaseController {
 				this.deleteGroup(
 					options as APIHandlerOptions<{ params: { id: number } }>,
 				),
-			method: "POST",
+			method: "DELETE",
 			path: GroupsApiPath.$ID,
 		});
 
@@ -141,7 +141,7 @@ class GroupController extends BaseController {
 	 *         name: name
 	 *         required: true
 	 *         schema:
-	 *           type: string
+	 *           type: number
 	 *     responses:
 	 *       204:
 	 *         description: Group deleted successfully
@@ -153,10 +153,10 @@ class GroupController extends BaseController {
 		options: APIHandlerOptions<{ params: { id: number } }>,
 	): Promise<APIHandlerResponse> {
 		const { id } = options.params;
-		await this.groupService.delete(Number(id));
+		const isDeleted = await this.groupService.delete(id);
 
 		return {
-			payload: null,
+			payload: isDeleted,
 			status: HTTPCode.NO_CONTENT,
 		};
 	}

@@ -47,16 +47,16 @@ class GroupService implements Service {
 	}
 
 	public async delete(id: number): Promise<boolean> {
-		const group = await this.groupRepository.find(id);
+		const isDeleted = await this.groupRepository.delete(id);
 
-		if (!group) {
+		if (!isDeleted) {
 			throw new GroupError({
 				message: ExceptionMessage.GROUP_NOT_FOUND,
 				status: HTTPCode.NOT_FOUND,
 			});
 		}
 
-		return await this.groupRepository.delete(id);
+		return isDeleted;
 	}
 
 	public find(): ReturnType<Service["find"]> {
