@@ -1,5 +1,5 @@
 .user-popover {
-	max-width: 250px;
+	min-width: 250px;
 }
 
 .user-info {
