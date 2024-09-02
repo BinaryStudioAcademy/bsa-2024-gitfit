@@ -30,16 +30,11 @@ class GroupRepository implements Repository {
 			.query(trx)
 			.insertGraph(groupData, { relate: true })
 			.returning("*")
-			.withGraphJoined("[permissions, users]");
+			.withGraphFetched("[permissions, users]");
 
 		await trx.commit();
 
-		return GroupEntity.initialize({
-			id: group.id,
-			name: group.name,
-			permissions,
-			users,
-		});
+		return GroupEntity.initialize(group);
 	}
 
 	public async delete(id: number): Promise<boolean> {
@@ -55,8 +50,12 @@ class GroupRepository implements Repository {
 		return group ?? null;
 	}
 
-	public findAll(): ReturnType<Repository["findAll"]> {
-		return Promise.resolve([]);
+	public async findAll(): Promise<GroupEntity[]> {
+		const groups = await this.groupModel
+			.query()
+			.withGraphFetched("[permissions, users]");
+
+		return groups.map((group) => GroupEntity.initialize(group));
 	}
 
 	public async findByName(name: string): Promise<GroupModel | null> {
