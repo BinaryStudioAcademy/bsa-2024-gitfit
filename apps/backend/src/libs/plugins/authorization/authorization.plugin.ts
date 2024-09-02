@@ -8,10 +8,12 @@ import { type Token } from "~/libs/modules/token/token.js";
 import { AuthError } from "~/modules/auth/auth.js";
 import { type UserService } from "~/modules/users/user.service.js";
 
+import { checkIsWhiteRoute } from "./helpers/helpers.js";
+
 type Options = {
 	token: Token;
 	userService: UserService;
-	whiteRoutes: readonly RegExp[];
+	whiteRoutes: string[];
 };
 
 const authorization = fp<Options>((fastify, options, done) => {
@@ -19,13 +21,9 @@ const authorization = fp<Options>((fastify, options, done) => {
 
 	fastify.decorateRequest("user", null);
 
-	fastify.addHook("preHandler", async (request: FastifyRequest) => {
-		const { url } = request.raw;
-
-		for (const whiteRoute of whiteRoutes) {
-			if (whiteRoute.test(url as string)) {
-				return;
-			}
+	fastify.addHook("onRequest", async (request: FastifyRequest) => {
+		if (checkIsWhiteRoute(request.url, whiteRoutes)) {
+			return;
 		}
 
 		const BEARER_PREFIX = "Bearer ";
