@@ -16,3 +16,9 @@
 	font-weight: 600;
 	line-height: 120%;
 }
+
+.users-table {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}

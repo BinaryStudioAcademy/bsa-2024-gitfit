@@ -39,14 +39,16 @@ const AccessManagement = (): JSX.Element => {
 		<PageLayout>
 			<p className={styles["title"]}>Access Management</p>
 			<p className={styles["sub-title"]}>Users</p>
-			<Table<UserRow> columns={columns} data={data} />
-			<TablePagination
-				onPageChange={onPageChange}
-				onPageSizeChange={onPageSizeChange}
-				page={page}
-				pageSize={pageSize}
-				totalItemsCount={totalUsers}
-			/>
+			<div className={styles["users-table"]}>
+				<Table<UserRow> columns={columns} data={data} />
+				<TablePagination
+					onPageChange={onPageChange}
+					onPageSizeChange={onPageSizeChange}
+					page={page}
+					pageSize={pageSize}
+					totalItemsCount={totalUsers}
+				/>
+			</div>
 		</PageLayout>
 	);
 };
