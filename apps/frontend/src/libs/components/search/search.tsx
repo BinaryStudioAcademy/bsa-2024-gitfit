@@ -1,7 +1,8 @@
 import { Icon, Input } from "~/libs/components/components.js";
-import { DEBOUNCE_TIMEOUT } from "~/libs/constants/constants.js";
 import { initDebounce } from "~/libs/helpers/helpers.js";
 import { useAppForm, useEffect, useFormWatch } from "~/libs/hooks/hooks.js";
+
+import { SEARCH_TIMEOUT } from "./libs/constants/constants.js";
 
 type Properties = {
 	isLabelHidden: boolean;
@@ -24,7 +25,7 @@ const Search = ({
 	useEffect(() => {
 		const debouncedOnChange = initDebounce(() => {
 			onChange(value);
-		}, DEBOUNCE_TIMEOUT);
+		}, SEARCH_TIMEOUT);
 		debouncedOnChange(value);
 
 		return (): void => {
