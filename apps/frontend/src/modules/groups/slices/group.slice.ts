@@ -4,7 +4,7 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
 import { type GroupGetAllItemResponseDto } from "../libs/types/types.js";
-import { loadAll } from "./actions.js";
+import { deleteById, loadAll } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
@@ -28,6 +28,11 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(loadAll.rejected, (state) => {
 			state.groups = [];
 			state.dataStatus = DataStatus.REJECTED;
+		});
+		builder.addCase(deleteById.fulfilled, (state, action) => {
+			state.groups = state.groups.filter(
+				(group) => group.id !== action.payload,
+			);
 		});
 	},
 	initialState,

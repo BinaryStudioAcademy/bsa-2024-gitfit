@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+import { NotificationMessage } from "~/libs/enums/enums.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 
 import { type GroupGetAllResponseDto } from "../libs/types/types.js";
@@ -15,4 +16,16 @@ const loadAll = createAsyncThunk<
 	return await groupApi.getAll();
 });
 
-export { loadAll };
+const deleteById = createAsyncThunk<number, number, AsyncThunkConfig>(
+	`${sliceName}/delete`,
+	async (groupId, { extra }) => {
+		const { groupApi, toastNotifier } = extra;
+
+		await groupApi.delete(groupId);
+		toastNotifier.showSuccess(NotificationMessage.SUCCESS_GROUP_DELETE);
+
+		return groupId;
+	},
+);
+
+export { deleteById, loadAll };
