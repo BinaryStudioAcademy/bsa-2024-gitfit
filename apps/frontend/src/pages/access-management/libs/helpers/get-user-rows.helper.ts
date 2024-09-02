@@ -5,6 +5,7 @@ import { type UserRow } from "../types/types.js";
 const getUserRows = (users: UserAuthResponseDto[]): UserRow[] =>
 	users.map((user) => ({
 		createdAt: user.createdAt,
+		id: user.id,
 		name: user.name,
 	}));
 

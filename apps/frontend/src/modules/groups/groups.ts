@@ -12,7 +12,9 @@ const groupApi = new GroupApi({
 
 export { groupApi };
 export {
+	type GroupCreateRequestDto,
 	type GroupGetAllItemResponseDto,
 	type GroupGetAllResponseDto,
 } from "./libs/types/types.js";
+export { groupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 export { actions, reducer } from "./slices/groups.js";
