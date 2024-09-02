@@ -1,4 +1,4 @@
-import { PageLayout, Table } from "~/libs/components/components.js";
+import { Icon, PageLayout, Table } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -8,6 +8,7 @@ import {
 import { actions as groupActions } from "~/modules/groups/groups.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
+import { GroupPopover } from "./libs/components/components.js";
 import {
 	getGroupColumns,
 	getGroupRows,
@@ -25,6 +26,7 @@ const AccessManagement = (): JSX.Element => {
 	const { dataStatus: groupsDataStatus, groups } = useAppSelector(
 		({ groups }) => groups,
 	);
+
 	useEffect(() => {
 		void dispatch(userActions.loadAll());
 		void dispatch(groupActions.loadAll());
@@ -34,7 +36,19 @@ const AccessManagement = (): JSX.Element => {
 	const userData: UserRow[] = getUserRows(users);
 
 	const groupColumns = getGroupColumns();
-	const groupData: GroupRow[] = getGroupRows(groups);
+
+	const groupData: GroupRow[] = getGroupRows(groups).map((group) => {
+		const optionsElement = (
+			<GroupPopover groupId={group.id}>
+				<Icon height={20} name="ellipsis" width={20} />
+			</GroupPopover>
+		);
+
+		return {
+			...group,
+			options: optionsElement,
+		};
+	});
 
 	const isLoading = [usersDataStatus, groupsDataStatus].some(
 		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,

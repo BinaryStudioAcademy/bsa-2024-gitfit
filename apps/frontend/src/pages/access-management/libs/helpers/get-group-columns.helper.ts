@@ -17,6 +17,11 @@ const getGroupColumns = (): TableColumn<GroupRow>[] => [
 			formatDate(new Date(group.createdAt), "d MMM yyyy HH:mm"),
 		header: "Created At",
 	},
+	{
+		accessorFn: (group: GroupRow) => group.options,
+		header: "",
+		id: "options",
+	},
 ];
 
 export { getGroupColumns };
