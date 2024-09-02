@@ -27,9 +27,11 @@ const update = createAsyncThunk<
 >(`${sliceName}/update`, async ({ id, payload }, { extra }) => {
 	const { projectApi, toastNotifier } = extra;
 
+	const updatedProject = await projectApi.update(id, payload);
+
 	toastNotifier.showSuccess(NotificationMessage.SUCCESS_PROJECT_UPDATE);
 
-	return await projectApi.update(id, payload);
+	return updatedProject;
 });
 
 export { loadAll, update };

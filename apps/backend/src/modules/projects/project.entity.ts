@@ -53,6 +53,10 @@ class ProjectEntity implements Entity {
 		});
 	}
 
+	public getId(): null | number {
+		return this.id;
+	}
+
 	public toNewObject(): {
 		description: string;
 		name: string;

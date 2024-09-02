@@ -81,6 +81,17 @@ class ProjectService implements Service {
 			});
 		}
 
+		const projectWithSameName = await this.projectRepository.findByName(
+			projectData.name,
+		);
+
+		if (projectWithSameName && projectWithSameName.getId() !== id) {
+			throw new ProjectError({
+				message: ExceptionMessage.PROJECT_NAME_USED,
+				status: HTTPCode.CONFLICT,
+			});
+		}
+
 		const updatedItem = await this.projectRepository.update(id, projectData);
 
 		return updatedItem.toObject();
