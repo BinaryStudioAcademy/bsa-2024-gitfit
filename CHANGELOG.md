@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.2.0...v1.3.0) (2024-09-02)
+
+
+### Features
+
+* add an ability to create a project group gf-71 ([#108](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/108)) ([4ceb575](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/4ceb575bf603508a6a3942aa2592cb29f0b5adcb))
+* Add project page gf-86 ([#109](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/109)) ([ba11d74](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ba11d74366764dfafef62b367cd5f66a7182f0a9))
+* Sign Up page fields validation, Sign up button inconsistent text gf-131 ([#132](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/132)) ([c6496a4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c6496a4616237542cc6d88f83dd83eb2cb173359))
+
+
+### Bug Fixes
+
+* Make sidebar item to indicate the active page gf-118 ([#123](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/123)) ([b851b6c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b851b6c57c57c7dbe9f352cfd61e0729558cd244))
+
 ## [1.2.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.1.1...v1.2.0) (2024-08-30)
 
 
