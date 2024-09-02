@@ -8,6 +8,7 @@ import { GroupError } from "./libs/exceptions/exceptions.js";
 import {
 	type GroupCreateRequestDto,
 	type GroupCreateResponseDto,
+	type GroupGetAllResponseDto,
 } from "./libs/types/types.js";
 
 class GroupService implements Service {
@@ -53,8 +54,12 @@ class GroupService implements Service {
 		return Promise.resolve(null);
 	}
 
-	public findAll(): ReturnType<Service["findAll"]> {
-		return Promise.resolve({ items: [] });
+	public async findAll(): Promise<GroupGetAllResponseDto> {
+		const items = await this.groupRepository.findAll();
+
+		return {
+			items: items.map((item) => item.toObject()),
+		};
 	}
 
 	public update(): ReturnType<Service["update"]> {

@@ -1,4 +1,4 @@
-type GroupCreateResponseDto = {
+type GroupGetAllItemResponseDto = {
 	createdAt: string;
 	id: number;
 	name: string;
@@ -6,4 +6,4 @@ type GroupCreateResponseDto = {
 	users: { id: number }[];
 };
 
-export { type GroupCreateResponseDto };
+export { type GroupGetAllItemResponseDto };
