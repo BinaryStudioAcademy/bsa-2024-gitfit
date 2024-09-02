@@ -45,6 +45,7 @@ export {
 	GroupsApiPath,
 	type GroupUpdateRequestDto,
 	type GroupUpdateResponseDto,
+	groupUpdateValidationSchema,
 } from "./modules/groups/groups.js";
 export {
 	type ProjectGroupCreateRequestDto,

@@ -13,7 +13,10 @@ import {
 	type GroupCreateRequestDto,
 	type GroupUpdateRequestDto,
 } from "./libs/types/types.js";
-import { groupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+import {
+	groupCreateValidationSchema,
+	groupUpdateValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
 
 /**
  * @swagger
@@ -80,6 +83,9 @@ class GroupController extends BaseController {
 				),
 			method: "PUT",
 			path: GroupsApiPath.$ID,
+			validation: {
+				body: groupUpdateValidationSchema,
+			},
 		});
 	}
 

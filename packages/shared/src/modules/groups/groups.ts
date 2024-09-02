@@ -8,4 +8,7 @@ export {
 	type GroupUpdateRequestDto,
 	type GroupUpdateResponseDto,
 } from "./libs/types/types.js";
-export { groupCreate as groupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+export {
+	groupCreate as groupCreateValidationSchema,
+	groupUpdate as groupUpdateValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
