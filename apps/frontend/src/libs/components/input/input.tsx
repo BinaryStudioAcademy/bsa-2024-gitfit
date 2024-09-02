@@ -14,6 +14,7 @@ type Properties<T extends FieldValues> = {
 	autoComplete?: string;
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
+	isDisabled?: boolean;
 	label: string;
 	leftIcon?: JSX.Element;
 	name: FieldPath<T>;
@@ -26,6 +27,7 @@ const Input = <T extends FieldValues>({
 	autoComplete,
 	control,
 	errors,
+	isDisabled = false,
 	label,
 	leftIcon,
 	name,
@@ -63,6 +65,7 @@ const Input = <T extends FieldValues>({
 				<input
 					autoComplete={autoComplete}
 					className={inputClassNames}
+					disabled={isDisabled}
 					name={field.name}
 					onChange={field.onChange}
 					placeholder={placeholder}

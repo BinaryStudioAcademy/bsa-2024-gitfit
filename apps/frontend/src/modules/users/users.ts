@@ -15,12 +15,15 @@ export {
 	type UserAuthResponseDto,
 	type UserGetAllItemResponseDto,
 	type UserGetAllResponseDto,
+	type UserPatchRequestDto,
+	type UserPatchResponseDto,
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,
 	type UserSignUpRequestDto,
 	type UserSignUpResponseDto,
 } from "./libs/types/types.js";
 export {
+	userPatchValidationSchema,
 	userSignInValidationSchema,
 	userSignUpValidationSchema,
 } from "./libs/validation-schemas/validation-schemas.js";

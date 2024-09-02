@@ -24,7 +24,7 @@ const Projects = (): JSX.Element => {
 
 	return (
 		<PageLayout isLoading={isLoading}>
-			<h1 className={styles["label"]}>Projects</h1>
+			<h1 className={styles["title"]}>Projects</h1>
 			<div className={styles["projects-list"]}>
 				{projects.map((project) => (
 					<ProjectCard key={project.id} project={project} />
