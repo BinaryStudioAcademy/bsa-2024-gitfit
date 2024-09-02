@@ -7,7 +7,6 @@ import { UsersApiPath } from "./libs/enums/enums.js";
 import {
 	type PaginationParameters,
 	type UserGetAllResponseDto,
-	type UserGetAllResponseDto,
 	type UserPatchRequestDto,
 	type UserPatchResponseDto,
 } from "./libs/types/types.js";

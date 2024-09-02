@@ -24,15 +24,13 @@ import styles from "./styles.module.css";
 
 const AccessManagement = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-  
-	const { totalUsers, users } = useAppSelector(({ users }) => ({
-		totalUsers: users.totalUsers,
-		users: users.users,
-	}));
-    
-  const { dataStatus: usersDataStatus, users } = useAppSelector(
-		({ users }) => users,
-	);
+
+	const {
+		dataStatus: usersDataStatus,
+		totalUsers,
+		users,
+	} = useAppSelector(({ users }) => users);
+
 	const { dataStatus: groupsDataStatus, groups } = useAppSelector(
 		({ groups }) => groups,
 	);
@@ -62,15 +60,15 @@ const AccessManagement = (): JSX.Element => {
 			<section>
 				<h2 className={styles["section-title"]}>Users</h2>
 				<div className={styles["users-table"]}>
-				<Table<UserRow> columns={columns} data={data} />
-				<TablePagination
-					onPageChange={onPageChange}
-					onPageSizeChange={onPageSizeChange}
-					page={page}
-					pageSize={pageSize}
-					totalItemsCount={totalUsers}
-				/>
-			</div>
+					<Table<UserRow> columns={userColumns} data={userData} />
+					<TablePagination
+						onPageChange={onPageChange}
+						onPageSizeChange={onPageSizeChange}
+						page={page}
+						pageSize={pageSize}
+						totalItemsCount={totalUsers}
+					/>
+				</div>
 			</section>
 			<section>
 				<h2 className={styles["section-title"]}>Groups</h2>
