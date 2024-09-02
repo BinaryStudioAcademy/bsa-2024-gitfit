@@ -1,9 +1,22 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
-import { type ProjectGetAllResponseDto } from "~/modules/projects/projects.js";
+import {
+	type ProjectGetAllItemResponseDto,
+	type ProjectGetAllResponseDto,
+} from "~/modules/projects/projects.js";
 
 import { name as sliceName } from "./project.slice.js";
+
+const getById = createAsyncThunk<
+	ProjectGetAllItemResponseDto,
+	{ id: string },
+	AsyncThunkConfig
+>(`${sliceName}/getById`, async (payload, { extra }) => {
+	const { projectApi } = extra;
+
+	return await projectApi.getById(payload);
+});
 
 const loadAll = createAsyncThunk<
 	ProjectGetAllResponseDto,
@@ -15,4 +28,4 @@ const loadAll = createAsyncThunk<
 	return await projectApi.getAll();
 });
 
-export { loadAll };
+export { getById, loadAll };

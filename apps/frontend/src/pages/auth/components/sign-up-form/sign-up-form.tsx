@@ -77,7 +77,7 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 					type={isPasswordVisible ? "text" : "password"}
 				/>
 			</div>
-			<Button label="Sign up" type="submit" />
+			<Button label="Create Account" type="submit" />
 		</form>
 	);
 };

@@ -43,8 +43,14 @@ export {
 	GroupsApiPath,
 } from "./modules/groups/groups.js";
 export {
+	type ProjectGroupCreateRequestDto,
+	type ProjectGroupCreateResponseDto,
+	projectGroupCreateValidationSchema,
+	ProjectGroupError,
+	ProjectGroupsApiPath,
+} from "./modules/project-groups/project-groups.js";
+export {
 	type ProjectCreateRequestDto,
-	type ProjectCreateResponseDto,
 	projectCreateValidationSchema,
 	ProjectError,
 	type ProjectGetAllItemResponseDto,
