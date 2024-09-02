@@ -49,7 +49,6 @@ export {
 } from "./modules/project-groups/project-groups.js";
 export {
 	type ProjectCreateRequestDto,
-	type ProjectCreateResponseDto,
 	projectCreateValidationSchema,
 	ProjectError,
 	type ProjectGetAllItemResponseDto,
