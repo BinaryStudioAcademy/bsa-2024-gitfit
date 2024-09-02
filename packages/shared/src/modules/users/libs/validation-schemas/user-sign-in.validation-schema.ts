@@ -9,7 +9,7 @@ const userSignIn: z.ZodType<UserSignInRequestDto> = z
 			.string()
 			.trim()
 			.min(UserValidationRule.EMAIL_MINIMUM_LENGTH, {
-				message: UserValidationMessage.EMAIL_REQUIRED,
+				message: UserValidationMessage.EMAIL_TOO_SHORT,
 			})
 			.max(UserValidationRule.EMAIL_MAXIMUM_LENGTH, {
 				message: UserValidationMessage.EMAIL_TOO_LONG,
