@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.2.0...backend-v1.3.0) (2024-09-02)
+
+
+### Features
+
+* add an ability to create a project gf-87 ([#115](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/115)) ([2e08e17](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2e08e17056b0293e2ed61ab0ab7ec208835db647))
+
 ## [1.2.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.1.0...backend-v1.2.0) (2024-09-02)
 
 
