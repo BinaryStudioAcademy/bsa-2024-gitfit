@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.1.0...shared-v1.2.0) (2024-09-02)
+
+
+### Features
+
+* add an ability to edit user name gf-89 ([#107](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/107)) ([6dbdf12](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6dbdf12aa3b05675acfb7a78ac24b64bd28c707b))
+* add an ability to view groups gf-78 ([#122](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/122)) ([fd77bf6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/fd77bf6b8e388c185625cb3bf38959660c3fa46c))
+* Validation of the Password field on the login page gf-134 ([#141](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/141)) ([c5793e1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c5793e146ea97a9df84c728c4139879c582f908f))
+
 ## [1.1.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.0.0...shared-v1.1.0) (2024-09-02)
 
 
