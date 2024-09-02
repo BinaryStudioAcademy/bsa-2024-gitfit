@@ -4,11 +4,17 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	href?: string | undefined;
+	isDisabled?: boolean;
 	label: string;
 	type?: "button" | "submit";
 };
 
-const Button = ({ href, label, type = "button" }: Properties): JSX.Element => {
+const Button = ({
+	href,
+	isDisabled = false,
+	label,
+	type = "button",
+}: Properties): JSX.Element => {
 	if (href) {
 		return (
 			<NavLink className={styles["button"] ?? ""} to={href}>
@@ -18,7 +24,7 @@ const Button = ({ href, label, type = "button" }: Properties): JSX.Element => {
 	}
 
 	return (
-		<button className={styles["button"]} type={type}>
+		<button className={styles["button"]} disabled={isDisabled} type={type}>
 			{label}
 		</button>
 	);
