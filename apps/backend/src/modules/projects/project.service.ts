@@ -41,8 +41,8 @@ class ProjectService implements Service {
 		return item.toObject();
 	}
 
-	public delete(): ReturnType<Service["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		return await this.projectRepository.delete(id);
 	}
 
 	public async find(id: number): Promise<ProjectGetAllItemResponseDto> {

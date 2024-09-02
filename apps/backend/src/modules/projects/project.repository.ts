@@ -1,3 +1,4 @@
+import { NOTHING_DELETED_COUNT } from "~/libs/constants/constants.js";
 import { SortType } from "~/libs/enums/enums.js";
 import { type Repository } from "~/libs/types/types.js";
 
@@ -26,8 +27,13 @@ class ProjectRepository implements Repository {
 		return ProjectEntity.initialize(user);
 	}
 
-	public delete(): ReturnType<Repository["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const deletedRowsCount = await this.projectModel
+			.query()
+			.deleteById(id)
+			.execute();
+
+		return deletedRowsCount > NOTHING_DELETED_COUNT;
 	}
 
 	public async find(id: number): Promise<null | ProjectEntity> {
