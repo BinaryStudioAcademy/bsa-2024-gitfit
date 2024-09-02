@@ -1,5 +1,5 @@
 .user-popover {
-	max-width: 250px;
+	min-width: 250px;
 }
 
 .user-info {
@@ -35,6 +35,7 @@
 .button {
 	width: 100%;
 	padding: 8px 12px;
+	font-family: inherit;
 	font-size: 16px;
 	font-weight: 500;
 	line-height: 1.2;
