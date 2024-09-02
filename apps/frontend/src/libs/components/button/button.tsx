@@ -3,20 +3,18 @@ import { getValidClassNames } from "~/libs/helpers/helpers.js";
 
 import styles from "./styles.module.css";
 
-type ButtonVariant = "danger" | "default" | "outlined";
-
 type Properties = {
 	href?: string | undefined;
 	isDisabled?: boolean;
 	label: string;
 	onClick?: () => void;
 	type?: "button" | "submit";
-	variant?: ButtonVariant;
+	variant?: "danger" | "default" | "outlined";
 };
 
 const Button = ({
 	href,
-	isDisabled = false,
+	isDisabled,
 	label,
 	onClick,
 	type = "button",

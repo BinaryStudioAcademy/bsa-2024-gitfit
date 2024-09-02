@@ -4,11 +4,12 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
-import { getById, loadAll } from "./actions.js";
+import { create, getById, loadAll } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
 	project: null | ProjectGetAllItemResponseDto;
+	projectCreateStatus: ValueOf<typeof DataStatus>;
 	projects: ProjectGetAllItemResponseDto[];
 	projectStatus: ValueOf<typeof DataStatus>;
 };
@@ -16,6 +17,7 @@ type State = {
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	project: null,
+	projectCreateStatus: DataStatus.IDLE,
 	projects: [],
 	projectStatus: DataStatus.IDLE,
 };
@@ -43,6 +45,16 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(loadAll.rejected, (state) => {
 			state.projects = [];
 			state.dataStatus = DataStatus.REJECTED;
+		});
+		builder.addCase(create.pending, (state) => {
+			state.projectCreateStatus = DataStatus.PENDING;
+		});
+		builder.addCase(create.fulfilled, (state, action) => {
+			state.projects = [action.payload, ...state.projects];
+			state.projectCreateStatus = DataStatus.FULFILLED;
+		});
+		builder.addCase(create.rejected, (state) => {
+			state.projectCreateStatus = DataStatus.REJECTED;
 		});
 	},
 	initialState,

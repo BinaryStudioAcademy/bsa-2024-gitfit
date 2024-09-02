@@ -14,11 +14,13 @@ type Properties<T extends FieldValues> = {
 	autoComplete?: string;
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
+	isDisabled?: boolean;
 	label: string;
 	leftIcon?: JSX.Element;
 	name: FieldPath<T>;
 	placeholder?: string;
 	rightIcon?: JSX.Element;
+	rowsCount?: number;
 	type?: "email" | "password" | "text";
 };
 
@@ -26,11 +28,13 @@ const Input = <T extends FieldValues>({
 	autoComplete,
 	control,
 	errors,
+	isDisabled = false,
 	label,
 	leftIcon,
 	name,
 	placeholder = "",
 	rightIcon,
+	rowsCount,
 	type = "text",
 }: Properties<T>): JSX.Element => {
 	const { field } = useFormController({ control, name });
@@ -39,11 +43,7 @@ const Input = <T extends FieldValues>({
 	const hasError = Boolean(error);
 	const hasLeftIcon = Boolean(leftIcon);
 	const hasRightIcon = Boolean(rightIcon);
-	const inputClassNames = getValidClassNames(
-		styles["input-field"],
-		hasLeftIcon && styles["with-left-icon"],
-		hasRightIcon && styles["with-right-icon"],
-	);
+	const isTextArea = Boolean(rowsCount);
 
 	return (
 		<label className={styles["input-label"]}>
@@ -60,15 +60,31 @@ const Input = <T extends FieldValues>({
 					</div>
 				)}
 
-				<input
-					autoComplete={autoComplete}
-					className={inputClassNames}
-					name={field.name}
-					onChange={field.onChange}
-					placeholder={placeholder}
-					type={type}
-					value={field.value}
-				/>
+				{isTextArea ? (
+					<textarea
+						className={getValidClassNames(
+							styles["input-field"],
+							styles["input-textarea"],
+						)}
+						disabled={isDisabled}
+						name={field.name}
+						onChange={field.onChange}
+						placeholder={placeholder}
+						rows={rowsCount}
+						value={field.value}
+					/>
+				) : (
+					<input
+						autoComplete={autoComplete}
+						className={styles["input-field"]}
+						disabled={isDisabled}
+						name={field.name}
+						onChange={field.onChange}
+						placeholder={placeholder}
+						type={type}
+						value={field.value}
+					/>
+				)}
 
 				{hasRightIcon && (
 					<div

@@ -1,0 +1,19 @@
+.form-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	width: 100%;
+}
+
+.inputs-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 100%;
+	max-width: 500px;
+}
+
+.button-wrapper {
+	display: flex;
+	justify-content: flex-start;
+}

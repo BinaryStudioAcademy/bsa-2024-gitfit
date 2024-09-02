@@ -1,0 +1,16 @@
+.title {
+	margin-top: 0;
+	margin-bottom: 24px;
+}
+
+.profile-loader {
+	display: flex;
+	flex: 1;
+	align-items: center;
+}
+
+.profile-content {
+	width: 100%;
+	max-width: 800px;
+	margin: 0 auto;
+}

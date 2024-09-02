@@ -1,9 +1,11 @@
+export { EMPTY_LENGTH } from "./libs/constants/constants.js";
 export {
 	APIPath,
 	AppEnvironment,
 	ContentType,
 	ExceptionMessage,
 	ServerErrorType,
+	SortType,
 } from "./libs/enums/enums.js";
 export {
 	ApplicationError,
@@ -62,6 +64,9 @@ export {
 	UserError,
 	type UserGetAllItemResponseDto,
 	type UserGetAllResponseDto,
+	type UserPatchRequestDto,
+	type UserPatchResponseDto,
+	userPatchValidationSchema,
 	UsersApiPath,
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,

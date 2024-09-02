@@ -14,6 +14,7 @@ import { store } from "~/libs/modules/store/store.js";
 import { AccessManagement } from "~/pages/access-management/access-management.jsx";
 import { Auth } from "~/pages/auth/auth.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
+import { Profile } from "~/pages/profile/profile.jsx";
 import { Project } from "~/pages/project/project.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
 import { Ui } from "~/pages/ui/ui.jsx";
@@ -42,6 +43,14 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 									</ProtectedRoute>
 								),
 								path: AppRoute.ACCESS_MANAGEMENT,
+							},
+							{
+								element: (
+									<ProtectedRoute>
+										<Profile />
+									</ProtectedRoute>
+								),
+								path: AppRoute.PROFILE,
 							},
 							{
 								element: <Auth />,

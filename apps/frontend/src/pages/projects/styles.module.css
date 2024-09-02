@@ -5,6 +5,11 @@
 	line-height: 120%;
 }
 
+.projects-header {
+	display: flex;
+	justify-content: space-between;
+}
+
 .projects-list {
 	display: flex;
 	flex-direction: column;
