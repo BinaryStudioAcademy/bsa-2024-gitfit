@@ -14,12 +14,14 @@ type Properties<T extends FieldValues> = {
 	autoComplete?: string;
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
-	isLabelVisible?: boolean;
+	isDisabled?: boolean;
+	isLabelHidden?: boolean;
 	label: string;
 	leftIcon?: JSX.Element;
 	name: FieldPath<T>;
 	placeholder?: string;
 	rightIcon?: JSX.Element;
+	rowsCount?: number;
 	type?: "email" | "password" | "search" | "text";
 };
 
@@ -27,12 +29,14 @@ const Input = <T extends FieldValues>({
 	autoComplete,
 	control,
 	errors,
-	isLabelVisible = true,
+	isDisabled = false,
+	isLabelHidden = false,
 	label,
 	leftIcon,
 	name,
 	placeholder = "",
 	rightIcon,
+	rowsCount,
 	type = "text",
 }: Properties<T>): JSX.Element => {
 	const { field } = useFormController({ control, name });
@@ -41,8 +45,10 @@ const Input = <T extends FieldValues>({
 	const hasError = Boolean(error);
 	const hasLeftIcon = Boolean(leftIcon);
 	const hasRightIcon = Boolean(rightIcon);
+	const isTextArea = Boolean(rowsCount);
 	const inputClassNames = getValidClassNames(
 		styles["input-field"],
+		isTextArea && styles["input-textarea"],
 		hasLeftIcon && styles["with-left-icon"],
 		hasRightIcon && styles["with-right-icon"],
 	);
@@ -51,7 +57,7 @@ const Input = <T extends FieldValues>({
 		<label className={styles["input-label"]}>
 			<span
 				className={
-					isLabelVisible ? styles["input-label-text"] : "visually-hidden"
+					isLabelHidden ? "visually-hidden" : styles["input-label-text"]
 				}
 			>
 				{label}
@@ -68,15 +74,28 @@ const Input = <T extends FieldValues>({
 					</div>
 				)}
 
-				<input
-					autoComplete={autoComplete}
-					className={inputClassNames}
-					name={field.name}
-					onChange={field.onChange}
-					placeholder={placeholder}
-					type={type}
-					value={field.value}
-				/>
+				{isTextArea ? (
+					<textarea
+						className={inputClassNames}
+						disabled={isDisabled}
+						name={field.name}
+						onChange={field.onChange}
+						placeholder={placeholder}
+						rows={rowsCount}
+						value={field.value}
+					/>
+				) : (
+					<input
+						autoComplete={autoComplete}
+						className={inputClassNames}
+						disabled={isDisabled}
+						name={field.name}
+						onChange={field.onChange}
+						placeholder={placeholder}
+						type={type}
+						value={field.value}
+					/>
+				)}
 
 				{hasRightIcon && (
 					<div

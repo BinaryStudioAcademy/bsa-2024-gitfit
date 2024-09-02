@@ -1,5 +1,48 @@
 # Changelog
 
+## [1.5.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.4.0...v1.5.0) (2024-09-02)
+
+
+### Features
+
+* add an ability to create a project gf-87 ([#115](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/115)) ([2e08e17](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2e08e17056b0293e2ed61ab0ab7ec208835db647))
+
+## [1.4.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.3.0...v1.4.0) (2024-09-02)
+
+
+### Features
+
+* add an ability to edit user name gf-89 ([#107](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/107)) ([6dbdf12](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6dbdf12aa3b05675acfb7a78ac24b64bd28c707b))
+* add an ability to view groups gf-78 ([#122](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/122)) ([fd77bf6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/fd77bf6b8e388c185625cb3bf38959660c3fa46c))
+* Validation of the Password field on the login page gf-134 ([#141](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/141)) ([c5793e1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c5793e146ea97a9df84c728c4139879c582f908f))
+
+## [1.3.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.2.0...v1.3.0) (2024-09-02)
+
+
+### Features
+
+* add an ability to create a project group gf-71 ([#108](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/108)) ([4ceb575](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/4ceb575bf603508a6a3942aa2592cb29f0b5adcb))
+* Add project page gf-86 ([#109](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/109)) ([ba11d74](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ba11d74366764dfafef62b367cd5f66a7182f0a9))
+* Sign Up page fields validation, Sign up button inconsistent text gf-131 ([#132](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/132)) ([c6496a4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c6496a4616237542cc6d88f83dd83eb2cb173359))
+
+
+### Bug Fixes
+
+* Make sidebar item to indicate the active page gf-118 ([#123](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/123)) ([b851b6c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b851b6c57c57c7dbe9f352cfd61e0729558cd244))
+
+## [1.2.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.1.1...v1.2.0) (2024-08-30)
+
+
+### Features
+
+* add breadcrumbs component gf-101 ([#104](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/104)) ([a1994c5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a1994c518a8f7032386d225c058c80e4ae672427))
+
+
+### Bug Fixes
+
+* Abscence of a logo on the Sign In and Sign Up pages gf-121 ([#129](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/129)) ([35663ca](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/35663cadcb961a25dcfe95727122b7969887a40e))
+* Loader is missing when switching between pages gf-119 ([#127](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/127)) ([9ee75f5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9ee75f56c9a1e2e570cee0c0d72ba93017eaf6dd))
+
 ## [1.1.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.1.0...v1.1.1) (2024-08-30)
 
 

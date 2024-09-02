@@ -1,10 +1,11 @@
-export { EMPTY_ARRAY_LENGTH } from "./libs/constants/constants.js";
+export { EMPTY_LENGTH } from "./libs/constants/constants.js";
 export {
 	APIPath,
 	AppEnvironment,
 	ContentType,
 	ExceptionMessage,
 	ServerErrorType,
+	SortType,
 } from "./libs/enums/enums.js";
 export {
 	ApplicationError,
@@ -40,11 +41,19 @@ export {
 	type GroupCreateResponseDto,
 	groupCreateValidationSchema,
 	GroupError,
+	type GroupGetAllItemResponseDto,
+	type GroupGetAllResponseDto,
 	GroupsApiPath,
 } from "./modules/groups/groups.js";
 export {
+	type ProjectGroupCreateRequestDto,
+	type ProjectGroupCreateResponseDto,
+	projectGroupCreateValidationSchema,
+	ProjectGroupError,
+	ProjectGroupsApiPath,
+} from "./modules/project-groups/project-groups.js";
+export {
 	type ProjectCreateRequestDto,
-	type ProjectCreateResponseDto,
 	projectCreateValidationSchema,
 	ProjectError,
 	type ProjectGetAllItemResponseDto,
@@ -57,6 +66,9 @@ export {
 	UserError,
 	type UserGetAllItemResponseDto,
 	type UserGetAllResponseDto,
+	type UserPatchRequestDto,
+	type UserPatchResponseDto,
+	userPatchValidationSchema,
 	UsersApiPath,
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,

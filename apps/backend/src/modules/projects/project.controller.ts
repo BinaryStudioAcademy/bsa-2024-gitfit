@@ -71,6 +71,17 @@ class ProjectController extends BaseController {
 			method: "GET",
 			path: ProjectsApiPath.ROOT,
 		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.getById(
+					options as APIHandlerOptions<{
+						params: { id: string };
+					}>,
+				),
+			method: "GET",
+			path: ProjectsApiPath.$ID,
+		});
 	}
 
 	/**
@@ -140,6 +151,41 @@ class ProjectController extends BaseController {
 
 		return {
 			payload: await this.projectService.findAllbyName(query),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /projects/{id}:
+	 *    get:
+	 *      description: Get project by ID
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          schema:
+	 *            type: integer
+	 *          required: true
+	 *          description: Numeric ID of the project to retrieve
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 *                properties:
+	 *                  message:
+	 *                    type: object
+	 *                    $ref: "#/components/schemas/Project"
+	 */
+	private async getById(
+		options: APIHandlerOptions<{
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.projectService.find(Number(options.params.id)),
 			status: HTTPCode.OK,
 		};
 	}

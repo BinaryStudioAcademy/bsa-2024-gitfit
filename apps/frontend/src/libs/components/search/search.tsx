@@ -4,13 +4,13 @@ import { initDebounce } from "~/libs/helpers/helpers.js";
 import { useAppForm, useEffect, useFormWatch } from "~/libs/hooks/hooks.js";
 
 type Properties = {
-	isLabelVisible: boolean;
+	isLabelHidden: boolean;
 	label: string;
 	onChange: (search: string) => void;
 };
 
 const Search = ({
-	isLabelVisible,
+	isLabelHidden,
 	label,
 	onChange,
 }: Properties): JSX.Element => {
@@ -36,7 +36,7 @@ const Search = ({
 		<Input
 			control={control}
 			errors={errors}
-			isLabelVisible={isLabelVisible}
+			isLabelHidden={isLabelHidden}
 			label={label}
 			leftIcon={<Icon height={20} name="search" width={20} />}
 			name="search"
