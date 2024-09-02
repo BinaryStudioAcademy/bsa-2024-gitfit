@@ -1,1 +1,1 @@
-export { ProjectError } from "./user-error.exception.js";
+export { ProjectError } from "./project-error.exception.js";

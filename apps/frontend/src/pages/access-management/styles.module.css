@@ -2,16 +2,18 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	margin-top: 0;
+	margin: 0;
 }
 
 .title {
+	margin: 0;
 	font-size: 30px;
 	font-weight: 600;
 	line-height: 120%;
 }
 
-.sub-title {
+.section-title {
+	margin: 32px 0 24px;
 	font-size: 24px;
 	font-weight: 600;
 	line-height: 120%;
