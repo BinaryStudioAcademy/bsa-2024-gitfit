@@ -56,9 +56,10 @@ const Input = <T extends FieldValues>({
 	return (
 		<label className={styles["input-label"]}>
 			<span
-				className={
-					isLabelHidden ? "visually-hidden" : styles["input-label-text"]
-				}
+				className={getValidClassNames(
+					styles["input-label-text"],
+					isLabelHidden && "visually-hidden",
+				)}
 			>
 				{label}
 			</span>
