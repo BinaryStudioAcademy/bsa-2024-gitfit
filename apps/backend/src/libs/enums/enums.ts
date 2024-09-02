@@ -1,4 +1,4 @@
-export { SortType } from "./sort-type.enum.js";
+export { SortType } from "@git-fit/shared";
 export {
 	APIPath,
 	AppEnvironment,

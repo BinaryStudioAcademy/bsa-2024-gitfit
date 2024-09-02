@@ -5,6 +5,7 @@ export {
 	ContentType,
 	ExceptionMessage,
 	ServerErrorType,
+	SortType,
 } from "./libs/enums/enums.js";
 export {
 	ApplicationError,
