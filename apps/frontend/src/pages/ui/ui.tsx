@@ -33,7 +33,7 @@ const Ui = (): JSX.Element => {
 	const modal = useModal();
 
 	useEffect(() => {
-		void dispatch(userActions.loadAll());
+		void dispatch(userActions.loadAll({ page: 1, pageSize: 10 }));
 	}, [dispatch]);
 
 	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({

@@ -9,7 +9,10 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 import { type UserService } from "~/modules/users/user.service.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
-import { type PaginationParameters, type UserPatchRequestDto } from "./libs/types/types.js";
+import {
+	type PaginationParameters,
+	type UserPatchRequestDto,
+} from "./libs/types/types.js";
 import { userPatchValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 
 /**
