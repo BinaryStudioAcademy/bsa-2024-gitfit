@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.2.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.1.1...frontend-v1.2.0) (2024-08-30)
+
+
+### Features
+
+* add breadcrumbs component gf-101 ([#104](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/104)) ([a1994c5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a1994c518a8f7032386d225c058c80e4ae672427))
+
+
+### Bug Fixes
+
+* Abscence of a logo on the Sign In and Sign Up pages gf-121 ([#129](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/129)) ([35663ca](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/35663cadcb961a25dcfe95727122b7969887a40e))
+* Loader is missing when switching between pages gf-119 ([#127](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/127)) ([9ee75f5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9ee75f56c9a1e2e570cee0c0d72ba93017eaf6dd))
+
+## [1.1.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.1.0...frontend-v1.1.1) (2024-08-30)
+
+
+### Bug Fixes
+
+* fixed 'no token provided' error on 'access management' page gf-117 ([#125](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/125)) ([667be01](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/667be01f574c0d516f5adfc61a84d56f72ab2f9e))
+* Inconsistent layout on the Projects and Access Managment page gf-120 ([#126](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/126)) ([1777928](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1777928094417a5db688b8db4deb238d2a940c38))
+
 ## [1.1.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.0.0...frontend-v1.1.0) (2024-08-29)
 
 

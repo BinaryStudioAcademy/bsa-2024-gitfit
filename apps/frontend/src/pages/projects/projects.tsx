@@ -1,4 +1,4 @@
-import { Loader, PageLayout } from "~/libs/components/components.js";
+import { PageLayout } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -20,22 +20,16 @@ const Projects = (): JSX.Element => {
 	}, [dispatch]);
 
 	const isLoading =
-		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
+		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
 	return (
-		<PageLayout>
+		<PageLayout isLoading={isLoading}>
 			<h1 className={styles["label"]}>Projects</h1>
-			{isLoading ? (
-				<div className={styles["projects-loader"]}>
-					<Loader />
-				</div>
-			) : (
-				<div className={styles["projects-list"]}>
-					{projects.map((project) => (
-						<ProjectCard key={project.id} project={project} />
-					))}
-				</div>
-			)}
+			<div className={styles["projects-list"]}>
+				{projects.map((project) => (
+					<ProjectCard key={project.id} project={project} />
+				))}
+			</div>
 		</PageLayout>
 	);
 };

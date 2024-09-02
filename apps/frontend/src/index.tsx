@@ -14,6 +14,7 @@ import { store } from "~/libs/modules/store/store.js";
 import { AccessManagement } from "~/pages/access-management/access-management.jsx";
 import { Auth } from "~/pages/auth/auth.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
+import { Project } from "~/pages/project/project.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
 import { Ui } from "~/pages/ui/ui.jsx";
 
@@ -35,12 +36,24 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 								path: AppRoute.ROOT,
 							},
 							{
+								element: (
+									<ProtectedRoute>
+										<AccessManagement />
+									</ProtectedRoute>
+								),
+								path: AppRoute.ACCESS_MANAGEMENT,
+							},
+							{
 								element: <Auth />,
 								path: AppRoute.SIGN_IN,
 							},
 							{
 								element: <Auth />,
 								path: AppRoute.SIGN_UP,
+							},
+							{
+								element: <Project />,
+								path: AppRoute.PROJECT,
 							},
 						],
 						element: <App />,
@@ -50,17 +63,8 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 						element: <NotFound />,
 						path: AppRoute.ANY,
 					},
-					{
-						element: (
-							<ProtectedRoute>
-								<AccessManagement />
-							</ProtectedRoute>
-						),
-						path: AppRoute.ACCESS_MANAGEMENT,
-					},
 				]}
 			/>
-
 			<ToastContainer />
 		</StoreProvider>
 	</StrictMode>,

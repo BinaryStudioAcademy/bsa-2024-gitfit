@@ -1,4 +1,5 @@
 import {
+	Breadcrumbs,
 	ConfirmationModal,
 	Modal,
 	Select,
@@ -71,6 +72,13 @@ const Ui = (): JSX.Element => {
 				onConfirm={handleDeleteConfirm}
 				onModalClose={modal.onModalClose}
 				title="Are you sure?"
+			/>
+			<Breadcrumbs
+				items={[
+					{ href: "/", label: "GitFit" },
+					{ href: "/", label: "Projects" },
+					{ label: "User Interface" },
+				]}
 			/>
 			<TablePagination
 				onPageChange={onPageChange}
