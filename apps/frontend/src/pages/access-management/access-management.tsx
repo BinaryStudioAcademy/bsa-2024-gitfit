@@ -47,9 +47,10 @@ const AccessManagement = (): JSX.Element => {
 
 	useEffect(() => {
 		if (groupCreateStatus === DataStatus.FULFILLED) {
+			void dispatch(userActions.loadAll());
 			onModalClose();
 		}
-	}, [groupCreateStatus, onModalClose]);
+	}, [dispatch, groupCreateStatus, onModalClose]);
 
 	const handleGroupCreateSubmit = useCallback(
 		(payload: GroupCreateRequestDto) => {
