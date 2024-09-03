@@ -1,0 +1,9 @@
+.options-cell {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.options-content {
+	padding: 4px;
+}

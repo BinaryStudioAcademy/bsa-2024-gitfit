@@ -14,5 +14,7 @@ export { groupApi };
 export {
 	type GroupGetAllItemResponseDto,
 	type GroupGetAllResponseDto,
+	type GroupUpdateRequestDto,
 } from "./libs/types/types.js";
+export { groupUpdateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 export { actions, reducer } from "./slices/groups.js";

@@ -43,8 +43,15 @@ const Table = <T extends object>({
 				{table.getRowModel().rows.map((row) => (
 					<tr key={row.id}>
 						{row.getVisibleCells().map((cell) => (
-							<td key={cell.id}>
-								{flexRender(cell.column.columnDef.cell, cell.getContext())}
+							<td
+								className={
+									cell.column.id === "options" ? styles["options-column"] : ""
+								}
+								key={cell.id}
+							>
+								{typeof cell.getValue() === "object"
+									? (cell.getValue() as React.ReactNode)
+									: flexRender(cell.column.columnDef.cell, cell.getContext())}
 							</td>
 						))}
 					</tr>
