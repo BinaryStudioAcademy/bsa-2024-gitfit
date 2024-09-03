@@ -11,6 +11,7 @@
 	margin: 0;
 	font-size: 30px;
 	line-height: 120%;
+	word-break: break-word;
 }
 
 .project-description-layout {
@@ -31,4 +32,5 @@
 	margin: 0;
 	font-size: 16px;
 	line-height: 150%;
+	word-break: break-word;
 }

@@ -12,6 +12,7 @@ import Options from "~/assets/images/icons/options.svg?react";
 import Project from "~/assets/images/icons/project.svg?react";
 import RightArrow from "~/assets/images/icons/right-arrow.svg?react";
 import RightDoubleArrow from "~/assets/images/icons/right-double-arrow.svg?react";
+import Search from "~/assets/images/icons/search.svg?react";
 import StrikedEye from "~/assets/images/icons/striked-eye.svg?react";
 
 import { type IconName } from "../types/types.js";
@@ -29,6 +30,7 @@ const iconNameToSvg: Record<IconName, FC<React.SVGProps<SVGSVGElement>>> = {
 	project: Project,
 	rightArrow: RightArrow,
 	rightDoubleArrow: RightDoubleArrow,
+	search: Search,
 	strikedEye: StrikedEye,
 };
 

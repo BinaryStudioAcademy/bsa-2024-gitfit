@@ -11,6 +11,7 @@ type IconName =
 	| "project"
 	| "rightArrow"
 	| "rightDoubleArrow"
+	| "search"
 	| "strikedEye";
 
 export { type IconName };

@@ -6,6 +6,7 @@ import { ProjectError } from "./libs/exceptions/exceptions.js";
 import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
+	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
@@ -60,8 +61,14 @@ class ProjectService implements Service {
 		return item.toObject();
 	}
 
-	public async findAll(): Promise<ProjectGetAllResponseDto> {
-		const items = await this.projectRepository.findAll();
+	public findAll(): ReturnType<Service["findAll"]> {
+		return Promise.resolve({ items: [] });
+	}
+
+	public async findAllbyName(
+		query: ProjectGetAllRequestDto,
+	): Promise<ProjectGetAllResponseDto> {
+		const items = await this.projectRepository.findAllbyName(query.name);
 
 		return {
 			items: items.map((item) => item.toObject()),

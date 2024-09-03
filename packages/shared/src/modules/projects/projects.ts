@@ -3,6 +3,7 @@ export { ProjectError } from "./libs/exceptions/exceptions.js";
 export {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
+	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
