@@ -6,10 +6,7 @@ import {
 	useEffect,
 	useParams,
 } from "~/libs/hooks/hooks.js";
-import {
-	actions as projectActions,
-	type ProjectGetAllItemResponseDto,
-} from "~/modules/projects/projects.js";
+import { actions as projectActions } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
 import styles from "./styles.module.css";
@@ -41,12 +38,11 @@ const Project = (): JSX.Element => {
 	return (
 		<PageLayout isLoading={isLoading}>
 			<div className={styles["breadcrumb-container"]}>
-				<Breadcrumbs
-					items={[
-						{ href: "/", label: "Projects" },
-						{ label: (project as ProjectGetAllItemResponseDto).name },
-					]}
-				/>
+				{project && (
+					<Breadcrumbs
+						items={[{ href: "/", label: "Projects" }, { label: project.name }]}
+					/>
+				)}
 			</div>
 
 			<div className={styles["project-layout"]}>
