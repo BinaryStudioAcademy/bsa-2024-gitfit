@@ -72,20 +72,20 @@ class ProjectService implements Service {
 		id: number,
 		projectData: ProjectUpdateRequestDto,
 	): Promise<ProjectUpdateResponseDto> {
-		const existingProject = await this.projectRepository.find(id);
+		const targetProject = await this.projectRepository.find(id);
 
-		if (!existingProject) {
+		if (!targetProject) {
 			throw new ProjectError({
 				message: ExceptionMessage.PROJECT_NOT_FOUND,
 				status: HTTPCode.NOT_FOUND,
 			});
 		}
 
-		const projectWithSameName = await this.projectRepository.findByName(
+		const existingProject = await this.projectRepository.findByName(
 			projectData.name,
 		);
 
-		if (projectWithSameName && projectWithSameName.getId() !== id) {
+		if (existingProject && existingProject.toObject().id !== id) {
 			throw new ProjectError({
 				message: ExceptionMessage.PROJECT_NAME_USED,
 				status: HTTPCode.CONFLICT,
