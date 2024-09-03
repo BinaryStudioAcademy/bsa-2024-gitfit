@@ -1,7 +1,7 @@
 import { SortType } from "~/libs/enums/enums.js";
 import { type Repository } from "~/libs/types/types.js";
 
-import { type ProjectUpdateRequestDto } from "./libs/types/types.js";
+import { type ProjectPatchRequestDto } from "./libs/types/types.js";
 import { ProjectEntity } from "./project.entity.js";
 import { type ProjectModel } from "./project.model.js";
 
@@ -52,9 +52,9 @@ class ProjectRepository implements Repository {
 		return item ? ProjectEntity.initialize(item) : null;
 	}
 
-	public async update(
+	public async patch(
 		id: number,
-		projectData: ProjectUpdateRequestDto,
+		projectData: ProjectPatchRequestDto,
 	): Promise<ProjectEntity> {
 		const { description, name } = projectData;
 
@@ -63,6 +63,10 @@ class ProjectRepository implements Repository {
 			.patchAndFetchById(id, { description, name });
 
 		return ProjectEntity.initialize(updatedItem);
+	}
+
+	public update(): ReturnType<Repository["update"]> {
+		return Promise.resolve();
 	}
 }
 

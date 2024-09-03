@@ -7,8 +7,8 @@ import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
-	type ProjectUpdateRequestDto,
-	type ProjectUpdateResponseDto,
+	type ProjectPatchRequestDto,
+	type ProjectPatchResponseDto,
 } from "./libs/types/types.js";
 import { ProjectEntity } from "./project.entity.js";
 import { type ProjectRepository } from "./project.repository.js";
@@ -68,10 +68,10 @@ class ProjectService implements Service {
 		};
 	}
 
-	public async update(
+	public async patch(
 		id: number,
-		projectData: ProjectUpdateRequestDto,
-	): Promise<ProjectUpdateResponseDto> {
+		projectData: ProjectPatchRequestDto,
+	): Promise<ProjectPatchResponseDto> {
 		const targetProject = await this.projectRepository.find(id);
 
 		if (!targetProject) {
@@ -92,9 +92,13 @@ class ProjectService implements Service {
 			});
 		}
 
-		const updatedItem = await this.projectRepository.update(id, projectData);
+		const updatedItem = await this.projectRepository.patch(id, projectData);
 
 		return updatedItem.toObject();
+	}
+
+	public update(): ReturnType<Service["update"]> {
+		return Promise.resolve();
 	}
 }
 

@@ -4,10 +4,10 @@ export {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
-	type ProjectUpdateRequestDto,
-	type ProjectUpdateResponseDto,
+	type ProjectPatchRequestDto,
+	type ProjectPatchResponseDto,
 } from "./libs/types/types.js";
 export {
 	projectCreate as projectCreateValidationSchema,
-	projectUpdate as projectUpdateValidationSchema,
+	projectPatch as projectPatchValidationSchema,
 } from "./libs/validation-schemas/validation-schemas.js";

@@ -1,4 +1,4 @@
 export {
 	projectCreateValidationSchema,
-	projectUpdateValidationSchema,
+	projectPatchValidationSchema,
 } from "@git-fit/shared";

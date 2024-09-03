@@ -1,4 +1,4 @@
-import { Icon, Modal, Popover } from "~/libs/components/components.js";
+import { MenuItem, Modal, Popover } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -6,11 +6,12 @@ import {
 	useCallback,
 	useEffect,
 	useModal,
+	usePopover,
 } from "~/libs/hooks/hooks.js";
 import {
 	actions as projectActions,
 	type ProjectGetAllItemResponseDto,
-	type ProjectUpdateRequestDto,
+	type ProjectPatchRequestDto,
 } from "~/modules/projects/projects.js";
 
 import { ProjectUpdateForm } from "../components.js";
@@ -24,27 +25,25 @@ type Properties = {
 const ProjectPopover = ({ children, project }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { projectUpdateStatus } = useAppSelector(({ projects }) => projects);
+	const { projectPatchStatus } = useAppSelector(({ projects }) => projects);
 
+	const { isPopoverOpened, onPopoverClose, onPopoverOpen } = usePopover();
 	const { isModalOpened, onModalClose, onModalOpen } = useModal();
 
-	const handleEditClick = useCallback(
-		(event: React.MouseEvent): void => {
-			event.stopPropagation();
-			onModalOpen();
-		},
-		[onModalOpen],
-	);
+	const handleEditClick = useCallback((): void => {
+		onPopoverClose();
+		onModalOpen();
+	}, [onPopoverClose, onModalOpen]);
 
 	useEffect(() => {
-		if (projectUpdateStatus === DataStatus.FULFILLED) {
+		if (projectPatchStatus === DataStatus.FULFILLED) {
 			onModalClose();
 		}
-	}, [projectUpdateStatus, onModalClose]);
+	}, [projectPatchStatus, onModalClose]);
 
 	const handleProjectEditSubmit = useCallback(
-		(id: number, payload: ProjectUpdateRequestDto) => {
-			void dispatch(projectActions.update({ id, payload }));
+		(id: number, payload: ProjectPatchRequestDto) => {
+			void dispatch(projectActions.patch({ id, payload }));
 		},
 		[dispatch],
 	);
@@ -55,16 +54,17 @@ const ProjectPopover = ({ children, project }: Properties): JSX.Element => {
 				content={
 					<div className={styles["project-menu-popover"]}>
 						<div className={styles["project-menu-items"]}>
-							<button
-								className={styles["project-menu-item"]}
+							<MenuItem
+								iconName="edit"
+								label="Edit"
 								onClick={handleEditClick}
-							>
-								<Icon height={20} name="edit" width={20} />
-								<span className={styles["project-menu-item-text"]}>Edit</span>
-							</button>
+							/>
 						</div>
 					</div>
 				}
+				isPopoverOpened={isPopoverOpened}
+				onPopoverClose={onPopoverClose}
+				onPopoverOpen={onPopoverOpen}
 			>
 				{children}
 			</Popover>

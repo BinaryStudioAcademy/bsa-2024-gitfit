@@ -18,12 +18,14 @@ const ProjectCard = ({ project }: Properties): JSX.Element => {
 	});
 
 	return (
-		<div className={styles["project"] ?? ""}>
+		<div className={styles["project"]}>
 			<NavLink className={styles["project-link"] ?? ""} to={projectRoute}>
 				{project.name}
 			</NavLink>
 			<ProjectPopover project={project}>
-				<Icon height={20} name="options" width={20} />
+				<span className={styles["project-options-icon"]}>
+					<Icon height={20} name="options" width={20} />
+				</span>
 			</ProjectPopover>
 		</div>
 	);

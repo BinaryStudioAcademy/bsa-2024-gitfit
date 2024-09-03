@@ -2,6 +2,6 @@ export {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
-	type ProjectUpdateRequestDto,
-	type ProjectUpdateResponseDto,
+	type ProjectPatchRequestDto,
+	type ProjectPatchResponseDto,
 } from "@git-fit/shared";

@@ -57,10 +57,10 @@ export {
 	ProjectError,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
+	type ProjectPatchRequestDto,
+	type ProjectPatchResponseDto,
+	projectPatchValidationSchema,
 	ProjectsApiPath,
-	type ProjectUpdateRequestDto,
-	type ProjectUpdateResponseDto,
-	projectUpdateValidationSchema,
 } from "./modules/projects/projects.js";
 export {
 	type UserAuthResponseDto,

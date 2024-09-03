@@ -4,9 +4,9 @@ import {
 	ProjectValidationMessage,
 	ProjectValidationRule,
 } from "../enums/enums.js";
-import { type ProjectUpdateRequestDto } from "../types/types.js";
+import { type ProjectPatchRequestDto } from "../types/types.js";
 
-const projectUpdate: z.ZodType<ProjectUpdateRequestDto> = z
+const projectPatch: z.ZodType<ProjectPatchRequestDto> = z
 	.object({
 		description: z
 			.string()
@@ -26,4 +26,4 @@ const projectUpdate: z.ZodType<ProjectUpdateRequestDto> = z
 	})
 	.required();
 
-export { projectUpdate };
+export { projectPatch };

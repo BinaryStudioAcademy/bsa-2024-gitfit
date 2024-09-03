@@ -10,11 +10,11 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 import { ProjectsApiPath } from "./libs/enums/enums.js";
 import {
 	type ProjectCreateRequestDto,
-	type ProjectUpdateRequestDto,
+	type ProjectPatchRequestDto,
 } from "./libs/types/types.js";
 import {
 	projectCreateValidationSchema,
-	projectUpdateValidationSchema,
+	projectPatchValidationSchema,
 } from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectService } from "./project.service.js";
 
@@ -83,16 +83,16 @@ class ProjectController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
-				this.update(
+				this.patch(
 					options as APIHandlerOptions<{
-						body: ProjectUpdateRequestDto;
+						body: ProjectPatchRequestDto;
 						params: { id: string };
 					}>,
 				),
 			method: "PATCH",
 			path: ProjectsApiPath.$ID,
 			validation: {
-				body: projectUpdateValidationSchema,
+				body: projectPatchValidationSchema,
 			},
 		});
 	}
@@ -234,16 +234,16 @@ class ProjectController extends BaseController {
 	 *                    $ref: "#/components/schemas/Project"
 	 */
 
-	private async update(
+	private async patch(
 		options: APIHandlerOptions<{
-			body: ProjectUpdateRequestDto;
+			body: ProjectPatchRequestDto;
 			params: { id: string };
 		}>,
 	): Promise<APIHandlerResponse> {
 		const projectId = Number(options.params.id);
 
 		return {
-			payload: await this.projectService.update(projectId, options.body),
+			payload: await this.projectService.patch(projectId, options.body),
 			status: HTTPCode.OK,
 		};
 	}
