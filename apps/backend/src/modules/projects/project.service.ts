@@ -61,7 +61,7 @@ class ProjectService implements Service {
 
 	public async findAll(): Promise<ProjectGetAllResponseDto> {
 		return await this.projectRepository.findAll();
-  }
+	}
 
 	public async findAllbyName(
 		query: ProjectGetAllRequestDto,
