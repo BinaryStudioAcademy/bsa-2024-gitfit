@@ -97,7 +97,7 @@ const GroupCreateForm = ({ onSubmit, users }: Properties): JSX.Element => {
 				label="Name"
 				name="name"
 			/>
-			<h2 className={styles["section-title"]}>Users</h2>
+			<span className={styles["table-title"]}>Users</span>
 			<Table<UserRow>
 				columns={users.userColumns}
 				data={users.userData}

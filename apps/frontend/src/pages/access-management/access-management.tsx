@@ -73,12 +73,16 @@ const AccessManagement = (): JSX.Element => {
 		<PageLayout isLoading={isLoading}>
 			<h1 className={styles["title"]}>Access Management</h1>
 			<section>
-				<h2 className={styles["section-title"]}>Users</h2>
+				<div className={styles["section-header"]}>
+					<h2 className={styles["section-title"]}>Users</h2>
+				</div>
 				<Table<UserRow> columns={userColumns} data={userData} />
 			</section>
 			<section>
-				<h2 className={styles["section-title"]}>Groups</h2>
-				<Button label="Create New" onClick={onModalOpen} />
+				<div className={styles["section-header"]}>
+					<h2 className={styles["section-title"]}>Groups</h2>
+					<Button label="Create New" onClick={onModalOpen} />
+				</div>
 				<Table<GroupRow> columns={groupColumns} data={groupData} />
 			</section>
 			<Modal
