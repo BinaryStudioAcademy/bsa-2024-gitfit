@@ -22,7 +22,7 @@
 
 .left-side {
 	background-color: var(--color-background-primary);
-	background-image: url("/assets/images/auth-background.png");
+	background-image: url("~/assets/images/auth-background.png");
 	background-repeat: no-repeat;
 	background-position: left bottom;
 	background-size: 200% 100%;
