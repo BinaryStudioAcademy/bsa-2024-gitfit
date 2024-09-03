@@ -1,6 +1,7 @@
 const UserValidationRule = {
 	EMAIL_MAXIMUM_LENGTH: 50,
 	EMAIL_MINIMUM_LENGTH: 6,
+	LATIN_PATTERN: /^[\w!"#$%&'()*+,./:;<=>?@[\]^`{|}~-]*$/,
 	NAME_MAXIMUM_LENGTH: 50,
 	NAME_MINIMUM_LENGTH: 3,
 	PASSWORD_LOWERCASE_PATTERN: /[a-z]/,

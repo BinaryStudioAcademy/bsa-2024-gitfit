@@ -8,6 +8,9 @@ const userSignIn: z.ZodType<UserSignInRequestDto> = z
 		email: z
 			.string()
 			.trim()
+			.regex(UserValidationRule.LATIN_PATTERN, {
+				message: UserValidationMessage.ONLY_LATIN,
+			})
 			.min(UserValidationRule.EMAIL_MINIMUM_LENGTH, {
 				message: UserValidationMessage.EMAIL_TOO_SHORT,
 			})
@@ -20,6 +23,9 @@ const userSignIn: z.ZodType<UserSignInRequestDto> = z
 		password: z
 			.string()
 			.trim()
+			.regex(UserValidationRule.LATIN_PATTERN, {
+				message: UserValidationMessage.ONLY_LATIN,
+			})
 			.min(UserValidationRule.PASSWORD_MINIMUM_LENGTH, {
 				message: UserValidationMessage.PASSWORD_MINIMUM_LENGTH,
 			})
