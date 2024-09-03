@@ -24,7 +24,7 @@ const ProjectCard = ({ project }: Properties): JSX.Element => {
 			</NavLink>
 			<ProjectPopover project={project}>
 				<span className={styles["project-options-icon"]}>
-					<Icon height={20} name="options" width={20} />
+					<Icon height={20} name="ellipsis" width={20} />
 				</span>
 			</ProjectPopover>
 		</div>

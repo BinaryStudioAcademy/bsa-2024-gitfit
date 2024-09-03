@@ -78,7 +78,7 @@ class ProjectRepository implements Repository {
 	}
 
 	public update(): ReturnType<Repository["update"]> {
-		return Promise.resolve();
+		return Promise.resolve(null);
 	}
 }
 

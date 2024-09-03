@@ -105,7 +105,7 @@ class ProjectService implements Service {
 	}
 
 	public update(): ReturnType<Service["update"]> {
-		return Promise.resolve();
+		return Promise.resolve(null);
 	}
 }
 

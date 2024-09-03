@@ -55,7 +55,7 @@ const ProjectPopover = ({ children, project }: Properties): JSX.Element => {
 					<div className={styles["project-menu-popover"]}>
 						<div className={styles["project-menu-items"]}>
 							<MenuItem
-								iconName="edit"
+								iconName="pencil"
 								label="Edit"
 								onClick={handleEditClick}
 							/>
