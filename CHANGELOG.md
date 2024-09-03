@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.6.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.5.1...v1.6.0) (2024-09-03)
+
+
+### Features
+
+* Add search to the project list gf-85 ([#114](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/114)) ([44c5ca9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/44c5ca9d28035094efd5a13a47d65009833611e2))
+
+
+### Bug Fixes
+
+* The Project description text overflows beyond the screen boundaries when 1000 characters are entered gf-150 ([#153](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/153)) ([77b2055](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/77b2055da1cce948955ee4a81d3fcb06809f9b1d))
+
+## [1.5.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.5.0...v1.5.1) (2024-09-02)
+
+
+### Bug Fixes
+
+* the size of the user popup and the font of the elements don't match the layout gf-136 ([#148](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/148)) ([2850420](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/285042035ab2bcab05fd7288796f8ad38d733103))
+
 ## [1.5.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.4.0...v1.5.0) (2024-09-02)
 
 

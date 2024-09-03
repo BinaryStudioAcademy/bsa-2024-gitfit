@@ -15,13 +15,14 @@ type Properties<T extends FieldValues> = {
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
 	isDisabled?: boolean;
+	isLabelHidden?: boolean;
 	label: string;
 	leftIcon?: JSX.Element;
 	name: FieldPath<T>;
 	placeholder?: string;
 	rightIcon?: JSX.Element;
 	rowsCount?: number;
-	type?: "email" | "password" | "text";
+	type?: "email" | "password" | "search" | "text";
 };
 
 const Input = <T extends FieldValues>({
@@ -29,6 +30,7 @@ const Input = <T extends FieldValues>({
 	control,
 	errors,
 	isDisabled = false,
+	isLabelHidden = false,
 	label,
 	leftIcon,
 	name,
@@ -44,10 +46,23 @@ const Input = <T extends FieldValues>({
 	const hasLeftIcon = Boolean(leftIcon);
 	const hasRightIcon = Boolean(rightIcon);
 	const isTextArea = Boolean(rowsCount);
+	const inputClassNames = getValidClassNames(
+		styles["input-field"],
+		isTextArea && styles["input-textarea"],
+		hasLeftIcon && styles["with-left-icon"],
+		hasRightIcon && styles["with-right-icon"],
+	);
 
 	return (
 		<label className={styles["input-label"]}>
-			<span className={styles["input-label-text"]}>{label}</span>
+			<span
+				className={getValidClassNames(
+					styles["input-label-text"],
+					isLabelHidden && "visually-hidden",
+				)}
+			>
+				{label}
+			</span>
 			<div className={styles["input-container"]}>
 				{hasLeftIcon && (
 					<div
@@ -62,10 +77,7 @@ const Input = <T extends FieldValues>({
 
 				{isTextArea ? (
 					<textarea
-						className={getValidClassNames(
-							styles["input-field"],
-							styles["input-textarea"],
-						)}
+						className={inputClassNames}
 						disabled={isDisabled}
 						name={field.name}
 						onChange={field.onChange}
@@ -76,7 +88,7 @@ const Input = <T extends FieldValues>({
 				) : (
 					<input
 						autoComplete={autoComplete}
-						className={styles["input-field"]}
+						className={inputClassNames}
 						disabled={isDisabled}
 						name={field.name}
 						onChange={field.onChange}
