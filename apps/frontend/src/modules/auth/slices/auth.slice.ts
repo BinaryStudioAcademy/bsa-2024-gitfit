@@ -45,7 +45,6 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(getAuthenticatedUser.rejected, (state) => {
 			state.authenticatedUser = null;
-			state.permissions = null;
 			state.dataStatus = DataStatus.REJECTED;
 		});
 
