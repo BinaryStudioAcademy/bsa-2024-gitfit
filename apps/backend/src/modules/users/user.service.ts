@@ -7,6 +7,7 @@ import { UserError } from "./libs/exceptions/exceptions.js";
 import {
 	type UserAuthResponseDto,
 	type UserGetAllResponseDto,
+	type UserGetPermissionItemResponseDto,
 	type UserSignUpRequestDto,
 } from "./libs/types/types.js";
 import { UserEntity } from "./user.entity.js";
@@ -85,6 +86,12 @@ class UserService implements Service {
 		}
 
 		return item;
+	}
+
+	public async getPermissionsByUserId(
+		userId: number,
+	): Promise<null | UserGetPermissionItemResponseDto[]> {
+		return await this.userRepository.getPermissionsByUserId(userId);
 	}
 
 	public update(): ReturnType<Service["update"]> {

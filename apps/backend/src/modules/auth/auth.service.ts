@@ -4,6 +4,7 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Token } from "~/libs/modules/token/token.js";
 import {
 	type UserAuthResponseDto,
+	type UserGetPermissionItemResponseDto,
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,
 	type UserSignUpRequestDto,
@@ -32,6 +33,12 @@ class AuthService {
 		userId: number,
 	): Promise<UserAuthResponseDto> {
 		return await this.userService.find(userId);
+	}
+
+	public async getPermissions(
+		userId: number,
+	): Promise<null | UserGetPermissionItemResponseDto[]> {
+		return await this.userService.getPermissionsByUserId(userId);
 	}
 
 	public async signIn(

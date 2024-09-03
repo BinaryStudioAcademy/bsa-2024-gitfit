@@ -3,6 +3,7 @@ export {
 	AppEnvironment,
 	ContentType,
 	ExceptionMessage,
+	Permission,
 	ServerErrorType,
 } from "./libs/enums/enums.js";
 export {
@@ -54,6 +55,9 @@ export {
 	UserError,
 	type UserGetAllItemResponseDto,
 	type UserGetAllResponseDto,
+	type UserGetPermissionItemResponseDto,
+	type UserGetPermissionsRequestDto,
+	type UserGetPermissionsResponseDto,
 	UsersApiPath,
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,

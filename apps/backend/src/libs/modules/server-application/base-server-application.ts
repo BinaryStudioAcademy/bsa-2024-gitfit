@@ -1,7 +1,11 @@
 import fastifyStatic from "@fastify/static";
 import swagger, { type StaticDocumentSpec } from "@fastify/swagger";
 import swaggerUi from "@fastify/swagger-ui";
-import Fastify, { type FastifyError, type FastifyInstance } from "fastify";
+import Fastify, {
+	type FastifyError,
+	type FastifyInstance,
+	type RouteOptions,
+} from "fastify";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -166,16 +170,22 @@ class BaseServerApplication implements ServerApplication {
 	}
 
 	public addRoute(parameters: ServerApplicationRouteParameters): void {
-		const { handler, method, path, validation } = parameters;
+		const { handler, method, path, preHandler, validation } = parameters;
 
-		this.app.route({
+		const route: RouteOptions = {
 			handler,
 			method,
 			schema: {
 				body: validation?.body,
 			},
 			url: path,
+		};
+
+		const routeOptionsWithPreHandler = Object.assign({}, route, {
+			...(preHandler ? { preHandler } : {}),
 		});
+
+		this.app.route(routeOptionsWithPreHandler);
 
 		this.logger.info(`Route: ${method} ${path} is registered.`);
 	}

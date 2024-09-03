@@ -1,4 +1,6 @@
 import { type Repository } from "~/libs/types/types.js";
+import { PermissionModel } from "~/modules/groups/permission.model.js";
+import { type UserGetPermissionItemResponseDto } from "~/modules/users/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserModel } from "~/modules/users/user.model.js";
 
@@ -49,6 +51,17 @@ class UserRepository implements Repository {
 		const user = await this.userModel.query().findOne({ email });
 
 		return user ? UserEntity.initialize(user) : null;
+	}
+
+	public async getPermissionsByUserId(
+		userId: number,
+	): Promise<null | UserGetPermissionItemResponseDto[]> {
+		return await this.userModel
+			.relatedQuery("groups")
+			.for(userId)
+			.joinRelated("permissions")
+			.distinct("permissions.*")
+			.castTo(PermissionModel);
 	}
 
 	public update(): ReturnType<Repository["update"]> {
