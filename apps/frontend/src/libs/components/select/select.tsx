@@ -2,13 +2,11 @@ import {
 	type Control,
 	type FieldPath,
 	type FieldValues,
-	type Path,
-	type PathValue,
 } from "react-hook-form";
-import ReactSelect from "react-select";
+import ReactSelect, { type MultiValue, type SingleValue } from "react-select";
 
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
-import { useFormController } from "~/libs/hooks/hooks.js";
+import { useCallback, useFormController } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -20,6 +18,7 @@ type Properties<TFieldValues extends FieldValues, TOptionValue> = {
 	isMulti?: boolean;
 	label: string;
 	name: FieldPath<TFieldValues>;
+	onChange?: (selectedOptions: SelectOption<TOptionValue>[]) => void;
 	options: SelectOption<TOptionValue>[];
 	placeholder?: string;
 	size?: "default" | "small";
@@ -32,6 +31,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 	isMulti = false,
 	label,
 	name,
+	onChange,
 	options,
 	placeholder,
 	size = "default",
@@ -47,6 +47,36 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		styles["label-text"],
 		isLabelHidden && "visually-hidden",
 	);
+
+	const handleChange = useCallback(
+		(
+			selectedOptions:
+				| MultiValue<SelectOption<TOptionValue> | undefined>
+				| SingleValue<SelectOption<TOptionValue> | undefined>,
+		): void => {
+			const filteredOptions = Array.isArray(selectedOptions)
+				? selectedOptions
+				: [selectedOptions];
+
+			field.onChange(filteredOptions);
+
+			if (onChange) {
+				onChange(filteredOptions as SelectOption<TOptionValue>[]);
+			}
+		},
+		[field, onChange],
+	);
+
+	const findOption = (
+		value: TOptionValue,
+	): SelectOption<TOptionValue> | undefined =>
+		options.find((option) => option.value === value);
+
+	const selectedValue = isMulti
+		? (field.value as TOptionValue[])
+				.map((element) => findOption(element))
+				.filter(Boolean)
+		: findOption(field.value as TOptionValue) || null;
 
 	return (
 		<label className={styles["label"]}>
@@ -89,8 +119,8 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				isClearable={false}
 				isMulti={isMulti}
 				name={name}
-				onChange={field.onChange}
-				options={options as PathValue<TFieldValues, Path<TFieldValues>>}
+				onChange={handleChange}
+				options={options}
 				placeholder={placeholder}
 				styles={{
 					control: (base) => ({
@@ -99,7 +129,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 					}),
 				}}
 				unstyled
-				value={field.value}
+				value={selectedValue}
 			/>
 		</label>
 	);
