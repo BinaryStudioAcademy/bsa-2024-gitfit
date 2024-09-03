@@ -28,9 +28,10 @@ const Auth = (): JSX.Element => {
 
 	useEffect(() => {
 		if (authenticatedUser) {
+			void dispatch(authActions.loadPermissions());
 			navigate(AppRoute.ROOT);
 		}
-	}, [authenticatedUser, navigate]);
+	}, [authenticatedUser, dispatch, navigate]);
 
 	const handleSignInSubmit = useCallback(
 		(payload: UserSignInRequestDto): void => {
