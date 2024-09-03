@@ -1,30 +1,50 @@
-import { type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
 import { Loader } from "~/libs/components/components.js";
 import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
+import { type UserGetPermissionItemResponseDto } from "~/modules/auth/auth.js";
 
 type Properties = {
-	children: ReactNode;
+	children: React.ReactNode;
+	requiredPermissions?: string[];
 };
 
-const ProtectedRoute = ({ children }: Properties): JSX.Element => {
-	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
+const ProtectedRoute = ({
+	children,
+	requiredPermissions,
+}: Properties): JSX.Element => {
+	const { authenticatedUser, dataStatus, permissions } = useAppSelector(
+		({ auth }) => auth,
+	);
 
 	const hasAuthenticatedUser = Boolean(authenticatedUser);
+
 	const isLoading =
 		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
+
+	const hasRequiredPermission = requiredPermissions
+		? requiredPermissions.every((permission) =>
+				permissions?.some(
+					(userPermission: UserGetPermissionItemResponseDto) =>
+						userPermission.key === permission,
+				),
+			)
+		: true;
 
 	if (isLoading) {
 		return <Loader />;
 	}
 
-	return hasAuthenticatedUser ? (
-		<>{children}</>
-	) : (
-		<Navigate replace to={AppRoute.SIGN_IN} />
-	);
+	if (!hasAuthenticatedUser) {
+		return <Navigate replace to={AppRoute.SIGN_IN} />;
+	}
+
+	if (!hasRequiredPermission) {
+		return <Navigate replace to={AppRoute.ANY} />;
+	}
+
+	return <>{children}</>;
 };
 
 export { ProtectedRoute };

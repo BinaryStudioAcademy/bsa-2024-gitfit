@@ -1,3 +1,5 @@
+import { Permission } from "~/libs/enums/enums.js";
+import { useAppSelector } from "~/libs/hooks/hooks.js";
 import { type NavigationItem } from "~/libs/types/navigation-item.type.js";
 
 import { SidebarItem } from "./sidebar-item/sidebar-item.js";
@@ -8,9 +10,21 @@ type Properties = {
 };
 
 const Sidebar = ({ items }: Properties): JSX.Element => {
+	const { permissions } = useAppSelector(({ auth }) => auth);
+
+	const filteredItems = items.filter((item) => {
+		if (item.label === "Access Management") {
+			return permissions?.some(
+				(permission) => permission.key === Permission.MANAGE_USER_ACCESS,
+			);
+		}
+
+		return true;
+	});
+
 	return (
 		<ul className={styles["sidebar"]}>
-			{items.map((item) => (
+			{filteredItems.map((item) => (
 				<SidebarItem
 					href={item.href}
 					icon={item.icon}

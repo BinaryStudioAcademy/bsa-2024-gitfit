@@ -7,6 +7,7 @@ const App = (): JSX.Element => {
 
 	useEffect(() => {
 		void dispatch(authActions.getAuthenticatedUser());
+		void dispatch(authActions.loadPermissions());
 	}, [dispatch]);
 
 	return <RouterOutlet />;
