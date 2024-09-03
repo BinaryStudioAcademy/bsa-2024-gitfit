@@ -68,8 +68,6 @@ export {
 	type UserGetAllItemResponseDto,
 	type UserGetAllResponseDto,
 	type UserGetPermissionItemResponseDto,
-	type UserGetPermissionsRequestDto,
-	type UserGetPermissionsResponseDto,
 	type UserPatchRequestDto,
 	type UserPatchResponseDto,
 	userPatchValidationSchema,
