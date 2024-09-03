@@ -5,6 +5,8 @@ import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 import { type UserGetPermissionItemResponseDto } from "~/modules/auth/auth.js";
 
+import styles from "./styles.module.css";
+
 type Properties = {
 	children: React.ReactNode;
 	requiredPermissions?: string[];
@@ -33,7 +35,11 @@ const ProtectedRoute = ({
 		: true;
 
 	if (isLoading) {
-		return <Loader />;
+		return (
+			<div className={styles["loader-container"]}>
+				<Loader />
+			</div>
+		);
 	}
 
 	if (!hasAuthenticatedUser) {

@@ -1,6 +1,9 @@
 import { type Repository } from "~/libs/types/types.js";
 import { PermissionModel } from "~/modules/groups/permission.model.js";
-import { type UserGetPermissionItemResponseDto } from "~/modules/users/libs/types/types.js";
+import {
+	type UserGetPermissionItemResponseDto,
+	type UserPatchRequestDto,
+} from "~/modules/users/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserModel } from "~/modules/users/user.model.js";
 
@@ -64,8 +67,19 @@ class UserRepository implements Repository {
 			.castTo(PermissionModel);
 	}
 
+	public async patch(
+		userId: number,
+		data: UserPatchRequestDto,
+	): Promise<UserEntity> {
+		const user = await this.userModel.query().patchAndFetchById(userId, {
+			name: data.name,
+		});
+
+		return UserEntity.initialize(user);
+	}
+
 	public update(): ReturnType<Repository["update"]> {
-		return Promise.resolve(null);
+		return Promise.resolve();
 	}
 }
 

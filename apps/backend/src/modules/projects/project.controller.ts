@@ -8,7 +8,10 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { ProjectsApiPath } from "./libs/enums/enums.js";
-import { type ProjectCreateRequestDto } from "./libs/types/types.js";
+import {
+	type ProjectCreateRequestDto,
+	type ProjectGetAllRequestDto,
+} from "./libs/types/types.js";
 import { projectCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectService } from "./project.service.js";
 
@@ -59,9 +62,25 @@ class ProjectController extends BaseController {
 		});
 
 		this.addRoute({
-			handler: () => this.findAll(),
+			handler: (options) =>
+				this.findAllByName(
+					options as APIHandlerOptions<{
+						query: ProjectGetAllRequestDto;
+					}>,
+				),
 			method: "GET",
 			path: ProjectsApiPath.ROOT,
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.getById(
+					options as APIHandlerOptions<{
+						params: { id: string };
+					}>,
+				),
+			method: "GET",
+			path: ProjectsApiPath.$ID,
 		});
 	}
 
@@ -123,9 +142,50 @@ class ProjectController extends BaseController {
 	 *                		items:
 	 *                  		$ref: "#/components/schemas/Project"
 	 */
-	private async findAll(): Promise<APIHandlerResponse> {
+	private async findAllByName(
+		options: APIHandlerOptions<{
+			query: ProjectGetAllRequestDto;
+		}>,
+	): Promise<APIHandlerResponse> {
+		const { query } = options;
+
 		return {
-			payload: await this.projectService.findAll(),
+			payload: await this.projectService.findAllbyName(query),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /projects/{id}:
+	 *    get:
+	 *      description: Get project by ID
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          schema:
+	 *            type: integer
+	 *          required: true
+	 *          description: Numeric ID of the project to retrieve
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 *                properties:
+	 *                  message:
+	 *                    type: object
+	 *                    $ref: "#/components/schemas/Project"
+	 */
+	private async getById(
+		options: APIHandlerOptions<{
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.projectService.find(Number(options.params.id)),
 			status: HTTPCode.OK,
 		};
 	}

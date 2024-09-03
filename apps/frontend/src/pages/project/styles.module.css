@@ -1,0 +1,36 @@
+.project-layout {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	align-items: flex-start;
+	padding: 0;
+	color: var(--color-text-primary);
+}
+
+.title {
+	margin: 0;
+	font-size: 30px;
+	line-height: 120%;
+	word-break: break-word;
+}
+
+.project-description-layout {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	align-items: flex-start;
+	padding: 0;
+}
+
+.project-description-title {
+	margin: 0;
+	font-size: 20px;
+	line-height: 130%;
+}
+
+.project-description {
+	margin: 0;
+	font-size: 16px;
+	line-height: 150%;
+	word-break: break-word;
+}

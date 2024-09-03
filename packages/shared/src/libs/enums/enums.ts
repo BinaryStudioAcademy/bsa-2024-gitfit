@@ -4,3 +4,4 @@ export { ContentType } from "./content-type.enum.js";
 export { ExceptionMessage } from "./exception-message.enum.js";
 export { Permission } from "./permissions.enum.js";
 export { ServerErrorType } from "./server-error-type.enum.js";
+export { SortType } from "./sort-type.enum.js";

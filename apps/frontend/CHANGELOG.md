@@ -1,5 +1,68 @@
 # Changelog
 
+## [1.6.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.6.1...frontend-v1.6.2) (2024-09-03)
+
+
+### Bug Fixes
+
+* Inconsistent location of the load component with a slow internet connection gf-147 ([#162](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/162)) ([f07f4e3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f07f4e3c7e4e2e7974d4788440d2a1fec4e268ca))
+
+## [1.6.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.6.0...frontend-v1.6.1) (2024-09-03)
+
+
+### Bug Fixes
+
+* Absence of background on the left side of Auth pages gf-121 ([#157](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/157)) ([b71df9e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b71df9e91c5e7b9a342fd6068f813c7c6fa26e66))
+* make background to be primary gf-145 ([#161](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/161)) ([c55eb9e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c55eb9e463da35a5a663af5fb78013a699c8665c))
+* update button text alignment gf-156 ([#160](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/160)) ([4e42cd6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/4e42cd6004cead60c7e96b73463db8a7a00e690d))
+
+## [1.6.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.5.1...frontend-v1.6.0) (2024-09-03)
+
+
+### Features
+
+* Add search to the project list gf-85 ([#114](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/114)) ([44c5ca9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/44c5ca9d28035094efd5a13a47d65009833611e2))
+
+
+### Bug Fixes
+
+* The Project description text overflows beyond the screen boundaries when 1000 characters are entered gf-150 ([#153](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/153)) ([77b2055](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/77b2055da1cce948955ee4a81d3fcb06809f9b1d))
+
+## [1.5.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.5.0...frontend-v1.5.1) (2024-09-02)
+
+
+### Bug Fixes
+
+* the size of the user popup and the font of the elements don't match the layout gf-136 ([#148](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/148)) ([2850420](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/285042035ab2bcab05fd7288796f8ad38d733103))
+
+## [1.5.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.4.0...frontend-v1.5.0) (2024-09-02)
+
+
+### Features
+
+* add an ability to create a project gf-87 ([#115](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/115)) ([2e08e17](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2e08e17056b0293e2ed61ab0ab7ec208835db647))
+
+## [1.4.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.3.0...frontend-v1.4.0) (2024-09-02)
+
+
+### Features
+
+* add an ability to edit user name gf-89 ([#107](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/107)) ([6dbdf12](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6dbdf12aa3b05675acfb7a78ac24b64bd28c707b))
+* add an ability to view groups gf-78 ([#122](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/122)) ([fd77bf6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/fd77bf6b8e388c185625cb3bf38959660c3fa46c))
+
+## [1.3.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.2.0...frontend-v1.3.0) (2024-09-02)
+
+
+### Features
+
+* Add project page gf-86 ([#109](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/109)) ([ba11d74](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ba11d74366764dfafef62b367cd5f66a7182f0a9))
+* Sign Up page fields validation, Sign up button inconsistent text gf-131 ([#132](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/132)) ([c6496a4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c6496a4616237542cc6d88f83dd83eb2cb173359))
+
+
+### Bug Fixes
+
+* Make sidebar item to indicate the active page gf-118 ([#123](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/123)) ([b851b6c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b851b6c57c57c7dbe9f352cfd61e0729558cd244))
+
 ## [1.2.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.1.1...frontend-v1.2.0) (2024-08-30)
 
 

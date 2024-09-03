@@ -8,6 +8,8 @@ import {
 	type UserAuthResponseDto,
 	type UserGetAllResponseDto,
 	type UserGetPermissionItemResponseDto,
+	type UserPatchRequestDto,
+	type UserPatchResponseDto,
 	type UserSignUpRequestDto,
 } from "./libs/types/types.js";
 import { UserEntity } from "./user.entity.js";
@@ -94,8 +96,26 @@ class UserService implements Service {
 		return await this.userRepository.getPermissionsByUserId(userId);
 	}
 
+	public async patch(
+		userId: number,
+		userInfo: UserPatchRequestDto,
+	): Promise<UserPatchResponseDto> {
+		const user = await this.userRepository.find(userId);
+
+		if (!user) {
+			throw new UserError({
+				message: ExceptionMessage.USER_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		const updatedUser = await this.userRepository.patch(userId, userInfo);
+
+		return updatedUser.toObject();
+	}
+
 	public update(): ReturnType<Service["update"]> {
-		return Promise.resolve(null);
+		return Promise.resolve();
 	}
 }
 

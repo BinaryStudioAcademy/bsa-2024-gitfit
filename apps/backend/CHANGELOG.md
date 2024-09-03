@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.4.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.3.0...backend-v1.4.0) (2024-09-03)
+
+
+### Features
+
+* Add search to the project list gf-85 ([#114](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/114)) ([44c5ca9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/44c5ca9d28035094efd5a13a47d65009833611e2))
+
+## [1.3.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.2.0...backend-v1.3.0) (2024-09-02)
+
+
+### Features
+
+* add an ability to create a project gf-87 ([#115](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/115)) ([2e08e17](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2e08e17056b0293e2ed61ab0ab7ec208835db647))
+
+## [1.2.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.1.0...backend-v1.2.0) (2024-09-02)
+
+
+### Features
+
+* add an ability to edit user name gf-89 ([#107](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/107)) ([6dbdf12](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6dbdf12aa3b05675acfb7a78ac24b64bd28c707b))
+* add an ability to view groups gf-78 ([#122](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/122)) ([fd77bf6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/fd77bf6b8e388c185625cb3bf38959660c3fa46c))
+
+## [1.1.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.0.1...backend-v1.1.0) (2024-09-02)
+
+
+### Features
+
+* add an ability to create a project group gf-71 ([#108](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/108)) ([4ceb575](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/4ceb575bf603508a6a3942aa2592cb29f0b5adcb))
+* Add project page gf-86 ([#109](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/109)) ([ba11d74](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ba11d74366764dfafef62b367cd5f66a7182f0a9))
+
 ## [1.0.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.0.0...backend-v1.0.1) (2024-08-30)
 
 

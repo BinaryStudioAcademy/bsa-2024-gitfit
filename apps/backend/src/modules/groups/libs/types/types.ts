@@ -1,2 +1,6 @@
-export { type GroupCreateRequestDto } from "@git-fit/shared";
-export { type GroupCreateResponseDto } from "@git-fit/shared";
+export {
+	type GroupCreateRequestDto,
+	type GroupCreateResponseDto,
+	type GroupGetAllItemResponseDto,
+	type GroupGetAllResponseDto,
+} from "@git-fit/shared";

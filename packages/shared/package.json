@@ -1,6 +1,6 @@
 {
 	"name": "@git-fit/shared",
-	"version": "1.0.0",
+	"version": "1.4.0",
 	"type": "module",
 	"main": "build/index.js",
 	"types": "src/index.ts",
@@ -17,6 +17,7 @@
 	"dependencies": {
 		"change-case": "5.4.4",
 		"date-fns": "3.6.0",
-		"zod": "3.23.8"
+		"zod": "3.23.8",
+		"debounce": "2.1.0"
 	}
 }
