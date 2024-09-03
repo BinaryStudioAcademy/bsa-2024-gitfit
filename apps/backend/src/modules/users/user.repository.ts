@@ -35,6 +35,7 @@ class UserRepository implements Repository {
 		const user = await this.userModel
 			.query()
 			.findById(id)
+			.withGraphFetched("groups")
 			.returning("*")
 			.execute();
 
@@ -42,13 +43,19 @@ class UserRepository implements Repository {
 	}
 
 	public async findAll(): Promise<UserEntity[]> {
-		const users = await this.userModel.query().execute();
+		const users = await this.userModel
+			.query()
+			.withGraphFetched("groups")
+			.execute();
 
 		return users.map((user) => UserEntity.initialize(user));
 	}
 
 	public async findByEmail(email: string): Promise<null | UserEntity> {
-		const user = await this.userModel.query().findOne({ email });
+		const user = await this.userModel
+			.query()
+			.withGraphFetched("groups")
+			.findOne({ email });
 
 		return user ? UserEntity.initialize(user) : null;
 	}

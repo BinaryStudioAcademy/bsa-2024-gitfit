@@ -1,11 +1,14 @@
 import { type Entity } from "~/libs/types/types.js";
 
+import { type GroupModel } from "../groups/group.model.js";
 import { type UserAuthResponseDto } from "./libs/types/types.js";
 
 class UserEntity implements Entity {
 	private createdAt: null | string;
 
 	private email: string;
+
+	private groups: Pick<GroupModel, "id" | "name">[];
 
 	private id: null | number;
 
@@ -18,6 +21,7 @@ class UserEntity implements Entity {
 	private constructor({
 		createdAt,
 		email,
+		groups,
 		id,
 		name,
 		passwordHash,
@@ -25,6 +29,7 @@ class UserEntity implements Entity {
 	}: {
 		createdAt: null | string;
 		email: string;
+		groups: Pick<GroupModel, "id" | "name">[];
 		id: null | number;
 		name: string;
 		passwordHash: string;
@@ -32,6 +37,7 @@ class UserEntity implements Entity {
 	}) {
 		this.id = id;
 		this.email = email;
+		this.groups = groups;
 		this.name = name;
 		this.passwordHash = passwordHash;
 		this.passwordSalt = passwordSalt;
@@ -41,6 +47,7 @@ class UserEntity implements Entity {
 	public static initialize({
 		createdAt,
 		email,
+		groups,
 		id,
 		name,
 		passwordHash,
@@ -48,6 +55,7 @@ class UserEntity implements Entity {
 	}: {
 		createdAt: string;
 		email: string;
+		groups: Pick<GroupModel, "id" | "name">[];
 		id: number;
 		name: string;
 		passwordHash: string;
@@ -56,6 +64,7 @@ class UserEntity implements Entity {
 		return new UserEntity({
 			createdAt,
 			email,
+			groups,
 			id,
 			name,
 			passwordHash,
@@ -65,11 +74,13 @@ class UserEntity implements Entity {
 
 	public static initializeNew({
 		email,
+		groups,
 		name,
 		passwordHash,
 		passwordSalt,
 	}: {
 		email: string;
+		groups: Pick<GroupModel, "id" | "name">[];
 		name: string;
 		passwordHash: string;
 		passwordSalt: string;
@@ -77,6 +88,7 @@ class UserEntity implements Entity {
 		return new UserEntity({
 			createdAt: null,
 			email,
+			groups,
 			id: null,
 			name,
 			passwordHash,
@@ -86,12 +98,14 @@ class UserEntity implements Entity {
 
 	public toNewObject(): {
 		email: string;
+		groups: Pick<GroupModel, "id" | "name">[];
 		name: string;
 		passwordHash: string;
 		passwordSalt: string;
 	} {
 		return {
 			email: this.email,
+			groups: this.groups,
 			name: this.name,
 			passwordHash: this.passwordHash,
 			passwordSalt: this.passwordSalt,
@@ -102,6 +116,10 @@ class UserEntity implements Entity {
 		return {
 			createdAt: this.createdAt as string,
 			email: this.email,
+			groups: this.groups.map((group) => ({
+				id: group.id,
+				name: group.name,
+			})),
 			id: this.id as number,
 			name: this.name,
 		};
