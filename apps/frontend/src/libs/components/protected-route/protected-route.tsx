@@ -5,6 +5,8 @@ import { Loader } from "~/libs/components/components.js";
 import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 
+import styles from "./styles.module.css";
+
 type Properties = {
 	children: ReactNode;
 };
@@ -17,7 +19,11 @@ const ProtectedRoute = ({ children }: Properties): JSX.Element => {
 		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
 
 	if (isLoading) {
-		return <Loader />;
+		return (
+			<div className={styles["loader-container"]}>
+				<Loader />
+			</div>
+		);
 	}
 
 	return hasAuthenticatedUser ? (

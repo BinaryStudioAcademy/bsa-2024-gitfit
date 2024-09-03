@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.6.1...v1.6.2) (2024-09-03)
+
+
+### Bug Fixes
+
+* Inconsistent location of the load component with a slow internet connection gf-147 ([#162](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/162)) ([f07f4e3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f07f4e3c7e4e2e7974d4788440d2a1fec4e268ca))
+
 ## [1.6.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.6.0...v1.6.1) (2024-09-03)
 
 
