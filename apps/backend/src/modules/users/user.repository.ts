@@ -23,6 +23,7 @@ class UserRepository implements Repository {
 			})
 			.returning("*")
 			.execute();
+		user.groups = [];
 
 		return UserEntity.initialize(user);
 	}
