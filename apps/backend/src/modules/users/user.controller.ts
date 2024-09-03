@@ -6,7 +6,7 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
-import { type PaginationParameters } from "~/libs/types/types.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 import { type UserService } from "~/modules/users/user.service.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
@@ -102,7 +102,9 @@ class UserController extends BaseController {
 		query,
 	}: APIHandlerOptions): Promise<APIHandlerResponse> {
 		return {
-			payload: await this.userService.findAll(query as PaginationParameters),
+			payload: await this.userService.findAll(
+				query as PaginationQueryParameters,
+			),
 			status: HTTPCode.OK,
 		};
 	}

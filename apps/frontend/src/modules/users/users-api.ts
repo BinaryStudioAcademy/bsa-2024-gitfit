@@ -2,7 +2,7 @@ import { APIPath, ContentType } from "~/libs/enums/enums.js";
 import { BaseHTTPApi } from "~/libs/modules/api/api.js";
 import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
-import { type PaginationParameters } from "~/libs/types/types.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
 import {
@@ -25,7 +25,7 @@ class UserApi extends BaseHTTPApi {
 	public async getAll({
 		page,
 		pageSize,
-	}: PaginationParameters): Promise<UserGetAllResponseDto> {
+	}: PaginationQueryParameters): Promise<UserGetAllResponseDto> {
 		const end = this.getFullEndpoint(
 			UsersApiPath.ROOT,
 			"?page=:page&pageSize=:pageSize",

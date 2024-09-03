@@ -1,11 +1,14 @@
 import {
-	type PaginationParameters,
+	type PaginationQueryParameters,
 	type Repository,
 } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserModel } from "~/modules/users/user.model.js";
 
-import { type UserPatchRequestDto } from "./libs/types/types.js";
+import {
+	type UserGetAllResponseDto,
+	type UserPatchRequestDto,
+} from "./libs/types/types.js";
 
 class UserRepository implements Repository {
 	private userModel: typeof UserModel;
@@ -51,15 +54,15 @@ class UserRepository implements Repository {
 	public async findAll({
 		page,
 		pageSize,
-	}: PaginationParameters): Promise<UserEntity[]> {
-		const offset = --page * pageSize;
-		const users = await this.userModel
-			.query()
-			.offset(offset)
-			.limit(pageSize)
-			.execute();
+	}: PaginationQueryParameters): Promise<UserGetAllResponseDto> {
+		const result = await this.userModel.query().page(--page, pageSize);
 
-		return users.map((user) => UserEntity.initialize(user));
+		return {
+			items: result.results.map((user) =>
+				UserEntity.initialize(user).toObject(),
+			),
+			totalItems: result.total,
+		};
 	}
 
 	public async findByEmail(email: string): Promise<null | UserEntity> {

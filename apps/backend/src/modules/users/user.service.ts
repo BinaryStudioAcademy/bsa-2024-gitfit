@@ -1,7 +1,10 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { type Encryption } from "~/libs/modules/encryption/encryption.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
-import { type PaginationParameters, type Service } from "~/libs/types/types.js";
+import {
+	type PaginationQueryParameters,
+	type Service,
+} from "~/libs/types/types.js";
 
 import { UserError } from "./libs/exceptions/exceptions.js";
 import {
@@ -69,17 +72,9 @@ class UserService implements Service {
 	}
 
 	public async findAll(
-		parameters: PaginationParameters,
+		parameters: PaginationQueryParameters,
 	): Promise<UserGetAllResponseDto> {
-		const [items, totalItems] = await Promise.all([
-			this.userRepository.findAll(parameters),
-			this.userRepository.count(),
-		]);
-
-		return {
-			items: items.map((item) => item.toObject()),
-			totalItems,
-		};
+		return await this.userRepository.findAll(parameters);
 	}
 
 	public async getByEmail(email: string): Promise<UserEntity> {

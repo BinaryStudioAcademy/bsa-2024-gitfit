@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { NotificationMessage } from "~/libs/enums/enums.js";
 import {
 	type AsyncThunkConfig,
-	type PaginationParameters,
+	type PaginationQueryParameters,
 } from "~/libs/types/types.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
 import {
@@ -16,12 +16,12 @@ import { name as sliceName } from "./users.slice.js";
 
 const loadAll = createAsyncThunk<
 	UserGetAllResponseDto,
-	PaginationParameters,
+	PaginationQueryParameters,
 	AsyncThunkConfig
->(`${sliceName}/load-all`, (paging, { extra }) => {
+>(`${sliceName}/load-all`, (query, { extra }) => {
 	const { userApi } = extra;
 
-	return userApi.getAll(paging);
+	return userApi.getAll(query);
 });
 
 const updateProfile = createAsyncThunk<

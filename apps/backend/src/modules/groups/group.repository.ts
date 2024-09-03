@@ -5,6 +5,7 @@ import { type Repository } from "~/libs/types/types.js";
 
 import { GroupEntity } from "./group.entity.js";
 import { type GroupModel } from "./group.model.js";
+import { type GroupGetAllResponseDto } from "./libs/types/types.js";
 
 class GroupRepository implements Repository {
 	private groupModel: typeof GroupModel;
@@ -45,12 +46,14 @@ class GroupRepository implements Repository {
 		return Promise.resolve(null);
 	}
 
-	public async findAll(): Promise<GroupEntity[]> {
+	public async findAll(): Promise<GroupGetAllResponseDto> {
 		const groups = await this.groupModel
 			.query()
 			.withGraphFetched("[permissions, users]");
 
-		return groups.map((group) => GroupEntity.initialize(group));
+		return {
+			items: groups.map((group) => GroupEntity.initialize(group).toObject()),
+		};
 	}
 
 	public async findByName(name: string): Promise<GroupModel | null> {

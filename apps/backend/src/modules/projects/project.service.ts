@@ -59,11 +59,7 @@ class ProjectService implements Service {
 	}
 
 	public async findAll(): Promise<ProjectGetAllResponseDto> {
-		const items = await this.projectRepository.findAll();
-
-		return {
-			items: items.map((item) => item.toObject()),
-		};
+		return await this.projectRepository.findAll();
 	}
 
 	public update(): ReturnType<Service["update"]> {
