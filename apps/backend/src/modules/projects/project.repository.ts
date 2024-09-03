@@ -51,6 +51,18 @@ class ProjectRepository implements Repository {
 		return projects.map((project) => ProjectEntity.initialize(project));
 	}
 
+	public async findAllbyName(name: string): Promise<ProjectEntity[]> {
+		const projects = await this.projectModel
+
+			.query()
+			.orderBy("created_at", SortType.DESCENDING)
+
+			.whereILike("name", `%${name}%`)
+			.execute();
+
+		return projects.map((project) => ProjectEntity.initialize(project));
+	}
+
 	public async findByName(name: string): Promise<null | ProjectEntity> {
 		const item = await this.projectModel.query().findOne({ name });
 
