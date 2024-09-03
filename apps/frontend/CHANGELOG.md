@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.5.0...frontend-v1.5.1) (2024-09-02)
+
+
+### Bug Fixes
+
+* the size of the user popup and the font of the elements don't match the layout gf-136 ([#148](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/148)) ([2850420](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/285042035ab2bcab05fd7288796f8ad38d733103))
+
 ## [1.5.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.4.0...frontend-v1.5.0) (2024-09-02)
 
 

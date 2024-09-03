@@ -13,6 +13,7 @@ export { PageLayout } from "./page-layout/page-layout.js";
 export { Popover } from "./popover/popover.js";
 export { ProtectedRoute } from "./protected-route/protected-route.js";
 export { RouterProvider } from "./router-provider/router-provider.js";
+export { Search } from "./search/search.js";
 export { Select } from "./select/select.js";
 export { Sidebar } from "./sidebar/sidebar.js";
 export { Table } from "./table/table.js";
