@@ -1,4 +1,4 @@
-import { PageLayout } from "~/libs/components/components.js";
+import { Breadcrumbs, PageLayout } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -37,6 +37,12 @@ const Project = (): JSX.Element => {
 
 	return (
 		<PageLayout isLoading={isLoading}>
+			<Breadcrumbs
+				items={[
+					{ href: "/", label: "Projects" },
+					{ label: project?.name || "" },
+				]}
+			/>
 			<div className={styles["project-layout"]}>
 				<h1 className={styles["title"]}>{project?.name}</h1>
 				<div className={styles["project-description-layout"]}>

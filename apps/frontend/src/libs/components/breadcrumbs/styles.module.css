@@ -4,6 +4,7 @@
 	align-items: center;
 	justify-content: flex-start;
 	padding: 0;
+	margin-bottom: 32px;
 }
 
 .breadcrumb-list {
