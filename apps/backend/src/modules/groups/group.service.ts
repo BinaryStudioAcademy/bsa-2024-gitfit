@@ -55,7 +55,11 @@ class GroupService implements Service {
 	}
 
 	public async findAll(): Promise<GroupGetAllResponseDto> {
-		return await this.groupRepository.findAll();
+		const groups = await this.groupRepository.findAll();
+
+		return {
+			items: groups.items.map((item) => item.toObject()),
+		};
 	}
 
 	public update(): ReturnType<Service["update"]> {

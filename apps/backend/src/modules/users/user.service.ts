@@ -74,7 +74,12 @@ class UserService implements Service {
 	public async findAll(
 		parameters: PaginationQueryParameters,
 	): Promise<UserGetAllResponseDto> {
-		return await this.userRepository.findAll(parameters);
+		const users = await this.userRepository.findAll(parameters);
+
+		return {
+			items: users.items.map((item) => item.toObject()),
+			totalItems: users.totalItems,
+		};
 	}
 
 	public async getByEmail(email: string): Promise<UserEntity> {
