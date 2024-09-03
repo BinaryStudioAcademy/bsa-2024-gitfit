@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children }: Properties): JSX.Element => {
 
 	if (isLoading) {
 		return (
-			<div className={styles["loader"]}>
+			<div className={styles["loader-container"]}>
 				<Loader />
 			</div>
 		);
