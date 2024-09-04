@@ -24,7 +24,7 @@
 }
 
 .divider {
-	width: 800px;
+	min-width: 100%;
 	height: 1px;
 	background: var(--color-border-primary);
 }

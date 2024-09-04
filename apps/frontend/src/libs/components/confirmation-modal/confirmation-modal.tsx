@@ -3,7 +3,7 @@ import { useCallback } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
 
-type ConfirmationModalProperties = {
+type Properties = {
 	cancelLabel?: string;
 	confirmationText: string;
 	confirmLabel?: string;
@@ -21,7 +21,7 @@ const ConfirmationModal = ({
 	onConfirm,
 	onModalClose,
 	title,
-}: ConfirmationModalProperties): JSX.Element => {
+}: Properties): JSX.Element => {
 	const handleConfirmClick = useCallback(() => {
 		onConfirm();
 		onModalClose();
