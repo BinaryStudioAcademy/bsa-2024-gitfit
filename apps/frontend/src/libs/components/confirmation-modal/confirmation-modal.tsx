@@ -31,12 +31,20 @@ const ConfirmationModal = ({
 		<Modal isOpened={isModalOpened} onClose={onModalClose} title={title}>
 			<p className={styles["confirmation-text"]}>{confirmationText}</p>
 			<div className={styles["confirmation-buttons"]}>
-				<Button label={cancelLabel} onClick={onModalClose} variant="outlined" />
-				<Button
-					label={confirmLabel}
-					onClick={handleConfirmClick}
-					variant="danger"
-				/>
+				<div className={styles["button-wrapper"]}>
+					<Button
+						label={cancelLabel}
+						onClick={onModalClose}
+						variant="outlined"
+					/>
+				</div>
+				<div className={styles["button-wrapper"]}>
+					<Button
+						label={confirmLabel}
+						onClick={handleConfirmClick}
+						variant="danger"
+					/>
+				</div>
 			</div>
 		</Modal>
 	);
