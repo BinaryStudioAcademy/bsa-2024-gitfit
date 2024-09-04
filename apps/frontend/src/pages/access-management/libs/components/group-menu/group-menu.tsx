@@ -1,6 +1,8 @@
 import { Menu, MenuItem } from "~/libs/components/components.js";
 import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
+import styles from "./styles.module.css";
+
 type Properties = {
 	groupId: number;
 	onDelete: (groupId: number) => void;
@@ -15,13 +17,17 @@ const GroupMenu = ({ groupId, onDelete }: Properties): JSX.Element => {
 	}, [onDelete, onClose, groupId]);
 
 	return (
-		<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-			<MenuItem
-				iconName="trashBin"
-				label="Delete"
-				onClick={handleDeleteClick}
-			/>
-		</Menu>
+		<div className={styles["options-container"]}>
+			<div className={styles["options-wrapper"]}>
+				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+					<MenuItem
+						iconName="trashBin"
+						label="Delete"
+						onClick={handleDeleteClick}
+					/>
+				</Menu>
+			</div>
+		</div>
 	);
 };
 
