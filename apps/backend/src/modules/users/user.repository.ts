@@ -1,4 +1,8 @@
-import { type Repository } from "~/libs/types/types.js";
+import {
+	type PaginationQueryParameters,
+	type PaginationResponseDto,
+	type Repository,
+} from "~/libs/types/types.js";
 import { PermissionModel } from "~/modules/groups/permission.model.js";
 import {
 	type UserGetPermissionItemResponseDto,
@@ -44,10 +48,18 @@ class UserRepository implements Repository {
 		return user ? UserEntity.initialize(user) : null;
 	}
 
-	public async findAll(): Promise<UserEntity[]> {
-		const users = await this.userModel.query().execute();
+	public async findAll({
+		page,
+		pageSize,
+	}: PaginationQueryParameters): Promise<PaginationResponseDto<UserEntity>> {
+		const { results, total } = await this.userModel
+			.query()
+			.page(page, pageSize);
 
-		return users.map((user) => UserEntity.initialize(user));
+		return {
+			items: results.map((user) => UserEntity.initialize(user)),
+			totalItems: total,
+		};
 	}
 
 	public async findByEmail(email: string): Promise<null | UserEntity> {

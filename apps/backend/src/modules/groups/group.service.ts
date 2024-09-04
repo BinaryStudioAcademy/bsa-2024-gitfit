@@ -55,10 +55,10 @@ class GroupService implements Service {
 	}
 
 	public async findAll(): Promise<GroupGetAllResponseDto> {
-		const items = await this.groupRepository.findAll();
+		const groups = await this.groupRepository.findAll();
 
 		return {
-			items: items.map((item) => item.toObject()),
+			items: groups.items.map((item) => item.toObject()),
 		};
 	}
 

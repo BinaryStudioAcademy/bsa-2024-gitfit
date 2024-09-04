@@ -34,3 +34,7 @@
 	line-height: 150%;
 	word-break: break-word;
 }
+
+.breadcrumb-container {
+	margin-bottom: 32px;
+}
