@@ -28,26 +28,15 @@ const AccessManagement = (): JSX.Element => {
 		usersTotalCount,
 	} = useAppSelector(({ users }) => users);
 
-	const {
-		dataStatus: groupsDataStatus,
-		groupCreateStatus,
-		groups,
-	} = useAppSelector(({ groups }) => groups);
+	const { dataStatus: groupsDataStatus, groups } = useAppSelector(
+		({ groups }) => groups,
+	);
 
 	const {
 		onPageChange: onUserPageChange,
 		onPageSizeChange: onUserPageSizeChange,
 		page: userPage,
 		pageSize: userPageSize,
-	} = usePagination({
-		totalItemsCount: usersTotalCount,
-	});
-
-	const {
-		onPageChange: onModalPageChange,
-		onPageSizeChange: onModalPageSizeChange,
-		page: modalPage,
-		pageSize: modalPageSize,
 	} = usePagination({
 		totalItemsCount: usersTotalCount,
 	});
@@ -62,35 +51,22 @@ const AccessManagement = (): JSX.Element => {
 		void dispatch(
 			userActions.loadAll({ page: userPage, pageSize: userPageSize }),
 		);
+
 		void dispatch(groupActions.loadAll());
-	}, [
-		dispatch,
-		isModalOpened,
-		modalPage,
-		modalPageSize,
-		userPage,
-		userPageSize,
-	]);
-
-	useEffect(() => {
-		if (isModalOpened) {
-			void dispatch(
-				userActions.loadAll({ page: modalPage, pageSize: modalPageSize }),
-			);
-		}
-	}, [dispatch, isModalOpened, modalPage, modalPageSize]);
-
-	useEffect(() => {
-		if (groupCreateStatus === DataStatus.FULFILLED) {
-			onModalClose();
-		}
-	}, [groupCreateStatus, onModalClose, isModalOpened]);
+	}, [dispatch, userPage, userPageSize]);
 
 	const handleGroupCreateSubmit = useCallback(
-		(payload: GroupCreateRequestDto) => {
-			void dispatch(groupActions.create(payload));
+		(payload: GroupCreateRequestDto): void => {
+			dispatch(groupActions.create(payload))
+				.then(() => {
+					onModalClose();
+					void dispatch(
+						userActions.loadAll({ page: userPage, pageSize: userPageSize }),
+					);
+				})
+				.catch(() => {});
 		},
-		[dispatch],
+		[dispatch, onModalClose, userPage, userPageSize],
 	);
 
 	const isLoading = [usersDataStatus, groupsDataStatus].some(
@@ -125,15 +101,7 @@ const AccessManagement = (): JSX.Element => {
 				onClose={onModalClose}
 				title="Create new group"
 			>
-				<GroupCreateForm
-					onPageChange={onModalPageChange}
-					onPageSizeChange={onModalPageSizeChange}
-					onSubmit={handleGroupCreateSubmit}
-					page={modalPage}
-					pageSize={modalPageSize}
-					totalItemsCount={usersTotalCount}
-					users={users}
-				/>
+				<GroupCreateForm onSubmit={handleGroupCreateSubmit} />
 			</Modal>
 		</PageLayout>
 	);

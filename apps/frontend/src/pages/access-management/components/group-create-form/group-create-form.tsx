@@ -1,10 +1,12 @@
-import { Button, Input, Select } from "~/libs/components/components.js";
+import { Button, Input, Loader, Select } from "~/libs/components/components.js";
+import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppForm,
 	useAppSelector,
 	useCallback,
 	useEffect,
+	usePagination,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
@@ -13,61 +15,62 @@ import {
 	groupCreateValidationSchema,
 } from "~/modules/groups/groups.js";
 import { actions as permissionActions } from "~/modules/permissions/permissions.js";
-import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
+import { actions as userActions } from "~/modules/users/users.js";
 
-import { getUserRows } from "../../libs/helpers/helpers.js";
-import { type UserRow } from "../../libs/types/types.js";
 import { UsersTable } from "../users-table/users-table.js";
 import { DEFAULT_GROUP_CREATE_PAYLOAD } from "./libs/constants/constants.js";
+import { getPermissionOptions } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	onPageChange: (page: number) => void;
-	onPageSizeChange: (pageSize: number) => void;
 	onRowSelect?: (rowId: number, isSelected: boolean) => void;
 	onSubmit: (payload: GroupCreateRequestDto) => void;
-	page: number;
-	pageSize: number;
-	totalItemsCount: number;
-	users: UserGetAllItemResponseDto[];
 };
 
-const GroupCreateForm = ({
-	onPageChange,
-	onPageSizeChange,
-	onSubmit,
-	page,
-	pageSize,
-	totalItemsCount,
-	users,
-}: Properties): JSX.Element => {
+const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-
 	const { control, errors, handleSubmit, setValue } =
 		useAppForm<GroupCreateRequestDto>({
 			defaultValues: DEFAULT_GROUP_CREATE_PAYLOAD,
 			validationSchema: groupCreateValidationSchema,
 		});
 
-	const [, setSelectedUserIds] = useState<number[]>([]);
-	const [selectedPermissionIds, setSelectedPermissionIds] = useState<number[]>(
-		[],
+	const [, setSelectedPermissionIds] = useState<number[]>([]);
+	const { dataStatus: permissionsDataStatus, permissions } = useAppSelector(
+		({ permissions }) => permissions,
 	);
-	const { permissions } = useAppSelector(({ permissions }) => permissions);
+
+	const {
+		modalDataStatus: usersDataStatus,
+		usersModal: users,
+		usersModalTotalCount: usersTotalCount,
+	} = useAppSelector(({ users }) => users);
+
+	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+		totalItemsCount: usersTotalCount,
+	});
 
 	useEffect(() => {
+		void dispatch(userActions.loadAllModal({ page, pageSize }));
 		void dispatch(permissionActions.loadAll());
-	}, [dispatch]);
+	}, [dispatch, page, pageSize]);
 
-	const userData: UserRow[] = getUserRows(users);
+	const [selectedUserIds, setSelectedUserIds] = useState<Set<number>>(
+		new Set(),
+	);
 
 	const handleUserSelect = useCallback(
 		(userId: number, isSelected: boolean) => {
 			setSelectedUserIds((previousIds) => {
-				const updatedIds = isSelected
-					? [...previousIds, userId]
-					: previousIds.filter((id) => id !== userId);
-				setValue("userIds", updatedIds);
+				const updatedIds = new Set(previousIds);
+
+				if (isSelected) {
+					updatedIds.add(userId);
+				} else {
+					updatedIds.delete(userId);
+				}
+
+				setValue("userIds", [...updatedIds]);
 
 				return updatedIds;
 			});
@@ -89,20 +92,23 @@ const GroupCreateForm = ({
 			void handleSubmit((formData: GroupCreateRequestDto) => {
 				onSubmit({
 					name: formData.name,
-					permissionIds: selectedPermissionIds,
-					userIds: formData.userIds
-						.map((selectedId) => userData[selectedId]?.id)
-						.filter((id) => id !== undefined),
+					permissionIds: formData.permissionIds,
+					userIds: formData.userIds,
 				});
 			})(event_);
 		},
-		[handleSubmit, onSubmit, selectedPermissionIds, userData],
+		[handleSubmit, onSubmit],
 	);
 
-	const permissionOptions = permissions.map((permission) => ({
-		label: permission.name,
-		value: permission.id,
-	}));
+	const permissionOptions = getPermissionOptions(permissions);
+
+	const isLoading = [usersDataStatus, permissionsDataStatus].some(
+		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
+	);
+
+	if (isLoading) {
+		return <Loader />;
+	}
 
 	return (
 		<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>
@@ -120,9 +126,14 @@ const GroupCreateForm = ({
 				onRowSelect={handleUserSelect}
 				page={page}
 				pageSize={pageSize}
-				totalItemsCount={totalItemsCount}
+				paginationBackground="secondary"
+				selectedIds={selectedUserIds}
+				totalItemsCount={usersTotalCount}
 				users={users}
 			/>
+			{errors.userIds && (
+				<div className={styles["error-message"]}>{errors.userIds.message}</div>
+			)}
 			<Select
 				control={control}
 				isMulti

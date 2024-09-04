@@ -8,16 +8,22 @@ import { type TableColumn } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
 
-type Properties<T extends object> = {
+type Identifiable = {
+	id: number;
+};
+
+type Properties<T> = {
 	columns: TableColumn<T>[];
 	data: T[];
 	onRowSelect?: (rowId: number, isSelected: boolean) => void;
+	selectedIds?: Set<number>;
 };
 
 const Table = <T extends object>({
 	columns,
 	data,
 	onRowSelect,
+	selectedIds,
 }: Properties<T>): JSX.Element => {
 	const table = useReactTable({
 		columns,
@@ -59,8 +65,13 @@ const Table = <T extends object>({
 							{onRowSelect && (
 								<td className={styles["table-data"]}>
 									<input
-										id={row.id}
-										onChange={handleRowSelect(Number(row.id))}
+										checked={selectedIds?.has(
+											(row.original as unknown as Identifiable).id,
+										)}
+										id={(row.original as unknown as Identifiable).id.toString()}
+										onChange={handleRowSelect(
+											(row.original as unknown as Identifiable).id,
+										)}
 										type="checkbox"
 									/>
 								</td>

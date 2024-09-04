@@ -19,7 +19,7 @@
 	gap: 10px;
 	min-width: 800px;
 	min-height: 190px;
-	max-height: 80%;
+	max-height: 90%;
 	padding: 24px;
 	overflow-y: auto;
 	background: var(--color-background-secondary);

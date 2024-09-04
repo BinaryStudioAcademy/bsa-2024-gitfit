@@ -11,5 +11,8 @@ const permissionApi = new PermissionApi({
 });
 
 export { permissionApi };
-export { type PermissionGetAllResponseDto } from "./libs/types/types.js";
+export {
+	type PermissionGetAllItemResponseDto,
+	type PermissionGetAllResponseDto,
+} from "./libs/types/types.js";
 export { actions, reducer } from "./slices/permissions.js";
