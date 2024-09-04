@@ -36,43 +36,45 @@ const Table = <T extends object>({
 	};
 
 	return (
-		<table className={styles["table"]}>
-			<thead>
-				{table.getHeaderGroups().map((headerGroup) => (
-					<tr key={headerGroup.id}>
-						{onRowSelect && <th />}
-						{headerGroup.headers.map((header) => (
-							<th key={header.id}>
-								{flexRender(
-									header.column.columnDef.header,
-									header.getContext(),
-								)}
-							</th>
-						))}
-					</tr>
-				))}
-			</thead>
-			<tbody>
-				{table.getRowModel().rows.map((row) => (
-					<tr key={row.id}>
-						{onRowSelect && (
-							<td>
-								<input
-									id={row.id}
-									onChange={handleRowSelect(Number(row.id))}
-									type="checkbox"
-								/>
-							</td>
-						)}
-						{row.getVisibleCells().map((cell) => (
-							<td key={cell.id}>
-								{flexRender(cell.column.columnDef.cell, cell.getContext())}
-							</td>
-						))}
-					</tr>
-				))}
-			</tbody>
-		</table>
+		<div className={styles["table-container"]}>
+			<table className={styles["table"]}>
+				<thead className={styles["table-head"]}>
+					{table.getHeaderGroups().map((headerGroup) => (
+						<tr className={styles["table-row"]} key={headerGroup.id}>
+							{onRowSelect && <th className={styles["table-header"]} />}
+							{headerGroup.headers.map((header) => (
+								<th className={styles["table-header"]} key={header.id}>
+									{flexRender(
+										header.column.columnDef.header,
+										header.getContext(),
+									)}
+								</th>
+							))}
+						</tr>
+					))}
+				</thead>
+				<tbody className={styles["table-body"]}>
+					{table.getRowModel().rows.map((row) => (
+						<tr className={styles["table-row"]} key={row.id}>
+							{onRowSelect && (
+								<td className={styles["table-data"]}>
+									<input
+										id={row.id}
+										onChange={handleRowSelect(Number(row.id))}
+										type="checkbox"
+									/>
+								</td>
+							)}
+							{row.getVisibleCells().map((cell) => (
+								<td className={styles["table-data"]} key={cell.id}>
+									{flexRender(cell.column.columnDef.cell, cell.getContext())}
+								</td>
+							))}
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
 	);
 };
 
