@@ -1,10 +1,10 @@
+import { PAGE_NAME } from "~/libs/constants/constants.js";
 import { Permission } from "~/libs/enums/enums.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 import { type NavigationItem } from "~/libs/types/navigation-item.type.js";
 
 import { SidebarItem } from "./sidebar-item/sidebar-item.js";
 import styles from "./styles.module.css";
-import { PAGE_NAME } from "~/libs/constants/constants.js";
 
 type Properties = {
 	items: NavigationItem[];
@@ -19,6 +19,7 @@ const Sidebar = ({ items }: Properties): JSX.Element => {
 				(permission) => permission.key === Permission.MANAGE_USER_ACCESS,
 			);
 		}
+
 		return true;
 	});
 

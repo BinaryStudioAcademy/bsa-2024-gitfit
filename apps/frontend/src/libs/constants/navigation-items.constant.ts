@@ -1,5 +1,6 @@
 import { AppRoute } from "~/libs/enums/enums.js";
 import { type NavigationItem } from "~/libs/types/types.js";
+
 import { PAGE_NAME } from "./page-name.constant.js";
 
 const SIDEBAR_ITEMS: NavigationItem[] = [

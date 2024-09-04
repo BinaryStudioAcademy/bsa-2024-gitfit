@@ -41,12 +41,12 @@ const ProtectedRoute = ({
 		);
 	}
 
-	if (!hasAuthenticatedUser) {
-		return <Navigate replace to={AppRoute.SIGN_IN} />;
-	}
-
 	if (!hasRequiredPermission) {
 		return <Navigate replace to={AppRoute.ANY} />;
+	}
+
+	if (!hasAuthenticatedUser) {
+		return <Navigate replace to={AppRoute.SIGN_IN} />;
 	}
 
 	return <>{children}</>;
