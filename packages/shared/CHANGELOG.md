@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.6.0...shared-v1.7.0) (2024-09-04)
+
+
+### Features
+
+* add only latin validation rule gf-131 ([#173](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/173)) ([ecabee8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ecabee8bde62d38d4eaa00886d5765c5bb25b89f))
+
 ## [1.6.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.5.0...shared-v1.6.0) (2024-09-04)
 
 
