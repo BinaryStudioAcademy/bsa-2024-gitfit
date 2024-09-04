@@ -61,15 +61,18 @@ const AccessManagement = (): JSX.Element => {
 			</section>
 			<section>
 				<h2 className={styles["section-title"]}>Groups</h2>
-				<Table<GroupRow> columns={groupColumns} data={groupData} />
-				<TablePagination
-					onPageChange={onPageChange}
-					onPageSizeChange={onPageSizeChange}
-					page={page}
-					// Correct the pageSize value instead of hardcoding it to 0
-					pageSize={pageSize}
-					totalItemsCount={totalGroupsCount}
-				/>
+				<div className={styles["groups-table"]}>
+					<Table<GroupRow> columns={groupColumns} data={groupData} />
+
+					<TablePagination
+						onPageChange={onPageChange}
+						onPageSizeChange={onPageSizeChange}
+						page={page}
+						// Correct the pageSize value instead of hardcoding it to 0
+						pageSize={pageSize}
+						totalItemsCount={totalGroupsCount}
+					/>
+				</div>
 			</section>
 		</PageLayout>
 	);
