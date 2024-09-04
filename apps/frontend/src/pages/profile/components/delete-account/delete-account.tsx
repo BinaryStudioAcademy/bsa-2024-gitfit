@@ -12,11 +12,11 @@ type Properties = {
 const DeleteAccount = ({ userId }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { isModalOpened, onModalClose, onModalOpen } = useModal();
+	const { isOpened, onClose, onOpen } = useModal();
 
 	const handleDeleteClick = useCallback((): void => {
-		onModalOpen();
-	}, [onModalOpen]);
+		onOpen();
+	}, [onOpen]);
 
 	const handleDeleteConfirm = useCallback(() => {
 		void dispatch(userActions.deleteById(userId));
@@ -35,9 +35,9 @@ const DeleteAccount = ({ userId }: Properties): JSX.Element => {
 			<ConfirmationModal
 				confirmationText="This account will be deleted. This action cannot be undone. Do you want to continue?"
 				confirmLabel="Yes, Delete it"
-				isModalOpened={isModalOpened}
+				isModalOpened={isOpened}
 				onConfirm={handleDeleteConfirm}
-				onModalClose={onModalClose}
+				onModalClose={onClose}
 				title="Are you sure?"
 			/>
 		</div>
