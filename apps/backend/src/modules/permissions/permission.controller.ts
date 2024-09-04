@@ -24,6 +24,24 @@ class PermissionController extends BaseController {
 		});
 	}
 
+	/**
+	 * @swagger
+	 * /groups:
+	 *   get:
+	 *     description: Returns an array of permissions
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: object
+	 *               properties:
+	 *                 items:
+	 *                   type: array
+	 *                   items:
+	 *                     $ref: "#/components/schemas/Permission"
+	 */
 	private async findAll(): Promise<APIHandlerResponse> {
 		const permissions = await this.permissionService.findAll();
 
