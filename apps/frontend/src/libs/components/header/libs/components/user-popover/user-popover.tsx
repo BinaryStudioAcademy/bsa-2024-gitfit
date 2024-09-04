@@ -10,10 +10,18 @@ import styles from "./styles.module.css";
 type Properties = {
 	children: React.ReactNode;
 	email: string;
+	isOpened: boolean;
 	name: string;
+	onClose: () => void;
 };
 
-const UserPopover = ({ children, email, name }: Properties): JSX.Element => {
+const UserPopover = ({
+	children,
+	email,
+	isOpened,
+	name,
+	onClose,
+}: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const handleLogout = useCallback((): void => {
@@ -38,6 +46,8 @@ const UserPopover = ({ children, email, name }: Properties): JSX.Element => {
 					</div>
 				</div>
 			}
+			isOpened={isOpened}
+			onClose={onClose}
 		>
 			{children}
 		</Popover>
