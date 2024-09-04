@@ -1,5 +1,6 @@
 import logoSrc from "~/assets/images/logo.svg";
-import { Avatar } from "~/libs/components/components.js";
+import { Avatar, NavLink } from "~/libs/components/components.js";
+import { AppRoute } from "~/libs/enums/enums.js";
 import { useAppSelector, usePopover } from "~/libs/hooks/hooks.js";
 
 import { UserPopover } from "./libs/components/components.js";
@@ -20,10 +21,12 @@ const Header = (): JSX.Element => {
 
 	return (
 		<header className={styles["header"]}>
-			<div className={styles["logo-container"]}>
-				<img alt="GitFit logo" className={styles["logo-img"]} src={logoSrc} />
-				<span className={styles["logo-text"]}>Logo</span>
-			</div>
+			<NavLink className={styles["logo-link"] ?? ""} to={AppRoute.ROOT}>
+				<div className={styles["logo-container"]}>
+					<img alt="GitFit logo" className={styles["logo-img"]} src={logoSrc} />
+					<span className={styles["logo-text"]}>Logo</span>
+				</div>
+			</NavLink>
 			<UserPopover
 				email={email}
 				isOpened={isOpened}
