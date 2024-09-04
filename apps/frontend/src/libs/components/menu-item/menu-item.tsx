@@ -1,7 +1,7 @@
 import { Icon } from "~/libs/components/components.js";
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
 
-import { type IconName } from "../../../../icon/libs/types/types.js";
+import { type IconName } from "../icon/libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
