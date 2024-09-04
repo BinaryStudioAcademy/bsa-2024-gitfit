@@ -13,8 +13,6 @@ import { GroupsApiPath } from "./libs/enums/enum.js";
 import { type GroupCreateRequestDto } from "./libs/types/types.js";
 import { groupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 
-const DEFAULT_PAGE = 1;
-const DEFAULT_PAGE_SIZE = 10;
 /**
  * @swagger
  * components:
@@ -153,13 +151,10 @@ class GroupController extends BaseController {
 	}: APIHandlerOptions<{
 		query: PaginationQueryParameters;
 	}>): Promise<APIHandlerResponse> {
-		const { page = DEFAULT_PAGE, pageSize = DEFAULT_PAGE_SIZE } = query;
-
 		return {
-			payload: await this.groupService.findAll({ page, pageSize }),
+			payload: await this.groupService.findAll(query),
 			status: HTTPCode.OK,
 		};
 	}
 }
-
 export { GroupController };
