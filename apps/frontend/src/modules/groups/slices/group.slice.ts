@@ -9,11 +9,13 @@ import { loadAll } from "./actions.js";
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
 	groups: GroupGetAllItemResponseDto[];
+	totalGroupsCount: number;
 };
 
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	groups: [],
+	totalGroupsCount: 1,
 };
 
 const { actions, name, reducer } = createSlice({
@@ -23,6 +25,7 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
 			state.groups = action.payload.items;
+			state.totalGroupsCount = action.payload.totalItems;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadAll.rejected, (state) => {

@@ -1,9 +1,14 @@
-import { PageLayout, Table } from "~/libs/components/components.js";
+import {
+	PageLayout,
+	Table,
+	TablePagination,
+} from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
 	useEffect,
+	usePagination,
 } from "~/libs/hooks/hooks.js";
 import { actions as groupActions } from "~/modules/groups/groups.js";
 import { actions as userActions } from "~/modules/users/users.js";
@@ -22,13 +27,20 @@ const AccessManagement = (): JSX.Element => {
 	const { dataStatus: usersDataStatus, users } = useAppSelector(
 		({ users }) => users,
 	);
-	const { dataStatus: groupsDataStatus, groups } = useAppSelector(
-		({ groups }) => groups,
-	);
+	const {
+		dataStatus: groupsDataStatus,
+		groups,
+		totalGroupsCount,
+	} = useAppSelector(({ groups }) => groups);
+
+	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+		totalItemsCount: totalGroupsCount,
+	});
+
 	useEffect(() => {
 		void dispatch(userActions.loadAll());
-		void dispatch(groupActions.loadAll());
-	}, [dispatch]);
+		void dispatch(groupActions.loadAll({ page, pageSize }));
+	}, [dispatch, page, pageSize]);
 
 	const userColumns = getUserColumns();
 	const userData: UserRow[] = getUserRows(users);
@@ -50,6 +62,14 @@ const AccessManagement = (): JSX.Element => {
 			<section>
 				<h2 className={styles["section-title"]}>Groups</h2>
 				<Table<GroupRow> columns={groupColumns} data={groupData} />
+				<TablePagination
+					onPageChange={onPageChange}
+					onPageSizeChange={onPageSizeChange}
+					page={page}
+					// Correct the pageSize value instead of hardcoding it to 0
+					pageSize={pageSize}
+					totalItemsCount={totalGroupsCount}
+				/>
 			</section>
 		</PageLayout>
 	);
