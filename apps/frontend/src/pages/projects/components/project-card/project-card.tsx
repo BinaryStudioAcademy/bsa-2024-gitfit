@@ -16,7 +16,7 @@ const ProjectCard = ({ project }: Properties): JSX.Element => {
 	});
 
 	return (
-		<NavLink className={styles["project"] ?? ""} to={projectRoute}>
+		<NavLink className={styles["project"] as string} to={projectRoute}>
 			{project.name}
 		</NavLink>
 	);

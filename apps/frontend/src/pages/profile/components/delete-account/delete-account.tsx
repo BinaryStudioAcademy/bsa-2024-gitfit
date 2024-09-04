@@ -1,11 +1,6 @@
 import { Button, ConfirmationModal } from "~/libs/components/components.js";
-import { AppRoute } from "~/libs/enums/enums.js";
-import {
-	useAppDispatch,
-	useCallback,
-	useModal,
-	useNavigate,
-} from "~/libs/hooks/hooks.js";
+import { useAppDispatch, useCallback, useModal } from "~/libs/hooks/hooks.js";
+import { actions as authActions } from "~/modules/auth/auth.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
 import styles from "./styles.module.css";
@@ -16,7 +11,6 @@ type Properties = {
 
 const DeleteAccount = ({ userId }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const navigate = useNavigate();
 
 	const { isModalOpened, onModalClose, onModalOpen } = useModal();
 
@@ -26,8 +20,8 @@ const DeleteAccount = ({ userId }: Properties): JSX.Element => {
 
 	const handleDeleteConfirm = useCallback(() => {
 		void dispatch(userActions.deleteById(userId));
-		navigate(AppRoute.SIGN_IN);
-	}, [dispatch, navigate, userId]);
+		void dispatch(authActions.logout());
+	}, [dispatch, userId]);
 
 	return (
 		<div className={styles["profile-delete"]}>
@@ -39,7 +33,7 @@ const DeleteAccount = ({ userId }: Properties): JSX.Element => {
 				variant="danger"
 			/>
 			<ConfirmationModal
-				confirmationText="The account will be marked as deleted. The account won`t be accessible, but it can be restored if needed. Do you want to continue?"
+				confirmationText="This account will be deleted. This action cannot be undone. Do you want to continue?"
 				confirmLabel="Yes, Delete it"
 				isModalOpened={isModalOpened}
 				onConfirm={handleDeleteConfirm}
