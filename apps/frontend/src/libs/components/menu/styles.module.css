@@ -1,0 +1,13 @@
+.menu-options {
+	min-width: 200px;
+	color: var(--color-text-primary);
+	border: 1px solid var(--color-border-secondary);
+	border-radius: 8px;
+}
+
+.options-content {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin: 4px;
+}

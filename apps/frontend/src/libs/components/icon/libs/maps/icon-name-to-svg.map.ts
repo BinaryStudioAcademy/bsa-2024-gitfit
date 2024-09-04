@@ -15,8 +15,7 @@ import RightDoubleArrow from "~/assets/images/icons/right-double-arrow.svg?react
 import Search from "~/assets/images/icons/search.svg?react";
 import StrikedEye from "~/assets/images/icons/striked-eye.svg?react";
 import TrashBin from "~/assets/images/icons/trash-bin.svg?react";
-
-import { type IconName } from "../types/types.js";
+import { type IconName } from "~/libs/types/types.js";
 
 const iconNameToSvg: Record<IconName, FC<React.SVGProps<SVGSVGElement>>> = {
 	access: Access,

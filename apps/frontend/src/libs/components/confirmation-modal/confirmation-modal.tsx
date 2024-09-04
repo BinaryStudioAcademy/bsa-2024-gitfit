@@ -28,11 +28,7 @@ const ConfirmationModal = ({
 	}, [onConfirm, onModalClose]);
 
 	return (
-		<Modal
-			isModalOpened={isModalOpened}
-			onModalClose={onModalClose}
-			title={title}
-		>
+		<Modal isOpened={isModalOpened} onClose={onModalClose} title={title}>
 			<p className={styles["confirmation-text"]}>{confirmationText}</p>
 			<div className={styles["confirmation-buttons"]}>
 				<Button label={cancelLabel} onClick={onModalClose} variant="outlined" />

@@ -1,1 +1,1 @@
-export { GroupPopover } from "./group-popover/group-popover.js";
+export { GroupMenu } from "./group-menu/group.menu.js";

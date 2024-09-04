@@ -1,5 +1,5 @@
 import {
-	Icon,
+	ConfirmationModal,
 	PageLayout,
 	Table,
 	TablePagination,
@@ -8,13 +8,16 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
+	useCallback,
 	useEffect,
+	useModal,
 	usePagination,
+	useState,
 } from "~/libs/hooks/hooks.js";
 import { actions as groupActions } from "~/modules/groups/groups.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-import { GroupPopover } from "./libs/components/components.js";
+import { GroupMenu } from "./libs/components/components.js";
 import {
 	getGroupColumns,
 	getGroupRows,
@@ -41,6 +44,27 @@ const AccessManagement = (): JSX.Element => {
 		totalItemsCount: usersTotalCount,
 	});
 
+	const [selectedGroupId, setSelectedGroupId] = useState<null | number>(null);
+	const {
+		isOpened: isConfirmationModalOpen,
+		onClose: handleConfirmationModalClose,
+		onOpen: handleConfirmationModalOpen,
+	} = useModal();
+
+	const handleDelete = useCallback(
+		(groupId: number) => {
+			setSelectedGroupId(groupId);
+			handleConfirmationModalOpen();
+		},
+		[handleConfirmationModalOpen],
+	);
+
+	const handleDeleteConfirm = useCallback(() => {
+		if (selectedGroupId !== null) {
+			void dispatch(groupActions.deleteById(selectedGroupId));
+		}
+	}, [dispatch, selectedGroupId]);
+
 	useEffect(() => {
 		void dispatch(userActions.loadAll({ page, pageSize }));
 		void dispatch(groupActions.loadAll());
@@ -50,12 +74,9 @@ const AccessManagement = (): JSX.Element => {
 	const userData: UserRow[] = getUserRows(users);
 
 	const groupColumns = getGroupColumns();
-
 	const groupData: GroupRow[] = getGroupRows(groups).map((group) => {
 		const optionsElement = (
-			<GroupPopover groupId={group.id}>
-				<Icon height={20} name="ellipsis" width={20} />
-			</GroupPopover>
+			<GroupMenu groupId={group.id} onDelete={handleDelete} />
 		);
 
 		return {
@@ -88,6 +109,15 @@ const AccessManagement = (): JSX.Element => {
 				<h2 className={styles["section-title"]}>Groups</h2>
 				<Table<GroupRow> columns={groupColumns} data={groupData} />
 			</section>
+			<ConfirmationModal
+				cancelLabel="Cancel"
+				confirmationText="This group will be deleted. This action cannot be undone. Do you want to continue?"
+				confirmLabel="Yes, Delete it"
+				isModalOpened={isConfirmationModalOpen}
+				onConfirm={handleDeleteConfirm}
+				onModalClose={handleConfirmationModalClose}
+				title="Are you sure?"
+			/>
 		</PageLayout>
 	);
 };

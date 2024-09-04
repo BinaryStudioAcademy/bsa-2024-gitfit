@@ -1,6 +1,5 @@
 import {
 	Breadcrumbs,
-	ConfirmationModal,
 	Modal,
 	Select,
 	Table,
@@ -13,7 +12,6 @@ import {
 import {
 	useAppDispatch,
 	useAppForm,
-	useCallback,
 	useEffect,
 	useModal,
 } from "~/libs/hooks/hooks.js";
@@ -34,10 +32,6 @@ const Ui = (): JSX.Element => {
 		void dispatch(userActions.loadAll({ page: 1, pageSize: 10 }));
 	}, [dispatch]);
 
-	const handleDeleteConfirm = useCallback(() => {
-		modal.onModalClose();
-	}, [modal]);
-
 	return (
 		<>
 			<Select<
@@ -56,15 +50,6 @@ const Ui = (): JSX.Element => {
 			<Modal title="Title" {...modal}>
 				children
 			</Modal>
-			<ConfirmationModal
-				cancelLabel="Cancel"
-				confirmationText="This group will be deleted. This action cannot be undone. Do you want to continue?"
-				confirmLabel="Yes, Delete it"
-				isModalOpened={modal.isModalOpened}
-				onConfirm={handleDeleteConfirm}
-				onModalClose={modal.onModalClose}
-				title="Are you sure?"
-			/>
 			<Breadcrumbs
 				items={[
 					{ href: "/", label: "GitFit" },
