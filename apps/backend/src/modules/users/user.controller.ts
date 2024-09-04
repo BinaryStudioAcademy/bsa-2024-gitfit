@@ -6,6 +6,7 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 import { type UserService } from "~/modules/users/user.service.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
@@ -40,7 +41,12 @@ class UserController extends BaseController {
 		this.userService = userService;
 
 		this.addRoute({
-			handler: () => this.findAll(),
+			handler: (options) =>
+				this.findAll(
+					options as APIHandlerOptions<{
+						query: PaginationQueryParameters;
+					}>,
+				),
 			method: "GET",
 			path: UsersApiPath.ROOT,
 		});
@@ -65,20 +71,45 @@ class UserController extends BaseController {
 	 * @swagger
 	 * /users:
 	 *    get:
-	 *      description: Returns an array of users
+	 *      description: Returns a paginated array of users
+	 *      parameters:
+	 *        - in: query
+	 *          name: page
+	 *          schema:
+	 *            type: integer
+	 *          description: Page number
+	 *        - in: query
+	 *          name: pageSize
+	 *          schema:
+	 *            type: integer
+	 *          description: Number of items per page
 	 *      responses:
 	 *        200:
 	 *          description: Successful operation
 	 *          content:
 	 *            application/json:
 	 *              schema:
-	 *                type: array
-	 *                items:
-	 *                  $ref: "#/components/schemas/User"
+	 *                type: object
+	 *                properties:
+	 *                  items:
+	 *                    type: array
+	 *                    items:
+	 *                      $ref: "#/components/schemas/User"
+	 *                  currentPage:
+	 *                    type: integer
+	 *                  totalItems:
+	 *                    type: integer
+	 *                  totalPages:
+	 *                    type: integer
 	 */
-	private async findAll(): Promise<APIHandlerResponse> {
+
+	private async findAll({
+		query,
+	}: APIHandlerOptions<{
+		query: PaginationQueryParameters;
+	}>): Promise<APIHandlerResponse> {
 		return {
-			payload: await this.userService.findAll(),
+			payload: await this.userService.findAll(query),
 			status: HTTPCode.OK,
 		};
 	}
