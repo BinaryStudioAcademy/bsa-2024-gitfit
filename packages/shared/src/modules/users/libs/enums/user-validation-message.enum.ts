@@ -5,12 +5,12 @@ const UserValidationMessage = {
 	EMAIL_TOO_LONG: `Email must be less than ${String(UserValidationRule.EMAIL_MAXIMUM_LENGTH)} characters long.`,
 	EMAIL_TOO_SHORT: `Email must be at least ${String(UserValidationRule.EMAIL_MINIMUM_LENGTH)} characters long.`,
 	EMAIL_WRONG: "Email is wrong.",
+	NAME_PATTERN: "Name must contain only Latin letters.",
 	NAME_TOO_LONG: `Name is too long (> ${String(UserValidationRule.NAME_MAXIMUM_LENGTH)} symbols).`,
 	NAME_TOO_SHORT: `Name must be at least ${String(UserValidationRule.NAME_MINIMUM_LENGTH)} characters long.`,
-	ONLY_LATIN: "Latin letters only.",
-	PASSWORD_COMPLEXITY:
-		"Password must include at least one uppercase letter, one lowercase letter, one number, and one special character (Latin letters only).",
 	PASSWORD_MINIMUM_LENGTH: `Password must be at least ${String(UserValidationRule.PASSWORD_MINIMUM_LENGTH)} characters long.`,
+	PASSWORD_PATTERN:
+		"Password must contain only Latin letters and include at least one uppercase letter, one lowercase letter, one number and one special character.",
 	PASSWORD_TOO_LONG: `Password must be less than ${String(UserValidationRule.PASSWORD_MAXIMUM_LENGTH)} characters long.`,
 } as const;
 

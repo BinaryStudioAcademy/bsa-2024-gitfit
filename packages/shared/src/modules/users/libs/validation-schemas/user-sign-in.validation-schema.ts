@@ -27,7 +27,7 @@ const userSignIn: z.ZodType<UserSignInRequestDto> = z
 				message: UserValidationMessage.PASSWORD_TOO_LONG,
 			})
 			.regex(UserValidationRule.PASSWORD_PATTERN, {
-				message: UserValidationMessage.PASSWORD_COMPLEXITY,
+				message: UserValidationMessage.PASSWORD_PATTERN,
 			}),
 	})
 	.required();
