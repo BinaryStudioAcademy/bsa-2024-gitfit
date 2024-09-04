@@ -1,5 +1,3 @@
-import { type PaginationQueryParameters } from "~/libs/types/types.js";
-
 type Repository<T = unknown> = {
 	create(payload: unknown): Promise<T>;
 	delete(id: number): Promise<boolean>;
