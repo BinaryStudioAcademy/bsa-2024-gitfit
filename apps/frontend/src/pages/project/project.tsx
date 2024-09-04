@@ -1,5 +1,5 @@
 import { Breadcrumbs, PageLayout } from "~/libs/components/components.js";
-import { DataStatus } from "~/libs/enums/enums.js";
+import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -31,6 +31,8 @@ const Project = (): JSX.Element => {
 
 	const isRejected = projectStatus === DataStatus.REJECTED;
 
+	const hasProject = project !== null;
+
 	if (isRejected) {
 		return <NotFound />;
 	}
@@ -38,9 +40,12 @@ const Project = (): JSX.Element => {
 	return (
 		<PageLayout isLoading={isLoading}>
 			<div className={styles["breadcrumb-container"]}>
-				{project && (
+				{hasProject && (
 					<Breadcrumbs
-						items={[{ href: "/", label: "Projects" }, { label: project.name }]}
+						items={[
+							{ href: AppRoute.ROOT, label: "Projects" },
+							{ label: project.name },
+						]}
 					/>
 				)}
 			</div>
