@@ -52,7 +52,11 @@ const AccessManagement = (): JSX.Element => {
 		totalItemsCount: usersTotalCount,
 	});
 
-	const { isModalOpened, onModalClose, onModalOpen } = useModal();
+	const {
+		isOpened: isModalOpened,
+		onClose: onModalClose,
+		onOpen: onModalOpen,
+	} = useModal();
 
 	useEffect(() => {
 		void dispatch(
@@ -117,8 +121,8 @@ const AccessManagement = (): JSX.Element => {
 				<GroupsTable groups={groups} />
 			</section>
 			<Modal
-				isModalOpened={isModalOpened}
-				onModalClose={onModalClose}
+				isOpened={isModalOpened}
+				onClose={onModalClose}
 				title="Create new group"
 			>
 				<GroupCreateForm

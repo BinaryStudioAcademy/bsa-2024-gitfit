@@ -29,3 +29,13 @@
 	color: var(--color-text-primary);
 	cursor: pointer;
 }
+
+.user-popover-trigger {
+	padding: 0;
+	margin: 0;
+	text-decoration: none;
+	cursor: pointer;
+	background: none;
+	border: none;
+	border-radius: 50%;
+}

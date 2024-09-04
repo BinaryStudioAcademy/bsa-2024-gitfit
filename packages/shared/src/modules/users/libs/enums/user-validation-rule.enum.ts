@@ -3,12 +3,11 @@ const UserValidationRule = {
 	EMAIL_MINIMUM_LENGTH: 6,
 	NAME_MAXIMUM_LENGTH: 50,
 	NAME_MINIMUM_LENGTH: 3,
-	PASSWORD_LOWERCASE_PATTERN: /[a-z]/,
+	NAME_PATTERN: /^[\sA-Za-z]*$/,
 	PASSWORD_MAXIMUM_LENGTH: 50,
 	PASSWORD_MINIMUM_LENGTH: 5,
-	PASSWORD_NUMBER_PATTERN: /\d/,
-	PASSWORD_SPECIAL_CHAR_PATTERN: /[!"#$%&'()*+,./:;<=>?@[\]^_`{|}~-]/,
-	PASSWORD_UPPERCASE_PATTERN: /[A-Z]/,
+	PASSWORD_PATTERN:
+		/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!#$%&()*+,.=?@^_-])[\d!#$%-_a-z]*$/,
 } as const;
 
 export { UserValidationRule };

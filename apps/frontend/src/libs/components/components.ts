@@ -8,6 +8,8 @@ export { IconButton } from "./icon-button/icon-button.js";
 export { Input } from "./input/input.js";
 export { Link, NavLink } from "./link/link.js";
 export { Loader } from "./loader/loader.js";
+export { Menu } from "./menu/menu.js";
+export { MenuItem } from "./menu-item/menu-item.js";
 export { Modal } from "./modal/modal.js";
 export { PageLayout } from "./page-layout/page-layout.js";
 export { Popover } from "./popover/popover.js";
