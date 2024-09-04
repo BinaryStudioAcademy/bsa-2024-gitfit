@@ -7,12 +7,12 @@ type IconName =
 	| "eye"
 	| "leftArrow"
 	| "leftDoubleArrow"
-	| "pen"
+	| "pencil"
 	| "project"
 	| "rightArrow"
 	| "rightDoubleArrow"
 	| "search"
 	| "strikedEye"
-	| "trash";
+	| "trashBin";
 
 export { type IconName };

@@ -34,14 +34,14 @@ const GroupPopover = ({ children, groupId }: Properties): JSX.Element => {
 						<div className={styles["group-menu-items"]}>
 							<div className={styles["popover"]}>
 								<button className={styles["button"]}>
-									<Icon height={15} name="pen" width={15} />
+									<Icon height={15} name="pencil" width={15} />
 									Edit
 								</button>
 								<button
 									className={styles["button"]}
 									onClick={handleDeleteClick}
 								>
-									<Icon height={17} name="trash" width={17} />
+									<Icon height={17} name="trashBin" width={17} />
 									Delete
 								</button>
 							</div>
