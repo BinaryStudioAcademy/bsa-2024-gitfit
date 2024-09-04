@@ -57,7 +57,6 @@ class ProjectApi extends BaseHTTPApi {
 		});
 
 		const response = await this.load(endpoint, {
-			contentType: ContentType.JSON,
 			hasAuth: true,
 			method: "GET",
 		});
@@ -71,7 +70,6 @@ class ProjectApi extends BaseHTTPApi {
 		const response = await this.load(
 			this.getFullEndpoint(ProjectsApiPath.$ID, { id: payload.id }),
 			{
-				contentType: ContentType.JSON,
 				hasAuth: true,
 				method: "GET",
 			},
