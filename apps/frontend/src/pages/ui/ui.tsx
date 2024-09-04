@@ -4,7 +4,6 @@ import {
 	Modal,
 	Select,
 	Table,
-	TablePagination,
 } from "~/libs/components/components.js";
 import {
 	mockColumns as mockTableColumns,
@@ -17,12 +16,9 @@ import {
 	useCallback,
 	useEffect,
 	useModal,
-	usePagination,
 } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 import { actions as userActions } from "~/modules/users/users.js";
-
-const TABLE_TOTAL_ITEMS_COUNT = 100;
 
 const Ui = (): JSX.Element => {
 	const dispatch = useAppDispatch();
@@ -35,12 +31,8 @@ const Ui = (): JSX.Element => {
 	const modal = useModal();
 
 	useEffect(() => {
-		void dispatch(userActions.loadAll());
+		void dispatch(userActions.loadAll({ page: 1, pageSize: 10 }));
 	}, [dispatch]);
-
-	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
-		totalItemsCount: TABLE_TOTAL_ITEMS_COUNT,
-	});
 
 	const handleDeleteConfirm = useCallback(() => {
 		modal.onModalClose();
@@ -79,13 +71,6 @@ const Ui = (): JSX.Element => {
 					{ href: "/", label: "Projects" },
 					{ label: "User Interface" },
 				]}
-			/>
-			<TablePagination
-				onPageChange={onPageChange}
-				onPageSizeChange={onPageSizeChange}
-				page={page}
-				pageSize={pageSize}
-				totalItemsCount={TABLE_TOTAL_ITEMS_COUNT}
 			/>
 		</>
 	);

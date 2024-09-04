@@ -2,6 +2,7 @@ import { APIPath, ContentType } from "~/libs/enums/enums.js";
 import { BaseHTTPApi } from "~/libs/modules/api/api.js";
 import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
 import {
@@ -21,13 +22,19 @@ class UserApi extends BaseHTTPApi {
 		super({ baseUrl, http, path: APIPath.USERS, storage });
 	}
 
-	public async getAll(): Promise<UserGetAllResponseDto> {
+	public async getAll(
+		query: PaginationQueryParameters,
+	): Promise<UserGetAllResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(UsersApiPath.ROOT, {}),
 			{
 				contentType: ContentType.JSON,
 				hasAuth: true,
 				method: "GET",
+				query: {
+					page: String(query.page),
+					pageSize: String(query.pageSize),
+				},
 			},
 		);
 

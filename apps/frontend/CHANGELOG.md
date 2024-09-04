@@ -1,5 +1,56 @@
 # Changelog
 
+## [1.8.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.7.0...frontend-v1.8.0) (2024-09-04)
+
+
+### Features
+
+* add pagination to the users table gf-82 ([#143](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/143)) ([c663ca0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c663ca0be448bfd16c85b99c32e1f334199ea03a))
+
+## [1.7.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.6.2...frontend-v1.7.0) (2024-09-04)
+
+
+### Features
+
+* Add breadcrumbs to the project details page gf-165 ([#171](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/171)) ([e89c510](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/e89c510f279aa51ec6f77c5ada8f87bd33d4a606))
+* add link to logo gf-154 ([#167](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/167)) ([c4c1621](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c4c162173b45b07c29e4adbf6b85dbf81be0038c))
+* scroll element must be shown at the right side of the table component gf-149 ([#174](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/174)) ([0c73b4d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0c73b4d271d5d0c04b1ab5aff8e08b9226c24b92))
+
+## [1.6.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.6.1...frontend-v1.6.2) (2024-09-03)
+
+
+### Bug Fixes
+
+* Inconsistent location of the load component with a slow internet connection gf-147 ([#162](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/162)) ([f07f4e3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f07f4e3c7e4e2e7974d4788440d2a1fec4e268ca))
+
+## [1.6.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.6.0...frontend-v1.6.1) (2024-09-03)
+
+
+### Bug Fixes
+
+* Absence of background on the left side of Auth pages gf-121 ([#157](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/157)) ([b71df9e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b71df9e91c5e7b9a342fd6068f813c7c6fa26e66))
+* make background to be primary gf-145 ([#161](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/161)) ([c55eb9e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c55eb9e463da35a5a663af5fb78013a699c8665c))
+* update button text alignment gf-156 ([#160](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/160)) ([4e42cd6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/4e42cd6004cead60c7e96b73463db8a7a00e690d))
+
+## [1.6.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.5.1...frontend-v1.6.0) (2024-09-03)
+
+
+### Features
+
+* Add search to the project list gf-85 ([#114](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/114)) ([44c5ca9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/44c5ca9d28035094efd5a13a47d65009833611e2))
+
+
+### Bug Fixes
+
+* The Project description text overflows beyond the screen boundaries when 1000 characters are entered gf-150 ([#153](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/153)) ([77b2055](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/77b2055da1cce948955ee4a81d3fcb06809f9b1d))
+
+## [1.5.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.5.0...frontend-v1.5.1) (2024-09-02)
+
+
+### Bug Fixes
+
+* the size of the user popup and the font of the elements don't match the layout gf-136 ([#148](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/148)) ([2850420](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/285042035ab2bcab05fd7288796f8ad38d733103))
+
 ## [1.5.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.4.0...frontend-v1.5.0) (2024-09-02)
 
 

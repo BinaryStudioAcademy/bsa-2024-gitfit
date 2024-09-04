@@ -10,12 +10,14 @@ type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
 	updateProfileStatus: ValueOf<typeof DataStatus>;
 	users: UserGetAllItemResponseDto[];
+	usersTotalCount: number;
 };
 
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	updateProfileStatus: DataStatus.IDLE,
 	users: [],
+	usersTotalCount: 0,
 };
 
 const { actions, name, reducer } = createSlice({
@@ -25,6 +27,7 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
 			state.users = action.payload.items;
+			state.usersTotalCount = action.payload.totalItems;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadAll.rejected, (state) => {
