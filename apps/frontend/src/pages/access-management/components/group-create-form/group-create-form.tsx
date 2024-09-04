@@ -22,6 +22,8 @@ import { DEFAULT_GROUP_CREATE_PAYLOAD } from "./libs/constants/constants.js";
 import { getPermissionOptions } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
+const EMPTY_SET_SIZE = 0;
+
 type Properties = {
 	onRowSelect?: (rowId: number, isSelected: boolean) => void;
 	onSubmit: (payload: GroupCreateRequestDto) => void;
@@ -131,7 +133,7 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 				totalItemsCount={usersTotalCount}
 				users={users}
 			/>
-			{errors.userIds && (
+			{selectedUserIds.size === EMPTY_SET_SIZE && errors.userIds && (
 				<div className={styles["error-message"]}>{errors.userIds.message}</div>
 			)}
 			<Select
