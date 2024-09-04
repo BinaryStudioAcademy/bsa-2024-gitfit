@@ -31,7 +31,9 @@ class UserRepository implements Repository {
 	public async delete(id: number): Promise<boolean> {
 		const numberDeletedRows = await this.userModel
 			.query()
-			.deleteById(id)
+			.patch({ deletedAt: new Date().toISOString() })
+			.where({ id })
+			.whereNull("deletedAt")
 			.execute();
 
 		return numberDeletedRows > NOTHING_DELETED_COUNT;
@@ -41,6 +43,7 @@ class UserRepository implements Repository {
 		const user = await this.userModel
 			.query()
 			.findById(id)
+			.whereNull("deletedAt")
 			.returning("*")
 			.execute();
 
@@ -48,13 +51,13 @@ class UserRepository implements Repository {
 	}
 
 	public async findAll(): Promise<UserEntity[]> {
-		const users = await this.userModel.query().execute();
+		const users = await this.userModel.query().whereNull("deletedAt").execute();
 
 		return users.map((user) => UserEntity.initialize(user));
 	}
 
 	public async findByEmail(email: string): Promise<null | UserEntity> {
-		const user = await this.userModel.query().findOne({ email });
+		const user = await this.userModel.query().findOne({ email }).execute();
 
 		return user ? UserEntity.initialize(user) : null;
 	}
