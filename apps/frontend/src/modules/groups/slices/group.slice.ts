@@ -30,8 +30,9 @@ const { actions, name, reducer } = createSlice({
 			state.dataStatus = DataStatus.REJECTED;
 		});
 		builder.addCase(deleteById.fulfilled, (state, action) => {
+			const deletedGroupId = action.meta.arg;
 			state.groups = state.groups.filter(
-				(group) => group.id !== action.payload,
+				(group) => group.id !== deletedGroupId,
 			);
 		});
 	},
