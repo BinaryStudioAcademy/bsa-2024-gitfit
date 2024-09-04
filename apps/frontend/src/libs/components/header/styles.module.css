@@ -30,7 +30,12 @@
 	cursor: pointer;
 }
 
-.user-button {
-	all: unset;
+.user-popover-trigger {
+	padding: 0;
+	margin: 0;
+	text-decoration: none;
 	cursor: pointer;
+	background: none;
+	border: none;
+	border-radius: 50%;
 }

@@ -2,16 +2,16 @@ import { Menu, MenuItem } from "~/libs/components/components.js";
 import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
 type Properties = {
-	onEditClick: () => void;
+	onEdit: () => void;
 };
 
-const ProjectMenu = ({ onEditClick }: Properties): JSX.Element => {
+const ProjectMenu = ({ onEdit }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
 
 	const handleEditClick = useCallback(() => {
-		onEditClick();
+		onEdit();
 		onClose();
-	}, [onEditClick, onClose]);
+	}, [onEdit, onClose]);
 
 	return (
 		<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>

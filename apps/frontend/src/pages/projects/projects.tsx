@@ -118,7 +118,7 @@ const Projects = (): JSX.Element => {
 					projects.map((project) => (
 						<ProjectCard
 							key={project.id}
-							onEditClick={handleEditClick}
+							onEdit={handleEditClick}
 							project={project}
 						/>
 					))

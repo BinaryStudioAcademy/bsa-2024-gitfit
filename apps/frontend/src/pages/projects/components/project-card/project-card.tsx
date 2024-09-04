@@ -9,25 +9,25 @@ import { ProjectMenu } from "../components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	onEditClick: (project: ProjectGetAllItemResponseDto) => void;
+	onEdit: (project: ProjectGetAllItemResponseDto) => void;
 	project: ProjectGetAllItemResponseDto;
 };
 
-const ProjectCard = ({ onEditClick, project }: Properties): JSX.Element => {
+const ProjectCard = ({ onEdit, project }: Properties): JSX.Element => {
 	const projectRoute = configureString(AppRoute.PROJECT, {
 		id: project.id.toString(),
 	});
 
 	const handleEditClick = useCallback(() => {
-		onEditClick(project);
-	}, [onEditClick, project]);
+		onEdit(project);
+	}, [onEdit, project]);
 
 	return (
-		<div className={styles["project"]}>
-			<NavLink className={styles["project-link"] ?? ""} to={projectRoute}>
+		<div className={styles["project-container"]}>
+			<NavLink className={styles["project"] as string} to={projectRoute}>
 				{project.name}
 			</NavLink>
-			<ProjectMenu onEditClick={handleEditClick} />
+			<ProjectMenu onEdit={handleEditClick} />
 		</div>
 	);
 };

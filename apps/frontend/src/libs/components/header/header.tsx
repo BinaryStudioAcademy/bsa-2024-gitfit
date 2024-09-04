@@ -34,7 +34,7 @@ const Header = (): JSX.Element => {
 				onClose={onClose}
 			>
 				<button
-					className={styles["user-button"]}
+					className={styles["user-popover-trigger"]}
 					onClick={isOpened ? onClose : onOpen}
 				>
 					<Avatar name={name} />
