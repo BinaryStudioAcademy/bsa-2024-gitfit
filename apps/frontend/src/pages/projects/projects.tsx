@@ -115,9 +115,10 @@ const Projects = (): JSX.Element => {
 
 	const handleProjectDeleteConfirm = useCallback(() => {
 		if (selectedProject) {
-			// TODO: dispatch delete project
+			void dispatch(projectActions.deleteById(selectedProject.id));
+			handleDeleteConfirmationModalClose();
 		}
-	}, [selectedProject]);
+	}, [dispatch, selectedProject, handleDeleteConfirmationModalClose]);
 
 	const isLoading =
 		dataStatus === DataStatus.IDLE ||
