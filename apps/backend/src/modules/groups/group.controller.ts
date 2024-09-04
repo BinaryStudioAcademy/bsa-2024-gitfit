@@ -6,12 +6,15 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { type GroupService } from "./group.service.js";
 import { GroupsApiPath } from "./libs/enums/enum.js";
 import { type GroupCreateRequestDto } from "./libs/types/types.js";
 import { groupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 
+const DEFAULT_PAGE = 1;
+const DEFAULT_PAGE_SIZE = 10;
 /**
  * @swagger
  * components:
@@ -62,7 +65,12 @@ class GroupController extends BaseController {
 		});
 
 		this.addRoute({
-			handler: () => this.findAll(),
+			handler: (options) =>
+				this.findAll(
+					options as APIHandlerOptions<{
+						query: PaginationQueryParameters;
+					}>,
+				),
 			method: "GET",
 			path: GroupsApiPath.ROOT,
 		});
@@ -140,11 +148,15 @@ class GroupController extends BaseController {
 	 *                   items:
 	 *                     $ref: "#/components/schemas/Group"
 	 */
-	private async findAll(): Promise<APIHandlerResponse> {
-		const groups = await this.groupService.findAll();
+	private async findAll({
+		query,
+	}: APIHandlerOptions<{
+		query: PaginationQueryParameters;
+	}>): Promise<APIHandlerResponse> {
+		const { page = DEFAULT_PAGE, pageSize = DEFAULT_PAGE_SIZE } = query;
 
 		return {
-			payload: groups,
+			payload: await this.groupService.findAll({ page, pageSize }),
 			status: HTTPCode.OK,
 		};
 	}
