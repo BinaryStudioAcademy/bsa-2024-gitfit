@@ -4,6 +4,7 @@ import { type NavigationItem } from "~/libs/types/navigation-item.type.js";
 
 import { SidebarItem } from "./sidebar-item/sidebar-item.js";
 import styles from "./styles.module.css";
+import { PAGE_NAME } from "~/libs/constants/constants.js";
 
 type Properties = {
 	items: NavigationItem[];
@@ -13,12 +14,11 @@ const Sidebar = ({ items }: Properties): JSX.Element => {
 	const { permissions } = useAppSelector(({ permissions }) => permissions);
 
 	const filteredItems = items.filter((item) => {
-		if (item.label === "Access Management") {
+		if (item.label === PAGE_NAME.ACCESS_MANAGEMENT) {
 			return permissions.some(
 				(permission) => permission.key === Permission.MANAGE_USER_ACCESS,
 			);
 		}
-
 		return true;
 	});
 

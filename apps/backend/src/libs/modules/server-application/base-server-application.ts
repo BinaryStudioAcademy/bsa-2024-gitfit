@@ -4,7 +4,6 @@ import swaggerUi from "@fastify/swagger-ui";
 import Fastify, {
 	type FastifyError,
 	type FastifyInstance,
-	type RouteOptions,
 } from "fastify";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -172,20 +171,17 @@ class BaseServerApplication implements ServerApplication {
 	public addRoute(parameters: ServerApplicationRouteParameters): void {
 		const { handler, method, path, preHandler, validation } = parameters;
 
-		const route: RouteOptions = {
+		const routeOptions = {
 			handler,
 			method,
-			schema: {
+			shema: {
 				body: validation?.body,
 			},
 			url: path,
+			...(preHandler ? { preHandler } : {}),
 		};
 
-		const routeOptionsWithPreHandler = Object.assign({}, route, {
-			...(preHandler ? { preHandler } : {}),
-		});
-
-		this.app.route(routeOptionsWithPreHandler);
+		this.app.route(routeOptions);
 
 		this.logger.info(`Route: ${method} ${path} is registered.`);
 	}
