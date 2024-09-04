@@ -2,16 +2,15 @@ import { APIPath, ContentType } from "~/libs/enums/enums.js";
 import { BaseHTTPApi } from "~/libs/modules/api/api.js";
 import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
-import { type UserGetPermissionItemResponseDto } from "~/modules/auth/auth.js";
+
+import { AuthApiPath } from "./libs/enums/enums.js";
 import {
 	type UserAuthResponseDto,
 	type UserSignInRequestDto,
 	type UserSignInResponseDto,
 	type UserSignUpRequestDto,
 	type UserSignUpResponseDto,
-} from "~/modules/users/users.js";
-
-import { AuthApiPath } from "./libs/enums/enums.js";
+} from "./libs/types/types.js";
 
 type Constructor = {
 	baseUrl: string;
@@ -34,19 +33,6 @@ class AuthApi extends BaseHTTPApi {
 		);
 
 		return await response.json<UserAuthResponseDto>();
-	}
-
-	public async getPermissions(): Promise<UserGetPermissionItemResponseDto[]> {
-		const response = await this.load(
-			this.getFullEndpoint(AuthApiPath.PERMISSIONS, {}),
-			{
-				contentType: ContentType.JSON,
-				hasAuth: true,
-				method: "GET",
-			},
-		);
-
-		return await response.json<UserGetPermissionItemResponseDto[]>();
 	}
 
 	public async signIn(

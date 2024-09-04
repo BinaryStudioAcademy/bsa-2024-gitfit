@@ -3,8 +3,8 @@ import { BaseHTTPApi } from "~/libs/modules/api/api.js";
 import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
 
-import { AuthApiPath } from "./libs/enums/enums.js";
-import { type UserGetPermissionItemResponseDto } from "./libs/types/types.js";
+import { PermissionsApiPath } from "./libs/enums/enums.js";
+import { type PermissionGetAllResponseDto } from "./libs/types/types.js";
 
 type Constructor = {
 	baseUrl: string;
@@ -14,12 +14,12 @@ type Constructor = {
 
 class PermissonsApi extends BaseHTTPApi {
 	public constructor({ baseUrl, http, storage }: Constructor) {
-		super({ baseUrl, http, path: APIPath.AUTH, storage });
+		super({ baseUrl, http, path: APIPath.PERMISSIONS, storage });
 	}
 
-	public async getPermissions(): Promise<UserGetPermissionItemResponseDto[]> {
+	public async getPermissions(): Promise<PermissionGetAllResponseDto> {
 		const response = await this.load(
-			this.getFullEndpoint(AuthApiPath.PERMISSIONS, {}),
+			this.getFullEndpoint(PermissionsApiPath.USER_PERMISSONS, {}),
 			{
 				contentType: ContentType.JSON,
 				hasAuth: true,
@@ -27,7 +27,7 @@ class PermissonsApi extends BaseHTTPApi {
 			},
 		);
 
-		return await response.json<UserGetPermissionItemResponseDto[]>();
+		return await response.json<PermissionGetAllResponseDto>();
 	}
 }
 

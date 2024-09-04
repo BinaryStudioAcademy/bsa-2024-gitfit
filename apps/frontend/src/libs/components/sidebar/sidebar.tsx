@@ -15,7 +15,7 @@ const Sidebar = ({ items }: Properties): JSX.Element => {
 
 	const filteredItems = items.filter((item) => {
 		if (item.label === PAGE_NAME.ACCESS_MANAGEMENT) {
-			return permissions.some(
+			return permissions.items.some(
 				(permission) => permission.key === Permission.MANAGE_USER_ACCESS,
 			);
 		}

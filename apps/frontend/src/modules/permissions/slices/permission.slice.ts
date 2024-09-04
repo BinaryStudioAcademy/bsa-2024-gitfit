@@ -2,18 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
-import { type UserGetPermissionItemResponseDto } from "~/modules/auth/auth.js";
 
+import { type PermissionGetAllResponseDto } from "../libs/types/types.js";
 import { loadPermissions } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
-	permissions: UserGetPermissionItemResponseDto[];
+	permissions: PermissionGetAllResponseDto;
 };
 
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
-	permissions: [],
+	permissions: {
+		items: [],
+	},
 };
 
 const { actions, name, reducer } = createSlice({

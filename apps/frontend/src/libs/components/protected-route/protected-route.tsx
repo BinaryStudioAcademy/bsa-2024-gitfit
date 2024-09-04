@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { Loader } from "~/libs/components/components.js";
 import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
-import { type UserGetPermissionItemResponseDto } from "~/modules/auth/auth.js";
+import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/libs/types/types.js";
 
 import styles from "./styles.module.css";
 
@@ -26,8 +26,8 @@ const ProtectedRoute = ({
 
 	const hasRequiredPermission = requiredPermissions
 		? requiredPermissions.every((permission) =>
-				permissions.some(
-					(userPermission: UserGetPermissionItemResponseDto) =>
+				permissions.items.some(
+					(userPermission: PermissionGetAllItemResponseDto) =>
 						userPermission.key === permission,
 				),
 			)

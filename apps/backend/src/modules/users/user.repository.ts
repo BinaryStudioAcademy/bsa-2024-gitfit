@@ -3,11 +3,9 @@ import {
 	type PaginationResponseDto,
 	type Repository,
 } from "~/libs/types/types.js";
-import { PermissionModel } from "~/modules/groups/permission.model.js";
-import {
-	type UserGetPermissionItemResponseDto,
-	type UserPatchRequestDto,
-} from "~/modules/users/libs/types/types.js";
+import { type PermissionGetAllResponseDto } from "~/modules/permissions/libs/types/types.js";
+import { PermissionModel } from "~/modules/permissions/permission.model.js";
+import { type UserPatchRequestDto } from "~/modules/users/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserModel } from "~/modules/users/user.model.js";
 
@@ -70,13 +68,21 @@ class UserRepository implements Repository {
 
 	public async getPermissionsByUserId(
 		userId: number,
-	): Promise<UserGetPermissionItemResponseDto[]> {
-		return await this.userModel
+	): Promise<PermissionGetAllResponseDto> {
+		const permissions = await this.userModel
 			.relatedQuery("groups")
 			.for(userId)
 			.joinRelated("permissions")
 			.distinct("permissions.*")
 			.castTo(PermissionModel);
+
+		return {
+			items: permissions.map((permission) => ({
+				id: permission.id,
+				key: permission.key,
+				name: permission.name,
+			})),
+		};
 	}
 
 	public async patch(

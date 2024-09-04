@@ -7,7 +7,6 @@ import {
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 import {
-	type UserAuthResponseDto,
 	type UserSignInRequestDto,
 	userSignInValidationSchema,
 	type UserSignUpRequestDto,
@@ -58,17 +57,6 @@ class AuthController extends BaseController {
 			method: "GET",
 			path: AuthApiPath.AUTHENTICATED_USER,
 		});
-
-		this.addRoute({
-			handler: (options) =>
-				this.getPermissions(
-					options as APIHandlerOptions<{
-						user: UserAuthResponseDto;
-					}>,
-				),
-			method: "GET",
-			path: AuthApiPath.PERMISSIONS,
-		});
 	}
 
 	/**
@@ -97,46 +85,6 @@ class AuthController extends BaseController {
 			payload: user,
 			status: HTTPCode.OK,
 		});
-	}
-
-	/**
-	 * @swagger
-	 * /auth/permissions:
-	 *    get:
-	 *      description: Get permissions for the authenticated user
-	 *      responses:
-	 *        200:
-	 *          description: Successful operation
-	 *          content:
-	 *            application/json:
-	 *              schema:
-	 *                type: array
-	 *                items:
-	 *                  type: object
-	 *                  properties:
-	 *                    id:
-	 *                      type: integer
-	 *                    key:
-	 *                      type: string
-	 *                    name:
-	 *                      type: string
-	 *                    createdAt:
-	 *                      type: string
-	 *                      format: date-time
-	 *                    updatedAt:
-	 *                      type: string
-	 *                      format: date-time
-	 */
-
-	private async getPermissions(
-		options: APIHandlerOptions<{
-			user: UserAuthResponseDto;
-		}>,
-	): Promise<APIHandlerResponse> {
-		return {
-			payload: await this.authService.getPermissions(options.user.id),
-			status: HTTPCode.OK,
-		};
 	}
 
 	/**

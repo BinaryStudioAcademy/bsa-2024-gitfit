@@ -49,6 +49,11 @@ export {
 	GroupsApiPath,
 } from "./modules/groups/groups.js";
 export {
+	type PermissionGetAllItemResponseDto,
+	type PermissionGetAllResponseDto,
+	PermissionsApiPath,
+} from "./modules/permissions/permissions.js";
+export {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupCreateResponseDto,
 	projectGroupCreateValidationSchema,
@@ -69,7 +74,6 @@ export {
 	UserError,
 	type UserGetAllItemResponseDto,
 	type UserGetAllResponseDto,
-	type UserGetPermissionItemResponseDto,
 	type UserPatchRequestDto,
 	type UserPatchResponseDto,
 	userPatchValidationSchema,

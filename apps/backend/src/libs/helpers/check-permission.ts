@@ -4,7 +4,7 @@ import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { type APIPreHandler } from "~/libs/modules/controller/libs/types/types.js";
 import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
-import { userService } from "~/modules/users/users.js";
+import { permissionService } from "~/modules/permissions/permissions.js";
 
 const checkPermission = (requiredPermission: string): APIPreHandler => {
 	return async (request: FastifyRequest): Promise<void> => {
@@ -17,16 +17,16 @@ const checkPermission = (requiredPermission: string): APIPreHandler => {
 			});
 		}
 
-		const permissions = await userService.getPermissionsByUserId(userId);
+		const permissions = await permissionService.getPermissions(userId);
 
-		if (permissions.length === EMPTY_LENGTH) {
+		if (permissions.items.length === EMPTY_LENGTH) {
 			throw new HTTPError({
 				message: ExceptionMessage.PERMISSION_NOT_FOUND,
 				status: HTTPCode.FORBIDDEN,
 			});
 		}
 
-		const hasPermission = permissions.some(
+		const hasPermission = permissions.items.some(
 			(permission) => permission.key === requiredPermission,
 		);
 

@@ -6,12 +6,12 @@ import {
 	type PaginationQueryParameters,
 	type Service,
 } from "~/libs/types/types.js";
+import { type PermissionGetAllResponseDto } from "~/modules/permissions/libs/types/types.js";
 
 import { UserError } from "./libs/exceptions/exceptions.js";
 import {
 	type UserAuthResponseDto,
 	type UserGetAllResponseDto,
-	type UserGetPermissionItemResponseDto,
 	type UserPatchRequestDto,
 	type UserPatchResponseDto,
 	type UserSignUpRequestDto,
@@ -102,7 +102,7 @@ class UserService implements Service {
 
 	public async getPermissionsByUserId(
 		userId: number,
-	): Promise<UserGetPermissionItemResponseDto[]> {
+	): Promise<PermissionGetAllResponseDto> {
 		return await this.userRepository.getPermissionsByUserId(userId);
 	}
 
