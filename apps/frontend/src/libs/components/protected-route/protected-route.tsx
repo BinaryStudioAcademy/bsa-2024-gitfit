@@ -1,8 +1,13 @@
 import { Navigate } from "react-router-dom";
 
 import { Loader } from "~/libs/components/components.js";
-import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
-import { useAppSelector } from "~/libs/hooks/hooks.js";
+import {
+	AppRoute,
+	DataStatus,
+	NotificationMessage,
+} from "~/libs/enums/enums.js";
+import { useAppSelector, useRef } from "~/libs/hooks/hooks.js";
+import { toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
 import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -18,6 +23,8 @@ const ProtectedRoute = ({
 }: Properties): JSX.Element => {
 	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
 	const { permissions } = useAppSelector(({ permissions }) => permissions);
+
+	const hasShownError = useRef(false);
 
 	const hasAuthenticatedUser = Boolean(authenticatedUser);
 
@@ -42,7 +49,12 @@ const ProtectedRoute = ({
 	}
 
 	if (!hasRequiredPermission) {
-		return <Navigate replace to={AppRoute.ANY} />;
+		if (!hasShownError.current) {
+			toastNotifier.showError(NotificationMessage.PERMISSIONS_REQUIRED);
+			hasShownError.current = true;
+		}
+
+		return <Navigate replace to={AppRoute.ROOT} />;
 	}
 
 	if (!hasAuthenticatedUser) {
