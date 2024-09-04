@@ -26,11 +26,11 @@ const Table = <T extends object>({
 	return (
 		<div className={styles["table-container"]}>
 			<table className={styles["table"]}>
-				<thead>
+				<thead className={styles["table-head"]}>
 					{table.getHeaderGroups().map((headerGroup) => (
-						<tr key={headerGroup.id}>
+						<tr className={styles["table-row"]} key={headerGroup.id}>
 							{headerGroup.headers.map((header) => (
-								<th key={header.id}>
+								<th className={styles["table-header"]} key={header.id}>
 									{flexRender(
 										header.column.columnDef.header,
 										header.getContext(),
@@ -40,11 +40,11 @@ const Table = <T extends object>({
 						</tr>
 					))}
 				</thead>
-				<tbody>
+				<tbody className={styles["table-body"]}>
 					{table.getRowModel().rows.map((row) => (
-						<tr key={row.id}>
+						<tr className={styles["table-row"]} key={row.id}>
 							{row.getVisibleCells().map((cell) => (
-								<td key={cell.id}>
+								<td className={styles["table-data"]} key={cell.id}>
 									{flexRender(cell.column.columnDef.cell, cell.getContext())}
 								</td>
 							))}
