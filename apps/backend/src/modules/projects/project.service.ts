@@ -8,6 +8,8 @@ import {
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
+	type ProjectPatchRequestDto,
+	type ProjectPatchResponseDto,
 } from "./libs/types/types.js";
 import { ProjectEntity } from "./project.entity.js";
 import { type ProjectRepository } from "./project.repository.js";
@@ -59,8 +61,12 @@ class ProjectService implements Service {
 		return item.toObject();
 	}
 
-	public findAll(): ReturnType<Service["findAll"]> {
-		return Promise.resolve({ items: [] });
+	public async findAll(): Promise<ProjectGetAllResponseDto> {
+		const projects = await this.projectRepository.findAll();
+
+		return {
+			items: projects.items.map((item) => item.toObject()),
+		};
 	}
 
 	public async findAllbyName(
@@ -71,6 +77,35 @@ class ProjectService implements Service {
 		return {
 			items: items.map((item) => item.toObject()),
 		};
+	}
+
+	public async patch(
+		id: number,
+		projectData: ProjectPatchRequestDto,
+	): Promise<ProjectPatchResponseDto> {
+		const targetProject = await this.projectRepository.find(id);
+
+		if (!targetProject) {
+			throw new ProjectError({
+				message: ExceptionMessage.PROJECT_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		const existingProject = await this.projectRepository.findByName(
+			projectData.name,
+		);
+
+		if (existingProject && existingProject.toObject().id !== id) {
+			throw new ProjectError({
+				message: ExceptionMessage.PROJECT_NAME_USED,
+				status: HTTPCode.CONFLICT,
+			});
+		}
+
+		const updatedItem = await this.projectRepository.patch(id, projectData);
+
+		return updatedItem.toObject();
 	}
 
 	public update(): ReturnType<Service["update"]> {

@@ -65,7 +65,7 @@ class ProjectGroupRepository implements Repository {
 	}
 
 	public findAll(): ReturnType<Repository["findAll"]> {
-		return Promise.resolve([]);
+		return Promise.resolve({ items: [] });
 	}
 
 	public async findByName(name: string): Promise<null | ProjectGroupModel> {

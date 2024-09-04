@@ -1,36 +1,27 @@
-import {
-	useCallback,
-	useHandleClickOutside,
-	useRef,
-	useState,
-} from "~/libs/hooks/hooks.js";
+import { useHandleClickOutside, useRef } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
 	content: React.ReactNode;
+	isOpened: boolean;
+	onClose: () => void;
 };
 
-const Popover = ({ children, content }: Properties): JSX.Element => {
-	const [isOpened, setIsOpened] = useState<boolean>(false);
+const Popover = ({
+	children,
+	content,
+	isOpened,
+	onClose,
+}: Properties): JSX.Element => {
 	const popoverReference = useRef<HTMLDivElement>(null);
 
-	const handleToggle = useCallback((): void => {
-		setIsOpened((previousState) => !previousState);
-	}, []);
-
-	const handleClose = (): void => {
-		setIsOpened(false);
-	};
-
-	useHandleClickOutside(popoverReference, handleClose);
+	useHandleClickOutside(popoverReference, onClose);
 
 	return (
 		<div className={styles["popover-wrapper"]} ref={popoverReference}>
-			<button className={styles["trigger-wrapper"]} onClick={handleToggle}>
-				{children}
-			</button>
+			{children}
 			{isOpened && (
 				<div className={styles["popover-content-wrapper"]}>{content}</div>
 			)}

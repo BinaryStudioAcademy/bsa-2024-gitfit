@@ -1,26 +1,26 @@
 import { useCallback, useState } from "~/libs/hooks/hooks.js";
 
 type Properties = {
-	isModalOpened: boolean;
-	onModalClose: () => void;
-	onModalOpen: () => void;
+	isOpened: boolean;
+	onClose: () => void;
+	onOpen: () => void;
 };
 
 const useModal = (): Properties => {
-	const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+	const [isOpened, setIsOpened] = useState<boolean>(false);
 
 	const handleModalOpen = useCallback(() => {
-		setIsModalOpened(true);
+		setIsOpened(true);
 	}, []);
 
 	const handleModalClose = useCallback(() => {
-		setIsModalOpened(false);
+		setIsOpened(false);
 	}, []);
 
 	return {
-		isModalOpened,
-		onModalClose: handleModalClose,
-		onModalOpen: handleModalOpen,
+		isOpened,
+		onClose: handleModalClose,
+		onOpen: handleModalOpen,
 	};
 };
 
