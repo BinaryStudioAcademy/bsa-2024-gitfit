@@ -19,8 +19,10 @@
 	line-height: 120%;
 }
 
-.groups-table {
+.groups-table,
+.users-table {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	overflow: visible;
 }
