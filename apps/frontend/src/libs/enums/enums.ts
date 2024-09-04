@@ -6,6 +6,6 @@ export {
 	APIPath,
 	AppEnvironment,
 	ContentType,
-	Permission,
+	PermissionKey,
 	ServerErrorType,
 } from "@git-fit/shared";

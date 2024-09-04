@@ -4,7 +4,7 @@ export {
 	AppEnvironment,
 	ContentType,
 	ExceptionMessage,
-	Permission,
+	PermissionKey,
 	ServerErrorType,
 	SortType,
 } from "./libs/enums/enums.js";

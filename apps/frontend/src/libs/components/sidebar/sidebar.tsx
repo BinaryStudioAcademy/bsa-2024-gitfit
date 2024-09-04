@@ -1,6 +1,6 @@
 import { PAGE_NAME } from "~/libs/constants/constants.js";
-import { Permission } from "~/libs/enums/enums.js";
-import { useAppSelector } from "~/libs/hooks/hooks.js";
+import { PermissionKey } from "~/libs/enums/enums.js";
+import { useAppSelector, useMemo } from "~/libs/hooks/hooks.js";
 import { type NavigationItem } from "~/libs/types/navigation-item.type.js";
 
 import { SidebarItem } from "./sidebar-item/sidebar-item.js";
@@ -13,15 +13,17 @@ type Properties = {
 const Sidebar = ({ items }: Properties): JSX.Element => {
 	const { permissions } = useAppSelector(({ permissions }) => permissions);
 
-	const filteredItems = items.filter((item) => {
-		if (item.label === PAGE_NAME.ACCESS_MANAGEMENT) {
-			return permissions.items.some(
-				(permission) => permission.key === Permission.MANAGE_USER_ACCESS,
-			);
-		}
+	const filteredItems = useMemo(() => {
+		return items.filter((item) => {
+			if (item.label === PAGE_NAME.ACCESS_MANAGEMENT) {
+				return permissions.items.some(
+					(permission) => permission.key === PermissionKey.MANAGE_USER_ACCESS,
+				);
+			}
 
-		return true;
-	});
+			return true;
+		});
+	}, [items, permissions.items]);
 
 	return (
 		<ul className={styles["sidebar"]}>

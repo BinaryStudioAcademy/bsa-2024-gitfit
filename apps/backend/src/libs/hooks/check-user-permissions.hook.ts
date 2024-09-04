@@ -6,7 +6,7 @@ import { type APIPreHandler } from "~/libs/modules/controller/libs/types/types.j
 import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
 import { permissionService } from "~/modules/permissions/permissions.js";
 
-const checkPermission = (requiredPermission: string): APIPreHandler => {
+const checkPermission = (routePermissions: string): APIPreHandler => {
 	return async (request: FastifyRequest): Promise<void> => {
 		const userId = request.user?.id;
 
@@ -27,7 +27,7 @@ const checkPermission = (requiredPermission: string): APIPreHandler => {
 		}
 
 		const hasPermission = permissions.items.some(
-			(permission) => permission.key === requiredPermission,
+			(permission) => permission.key === routePermissions,
 		);
 
 		if (!hasPermission) {

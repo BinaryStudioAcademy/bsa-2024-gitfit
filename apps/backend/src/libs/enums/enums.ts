@@ -3,6 +3,6 @@ export {
 	APIPath,
 	AppEnvironment,
 	ExceptionMessage,
-	Permission,
+	PermissionKey,
 	ServerErrorType,
 } from "@git-fit/shared";

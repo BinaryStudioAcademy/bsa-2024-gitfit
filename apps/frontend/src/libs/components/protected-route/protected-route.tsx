@@ -1,38 +1,32 @@
 import { Navigate } from "react-router-dom";
 
 import { Loader } from "~/libs/components/components.js";
-import {
-	AppRoute,
-	DataStatus,
-	NotificationMessage,
-} from "~/libs/enums/enums.js";
-import { useAppSelector, useRef } from "~/libs/hooks/hooks.js";
-import { toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
+import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
+import { useAppSelector } from "~/libs/hooks/hooks.js";
 import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/libs/types/types.js";
+import { NotFound } from "~/pages/not-found/not-found.jsx";
 
 import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
-	requiredPermissions?: string[];
+	pagePermissions?: string[];
 };
 
 const ProtectedRoute = ({
 	children,
-	requiredPermissions,
+	pagePermissions,
 }: Properties): JSX.Element => {
 	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
 	const { permissions } = useAppSelector(({ permissions }) => permissions);
-
-	const hasShownError = useRef(false);
 
 	const hasAuthenticatedUser = Boolean(authenticatedUser);
 
 	const isLoading =
 		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
 
-	const hasRequiredPermission = requiredPermissions
-		? requiredPermissions.every((permission) =>
+	const hasRequiredPermission = pagePermissions
+		? pagePermissions.every((permission) =>
 				permissions.items.some(
 					(userPermission: PermissionGetAllItemResponseDto) =>
 						userPermission.key === permission,
@@ -49,12 +43,7 @@ const ProtectedRoute = ({
 	}
 
 	if (!hasRequiredPermission) {
-		if (!hasShownError.current) {
-			toastNotifier.showError(NotificationMessage.PERMISSIONS_REQUIRED);
-			hasShownError.current = true;
-		}
-
-		return <Navigate replace to={AppRoute.ROOT} />;
+		return <NotFound />;
 	}
 
 	if (!hasAuthenticatedUser) {
