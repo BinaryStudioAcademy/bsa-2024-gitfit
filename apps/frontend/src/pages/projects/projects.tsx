@@ -82,6 +82,13 @@ const Projects = (): JSX.Element => {
 		[handleEditModalOpen],
 	);
 
+	const handleDeleteClick = useCallback(
+		(project: ProjectGetAllItemResponseDto) => {
+			setSelectedProject(project);
+			// TODO: show confirmation modal
+		},
+		[],
+	);
 	const handleProjectCreateSubmit = useCallback(
 		(payload: ProjectCreateRequestDto) => {
 			void dispatch(projectActions.create(payload));
@@ -118,6 +125,7 @@ const Projects = (): JSX.Element => {
 					projects.map((project) => (
 						<ProjectCard
 							key={project.id}
+							onDelete={handleDeleteClick}
 							onEdit={handleEditClick}
 							project={project}
 						/>
