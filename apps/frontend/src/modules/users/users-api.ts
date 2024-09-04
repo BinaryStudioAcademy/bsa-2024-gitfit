@@ -22,23 +22,21 @@ class UserApi extends BaseHTTPApi {
 		super({ baseUrl, http, path: APIPath.USERS, storage });
 	}
 
-	public async getAll({
-		page,
-		pageSize,
-	}: PaginationQueryParameters): Promise<UserGetAllResponseDto> {
-		const end = this.getFullEndpoint(
-			UsersApiPath.ROOT,
-			"?page=:page&pageSize=:pageSize",
+	public async getAll(
+		query: PaginationQueryParameters,
+	): Promise<UserGetAllResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(UsersApiPath.ROOT, {}),
 			{
-				page: String(page),
-				pageSize: String(pageSize),
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "GET",
+				query: {
+					page: String(query.page),
+					pageSize: String(query.pageSize),
+				},
 			},
 		);
-		const response = await this.load(end, {
-			contentType: ContentType.JSON,
-			hasAuth: true,
-			method: "GET",
-		});
 
 		return await response.json<UserGetAllResponseDto>();
 	}
