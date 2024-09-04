@@ -1,3 +1,4 @@
+import { NOTHING_DELETED_COUNT } from "~/libs/constants/constants.js";
 import { type Repository } from "~/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserModel } from "~/modules/users/user.model.js";
@@ -28,14 +29,12 @@ class UserRepository implements Repository {
 	}
 
 	public async delete(id: number): Promise<boolean> {
-		const NO_ROWS_DELETED = 0;
-
 		const numberDeletedRows = await this.userModel
 			.query()
 			.deleteById(id)
 			.execute();
 
-		return numberDeletedRows > NO_ROWS_DELETED;
+		return numberDeletedRows > NOTHING_DELETED_COUNT;
 	}
 
 	public async find(id: number): Promise<null | UserEntity> {

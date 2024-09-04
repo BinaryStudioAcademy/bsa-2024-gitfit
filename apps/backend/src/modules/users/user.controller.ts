@@ -59,6 +59,48 @@ class UserController extends BaseController {
 				body: userPatchValidationSchema,
 			},
 		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.delete(
+					options as APIHandlerOptions<{
+						params: { id: string };
+					}>,
+				),
+			method: "DELETE",
+			path: UsersApiPath.$ID,
+		});
+	}
+
+	/**
+	 * @swagger
+	 * /users/{id}:
+	 *    delete:
+	 *      tags:
+	 *        - Users
+	 *      description: Deletes a user
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          description: ID of the user to delete
+	 *          required: true
+	 *          schema:
+	 *            type: string
+	 *      responses:
+	 *        200:
+	 *          description: User deleted successfully
+	 *        404:
+	 *          description: User not found
+	 */
+	private async delete(
+		options: APIHandlerOptions<{
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.userService.delete(Number(options.params.id)),
+			status: HTTPCode.OK,
+		};
 	}
 
 	/**
