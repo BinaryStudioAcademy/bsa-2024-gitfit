@@ -1,5 +1,6 @@
 import { transaction } from "objection";
 
+import { NOTHING_DELETED_COUNT } from "~/libs/constants/constants.js";
 import { changeCase } from "~/libs/helpers/helpers.js";
 import { type Repository } from "~/libs/types/types.js";
 
@@ -38,10 +39,9 @@ class GroupRepository implements Repository {
 	}
 
 	public async delete(id: number): Promise<boolean> {
-		const ROWS_DELETED = 0;
-		const numberDeleted = await this.groupModel.query().deleteById(id);
+		const deletedRowsCount = await this.groupModel.query().deleteById(id);
 
-		return numberDeleted > ROWS_DELETED;
+		return deletedRowsCount > NOTHING_DELETED_COUNT;
 	}
 
 	public async find(id: number): Promise<GroupModel | null> {
