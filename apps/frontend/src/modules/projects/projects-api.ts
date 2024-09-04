@@ -8,6 +8,8 @@ import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
+	type ProjectPatchRequestDto,
+	type ProjectPatchResponseDto,
 } from "./libs/types/types.js";
 
 type Constructor = {
@@ -37,15 +39,16 @@ class ProjectApi extends BaseHTTPApi {
 		return await response.json<ProjectGetAllItemResponseDto>();
 	}
 
-	public async getAll(): Promise<ProjectGetAllResponseDto> {
-		const response = await this.load(
-			this.getFullEndpoint(ProjectsApiPath.ROOT, {}),
-			{
-				contentType: ContentType.JSON,
-				hasAuth: true,
-				method: "GET",
-			},
-		);
+	public async getAll(name = ""): Promise<ProjectGetAllResponseDto> {
+		const endpoint = this.getFullEndpoint(ProjectsApiPath.ROOT, "?name=:name", {
+			name,
+		});
+
+		const response = await this.load(endpoint, {
+			contentType: ContentType.JSON,
+			hasAuth: true,
+			method: "GET",
+		});
 
 		return await response.json<ProjectGetAllResponseDto>();
 	}
@@ -63,6 +66,23 @@ class ProjectApi extends BaseHTTPApi {
 		);
 
 		return await response.json<ProjectGetAllItemResponseDto>();
+	}
+
+	public async patch(
+		id: number,
+		payload: ProjectPatchRequestDto,
+	): Promise<ProjectPatchResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(ProjectsApiPath.$ID, { id: String(id) }),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "PATCH",
+				payload: JSON.stringify(payload),
+			},
+		);
+
+		return await response.json<ProjectPatchResponseDto>();
 	}
 }
 

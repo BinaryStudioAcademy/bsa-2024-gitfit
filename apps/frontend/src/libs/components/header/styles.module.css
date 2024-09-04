@@ -24,3 +24,18 @@
 	font-size: 16px;
 	font-weight: 500;
 }
+
+.logo-link {
+	color: var(--color-text-primary);
+	cursor: pointer;
+}
+
+.user-popover-trigger {
+	padding: 0;
+	margin: 0;
+	text-decoration: none;
+	cursor: pointer;
+	background: none;
+	border: none;
+	border-radius: 50%;
+}

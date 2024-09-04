@@ -21,7 +21,6 @@ const getGroupColumns = (): TableColumn<GroupRow>[] => [
 		accessorFn: (group: GroupRow): React.ReactNode => group.options,
 		header: "",
 		id: "options",
-		size: 28,
 	},
 ];
 

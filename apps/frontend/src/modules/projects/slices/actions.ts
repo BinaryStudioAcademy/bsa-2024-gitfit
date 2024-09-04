@@ -6,6 +6,8 @@ import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
+	type ProjectPatchRequestDto,
+	type ProjectPatchResponseDto,
 } from "~/modules/projects/projects.js";
 
 import { name as sliceName } from "./project.slice.js";
@@ -22,12 +24,12 @@ const getById = createAsyncThunk<
 
 const loadAll = createAsyncThunk<
 	ProjectGetAllResponseDto,
-	undefined,
+	string | undefined,
 	AsyncThunkConfig
->(`${sliceName}/load-all`, async (_, { extra }) => {
+>(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { projectApi } = extra;
 
-	return await projectApi.getAll();
+	return await projectApi.getAll(query);
 });
 
 const create = createAsyncThunk<
@@ -44,4 +46,18 @@ const create = createAsyncThunk<
 	return response;
 });
 
-export { create, getById, loadAll };
+const patch = createAsyncThunk<
+	ProjectPatchResponseDto,
+	{ id: number; payload: ProjectPatchRequestDto },
+	AsyncThunkConfig
+>(`${sliceName}/update`, async ({ id, payload }, { extra }) => {
+	const { projectApi, toastNotifier } = extra;
+
+	const updatedProject = await projectApi.patch(id, payload);
+
+	toastNotifier.showSuccess(NotificationMessage.PROJECT_UPDATE_SUCCESS);
+
+	return updatedProject;
+});
+
+export { create, getById, loadAll, patch };

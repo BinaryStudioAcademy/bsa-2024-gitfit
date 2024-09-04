@@ -11,7 +11,7 @@ type Properties = {
 };
 
 const GroupsTable = ({ groups }: Properties): JSX.Element => {
-	const { isModalOpened, onModalClose, onModalOpen } = useModal();
+	const { isOpened, onClose, onOpen } = useModal();
 	const [groupToEdit, setGroupToEdit] =
 		useState<GroupGetAllItemResponseDto | null>(null);
 
@@ -19,14 +19,14 @@ const GroupsTable = ({ groups }: Properties): JSX.Element => {
 	const groupData: GroupRow[] = getGroupRows(groups, {
 		onEdit: (group: GroupGetAllItemResponseDto) => {
 			setGroupToEdit(group);
-			onModalOpen();
+			onOpen();
 		},
 	});
 
 	const handleModalClose = useCallback(() => {
 		setGroupToEdit(null);
-		onModalClose();
-	}, [onModalClose, setGroupToEdit]);
+		onClose();
+	}, [onClose, setGroupToEdit]);
 
 	return (
 		<>
@@ -34,8 +34,8 @@ const GroupsTable = ({ groups }: Properties): JSX.Element => {
 
 			{groupToEdit && (
 				<Modal
-					isModalOpened={isModalOpened}
-					onModalClose={handleModalClose}
+					isOpened={isOpened}
+					onClose={handleModalClose}
 					title="Update group"
 				>
 					<GroupsUpdateForm group={groupToEdit} onSubmit={handleModalClose} />

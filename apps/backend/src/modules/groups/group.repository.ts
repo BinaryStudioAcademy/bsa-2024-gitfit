@@ -47,12 +47,14 @@ class GroupRepository implements Repository {
 		return group ? GroupEntity.initialize(group) : null;
 	}
 
-	public async findAll(): Promise<GroupEntity[]> {
+	public async findAll(): Promise<{ items: GroupEntity[] }> {
 		const groups = await this.groupModel
 			.query()
 			.withGraphFetched("[permissions, users]");
 
-		return groups.map((group) => GroupEntity.initialize(group));
+		return {
+			items: groups.map((group) => GroupEntity.initialize(group)),
+		};
 	}
 
 	public async findByName(name: string): Promise<GroupModel | null> {

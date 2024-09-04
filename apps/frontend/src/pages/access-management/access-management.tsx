@@ -1,34 +1,51 @@
-import { PageLayout } from "~/libs/components/components.js";
+import {
+	PageLayout,
+	Table,
+	TablePagination,
+} from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
 	useEffect,
+	usePagination,
 } from "~/libs/hooks/hooks.js";
 import { actions as groupActions } from "~/modules/groups/groups.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-import { GroupsTable, UsersTable } from "./libs/components/components.js";
+import { GroupsTable } from "./libs/components/components.js";
+import { getUserColumns, getUserRows } from "./libs/helpers/helpers.js";
+import { type UserRow } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
 const AccessManagement = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { dataStatus: usersDataStatus, users } = useAppSelector(
-		({ users }) => users,
-	);
+	const {
+		dataStatus: usersDataStatus,
+		users,
+		usersTotalCount,
+	} = useAppSelector(({ users }) => users);
+
 	const { dataStatus: groupsDataStatus, groups } = useAppSelector(
 		({ groups }) => groups,
 	);
 
+	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+		totalItemsCount: usersTotalCount,
+	});
+
 	useEffect(() => {
-		void dispatch(userActions.loadAll());
+		void dispatch(userActions.loadAll({ page, pageSize }));
 		void dispatch(groupActions.loadAll());
-	}, [dispatch]);
+	}, [dispatch, page, pageSize]);
 
 	const isLoading = [usersDataStatus, groupsDataStatus].some(
 		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
 	);
+
+	const userColumns = getUserColumns();
+	const userData: UserRow[] = getUserRows(users);
 
 	return (
 		<PageLayout isLoading={isLoading}>
@@ -36,7 +53,15 @@ const AccessManagement = (): JSX.Element => {
 
 			<section>
 				<h2 className={styles["section-title"]}>Users</h2>
-				<UsersTable users={users} />
+
+				<Table<UserRow> columns={userColumns} data={userData} />
+				<TablePagination
+					onPageChange={onPageChange}
+					onPageSizeChange={onPageSizeChange}
+					page={page}
+					pageSize={pageSize}
+					totalItemsCount={usersTotalCount}
+				/>
 			</section>
 
 			<section>

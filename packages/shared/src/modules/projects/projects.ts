@@ -3,6 +3,12 @@ export { ProjectError } from "./libs/exceptions/exceptions.js";
 export {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
+	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
+	type ProjectPatchRequestDto,
+	type ProjectPatchResponseDto,
 } from "./libs/types/types.js";
-export { projectCreate as projectCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+export {
+	projectCreate as projectCreateValidationSchema,
+	projectPatch as projectPatchValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";

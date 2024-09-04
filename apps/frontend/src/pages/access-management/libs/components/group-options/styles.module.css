@@ -4,6 +4,6 @@
 	justify-content: flex-end;
 }
 
-.options-content {
-	padding: 4px;
+.options-wrapper {
+	position: absolute;
 }
