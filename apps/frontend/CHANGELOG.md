@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.7.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.6.2...frontend-v1.7.0) (2024-09-04)
+
+
+### Features
+
+* Add breadcrumbs to the project details page gf-165 ([#171](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/171)) ([e89c510](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/e89c510f279aa51ec6f77c5ada8f87bd33d4a606))
+* add link to logo gf-154 ([#167](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/167)) ([c4c1621](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c4c162173b45b07c29e4adbf6b85dbf81be0038c))
+* scroll element must be shown at the right side of the table component gf-149 ([#174](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/174)) ([0c73b4d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0c73b4d271d5d0c04b1ab5aff8e08b9226c24b92))
+
 ## [1.6.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.6.1...frontend-v1.6.2) (2024-09-03)
 
 
