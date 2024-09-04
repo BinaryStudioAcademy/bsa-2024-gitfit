@@ -21,6 +21,16 @@ class UserApi extends BaseHTTPApi {
 		super({ baseUrl, http, path: APIPath.USERS, storage });
 	}
 
+	public async delete(id: number): Promise<void> {
+		await this.load(
+			this.getFullEndpoint(UsersApiPath.$ID, { id: String(id) }),
+			{
+				hasAuth: true,
+				method: "DELETE",
+			},
+		);
+	}
+
 	public async getAll(): Promise<UserGetAllResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(UsersApiPath.ROOT, {}),

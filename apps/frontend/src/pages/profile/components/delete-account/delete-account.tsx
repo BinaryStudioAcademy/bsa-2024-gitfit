@@ -1,14 +1,23 @@
 import { Button, ConfirmationModal } from "~/libs/components/components.js";
-import { useCallback, useModal } from "~/libs/hooks/hooks.js";
-import { type UserAuthResponseDto } from "~/modules/users/users.js";
+import { AppRoute } from "~/libs/enums/enums.js";
+import {
+	useAppDispatch,
+	useCallback,
+	useModal,
+	useNavigate,
+} from "~/libs/hooks/hooks.js";
+import { actions as userActions } from "~/modules/users/users.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
-	user: UserAuthResponseDto;
+	userId: number;
 };
 
-const DeleteAccount = ({ user }: Properties): JSX.Element => {
+const DeleteAccount = ({ userId }: Properties): JSX.Element => {
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+
 	const { isModalOpened, onModalClose, onModalOpen } = useModal();
 
 	const handleDeleteClick = useCallback((): void => {
@@ -16,12 +25,13 @@ const DeleteAccount = ({ user }: Properties): JSX.Element => {
 	}, [onModalOpen]);
 
 	const handleDeleteConfirm = useCallback(() => {
-		onModalClose();
-	}, [onModalClose]);
+		void dispatch(userActions.deleteById(userId));
+		navigate(AppRoute.SIGN_IN);
+	}, [dispatch, navigate, userId]);
 
 	return (
 		<div className={styles["profile-delete"]}>
-			<h2 className={styles["delete-title"]}>Delete account {user.name}</h2>
+			<h2 className={styles["delete-title"]}>Delete account</h2>
 			<p className={styles["delete-text"]}>This action cannot be undone.</p>
 			<Button
 				label="Delete Your Account"

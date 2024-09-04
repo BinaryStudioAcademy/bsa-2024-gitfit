@@ -27,7 +27,7 @@ class UserService implements Service {
 		payload: UserSignUpRequestDto,
 	): Promise<UserAuthResponseDto> {
 		const { email, name, password } = payload;
-		const existingUser = await this.userRepository.findByEmail(email);
+		const existingUser = await this.userRepository.findByEmailCreate(email);
 
 		if (existingUser) {
 			throw new UserError({
@@ -90,7 +90,7 @@ class UserService implements Service {
 
 		if (!item) {
 			throw new UserError({
-				message: ExceptionMessage.USER_NOT_FOUND,
+				message: ExceptionMessage.INVALID_CREDENTIALS,
 				status: HTTPCode.NOT_FOUND,
 			});
 		}

@@ -89,8 +89,6 @@ class UserController extends BaseController {
 	 *      responses:
 	 *        200:
 	 *          description: User deleted successfully
-	 *        404:
-	 *          description: User not found
 	 */
 	private async delete(
 		options: APIHandlerOptions<{

@@ -16,7 +16,9 @@ const Profile = (): JSX.Element => {
 					<EditUserForm user={authenticatedUser as UserAuthResponseDto} />
 				</div>
 				<div className={styles["divider"]} />
-				<DeleteAccount user={authenticatedUser as UserAuthResponseDto} />
+				{authenticatedUser?.id && (
+					<DeleteAccount userId={authenticatedUser.id} />
+				)}
 			</div>
 		</PageLayout>
 	);

@@ -11,6 +11,18 @@ import {
 
 import { name as sliceName } from "./users.slice.js";
 
+const deleteById = createAsyncThunk<number, number, AsyncThunkConfig>(
+	`${sliceName}/delete`,
+	async (userId, { extra }) => {
+		const { toastNotifier, userApi } = extra;
+
+		await userApi.delete(userId);
+		toastNotifier.showSuccess(NotificationMessage.SUCCESS_USER_DELETE);
+
+		return userId;
+	},
+);
+
 const loadAll = createAsyncThunk<
 	UserGetAllResponseDto,
 	undefined,
@@ -36,4 +48,4 @@ const updateProfile = createAsyncThunk<
 	return user;
 });
 
-export { loadAll, updateProfile };
+export { deleteById, loadAll, updateProfile };
