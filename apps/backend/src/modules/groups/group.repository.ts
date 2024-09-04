@@ -58,7 +58,6 @@ class GroupRepository implements Repository {
 			.page(page, pageSize)
 			.withGraphFetched("[permissions, users]");
 
-		// Return the paginated response with mapped entities
 		return {
 			items: results.map((group) => GroupEntity.initialize(group)),
 			totalItems: total,
