@@ -132,7 +132,18 @@ class GroupController extends BaseController {
 	 * @swagger
 	 * /groups:
 	 *   get:
-	 *     description: Returns an array of groups
+	 *     description: Returns an array of groups with pagination
+	 *     parameters:
+	 *       - in: query
+	 *         name: page
+	 *         schema:
+	 *           type: integer
+	 *         description: The page number to retrieve
+	 *       - in: query
+	 *         name: pageSize
+	 *         schema:
+	 *           type: integer
+	 *         description: Number of items per page
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
@@ -145,6 +156,9 @@ class GroupController extends BaseController {
 	 *                   type: array
 	 *                   items:
 	 *                     $ref: "#/components/schemas/Group"
+	 *                 totalItems:
+	 *                   type: integer
+	 *                   description: Total number of groups available
 	 */
 	private async findAll({
 		query,
