@@ -72,7 +72,6 @@ erDiagram
       dateTime updated_at
       varchar name
       varchar description
-      varchar api_key
    }
 
    user_groups_to_projects {
