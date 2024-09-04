@@ -123,6 +123,14 @@ erDiagram
       int project_id FK
    }
 
+   project_api_keys {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      int user_id FK
+      int project_id FK
+   }
+
    contributors {
       int id PK
       dateTime created_at
@@ -187,6 +195,9 @@ erDiagram
 
    users ||--|{ users_to_project_groups : user_id
    project_groups ||--|{ users_to_project_groups : project_group_id
+
+   project_api_keys }|--|| users : user_id
+   project_api_keys }|--|| projects : project_id
 
    contributors ||--|{ git_emails : contributor_id
 
