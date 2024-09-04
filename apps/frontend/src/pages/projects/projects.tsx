@@ -1,5 +1,6 @@
 import {
 	Button,
+	ConfirmationModal,
 	Loader,
 	Modal,
 	PageLayout,
@@ -61,6 +62,11 @@ const Projects = (): JSX.Element => {
 		onClose: handleEditModalClose,
 		onOpen: handleEditModalOpen,
 	} = useModal();
+	const {
+		isOpened: isDeleteConfirmationModalOpen,
+		onClose: handleDeleteConfirmationModalClose,
+		onOpen: handleDeleteConfirmationModalOpen,
+	} = useModal();
 
 	useEffect(() => {
 		if (projectCreateStatus === DataStatus.FULFILLED) {
@@ -85,9 +91,9 @@ const Projects = (): JSX.Element => {
 	const handleDeleteClick = useCallback(
 		(project: ProjectGetAllItemResponseDto) => {
 			setSelectedProject(project);
-			// TODO: show confirmation modal
+			handleDeleteConfirmationModalOpen();
 		},
-		[],
+		[handleDeleteConfirmationModalOpen],
 	);
 	const handleProjectCreateSubmit = useCallback(
 		(payload: ProjectCreateRequestDto) => {
@@ -106,6 +112,12 @@ const Projects = (): JSX.Element => {
 		},
 		[dispatch, selectedProject],
 	);
+
+	const handleProjectDeleteConfirm = useCallback(() => {
+		if (selectedProject) {
+			// TODO: dispatch delete project
+		}
+	}, [selectedProject]);
 
 	const isLoading =
 		dataStatus === DataStatus.IDLE ||
@@ -151,6 +163,14 @@ const Projects = (): JSX.Element => {
 					/>
 				)}
 			</Modal>
+			<ConfirmationModal
+				confirmationText="The project will be deleted. This action cannot be undone. Do you want to continue?"
+				confirmLabel="Yes, Delete it"
+				isOpened={isDeleteConfirmationModalOpen}
+				onClose={handleDeleteConfirmationModalClose}
+				onConfirm={handleProjectDeleteConfirm}
+				title="Are you sure?"
+			/>
 		</PageLayout>
 	);
 };
