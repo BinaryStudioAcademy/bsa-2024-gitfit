@@ -27,7 +27,7 @@ const ProtectedRoute = ({
 
 	const hasRequiredPermission = requiredPermissions
 		? requiredPermissions.every((permission) =>
-				permissions?.some(
+				permissions.some(
 					(userPermission: UserGetPermissionItemResponseDto) =>
 						userPermission.key === permission,
 				),

@@ -92,7 +92,7 @@ class UserService implements Service {
 
 	public async getPermissionsByUserId(
 		userId: number,
-	): Promise<null | UserGetPermissionItemResponseDto[]> {
+	): Promise<UserGetPermissionItemResponseDto[]> {
 		return await this.userRepository.getPermissionsByUserId(userId);
 	}
 

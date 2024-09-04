@@ -16,13 +16,13 @@ import {
 type State = {
 	authenticatedUser: null | UserAuthResponseDto;
 	dataStatus: ValueOf<typeof DataStatus>;
-	permissions: null | UserGetPermissionItemResponseDto[];
+	permissions: UserGetPermissionItemResponseDto[];
 };
 
 const initialState: State = {
 	authenticatedUser: null,
 	dataStatus: DataStatus.IDLE,
-	permissions: null,
+	permissions: [],
 };
 
 const { actions, name, reducer } = createSlice({
@@ -71,7 +71,7 @@ const { actions, name, reducer } = createSlice({
 
 		builder.addCase(logout.fulfilled, (state) => {
 			state.authenticatedUser = null;
-			state.permissions = null;
+			state.permissions = [];
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(logout.pending, (state) => {

@@ -58,7 +58,7 @@ class UserRepository implements Repository {
 
 	public async getPermissionsByUserId(
 		userId: number,
-	): Promise<null | UserGetPermissionItemResponseDto[]> {
+	): Promise<UserGetPermissionItemResponseDto[]> {
 		return await this.userModel
 			.relatedQuery("groups")
 			.for(userId)

@@ -37,7 +37,7 @@ class AuthService {
 
 	public async getPermissions(
 		userId: number,
-	): Promise<null | UserGetPermissionItemResponseDto[]> {
+	): Promise<UserGetPermissionItemResponseDto[]> {
 		return await this.userService.getPermissionsByUserId(userId);
 	}
 
