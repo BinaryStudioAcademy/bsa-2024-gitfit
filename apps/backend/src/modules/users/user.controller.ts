@@ -41,7 +41,12 @@ class UserController extends BaseController {
 		this.userService = userService;
 
 		this.addRoute({
-			handler: (request) => this.findAll(request),
+			handler: (options) =>
+				this.findAll(
+					options as APIHandlerOptions<{
+						query: PaginationQueryParameters;
+					}>,
+				),
 			method: "GET",
 			path: UsersApiPath.ROOT,
 		});
@@ -100,11 +105,11 @@ class UserController extends BaseController {
 
 	private async findAll({
 		query,
-	}: APIHandlerOptions): Promise<APIHandlerResponse> {
+	}: APIHandlerOptions<{
+		query: PaginationQueryParameters;
+	}>): Promise<APIHandlerResponse> {
 		return {
-			payload: await this.userService.findAll(
-				query as PaginationQueryParameters,
-			),
+			payload: await this.userService.findAll(query),
 			status: HTTPCode.OK,
 		};
 	}
