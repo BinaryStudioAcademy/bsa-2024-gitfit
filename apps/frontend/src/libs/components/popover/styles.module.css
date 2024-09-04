@@ -13,10 +13,3 @@
 	border-radius: 8px;
 	box-shadow: var(--box-shadow);
 }
-
-.trigger-wrapper {
-	padding: 0;
-	cursor: pointer;
-	background: none;
-	border: none;
-}
