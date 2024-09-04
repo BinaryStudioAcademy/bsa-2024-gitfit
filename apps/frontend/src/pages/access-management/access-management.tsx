@@ -74,16 +74,7 @@ const AccessManagement = (): JSX.Element => {
 	const userData: UserRow[] = getUserRows(users);
 
 	const groupColumns = getGroupColumns();
-	const groupData: GroupRow[] = getGroupRows(groups).map((group) => {
-		const optionsElement = (
-			<GroupMenu groupId={group.id} onDelete={handleDelete} />
-		);
-
-		return {
-			...group,
-			options: optionsElement,
-		};
-	});
+	const groupData: GroupRow[] = getGroupRows(groups);
 
 	const isLoading = [usersDataStatus, groupsDataStatus].some(
 		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
@@ -107,7 +98,13 @@ const AccessManagement = (): JSX.Element => {
 			</section>
 			<section>
 				<h2 className={styles["section-title"]}>Groups</h2>
-				<Table<GroupRow> columns={groupColumns} data={groupData} />
+				<Table<GroupRow>
+					columns={groupColumns}
+					data={groupData.map((group) => ({
+						...group,
+						options: <GroupMenu groupId={group.id} onDelete={handleDelete} />,
+					}))}
+				/>
 			</section>
 			<ConfirmationModal
 				cancelLabel="Cancel"
