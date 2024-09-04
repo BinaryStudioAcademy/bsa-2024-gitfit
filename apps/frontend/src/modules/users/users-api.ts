@@ -31,7 +31,10 @@ class UserApi extends BaseHTTPApi {
 				contentType: ContentType.JSON,
 				hasAuth: true,
 				method: "GET",
-				query,
+				query: {
+					page: String(query.page),
+					pageSize: String(query.pageSize),
+				},
 			},
 		);
 

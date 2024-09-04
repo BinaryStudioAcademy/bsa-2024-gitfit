@@ -81,14 +81,15 @@ class BaseHTTPApi implements HTTPApi {
 		return headers;
 	}
 
-	private getUrl(path: string, query?: Record<string, unknown>): string {
+	private getUrl(
+		path: string,
+		query?: ConstructorParameters<typeof URLSearchParams>[number],
+	): string {
 		if (!query) {
 			return path;
 		}
 
-		const queryParameters = new URLSearchParams(
-			query as Record<string, string>,
-		);
+		const queryParameters = new URLSearchParams(query);
 
 		return `${path}?${queryParameters.toString()}`;
 	}

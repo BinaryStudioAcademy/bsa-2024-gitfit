@@ -6,7 +6,7 @@ type HTTPApiOptions = {
 	contentType?: ValueOf<typeof ContentType>;
 	hasAuth: boolean;
 	payload?: HTTPOptions["payload"];
-	query?: Record<string, unknown>;
+	query?: Record<string, string>;
 } & Omit<HTTPOptions, "headers" | "payload">;
 
 export { type HTTPApiOptions };
