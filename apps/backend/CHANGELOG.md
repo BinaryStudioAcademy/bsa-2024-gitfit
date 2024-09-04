@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.4.0...backend-v1.5.0) (2024-09-04)
+
+
+### Features
+
+* add pagination to the users table gf-82 ([#143](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/143)) ([c663ca0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c663ca0be448bfd16c85b99c32e1f334199ea03a))
+
 ## [1.4.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.3.0...backend-v1.4.0) (2024-09-03)
 
 
