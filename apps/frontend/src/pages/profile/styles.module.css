@@ -1,16 +1,30 @@
-.title {
-	margin-top: 0;
-	margin-bottom: 24px;
-}
-
-.profile-loader {
-	display: flex;
-	flex: 1;
-	align-items: center;
-}
-
 .profile-content {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	align-items: flex-start;
 	width: 100%;
 	max-width: 800px;
+	padding: 0;
 	margin: 0 auto;
+}
+
+.profile-update {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	align-items: flex-start;
+	padding: 0;
+}
+
+.title {
+	margin: 0;
+	font-size: 30px;
+	line-height: 120%;
+}
+
+.divider {
+	width: 800px;
+	height: 1px;
+	background: var(--color-border-primary);
 }
