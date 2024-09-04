@@ -64,7 +64,7 @@ class GroupController extends BaseController {
 		this.addRoute({
 			handler: (options) =>
 				this.deleteGroup(
-					options as APIHandlerOptions<{ params: { id: number } }>,
+					options as APIHandlerOptions<{ params: { id: string } }>,
 				),
 			method: "DELETE",
 			path: GroupsApiPath.$ID,
@@ -135,10 +135,10 @@ class GroupController extends BaseController {
 	 * @swagger
 	 * /groups/{name}:
 	 *   delete:
-	 *     description: Delete a group by its name
+	 *     description: Delete a group by ID
 	 *     parameters:
 	 *       - in: path
-	 *         name: name
+	 *         name: id
 	 *         required: true
 	 *         schema:
 	 *           type: number
@@ -150,10 +150,10 @@ class GroupController extends BaseController {
 	 */
 
 	private async deleteGroup(
-		options: APIHandlerOptions<{ params: { id: number } }>,
+		options: APIHandlerOptions<{ params: { id: string } }>,
 	): Promise<APIHandlerResponse> {
 		const { id } = options.params;
-		const isDeleted = await this.groupService.delete(id);
+		const isDeleted = await this.groupService.delete(Number(id));
 
 		return {
 			payload: isDeleted,
