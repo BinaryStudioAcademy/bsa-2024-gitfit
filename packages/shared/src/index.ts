@@ -28,6 +28,8 @@ export {
 } from "./libs/modules/http/http.js";
 export { type Storage } from "./libs/modules/storage/storage.js";
 export {
+	type PaginationQueryParameters,
+	type PaginationResponseDto,
 	type ServerCommonErrorResponse,
 	type ServerErrorDetail,
 	type ServerErrorResponse,
@@ -59,6 +61,9 @@ export {
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
+	type ProjectPatchRequestDto,
+	type ProjectPatchResponseDto,
+	projectPatchValidationSchema,
 	ProjectsApiPath,
 } from "./modules/projects/projects.js";
 export {

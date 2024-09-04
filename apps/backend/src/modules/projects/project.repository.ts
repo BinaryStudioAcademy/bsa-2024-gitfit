@@ -2,6 +2,7 @@ import { NOTHING_DELETED_COUNT } from "~/libs/constants/constants.js";
 import { SortType } from "~/libs/enums/enums.js";
 import { type Repository } from "~/libs/types/types.js";
 
+import { type ProjectPatchRequestDto } from "./libs/types/types.js";
 import { ProjectEntity } from "./project.entity.js";
 import { type ProjectModel } from "./project.model.js";
 
@@ -42,13 +43,15 @@ class ProjectRepository implements Repository {
 		return item ? ProjectEntity.initialize(item) : null;
 	}
 
-	public async findAll(): Promise<ProjectEntity[]> {
+	public async findAll(): Promise<{ items: ProjectEntity[] }> {
 		const projects = await this.projectModel
 			.query()
 			.orderBy("created_at", SortType.DESCENDING)
 			.execute();
 
-		return projects.map((project) => ProjectEntity.initialize(project));
+		return {
+			items: projects.map((project) => ProjectEntity.initialize(project)),
+		};
 	}
 
 	public async findAllbyName(name: string): Promise<ProjectEntity[]> {
@@ -67,6 +70,19 @@ class ProjectRepository implements Repository {
 		const item = await this.projectModel.query().findOne({ name });
 
 		return item ? ProjectEntity.initialize(item) : null;
+	}
+
+	public async patch(
+		id: number,
+		projectData: ProjectPatchRequestDto,
+	): Promise<ProjectEntity> {
+		const { description, name } = projectData;
+
+		const updatedItem = await this.projectModel
+			.query()
+			.patchAndFetchById(id, { description, name });
+
+		return ProjectEntity.initialize(updatedItem);
 	}
 
 	public update(): ReturnType<Repository["update"]> {

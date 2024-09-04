@@ -20,6 +20,9 @@ const userSignUp: z.ZodType<UserSignUpRequestDto> = z
 		name: z
 			.string()
 			.trim()
+			.regex(UserValidationRule.NAME_PATTERN, {
+				message: UserValidationMessage.NAME_PATTERN,
+			})
 			.min(UserValidationRule.NAME_MINIMUM_LENGTH, {
 				message: UserValidationMessage.NAME_TOO_SHORT,
 			})
@@ -35,17 +38,8 @@ const userSignUp: z.ZodType<UserSignUpRequestDto> = z
 			.max(UserValidationRule.PASSWORD_MAXIMUM_LENGTH, {
 				message: UserValidationMessage.PASSWORD_TOO_LONG,
 			})
-			.regex(UserValidationRule.PASSWORD_UPPERCASE_PATTERN, {
-				message: UserValidationMessage.PASSWORD_UPPERCASE_REQUIRED,
-			})
-			.regex(UserValidationRule.PASSWORD_LOWERCASE_PATTERN, {
-				message: UserValidationMessage.PASSWORD_LOWERCASE_REQUIRED,
-			})
-			.regex(UserValidationRule.PASSWORD_NUMBER_PATTERN, {
-				message: UserValidationMessage.PASSWORD_NUMBER_REQUIRED,
-			})
-			.regex(UserValidationRule.PASSWORD_SPECIAL_CHAR_PATTERN, {
-				message: UserValidationMessage.PASSWORD_SPECIAL_CHAR_REQUIRED,
+			.regex(UserValidationRule.PASSWORD_PATTERN, {
+				message: UserValidationMessage.PASSWORD_PATTERN,
 			}),
 	})
 	.required();
