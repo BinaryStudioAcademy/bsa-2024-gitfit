@@ -27,8 +27,15 @@ class UserRepository implements Repository {
 		return UserEntity.initialize(user);
 	}
 
-	public delete(): ReturnType<Repository["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const NO_ROWS_DELETED = 0;
+
+		const numberDeletedRows = await this.userModel
+			.query()
+			.deleteById(id)
+			.execute();
+
+		return numberDeletedRows > NO_ROWS_DELETED;
 	}
 
 	public async find(id: number): Promise<null | UserEntity> {
