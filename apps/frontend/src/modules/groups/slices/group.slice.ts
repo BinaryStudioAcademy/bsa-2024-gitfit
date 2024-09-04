@@ -15,7 +15,7 @@ type State = {
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	groups: [],
-	totalGroupsCount: 1,
+	totalGroupsCount: 0,
 };
 
 const { actions, name, reducer } = createSlice({
