@@ -25,7 +25,6 @@ import styles from "./styles.module.css";
 const AccessManagement = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	// Users pagination
 	const {
 		dataStatus: usersDataStatus,
 		users,
@@ -41,7 +40,6 @@ const AccessManagement = (): JSX.Element => {
 		totalItemsCount: usersTotalCount,
 	});
 
-	// Groups pagination
 	const {
 		dataStatus: groupsDataStatus,
 		groups,
