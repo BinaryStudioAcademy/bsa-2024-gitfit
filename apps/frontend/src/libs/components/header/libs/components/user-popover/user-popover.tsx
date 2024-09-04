@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 import { Popover } from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
-import { useAppDispatch, useCallback, usePopover } from "~/libs/hooks/hooks.js";
+import { useAppDispatch, useCallback } from "~/libs/hooks/hooks.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
 
 import styles from "./styles.module.css";
@@ -10,13 +10,19 @@ import styles from "./styles.module.css";
 type Properties = {
 	children: React.ReactNode;
 	email: string;
+	isOpened: boolean;
 	name: string;
+	onClose: () => void;
 };
 
-const UserPopover = ({ children, email, name }: Properties): JSX.Element => {
+const UserPopover = ({
+	children,
+	email,
+	isOpened,
+	name,
+	onClose,
+}: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-
-	const { isPopoverOpened, onPopoverClose, onPopoverOpen } = usePopover();
 
 	const handleLogout = useCallback((): void => {
 		void dispatch(authActions.logout());
@@ -40,9 +46,8 @@ const UserPopover = ({ children, email, name }: Properties): JSX.Element => {
 					</div>
 				</div>
 			}
-			isPopoverOpened={isPopoverOpened}
-			onPopoverClose={onPopoverClose}
-			onPopoverOpen={onPopoverOpen}
+			isOpened={isOpened}
+			onClose={onClose}
 		>
 			{children}
 		</Popover>

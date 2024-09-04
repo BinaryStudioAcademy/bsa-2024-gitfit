@@ -1,26 +1,26 @@
 import { useCallback, useState } from "~/libs/hooks/hooks.js";
 
 type Properties = {
-	isPopoverOpened: boolean;
-	onPopoverClose: () => void;
-	onPopoverOpen: () => void;
+	isOpened: boolean;
+	onClose: () => void;
+	onOpen: () => void;
 };
 
 const usePopover = (): Properties => {
-	const [isPopoverOpened, setIsPopoverOpened] = useState<boolean>(false);
+	const [isOpened, setIsOpened] = useState<boolean>(false);
 
 	const handlePopoverOpen = useCallback(() => {
-		setIsPopoverOpened(true);
+		setIsOpened(true);
 	}, []);
 
 	const handlePopoverClose = useCallback(() => {
-		setIsPopoverOpened(false);
+		setIsOpened(false);
 	}, []);
 
 	return {
-		isPopoverOpened,
-		onPopoverClose: handlePopoverClose,
-		onPopoverOpen: handlePopoverOpen,
+		isOpened,
+		onClose: handlePopoverClose,
+		onOpen: handlePopoverOpen,
 	};
 };
 

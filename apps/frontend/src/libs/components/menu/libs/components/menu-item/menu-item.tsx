@@ -1,8 +1,7 @@
 import { Icon } from "~/libs/components/components.js";
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
 
-import { type IconName } from "../icon/libs/types/types.js";
-import { ICON_SIZE } from "./libs/constants/constants.js";
+import { type IconName } from "../../../../icon/libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
@@ -19,8 +18,8 @@ const MenuItem = ({
 	variant = "primary",
 }: Properties): JSX.Element => {
 	const buttonClassName = getValidClassNames(
-		styles["project-menu-item"],
-		styles[`project-menu-item--${variant}`],
+		styles["menu-item"],
+		styles[`menu-item-${variant}`],
 	);
 
 	return (
@@ -30,8 +29,8 @@ const MenuItem = ({
 			onClick={onClick}
 			type="button"
 		>
-			<Icon height={ICON_SIZE} name={iconName} width={ICON_SIZE} />
-			<span className={styles["project-menu-item-text"]}>{label}</span>
+			<Icon height={20} name={iconName} width={20} />
+			<span className={styles["menu-item-text"]}>{label}</span>
 		</button>
 	);
 };

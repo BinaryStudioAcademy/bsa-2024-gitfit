@@ -9,12 +9,12 @@ import {
 import styles from "./styles.module.css";
 
 type Properties = {
-	onSubmit: (id: number, payload: ProjectPatchRequestDto) => void;
+	onSubmit: (payload: ProjectPatchRequestDto) => void;
 	project: ProjectGetAllItemResponseDto;
 };
 
 const ProjectUpdateForm = ({ onSubmit, project }: Properties): JSX.Element => {
-	const { description, id, name } = project;
+	const { description, name } = project;
 
 	const { control, errors, handleSubmit } = useAppForm<ProjectPatchRequestDto>({
 		defaultValues: { description, name },
@@ -24,10 +24,10 @@ const ProjectUpdateForm = ({ onSubmit, project }: Properties): JSX.Element => {
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData: ProjectPatchRequestDto) => {
-				onSubmit(id, formData);
+				onSubmit(formData);
 			})(event_);
 		},
-		[handleSubmit, id, onSubmit],
+		[handleSubmit, onSubmit],
 	);
 
 	return (

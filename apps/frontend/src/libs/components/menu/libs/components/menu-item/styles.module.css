@@ -1,4 +1,4 @@
-.project-menu-item {
+.menu-item {
 	display: flex;
 	gap: 8px;
 	align-items: center;
@@ -10,11 +10,11 @@
 	border-radius: 4px;
 }
 
-.project-menu-item:hover {
+.menu-item:hover {
 	background-color: var(--color-background-hover);
 }
 
-.project-menu-item-text {
+.menu-item-text {
 	margin: 0;
 	font-family: Inter, sans-serif;
 	font-size: 16px;
@@ -22,10 +22,10 @@
 	line-height: 1.2;
 }
 
-.project-menu-item--primary {
+.menu-item-primary {
 	color: var(--color-text-primary);
 }
 
-.project-menu-item--danger {
+.menu-item-danger {
 	color: var(--color-danger);
 }
