@@ -68,6 +68,7 @@ class ProjectService implements Service {
 			items: projects.items.map((item) => item.toObject()),
 		};
 	}
+
 	public async findAllbyName(
 		query: ProjectGetAllRequestDto,
 	): Promise<ProjectGetAllResponseDto> {
