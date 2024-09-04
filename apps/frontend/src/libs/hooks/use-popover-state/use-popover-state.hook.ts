@@ -6,22 +6,22 @@ type Properties = {
 	onOpen: () => void;
 };
 
-const useModal = (): Properties => {
+const usePopover = (): Properties => {
 	const [isOpened, setIsOpened] = useState<boolean>(false);
 
-	const handleModalOpen = useCallback(() => {
+	const handlePopoverOpen = useCallback(() => {
 		setIsOpened(true);
 	}, []);
 
-	const handleModalClose = useCallback(() => {
+	const handlePopoverClose = useCallback(() => {
 		setIsOpened(false);
 	}, []);
 
 	return {
 		isOpened,
-		onClose: handleModalClose,
-		onOpen: handleModalOpen,
+		onClose: handlePopoverClose,
+		onOpen: handlePopoverOpen,
 	};
 };
 
-export { useModal };
+export { usePopover };
