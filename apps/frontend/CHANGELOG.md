@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.9.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.8.0...frontend-v1.9.0) (2024-09-04)
+
+
+### Features
+
+* add an ability to edit a project gf-88 ([#137](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/137)) ([92b59e0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/92b59e0f955332412fe52a3fbfcdec570ef0551c))
+
+
+### Bug Fixes
+
+* Inconsistent location of the load component with a slow internet connection gf-147 ([#179](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/179)) ([f9ad998](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f9ad998843c05a5d35e81e203287db0d686ccf00))
+
+## [1.8.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.7.0...frontend-v1.8.0) (2024-09-04)
+
+
+### Features
+
+* add pagination to the users table gf-82 ([#143](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/143)) ([c663ca0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c663ca0be448bfd16c85b99c32e1f334199ea03a))
+
 ## [1.7.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.6.2...frontend-v1.7.0) (2024-09-04)
 
 

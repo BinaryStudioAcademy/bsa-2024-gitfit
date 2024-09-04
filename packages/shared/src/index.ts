@@ -67,6 +67,9 @@ export {
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
+	type ProjectPatchRequestDto,
+	type ProjectPatchResponseDto,
+	projectPatchValidationSchema,
 	ProjectsApiPath,
 } from "./modules/projects/projects.js";
 export {

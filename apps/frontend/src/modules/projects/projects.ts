@@ -15,6 +15,11 @@ export {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
+	type ProjectPatchRequestDto,
+	type ProjectPatchResponseDto,
 } from "./libs/types/types.js";
-export { projectCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+export {
+	projectCreateValidationSchema,
+	projectPatchValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
 export { actions, reducer } from "./slices/projects.js";
