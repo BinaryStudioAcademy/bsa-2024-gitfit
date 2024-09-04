@@ -59,8 +59,12 @@ class ProjectService implements Service {
 		return item.toObject();
 	}
 
-	public findAll(): ReturnType<Service["findAll"]> {
-		return Promise.resolve({ items: [] });
+	public async findAll(): Promise<ProjectGetAllResponseDto> {
+		const projects = await this.projectRepository.findAll();
+
+		return {
+			items: projects.items.map((item) => item.toObject()),
+		};
 	}
 
 	public async findAllbyName(

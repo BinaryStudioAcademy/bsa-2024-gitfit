@@ -22,12 +22,14 @@ class PermissionRepository implements Repository {
 		return Promise.resolve(null);
 	}
 
-	public async findAll(): Promise<PermissionEntity[]> {
+	public async findAll(): Promise<{ items: PermissionEntity[] }> {
 		const permissions = await this.permissionModel.query();
 
-		return permissions.map((permission) =>
-			PermissionEntity.initialize(permission),
-		);
+		return {
+			items: permissions.map((permission) =>
+				PermissionEntity.initialize(permission),
+			),
+		};
 	}
 
 	public update(): ReturnType<Repository["update"]> {

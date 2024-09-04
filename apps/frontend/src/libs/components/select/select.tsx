@@ -2,6 +2,8 @@ import {
 	type Control,
 	type FieldPath,
 	type FieldValues,
+	type Path,
+	type PathValue,
 } from "react-hook-form";
 import ReactSelect, { type MultiValue, type SingleValue } from "react-select";
 
@@ -54,17 +56,21 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				| MultiValue<SelectOption<TOptionValue> | undefined>
 				| SingleValue<SelectOption<TOptionValue> | undefined>,
 		): void => {
-			const filteredOptions = Array.isArray(selectedOptions)
-				? selectedOptions
-				: [selectedOptions];
+			// If it's a multi-select, handle the selectedOptions as an array
+			if (isMulti) {
+				const filteredOptions = Array.isArray(selectedOptions)
+					? selectedOptions
+					: [selectedOptions];
+				field.onChange(selectedOptions);
 
-			field.onChange(filteredOptions);
-
-			if (onChange) {
-				onChange(filteredOptions as SelectOption<TOptionValue>[]);
+				if (onChange) {
+					onChange(filteredOptions as SelectOption<TOptionValue>[]);
+				}
+			} else {
+				field.onChange(selectedOptions);
 			}
 		},
-		[field, onChange],
+		[field, onChange, isMulti],
 	);
 
 	const findOption = (
@@ -119,8 +125,8 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				isClearable={false}
 				isMulti={isMulti}
 				name={name}
-				onChange={handleChange}
-				options={options}
+				onChange={onChange ? handleChange : field.onChange}
+				options={options as PathValue<TFieldValues, Path<TFieldValues>>}
 				placeholder={placeholder}
 				styles={{
 					control: (base) => ({
@@ -129,7 +135,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 					}),
 				}}
 				unstyled
-				value={selectedValue}
+				value={onChange ? selectedValue : field.value}
 			/>
 		</label>
 	);

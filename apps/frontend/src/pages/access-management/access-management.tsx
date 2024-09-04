@@ -3,6 +3,7 @@ import {
 	Modal,
 	PageLayout,
 	Table,
+	TablePagination,
 } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
@@ -11,6 +12,7 @@ import {
 	useCallback,
 	useEffect,
 	useModal,
+	usePagination,
 } from "~/libs/hooks/hooks.js";
 import {
 	actions as groupActions,
@@ -30,27 +32,36 @@ import styles from "./styles.module.css";
 
 const AccessManagement = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { dataStatus: usersDataStatus, users } = useAppSelector(
-		({ users }) => users,
-	);
+
+	const {
+		dataStatus: usersDataStatus,
+		users,
+		usersTotalCount,
+	} = useAppSelector(({ users }) => users);
+
 	const {
 		dataStatus: groupsDataStatus,
 		groupCreateStatus,
 		groups,
 	} = useAppSelector(({ groups }) => groups);
+
+	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+		totalItemsCount: usersTotalCount,
+	});
+
 	useEffect(() => {
-		void dispatch(userActions.loadAll());
+		void dispatch(userActions.loadAll({ page, pageSize }));
 		void dispatch(groupActions.loadAll());
-	}, [dispatch]);
+	}, [dispatch, page, pageSize]);
 
 	const { isModalOpened, onModalClose, onModalOpen } = useModal();
 
 	useEffect(() => {
 		if (groupCreateStatus === DataStatus.FULFILLED) {
-			void dispatch(userActions.loadAll());
+			void dispatch(userActions.loadAll({ page, pageSize }));
 			onModalClose();
 		}
-	}, [dispatch, groupCreateStatus, onModalClose]);
+	}, [dispatch, groupCreateStatus, onModalClose, page, pageSize]);
 
 	const handleGroupCreateSubmit = useCallback(
 		(payload: GroupCreateRequestDto) => {
@@ -78,6 +89,13 @@ const AccessManagement = (): JSX.Element => {
 					<h2 className={styles["section-title"]}>Users</h2>
 				</div>
 				<Table<UserRow> columns={userColumns} data={userData} />
+				<TablePagination
+					onPageChange={onPageChange}
+					onPageSizeChange={onPageSizeChange}
+					page={page}
+					pageSize={pageSize}
+					totalItemsCount={usersTotalCount}
+				/>
 			</section>
 			<section>
 				<div className={styles["section-header"]}>

@@ -23,10 +23,10 @@ class PermissionService implements Service {
 	}
 
 	public async findAll(): Promise<PermissionGetAllResponseDto> {
-		const items = await this.permissionRepository.findAll();
+		const permissions = await this.permissionRepository.findAll();
 
 		return {
-			items: items.map((item) => item.toObject()),
+			items: permissions.items.map((item) => item.toObject()),
 		};
 	}
 
