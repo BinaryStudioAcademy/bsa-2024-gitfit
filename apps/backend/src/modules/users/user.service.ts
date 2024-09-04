@@ -1,3 +1,4 @@
+import { PAGE_INDEX_OFFSET } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { type Encryption } from "~/libs/modules/encryption/encryption.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
@@ -74,7 +75,10 @@ class UserService implements Service {
 	public async findAll(
 		parameters: PaginationQueryParameters,
 	): Promise<UserGetAllResponseDto> {
-		const users = await this.userRepository.findAll(parameters);
+		const users = await this.userRepository.findAll({
+			page: parameters.page - PAGE_INDEX_OFFSET,
+			pageSize: parameters.pageSize,
+		});
 
 		return {
 			items: users.items.map((item) => item.toObject()),

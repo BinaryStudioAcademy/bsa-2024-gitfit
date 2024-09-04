@@ -51,7 +51,7 @@ class UserRepository implements Repository {
 	}: PaginationQueryParameters): Promise<PaginationResponseDto<UserEntity>> {
 		const { results, total } = await this.userModel
 			.query()
-			.page(--page, pageSize);
+			.page(page, pageSize);
 
 		return {
 			items: results.map((user) => UserEntity.initialize(user)),
