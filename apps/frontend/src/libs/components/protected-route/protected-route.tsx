@@ -16,9 +16,8 @@ const ProtectedRoute = ({
 	children,
 	requiredPermissions,
 }: Properties): JSX.Element => {
-	const { authenticatedUser, dataStatus, permissions } = useAppSelector(
-		({ auth }) => auth,
-	);
+	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
+	const { permissions } = useAppSelector(({ permissions }) => permissions);
 
 	const hasAuthenticatedUser = Boolean(authenticatedUser);
 

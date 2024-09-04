@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { StorageKey } from "~/libs/modules/storage/storage.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
-import { type UserGetPermissionItemResponseDto } from "~/modules/auth/auth.js";
 import {
 	type UserAuthResponseDto,
 	type UserSignInRequestDto,
@@ -55,16 +54,6 @@ const signUp = createAsyncThunk<
 	return user;
 });
 
-const loadPermissions = createAsyncThunk<
-	UserGetPermissionItemResponseDto[],
-	undefined,
-	AsyncThunkConfig
->(`${sliceName}/load-permissions`, (_, { extra }) => {
-	const { authApi } = extra;
-
-	return authApi.getPermissions();
-});
-
 const logout = createAsyncThunk<undefined, undefined, AsyncThunkConfig>(
 	`${sliceName}/logout`,
 	async (_payload, { extra }): Promise<undefined> => {
@@ -73,4 +62,4 @@ const logout = createAsyncThunk<undefined, undefined, AsyncThunkConfig>(
 	},
 );
 
-export { getAuthenticatedUser, loadPermissions, logout, signIn, signUp };
+export { getAuthenticatedUser, logout, signIn, signUp };

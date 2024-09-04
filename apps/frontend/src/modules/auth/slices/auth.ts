@@ -1,16 +1,9 @@
-import {
-	getAuthenticatedUser,
-	loadPermissions,
-	logout,
-	signIn,
-	signUp,
-} from "./actions.js";
+import { getAuthenticatedUser, logout, signIn, signUp } from "./actions.js";
 import { actions } from "./auth.slice.js";
 
 const allActions = {
 	...actions,
 	getAuthenticatedUser,
-	loadPermissions,
 	logout,
 	signIn,
 	signUp,

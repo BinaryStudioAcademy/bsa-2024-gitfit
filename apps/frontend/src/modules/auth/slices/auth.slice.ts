@@ -2,27 +2,18 @@ import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
-import { type UserGetPermissionItemResponseDto } from "~/modules/auth/auth.js";
 import { type UserAuthResponseDto } from "~/modules/users/users.js";
 
-import {
-	getAuthenticatedUser,
-	loadPermissions,
-	logout,
-	signIn,
-	signUp,
-} from "./actions.js";
+import { getAuthenticatedUser, logout, signIn, signUp } from "./actions.js";
 
 type State = {
 	authenticatedUser: null | UserAuthResponseDto;
 	dataStatus: ValueOf<typeof DataStatus>;
-	permissions: UserGetPermissionItemResponseDto[];
 };
 
 const initialState: State = {
 	authenticatedUser: null,
 	dataStatus: DataStatus.IDLE,
-	permissions: [],
 };
 
 const { actions, name, reducer } = createSlice({
@@ -58,20 +49,8 @@ const { actions, name, reducer } = createSlice({
 			state.dataStatus = DataStatus.REJECTED;
 		});
 
-		builder.addCase(loadPermissions.fulfilled, (state, action) => {
-			state.permissions = action.payload;
-			state.dataStatus = DataStatus.FULFILLED;
-		});
-		builder.addCase(loadPermissions.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
-		});
-		builder.addCase(loadPermissions.rejected, (state) => {
-			state.dataStatus = DataStatus.REJECTED;
-		});
-
 		builder.addCase(logout.fulfilled, (state) => {
 			state.authenticatedUser = null;
-			state.permissions = [];
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(logout.pending, (state) => {

@@ -10,6 +10,7 @@ import {
 	useLocation,
 } from "~/libs/hooks/hooks.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
+import { actions as permissionsActions } from "~/modules/permissions/permissions.js";
 import {
 	type UserSignInRequestDto,
 	type UserSignUpRequestDto,
@@ -28,7 +29,7 @@ const Auth = (): JSX.Element => {
 
 	useEffect(() => {
 		if (authenticatedUser) {
-			void dispatch(authActions.loadPermissions());
+			void dispatch(permissionsActions.loadPermissions());
 			navigate(AppRoute.ROOT);
 		}
 	}, [authenticatedUser, dispatch, navigate]);

@@ -10,7 +10,7 @@ type Properties = {
 };
 
 const Sidebar = ({ items }: Properties): JSX.Element => {
-	const { permissions } = useAppSelector(({ auth }) => auth);
+	const { permissions } = useAppSelector(({ permissions }) => permissions);
 
 	const filteredItems = items.filter((item) => {
 		if (item.label === "Access Management") {
