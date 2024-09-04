@@ -1,4 +1,4 @@
-import { Button, Input, Select, Table } from "~/libs/components/components.js";
+import { Button, Input, Select } from "~/libs/components/components.js";
 import {
 	useAppDispatch,
 	useAppForm,
@@ -7,26 +7,40 @@ import {
 	useEffect,
 	useState,
 } from "~/libs/hooks/hooks.js";
-import { type SelectOption, type TableColumn } from "~/libs/types/types.js";
+import { type SelectOption } from "~/libs/types/types.js";
 import {
 	type GroupCreateRequestDto,
 	groupCreateValidationSchema,
 } from "~/modules/groups/groups.js";
 import { actions as permissionActions } from "~/modules/permissions/permissions.js";
+import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
+import { getUserRows } from "../../libs/helpers/helpers.js";
 import { type UserRow } from "../../libs/types/types.js";
+import { UsersTable } from "../users-table/users-table.js";
 import { DEFAULT_GROUP_CREATE_PAYLOAD } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	onPageChange: (page: number) => void;
+	onPageSizeChange: (pageSize: number) => void;
+	onRowSelect?: (rowId: number, isSelected: boolean) => void;
 	onSubmit: (payload: GroupCreateRequestDto) => void;
-	users: {
-		userColumns: TableColumn<UserRow>[];
-		userData: UserRow[];
-	};
+	page: number;
+	pageSize: number;
+	totalItemsCount: number;
+	users: UserGetAllItemResponseDto[];
 };
 
-const GroupCreateForm = ({ onSubmit, users }: Properties): JSX.Element => {
+const GroupCreateForm = ({
+	onPageChange,
+	onPageSizeChange,
+	onSubmit,
+	page,
+	pageSize,
+	totalItemsCount,
+	users,
+}: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const { control, errors, handleSubmit, setValue } =
@@ -44,6 +58,8 @@ const GroupCreateForm = ({ onSubmit, users }: Properties): JSX.Element => {
 	useEffect(() => {
 		void dispatch(permissionActions.loadAll());
 	}, [dispatch]);
+
+	const userData: UserRow[] = getUserRows(users);
 
 	const handleUserSelect = useCallback(
 		(userId: number, isSelected: boolean) => {
@@ -75,12 +91,12 @@ const GroupCreateForm = ({ onSubmit, users }: Properties): JSX.Element => {
 					name: formData.name,
 					permissionIds: selectedPermissionIds,
 					userIds: formData.userIds
-						.map((selectedId) => users.userData[selectedId]?.id)
+						.map((selectedId) => userData[selectedId]?.id)
 						.filter((id) => id !== undefined),
 				});
 			})(event_);
 		},
-		[handleSubmit, onSubmit, selectedPermissionIds, users.userData],
+		[handleSubmit, onSubmit, selectedPermissionIds, userData],
 	);
 
 	const permissionOptions = permissions.map((permission) => ({
@@ -98,10 +114,14 @@ const GroupCreateForm = ({ onSubmit, users }: Properties): JSX.Element => {
 				name="name"
 			/>
 			<span className={styles["table-title"]}>Users</span>
-			<Table<UserRow>
-				columns={users.userColumns}
-				data={users.userData}
+			<UsersTable
+				onPageChange={onPageChange}
+				onPageSizeChange={onPageSizeChange}
 				onRowSelect={handleUserSelect}
+				page={page}
+				pageSize={pageSize}
+				totalItemsCount={totalItemsCount}
+				users={users}
 			/>
 			<Select
 				control={control}
