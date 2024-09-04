@@ -1,7 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { NotificationMessage } from "~/libs/enums/enums.js";
-import { type AsyncThunkConfig } from "~/libs/types/types.js";
+import {
+	type AsyncThunkConfig,
+	type PaginationQueryParameters,
+} from "~/libs/types/types.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
 import {
 	type UserGetAllResponseDto,
@@ -25,12 +28,12 @@ const deleteById = createAsyncThunk<number, number, AsyncThunkConfig>(
 
 const loadAll = createAsyncThunk<
 	UserGetAllResponseDto,
-	undefined,
+	PaginationQueryParameters,
 	AsyncThunkConfig
->(`${sliceName}/load-all`, (_, { extra }) => {
+>(`${sliceName}/load-all`, (query, { extra }) => {
 	const { userApi } = extra;
 
-	return userApi.getAll();
+	return userApi.getAll(query);
 });
 
 const updateProfile = createAsyncThunk<
