@@ -43,17 +43,17 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 	);
 
 	const {
-		modalDataStatus: usersDataStatus,
-		usersModal: users,
-		usersModalTotalCount: usersTotalCount,
-	} = useAppSelector(({ users }) => users);
+		data: users,
+		dataStatus: usersDataStatus,
+		totalCount: usersTotalCount,
+	} = useAppSelector(({ users }) => users.modal);
 
 	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
 		totalItemsCount: usersTotalCount,
 	});
 
 	useEffect(() => {
-		void dispatch(userActions.loadAllModal({ page, pageSize }));
+		void dispatch(userActions.loadAll({ isModal: true, page, pageSize }));
 		void dispatch(permissionActions.loadAll());
 	}, [dispatch, page, pageSize]);
 

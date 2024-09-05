@@ -4,52 +4,63 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
-import { loadAll, loadAllModal, updateProfile } from "./actions.js";
+import { loadAll, updateProfile } from "./actions.js";
 
 type State = {
-	dataStatus: ValueOf<typeof DataStatus>;
-	modalDataStatus: ValueOf<typeof DataStatus>;
+	modal: {
+		data: UserGetAllItemResponseDto[];
+		dataStatus: ValueOf<typeof DataStatus>;
+		totalCount: number;
+	};
 	updateProfileStatus: ValueOf<typeof DataStatus>;
-	users: UserGetAllItemResponseDto[];
-	usersModal: UserGetAllItemResponseDto[];
-	usersModalTotalCount: number;
-	usersTotalCount: number;
+	users: {
+		data: UserGetAllItemResponseDto[];
+		dataStatus: ValueOf<typeof DataStatus>;
+		totalCount: number;
+	};
 };
 
 const initialState: State = {
-	dataStatus: DataStatus.IDLE,
-	modalDataStatus: DataStatus.IDLE,
+	modal: {
+		data: [],
+		dataStatus: DataStatus.IDLE,
+		totalCount: 0,
+	},
 	updateProfileStatus: DataStatus.IDLE,
-	users: [],
-	usersModal: [],
-	usersModalTotalCount: 0,
-	usersTotalCount: 0,
+	users: {
+		data: [],
+		dataStatus: DataStatus.IDLE,
+		totalCount: 0,
+	},
 };
 
 const { actions, name, reducer } = createSlice({
 	extraReducers(builder) {
-		builder.addCase(loadAll.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
-		});
-		builder.addCase(loadAll.fulfilled, (state, action) => {
-			state.users = action.payload.items;
-			state.usersTotalCount = action.payload.totalItems;
-			state.dataStatus = DataStatus.FULFILLED;
-		});
-		builder.addCase(loadAll.rejected, (state) => {
-			state.dataStatus = DataStatus.REJECTED;
+		builder.addCase(loadAll.pending, (state, action) => {
+			if (action.meta.arg.isModal) {
+				state.modal.dataStatus = DataStatus.PENDING;
+			} else {
+				state.users.dataStatus = DataStatus.PENDING;
+			}
 		});
 
-		builder.addCase(loadAllModal.pending, (state) => {
-			state.modalDataStatus = DataStatus.PENDING;
+		builder.addCase(loadAll.fulfilled, (state, action) => {
+			if (action.meta.arg.isModal) {
+				state.modal.data = action.payload.items;
+				state.modal.totalCount = action.payload.totalItems;
+				state.modal.dataStatus = DataStatus.FULFILLED;
+			} else {
+				state.users.data = action.payload.items;
+				state.users.totalCount = action.payload.totalItems;
+				state.users.dataStatus = DataStatus.FULFILLED;
+			}
 		});
-		builder.addCase(loadAllModal.fulfilled, (state, action) => {
-			state.usersModal = action.payload.items;
-			state.usersModalTotalCount = action.payload.totalItems;
-			state.modalDataStatus = DataStatus.FULFILLED;
-		});
-		builder.addCase(loadAllModal.rejected, (state) => {
-			state.modalDataStatus = DataStatus.REJECTED;
+		builder.addCase(loadAll.rejected, (state, action) => {
+			if (action.meta.arg.isModal) {
+				state.modal.dataStatus = DataStatus.REJECTED;
+			} else {
+				state.users.dataStatus = DataStatus.REJECTED;
+			}
 		});
 
 		builder.addCase(updateProfile.pending, (state) => {

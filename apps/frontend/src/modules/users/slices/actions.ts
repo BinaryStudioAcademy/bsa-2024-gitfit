@@ -16,19 +16,9 @@ import { name as sliceName } from "./users.slice.js";
 
 const loadAll = createAsyncThunk<
 	UserGetAllResponseDto,
-	PaginationQueryParameters,
+	{ isModal?: boolean } & PaginationQueryParameters,
 	AsyncThunkConfig
 >(`${sliceName}/load-all`, (query, { extra }) => {
-	const { userApi } = extra;
-
-	return userApi.getAll(query);
-});
-
-const loadAllModal = createAsyncThunk<
-	UserGetAllResponseDto,
-	PaginationQueryParameters,
-	AsyncThunkConfig
->(`${sliceName}/load-all-modal`, (query, { extra }) => {
 	const { userApi } = extra;
 
 	return userApi.getAll(query);
@@ -49,4 +39,4 @@ const updateProfile = createAsyncThunk<
 	return user;
 });
 
-export { loadAll, loadAllModal, updateProfile };
+export { loadAll, updateProfile };

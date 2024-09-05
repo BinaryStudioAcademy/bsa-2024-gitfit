@@ -23,10 +23,10 @@ const AccessManagement = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const {
+		data: users,
 		dataStatus: usersDataStatus,
-		users,
-		usersTotalCount,
-	} = useAppSelector(({ users }) => users);
+		totalCount: usersTotalCount,
+	} = useAppSelector(({ users }) => users.users);
 
 	const { dataStatus: groupsDataStatus, groups } = useAppSelector(
 		({ groups }) => groups,
