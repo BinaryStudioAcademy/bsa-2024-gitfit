@@ -14,7 +14,7 @@ export {
 } from "./libs/exceptions/exceptions.js";
 export {
 	changeCase,
-	checkUserPermissions,
+	checkHasPermission,
 	configureString,
 	formatDate,
 	initDebounce,

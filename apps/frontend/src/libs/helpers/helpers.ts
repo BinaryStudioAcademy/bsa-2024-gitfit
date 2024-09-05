@@ -1,6 +1,6 @@
 export { getValidClassNames } from "./get-valid-classes.helper.js";
 export {
-	checkUserPermissions,
+	checkHasPermission,
 	configureString,
 	formatDate,
 	initDebounce,

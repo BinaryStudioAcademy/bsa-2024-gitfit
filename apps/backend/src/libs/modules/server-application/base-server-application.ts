@@ -171,7 +171,7 @@ class BaseServerApplication implements ServerApplication {
 		const routeOptions = {
 			handler,
 			method,
-			shema: {
+			schema: {
 				body: validation?.body,
 			},
 			url: path,

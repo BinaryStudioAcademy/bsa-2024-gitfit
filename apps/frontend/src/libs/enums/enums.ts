@@ -1,6 +1,7 @@
 export { AppRoute } from "./app-route.enum.js";
 export { DataStatus } from "./data-status.enum.js";
 export { NotificationMessage } from "./notification-message.enum.js";
+export { PAGE_NAME } from "./page-name.enum.js";
 export { QueryParameterName } from "./query-parameter-name.enum.js";
 export {
 	APIPath,

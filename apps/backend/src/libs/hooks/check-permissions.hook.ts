@@ -2,7 +2,7 @@ import { type FastifyRequest } from "fastify";
 
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
-import { checkUserPermissions } from "~/libs/helpers/helpers.js";
+import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import { type APIPreHandler } from "~/libs/modules/controller/libs/types/types.js";
 import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
 import { userService } from "~/modules/users/users.js";
@@ -27,7 +27,10 @@ const checkPermission = (routePermissions: string[]): APIPreHandler => {
 			});
 		}
 
-		const hasPermission = checkUserPermissions(user, routePermissions);
+		const hasPermission = checkHasPermission(
+			routePermissions,
+			user.groups.flatMap(group => group.permissions)
+		);
 
 		if (!hasPermission) {
 			throw new HTTPError({

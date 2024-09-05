@@ -1,1 +1,1 @@
-export { changeCase, checkUserPermissions } from "@git-fit/shared";
+export { changeCase, checkHasPermission } from "@git-fit/shared";

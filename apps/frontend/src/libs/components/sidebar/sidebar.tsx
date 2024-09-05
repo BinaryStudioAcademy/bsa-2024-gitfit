@@ -1,6 +1,6 @@
-import { PAGE_NAME } from "~/libs/constants/constants.js";
+import { PAGE_NAME } from "~/libs/enums/enums.js";
 import { PermissionKey } from "~/libs/enums/enums.js";
-import { checkUserPermissions } from "~/libs/helpers/helpers.js";
+import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import { useAppSelector, useMemo } from "~/libs/hooks/hooks.js";
 import { type NavigationItem } from "~/libs/types/navigation-item.type.js";
 
@@ -21,9 +21,10 @@ const Sidebar = ({ items }: Properties): JSX.Element => {
 					return false;
 				}
 
-				return checkUserPermissions(authenticatedUser, [
-					PermissionKey.MANAGE_USER_ACCESS,
-				]);
+				return checkHasPermission(
+					[PermissionKey.MANAGE_USER_ACCESS],
+					authenticatedUser.groups.flatMap(group => group.permissions)
+				);
 			}
 
 			return true;
