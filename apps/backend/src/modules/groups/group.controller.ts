@@ -57,7 +57,7 @@ class GroupController extends BaseController {
 				),
 			method: "POST",
 			path: GroupsApiPath.ROOT,
-			preHandler: checkPermission(PermissionKey.MANAGE_USER_ACCESS),
+			preHandler: checkPermission([PermissionKey.MANAGE_USER_ACCESS]),
 			validation: {
 				body: groupCreateValidationSchema,
 			},

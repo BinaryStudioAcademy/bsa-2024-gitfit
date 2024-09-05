@@ -2,11 +2,12 @@ import { type FastifyRequest } from "fastify";
 
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
+import { checkUserPermissions } from "~/libs/helpers/helpers.js";
 import { type APIPreHandler } from "~/libs/modules/controller/libs/types/types.js";
 import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
-import { permissionService } from "~/modules/permissions/permissions.js";
+import { userService } from "~/modules/users/users.js";
 
-const checkPermission = (routePermissions: string): APIPreHandler => {
+const checkPermission = (routePermissions: string[]): APIPreHandler => {
 	return async (request: FastifyRequest): Promise<void> => {
 		const userId = request.user?.id;
 
@@ -17,18 +18,16 @@ const checkPermission = (routePermissions: string): APIPreHandler => {
 			});
 		}
 
-		const permissions = await permissionService.getPermissions(userId);
+		const user = await userService.find(userId);
 
-		if (permissions.items.length === EMPTY_LENGTH) {
+		if (user.groups.length === EMPTY_LENGTH) {
 			throw new HTTPError({
 				message: ExceptionMessage.PERMISSION_NOT_FOUND,
 				status: HTTPCode.FORBIDDEN,
 			});
 		}
 
-		const hasPermission = permissions.items.some(
-			(permission) => permission.key === routePermissions,
-		);
+		const hasPermission = checkUserPermissions(user, routePermissions);
 
 		if (!hasPermission) {
 			throw new HTTPError({

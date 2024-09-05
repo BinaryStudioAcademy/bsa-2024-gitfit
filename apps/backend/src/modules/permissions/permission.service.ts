@@ -36,12 +36,6 @@ class PermissionService implements Service {
 		};
 	}
 
-	public async getPermissions(
-		userId: number,
-	): Promise<PermissionGetAllResponseDto> {
-		return await this.userService.getPermissionsByUserId(userId);
-	}
-
 	public update(): ReturnType<Service["update"]> {
 		return Promise.resolve(null);
 	}

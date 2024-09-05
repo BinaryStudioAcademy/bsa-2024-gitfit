@@ -16,4 +16,4 @@ const permissionController = new PermissionController(
 	permissionService,
 );
 
-export { permissionController, permissionService };
+export { permissionController };

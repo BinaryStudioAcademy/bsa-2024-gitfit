@@ -12,10 +12,6 @@ import { toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
 import { authApi, reducer as authReducer } from "~/modules/auth/auth.js";
 import { groupApi, reducer as groupsReducer } from "~/modules/groups/groups.js";
 import {
-	permissionsApi,
-	reducer as permissionsReducer,
-} from "~/modules/permissions/permissions.js";
-import {
 	projectApi,
 	reducer as projectsReducer,
 } from "~/modules/projects/projects.js";
@@ -46,7 +42,6 @@ class Store {
 			reducer: {
 				auth: authReducer,
 				groups: groupsReducer,
-				permissions: permissionsReducer,
 				projects: projectsReducer,
 				users: usersReducer,
 			},
@@ -57,7 +52,6 @@ class Store {
 		return {
 			authApi,
 			groupApi,
-			permissionsApi,
 			projectApi,
 			storage,
 			toastNotifier,

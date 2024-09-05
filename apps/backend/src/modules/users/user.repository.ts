@@ -5,7 +5,10 @@ import {
 } from "~/libs/types/types.js";
 import { type PermissionGetAllResponseDto } from "~/modules/permissions/libs/types/types.js";
 import { PermissionModel } from "~/modules/permissions/permission.model.js";
-import { type UserPatchRequestDto } from "~/modules/users/libs/types/types.js";
+import {
+	type UserAuthResponseDto,
+	type UserPatchRequestDto,
+} from "~/modules/users/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserModel } from "~/modules/users/user.model.js";
 
@@ -40,10 +43,22 @@ class UserRepository implements Repository {
 		const user = await this.userModel
 			.query()
 			.findById(id)
-			.returning("*")
-			.execute();
+			.withGraphFetched("groups.permissions")
+			.modifyGraph("groups", (builder) => {
+				builder.select("name");
+			})
+			.modifyGraph("groups.permissions", (builder) => {
+				builder.select("name", "key");
+			})
+			.castTo<UserAuthResponseDto>();
 
-		return user ? UserEntity.initialize(user) : null;
+		const userWithStubbedFields = {
+			...user,
+			passwordHash: "",
+			passwordSalt: "",
+		};
+
+		return UserEntity.initialize(userWithStubbedFields);
 	}
 
 	public async findAll({

@@ -1,3 +1,4 @@
+export { type Group } from "./group.type.js";
 export {
 	type UserAuthResponseDto,
 	type UserGetAllItemResponseDto,
