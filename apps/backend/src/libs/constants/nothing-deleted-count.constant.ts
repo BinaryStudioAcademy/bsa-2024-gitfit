@@ -1,3 +1,0 @@
-const NOTHING_DELETED_COUNT = 0;
-
-export { NOTHING_DELETED_COUNT };

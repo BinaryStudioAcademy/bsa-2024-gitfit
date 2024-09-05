@@ -1,4 +1,3 @@
-import { NOTHING_DELETED_COUNT } from "~/libs/constants/constants.js";
 import { SortType } from "~/libs/enums/enums.js";
 import { type Repository } from "~/libs/types/types.js";
 
@@ -34,7 +33,7 @@ class ProjectRepository implements Repository {
 			.deleteById(id)
 			.execute();
 
-		return deletedRowsCount > NOTHING_DELETED_COUNT;
+		return Boolean(deletedRowsCount);
 	}
 
 	public async find(id: number): Promise<null | ProjectEntity> {
