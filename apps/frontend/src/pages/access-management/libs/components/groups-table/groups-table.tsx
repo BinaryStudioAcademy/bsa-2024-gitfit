@@ -1,4 +1,4 @@
-import { Modal, Table } from "~/libs/components/components.js";
+import { Modal, Table, TablePagination } from "~/libs/components/components.js";
 import {
 	useAppDispatch,
 	useCallback,
@@ -17,22 +17,26 @@ import { GroupsUpdateForm } from "../groups-update-form/groups-update-form.js";
 
 type Properties = {
 	groups: GroupGetAllItemResponseDto[];
+	onPageChange: (page: number) => void;
+	onPageSizeChange: (pageSize: number) => void;
+	page: number;
+	pageSize: number;
+	totalItemsCount: number;
 };
 
-const GroupsTable = ({ groups }: Properties): JSX.Element => {
+const GroupsTable = ({
+	groups,
+	onPageChange,
+	onPageSizeChange,
+	page,
+	pageSize,
+	totalItemsCount,
+}: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const { isOpened, onClose, onOpen } = useModal();
 	const [groupToEdit, setGroupToEdit] =
 		useState<GroupGetAllItemResponseDto | null>(null);
-
-	const groupColumns = getGroupColumns();
-	const groupData: GroupRow[] = getGroupRows(groups, {
-		onEdit: (group: GroupGetAllItemResponseDto) => {
-			setGroupToEdit(group);
-			onOpen();
-		},
-	});
 
 	const handleModalClose = useCallback(() => {
 		setGroupToEdit(null);
@@ -47,9 +51,24 @@ const GroupsTable = ({ groups }: Properties): JSX.Element => {
 		[dispatch, handleModalClose],
 	);
 
+	const groupColumns = getGroupColumns();
+	const groupData: GroupRow[] = getGroupRows(groups, {
+		onEdit: (group: GroupGetAllItemResponseDto) => {
+			setGroupToEdit(group);
+			onOpen();
+		},
+	});
+
 	return (
 		<>
 			<Table<GroupRow> columns={groupColumns} data={groupData} />
+			<TablePagination
+				onPageChange={onPageChange}
+				onPageSizeChange={onPageSizeChange}
+				page={page}
+				pageSize={pageSize}
+				totalItemsCount={totalItemsCount}
+			/>
 
 			{groupToEdit && (
 				<Modal

@@ -14,11 +14,7 @@ const getGroupRows = (
 		createdAt: group.createdAt,
 		id: group.id,
 		name: group.name,
-		options: GroupOptions({
-			onEdit: () => {
-				options.onEdit(group);
-			},
-		}),
+		options: <GroupOptions group={group} onEdit={options.onEdit} />,
 		permissions: group.permissions.map((permission) => permission.name),
 	}));
 

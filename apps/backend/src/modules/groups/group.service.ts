@@ -1,6 +1,10 @@
+import { PAGE_INDEX_OFFSET } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
-import { type Service } from "~/libs/types/types.js";
+import {
+	type PaginationQueryParameters,
+	type Service,
+} from "~/libs/types/types.js";
 
 import { GroupEntity } from "./group.entity.js";
 import { type GroupRepository } from "./group.repository.js";
@@ -56,11 +60,17 @@ class GroupService implements Service {
 		return Promise.resolve(null);
 	}
 
-	public async findAll(): Promise<GroupGetAllResponseDto> {
-		const groups = await this.groupRepository.findAll();
+	public async findAll(
+		parameters: PaginationQueryParameters,
+	): Promise<GroupGetAllResponseDto> {
+		const groups = await this.groupRepository.findAll({
+			page: parameters.page - PAGE_INDEX_OFFSET,
+			pageSize: parameters.pageSize,
+		});
 
 		return {
-			items: groups.items.map((item) => item.toObject()),
+			items: groups.items.map((group) => group.toObject()),
+			totalItems: groups.totalItems,
 		};
 	}
 
