@@ -1,4 +1,4 @@
-import { Button, Input } from "~/libs/components/components.js";
+import { Button, Input, Select } from "~/libs/components/components.js";
 import { useAppForm, useCallback } from "~/libs/hooks/hooks.js";
 import {
 	type GroupGetAllItemResponseDto,
@@ -39,6 +39,14 @@ const GroupsUpdateForm = ({ group, onSubmit }: Properties): JSX.Element => {
 				errors={errors}
 				label="Name"
 				name="name"
+			/>
+
+			<Select
+				control={control}
+				isMulti
+				label="Permissions"
+				name="permissionIds"
+				options={[]}
 			/>
 
 			<div>

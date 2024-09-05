@@ -1,6 +1,15 @@
 import { Modal, Table } from "~/libs/components/components.js";
-import { useCallback, useModal, useState } from "~/libs/hooks/hooks.js";
-import { type GroupGetAllItemResponseDto } from "~/modules/groups/groups.js";
+import {
+	useAppDispatch,
+	useCallback,
+	useModal,
+	useState,
+} from "~/libs/hooks/hooks.js";
+import {
+	actions as groupActions,
+	type GroupGetAllItemResponseDto,
+	type GroupUpdateRequestDto,
+} from "~/modules/groups/groups.js";
 
 import { getGroupColumns, getGroupRows } from "../../helpers/helpers.js";
 import { type GroupRow } from "../../types/types.js";
@@ -11,6 +20,8 @@ type Properties = {
 };
 
 const GroupsTable = ({ groups }: Properties): JSX.Element => {
+	const dispatch = useAppDispatch();
+
 	const { isOpened, onClose, onOpen } = useModal();
 	const [groupToEdit, setGroupToEdit] =
 		useState<GroupGetAllItemResponseDto | null>(null);
@@ -28,6 +39,14 @@ const GroupsTable = ({ groups }: Properties): JSX.Element => {
 		onClose();
 	}, [onClose, setGroupToEdit]);
 
+	const handleUpdate = useCallback(
+		(id: number, payload: GroupUpdateRequestDto) => {
+			void dispatch(groupActions.update({ id, payload }));
+			handleModalClose();
+		},
+		[dispatch, handleModalClose],
+	);
+
 	return (
 		<>
 			<Table<GroupRow> columns={groupColumns} data={groupData} />
@@ -38,7 +57,7 @@ const GroupsTable = ({ groups }: Properties): JSX.Element => {
 					onClose={handleModalClose}
 					title="Update group"
 				>
-					<GroupsUpdateForm group={groupToEdit} onSubmit={handleModalClose} />
+					<GroupsUpdateForm group={groupToEdit} onSubmit={handleUpdate} />
 				</Modal>
 			)}
 		</>

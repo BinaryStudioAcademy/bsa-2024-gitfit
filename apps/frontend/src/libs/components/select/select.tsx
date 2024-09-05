@@ -5,10 +5,10 @@ import {
 	type Path,
 	type PathValue,
 } from "react-hook-form";
-import ReactSelect from "react-select";
+import ReactSelect, { type MultiValue, type SingleValue } from "react-select";
 
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
-import { useFormController } from "~/libs/hooks/hooks.js";
+import { useCallback, useFormController } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -46,6 +46,34 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 	const labelClassName = getValidClassNames(
 		styles["label-text"],
 		isLabelHidden && "visually-hidden",
+	);
+
+	const findOption = (
+		value: TOptionValue,
+	): SelectOption<TOptionValue> | undefined =>
+		options.find((option) => option.value === value);
+
+	const selectedValue = isMulti
+		? (field.value as TOptionValue[])
+				.map((element) => findOption(element))
+				.filter(Boolean)
+		: findOption(field.value as TOptionValue) || null;
+
+	const handleChange = useCallback(
+		(
+			selectedOptions:
+				| MultiValue<SelectOption<TOptionValue> | undefined>
+				| SingleValue<SelectOption<TOptionValue> | undefined>,
+		): void => {
+			const selectedValues = isMulti
+				? (selectedOptions as MultiValue<SelectOption<TOptionValue>>).map(
+						({ value }) => value,
+					)
+				: (selectedOptions as SingleValue<SelectOption<TOptionValue>>)?.value;
+
+			field.onChange(selectedValues);
+		},
+		[field, isMulti],
 	);
 
 	return (
@@ -89,7 +117,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				isClearable={false}
 				isMulti={isMulti}
 				name={name}
-				onChange={field.onChange}
+				onChange={handleChange}
 				options={options as PathValue<TFieldValues, Path<TFieldValues>>}
 				placeholder={placeholder}
 				styles={{
@@ -99,7 +127,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 					}),
 				}}
 				unstyled
-				value={field.value}
+				value={selectedValue}
 			/>
 		</label>
 	);
