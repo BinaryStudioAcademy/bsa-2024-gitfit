@@ -16,9 +16,19 @@ import { name as sliceName } from "./users.slice.js";
 
 const loadAll = createAsyncThunk<
 	UserGetAllResponseDto,
-	{ isModal?: boolean } & PaginationQueryParameters,
+	PaginationQueryParameters,
 	AsyncThunkConfig
 >(`${sliceName}/load-all`, (query, { extra }) => {
+	const { userApi } = extra;
+
+	return userApi.getAll(query);
+});
+
+const configureGroupUsers = createAsyncThunk<
+	UserGetAllResponseDto,
+	PaginationQueryParameters,
+	AsyncThunkConfig
+>(`${sliceName}/load-all-group-users`, (query, { extra }) => {
 	const { userApi } = extra;
 
 	return userApi.getAll(query);
@@ -39,4 +49,4 @@ const updateProfile = createAsyncThunk<
 	return user;
 });
 
-export { loadAll, updateProfile };
+export { configureGroupUsers, loadAll, updateProfile };
