@@ -39,13 +39,24 @@ class ProjectApi extends BaseHTTPApi {
 		return await response.json<ProjectGetAllItemResponseDto>();
 	}
 
+	public async deleteById(id: number): Promise<boolean> {
+		const response = await this.load(
+			this.getFullEndpoint(ProjectsApiPath.$ID, { id: String(id) }),
+			{
+				hasAuth: true,
+				method: "DELETE",
+			},
+		);
+
+		return await response.json<boolean>();
+	}
+
 	public async getAll(name = ""): Promise<ProjectGetAllResponseDto> {
 		const endpoint = this.getFullEndpoint(ProjectsApiPath.ROOT, "?name=:name", {
 			name,
 		});
 
 		const response = await this.load(endpoint, {
-			contentType: ContentType.JSON,
 			hasAuth: true,
 			method: "GET",
 		});
@@ -59,7 +70,6 @@ class ProjectApi extends BaseHTTPApi {
 		const response = await this.load(
 			this.getFullEndpoint(ProjectsApiPath.$ID, { id: payload.id }),
 			{
-				contentType: ContentType.JSON,
 				hasAuth: true,
 				method: "GET",
 			},
