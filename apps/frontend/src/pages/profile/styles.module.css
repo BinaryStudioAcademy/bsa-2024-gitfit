@@ -17,7 +17,7 @@
 	line-height: 120%;
 }
 
-.profile-update {
+.profile-info {
 	display: flex;
 	flex-direction: column;
 	gap: 24px;

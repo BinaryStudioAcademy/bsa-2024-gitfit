@@ -31,7 +31,7 @@ class UserService implements Service {
 		payload: UserSignUpRequestDto,
 	): Promise<UserAuthResponseDto> {
 		const { email, name, password } = payload;
-		const existingUser = await this.userRepository.findByEmailCreate(email);
+		const existingUser = await this.userRepository.findByEmail(email, true);
 
 		if (existingUser) {
 			throw new UserError({

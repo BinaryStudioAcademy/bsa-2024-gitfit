@@ -11,7 +11,7 @@ const Profile = (): JSX.Element => {
 	return (
 		<PageLayout>
 			<div className={styles["profile-layout"]}>
-				<div className={styles["profile-update"]}>
+				<div className={styles["profile-info"]}>
 					<h1 className={styles["title"]}>Profile</h1>
 					<EditUserForm user={authenticatedUser as UserAuthResponseDto} />
 				</div>

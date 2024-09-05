@@ -68,18 +68,17 @@ class UserRepository implements Repository {
 		};
 	}
 
-	public async findByEmail(email: string): Promise<null | UserEntity> {
-		const user = await this.userModel
-			.query()
-			.findOne({ email })
-			.whereNull("deletedAt")
-			.execute();
+	public async findByEmail(
+		email: string,
+		includeDeleted = false,
+	): Promise<null | UserEntity> {
+		const query = this.userModel.query().findOne({ email });
 
-		return user ? UserEntity.initialize(user) : null;
-	}
+		if (!includeDeleted) {
+			query.whereNull("deletedAt");
+		}
 
-	public async findByEmailCreate(email: string): Promise<null | UserEntity> {
-		const user = await this.userModel.query().findOne({ email }).execute();
+		const user = await query.execute();
 
 		return user ? UserEntity.initialize(user) : null;
 	}

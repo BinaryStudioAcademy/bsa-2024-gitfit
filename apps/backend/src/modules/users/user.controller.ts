@@ -103,7 +103,7 @@ class UserController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.userService.delete(Number(options.params.id)),
-			status: HTTPCode.NO_CONTENT,
+			status: HTTPCode.OK,
 		};
 	}
 
