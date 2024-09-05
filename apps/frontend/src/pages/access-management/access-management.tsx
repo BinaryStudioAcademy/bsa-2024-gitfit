@@ -37,6 +37,7 @@ const AccessManagement = (): JSX.Element => {
 		page: userPage,
 		pageSize: userPageSize,
 	} = usePagination({
+		queryParameterPrefix: "user",
 		totalItemsCount: usersTotalCount,
 	});
 
@@ -52,6 +53,7 @@ const AccessManagement = (): JSX.Element => {
 		page: groupPage,
 		pageSize: groupPageSize,
 	} = usePagination({
+		queryParameterPrefix: "group",
 		totalItemsCount: groupsTotalCount,
 	});
 

@@ -13,36 +13,50 @@ import {
 	getInitialPageSize,
 } from "./libs/helpers/helpers.js";
 
-type UsePagination = (parameters: { totalItemsCount: number }) => {
+type UsePagination = (parameters: {
+	queryParameterPrefix: string;
+	totalItemsCount: number;
+}) => {
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
 	pageSize: number;
 };
 
-const usePagination: UsePagination = ({ totalItemsCount }) => {
+const usePagination: UsePagination = ({
+	queryParameterPrefix,
+	totalItemsCount,
+}) => {
 	const [searchParameters, setSearchParameters] = useSearchParams();
 
-	const pageQueryParameter = searchParameters.get(QueryParameterName.PAGE);
-	const pageSizeQueryParameter = searchParameters.get(
-		QueryParameterName.PAGE_SIZE,
-	);
+	const pageParameterName = queryParameterPrefix + QueryParameterName.PAGE;
+	const pageSizeParameterName =
+		queryParameterPrefix + QueryParameterName.PAGE_SIZE;
+
+	const pageParameterNameeter = searchParameters.get(pageParameterName);
+	const pageSizeParameterNameeter = searchParameters.get(pageSizeParameterName);
 
 	const [pageSize, setPageSize] = useState<number>(() =>
-		getInitialPageSize(pageSizeQueryParameter),
+		getInitialPageSize(pageSizeParameterNameeter),
 	);
 	const [page, setPage] = useState<number>(() => {
 		const initialTotalPages = calculateTotalPages(pageSize, totalItemsCount);
 
-		return getInitialPage(pageQueryParameter, initialTotalPages);
+		return getInitialPage(pageParameterNameeter, initialTotalPages);
 	});
 
 	useEffect(() => {
-		setSearchParameters({
-			[QueryParameterName.PAGE]: String(page),
-			[QueryParameterName.PAGE_SIZE]: String(pageSize),
-		});
-	}, [page, pageSize, setSearchParameters]);
+		const updatedSearchParameters = new URLSearchParams(searchParameters);
+		updatedSearchParameters.set(pageParameterName, String(page));
+		updatedSearchParameters.set(pageSizeParameterName, String(pageSize));
+		setSearchParameters(updatedSearchParameters);
+	}, [
+		page,
+		pageSize,
+		setSearchParameters,
+		pageParameterName,
+		pageSizeParameterName,
+	]);
 
 	const onPageChange = useCallback(
 		(newPage: number) => {
