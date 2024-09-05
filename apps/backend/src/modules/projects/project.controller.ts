@@ -157,7 +157,7 @@ class ProjectController extends BaseController {
 	/**
 	 * @swagger
 	 * /projects/{id}:
-	 *    get:
+	 *    delete:
 	 *      description: Deletes project by ID
 	 *      parameters:
 	 *        - in: path
