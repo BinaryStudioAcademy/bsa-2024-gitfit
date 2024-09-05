@@ -1,20 +1,14 @@
 import { Menu, MenuItem } from "~/libs/components/components.js";
-import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
+import { usePopover } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
-	groupId: number;
-	onDelete: (groupId: number) => void;
+	onDelete: () => void;
 };
 
-const GroupMenu = ({ groupId, onDelete }: Properties): JSX.Element => {
+const GroupMenu = ({ onDelete }: Properties): React.ReactElement => {
 	const { isOpened, onClose, onOpen } = usePopover();
-
-	const handleDeleteClick = useCallback(() => {
-		onDelete(groupId);
-		onClose();
-	}, [onDelete, onClose, groupId]);
 
 	return (
 		<div className={styles["options-container"]}>
@@ -23,7 +17,7 @@ const GroupMenu = ({ groupId, onDelete }: Properties): JSX.Element => {
 					<MenuItem
 						iconName="trashBin"
 						label="Delete"
-						onClick={handleDeleteClick}
+						onClick={onDelete}
 						variant="danger"
 					/>
 				</Menu>

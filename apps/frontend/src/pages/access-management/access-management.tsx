@@ -14,17 +14,15 @@ import {
 	usePagination,
 	useState,
 } from "~/libs/hooks/hooks.js";
-import { actions as groupActions } from "~/modules/groups/groups.js";
+import {
+	actions as groupActions,
+	type GroupGetAllItemResponseDto,
+} from "~/modules/groups/groups.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-import { GroupMenu } from "./libs/components/components.js";
-import {
-	getGroupColumns,
-	getGroupRows,
-	getUserColumns,
-	getUserRows,
-} from "./libs/helpers/helpers.js";
-import { type GroupRow, type UserRow } from "./libs/types/types.js";
+import { GroupTable } from "./libs/components/components.js";
+import { getUserColumns, getUserRows } from "./libs/helpers/helpers.js";
+import { type UserRow } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
 const AccessManagement = (): JSX.Element => {
@@ -44,26 +42,29 @@ const AccessManagement = (): JSX.Element => {
 		totalItemsCount: usersTotalCount,
 	});
 
-	const [selectedGroupId, setSelectedGroupId] = useState<null | number>(null);
+	const [groupToDelete, setGroupToDelete] =
+		useState<GroupGetAllItemResponseDto | null>(null);
+
 	const {
-		isOpened: isConfirmationModalOpen,
-		onClose: handleConfirmationModalClose,
-		onOpen: handleConfirmationModalOpen,
+		isOpened: isDeleteModalOpen,
+		onClose: handleDeleteModalClose,
+		onOpen: handleDeleteModalOpen,
 	} = useModal();
 
-	const handleDelete = useCallback(
-		(groupId: number) => {
-			setSelectedGroupId(groupId);
-			handleConfirmationModalOpen();
+	const handleDeleteClick = useCallback(
+		(group: GroupGetAllItemResponseDto) => {
+			setGroupToDelete(group);
+			handleDeleteModalOpen();
 		},
-		[handleConfirmationModalOpen],
+		[handleDeleteModalOpen],
 	);
 
-	const handleDeleteConfirm = useCallback(() => {
-		if (selectedGroupId !== null) {
-			void dispatch(groupActions.deleteById(selectedGroupId));
+	const confirmDeleteGroup = useCallback(() => {
+		if (groupToDelete) {
+			void dispatch(groupActions.deleteById(groupToDelete.id));
+			handleDeleteModalClose();
 		}
-	}, [dispatch, selectedGroupId]);
+	}, [dispatch, groupToDelete, handleDeleteModalClose]);
 
 	useEffect(() => {
 		void dispatch(userActions.loadAll({ page, pageSize }));
@@ -72,9 +73,6 @@ const AccessManagement = (): JSX.Element => {
 
 	const userColumns = getUserColumns();
 	const userData: UserRow[] = getUserRows(users);
-
-	const groupColumns = getGroupColumns();
-	const groupData: GroupRow[] = getGroupRows(groups);
 
 	const isLoading = [usersDataStatus, groupsDataStatus].some(
 		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
@@ -98,23 +96,20 @@ const AccessManagement = (): JSX.Element => {
 			</section>
 			<section>
 				<h2 className={styles["section-title"]}>Groups</h2>
-				<Table<GroupRow>
-					columns={groupColumns}
-					data={groupData.map((group) => ({
-						...group,
-						options: <GroupMenu groupId={group.id} onDelete={handleDelete} />,
-					}))}
-				/>
+				<GroupTable groups={groups} onDelete={handleDeleteClick} />
 			</section>
-			<ConfirmationModal
-				cancelLabel="Cancel"
-				confirmationText="This group will be deleted. This action cannot be undone. Do you want to continue?"
-				confirmLabel="Yes, Delete it"
-				isModalOpened={isConfirmationModalOpen}
-				onConfirm={handleDeleteConfirm}
-				onModalClose={handleConfirmationModalClose}
-				title="Are you sure?"
-			/>
+
+			{groupToDelete && (
+				<ConfirmationModal
+					cancelLabel="Cancel"
+					confirmationText="The group will be deleted. This action cannot be undone. Do you want to continue?"
+					confirmLabel="Yes, Delete it"
+					isModalOpened={isDeleteModalOpen}
+					onConfirm={confirmDeleteGroup}
+					onModalClose={handleDeleteModalClose}
+					title="Are you sure?"
+				/>
+			)}
 		</PageLayout>
 	);
 };
