@@ -33,16 +33,16 @@ const usePagination: UsePagination = ({
 	const pageSizeParameterName =
 		queryParameterPrefix + QueryParameterName.PAGE_SIZE;
 
-	const pageParameterNameeter = searchParameters.get(pageParameterName);
-	const pageSizeParameterNameeter = searchParameters.get(pageSizeParameterName);
+	const NamedPageParameter = searchParameters.get(pageParameterName);
+	const NamedPageSizeParameter = searchParameters.get(pageSizeParameterName);
 
 	const [pageSize, setPageSize] = useState<number>(() =>
-		getInitialPageSize(pageSizeParameterNameeter),
+		getInitialPageSize(NamedPageSizeParameter),
 	);
 	const [page, setPage] = useState<number>(() => {
 		const initialTotalPages = calculateTotalPages(pageSize, totalItemsCount);
 
-		return getInitialPage(pageParameterNameeter, initialTotalPages);
+		return getInitialPage(NamedPageParameter, initialTotalPages);
 	});
 
 	useEffect(() => {
