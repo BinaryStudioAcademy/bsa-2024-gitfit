@@ -1,1 +1,1 @@
-export { checkPermission } from "./check-permissions.hook.js";
+export { checkUserPermissions } from "./check-user-permissions.hook.js";

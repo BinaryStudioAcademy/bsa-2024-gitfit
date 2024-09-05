@@ -1,5 +1,5 @@
 type Permission = {
 	key: string;
-}
+};
 
-export { type Permission }
+export { type Permission };

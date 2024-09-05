@@ -7,7 +7,7 @@ import { type APIPreHandler } from "~/libs/modules/controller/libs/types/types.j
 import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
 import { userService } from "~/modules/users/users.js";
 
-const checkPermission = (routePermissions: string[]): APIPreHandler => {
+const checkUserPermissions = (routePermissions: string[]): APIPreHandler => {
 	return async (request: FastifyRequest): Promise<void> => {
 		const userId = request.user?.id;
 
@@ -29,7 +29,7 @@ const checkPermission = (routePermissions: string[]): APIPreHandler => {
 
 		const hasPermission = checkHasPermission(
 			routePermissions,
-			user.groups.flatMap(group => group.permissions)
+			user.groups.flatMap((group) => group.permissions),
 		);
 
 		if (!hasPermission) {
@@ -41,4 +41,4 @@ const checkPermission = (routePermissions: string[]): APIPreHandler => {
 	};
 };
 
-export { checkPermission };
+export { checkUserPermissions };

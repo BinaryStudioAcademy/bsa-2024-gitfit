@@ -1,4 +1,4 @@
-import { Permission } from "./libs/types/permissions.type.js";
+import { type Permission } from "./libs/types/permissions.type.js";
 
 const checkHasPermission = (
 	requiredPermissions: string[],

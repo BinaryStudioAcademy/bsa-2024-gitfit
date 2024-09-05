@@ -1,6 +1,6 @@
-const PAGE_NAME = {
+const PageName = {
 	ACCESS_MANAGEMENT: "Access Management",
 	PROJECTS: "Projects",
-}  as const;
+} as const;
 
-export { PAGE_NAME };
+export { PageName };

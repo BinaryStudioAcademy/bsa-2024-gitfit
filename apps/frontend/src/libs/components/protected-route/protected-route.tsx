@@ -1,4 +1,5 @@
 import { Navigate } from "react-router-dom";
+
 import { Loader } from "~/libs/components/components.js";
 import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
@@ -26,8 +27,8 @@ const ProtectedRoute = ({
 	const hasRequiredPermission = authenticatedUser
 		? checkHasPermission(
 				pagePermissions ?? [],
-				authenticatedUser.groups.flatMap(group => group.permissions)
-		  )
+				authenticatedUser.groups.flatMap((group) => group.permissions),
+			)
 		: false;
 
 	if (isLoading) {

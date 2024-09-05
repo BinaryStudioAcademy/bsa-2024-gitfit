@@ -1,1 +1,1 @@
-export { Permission } from "./permissions.type.js";
+export { type Permission } from "./permissions.type.js";

@@ -1,5 +1,4 @@
-import { PAGE_NAME } from "~/libs/enums/enums.js";
-import { PermissionKey } from "~/libs/enums/enums.js";
+import { PageName, PermissionKey } from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import { useAppSelector, useMemo } from "~/libs/hooks/hooks.js";
 import { type NavigationItem } from "~/libs/types/navigation-item.type.js";
@@ -16,14 +15,14 @@ const Sidebar = ({ items }: Properties): JSX.Element => {
 
 	const filteredItems = useMemo(() => {
 		return items.filter((item) => {
-			if (item.label === PAGE_NAME.ACCESS_MANAGEMENT) {
+			if (item.label === PageName.ACCESS_MANAGEMENT) {
 				if (!authenticatedUser) {
 					return false;
 				}
 
 				return checkHasPermission(
 					[PermissionKey.MANAGE_USER_ACCESS],
-					authenticatedUser.groups.flatMap(group => group.permissions)
+					authenticatedUser.groups.flatMap((group) => group.permissions),
 				);
 			}
 
