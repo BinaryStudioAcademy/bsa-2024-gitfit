@@ -189,7 +189,13 @@ class ProjectController extends BaseController {
 	 * @swagger
 	 * /projects:
 	 *    get:
-	 *      description: Returns an array of projects
+	 *      description: Returns all projects or filters them by name if the 'name' query parameter is provided.
+	 *      parameters:
+	 *        - in: query
+	 *          name: name
+	 *          schema:
+	 *            type: string
+	 *          description: The name to filter projects by (optional).
 	 *      responses:
 	 *        200:
 	 *          description: Successful operation
@@ -197,11 +203,11 @@ class ProjectController extends BaseController {
 	 *            application/json:
 	 *              schema:
 	 *                type: object
-	 * 								properties:
-	 * 									items:
-	 * 										type: array
-	 *                		items:
-	 *                  		$ref: "#/components/schemas/Project"
+	 *                properties:
+	 *                  items:
+	 *                    type: array
+	 *                    items:
+	 *                      $ref: "#/components/schemas/Project"
 	 */
 	private async findAllByName(
 		options: APIHandlerOptions<{
@@ -210,12 +216,18 @@ class ProjectController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		const { query } = options;
 
+		if (!query.name) {
+			return {
+				payload: await this.projectService.findAll(),
+				status: HTTPCode.OK,
+			};
+		}
+
 		return {
 			payload: await this.projectService.findAllbyName(query),
 			status: HTTPCode.OK,
 		};
 	}
-
 	/**
 	 * @swagger
 	 * /projects/{id}:
