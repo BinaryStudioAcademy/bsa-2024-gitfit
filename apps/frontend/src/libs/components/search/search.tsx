@@ -1,8 +1,9 @@
-import { Icon, Input } from "~/libs/components/components.js";
+import { Input } from "~/libs/components/components.js";
 import { initDebounce } from "~/libs/helpers/helpers.js";
 import { useAppForm, useEffect, useFormWatch } from "~/libs/hooks/hooks.js";
 
 import { SEARCH_TIMEOUT } from "./libs/constants/constants.js";
+import { useSearchQueryParameters } from "./libs/hooks/use-search-query.hook.js"; // Import the hook
 
 type Properties = {
 	isLabelHidden: boolean;
@@ -15,8 +16,10 @@ const Search = ({
 	label,
 	onChange,
 }: Properties): JSX.Element => {
+	const { searchQuery, updateSearchParams } = useSearchQueryParameters("");
+
 	const { control, errors } = useAppForm({
-		defaultValues: { search: "" },
+		defaultValues: { search: searchQuery },
 		mode: "onChange",
 	});
 
@@ -25,13 +28,15 @@ const Search = ({
 	useEffect(() => {
 		const debouncedOnChange = initDebounce(() => {
 			onChange(value);
+			updateSearchParams(value);
 		}, SEARCH_TIMEOUT);
+
 		debouncedOnChange(value);
 
 		return (): void => {
 			debouncedOnChange.clear();
 		};
-	}, [onChange, value]);
+	}, [onChange, value, updateSearchParams]);
 
 	return (
 		<Input
@@ -39,7 +44,6 @@ const Search = ({
 			errors={errors}
 			isLabelHidden={isLabelHidden}
 			label={label}
-			leftIcon={<Icon height={20} name="search" width={20} />}
 			name="search"
 			placeholder="Enter project name"
 			type="search"
