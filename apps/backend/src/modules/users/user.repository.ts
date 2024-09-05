@@ -70,11 +70,11 @@ class UserRepository implements Repository {
 
 	public async findByEmail(
 		email: string,
-		includeDeleted = false,
+		hasDeleted = false,
 	): Promise<null | UserEntity> {
 		const query = this.userModel.query().findOne({ email });
 
-		if (!includeDeleted) {
+		if (!hasDeleted) {
 			query.whereNull("deletedAt");
 		}
 
