@@ -93,7 +93,7 @@ class UserController extends BaseController {
 	 *          schema:
 	 *            type: string
 	 *      responses:
-	 *        200:
+	 *        204:
 	 *          description: User deleted successfully
 	 */
 	private async delete(
@@ -103,7 +103,7 @@ class UserController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.userService.delete(Number(options.params.id)),
-			status: HTTPCode.OK,
+			status: HTTPCode.NO_CONTENT,
 		};
 	}
 
