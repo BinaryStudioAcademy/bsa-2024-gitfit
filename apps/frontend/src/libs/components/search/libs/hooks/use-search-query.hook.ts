@@ -10,11 +10,9 @@ const useSearchQueryParameters = (
 	const location = useLocation();
 	const navigate = useNavigate();
 
-	// Extract the search parameter from the URL
 	const searchParameters = new URLSearchParams(location.search);
 	const searchQuery = searchParameters.get("search") || defaultSearch;
 
-	// Function to update query parameters
 	const updateSearchParameters = useCallback(
 		(newSearchValue: string) => {
 			const parameters = new URLSearchParams(location.search);
