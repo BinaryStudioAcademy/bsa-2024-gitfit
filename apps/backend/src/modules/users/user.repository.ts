@@ -1,4 +1,3 @@
-import { NOTHING_DELETED_COUNT } from "~/libs/constants/constants.js";
 import {
 	type PaginationQueryParameters,
 	type PaginationResponseDto,
@@ -33,14 +32,14 @@ class UserRepository implements Repository {
 	}
 
 	public async delete(id: number): Promise<boolean> {
-		const numberDeletedRows = await this.userModel
+		const deletedRowsCount = await this.userModel
 			.query()
 			.patch({ deletedAt: new Date().toISOString() })
 			.where({ id })
 			.whereNull("deletedAt")
 			.execute();
 
-		return numberDeletedRows > NOTHING_DELETED_COUNT;
+		return Boolean(deletedRowsCount);
 	}
 
 	public async find(id: number): Promise<null | UserEntity> {
