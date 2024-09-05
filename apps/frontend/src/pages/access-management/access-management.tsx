@@ -43,7 +43,7 @@ const AccessManagement = (): JSX.Element => {
 	const {
 		dataStatus: groupsDataStatus,
 		groups,
-		totalGroupsCount,
+		groupsTotalCount,
 	} = useAppSelector(({ groups }) => groups);
 
 	const {
@@ -52,7 +52,7 @@ const AccessManagement = (): JSX.Element => {
 		page: groupPage,
 		pageSize: groupPageSize,
 	} = usePagination({
-		totalItemsCount: totalGroupsCount,
+		totalItemsCount: groupsTotalCount,
 	});
 
 	useEffect(() => {
@@ -99,7 +99,7 @@ const AccessManagement = (): JSX.Element => {
 						onPageSizeChange={onGroupPageSizeChange}
 						page={groupPage}
 						pageSize={groupPageSize}
-						totalItemsCount={totalGroupsCount}
+						totalItemsCount={groupsTotalCount}
 					/>
 				</div>
 			</section>
