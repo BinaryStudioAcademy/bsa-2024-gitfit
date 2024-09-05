@@ -24,6 +24,7 @@ const GroupMenu = ({ groupId, onDelete }: Properties): JSX.Element => {
 						iconName="trashBin"
 						label="Delete"
 						onClick={handleDeleteClick}
+						variant="danger"
 					/>
 				</Menu>
 			</div>
