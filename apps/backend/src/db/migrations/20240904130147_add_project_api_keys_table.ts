@@ -17,7 +17,7 @@ const USERS_TABLE = "users";
 function up(knex: Knex): Promise<void> {
 	return knex.schema.createTable(TABLE_NAME, (table) => {
 		table.increments(ColumnName.ID).primary();
-		table.string(ColumnName.ENCODED_KEY).unique().notNullable();
+		table.string(ColumnName.ENCODED_KEY).notNullable();
 		table
 			.integer(ColumnName.PROJECT_ID)
 			.unsigned()
