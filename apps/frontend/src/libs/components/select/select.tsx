@@ -56,7 +56,6 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				| MultiValue<SelectOption<TOptionValue> | undefined>
 				| SingleValue<SelectOption<TOptionValue> | undefined>,
 		): void => {
-			// If it's a multi-select, handle the selectedOptions as an array
 			if (isMulti) {
 				const filteredOptions = Array.isArray(selectedOptions)
 					? selectedOptions
