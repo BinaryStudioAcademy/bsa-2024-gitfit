@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.6.0...backend-v1.7.0) (2024-09-05)
+
+
+### Features
+
+* Add pagination to the groups table gf-83 ([#184](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/184)) ([2b6f1b3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2b6f1b39eb1ea176506dbf82807cfe930cf4c4fb))
+
 ## [1.6.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.5.0...backend-v1.6.0) (2024-09-04)
 
 

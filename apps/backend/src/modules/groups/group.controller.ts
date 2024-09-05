@@ -6,6 +6,7 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { type GroupService } from "./group.service.js";
 import { GroupsApiPath } from "./libs/enums/enum.js";
@@ -62,7 +63,12 @@ class GroupController extends BaseController {
 		});
 
 		this.addRoute({
-			handler: () => this.findAll(),
+			handler: (options) =>
+				this.findAll(
+					options as APIHandlerOptions<{
+						query: PaginationQueryParameters;
+					}>,
+				),
 			method: "GET",
 			path: GroupsApiPath.ROOT,
 		});
@@ -126,7 +132,18 @@ class GroupController extends BaseController {
 	 * @swagger
 	 * /groups:
 	 *   get:
-	 *     description: Returns an array of groups
+	 *     description: Returns an array of groups with pagination
+	 *     parameters:
+	 *       - in: query
+	 *         name: page
+	 *         schema:
+	 *           type: integer
+	 *         description: The page number to retrieve
+	 *       - in: query
+	 *         name: pageSize
+	 *         schema:
+	 *           type: integer
+	 *         description: Number of items per page
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
@@ -139,15 +156,19 @@ class GroupController extends BaseController {
 	 *                   type: array
 	 *                   items:
 	 *                     $ref: "#/components/schemas/Group"
+	 *                 totalItems:
+	 *                   type: integer
+	 *                   description: Total number of groups available
 	 */
-	private async findAll(): Promise<APIHandlerResponse> {
-		const groups = await this.groupService.findAll();
-
+	private async findAll({
+		query,
+	}: APIHandlerOptions<{
+		query: PaginationQueryParameters;
+	}>): Promise<APIHandlerResponse> {
 		return {
-			payload: groups,
+			payload: await this.groupService.findAll(query),
 			status: HTTPCode.OK,
 		};
 	}
 }
-
 export { GroupController };
