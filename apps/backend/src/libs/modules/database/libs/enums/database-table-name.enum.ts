@@ -1,6 +1,7 @@
 const DatabaseTableName = {
 	MIGRATIONS: "migrations",
 	PERMISSIONS: "permissions",
+	PROJECT_API_KEYS: "project_api_keys",
 	PROJECT_GROUPS: "project_groups",
 	PROJECT_GROUPS_TO_PROJECT_PERMISSIONS:
 		"project_groups_to_project_permissions",
