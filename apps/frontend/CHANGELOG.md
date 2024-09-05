@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.10.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.9.0...frontend-v1.10.0) (2024-09-05)
+
+
+### Features
+
+* Add pagination to the groups table gf-83 ([#184](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/184)) ([2b6f1b3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2b6f1b39eb1ea176506dbf82807cfe930cf4c4fb))
+
+
+### Bug Fixes
+
+* Font size of the "Profile" heading doesn`t match the design mockup gf-192 ([#194](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/194)) ([8bcaffc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8bcaffc4c2b84fe4390644ff5027ee2e77dd93d9))
+* update profile success message gf-193 ([#195](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/195)) ([1b262d7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1b262d77b25cb5056dfb674ff0fcd8c51bfc315d))
+
 ## [1.9.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.8.0...frontend-v1.9.0) (2024-09-04)
 
 
