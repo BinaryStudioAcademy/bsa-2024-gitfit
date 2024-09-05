@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.10.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.9.0...v1.10.0) (2024-09-04)
+
+
+### Features
+
+* add only latin validation rule gf-131 ([#173](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/173)) ([ecabee8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ecabee8bde62d38d4eaa00886d5765c5bb25b89f))
+
+## [1.9.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.8.0...v1.9.0) (2024-09-04)
+
+
+### Features
+
+* add an ability to edit a project gf-88 ([#137](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/137)) ([92b59e0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/92b59e0f955332412fe52a3fbfcdec570ef0551c))
+
+
+### Bug Fixes
+
+* Inconsistent location of the load component with a slow internet connection gf-147 ([#179](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/179)) ([f9ad998](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f9ad998843c05a5d35e81e203287db0d686ccf00))
+
 ## [1.8.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.7.0...v1.8.0) (2024-09-04)
 
 
