@@ -11,6 +11,8 @@
 	justify-content: flex-end;
 }
 
-.confirmation-buttons button {
+.button-wrapper {
+	display: flex;
+	flex-direction: column;
 	min-width: 150px;
 }

@@ -33,12 +33,10 @@ const DeleteAccount = ({ userId }: Properties): JSX.Element => {
 				variant="danger"
 			/>
 			<ConfirmationModal
-				confirmationText="This account will be deleted. This action cannot be undone. Do you want to continue?"
-				confirmLabel="Yes, Delete it"
-				isModalOpened={isOpened}
+				content="This account will be deleted. This action cannot be undone. Do you want to continue?"
+				isOpened={isOpened}
+				onClose={onClose}
 				onConfirm={handleDeleteConfirm}
-				onModalClose={onClose}
-				title="Are you sure?"
 			/>
 		</div>
 	);

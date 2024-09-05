@@ -4,39 +4,37 @@ import { useCallback } from "~/libs/hooks/hooks.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	cancelLabel?: string;
-	confirmationText: string;
-	confirmLabel?: string;
-	isModalOpened: boolean;
+	content: string;
+	isOpened: boolean;
+	onClose: () => void;
 	onConfirm: () => void;
-	onModalClose: () => void;
-	title: string;
 };
 
 const ConfirmationModal = ({
-	cancelLabel = "Cancel",
-	confirmationText,
-	confirmLabel = "Confirm",
-	isModalOpened,
+	content,
+	isOpened,
+	onClose,
 	onConfirm,
-	onModalClose,
-	title,
 }: Properties): JSX.Element => {
 	const handleConfirmClick = useCallback(() => {
 		onConfirm();
-		onModalClose();
-	}, [onConfirm, onModalClose]);
+		onClose();
+	}, [onConfirm, onClose]);
 
 	return (
-		<Modal isOpened={isModalOpened} onClose={onModalClose} title={title}>
-			<p className={styles["confirmation-text"]}>{confirmationText}</p>
+		<Modal isOpened={isOpened} onClose={onClose} title="Are you sure?">
+			<p className={styles["confirmation-text"]}>{content}</p>
 			<div className={styles["confirmation-buttons"]}>
-				<Button label={cancelLabel} onClick={onModalClose} variant="outlined" />
-				<Button
-					label={confirmLabel}
-					onClick={handleConfirmClick}
-					variant="danger"
-				/>
+				<div className={styles["button-wrapper"]}>
+					<Button label="Cancel" onClick={onClose} variant="outlined" />
+				</div>
+				<div className={styles["button-wrapper"]}>
+					<Button
+						label="Yes, Delete it"
+						onClick={handleConfirmClick}
+						variant="danger"
+					/>
+				</div>
 			</div>
 		</Modal>
 	);

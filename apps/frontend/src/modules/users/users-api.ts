@@ -38,7 +38,6 @@ class UserApi extends BaseHTTPApi {
 		const response = await this.load(
 			this.getFullEndpoint(UsersApiPath.ROOT, {}),
 			{
-				contentType: ContentType.JSON,
 				hasAuth: true,
 				method: "GET",
 				query: {
