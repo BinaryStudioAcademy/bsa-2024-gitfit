@@ -24,16 +24,6 @@ const loadAll = createAsyncThunk<
 	return userApi.getAll(query);
 });
 
-const configureGroupUsers = createAsyncThunk<
-	UserGetAllResponseDto,
-	PaginationQueryParameters,
-	AsyncThunkConfig
->(`${sliceName}/load-all-group-users`, (query, { extra }) => {
-	const { userApi } = extra;
-
-	return userApi.getAll(query);
-});
-
 const updateProfile = createAsyncThunk<
 	UserPatchResponseDto,
 	{ id: number; payload: UserPatchRequestDto },
@@ -49,4 +39,4 @@ const updateProfile = createAsyncThunk<
 	return user;
 });
 
-export { configureGroupUsers, loadAll, updateProfile };
+export { loadAll, updateProfile };

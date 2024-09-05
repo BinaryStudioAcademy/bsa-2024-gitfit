@@ -1,7 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { NotificationMessage } from "~/libs/enums/enums.js";
-import { type AsyncThunkConfig } from "~/libs/types/types.js";
+import {
+	type AsyncThunkConfig,
+	type PaginationQueryParameters,
+} from "~/libs/types/types.js";
+import { type UserGetAllResponseDto } from "~/modules/users/users.js";
 
 import {
 	type GroupCreateRequestDto,
@@ -20,6 +24,16 @@ const loadAll = createAsyncThunk<
 	return await groupApi.getAll();
 });
 
+const configureGroupUsers = createAsyncThunk<
+	UserGetAllResponseDto,
+	PaginationQueryParameters,
+	AsyncThunkConfig
+>(`${sliceName}/configure-group-users`, (query, { extra }) => {
+	const { userApi } = extra;
+
+	return userApi.getAll(query);
+});
+
 const create = createAsyncThunk<
 	GroupCreateResponseDto,
 	GroupCreateRequestDto,
@@ -34,4 +48,4 @@ const create = createAsyncThunk<
 	return response;
 });
 
-export { create, loadAll };
+export { configureGroupUsers, create, loadAll };

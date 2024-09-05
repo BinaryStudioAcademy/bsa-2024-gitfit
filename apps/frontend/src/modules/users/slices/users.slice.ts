@@ -4,64 +4,36 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
-import { configureGroupUsers, loadAll, updateProfile } from "./actions.js";
+import { loadAll, updateProfile } from "./actions.js";
 
 type State = {
-	groupUsers: {
-		data: UserGetAllItemResponseDto[];
-		dataStatus: ValueOf<typeof DataStatus>;
-		totalCount: number;
-	};
+	dataStatus: ValueOf<typeof DataStatus>;
 	updateProfileStatus: ValueOf<typeof DataStatus>;
-	users: {
-		data: UserGetAllItemResponseDto[];
-		dataStatus: ValueOf<typeof DataStatus>;
-		totalCount: number;
-	};
+	users: UserGetAllItemResponseDto[];
+	usersTotalCount: number;
 };
 
 const initialState: State = {
-	groupUsers: {
-		data: [],
-		dataStatus: DataStatus.IDLE,
-		totalCount: 0,
-	},
+	dataStatus: DataStatus.IDLE,
 	updateProfileStatus: DataStatus.IDLE,
-	users: {
-		data: [],
-		dataStatus: DataStatus.IDLE,
-		totalCount: 0,
-	},
+	users: [],
+	usersTotalCount: 0,
 };
 
 const { actions, name, reducer } = createSlice({
 	extraReducers(builder) {
-		builder.addCase(configureGroupUsers.pending, (state) => {
-			state.groupUsers.dataStatus = DataStatus.PENDING;
-		});
-
-		builder.addCase(configureGroupUsers.fulfilled, (state, action) => {
-			state.groupUsers.data = action.payload.items;
-			state.groupUsers.totalCount = action.payload.totalItems;
-			state.groupUsers.dataStatus = DataStatus.FULFILLED;
-		});
-
-		builder.addCase(configureGroupUsers.rejected, (state) => {
-			state.groupUsers.dataStatus = DataStatus.REJECTED;
-		});
-
 		builder.addCase(loadAll.pending, (state) => {
-			state.users.dataStatus = DataStatus.PENDING;
+			state.dataStatus = DataStatus.PENDING;
 		});
 
 		builder.addCase(loadAll.fulfilled, (state, action) => {
-			state.users.data = action.payload.items;
-			state.users.totalCount = action.payload.totalItems;
-			state.users.dataStatus = DataStatus.FULFILLED;
+			state.users = action.payload.items;
+			state.usersTotalCount = action.payload.totalItems;
+			state.dataStatus = DataStatus.FULFILLED;
 		});
 
 		builder.addCase(loadAll.rejected, (state) => {
-			state.users.dataStatus = DataStatus.REJECTED;
+			state.dataStatus = DataStatus.REJECTED;
 		});
 
 		builder.addCase(updateProfile.pending, (state) => {

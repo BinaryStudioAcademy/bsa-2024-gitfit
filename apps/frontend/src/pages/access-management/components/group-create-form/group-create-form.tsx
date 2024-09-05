@@ -13,8 +13,8 @@ import {
 	type GroupCreateRequestDto,
 	groupCreateValidationSchema,
 } from "~/modules/groups/groups.js";
+import { actions as groupActions } from "~/modules/groups/groups.js";
 import { actions as permissionActions } from "~/modules/permissions/permissions.js";
-import { actions as userActions } from "~/modules/users/users.js";
 
 import { UsersTable } from "../users-table/users-table.js";
 import { DEFAULT_GROUP_CREATE_PAYLOAD } from "./libs/constants/constants.js";
@@ -40,18 +40,16 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 		({ permissions }) => permissions,
 	);
 
-	const {
-		data: users,
-		dataStatus: usersDataStatus,
-		totalCount: usersTotalCount,
-	} = useAppSelector(({ users }) => users.groupUsers);
+	const { users, usersDataStatus, usersTotalCount } = useAppSelector(
+		({ groups }) => groups,
+	);
 
 	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
 		totalItemsCount: usersTotalCount,
 	});
 
 	useEffect(() => {
-		void dispatch(userActions.configureGroupUsers({ page, pageSize }));
+		void dispatch(groupActions.configureGroupUsers({ page, pageSize }));
 		void dispatch(permissionActions.loadAll());
 	}, [dispatch, page, pageSize]);
 
