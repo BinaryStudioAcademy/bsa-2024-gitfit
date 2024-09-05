@@ -11,6 +11,7 @@ type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
 	groupCreateStatus: ValueOf<typeof DataStatus>;
 	groups: GroupGetAllItemResponseDto[];
+	groupsTotalCount: number;
 	users: UserGetAllItemResponseDto[];
 	usersDataStatus: ValueOf<typeof DataStatus>;
 	usersTotalCount: number;
@@ -20,6 +21,7 @@ const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	groupCreateStatus: DataStatus.IDLE,
 	groups: [],
+	groupsTotalCount: 0,
 	users: [],
 	usersDataStatus: DataStatus.IDLE,
 	usersTotalCount: 0,
@@ -46,6 +48,7 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
 			state.groups = action.payload.items;
+			state.groupsTotalCount = action.payload.totalItems;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadAll.rejected, (state) => {

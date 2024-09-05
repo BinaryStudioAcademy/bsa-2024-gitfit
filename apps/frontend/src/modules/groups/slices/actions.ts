@@ -16,12 +16,12 @@ import { name as sliceName } from "./group.slice.js";
 
 const loadAll = createAsyncThunk<
 	GroupGetAllResponseDto,
-	undefined,
+	PaginationQueryParameters,
 	AsyncThunkConfig
->(`${sliceName}/load-all`, async (_, { extra }) => {
+>(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { groupApi } = extra;
 
-	return await groupApi.getAll();
+	return await groupApi.getAll(query);
 });
 
 const configureGroupUsers = createAsyncThunk<

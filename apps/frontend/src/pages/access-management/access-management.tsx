@@ -28,16 +28,13 @@ const AccessManagement = (): JSX.Element => {
 		usersTotalCount,
 	} = useAppSelector(({ users }) => users);
 
-	const { dataStatus: groupsDataStatus, groups } = useAppSelector(
-		({ groups }) => groups,
-	);
-
 	const {
 		onPageChange: onUserPageChange,
 		onPageSizeChange: onUserPageSizeChange,
 		page: userPage,
 		pageSize: userPageSize,
 	} = usePagination({
+		queryParameterPrefix: "user",
 		totalItemsCount: usersTotalCount,
 	});
 
@@ -46,14 +43,30 @@ const AccessManagement = (): JSX.Element => {
 		onClose: onModalClose,
 		onOpen: onModalOpen,
 	} = useModal();
+	const {
+		dataStatus: groupsDataStatus,
+		groups,
+		groupsTotalCount,
+	} = useAppSelector(({ groups }) => groups);
+
+	const {
+		onPageChange: onGroupPageChange,
+		onPageSizeChange: onGroupPageSizeChange,
+		page: groupPage,
+		pageSize: groupPageSize,
+	} = usePagination({
+		queryParameterPrefix: "group",
+		totalItemsCount: groupsTotalCount,
+	});
 
 	useEffect(() => {
 		void dispatch(
 			userActions.loadAll({ page: userPage, pageSize: userPageSize }),
 		);
-
-		void dispatch(groupActions.loadAll());
-	}, [dispatch, userPage, userPageSize]);
+		void dispatch(
+			groupActions.loadAll({ page: groupPage, pageSize: groupPageSize }),
+		);
+	}, [dispatch, userPage, userPageSize, groupPage, groupPageSize]);
 
 	const handleGroupCreateSubmit = useCallback(
 		(payload: GroupCreateRequestDto): void => {
@@ -94,7 +107,14 @@ const AccessManagement = (): JSX.Element => {
 					<h2 className={styles["section-title"]}>Groups</h2>
 					<Button label="Create New" onClick={onModalOpen} />
 				</div>
-				<GroupsTable groups={groups} />
+				<GroupsTable
+					groups={groups}
+					onPageChange={onGroupPageChange}
+					onPageSizeChange={onGroupPageSizeChange}
+					page={groupPage}
+					pageSize={groupPageSize}
+					totalItemsCount={groupsTotalCount}
+				/>
 			</section>
 			<Modal
 				isOpened={isModalOpened}

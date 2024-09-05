@@ -45,6 +45,7 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 	);
 
 	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+		queryParameterPrefix: "user",
 		totalItemsCount: usersTotalCount,
 	});
 
