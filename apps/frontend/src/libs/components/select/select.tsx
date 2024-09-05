@@ -20,7 +20,6 @@ type Properties<TFieldValues extends FieldValues, TOptionValue> = {
 	isMulti?: boolean;
 	label: string;
 	name: FieldPath<TFieldValues>;
-	onChange?: (selectedOptions: SelectOption<TOptionValue>[]) => void;
 	options: SelectOption<TOptionValue>[];
 	placeholder?: string;
 	size?: "default" | "small";
@@ -33,7 +32,6 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 	isMulti = false,
 	label,
 	name,
-	onChange,
 	options,
 	placeholder,
 	size = "default",
@@ -56,20 +54,15 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				| MultiValue<SelectOption<TOptionValue> | undefined>
 				| SingleValue<SelectOption<TOptionValue> | undefined>,
 		): void => {
-			if (isMulti) {
-				const filteredOptions = Array.isArray(selectedOptions)
-					? selectedOptions
-					: [selectedOptions];
-				field.onChange(selectedOptions);
+			const selectedValues = isMulti
+				? (selectedOptions as MultiValue<SelectOption<TOptionValue>>).map(
+						({ value }) => value,
+					)
+				: (selectedOptions as SingleValue<SelectOption<TOptionValue>>)?.value;
 
-				if (onChange) {
-					onChange(filteredOptions as SelectOption<TOptionValue>[]);
-				}
-			} else {
-				field.onChange(selectedOptions);
-			}
+			field.onChange(selectedValues);
 		},
-		[field, onChange, isMulti],
+		[field, isMulti],
 	);
 
 	const findOption = (
@@ -124,7 +117,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				isClearable={false}
 				isMulti={isMulti}
 				name={name}
-				onChange={onChange ? handleChange : field.onChange}
+				onChange={handleChange}
 				options={options as PathValue<TFieldValues, Path<TFieldValues>>}
 				placeholder={placeholder}
 				styles={{
@@ -134,7 +127,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 					}),
 				}}
 				unstyled
-				value={onChange ? selectedValue : field.value}
+				value={selectedValue}
 			/>
 		</label>
 	);

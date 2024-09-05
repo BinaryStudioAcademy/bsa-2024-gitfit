@@ -9,7 +9,6 @@ import {
 	usePagination,
 	useState,
 } from "~/libs/hooks/hooks.js";
-import { type SelectOption } from "~/libs/types/types.js";
 import {
 	type GroupCreateRequestDto,
 	groupCreateValidationSchema,
@@ -37,7 +36,6 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 			validationSchema: groupCreateValidationSchema,
 		});
 
-	const [, setSelectedPermissionIds] = useState<number[]>([]);
 	const { dataStatus: permissionsDataStatus, permissions } = useAppSelector(
 		({ permissions }) => permissions,
 	);
@@ -76,15 +74,6 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 
 				return updatedIds;
 			});
-		},
-		[setValue],
-	);
-
-	const handlePermissionsChange = useCallback(
-		(selectedOptions: SelectOption<number>[]) => {
-			const selectedIds = selectedOptions.map((option) => option.value);
-			setSelectedPermissionIds(selectedIds);
-			setValue("permissionIds", selectedIds);
 		},
 		[setValue],
 	);
@@ -141,7 +130,6 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 				isMulti
 				label="Permissions"
 				name="permissionIds"
-				onChange={handlePermissionsChange}
 				options={permissionOptions}
 				placeholder="Choose permissions"
 			/>

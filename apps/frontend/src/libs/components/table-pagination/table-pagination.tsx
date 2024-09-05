@@ -29,7 +29,7 @@ type Properties = {
 type PageSizeOption = SelectOption<number>;
 
 type FormData = {
-	pageSize: PageSizeOption;
+	pageSize: number;
 };
 
 const TablePagination = ({
@@ -42,7 +42,7 @@ const TablePagination = ({
 }: Properties): JSX.Element => {
 	const { control } = useAppForm<FormData>({
 		defaultValues: {
-			pageSize: { label: String(pageSize), value: pageSize },
+			pageSize,
 		},
 	});
 
@@ -57,7 +57,7 @@ const TablePagination = ({
 	const { pageSize: changedPageSize } = useFormWatch({ control });
 
 	useEffect(() => {
-		const newPageSize = changedPageSize?.value as number;
+		const newPageSize = changedPageSize as number;
 		onPageSizeChange(newPageSize);
 	}, [changedPageSize, onPageSizeChange]);
 
