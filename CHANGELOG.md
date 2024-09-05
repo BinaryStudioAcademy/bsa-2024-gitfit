@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.11.0...v1.12.0) (2024-09-05)
+
+
+### Features
+
+* Add an ability to delete a project gf-138 ([#168](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/168)) ([76547f4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/76547f4cb6b441974b90b0da7ba57d74c9bc9058))
+
 ## [1.11.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.10.0...v1.11.0) (2024-09-05)
 
 
