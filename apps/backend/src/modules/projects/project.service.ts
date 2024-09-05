@@ -44,8 +44,17 @@ class ProjectService implements Service {
 		return item.toObject();
 	}
 
-	public delete(): ReturnType<Service["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const isDeleted = await this.projectRepository.delete(id);
+
+		if (!isDeleted) {
+			throw new ProjectError({
+				message: ExceptionMessage.PROJECT_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		return isDeleted;
 	}
 
 	public async find(id: number): Promise<ProjectGetAllItemResponseDto> {

@@ -27,7 +27,6 @@ class GroupApi extends BaseHTTPApi {
 		const response = await this.load(
 			this.getFullEndpoint(GroupsApiPath.ROOT, {}),
 			{
-				contentType: ContentType.JSON,
 				hasAuth: true,
 				method: "GET",
 				query: {
