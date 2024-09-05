@@ -8,7 +8,7 @@ import {
 import ReactSelect, { type MultiValue, type SingleValue } from "react-select";
 
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
-import { useCallback, useFormController } from "~/libs/hooks/hooks.js";
+import { useCallback, useFormController, useMemo } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -65,16 +65,22 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		[field, isMulti],
 	);
 
-	const findOption = (
-		value: TOptionValue,
-	): SelectOption<TOptionValue> | undefined =>
-		options.find((option) => option.value === value);
+	const findOptionByValue = useCallback(
+		(value: TOptionValue): SelectOption<TOptionValue> | undefined => {
+			return options.find((option) => option.value === value);
+		},
+		[options],
+	);
 
-	const selectedValue = isMulti
-		? (field.value as TOptionValue[])
-				.map((element) => findOption(element))
-				.filter(Boolean)
-		: findOption(field.value as TOptionValue) || null;
+	const selectedValue = useMemo(() => {
+		if (isMulti) {
+			return (field.value as TOptionValue[])
+				.map((element) => findOptionByValue(element))
+				.filter(Boolean);
+		}
+
+		return findOptionByValue(field.value as TOptionValue);
+	}, [field.value, findOptionByValue, isMulti]);
 
 	return (
 		<label className={styles["label"]}>
