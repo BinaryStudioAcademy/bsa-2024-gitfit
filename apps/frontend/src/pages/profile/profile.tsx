@@ -10,7 +10,7 @@ const Profile = (): JSX.Element => {
 
 	return (
 		<PageLayout>
-			<div className={styles["profile-content"]}>
+			<div className={styles["profile-layout"]}>
 				<h1 className={styles["title"]}>Profile</h1>
 
 				<EditUserForm user={authenticatedUser as UserAuthResponseDto} />
