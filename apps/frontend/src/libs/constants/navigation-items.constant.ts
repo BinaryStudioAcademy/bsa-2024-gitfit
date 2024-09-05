@@ -12,6 +12,11 @@ const SIDEBAR_ITEMS: NavigationItem[] = [
 		icon: "access",
 		label: "Access Management",
 	},
+	{
+		href: AppRoute.ANALYTICS,
+		icon: "analytics",
+		label: "Analytics",
+	},
 ];
 
 export { SIDEBAR_ITEMS };

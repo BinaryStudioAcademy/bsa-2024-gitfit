@@ -11,6 +11,7 @@ import {
 import { AppRoute } from "~/libs/enums/enums.js";
 import { store } from "~/libs/modules/store/store.js";
 import { AccessManagement } from "~/pages/access-management/access-management.jsx";
+import { Analytics } from "~/pages/analytics/analytics.jsx";
 import { Auth } from "~/pages/auth/auth.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { Profile } from "~/pages/profile/profile.jsx";
@@ -50,6 +51,14 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 									</ProtectedRoute>
 								),
 								path: AppRoute.PROFILE,
+							},
+							{
+								element: (
+									<ProtectedRoute>
+										<Analytics />
+									</ProtectedRoute>
+								),
+								path: AppRoute.ANALYTICS,
 							},
 							{
 								element: <Auth />,
