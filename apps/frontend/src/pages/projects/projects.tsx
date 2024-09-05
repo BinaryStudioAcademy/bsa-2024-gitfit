@@ -165,12 +165,10 @@ const Projects = (): JSX.Element => {
 				)}
 			</Modal>
 			<ConfirmationModal
-				confirmationText="The project will be deleted. This action cannot be undone. Do you want to continue?"
-				confirmLabel="Yes, Delete it"
+				content="The project will be deleted. This action cannot be undone. Do you want to continue?"
 				isOpened={isDeleteConfirmationModalOpen}
 				onClose={handleDeleteConfirmationModalClose}
 				onConfirm={handleProjectDeleteConfirm}
-				title="Are you sure?"
 			/>
 		</PageLayout>
 	);
