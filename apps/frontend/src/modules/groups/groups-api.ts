@@ -17,14 +17,16 @@ class GroupApi extends BaseHTTPApi {
 		super({ baseUrl, http, path: APIPath.GROUPS, storage });
 	}
 
-	public async delete(groupId: number): Promise<void> {
-		await this.load(
-			this.getFullEndpoint(`${GroupsApiPath.ROOT}${String(groupId)}`, {}),
+	public async deleteById(id: number): Promise<boolean> {
+		const response = await this.load(
+			this.getFullEndpoint(GroupsApiPath.$ID, { id: String(id) }),
 			{
 				hasAuth: true,
 				method: "DELETE",
 			},
 		);
+
+		return await response.json<boolean>();
 	}
 
 	public async getAll(): Promise<GroupGetAllResponseDto> {

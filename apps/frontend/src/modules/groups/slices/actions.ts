@@ -16,15 +16,18 @@ const loadAll = createAsyncThunk<
 	return await groupApi.getAll();
 });
 
-const deleteById = createAsyncThunk<number, number, AsyncThunkConfig>(
-	`${sliceName}/delete`,
-	async (groupId, { extra }) => {
+const deleteById = createAsyncThunk<boolean, number, AsyncThunkConfig>(
+	`${sliceName}/delete-by-id`,
+	async (id, { extra }) => {
 		const { groupApi, toastNotifier } = extra;
 
-		await groupApi.delete(groupId);
-		toastNotifier.showSuccess(NotificationMessage.SUCCESS_GROUP_DELETE);
+		const isDeleted = await groupApi.deleteById(id);
 
-		return groupId;
+		if (isDeleted) {
+			toastNotifier.showSuccess(NotificationMessage.SUCCESS_GROUP_DELETE);
+		}
+
+		return isDeleted;
 	},
 );
 

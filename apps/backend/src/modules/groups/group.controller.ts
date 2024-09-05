@@ -133,7 +133,7 @@ class GroupController extends BaseController {
 
 	/**
 	 * @swagger
-	 * /groups/{name}:
+	 * /groups/{id}:
 	 *   delete:
 	 *     description: Delete a group by ID
 	 *     parameters:
@@ -143,8 +143,12 @@ class GroupController extends BaseController {
 	 *         schema:
 	 *           type: number
 	 *     responses:
-	 *       204:
-	 *         description: Group deleted successfully
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: boolean
 	 *       404:
 	 *         description: Group not found
 	 */
@@ -152,12 +156,9 @@ class GroupController extends BaseController {
 	private async deleteGroup(
 		options: APIHandlerOptions<{ params: { id: string } }>,
 	): Promise<APIHandlerResponse> {
-		const { id } = options.params;
-		const isDeleted = await this.groupService.delete(Number(id));
-
 		return {
-			payload: isDeleted,
-			status: HTTPCode.NO_CONTENT,
+			payload: await this.groupService.delete(Number(options.params.id)),
+			status: HTTPCode.OK,
 		};
 	}
 
