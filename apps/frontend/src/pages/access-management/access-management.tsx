@@ -42,29 +42,29 @@ const AccessManagement = (): JSX.Element => {
 		totalItemsCount: usersTotalCount,
 	});
 
-	const [groupToDelete, setGroupToDelete] =
+	const [selectedGroup, setSelectedGroup] =
 		useState<GroupGetAllItemResponseDto | null>(null);
 
 	const {
-		isOpened: isDeleteModalOpen,
-		onClose: handleDeleteModalClose,
-		onOpen: handleDeleteModalOpen,
+		isOpened: isDeleteConfirmationModalOpen,
+		onClose: handleDeleteConfirmationModalClose,
+		onOpen: handleDeleteConfirmationModalOpen,
 	} = useModal();
 
 	const handleDeleteClick = useCallback(
-		(group: GroupGetAllItemResponseDto) => {
-			setGroupToDelete(group);
-			handleDeleteModalOpen();
+		(project: GroupGetAllItemResponseDto) => {
+			setSelectedGroup(project);
+			handleDeleteConfirmationModalOpen();
 		},
-		[handleDeleteModalOpen],
+		[handleDeleteConfirmationModalOpen],
 	);
 
-	const confirmDeleteGroup = useCallback(() => {
-		if (groupToDelete) {
-			void dispatch(groupActions.deleteById(groupToDelete.id));
-			handleDeleteModalClose();
+	const handleGroupDeleteConfirm = useCallback(() => {
+		if (selectedGroup) {
+			void dispatch(groupActions.deleteById(selectedGroup.id));
+			handleDeleteConfirmationModalClose();
 		}
-	}, [dispatch, groupToDelete, handleDeleteModalClose]);
+	}, [dispatch, selectedGroup, handleDeleteConfirmationModalClose]);
 
 	useEffect(() => {
 		void dispatch(userActions.loadAll({ page, pageSize }));
@@ -99,15 +99,12 @@ const AccessManagement = (): JSX.Element => {
 				<GroupTable groups={groups} onDelete={handleDeleteClick} />
 			</section>
 
-			{groupToDelete && (
+			{selectedGroup && (
 				<ConfirmationModal
-					cancelLabel="Cancel"
-					confirmationText="The group will be deleted. This action cannot be undone. Do you want to continue?"
-					confirmLabel="Yes, Delete it"
-					isModalOpened={isDeleteModalOpen}
-					onConfirm={confirmDeleteGroup}
-					onModalClose={handleDeleteModalClose}
-					title="Are you sure?"
+					content="The group will be deleted. This action cannot be undone. Do you want to continue?"
+					isOpened={isDeleteConfirmationModalOpen}
+					onClose={handleDeleteConfirmationModalClose}
+					onConfirm={handleGroupDeleteConfirm}
 				/>
 			)}
 		</PageLayout>

@@ -41,13 +41,10 @@ const GroupTable = ({ groups, onDelete }: Properties): JSX.Element => {
 
 			{groupToDelete && (
 				<ConfirmationModal
-					cancelLabel="Cancel"
-					confirmationText="This group will be deleted. This action cannot be undone. Do you want to continue?"
-					confirmLabel="Yes, Delete it"
-					isModalOpened={isOpened}
+					content="The group will be deleted. This action cannot be undone. Do you want to continue?"
+					isOpened={isOpened}
+					onClose={handleModalClose}
 					onConfirm={handleDeleteConfirm}
-					onModalClose={handleModalClose}
-					title="Are you sure?"
 				/>
 			)}
 		</>
