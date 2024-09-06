@@ -18,6 +18,8 @@
 	display: flex;
 	align-items: center;
 	width: 100%;
+	border-radius: 6px;
+	overflow: hidden;
 }
 
 .input-field {
@@ -30,7 +32,7 @@
 	color: inherit;
 	background-color: var(--color-background-secondary);
 	border: 1px solid var(--color-border-primary);
-	border-radius: 6px;
+	border-radius: inherit;
 	transition: all 0.3s ease;
 }
 
