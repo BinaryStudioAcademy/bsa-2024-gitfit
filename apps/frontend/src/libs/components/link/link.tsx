@@ -11,7 +11,7 @@ type Properties = {
 };
 
 const Link = ({ children, to }: Properties): JSX.Element => (
-	<NavLink className={styles["link"] ?? ""} to={to}>
+	<NavLink className={styles["link"] as string} to={to}>
 		{children}
 	</NavLink>
 );

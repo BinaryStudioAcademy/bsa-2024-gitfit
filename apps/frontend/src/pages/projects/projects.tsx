@@ -52,7 +52,7 @@ const Projects = (): JSX.Element => {
 		[dispatch],
 	);
 
-	const hasProject = projects.length === EMPTY_LENGTH;
+	const hasProject = projects.length !== EMPTY_LENGTH;
 
 	const {
 		isOpened: isCreateModalOpen,
@@ -124,7 +124,7 @@ const Projects = (): JSX.Element => {
 
 	const isLoading =
 		dataStatus === DataStatus.IDLE ||
-		(dataStatus === DataStatus.PENDING && hasProject);
+		(dataStatus === DataStatus.PENDING && !hasProject);
 
 	return (
 		<PageLayout>
@@ -133,20 +133,27 @@ const Projects = (): JSX.Element => {
 				<Button label="Create New" onClick={handleCreateModalOpen} />
 			</header>
 			<ProjectsSearch onChange={handleSearchChange} />
-			<div className={styles["projects-list"]}>
-				{isLoading ? (
-					<Loader />
-				) : (
-					projects.map((project) => (
-						<ProjectCard
-							key={project.id}
-							onDelete={handleDeleteClick}
-							onEdit={handleEditClick}
-							project={project}
-						/>
-					))
-				)}
-			</div>
+			{isLoading ? (
+				<Loader />
+			) : (
+				<div className={styles["projects-list"]}>
+					{hasProject ? (
+						projects.map((project) => (
+							<ProjectCard
+								key={project.id}
+								onDelete={handleDeleteClick}
+								onEdit={handleEditClick}
+								project={project}
+							/>
+						))
+					) : (
+						<p className={styles["empty-placeholder"]}>
+							No projects found matching your search criteria. Please try
+							different keywords.
+						</p>
+					)}
+				</div>
+			)}
 			<Modal
 				isOpened={isCreateModalOpen}
 				onClose={handleCreateModalClose}
