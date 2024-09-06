@@ -4,6 +4,8 @@ import {
 } from "~/libs/modules/database/database.js";
 
 class UserModel extends AbstractModel {
+	public deletedAt!: null | string;
+
 	public email!: string;
 
 	public name!: string;

@@ -2,18 +2,22 @@ import { PageLayout } from "~/libs/components/components.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 import { type UserAuthResponseDto } from "~/modules/users/users.js";
 
-import { EditUserForm } from "./components/components.js";
+import { DeleteAccount, EditUserForm } from "./components/components.js";
 import styles from "./styles.module.css";
 
 const Profile = (): JSX.Element => {
 	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
+	const user = authenticatedUser as UserAuthResponseDto;
 
 	return (
 		<PageLayout>
 			<div className={styles["profile-layout"]}>
-				<h1 className={styles["title"]}>Profile</h1>
-
-				<EditUserForm user={authenticatedUser as UserAuthResponseDto} />
+				<div className={styles["profile-info"]}>
+					<h1 className={styles["title"]}>Profile</h1>
+					<EditUserForm user={user} />
+				</div>
+				<div className={styles["divider"]} />
+				<DeleteAccount userId={user.id} />
 			</div>
 		</PageLayout>
 	);
