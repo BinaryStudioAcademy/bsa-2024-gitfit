@@ -51,10 +51,10 @@ class UserRepository implements Repository {
 			.whereNull("deletedAt")
 			.withGraphFetched("groups.permissions")
 			.modifyGraph("groups", (builder) => {
-				builder.select("name");
+				builder.select("user_groups.id", "name");
 			})
 			.modifyGraph("groups.permissions", (builder) => {
-				builder.select("name", "key");
+				builder.select("permissions.id", "name", "key");
 			})
 			.castTo<
 				{
@@ -91,10 +91,10 @@ class UserRepository implements Repository {
 			.findOne({ email })
 			.withGraphFetched("groups.permissions")
 			.modifyGraph("groups", (builder) => {
-				builder.select("name");
+				builder.select("id", "name");
 			})
 			.modifyGraph("groups.permissions", (builder) => {
-				builder.select("name", "key");
+				builder.select("id", "name", "key");
 			})
 			.castTo<
 				{

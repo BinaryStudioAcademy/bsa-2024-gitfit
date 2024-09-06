@@ -38,7 +38,7 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: (
 									<ProtectedRoute
-										permissionKeys={[PermissionKey.MANAGE_USER_ACCESS]}
+										routePermissions={[PermissionKey.MANAGE_USER_ACCESS]}
 									>
 										<AccessManagement />
 									</ProtectedRoute>

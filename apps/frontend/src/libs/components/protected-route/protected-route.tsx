@@ -15,16 +15,14 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
-	permissionKeys?: ValueOf<typeof PermissionKey>[];
+	routePermissions?: ValueOf<typeof PermissionKey>[];
 };
 
 const ProtectedRoute = ({
 	children,
-	permissionKeys = [],
+	routePermissions = [],
 }: Properties): JSX.Element => {
 	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
-
-	const hasAuthenticatedUser = Boolean(authenticatedUser);
 
 	const isLoading =
 		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
@@ -37,16 +35,14 @@ const ProtectedRoute = ({
 		);
 	}
 
-	if (!hasAuthenticatedUser) {
+	if (!authenticatedUser) {
 		return <Navigate replace to={AppRoute.SIGN_IN} />;
 	}
 
-	const hasRequiredPermission = authenticatedUser
-		? checkHasPermission(
-				permissionKeys,
-				authenticatedUser.groups.flatMap((group) => group.permissions),
-			)
-		: false;
+	const hasRequiredPermission = checkHasPermission(
+		routePermissions,
+		authenticatedUser.groups.flatMap((group) => group.permissions),
+	);
 
 	if (!hasRequiredPermission) {
 		return <NotFound />;

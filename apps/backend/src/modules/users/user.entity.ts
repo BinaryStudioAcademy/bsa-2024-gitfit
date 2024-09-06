@@ -10,8 +10,8 @@ class UserEntity implements Entity {
 	private email: string;
 	private groups: Array<
 		{
-			permissions: Array<Pick<PermissionModel, "key" | "name">>;
-		} & Pick<GroupModel, "name">
+			permissions: Array<Pick<PermissionModel, "id" | "key" | "name">>;
+		} & Pick<GroupModel, "id" | "name">
 	>;
 	private id: null | number;
 	private name: string;
@@ -33,8 +33,8 @@ class UserEntity implements Entity {
 		email: string;
 		groups?: Array<
 			{
-				permissions: Array<Pick<PermissionModel, "key" | "name">>;
-			} & Pick<GroupModel, "name">
+				permissions: Array<Pick<PermissionModel, "id" | "key" | "name">>;
+			} & Pick<GroupModel, "id" | "name">
 		>;
 		id: null | number;
 		name: string;
@@ -66,8 +66,8 @@ class UserEntity implements Entity {
 		email: string;
 		groups?: Array<
 			{
-				permissions: Array<Pick<PermissionModel, "key" | "name">>;
-			} & Pick<GroupModel, "name">
+				permissions: Array<Pick<PermissionModel, "id" | "key" | "name">>;
+			} & Pick<GroupModel, "id" | "name">
 		>;
 		id: number;
 		name: string;
@@ -128,8 +128,10 @@ class UserEntity implements Entity {
 			createdAt: this.createdAt as string,
 			email: this.email,
 			groups: this.groups.map((group) => ({
+				id: group.id,
 				name: group.name,
 				permissions: group.permissions.map((permission) => ({
+					id: permission.id,
 					key: permission.key,
 					name: permission.name,
 				})),

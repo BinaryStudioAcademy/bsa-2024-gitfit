@@ -1,27 +1,23 @@
+import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import { useMemo } from "~/libs/hooks/hooks.js";
-import { type NavigationItem } from "~/libs/types/navigation-item.type.js";
+import {
+	type NavigationItem,
+	type PermissionGetAllItemResponseDto,
+} from "~/libs/types/types.js";
 
 import { SidebarItem } from "./sidebar-item/sidebar-item.js";
 import styles from "./styles.module.css";
 
 type Properties = {
 	items: NavigationItem[];
-	userPermissions: { key: string; name: string }[];
+	userPermissions: PermissionGetAllItemResponseDto[];
 };
 
 const Sidebar = ({ items, userPermissions }: Properties): JSX.Element => {
 	const filteredItems = useMemo(() => {
-		return items.filter((item) => {
-			if (item.pagePermissions) {
-				return item.pagePermissions.every((permission) =>
-					userPermissions.some(
-						(userPermission) => userPermission.key === permission,
-					),
-				);
-			}
-
-			return true;
-		});
+		return items.filter(({ pagePermissions = [] }) =>
+			checkHasPermission(pagePermissions, userPermissions),
+		);
 	}, [items, userPermissions]);
 
 	return (
