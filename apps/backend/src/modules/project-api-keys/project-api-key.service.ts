@@ -1,6 +1,8 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
+import { type ProjectRepository } from "~/modules/projects/projects.js";
+import { type UserRepository } from "~/modules/users/users.js";
 
 import { ProjectApiKeyError } from "./libs/exceptions/exceptions.js";
 import {
@@ -13,8 +15,18 @@ import { type ProjectApiKeyRepository } from "./project-api-key.repository.js";
 class ProjectApiKeyService implements Service {
 	private projectApiKeyRepository: ProjectApiKeyRepository;
 
-	public constructor(projectApiKeyRepository: ProjectApiKeyRepository) {
+	private projectRepository: ProjectRepository;
+
+	private userRepository: UserRepository;
+
+	public constructor(
+		projectApiKeyRepository: ProjectApiKeyRepository,
+		projectRepository: ProjectRepository,
+		userRepository: UserRepository,
+	) {
 		this.projectApiKeyRepository = projectApiKeyRepository;
+		this.projectRepository = projectRepository;
+		this.userRepository = userRepository;
 	}
 
 	public async create(
@@ -22,10 +34,31 @@ class ProjectApiKeyService implements Service {
 	): Promise<ProjectApiKeyCreateResponseDto> {
 		const { projectId, userId } = payload;
 
-		const existingProjectApiKey =
-			await this.projectApiKeyRepository.findByProjectId(projectId);
+		const isProjectExist = Boolean(
+			await this.projectRepository.find(projectId),
+		);
 
-		if (existingProjectApiKey) {
+		if (!isProjectExist) {
+			throw new ProjectApiKeyError({
+				message: ExceptionMessage.PROJECT_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		const isUserExist = Boolean(await this.userRepository.find(userId));
+
+		if (!isUserExist) {
+			throw new ProjectApiKeyError({
+				message: ExceptionMessage.USER_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		const isProjectApiKeyExist = Boolean(
+			await this.projectApiKeyRepository.findByProjectId(projectId),
+		);
+
+		if (isProjectApiKeyExist) {
 			throw new ProjectApiKeyError({
 				message: ExceptionMessage.PROJECT_API_KEY_ALREADY_HAS,
 				status: HTTPCode.CONFLICT,

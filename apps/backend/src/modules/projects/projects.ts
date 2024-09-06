@@ -10,4 +10,4 @@ const projectService = new ProjectService(projectRepository);
 const projectController = new ProjectController(logger, projectService);
 
 export { projectController };
-export { ProjectService } from "./project.service.js";
+export { ProjectRepository } from "./project.repository.js";
