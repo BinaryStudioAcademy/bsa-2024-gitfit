@@ -1,5 +1,4 @@
 import { Button, Input, Loader, Select } from "~/libs/components/components.js";
-import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -7,26 +6,20 @@ import {
 	useAppSelector,
 	useCallback,
 	useEffect,
-	usePagination,
 	useSelectedItems,
 } from "~/libs/hooks/hooks.js";
 import {
 	type GroupCreateRequestDto,
 	groupCreateValidationSchema,
 } from "~/modules/groups/groups.js";
-import { actions as groupActions } from "~/modules/groups/groups.js";
 import { actions as permissionActions } from "~/modules/permissions/permissions.js";
 
-import { type UserRow } from "../../libs/types/types.js";
-import { UsersTable } from "../users-table/users-table.js";
+import { GroupUsersTable } from "../group-users-table/group-users-table.js";
 import { DEFAULT_GROUP_CREATE_PAYLOAD } from "./libs/constants/constants.js";
 import { getPermissionOptions } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
-const getRowId = (row: UserRow): number => row.id;
-
 type Properties = {
-	onRowSelect?: (rowId: number, isSelected: boolean) => void;
 	onSubmit: (payload: GroupCreateRequestDto) => void;
 };
 
@@ -42,19 +35,9 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 		({ permissions }) => permissions,
 	);
 
-	const { users, usersDataStatus, usersTotalCount } = useAppSelector(
-		({ groups }) => groups,
-	);
-
-	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
-		queryParameterPrefix: "user",
-		totalItemsCount: usersTotalCount,
-	});
-
 	useEffect(() => {
-		void dispatch(groupActions.configureGroupUsers({ page, pageSize }));
 		void dispatch(permissionActions.loadAll());
-	}, [dispatch, page, pageSize]);
+	}, [dispatch]);
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
@@ -71,16 +54,12 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 
 	const permissionOptions = getPermissionOptions(permissions);
 
-	const isLoading = [usersDataStatus, permissionsDataStatus].some(
-		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
-	);
+	const isLoading =
+		permissionsDataStatus === DataStatus.IDLE ||
+		permissionsDataStatus === DataStatus.PENDING;
 
 	const { items: selectedUserIds, onToggle: handleToggle } =
 		useSelectedItems<number>([]);
-
-	useEffect(() => {
-		setValue("userIds", selectedUserIds);
-	}, [selectedUserIds, setValue]);
 
 	if (isLoading) {
 		return <Loader />;
@@ -95,23 +74,12 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 				label="Name"
 				name="name"
 			/>
-			<span className={styles["table-title"]}>Users</span>
-			<UsersTable
-				getRowId={getRowId}
-				name="userIds"
-				onPageChange={onPageChange}
-				onPageSizeChange={onPageSizeChange}
-				onRowSelect={handleToggle}
-				page={page}
-				pageSize={pageSize}
-				paginationBackground="secondary"
-				selectedIds={selectedUserIds}
-				totalItemsCount={usersTotalCount}
-				users={users}
+			<GroupUsersTable
+				errors={errors}
+				onToggle={handleToggle}
+				selectedUserIds={selectedUserIds}
+				setValue={setValue}
 			/>
-			{selectedUserIds.length === EMPTY_LENGTH && errors.userIds && (
-				<div className={styles["error-message"]}>{errors.userIds.message}</div>
-			)}
 			<Select
 				control={control}
 				isMulti
