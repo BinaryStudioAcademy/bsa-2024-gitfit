@@ -1,4 +1,5 @@
 import { Button, Input, Loader, Select } from "~/libs/components/components.js";
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -7,7 +8,7 @@ import {
 	useCallback,
 	useEffect,
 	usePagination,
-	useState,
+	useSelectedItems,
 } from "~/libs/hooks/hooks.js";
 import {
 	type GroupCreateRequestDto,
@@ -16,12 +17,13 @@ import {
 import { actions as groupActions } from "~/modules/groups/groups.js";
 import { actions as permissionActions } from "~/modules/permissions/permissions.js";
 
+import { type UserRow } from "../../libs/types/types.js";
 import { UsersTable } from "../users-table/users-table.js";
 import { DEFAULT_GROUP_CREATE_PAYLOAD } from "./libs/constants/constants.js";
 import { getPermissionOptions } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
-const EMPTY_SET_SIZE = 0;
+const getRowId = (row: UserRow): number => row.id;
 
 type Properties = {
 	onRowSelect?: (rowId: number, isSelected: boolean) => void;
@@ -54,29 +56,6 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 		void dispatch(permissionActions.loadAll());
 	}, [dispatch, page, pageSize]);
 
-	const [selectedUserIds, setSelectedUserIds] = useState<Set<number>>(
-		new Set(),
-	);
-
-	const handleUserSelect = useCallback(
-		(userId: number, isSelected: boolean) => {
-			setSelectedUserIds((previousIds) => {
-				const updatedIds = new Set(previousIds);
-
-				if (isSelected) {
-					updatedIds.add(userId);
-				} else {
-					updatedIds.delete(userId);
-				}
-
-				setValue("userIds", [...updatedIds]);
-
-				return updatedIds;
-			});
-		},
-		[setValue],
-	);
-
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData: GroupCreateRequestDto) => {
@@ -96,6 +75,13 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
 	);
 
+	const { items: selectedUserIds, onToggle: handleToggle } =
+		useSelectedItems<number>([]);
+
+	useEffect(() => {
+		setValue("userIds", selectedUserIds);
+	}, [selectedUserIds, setValue]);
+
 	if (isLoading) {
 		return <Loader />;
 	}
@@ -111,9 +97,11 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 			/>
 			<span className={styles["table-title"]}>Users</span>
 			<UsersTable
+				getRowId={getRowId}
+				name="userIds"
 				onPageChange={onPageChange}
 				onPageSizeChange={onPageSizeChange}
-				onRowSelect={handleUserSelect}
+				onRowSelect={handleToggle}
 				page={page}
 				pageSize={pageSize}
 				paginationBackground="secondary"
@@ -121,7 +109,7 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 				totalItemsCount={usersTotalCount}
 				users={users}
 			/>
-			{selectedUserIds.size === EMPTY_SET_SIZE && errors.userIds && (
+			{selectedUserIds.length === EMPTY_LENGTH && errors.userIds && (
 				<div className={styles["error-message"]}>{errors.userIds.message}</div>
 			)}
 			<Select

@@ -6,22 +6,23 @@ import {
 
 import { type TableColumn } from "~/libs/types/types.js";
 
+import { SelectRowCell } from "./components/select-row-cell/select-row-cell.js";
 import styles from "./styles.module.css";
-
-type Identifiable = {
-	id: number;
-};
 
 type Properties<T> = {
 	columns: TableColumn<T>[];
 	data: T[];
-	onRowSelect?: (rowId: number, isSelected: boolean) => void;
-	selectedIds?: Set<number>;
+	getRowId?: (row: T) => number;
+	name?: string;
+	onRowSelect?: (rowId: number) => void;
+	selectedIds?: number[];
 };
 
 const Table = <T extends object>({
 	columns,
 	data,
+	getRowId,
+	name,
 	onRowSelect,
 	selectedIds,
 }: Properties<T>): JSX.Element => {
@@ -30,16 +31,6 @@ const Table = <T extends object>({
 		data,
 		getCoreRowModel: getCoreRowModel(),
 	});
-
-	const handleRowSelect = (
-		rowId: number,
-	): ((event: React.ChangeEvent<HTMLInputElement>) => void) => {
-		return (event: React.ChangeEvent<HTMLInputElement>) => {
-			if (onRowSelect) {
-				onRowSelect(rowId, event.target.checked);
-			}
-		};
-	};
 
 	return (
 		<div className={styles["table-container"]}>
@@ -62,17 +53,13 @@ const Table = <T extends object>({
 				<tbody className={styles["table-body"]}>
 					{table.getRowModel().rows.map((row) => (
 						<tr className={styles["table-row"]} key={row.id}>
-							{onRowSelect && (
+							{onRowSelect && selectedIds && name && getRowId && (
 								<td className={styles["table-data"]}>
-									<input
-										checked={selectedIds?.has(
-											(row.original as unknown as Identifiable).id,
-										)}
-										id={(row.original as unknown as Identifiable).id.toString()}
-										onChange={handleRowSelect(
-											(row.original as unknown as Identifiable).id,
-										)}
-										type="checkbox"
+									<SelectRowCell
+										id={getRowId(row.original)}
+										isChecked={selectedIds.includes(getRowId(row.original))}
+										name={name}
+										onToggle={onRowSelect}
 									/>
 								</td>
 							)}

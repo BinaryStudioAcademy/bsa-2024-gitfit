@@ -54,17 +54,3 @@
 .table .table-row:last-child .table-data {
 	border-bottom: none;
 }
-
-.table input[type="checkbox"] {
-	width: 14px;
-	height: 14px;
-	margin: 0;
-	appearance: none;
-	border: 1px solid var(--color-border-primary);
-	border-radius: 1px;
-}
-
-.table input[type="checkbox"]:checked {
-	appearance: auto;
-	accent-color: var(--color-brand-primary);
-}

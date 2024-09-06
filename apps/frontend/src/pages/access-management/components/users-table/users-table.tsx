@@ -6,18 +6,22 @@ import { type UserRow } from "../../libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	getRowId?: (row: UserRow) => number;
+	name?: string;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
-	onRowSelect?: (rowId: number, isSelected: boolean) => void;
+	onRowSelect?: (rowId: number) => void;
 	page: number;
 	pageSize: number;
 	paginationBackground?: "primary" | "secondary";
-	selectedIds?: Set<number>;
+	selectedIds?: number[];
 	totalItemsCount: number;
 	users: UserGetAllItemResponseDto[];
 };
 
 const UsersTable = ({
+	getRowId,
+	name,
 	onPageChange,
 	onPageSizeChange,
 	onRowSelect,
@@ -33,10 +37,12 @@ const UsersTable = ({
 
 	return (
 		<div className={styles["users-table"]}>
-			{onRowSelect && selectedIds ? (
+			{onRowSelect && selectedIds && name && getRowId ? (
 				<Table<UserRow>
 					columns={userColumns}
 					data={userData}
+					getRowId={getRowId}
+					name={name}
 					onRowSelect={onRowSelect}
 					selectedIds={selectedIds}
 				/>
