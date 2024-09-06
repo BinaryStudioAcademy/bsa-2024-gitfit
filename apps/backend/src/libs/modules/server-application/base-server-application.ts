@@ -171,7 +171,7 @@ class BaseServerApplication implements ServerApplication {
 		const routeOptions = {
 			handler,
 			method,
-			preHandler: preHandlers ?? [],
+			preHandlers: preHandlers ?? [],
 			schema: {
 				body: validation?.body,
 			},
