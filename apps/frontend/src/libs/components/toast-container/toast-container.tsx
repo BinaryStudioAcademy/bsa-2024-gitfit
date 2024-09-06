@@ -6,7 +6,7 @@ import styles from "./styles.module.css";
 const ToastContainer = (): JSX.Element => {
 	return (
 		<LibraryToastContainer
-			autoClose={5000}
+			autoClose={500_000}
 			className={styles["toast-container"] ?? ""}
 			closeOnClick
 			draggable
@@ -14,7 +14,7 @@ const ToastContainer = (): JSX.Element => {
 			newestOnTop={false}
 			pauseOnFocusLoss
 			pauseOnHover
-			position="top-center"
+			position="top-left"
 			rtl={false}
 			theme="dark"
 		/>
