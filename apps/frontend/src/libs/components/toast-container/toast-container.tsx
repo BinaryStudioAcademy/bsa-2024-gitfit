@@ -6,7 +6,7 @@ import styles from "./styles.module.css";
 const ToastContainer = (): JSX.Element => {
 	return (
 		<LibraryToastContainer
-			autoClose={500_000}
+			autoClose={5000}
 			className={styles["toast-container"] ?? ""}
 			closeOnClick
 			draggable
