@@ -1,7 +1,11 @@
 import { transaction } from "objection";
 
 import { changeCase } from "~/libs/helpers/helpers.js";
-import { type Repository } from "~/libs/types/types.js";
+import {
+	type PaginationQueryParameters,
+	type PaginationResponseDto,
+	type Repository,
+} from "~/libs/types/types.js";
 
 import { GroupEntity } from "./group.entity.js";
 import { type GroupModel } from "./group.model.js";
@@ -52,13 +56,18 @@ class GroupRepository implements Repository {
 		return group ?? null;
 	}
 
-	public async findAll(): Promise<{ items: GroupEntity[] }> {
-		const groups = await this.groupModel
+	public async findAll({
+		page,
+		pageSize,
+	}: PaginationQueryParameters): Promise<PaginationResponseDto<GroupEntity>> {
+		const { results, total } = await this.groupModel
 			.query()
+			.page(page, pageSize)
 			.withGraphFetched("[permissions, users]");
 
 		return {
-			items: groups.map((group) => GroupEntity.initialize(group)),
+			items: results.map((group) => GroupEntity.initialize(group)),
+			totalItems: total,
 		};
 	}
 

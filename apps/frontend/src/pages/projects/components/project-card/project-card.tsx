@@ -9,11 +9,16 @@ import { ProjectMenu } from "../components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	onDelete: (project: ProjectGetAllItemResponseDto) => void;
 	onEdit: (project: ProjectGetAllItemResponseDto) => void;
 	project: ProjectGetAllItemResponseDto;
 };
 
-const ProjectCard = ({ onEdit, project }: Properties): JSX.Element => {
+const ProjectCard = ({
+	onDelete,
+	onEdit,
+	project,
+}: Properties): JSX.Element => {
 	const projectRoute = configureString(AppRoute.PROJECT, {
 		id: project.id.toString(),
 	});
@@ -22,12 +27,16 @@ const ProjectCard = ({ onEdit, project }: Properties): JSX.Element => {
 		onEdit(project);
 	}, [onEdit, project]);
 
+	const handleDeleteClick = useCallback(() => {
+		onDelete(project);
+	}, [onDelete, project]);
+
 	return (
 		<div className={styles["project-container"]}>
 			<NavLink className={styles["project"] as string} to={projectRoute}>
 				{project.name}
 			</NavLink>
-			<ProjectMenu onEdit={handleEditClick} />
+			<ProjectMenu onDelete={handleDeleteClick} onEdit={handleEditClick} />
 		</div>
 	);
 };

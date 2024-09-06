@@ -1,8 +1,9 @@
 const NotificationMessage = {
-	PROJECT_CREATE_SUCCESS: "Project was successfully created",
+	GROUP_DELETE_SUCCESS: "Group was successfully deleted.",
+	PROJECT_CREATE_SUCCESS: "Project was successfully created.",
+	PROJECT_DELETE_SUCCESS: "Project was successfully deleted.",
 	PROJECT_UPDATE_SUCCESS: "Project was successfully updated.",
-	SUCCESS_GROUP_DELETE: "Group deleted successfully.",
-	SUCCESS_PROFILE_UPDATE: "Successfully updated profile information.",
+	SUCCESS_PROFILE_UPDATE: "Your profile has been successfully updated.",
 } as const;
 
 export { NotificationMessage };

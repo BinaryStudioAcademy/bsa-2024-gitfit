@@ -60,4 +60,19 @@ const patch = createAsyncThunk<
 	return updatedProject;
 });
 
-export { create, getById, loadAll, patch };
+const deleteById = createAsyncThunk<boolean, number, AsyncThunkConfig>(
+	`${sliceName}/deleteById`,
+	async (id, { extra }) => {
+		const { projectApi, toastNotifier } = extra;
+
+		const isDeleted = await projectApi.deleteById(id);
+
+		if (isDeleted) {
+			toastNotifier.showSuccess(NotificationMessage.PROJECT_DELETE_SUCCESS);
+		}
+
+		return isDeleted;
+	},
+);
+
+export { create, deleteById, getById, loadAll, patch };

@@ -1,7 +1,8 @@
-import { APIPath, ContentType } from "~/libs/enums/enums.js";
+import { APIPath } from "~/libs/enums/enums.js";
 import { BaseHTTPApi } from "~/libs/modules/api/api.js";
 import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { GroupsApiPath } from "./libs/enums/enums.js";
 import { type GroupGetAllResponseDto } from "./libs/types/types.js";
@@ -29,13 +30,18 @@ class GroupApi extends BaseHTTPApi {
 		return await response.json<boolean>();
 	}
 
-	public async getAll(): Promise<GroupGetAllResponseDto> {
+	public async getAll(
+		query: PaginationQueryParameters,
+	): Promise<GroupGetAllResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(GroupsApiPath.ROOT, {}),
 			{
-				contentType: ContentType.JSON,
 				hasAuth: true,
 				method: "GET",
+				query: {
+					page: String(query.page),
+					pageSize: String(query.pageSize),
+				},
 			},
 		);
 

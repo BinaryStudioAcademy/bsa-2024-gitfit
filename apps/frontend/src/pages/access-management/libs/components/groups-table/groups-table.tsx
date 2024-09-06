@@ -1,4 +1,8 @@
-import { ConfirmationModal, Table } from "~/libs/components/components.js";
+import {
+	ConfirmationModal,
+	Table,
+	TablePagination,
+} from "~/libs/components/components.js";
 import {
 	useAppDispatch,
 	useCallback,
@@ -15,19 +19,29 @@ import { type GroupRow } from "../../types/types.js";
 
 type Properties = {
 	groups: GroupGetAllItemResponseDto[];
+	onPageChange: (page: number) => void;
+	onPageSizeChange: (pageSize: number) => void;
+	page: number;
+	pageSize: number;
+	totalItemsCount: number;
 };
 
-const GroupsTable = ({ groups }: Properties): JSX.Element => {
+const GroupsTable = ({
+	groups,
+	onPageChange,
+	onPageSizeChange,
+	page,
+	pageSize,
+	totalItemsCount,
+}: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const { isOpened, onClose, onOpen } = useModal();
 	const [groupToDelete, setGroupToDelete] =
 		useState<GroupGetAllItemResponseDto | null>(null);
 
-	const validGroups = Array.isArray(groups) ? groups : [];
-
 	const groupColumns = getGroupColumns();
-	const groupData: GroupRow[] = getGroupRows(validGroups, {
+	const groupData: GroupRow[] = getGroupRows(groups, {
 		onDelete: (group: GroupGetAllItemResponseDto) => {
 			setGroupToDelete(group);
 			onOpen();
@@ -50,6 +64,13 @@ const GroupsTable = ({ groups }: Properties): JSX.Element => {
 	return (
 		<>
 			<Table<GroupRow> columns={groupColumns} data={groupData} />
+			<TablePagination
+				onPageChange={onPageChange}
+				onPageSizeChange={onPageSizeChange}
+				page={page}
+				pageSize={pageSize}
+				totalItemsCount={totalItemsCount}
+			/>
 
 			{groupToDelete && (
 				<ConfirmationModal
