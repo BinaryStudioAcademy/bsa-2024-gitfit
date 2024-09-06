@@ -1,8 +1,6 @@
-import { type PermissionGetAllItemResponseDto } from "src/modules/permissions/permissions.js";
-
 const checkHasPermission = (
 	requiredPermissions: string[],
-	permissions: PermissionGetAllItemResponseDto[],
+	permissions: { key: string; name: string }[],
 ): boolean => {
 	return requiredPermissions.every((permission) =>
 		permissions.some((userPermission) => userPermission.key === permission),

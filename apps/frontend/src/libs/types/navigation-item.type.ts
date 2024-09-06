@@ -1,5 +1,4 @@
-import { PermissionKey } from "@git-fit/shared";
-import { type AppRoute } from "~/libs/enums/app-route.enum.js";
+import { type AppRoute, type PermissionKey } from "~/libs/enums/enums.js";
 import { type IconName, type ValueOf } from "~/libs/types/types.js";
 
 type NavigationItem = {

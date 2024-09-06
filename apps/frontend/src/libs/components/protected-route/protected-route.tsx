@@ -8,8 +8,8 @@ import {
 } from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
-import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { type ValueOf } from "~/libs/types/types.js";
+import { NotFound } from "~/pages/not-found/not-found.jsx";
 
 import styles from "./styles.module.css";
 

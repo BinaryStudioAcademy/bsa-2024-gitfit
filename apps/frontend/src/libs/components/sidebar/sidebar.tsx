@@ -1,7 +1,8 @@
+import { useMemo } from "~/libs/hooks/hooks.js";
 import { type NavigationItem } from "~/libs/types/navigation-item.type.js";
+
 import { SidebarItem } from "./sidebar-item/sidebar-item.js";
 import styles from "./styles.module.css";
-import { useMemo } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	items: NavigationItem[];

@@ -15,9 +15,9 @@ const PageLayout = ({
 }: Properties): JSX.Element => {
 	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
 
-	const userPermissions = authenticatedUser!.groups.flatMap(
-		(group) => group.permissions,
-	);
+	const userPermissions = authenticatedUser
+		? authenticatedUser.groups.flatMap((group) => group.permissions)
+		: [];
 
 	return (
 		<div className={styles["page"]}>
