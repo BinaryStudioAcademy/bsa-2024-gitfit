@@ -5,7 +5,7 @@ import {
 	Modal,
 	PageLayout,
 } from "~/libs/components/components.js";
-import { useSearchQueryParameters } from "~/libs/components/search/libs/hooks/use-search-query.hook.js";
+import { useSearchQueryParameter } from "~/libs/components/search/libs/hooks/hooks.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
@@ -33,7 +33,7 @@ import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { searchQuery } = useSearchQueryParameters("");
+	const { searchQuery } = useSearchQueryParameter("");
 
 	const [selectedProject, setSelectedProject] =
 		useState<null | ProjectGetAllItemResponseDto>(null);
