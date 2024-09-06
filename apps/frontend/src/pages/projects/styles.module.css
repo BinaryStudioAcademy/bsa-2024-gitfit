@@ -18,8 +18,9 @@
 	padding: 20px 0;
 }
 
-.no-projects-message {
-	font-size: 24px;
-	font-weight: 600;
-	line-height: 100%;
+.empty-placeholder {
+	align-self: center;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 150%;
 }

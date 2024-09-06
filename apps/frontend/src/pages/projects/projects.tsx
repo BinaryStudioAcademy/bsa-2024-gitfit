@@ -145,7 +145,7 @@ const Projects = (): JSX.Element => {
 							/>
 						))
 					) : (
-						<p className={styles["no-projects-message"]}>
+						<p className={styles["empty-placeholder"]}>
 							No projects found matching your search criteria. Please try
 							different keywords.
 						</p>
