@@ -2,33 +2,42 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { useCallback } from "~/libs/hooks/hooks.js";
 
-const useSearchQueryParameter = (
-	defaultSearch: string,
-): {
+import { SEARCH_PARAMETER_KEY } from "../constants/constants.js";
+
+type Properties = {
 	searchQuery: string;
 	updateSearchParams: (newSearchValue: string) => void;
-} => {
+};
+
+const useSearchQueryParameter = (defaultSearch: string): Properties => {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const searchParameters = new URLSearchParams(location.search);
-	const searchQuery = searchParameters.get("search") || defaultSearch;
+
+	const getSearchQuery = useCallback((): string => {
+		const searchParameters = new URLSearchParams(location.search);
+
+		return searchParameters.get(SEARCH_PARAMETER_KEY) || defaultSearch;
+	}, [location.search, defaultSearch]);
 
 	const updateSearchParameters = useCallback(
-		(newSearchValue: string) => {
-			const parameters = new URLSearchParams(location.search);
+		(newSearchValue: string): void => {
+			const searchParameters = new URLSearchParams(location.search);
 
 			if (newSearchValue) {
-				parameters.set("search", newSearchValue);
+				searchParameters.set(SEARCH_PARAMETER_KEY, newSearchValue);
 			} else {
-				parameters.delete("search");
+				searchParameters.delete(SEARCH_PARAMETER_KEY);
 			}
 
-			navigate({ search: parameters.toString() }, { replace: true });
+			navigate({ search: searchParameters.toString() }, { replace: true });
 		},
 		[location.search, navigate],
 	);
 
-	return { searchQuery, updateSearchParams: updateSearchParameters };
+	return {
+		searchQuery: getSearchQuery(),
+		updateSearchParams: updateSearchParameters,
+	};
 };
 
 export { useSearchQueryParameter };
