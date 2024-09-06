@@ -31,18 +31,40 @@ const AccessManagement = (): JSX.Element => {
 		usersTotalCount,
 	} = useAppSelector(({ users }) => users);
 
-	const { dataStatus: groupsDataStatus, groups } = useAppSelector(
-		({ groups }) => groups,
-	);
-
-	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+	const {
+		onPageChange: onUserPageChange,
+		onPageSizeChange: onUserPageSizeChange,
+		page: userPage,
+		pageSize: userPageSize,
+	} = usePagination({
+		queryParameterPrefix: "user",
 		totalItemsCount: usersTotalCount,
 	});
 
+	const {
+		dataStatus: groupsDataStatus,
+		groups,
+		groupsTotalCount,
+	} = useAppSelector(({ groups }) => groups);
+
+	const {
+		onPageChange: onGroupPageChange,
+		onPageSizeChange: onGroupPageSizeChange,
+		page: groupPage,
+		pageSize: groupPageSize,
+	} = usePagination({
+		queryParameterPrefix: "group",
+		totalItemsCount: groupsTotalCount,
+	});
+
 	useEffect(() => {
-		void dispatch(userActions.loadAll({ page, pageSize }));
-		void dispatch(groupActions.loadAll());
-	}, [dispatch, page, pageSize]);
+		void dispatch(
+			userActions.loadAll({ page: userPage, pageSize: userPageSize }),
+		);
+		void dispatch(
+			groupActions.loadAll({ page: groupPage, pageSize: groupPageSize }),
+		);
+	}, [dispatch, userPage, userPageSize, groupPage, groupPageSize]);
 
 	const userColumns = getUserColumns();
 	const userData: UserRow[] = getUserRows(users);
@@ -62,17 +84,26 @@ const AccessManagement = (): JSX.Element => {
 				<div className={styles["users-table"]}>
 					<Table<UserRow> columns={userColumns} data={userData} />
 					<TablePagination
-						onPageChange={onPageChange}
-						onPageSizeChange={onPageSizeChange}
-						page={page}
-						pageSize={pageSize}
+						onPageChange={onUserPageChange}
+						onPageSizeChange={onUserPageSizeChange}
+						page={userPage}
+						pageSize={userPageSize}
 						totalItemsCount={usersTotalCount}
 					/>
 				</div>
 			</section>
 			<section>
 				<h2 className={styles["section-title"]}>Groups</h2>
-				<Table<GroupRow> columns={groupColumns} data={groupData} />
+				<div className={styles["groups-table"]}>
+					<Table<GroupRow> columns={groupColumns} data={groupData} />
+					<TablePagination
+						onPageChange={onGroupPageChange}
+						onPageSizeChange={onGroupPageSizeChange}
+						page={groupPage}
+						pageSize={groupPageSize}
+						totalItemsCount={groupsTotalCount}
+					/>
+				</div>
 			</section>
 		</PageLayout>
 	);
