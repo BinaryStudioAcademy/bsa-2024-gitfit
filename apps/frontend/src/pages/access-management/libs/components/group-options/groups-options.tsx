@@ -1,20 +1,19 @@
 import { Menu, MenuItem } from "~/libs/components/components.js";
 import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
-import { type GroupGetAllItemResponseDto } from "~/modules/groups/groups.js";
 
+import { type GroupActions } from "../../types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	group: GroupGetAllItemResponseDto;
-	onEdit: (group: GroupGetAllItemResponseDto) => void;
-};
+	groupId: number;
+} & GroupActions;
 
-const GroupOptions = ({ group, onEdit }: Properties): React.ReactElement => {
+const GroupOptions = ({ groupId, onEdit }: Properties): React.ReactElement => {
 	const { isOpened, onClose, onOpen } = usePopover();
 
 	const handleEdit = useCallback(() => {
-		onEdit(group);
-	}, [group, onEdit]);
+		onEdit(groupId);
+	}, [groupId, onEdit]);
 
 	return (
 		<div className={styles["options-cell"]}>

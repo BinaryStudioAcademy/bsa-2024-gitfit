@@ -51,13 +51,15 @@ const GroupsTable = ({
 		[dispatch, handleModalClose],
 	);
 
-	const groupColumns = getGroupColumns();
-	const groupData: GroupRow[] = getGroupRows(groups, {
-		onEdit: (group: GroupGetAllItemResponseDto) => {
-			setGroupToEdit(group);
+	const groupColumns = getGroupColumns({
+		onEdit: (groupId: number) => {
+			const group = groups.find(({ id }) => id === groupId);
+			setGroupToEdit(group ?? null);
+
 			onOpen();
 		},
 	});
+	const groupData: GroupRow[] = getGroupRows(groups);
 
 	return (
 		<>
