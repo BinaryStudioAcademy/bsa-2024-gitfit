@@ -4,6 +4,7 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -30,7 +31,13 @@ const Table = <T extends object>({
 					{table.getHeaderGroups().map((headerGroup) => (
 						<tr className={styles["table-row"]} key={headerGroup.id}>
 							{headerGroup.headers.map((header) => (
-								<th className={styles["table-header"]} key={header.id}>
+								<th
+									className={getValidClassNames(
+										styles["table-header"],
+										header.id === "options" && styles["options-column"],
+									)}
+									key={header.id}
+								>
 									{flexRender(
 										header.column.columnDef.header,
 										header.getContext(),
@@ -44,7 +51,13 @@ const Table = <T extends object>({
 					{table.getRowModel().rows.map((row) => (
 						<tr className={styles["table-row"]} key={row.id}>
 							{row.getVisibleCells().map((cell) => (
-								<td className={styles["table-data"]} key={cell.id}>
+								<td
+									className={getValidClassNames(
+										styles["table-data"],
+										cell.column.id === "options" && styles["options-column"],
+									)}
+									key={cell.id}
+								>
 									{typeof cell.getValue() === "object"
 										? (cell.getValue() as React.ReactNode)
 										: flexRender(cell.column.columnDef.cell, cell.getContext())}

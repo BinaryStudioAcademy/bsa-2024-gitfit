@@ -51,6 +51,10 @@
 	table-layout: fixed;
 }
 
+.table .options-column {
+	width: 0;
+}
+
 .table .table-row:last-child .table-data {
 	border-bottom: none;
 }
