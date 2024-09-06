@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.12.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.12.0...v1.12.1) (2024-09-06)
+
+
+### Bug Fixes
+
+* adjusted the right arrow SVG to not include the fill white attribute in it's path gf-208 ([#213](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/213)) ([0aa5cc3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0aa5cc3f14c54f5aa448dbbbc3794636c0c61527))
+* fix notification gf-190 ([#207](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/207)) ([be32281](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/be32281d0dda473ed752cdf62a3f2c2863a52c9d))
+* inappropriate appearance of the scroll element at the Table component on Windows OS gf-197 ([#203](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/203)) ([7781a7a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7781a7af900dbe09f1c1d51bec51eecd4299e8de))
+* internal server error for table pagination on emty tables gf-205 ([#212](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/212)) ([0fd3d03](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0fd3d038afd20985062210c516b2bc790ec6bee5))
+
+## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.11.0...v1.12.0) (2024-09-05)
+
+
+### Features
+
+* Add an ability to delete a project gf-138 ([#168](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/168)) ([76547f4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/76547f4cb6b441974b90b0da7ba57d74c9bc9058))
+
 ## [1.11.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.10.0...v1.11.0) (2024-09-05)
 
 
