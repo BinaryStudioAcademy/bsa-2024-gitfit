@@ -1,20 +1,19 @@
 import { Menu, MenuItem } from "~/libs/components/components.js";
 import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
-import { type GroupGetAllItemResponseDto } from "~/modules/groups/groups.js";
 
+import { type GroupActions } from "../../types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	group: GroupGetAllItemResponseDto;
-	onDelete: (group: GroupGetAllItemResponseDto) => void;
-};
+	groupId: number;
+} & GroupActions;
 
-const GroupMenu = ({ group, onDelete }: Properties): React.ReactElement => {
+const GroupMenu = ({ groupId, onDelete }: Properties): React.ReactElement => {
 	const { isOpened, onClose, onOpen } = usePopover();
 
 	const handleDeleteClick = useCallback(() => {
-		onDelete(group);
-	}, [onDelete, group]);
+		onDelete(groupId);
+	}, [onDelete, groupId]);
 
 	return (
 		<div className={styles["options-container"]}>

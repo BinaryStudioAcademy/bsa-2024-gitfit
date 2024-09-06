@@ -40,13 +40,15 @@ const GroupsTable = ({
 	const [groupToDelete, setGroupToDelete] =
 		useState<GroupGetAllItemResponseDto | null>(null);
 
-	const groupColumns = getGroupColumns();
-	const groupData: GroupRow[] = getGroupRows(groups, {
-		onDelete: (group: GroupGetAllItemResponseDto) => {
-			setGroupToDelete(group);
+	const groupColumns = getGroupColumns({
+		onDelete: (groupId: number) => {
+			const group = groups.find(({ id }) => id === groupId);
+			setGroupToDelete(group ?? null);
+
 			onOpen();
 		},
 	});
+	const groupData: GroupRow[] = getGroupRows(groups);
 
 	const handleModalClose = useCallback(() => {
 		setGroupToDelete(null);
