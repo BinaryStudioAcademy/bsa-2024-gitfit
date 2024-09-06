@@ -1,22 +1,33 @@
 import { ConfirmationModal, Table } from "~/libs/components/components.js";
-import { useCallback, useModal, useState } from "~/libs/hooks/hooks.js";
-import { type GroupGetAllItemResponseDto } from "~/modules/groups/groups.js";
+import {
+	useAppDispatch,
+	useCallback,
+	useModal,
+	useState,
+} from "~/libs/hooks/hooks.js";
+import {
+	actions as groupActions,
+	type GroupGetAllItemResponseDto,
+} from "~/modules/groups/groups.js";
 
 import { getGroupColumns, getGroupRows } from "../../helpers/helpers.js";
 import { type GroupRow } from "../../types/types.js";
 
 type Properties = {
 	groups: GroupGetAllItemResponseDto[];
-	onDelete: (group: GroupGetAllItemResponseDto) => void;
 };
 
-const GroupTable = ({ groups, onDelete }: Properties): JSX.Element => {
+const GroupsTable = ({ groups }: Properties): JSX.Element => {
+	const dispatch = useAppDispatch();
+
 	const { isOpened, onClose, onOpen } = useModal();
 	const [groupToDelete, setGroupToDelete] =
 		useState<GroupGetAllItemResponseDto | null>(null);
 
+	const validGroups = Array.isArray(groups) ? groups : [];
+
 	const groupColumns = getGroupColumns();
-	const groupData: GroupRow[] = getGroupRows(groups, {
+	const groupData: GroupRow[] = getGroupRows(validGroups, {
 		onDelete: (group: GroupGetAllItemResponseDto) => {
 			setGroupToDelete(group);
 			onOpen();
@@ -26,14 +37,15 @@ const GroupTable = ({ groups, onDelete }: Properties): JSX.Element => {
 	const handleModalClose = useCallback(() => {
 		setGroupToDelete(null);
 		onClose();
-	}, [onClose]);
+	}, [onClose, setGroupToDelete]);
 
 	const handleDeleteConfirm = useCallback(() => {
-		if (groupToDelete !== null) {
-			onDelete(groupToDelete);
-			handleModalClose();
+		if (groupToDelete) {
+			void dispatch(groupActions.deleteById(groupToDelete.id));
 		}
-	}, [groupToDelete, handleModalClose, onDelete]);
+
+		handleModalClose();
+	}, [dispatch, groupToDelete, handleModalClose]);
 
 	return (
 		<>
@@ -51,4 +63,4 @@ const GroupTable = ({ groups, onDelete }: Properties): JSX.Element => {
 	);
 };
 
-export { GroupTable };
+export { GroupsTable };

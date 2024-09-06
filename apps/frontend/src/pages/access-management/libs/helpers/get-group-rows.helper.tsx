@@ -14,11 +14,7 @@ const getGroupRows = (
 		createdAt: group.createdAt,
 		id: group.id,
 		name: group.name,
-		options: GroupMenu({
-			onDelete: () => {
-				options.onDelete(group);
-			},
-		}),
+		options: <GroupMenu group={group} onDelete={options.onDelete} />,
 		permissions: group.permissions.map((permission) => permission.name),
 	}));
 
