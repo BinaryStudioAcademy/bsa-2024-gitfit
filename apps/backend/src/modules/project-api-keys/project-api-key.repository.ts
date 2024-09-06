@@ -13,14 +13,16 @@ class ProjectApiKeyRepository implements Repository {
 	public async create(
 		entity: ProjectApiKeyEntity,
 	): Promise<ProjectApiKeyEntity> {
-		const { apiKey, projectId, userId } = entity.toNewObject();
+		const { createdBy, encryptedKey, projectId, updatedBy } =
+			entity.toNewObject();
 
 		const projectApiKey = await this.projectApiKeyModel
 			.query()
 			.insert({
-				encodedKey: apiKey,
+				createdBy,
+				encryptedKey,
 				projectId,
-				userId,
+				updatedBy,
 			})
 			.returning("*")
 			.execute();
@@ -40,20 +42,15 @@ class ProjectApiKeyRepository implements Repository {
 		return Promise.resolve({ items: [] });
 	}
 
-	public async findByProjectIdAndUserId(
+	public async findByProjectId(
 		projectId: number,
-		userId: number,
 	): Promise<null | ProjectApiKeyEntity> {
 		const projectApiKey = await this.projectApiKeyModel
 			.query()
-			.findOne({ projectId, userId })
+			.findOne({ projectId })
 			.execute();
 
-		if (!projectApiKey) {
-			return null;
-		}
-
-		return ProjectApiKeyEntity.initialize(projectApiKey);
+		return projectApiKey ? ProjectApiKeyEntity.initialize(projectApiKey) : null;
 	}
 
 	public update(): ReturnType<Repository["update"]> {

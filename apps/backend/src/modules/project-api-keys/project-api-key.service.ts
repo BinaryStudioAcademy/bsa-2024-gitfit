@@ -23,10 +23,7 @@ class ProjectApiKeyService implements Service {
 		const { projectId, userId } = payload;
 
 		const existingProjectApiKey =
-			await this.projectApiKeyRepository.findByProjectIdAndUserId(
-				projectId,
-				userId,
-			);
+			await this.projectApiKeyRepository.findByProjectId(projectId);
 
 		if (existingProjectApiKey) {
 			throw new ProjectApiKeyError({
@@ -36,16 +33,26 @@ class ProjectApiKeyService implements Service {
 		}
 
 		const apiKey = "API_KEY"; // TODO: generate api key based on projectId and userId
+		const encryptedKey = apiKey; // TODO: encrypt
 
-		const item = await this.projectApiKeyRepository.create(
+		const createdApiKeyEntity = await this.projectApiKeyRepository.create(
 			ProjectApiKeyEntity.initializeNew({
-				encodedKey: apiKey,
+				createdBy: userId,
+				encryptedKey,
 				projectId,
-				userId,
+				updatedBy: userId,
 			}),
 		);
 
-		return item.toObject();
+		const createdApiKey = createdApiKeyEntity.toObject();
+
+		return {
+			apiKey,
+			createdBy: createdApiKey.createdBy,
+			id: createdApiKey.id,
+			projectId: createdApiKey.projectId,
+			updatedBy: createdApiKey.updatedBy,
+		};
 	}
 
 	public delete(): ReturnType<Service["delete"]> {

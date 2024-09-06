@@ -3,81 +3,100 @@ import { type Entity } from "~/libs/types/types.js";
 import { type ProjectApiKeyCreateResponseDto } from "./libs/types/types.js";
 
 class ProjectApiKeyEntity implements Entity {
-	private encodedKey!: string;
+	private createdBy!: number;
+
+	private encryptedKey!: string;
 
 	private id: null | number;
 
 	private projectId!: number;
 
-	private userId!: number;
+	private updatedBy!: number;
 
 	private constructor({
-		encodedKey,
+		createdBy,
+		encryptedKey,
 		id,
 		projectId,
-		userId,
+		updatedBy,
 	}: {
-		encodedKey: string;
+		createdBy: number;
+		encryptedKey: string;
 		id: null | number;
 		projectId: number;
-		userId: number;
+		updatedBy: number;
 	}) {
-		this.encodedKey = encodedKey;
+		this.encryptedKey = encryptedKey;
 		this.id = id;
 		this.projectId = projectId;
-		this.userId = userId;
+		this.createdBy = createdBy;
+		this.updatedBy = updatedBy;
 	}
 
 	public static initialize({
-		encodedKey,
+		createdBy,
+		encryptedKey,
 		id,
 		projectId,
-		userId,
+		updatedBy,
 	}: {
-		encodedKey: string;
+		createdBy: number;
+		encryptedKey: string;
 		id: number;
 		projectId: number;
-		userId: number;
+		updatedBy: number;
 	}): ProjectApiKeyEntity {
 		return new ProjectApiKeyEntity({
-			encodedKey,
+			createdBy,
+			encryptedKey,
 			id,
 			projectId,
-			userId,
+			updatedBy,
 		});
 	}
 
 	public static initializeNew({
-		encodedKey,
+		createdBy,
+		encryptedKey,
 		projectId,
-		userId,
+		updatedBy,
 	}: {
-		encodedKey: string;
+		createdBy: number;
+		encryptedKey: string;
 		projectId: number;
-		userId: number;
+		updatedBy: number;
 	}): ProjectApiKeyEntity {
 		return new ProjectApiKeyEntity({
-			encodedKey,
+			createdBy,
+			encryptedKey,
 			id: null,
 			projectId,
-			userId,
+			updatedBy,
 		});
 	}
 
-	public toNewObject(): Omit<ProjectApiKeyCreateResponseDto, "id"> {
+	public toNewObject(): { encryptedKey: string } & Omit<
+		ProjectApiKeyCreateResponseDto,
+		"apiKey" | "id"
+	> {
 		return {
-			apiKey: this.encodedKey,
+			createdBy: this.createdBy,
+			encryptedKey: this.encryptedKey,
 			projectId: this.projectId,
-			userId: this.userId,
+			updatedBy: this.updatedBy,
 		};
 	}
 
-	public toObject(): ProjectApiKeyCreateResponseDto {
+	public toObject(): { encryptedKey: string } & Omit<
+		ProjectApiKeyCreateResponseDto,
+		"apiKey"
+	> {
 		return {
-			apiKey: this.encodedKey,
+			createdBy: this.createdBy,
+			encryptedKey: this.encryptedKey,
 			id: this.id as number,
 			projectId: this.projectId,
-			userId: this.userId,
+			updatedBy: this.updatedBy,
 		};
 	}
 }
