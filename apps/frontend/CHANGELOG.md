@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.11.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.11.0...frontend-v1.11.1) (2024-09-06)
+
+
+### Bug Fixes
+
+* adjusted the right arrow SVG to not include the fill white attribute in it's path gf-208 ([#213](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/213)) ([0aa5cc3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0aa5cc3f14c54f5aa448dbbbc3794636c0c61527))
+* inappropriate appearance of the scroll element at the Table component on Windows OS gf-197 ([#203](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/203)) ([7781a7a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7781a7af900dbe09f1c1d51bec51eecd4299e8de))
+* internal server error for table pagination on emty tables gf-205 ([#212](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/212)) ([0fd3d03](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0fd3d038afd20985062210c516b2bc790ec6bee5))
+
 ## [1.11.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.10.0...frontend-v1.11.0) (2024-09-05)
 
 
