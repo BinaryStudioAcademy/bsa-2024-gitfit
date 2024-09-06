@@ -52,17 +52,6 @@
 	resize: none;
 }
 
-.input-textarea::-webkit-scrollbar {
-	cursor: default;
-	background-color: inherit;
-}
-
-.input-textarea::-webkit-scrollbar-thumb {
-	cursor: default;
-	background-color: var(--color-border-secondary);
-	border-radius: 6px;
-}
-
 .input-icon {
 	position: absolute;
 	top: 50%;
