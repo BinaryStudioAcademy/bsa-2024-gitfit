@@ -70,14 +70,13 @@ const AccessManagement = (): JSX.Element => {
 
 	const handleGroupCreateSubmit = useCallback(
 		(payload: GroupCreateRequestDto): void => {
-			dispatch(groupActions.create(payload))
-				.then(() => {
-					onModalClose();
-					void dispatch(
-						userActions.loadAll({ page: userPage, pageSize: userPageSize }),
-					);
-				})
-				.catch(() => {});
+			void dispatch(
+				groupActions.create({
+					payload,
+					query: { page: userPage, pageSize: userPageSize },
+				}),
+			);
+			onModalClose();
 		},
 		[dispatch, onModalClose, userPage, userPageSize],
 	);

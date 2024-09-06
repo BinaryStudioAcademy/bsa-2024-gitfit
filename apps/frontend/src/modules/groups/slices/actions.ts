@@ -6,6 +6,7 @@ import {
 	type PaginationQueryParameters,
 } from "~/libs/types/types.js";
 import { type UserGetAllResponseDto } from "~/modules/users/users.js";
+import { actions as userActions } from "~/modules/users/users.js";
 
 import {
 	type GroupCreateRequestDto,
@@ -36,14 +37,16 @@ const configureGroupUsers = createAsyncThunk<
 
 const create = createAsyncThunk<
 	GroupCreateResponseDto,
-	GroupCreateRequestDto,
+	{ payload: GroupCreateRequestDto; query: PaginationQueryParameters },
 	AsyncThunkConfig
->(`${sliceName}/create`, async (payload, { extra }) => {
+>(`${sliceName}/create`, async ({ payload, query }, { dispatch, extra }) => {
 	const { groupApi, toastNotifier } = extra;
 
 	const response = await groupApi.create(payload);
 
 	toastNotifier.showSuccess(NotificationMessage.GROUP_CREATE_SUCCESS);
+
+	void dispatch(userActions.loadAll(query));
 
 	return response;
 });
