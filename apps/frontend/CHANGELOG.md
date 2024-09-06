@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.11.1...frontend-v1.12.0) (2024-09-06)
+
+
+### Features
+
+* Add a "No projects found" message when search field no results on the Projects page gf-187 ([#210](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/210)) ([43bafae](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/43bafae531f87d4109b90fc29a8dafe86581996d))
+* Add an ability to delete personal account gf-146 ([#185](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/185)) ([7fb5001](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7fb500191fc25e2de94679e90501e685317ae339))
+
+## [1.11.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.11.0...frontend-v1.11.1) (2024-09-06)
+
+
+### Bug Fixes
+
+* adjusted the right arrow SVG to not include the fill white attribute in it's path gf-208 ([#213](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/213)) ([0aa5cc3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0aa5cc3f14c54f5aa448dbbbc3794636c0c61527))
+* inappropriate appearance of the scroll element at the Table component on Windows OS gf-197 ([#203](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/203)) ([7781a7a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7781a7af900dbe09f1c1d51bec51eecd4299e8de))
+* internal server error for table pagination on emty tables gf-205 ([#212](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/212)) ([0fd3d03](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0fd3d038afd20985062210c516b2bc790ec6bee5))
+
 ## [1.11.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.10.0...frontend-v1.11.0) (2024-09-05)
 
 

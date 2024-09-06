@@ -5,6 +5,8 @@ import { type UserAuthResponseDto } from "./libs/types/types.js";
 class UserEntity implements Entity {
 	private createdAt: null | string;
 
+	private deletedAt: null | string;
+
 	private email: string;
 
 	private id: null | number;
@@ -17,6 +19,7 @@ class UserEntity implements Entity {
 
 	private constructor({
 		createdAt,
+		deletedAt,
 		email,
 		id,
 		name,
@@ -24,6 +27,7 @@ class UserEntity implements Entity {
 		passwordSalt,
 	}: {
 		createdAt: null | string;
+		deletedAt: null | string;
 		email: string;
 		id: null | number;
 		name: string;
@@ -36,10 +40,12 @@ class UserEntity implements Entity {
 		this.passwordHash = passwordHash;
 		this.passwordSalt = passwordSalt;
 		this.createdAt = createdAt;
+		this.deletedAt = deletedAt;
 	}
 
 	public static initialize({
 		createdAt,
+		deletedAt,
 		email,
 		id,
 		name,
@@ -47,6 +53,7 @@ class UserEntity implements Entity {
 		passwordSalt,
 	}: {
 		createdAt: string;
+		deletedAt: null | string;
 		email: string;
 		id: number;
 		name: string;
@@ -55,6 +62,7 @@ class UserEntity implements Entity {
 	}): UserEntity {
 		return new UserEntity({
 			createdAt,
+			deletedAt,
 			email,
 			id,
 			name,
@@ -76,6 +84,7 @@ class UserEntity implements Entity {
 	}): UserEntity {
 		return new UserEntity({
 			createdAt: null,
+			deletedAt: null,
 			email,
 			id: null,
 			name,

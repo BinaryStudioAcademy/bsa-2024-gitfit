@@ -11,4 +11,9 @@ export {
 	useController as useFormController,
 	useWatch as useFormWatch,
 } from "react-hook-form";
-export { useLocation, useParams, useSearchParams } from "react-router-dom";
+export {
+	useLocation,
+	useNavigate,
+	useParams,
+	useSearchParams,
+} from "react-router-dom";

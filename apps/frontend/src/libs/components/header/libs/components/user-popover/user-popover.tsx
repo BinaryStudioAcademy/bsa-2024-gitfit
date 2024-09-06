@@ -37,7 +37,10 @@ const UserPopover = ({
 						<p className={styles["user-email"]}>{email}</p>
 					</div>
 					<div className={styles["buttons"]}>
-						<NavLink className={styles["button"] ?? ""} to={AppRoute.PROFILE}>
+						<NavLink
+							className={styles["button"] as string}
+							to={AppRoute.PROFILE}
+						>
 							Profile
 						</NavLink>
 						<button className={styles["button"]} onClick={handleLogout}>
