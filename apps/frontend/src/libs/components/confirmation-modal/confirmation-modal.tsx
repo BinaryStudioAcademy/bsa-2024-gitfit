@@ -4,6 +4,7 @@ import { useCallback } from "~/libs/hooks/hooks.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	confirmLabel?: string;
 	content: string;
 	isOpened: boolean;
 	onClose: () => void;
@@ -11,6 +12,7 @@ type Properties = {
 };
 
 const ConfirmationModal = ({
+	confirmLabel = "Yes, Delete it",
 	content,
 	isOpened,
 	onClose,
@@ -30,7 +32,7 @@ const ConfirmationModal = ({
 				</div>
 				<div className={styles["button-wrapper"]}>
 					<Button
-						label="Yes, Delete it"
+						label={confirmLabel}
 						onClick={handleConfirmClick}
 						variant="danger"
 					/>
