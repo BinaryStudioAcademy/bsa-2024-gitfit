@@ -17,7 +17,7 @@ class PermissionService implements Service {
 	}
 
 	public create(): ReturnType<Service["create"]> {
-		return Promise.resolve(true);
+		return Promise.resolve(null);
 	}
 
 	public delete(): ReturnType<Service["delete"]> {

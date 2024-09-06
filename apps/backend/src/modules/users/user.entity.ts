@@ -1,11 +1,17 @@
 import { type Entity } from "~/libs/types/types.js";
+import { type GroupModel } from "~/modules/groups/group.model.js";
+import { type PermissionModel } from "~/modules/permissions/permission.model.js";
 
-import { type Group, type UserAuthResponseDto } from "./libs/types/types.js";
+import { type UserAuthResponseDto } from "./libs/types/types.js";
 
 class UserEntity implements Entity {
 	private createdAt: null | string;
 	private email: string;
-	private groups: Group[] | null;
+	private groups: Array<
+		{
+			permissions: Array<Pick<PermissionModel, "key" | "name">>;
+		} & Pick<GroupModel, "name">
+	>;
 	private id: null | number;
 	private name: string;
 	private passwordHash: string;
@@ -14,7 +20,7 @@ class UserEntity implements Entity {
 	private constructor({
 		createdAt,
 		email,
-		groups = null,
+		groups = [],
 		id,
 		name,
 		passwordHash,
@@ -22,7 +28,11 @@ class UserEntity implements Entity {
 	}: {
 		createdAt: null | string;
 		email: string;
-		groups?: Group[] | null;
+		groups?: Array<
+			{
+				permissions: Array<Pick<PermissionModel, "key" | "name">>;
+			} & Pick<GroupModel, "name">
+		>;
 		id: null | number;
 		name: string;
 		passwordHash: string;
@@ -40,7 +50,7 @@ class UserEntity implements Entity {
 	public static initialize({
 		createdAt,
 		email,
-		groups = null,
+		groups = [],
 		id,
 		name,
 		passwordHash,
@@ -48,7 +58,11 @@ class UserEntity implements Entity {
 	}: {
 		createdAt: string;
 		email: string;
-		groups?: Group[] | null;
+		groups?: Array<
+			{
+				permissions: Array<Pick<PermissionModel, "key" | "name">>;
+			} & Pick<GroupModel, "name">
+		>;
 		id: number;
 		name: string;
 		passwordHash: string;
@@ -79,7 +93,7 @@ class UserEntity implements Entity {
 		return new UserEntity({
 			createdAt: null,
 			email,
-			groups: null,
+			groups: [],
 			id: null,
 			name,
 			passwordHash,
@@ -105,7 +119,13 @@ class UserEntity implements Entity {
 		return {
 			createdAt: this.createdAt as string,
 			email: this.email,
-			groups: this.groups || [],
+			groups: this.groups.map((group) => ({
+				name: group.name,
+				permissions: group.permissions.map((permission) => ({
+					key: permission.key,
+					name: permission.name,
+				})),
+			})),
 			id: this.id as number,
 			name: this.name,
 		};

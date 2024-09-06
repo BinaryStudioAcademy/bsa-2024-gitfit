@@ -1,5 +1,4 @@
 const NotificationMessage = {
-	PERMISSIONS_REQUIRED: "Access to the page is forbidden",
 	PROJECT_CREATE_SUCCESS: "Project was successfully created",
 	PROJECT_DELETE_SUCCESS: "Project was successfully deleted.",
 	PROJECT_UPDATE_SUCCESS: "Project was successfully updated.",

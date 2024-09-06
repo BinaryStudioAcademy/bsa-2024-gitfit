@@ -1,34 +1,27 @@
-import { PageName, PermissionKey } from "~/libs/enums/enums.js";
-import { checkHasPermission } from "~/libs/helpers/helpers.js";
-import { useAppSelector, useMemo } from "~/libs/hooks/hooks.js";
 import { type NavigationItem } from "~/libs/types/navigation-item.type.js";
-
 import { SidebarItem } from "./sidebar-item/sidebar-item.js";
 import styles from "./styles.module.css";
+import { useMemo } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	items: NavigationItem[];
+	userPermissions: { key: string; name: string }[];
 };
 
-const Sidebar = ({ items }: Properties): JSX.Element => {
-	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
-
+const Sidebar = ({ items, userPermissions }: Properties): JSX.Element => {
 	const filteredItems = useMemo(() => {
 		return items.filter((item) => {
-			if (item.label === PageName.ACCESS_MANAGEMENT) {
-				if (!authenticatedUser) {
-					return false;
-				}
-
-				return checkHasPermission(
-					[PermissionKey.MANAGE_USER_ACCESS],
-					authenticatedUser.groups.flatMap((group) => group.permissions),
+			if (item.pagePermissions) {
+				return item.pagePermissions.every((permission) =>
+					userPermissions.some(
+						(userPermission) => userPermission.key === permission,
+					),
 				);
 			}
 
 			return true;
 		});
-	}, [items, authenticatedUser]);
+	}, [items, userPermissions]);
 
 	return (
 		<ul className={styles["sidebar"]}>

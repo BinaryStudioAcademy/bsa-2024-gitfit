@@ -50,15 +50,11 @@ class UserRepository implements Repository {
 			.modifyGraph("groups.permissions", (builder) => {
 				builder.select("name", "key");
 			})
-			.castTo<UserAuthResponseDto>();
+			.castTo<
+				UserAuthResponseDto & { passwordSalt: string; passwordHash: string }
+			>();
 
-		const userWithStubbedFields = {
-			...user,
-			passwordHash: "",
-			passwordSalt: "",
-		};
-
-		return UserEntity.initialize(userWithStubbedFields);
+		return UserEntity.initialize(user);
 	}
 
 	public async findAll({
@@ -76,9 +72,21 @@ class UserRepository implements Repository {
 	}
 
 	public async findByEmail(email: string): Promise<null | UserEntity> {
-		const user = await this.userModel.query().findOne({ email });
+		const user = await this.userModel
+			.query()
+			.findOne({ email })
+			.withGraphFetched("groups.permissions")
+			.modifyGraph("groups", (builder) => {
+				builder.select("name");
+			})
+			.modifyGraph("groups.permissions", (builder) => {
+				builder.select("name", "key");
+			})
+			.castTo<
+				UserAuthResponseDto & { passwordSalt: string; passwordHash: string }
+			>();
 
-		return user ? UserEntity.initialize(user) : null;
+		return UserEntity.initialize(user);
 	}
 
 	public async getPermissionsByUserId(

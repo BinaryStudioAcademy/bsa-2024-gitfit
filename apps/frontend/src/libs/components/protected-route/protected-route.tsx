@@ -1,21 +1,26 @@
 import { Navigate } from "react-router-dom";
 
 import { Loader } from "~/libs/components/components.js";
-import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
+import {
+	AppRoute,
+	DataStatus,
+	type PermissionKey,
+} from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
+import { type ValueOf } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
-	pagePermissions?: string[];
+	permissionKeys?: ValueOf<typeof PermissionKey>[];
 };
 
 const ProtectedRoute = ({
 	children,
-	pagePermissions,
+	permissionKeys = [],
 }: Properties): JSX.Element => {
 	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
 
@@ -23,13 +28,6 @@ const ProtectedRoute = ({
 
 	const isLoading =
 		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
-
-	const hasRequiredPermission = authenticatedUser
-		? checkHasPermission(
-				pagePermissions ?? [],
-				authenticatedUser.groups.flatMap((group) => group.permissions),
-			)
-		: false;
 
 	if (isLoading) {
 		return (
@@ -42,6 +40,13 @@ const ProtectedRoute = ({
 	if (!hasAuthenticatedUser) {
 		return <Navigate replace to={AppRoute.SIGN_IN} />;
 	}
+
+	const hasRequiredPermission = authenticatedUser
+		? checkHasPermission(
+				permissionKeys,
+				authenticatedUser.groups.flatMap((group) => group.permissions),
+			)
+		: false;
 
 	if (!hasRequiredPermission) {
 		return <NotFound />;
