@@ -34,13 +34,13 @@ const Modal = ({
 				ref={dialogReference}
 			>
 				<div className={styles["modal-content"]}>
-					<div className={styles["modal-header-title"]}>
-						<h3>{title}</h3>
-						<div className={styles["modal-close"]}>
-							<IconButton iconName="cross" label="Close" onClick={onClose} />
-						</div>
+					<div className={styles["modal-close"]}>
+						<IconButton iconName="cross" label="Close" onClick={onClose} />
 					</div>
-					<div className={styles["modal-body"]}>{children}</div>
+					<div className={styles["modal-body"]}>
+						<h3 className={styles["modal-header-title"]}>{title}</h3>
+						{children}
+					</div>
 				</div>
 			</dialog>
 		</>
