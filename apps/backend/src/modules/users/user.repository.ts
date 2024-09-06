@@ -3,10 +3,7 @@ import {
 	type PaginationResponseDto,
 	type Repository,
 } from "~/libs/types/types.js";
-import {
-	type UserAuthResponseDto,
-	type UserPatchRequestDto,
-} from "~/modules/users/libs/types/types.js";
+import { type UserPatchRequestDto } from "~/modules/users/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserModel } from "~/modules/users/user.model.js";
 
@@ -56,15 +53,9 @@ class UserRepository implements Repository {
 			.modifyGraph("groups.permissions", (builder) => {
 				builder.select("permissions.id", "name", "key");
 			})
-			.castTo<
-				{
-					deletedAt: string;
-					passwordHash: string;
-					passwordSalt: string;
-				} & UserAuthResponseDto
-			>();
+			.execute();
 
-		return UserEntity.initialize(user);
+		return user ? UserEntity.initialize(user) : null;
 	}
 
 	public async findAll({
@@ -90,19 +81,12 @@ class UserRepository implements Repository {
 			.query()
 			.findOne({ email })
 			.withGraphFetched("groups.permissions")
-			.modifyGraph("groups", (builder) => {
+			.modifyGraph("user_groups.id", (builder) => {
 				builder.select("id", "name");
 			})
 			.modifyGraph("groups.permissions", (builder) => {
-				builder.select("id", "name", "key");
-			})
-			.castTo<
-				{
-					deletedAt: string;
-					passwordHash: string;
-					passwordSalt: string;
-				} & UserAuthResponseDto
-			>();
+				builder.select("permissions.id", "name", "key");
+			});
 
 		if (!hasDeleted) {
 			query.whereNull("deletedAt");
@@ -110,7 +94,7 @@ class UserRepository implements Repository {
 
 		const user = await query.execute();
 
-		return UserEntity.initialize(user);
+		return user ? UserEntity.initialize(user) : null;
 	}
 
 	public async patch(

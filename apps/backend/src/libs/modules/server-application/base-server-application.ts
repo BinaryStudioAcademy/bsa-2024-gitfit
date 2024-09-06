@@ -166,16 +166,16 @@ class BaseServerApplication implements ServerApplication {
 	}
 
 	public addRoute(parameters: ServerApplicationRouteParameters): void {
-		const { handler, method, path, preHandler, validation } = parameters;
+		const { handler, method, path, preHandlers, validation } = parameters;
 
 		const routeOptions = {
 			handler,
 			method,
+			preHandler: preHandlers ?? [],
 			schema: {
 				body: validation?.body,
 			},
 			url: path,
-			...(preHandler ? { preHandler } : {}),
 		};
 
 		this.app.route(routeOptions);
