@@ -35,7 +35,7 @@ class UserService implements Service {
 
 		if (existingUser) {
 			throw new UserError({
-				message: ExceptionMessage.EMAIL_USED,
+				message: ExceptionMessage.INVALID_CREDENTIALS,
 				status: HTTPCode.CONFLICT,
 			});
 		}
