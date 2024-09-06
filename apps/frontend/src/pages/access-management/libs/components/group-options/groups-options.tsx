@@ -13,15 +13,14 @@ const GroupOptions = ({ groupId, onEdit }: Properties): React.ReactElement => {
 
 	const handleEdit = useCallback(() => {
 		onEdit(groupId);
-	}, [groupId, onEdit]);
+		onClose();
+	}, [groupId, onEdit, onClose]);
 
 	return (
 		<div className={styles["options-cell"]}>
-			<div className={styles["options-wrapper"]}>
-				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-					<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
-				</Menu>
-			</div>
+			<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+				<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
+			</Menu>
 		</div>
 	);
 };
