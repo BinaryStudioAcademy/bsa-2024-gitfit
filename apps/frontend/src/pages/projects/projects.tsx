@@ -145,10 +145,10 @@ const Projects = (): JSX.Element => {
 							/>
 						))
 					) : (
-						<h1>
+						<p className={styles["no-projects-message"]}>
 							No projects found matching your search criteria. Please try
 							different keywords.
-						</h1>
+						</p>
 					)}
 				</div>
 			)}

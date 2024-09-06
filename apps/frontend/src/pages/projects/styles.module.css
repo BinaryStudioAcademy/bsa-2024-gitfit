@@ -17,3 +17,9 @@
 	gap: 12px;
 	padding: 20px 0;
 }
+
+.no-projects-message {
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 100%;
+}
