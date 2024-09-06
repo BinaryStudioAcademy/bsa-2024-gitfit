@@ -9,6 +9,8 @@ import {
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
+	type ProjectPatchRequestDto,
+	type ProjectPatchResponseDto,
 } from "./libs/types/types.js";
 import { ProjectEntity } from "./project.entity.js";
 import { type ProjectRepository } from "./project.repository.js";
@@ -63,8 +65,17 @@ class ProjectService implements Service {
 		return item.toObject();
 	}
 
-	public delete(): ReturnType<Service["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const isDeleted = await this.projectRepository.delete(id);
+
+		if (!isDeleted) {
+			throw new ProjectError({
+				message: ExceptionMessage.PROJECT_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		return isDeleted;
 	}
 
 	public async find(id: number): Promise<ProjectGetAllItemResponseDto> {
@@ -102,6 +113,35 @@ class ProjectService implements Service {
 				items.map((item) => this.joinProjectApiKeyToProject(item.toObject())),
 			),
 		};
+	}
+
+	public async patch(
+		id: number,
+		projectData: ProjectPatchRequestDto,
+	): Promise<ProjectPatchResponseDto> {
+		const targetProject = await this.projectRepository.find(id);
+
+		if (!targetProject) {
+			throw new ProjectError({
+				message: ExceptionMessage.PROJECT_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		const existingProject = await this.projectRepository.findByName(
+			projectData.name,
+		);
+
+		if (existingProject && existingProject.toObject().id !== id) {
+			throw new ProjectError({
+				message: ExceptionMessage.PROJECT_NAME_USED,
+				status: HTTPCode.CONFLICT,
+			});
+		}
+
+		const updatedItem = await this.projectRepository.patch(id, projectData);
+
+		return await this.joinProjectApiKeyToProject(updatedItem.toObject());
 	}
 
 	public update(): ReturnType<Service["update"]> {

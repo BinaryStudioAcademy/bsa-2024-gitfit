@@ -1,6 +1,5 @@
 const ExceptionMessage = {
-	CREATE_PROJECT_GROUP_FAILED: "Failed to create project group.",
-	EMAIL_USED: "Email address is already in use.",
+	CREATE_PROJECT_GROUP_FAILED: "Failed to create project group",
 	GROUP_NAME_USED: "Group name is already in use.",
 	GROUP_NOT_FOUND: "Group not found.",
 	INVALID_CREDENTIALS: "Invalid credentials.",

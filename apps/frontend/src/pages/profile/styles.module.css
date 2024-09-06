@@ -1,16 +1,32 @@
-.title {
-	margin-top: 0;
-	margin-bottom: 24px;
-}
-
-.profile-loader {
+.profile-layout {
 	display: flex;
-	flex: 1;
-	align-items: center;
-}
-
-.profile-content {
+	flex-direction: column;
+	gap: 24px;
+	align-items: flex-start;
 	width: 100%;
 	max-width: 800px;
+	padding: 0;
 	margin: 0 auto;
+	color: var(--color-text-primary);
+}
+
+.title {
+	margin: 0;
+	font-size: 30px;
+	font-weight: 600;
+	line-height: 120%;
+}
+
+.profile-info {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	align-items: flex-start;
+	padding: 0;
+}
+
+.divider {
+	min-width: 100%;
+	height: 1px;
+	background: var(--color-border-primary);
 }

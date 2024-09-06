@@ -4,12 +4,13 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
-import { create, getById, loadAll } from "./actions.js";
+import { create, deleteById, getById, loadAll, patch } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
 	project: null | ProjectGetAllItemResponseDto;
 	projectCreateStatus: ValueOf<typeof DataStatus>;
+	projectPatchStatus: ValueOf<typeof DataStatus>;
 	projects: ProjectGetAllItemResponseDto[];
 	projectStatus: ValueOf<typeof DataStatus>;
 };
@@ -18,6 +19,7 @@ const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	project: null,
 	projectCreateStatus: DataStatus.IDLE,
+	projectPatchStatus: DataStatus.IDLE,
 	projects: [],
 	projectStatus: DataStatus.IDLE,
 };
@@ -55,6 +57,26 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(create.rejected, (state) => {
 			state.projectCreateStatus = DataStatus.REJECTED;
+		});
+		builder.addCase(patch.pending, (state) => {
+			state.projectPatchStatus = DataStatus.PENDING;
+		});
+		builder.addCase(patch.fulfilled, (state, action) => {
+			const updatedProject = action.payload;
+			state.projects = state.projects.map((project) =>
+				project.id === updatedProject.id ? updatedProject : project,
+			);
+
+			state.projectPatchStatus = DataStatus.FULFILLED;
+		});
+		builder.addCase(patch.rejected, (state) => {
+			state.projectPatchStatus = DataStatus.REJECTED;
+		});
+		builder.addCase(deleteById.fulfilled, (state, action) => {
+			const deletedProjectId = action.meta.arg;
+			state.projects = state.projects.filter(
+				(project) => project.id !== deletedProjectId,
+			);
 		});
 	},
 	initialState,

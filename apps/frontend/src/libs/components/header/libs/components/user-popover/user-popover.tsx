@@ -10,10 +10,18 @@ import styles from "./styles.module.css";
 type Properties = {
 	children: React.ReactNode;
 	email: string;
+	isOpened: boolean;
 	name: string;
+	onClose: () => void;
 };
 
-const UserPopover = ({ children, email, name }: Properties): JSX.Element => {
+const UserPopover = ({
+	children,
+	email,
+	isOpened,
+	name,
+	onClose,
+}: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const handleLogout = useCallback((): void => {
@@ -29,7 +37,10 @@ const UserPopover = ({ children, email, name }: Properties): JSX.Element => {
 						<p className={styles["user-email"]}>{email}</p>
 					</div>
 					<div className={styles["buttons"]}>
-						<NavLink className={styles["button"] ?? ""} to={AppRoute.PROFILE}>
+						<NavLink
+							className={styles["button"] as string}
+							to={AppRoute.PROFILE}
+						>
 							Profile
 						</NavLink>
 						<button className={styles["button"]} onClick={handleLogout}>
@@ -38,6 +49,8 @@ const UserPopover = ({ children, email, name }: Properties): JSX.Element => {
 					</div>
 				</div>
 			}
+			isOpened={isOpened}
+			onClose={onClose}
 		>
 			{children}
 		</Popover>
