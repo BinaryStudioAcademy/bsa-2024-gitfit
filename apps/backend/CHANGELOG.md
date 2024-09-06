@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.8.1...backend-v1.9.0) (2024-09-06)
+
+
+### Features
+
+* Add an ability to delete personal account gf-146 ([#185](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/185)) ([7fb5001](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7fb500191fc25e2de94679e90501e685317ae339))
+
 ## [1.8.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.8.0...backend-v1.8.1) (2024-09-06)
 
 
