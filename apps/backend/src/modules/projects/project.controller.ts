@@ -197,11 +197,11 @@ class ProjectController extends BaseController {
 	 *            application/json:
 	 *              schema:
 	 *                type: object
-	 * 								properties:
-	 * 									items:
-	 * 										type: array
-	 *                		items:
-	 *                  		$ref: "#/components/schemas/Project"
+	 *                properties:
+	 *                  items:
+	 *                    type: array
+	 *                    items:
+	 *                      $ref: "#/components/schemas/Project"
 	 */
 	private async findAllByName(
 		options: APIHandlerOptions<{
