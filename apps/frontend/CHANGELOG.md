@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.11.1...frontend-v1.12.0) (2024-09-06)
+
+
+### Features
+
+* Add a "No projects found" message when search field no results on the Projects page gf-187 ([#210](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/210)) ([43bafae](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/43bafae531f87d4109b90fc29a8dafe86581996d))
+* Add an ability to delete personal account gf-146 ([#185](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/185)) ([7fb5001](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7fb500191fc25e2de94679e90501e685317ae339))
+
 ## [1.11.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.11.0...frontend-v1.11.1) (2024-09-06)
 
 
