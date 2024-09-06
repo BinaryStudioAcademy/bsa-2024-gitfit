@@ -2,15 +2,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { useCallback } from "~/libs/hooks/hooks.js";
 
-const location = useLocation();
-const navigate = useNavigate();
-
 const useSearchQueryParameter = (
 	defaultSearch: string,
 ): {
 	searchQuery: string;
 	updateSearchParams: (newSearchValue: string) => void;
 } => {
+	const location = useLocation();
+	const navigate = useNavigate();
 	const searchParameters = new URLSearchParams(location.search);
 	const searchQuery = searchParameters.get("search") || defaultSearch;
 
