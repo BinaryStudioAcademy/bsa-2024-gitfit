@@ -7,6 +7,8 @@ import {
 import { GroupModel } from "~/modules/groups/group.model.js";
 
 class UserModel extends AbstractModel {
+	public deletedAt!: null | string;
+
 	public email!: string;
 
 	public name!: string;

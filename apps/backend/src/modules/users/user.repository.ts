@@ -3,8 +3,6 @@ import {
 	type PaginationResponseDto,
 	type Repository,
 } from "~/libs/types/types.js";
-import { type PermissionGetAllResponseDto } from "~/modules/permissions/libs/types/types.js";
-import { PermissionModel } from "~/modules/permissions/permission.model.js";
 import {
 	type UserAuthResponseDto,
 	type UserPatchRequestDto,
@@ -35,14 +33,22 @@ class UserRepository implements Repository {
 		return UserEntity.initialize(user);
 	}
 
-	public delete(): ReturnType<Repository["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const deletedRowsCount = await this.userModel
+			.query()
+			.patch({ deletedAt: new Date().toISOString() })
+			.where({ id })
+			.whereNull("deletedAt")
+			.execute();
+
+		return Boolean(deletedRowsCount);
 	}
 
 	public async find(id: number): Promise<null | UserEntity> {
 		const user = await this.userModel
 			.query()
 			.findById(id)
+			.whereNull("deletedAt")
 			.withGraphFetched("groups.permissions")
 			.modifyGraph("groups", (builder) => {
 				builder.select("name");
@@ -51,7 +57,11 @@ class UserRepository implements Repository {
 				builder.select("name", "key");
 			})
 			.castTo<
-				UserAuthResponseDto & { passwordSalt: string; passwordHash: string }
+				{
+					deletedAt: string;
+					passwordHash: string;
+					passwordSalt: string;
+				} & UserAuthResponseDto
 			>();
 
 		return UserEntity.initialize(user);
@@ -63,6 +73,7 @@ class UserRepository implements Repository {
 	}: PaginationQueryParameters): Promise<PaginationResponseDto<UserEntity>> {
 		const { results, total } = await this.userModel
 			.query()
+			.whereNull("deletedAt")
 			.page(page, pageSize);
 
 		return {
@@ -71,8 +82,11 @@ class UserRepository implements Repository {
 		};
 	}
 
-	public async findByEmail(email: string): Promise<null | UserEntity> {
-		const user = await this.userModel
+	public async findByEmail(
+		email: string,
+		hasDeleted = false,
+	): Promise<null | UserEntity> {
+		const query = this.userModel
 			.query()
 			.findOne({ email })
 			.withGraphFetched("groups.permissions")
@@ -83,29 +97,20 @@ class UserRepository implements Repository {
 				builder.select("name", "key");
 			})
 			.castTo<
-				UserAuthResponseDto & { passwordSalt: string; passwordHash: string }
+				{
+					deletedAt: string;
+					passwordHash: string;
+					passwordSalt: string;
+				} & UserAuthResponseDto
 			>();
 
+		if (!hasDeleted) {
+			query.whereNull("deletedAt");
+		}
+
+		const user = await query.execute();
+
 		return UserEntity.initialize(user);
-	}
-
-	public async getPermissionsByUserId(
-		userId: number,
-	): Promise<PermissionGetAllResponseDto> {
-		const permissions = await this.userModel
-			.relatedQuery("groups")
-			.for(userId)
-			.joinRelated("permissions")
-			.distinct("permissions.*")
-			.castTo(PermissionModel);
-
-		return {
-			items: permissions.map((permission) => ({
-				id: permission.id,
-				key: permission.key,
-				name: permission.name,
-			})),
-		};
 	}
 
 	public async patch(

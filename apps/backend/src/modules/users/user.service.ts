@@ -6,7 +6,6 @@ import {
 	type PaginationQueryParameters,
 	type Service,
 } from "~/libs/types/types.js";
-import { type PermissionGetAllResponseDto } from "~/modules/permissions/libs/types/types.js";
 
 import { UserError } from "./libs/exceptions/exceptions.js";
 import {
@@ -32,11 +31,11 @@ class UserService implements Service {
 		payload: UserSignUpRequestDto,
 	): Promise<UserAuthResponseDto> {
 		const { email, name, password } = payload;
-		const existingUser = await this.userRepository.findByEmail(email);
+		const existingUser = await this.userRepository.findByEmail(email, true);
 
 		if (existingUser) {
 			throw new UserError({
-				message: ExceptionMessage.EMAIL_USED,
+				message: ExceptionMessage.INVALID_CREDENTIALS,
 				status: HTTPCode.CONFLICT,
 			});
 		}
@@ -56,8 +55,17 @@ class UserService implements Service {
 		return item.toObject();
 	}
 
-	public delete(): ReturnType<Service["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const isDeleted = await this.userRepository.delete(id);
+
+		if (!isDeleted) {
+			throw new UserError({
+				message: ExceptionMessage.USER_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		return isDeleted;
 	}
 
 	public async find(id: number): Promise<UserAuthResponseDto> {
@@ -92,18 +100,12 @@ class UserService implements Service {
 
 		if (!item) {
 			throw new UserError({
-				message: ExceptionMessage.USER_NOT_FOUND,
+				message: ExceptionMessage.INVALID_CREDENTIALS,
 				status: HTTPCode.NOT_FOUND,
 			});
 		}
 
 		return item;
-	}
-
-	public async getPermissionsByUserId(
-		userId: number,
-	): Promise<PermissionGetAllResponseDto> {
-		return await this.userRepository.getPermissionsByUserId(userId);
 	}
 
 	public async patch(

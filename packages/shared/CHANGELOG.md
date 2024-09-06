@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.9.0...shared-v1.9.1) (2024-09-06)
+
+
+### Bug Fixes
+
+* fix notification gf-190 ([#207](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/207)) ([be32281](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/be32281d0dda473ed752cdf62a3f2c2863a52c9d))
+
 ## [1.9.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.8.0...shared-v1.9.0) (2024-09-05)
 
 
