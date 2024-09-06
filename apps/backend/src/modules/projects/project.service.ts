@@ -1,6 +1,7 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
+import { type ProjectApiKeyService } from "~/modules/project-api-keys/project-api-key.service.js";
 
 import { ProjectError } from "./libs/exceptions/exceptions.js";
 import {
@@ -13,10 +14,30 @@ import { ProjectEntity } from "./project.entity.js";
 import { type ProjectRepository } from "./project.repository.js";
 
 class ProjectService implements Service {
+	private projectApiKeyService: ProjectApiKeyService;
+
 	private projectRepository: ProjectRepository;
 
-	public constructor(projectRepository: ProjectRepository) {
+	public constructor(
+		projectRepository: ProjectRepository,
+		projectApiKeyService: ProjectApiKeyService,
+	) {
 		this.projectRepository = projectRepository;
+		this.projectApiKeyService = projectApiKeyService;
+	}
+
+	private async joinProjectApiKeyToProject(
+		project: ProjectGetAllItemResponseDto,
+	): Promise<ProjectGetAllItemResponseDto> {
+		const projectApiKey = await this.projectApiKeyService.findByProjectId(
+			project.id,
+		);
+		const apiKey = projectApiKey ? projectApiKey.apiKey : null;
+
+		return {
+			...project,
+			apiKey,
+		};
 	}
 
 	public async create(
@@ -56,14 +77,18 @@ class ProjectService implements Service {
 			});
 		}
 
-		return item.toObject();
+		return await this.joinProjectApiKeyToProject(item.toObject());
 	}
 
 	public async findAll(): Promise<ProjectGetAllResponseDto> {
 		const projects = await this.projectRepository.findAll();
 
 		return {
-			items: projects.items.map((item) => item.toObject()),
+			items: await Promise.all(
+				projects.items.map((item) =>
+					this.joinProjectApiKeyToProject(item.toObject()),
+				),
+			),
 		};
 	}
 
@@ -73,7 +98,9 @@ class ProjectService implements Service {
 		const items = await this.projectRepository.findAllbyName(query.name);
 
 		return {
-			items: items.map((item) => item.toObject()),
+			items: await Promise.all(
+				items.map((item) => this.joinProjectApiKeyToProject(item.toObject())),
+			),
 		};
 	}
 

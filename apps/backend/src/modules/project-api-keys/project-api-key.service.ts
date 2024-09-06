@@ -100,6 +100,28 @@ class ProjectApiKeyService implements Service {
 		return Promise.resolve({ items: [] });
 	}
 
+	public async findByProjectId(
+		projectId: number,
+	): Promise<null | ProjectApiKeyCreateResponseDto> {
+		const apiKeyEnitity =
+			await this.projectApiKeyRepository.findByProjectId(projectId);
+
+		if (!apiKeyEnitity) {
+			return null;
+		}
+
+		const apiKey = apiKeyEnitity.toObject();
+		const decryptedApiKey = apiKey.encryptedKey; // TODO: decrypt
+
+		return {
+			apiKey: decryptedApiKey,
+			createdBy: apiKey.createdBy,
+			id: apiKey.id,
+			projectId: apiKey.projectId,
+			updatedBy: apiKey.updatedBy,
+		};
+	}
+
 	public update(): ReturnType<Service["update"]> {
 		return Promise.resolve(null);
 	}

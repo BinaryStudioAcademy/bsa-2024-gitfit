@@ -65,6 +65,7 @@ class ProjectEntity implements Entity {
 
 	public toObject(): ProjectGetAllItemResponseDto {
 		return {
+			apiKey: null,
 			description: this.description,
 			id: this.id as number,
 			name: this.name,

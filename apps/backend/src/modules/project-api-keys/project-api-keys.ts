@@ -20,5 +20,5 @@ const projectApiKeyController = new ProjectApiKeyController(
 	projectApiKeyService,
 );
 
-export { projectApiKeyController };
+export { projectApiKeyController, projectApiKeyService };
 export { ProjectApiKeyService } from "./project-api-key.service.js";
