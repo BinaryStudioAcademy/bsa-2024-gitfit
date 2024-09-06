@@ -5,6 +5,7 @@ import {
 	Modal,
 	PageLayout,
 } from "~/libs/components/components.js";
+import { useSearchQueryParameters } from "~/libs/components/search/libs/hooks/use-search-query.hook.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
@@ -32,6 +33,7 @@ import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
+	const { searchQuery } = useSearchQueryParameters("");
 
 	const [selectedProject, setSelectedProject] =
 		useState<null | ProjectGetAllItemResponseDto>(null);
@@ -40,8 +42,8 @@ const Projects = (): JSX.Element => {
 		useAppSelector(({ projects }) => projects);
 
 	useEffect(() => {
-		void dispatch(projectActions.loadAll());
-	}, [dispatch]);
+		void dispatch(projectActions.loadAll(searchQuery));
+	}, [dispatch, searchQuery]);
 
 	const handleSearchChange = useCallback(
 		(value: string) => {
