@@ -1,6 +1,6 @@
-import { type PermissionGetAllItemResponseDto } from "@git-fit/shared";
-
 import { type Entity } from "~/libs/types/types.js";
+
+import { type PermissionGetAllItemResponseDto } from "./libs/types/types.js";
 
 class PermissionEntity implements Entity {
 	private id: null | number;
