@@ -8,6 +8,8 @@ import {
 import { GroupModel } from "../groups/group.model.js";
 
 class UserModel extends AbstractModel {
+	public deletedAt!: null | string;
+
 	public email!: string;
 
 	public groups!: Pick<GroupModel, "id" | "name">[];

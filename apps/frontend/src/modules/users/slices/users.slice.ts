@@ -4,10 +4,11 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
-import { loadAll, updateProfile } from "./actions.js";
+import { deleteById, loadAll, updateProfile } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
+	deleteStatus: ValueOf<typeof DataStatus>;
 	updateProfileStatus: ValueOf<typeof DataStatus>;
 	users: UserGetAllItemResponseDto[];
 	usersTotalCount: number;
@@ -15,6 +16,7 @@ type State = {
 
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
+	deleteStatus: DataStatus.IDLE,
 	updateProfileStatus: DataStatus.IDLE,
 	users: [],
 	usersTotalCount: 0,
@@ -44,6 +46,10 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(updateProfile.rejected, (state) => {
 			state.updateProfileStatus = DataStatus.REJECTED;
+		});
+		builder.addCase(deleteById.fulfilled, (state, action) => {
+			state.deleteStatus = DataStatus.FULFILLED;
+			state.users = state.users.filter((user) => user.id !== action.payload);
 		});
 	},
 	initialState,

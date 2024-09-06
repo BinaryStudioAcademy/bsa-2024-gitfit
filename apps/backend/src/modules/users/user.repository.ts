@@ -32,8 +32,15 @@ class UserRepository implements Repository {
 		return UserEntity.initialize(user);
 	}
 
-	public delete(): ReturnType<Repository["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const deletedRowsCount = await this.userModel
+			.query()
+			.patch({ deletedAt: new Date().toISOString() })
+			.where({ id })
+			.whereNull("deletedAt")
+			.execute();
+
+		return Boolean(deletedRowsCount);
 	}
 
 	public async find(id: number): Promise<null | UserEntity> {
@@ -41,6 +48,7 @@ class UserRepository implements Repository {
 			.query()
 			.findById(id)
 			.withGraphFetched("groups")
+			.whereNull("deletedAt")
 			.returning("*")
 			.execute();
 
@@ -54,7 +62,8 @@ class UserRepository implements Repository {
 		const { results, total } = await this.userModel
 			.query()
 			.page(page, pageSize)
-			.withGraphFetched("groups");
+			.withGraphFetched("groups")
+			.whereNull("deletedAt");
 
 		return {
 			items: results.map((user) => UserEntity.initialize(user)),
@@ -62,11 +71,20 @@ class UserRepository implements Repository {
 		};
 	}
 
-	public async findByEmail(email: string): Promise<null | UserEntity> {
-		const user = await this.userModel
+	public async findByEmail(
+		email: string,
+		hasDeleted = false,
+	): Promise<null | UserEntity> {
+		const query = this.userModel
 			.query()
 			.withGraphFetched("groups")
 			.findOne({ email });
+
+		if (!hasDeleted) {
+			query.whereNull("deletedAt");
+		}
+
+		const user = await query.execute();
 
 		return user ? UserEntity.initialize(user) : null;
 	}
