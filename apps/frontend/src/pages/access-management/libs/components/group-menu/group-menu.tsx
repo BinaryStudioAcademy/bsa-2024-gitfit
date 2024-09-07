@@ -17,16 +17,14 @@ const GroupMenu = ({ groupId, onDelete }: Properties): React.ReactElement => {
 
 	return (
 		<div className={styles["options-container"]}>
-			<div className={styles["options-wrapper"]}>
-				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-					<MenuItem
-						iconName="trashBin"
-						label="Delete"
-						onClick={handleDeleteClick}
-						variant="danger"
-					/>
-				</Menu>
-			</div>
+			<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+				<MenuItem
+					iconName="trashBin"
+					label="Delete"
+					onClick={handleDeleteClick}
+					variant="danger"
+				/>
+			</Menu>
 		</div>
 	);
 };
