@@ -1,6 +1,7 @@
 import { config } from "~/libs/modules/config/config.js";
 import { database } from "~/libs/modules/database/database.js";
 import { logger } from "~/libs/modules/logger/logger.js";
+import { activityLogController } from "~/modules/activity-logs/activity-logs.js";
 import { authController } from "~/modules/auth/auth.js";
 import { groupController } from "~/modules/groups/groups.js";
 import { projectGroupController } from "~/modules/project-groups/project-groups.js";
@@ -15,6 +16,7 @@ import { WHITE_ROUTES } from "./libs/constants/constants.js";
 const apiV1 = new BaseServerApplicationApi(
 	"v1",
 	config,
+	...activityLogController.routes,
 	...authController.routes,
 	...projectGroupController.routes,
 	...projectController.routes,

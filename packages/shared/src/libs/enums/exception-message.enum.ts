@@ -1,6 +1,9 @@
 const ExceptionMessage = {
-	CREATE_PROJECT_GROUP_FAILED: "Failed to create project group",
+	CONTRIBUTOR_NOT_FOUND: "Contributor not found.",
+	CREATE_ACTIVITY_LOG_FAILED: "Failed to save activity logs.",
+	CREATE_PROJECT_GROUP_FAILED: "Failed to create project group.",
 	EMAIL_USED: "Email address is already in use.",
+	GIT_EMAIL_NOT_FOUND: "Git email not found.",
 	GROUP_NAME_USED: "Group name is already in use.",
 	GROUP_NOT_FOUND: "Group not found.",
 	INVALID_CREDENTIALS: "Invalid credentials.",

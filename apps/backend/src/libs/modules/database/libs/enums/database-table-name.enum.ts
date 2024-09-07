@@ -1,4 +1,7 @@
 const DatabaseTableName = {
+	ACTIVITY_LOGS: "activity_logs",
+	CONTRIBUTORS: "contributors",
+	GIT_EMAILS: "git_emails",
 	MIGRATIONS: "migrations",
 	PERMISSIONS: "permissions",
 	PROJECT_GROUPS: "project_groups",
