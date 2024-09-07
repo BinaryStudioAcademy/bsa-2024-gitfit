@@ -8,6 +8,7 @@ import {
 import { ContributorModel } from "./contributor.model.js";
 
 class GitEmailModel extends AbstractModel {
+	public contributor?: ContributorModel;
 	public contributorId!: number;
 	public email!: string;
 

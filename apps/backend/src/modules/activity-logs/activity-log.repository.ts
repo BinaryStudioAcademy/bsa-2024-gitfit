@@ -4,6 +4,8 @@ import { type Repository } from "~/libs/types/types.js";
 
 import { ActivityLogEntity } from "./activity-log.entity.js";
 import { type ActivityLogModel } from "./activity-log.model.js";
+import { type ContributorModel } from "./contributor.model.js";
+import { type GitEmailModel } from "./git-email.model.js";
 import { ActivityLogError } from "./libs/exceptions/exceptions.js";
 
 class ActivityLogRepository implements Repository {
@@ -38,12 +40,12 @@ class ActivityLogRepository implements Repository {
 				.returning("*")
 				.withGraphFetched("[gitEmail, project, createdByUser]");
 
-			const activityLogWithContributor = {
+			const activityLogWithContributorData = {
 				...createdActivityLog,
 				contributor,
 			};
 
-			return ActivityLogEntity.initialize(activityLogWithContributor);
+			return ActivityLogEntity.initialize(activityLogWithContributorData);
 		} catch {
 			throw new ActivityLogError({
 				message: ExceptionMessage.CREATE_ACTIVITY_LOG_FAILED,
@@ -63,10 +65,25 @@ class ActivityLogRepository implements Repository {
 	public async findAll(): Promise<{ items: ActivityLogEntity[] }> {
 		const activityLogs = await this.activityLogModel
 			.query()
-			.withGraphFetched("[gitEmail, project, createdByUser]");
+			.withGraphFetched("[gitEmail.[contributor], project, createdByUser]");
+
+		const activityLogWithContributorData = activityLogs.map((log) => {
+			const gitEmail = log.gitEmail as {
+				contributor: ContributorModel;
+			} & GitEmailModel;
+			const { contributor } = gitEmail;
+
+			return {
+				...log,
+				contributor: {
+					id: contributor.id,
+					name: contributor.name,
+				},
+			};
+		});
 
 		return {
-			items: activityLogs.map((activityLog) =>
+			items: activityLogWithContributorData.map((activityLog) =>
 				ActivityLogEntity.initialize(activityLog),
 			),
 		};
