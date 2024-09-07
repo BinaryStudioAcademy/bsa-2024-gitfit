@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.9.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.9.0...shared-v1.9.1) (2024-09-06)
+
+
+### Bug Fixes
+
+* fix notification gf-190 ([#207](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/207)) ([be32281](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/be32281d0dda473ed752cdf62a3f2c2863a52c9d))
+
+## [1.9.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.8.0...shared-v1.9.0) (2024-09-05)
+
+
+### Features
+
+* Add an ability to delete a project gf-138 ([#168](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/168)) ([76547f4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/76547f4cb6b441974b90b0da7ba57d74c9bc9058))
+
+## [1.8.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.7.0...shared-v1.8.0) (2024-09-05)
+
+
+### Features
+
+* Add pagination to the groups table gf-83 ([#184](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/184)) ([2b6f1b3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2b6f1b39eb1ea176506dbf82807cfe930cf4c4fb))
+
 ## [1.7.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.6.0...shared-v1.7.0) (2024-09-04)
 
 
