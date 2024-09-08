@@ -1,4 +1,8 @@
-export { ProjectsApiPath } from "./libs/enums/enums.js";
+export {
+	ProjectsApiPath,
+	ProjectValidationMessage,
+	ProjectValidationRule,
+} from "./libs/enums/enums.js";
 export { ProjectError } from "./libs/exceptions/exceptions.js";
 export {
 	type ProjectCreateRequestDto,
