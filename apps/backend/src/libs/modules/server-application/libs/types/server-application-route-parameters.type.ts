@@ -1,6 +1,6 @@
 import { type FastifyReply, type FastifyRequest } from "fastify";
 
-import { type APIPreHandler } from "~/libs/modules/controller/libs/types/api-pre-handler.type.js";
+import { type APIPreHandler } from "~/libs/modules/controller/controller.js";
 import { type HTTPMethod } from "~/libs/modules/http/http.js";
 import { type ValidationSchema } from "~/libs/types/types.js";
 
