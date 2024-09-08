@@ -13,19 +13,19 @@ const usePopoverPosition = <T extends HTMLElement>(
 	const [position, setPosition] = useState<Properties>({});
 
 	useEffect(() => {
-		if (usePositioning && isActive && reference.current) {
-			const targetRect = reference.current.getBoundingClientRect();
-			const { left, top } = targetRect;
-
-			const scrollOffset = window.scrollY || document.documentElement.scrollTop;
-
-			setPosition({
-				left,
-				top: top + scrollOffset,
-			});
-		} else {
+		if (!usePositioning || !isActive || !reference.current) {
 			setPosition({});
+
+			return;
 		}
+
+		const { left, top } = reference.current.getBoundingClientRect();
+		const scrollOffset = window.scrollY || document.documentElement.scrollTop;
+
+		setPosition({
+			left,
+			top: top + scrollOffset,
+		});
 	}, [reference, isActive, usePositioning]);
 
 	return position;
