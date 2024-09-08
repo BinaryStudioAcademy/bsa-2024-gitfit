@@ -1,5 +1,6 @@
 import {
 	Breadcrumbs,
+	Button,
 	Modal,
 	Select,
 	Table,
@@ -12,10 +13,12 @@ import {
 import {
 	useAppDispatch,
 	useAppForm,
+	useCallback,
 	useEffect,
 	useModal,
 } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
+import { actions as projectApiKey } from "~/modules/project-api-keys/project-api-keys.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
 const Ui = (): JSX.Element => {
@@ -30,6 +33,15 @@ const Ui = (): JSX.Element => {
 
 	useEffect(() => {
 		void dispatch(userActions.loadAll({ page: 1, pageSize: 10 }));
+	}, [dispatch]);
+
+	const handleGenerateApiKey = useCallback(() => {
+		void dispatch(
+			projectApiKey.create({
+				projectId: 1,
+				userId: 1,
+			}),
+		);
 	}, [dispatch]);
 
 	return (
@@ -57,6 +69,7 @@ const Ui = (): JSX.Element => {
 					{ label: "User Interface" },
 				]}
 			/>
+			<Button label="Generate API key" onClick={handleGenerateApiKey} />
 		</>
 	);
 };
