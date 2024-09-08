@@ -28,7 +28,7 @@ class ProjectService implements Service {
 		this.projectApiKeyService = projectApiKeyService;
 	}
 
-	private async joinProjectApiKeyToProject(
+	private async injectProjectApiKeyToProject(
 		project: ProjectGetAllItemResponseDto,
 	): Promise<ProjectGetAllItemResponseDto> {
 		const projectApiKey = await this.projectApiKeyService.findByProjectId(
@@ -88,18 +88,14 @@ class ProjectService implements Service {
 			});
 		}
 
-		return await this.joinProjectApiKeyToProject(item.toObject());
+		return await this.injectProjectApiKeyToProject(item.toObject());
 	}
 
 	public async findAll(): Promise<ProjectGetAllResponseDto> {
 		const projects = await this.projectRepository.findAll();
 
 		return {
-			items: await Promise.all(
-				projects.items.map((item) =>
-					this.joinProjectApiKeyToProject(item.toObject()),
-				),
-			),
+			items: projects.items.map((item) => item.toObject()),
 		};
 	}
 
@@ -109,9 +105,7 @@ class ProjectService implements Service {
 		const items = await this.projectRepository.findAllbyName(query.name);
 
 		return {
-			items: await Promise.all(
-				items.map((item) => this.joinProjectApiKeyToProject(item.toObject())),
-			),
+			items: items.map((item) => item.toObject()),
 		};
 	}
 
@@ -141,7 +135,7 @@ class ProjectService implements Service {
 
 		const updatedItem = await this.projectRepository.patch(id, projectData);
 
-		return await this.joinProjectApiKeyToProject(updatedItem.toObject());
+		return await this.injectProjectApiKeyToProject(updatedItem.toObject());
 	}
 
 	public update(): ReturnType<Service["update"]> {
