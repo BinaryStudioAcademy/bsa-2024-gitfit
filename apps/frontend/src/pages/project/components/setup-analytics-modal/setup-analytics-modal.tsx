@@ -1,5 +1,10 @@
 import { Button, Modal } from "~/libs/components/components.js";
-import { useAppDispatch, useCallback } from "~/libs/hooks/hooks.js";
+import { DataStatus } from "~/libs/enums/enums.js";
+import {
+	useAppDispatch,
+	useAppSelector,
+	useCallback,
+} from "~/libs/hooks/hooks.js";
 import { type UserAuthResponseDto } from "~/modules/auth/auth.js";
 import { actions as projectApiKeyActions } from "~/modules/project-api-keys/project-api-keys.js";
 import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
@@ -21,8 +26,11 @@ const SetupAnalyticsModal = ({
 	project,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
+	const { dataStatus } = useAppSelector(({ projectApiKeys }) => projectApiKeys);
 
 	const hasProjectApiKey = project.apiKey !== null;
+	const isGenerateButtonDisabled =
+		hasProjectApiKey || dataStatus === DataStatus.PENDING;
 
 	const handleGenerateSubmit = useCallback(() => {
 		void dispatch(
@@ -44,7 +52,7 @@ const SetupAnalyticsModal = ({
 					/>
 					<div className={styles["button-wrapper"]}>
 						<Button
-							isDisabled={hasProjectApiKey}
+							isDisabled={isGenerateButtonDisabled}
 							label="Generate"
 							onClick={handleGenerateSubmit}
 						/>
