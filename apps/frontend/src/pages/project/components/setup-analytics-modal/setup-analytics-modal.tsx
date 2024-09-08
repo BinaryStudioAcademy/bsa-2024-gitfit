@@ -36,7 +36,6 @@ const SetupAnalyticsModal = ({
 	return (
 		<Modal isOpened={isOpened} onClose={onClose} title="Setup Analytics">
 			<div className={styles["content"]}>
-				<p className={styles["text"]}>TODO: put here some text</p>
 				<div className={styles["api-key-container"]}>
 					<Output
 						label="API Key"
