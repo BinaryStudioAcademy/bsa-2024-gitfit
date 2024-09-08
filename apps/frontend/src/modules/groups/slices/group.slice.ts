@@ -37,6 +37,7 @@ const { actions, name, reducer } = createSlice({
 			state.groups = state.groups.filter(
 				(group) => group.id !== deletedGroupId,
 			);
+			state.groupsTotalCount -= 1;
 		});
 	},
 	initialState,

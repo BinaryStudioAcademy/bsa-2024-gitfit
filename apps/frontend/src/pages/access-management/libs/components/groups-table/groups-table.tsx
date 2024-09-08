@@ -4,6 +4,10 @@ import {
 	TablePagination,
 } from "~/libs/components/components.js";
 import {
+	FIRST_PAGE,
+	ITEMS_DECREMENT,
+} from "~/libs/components/table-pagination/libs/constants/constants.js";
+import {
 	useAppDispatch,
 	useCallback,
 	useModal,
@@ -57,11 +61,30 @@ const GroupsTable = ({
 
 	const handleDeleteConfirm = useCallback(() => {
 		if (groupToDelete) {
-			void dispatch(groupActions.deleteById(groupToDelete.id));
+			void dispatch(groupActions.deleteById(groupToDelete.id))
+				.unwrap()
+				.then(() => {
+					const newTotalCount = totalItemsCount - ITEMS_DECREMENT;
+					const totalPages = Math.max(
+						Math.ceil(newTotalCount / pageSize),
+						FIRST_PAGE,
+					);
+
+					const newPage = Math.min(page, totalPages);
+					onPageChange(newPage);
+				});
 		}
 
 		handleModalClose();
-	}, [dispatch, groupToDelete, handleModalClose]);
+	}, [
+		dispatch,
+		groupToDelete,
+		handleModalClose,
+		totalItemsCount,
+		page,
+		pageSize,
+		onPageChange,
+	]);
 
 	return (
 		<>
