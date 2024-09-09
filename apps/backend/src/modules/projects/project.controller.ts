@@ -214,13 +214,14 @@ class ProjectController extends BaseController {
 			query: ProjectGetAllRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { query } = options;
+		const { name } = options.query;
 
 		return {
-			payload: await this.projectService.findAll(query),
+			payload: await this.projectService.findAll(name),
 			status: HTTPCode.OK,
 		};
 	}
+
 	/**
 	 * @swagger
 	 * /projects/{id}:
