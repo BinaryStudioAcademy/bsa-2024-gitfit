@@ -4,7 +4,7 @@ import {
 	AbstractModel,
 	DatabaseTableName,
 } from "~/libs/modules/database/database.js";
-import { PermissionModel } from "~/modules/groups/permission.model.js";
+import { PermissionModel } from "~/modules/permissions/permission.model.js";
 import { UserModel } from "~/modules/users/user.model.js";
 
 class GroupModel extends AbstractModel {
