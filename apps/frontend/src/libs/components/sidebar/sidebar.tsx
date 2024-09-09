@@ -1,16 +1,28 @@
-import { type NavigationItem } from "~/libs/types/navigation-item.type.js";
+import { checkHasPermission } from "~/libs/helpers/helpers.js";
+import { useMemo } from "~/libs/hooks/hooks.js";
+import {
+	type NavigationItem,
+	type PermissionGetAllItemResponseDto,
+} from "~/libs/types/types.js";
 
 import { SidebarItem } from "./sidebar-item/sidebar-item.js";
 import styles from "./styles.module.css";
 
 type Properties = {
 	items: NavigationItem[];
+	userPermissions: PermissionGetAllItemResponseDto[];
 };
 
-const Sidebar = ({ items }: Properties): JSX.Element => {
+const Sidebar = ({ items, userPermissions }: Properties): JSX.Element => {
+	const filteredItems = useMemo(() => {
+		return items.filter(({ pagePermissions = [] }) =>
+			checkHasPermission(pagePermissions, userPermissions),
+		);
+	}, [items, userPermissions]);
+
 	return (
 		<ul className={styles["sidebar"]}>
-			{items.map((item) => (
+			{filteredItems.map((item) => (
 				<SidebarItem
 					href={item.href}
 					icon={item.icon}

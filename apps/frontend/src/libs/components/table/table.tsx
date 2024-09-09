@@ -4,6 +4,7 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { useEffect, useSelectedItems } from "~/libs/hooks/hooks.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
@@ -30,6 +31,8 @@ const Table = <T extends object>({
 		data,
 		getCoreRowModel: getCoreRowModel(),
 	});
+
+	const hasData = data.length !== EMPTY_LENGTH;
 
 	const { items, onToggle: handleToggle } =
 		useSelectedItems<number>(selectedIds);
@@ -66,30 +69,43 @@ const Table = <T extends object>({
 					))}
 				</thead>
 				<tbody className={styles["table-body"]}>
-					{table.getRowModel().rows.map((row) => (
-						<tr className={styles["table-row"]} key={row.id}>
-							{onSelect && name && (
-								<td className={styles["table-data"]}>
-									<SelectRowCell
-										id={(row.original as Record<"id", number>).id}
-										isChecked={items.includes(
-											(row.original as Record<"id", number>).id,
-										)}
-										name={name}
-										onToggle={handleToggle}
-									/>
-								</td>
-							)}
+					{hasData ? (
+						table.getRowModel().rows.map((row) => (
+							<tr className={styles["table-row"]} key={row.id}>
+								{onSelect && name && (
+									<td className={styles["table-data"]}>
+										<SelectRowCell
+											id={(row.original as Record<"id", number>).id}
+											isChecked={items.includes(
+												(row.original as Record<"id", number>).id,
+											)}
+											name={name}
+											onToggle={handleToggle}
+										/>
+									</td>
+								)}
 
-							{row.getVisibleCells().map((cell) => (
-								<td className={styles["table-data"]} key={cell.id}>
-									{typeof cell.getValue() === "object"
-										? (cell.getValue() as React.ReactNode)
-										: flexRender(cell.column.columnDef.cell, cell.getContext())}
-								</td>
-							))}
+								{row.getVisibleCells().map((cell) => (
+									<td className={styles["table-data"]} key={cell.id}>
+										{typeof cell.getValue() === "object"
+											? (cell.getValue() as React.ReactNode)
+											: flexRender(
+													cell.column.columnDef.cell,
+													cell.getContext(),
+												)}
+									</td>
+								))}
+							</tr>
+						))
+					) : (
+						<tr className={styles["table-row"]}>
+							<td className={styles["table-data"]} colSpan={columns.length}>
+								<p className={styles["empty-placeholder"]}>
+									There is nothing yet.
+								</p>
+							</td>
 						</tr>
-					))}
+					)}
 				</tbody>
 			</table>
 		</div>

@@ -4,6 +4,7 @@ export { type NavigationItem } from "./navigation-item.type.js";
 export { type SelectOption } from "./select-option.type.js";
 export {
 	type PaginationQueryParameters,
+	type PermissionGetAllItemResponseDto,
 	type ServerErrorDetail,
 	type ServerErrorResponse,
 	type ValidationSchema,
