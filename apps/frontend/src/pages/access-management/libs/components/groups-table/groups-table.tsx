@@ -4,10 +4,6 @@ import {
 	TablePagination,
 } from "~/libs/components/components.js";
 import {
-	FIRST_PAGE,
-	ITEMS_DECREMENT,
-} from "~/libs/components/table-pagination/libs/constants/constants.js";
-import {
 	useAppDispatch,
 	useCallback,
 	useModal,
@@ -46,50 +42,32 @@ const GroupsTable = ({
 		onOpen: onDeleteModalOpen,
 	} = useModal();
 
-	const [groupToDelete, setGroupToDelete] =
-		useState<GroupGetAllItemResponseDto | null>(null);
+	const [groupId, setGroupId] = useState<null | number>(null);
 
-	const groupColumns = getGroupColumns({
-		onDelete: (groupId: number) => {
-			const group = groups.find(({ id }) => id === groupId);
-			setGroupToDelete(group ?? null);
-
+	const onDelete = useCallback(
+		(groupId: number) => {
+			setGroupId(groupId);
 			onDeleteModalOpen();
 		},
-	});
+		[onDeleteModalOpen],
+	);
+
+	const groupColumns = getGroupColumns(onDelete);
+
 	const groupData: GroupRow[] = getGroupRows(groups);
 
 	const handleModalClose = useCallback(() => {
-		setGroupToDelete(null);
+		setGroupId(null);
 		onDeleteModalClose();
-	}, [onDeleteModalClose, setGroupToDelete]);
+	}, [onDeleteModalClose, setGroupId]);
 
 	const handleDeleteConfirm = useCallback(() => {
-		if (groupToDelete) {
-			void dispatch(groupActions.deleteById(groupToDelete.id))
-				.unwrap()
-				.then(() => {
-					const newTotalCount = totalItemsCount - ITEMS_DECREMENT;
-					const totalPages = Math.max(
-						Math.ceil(newTotalCount / pageSize),
-						FIRST_PAGE,
-					);
-
-					const newPage = Math.min(page, totalPages);
-					onPageChange(newPage);
-				});
+		if (groupId !== null) {
+			void dispatch(groupActions.deleteById(groupId));
 		}
 
 		handleModalClose();
-	}, [
-		dispatch,
-		groupToDelete,
-		handleModalClose,
-		totalItemsCount,
-		page,
-		pageSize,
-		onPageChange,
-	]);
+	}, [dispatch, groupId, handleModalClose]);
 
 	return (
 		<>
@@ -102,7 +80,7 @@ const GroupsTable = ({
 				totalItemsCount={totalItemsCount}
 			/>
 
-			{groupToDelete && (
+			{groupId && (
 				<ConfirmationModal
 					content="The group will be deleted. This action cannot be undone. Do you want to continue?"
 					isOpened={isDeleteModalOpen}
