@@ -31,7 +31,7 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 		name: "description",
 	});
 
-	const isDescriptionCounterShown = Boolean(!errors["description"]?.message);
+	const isDescriptionCounterShown = !errors["description"]?.message;
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
