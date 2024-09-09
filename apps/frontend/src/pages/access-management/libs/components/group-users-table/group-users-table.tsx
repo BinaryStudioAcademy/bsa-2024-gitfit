@@ -5,7 +5,6 @@ import {
 	Table,
 	TablePagination,
 } from "~/libs/components/components.js";
-import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -61,7 +60,6 @@ const GroupUsersTable = ({
 
 	const error = errors["userIds"]?.message;
 	const hasError = Boolean(error);
-	const hasSelectedUserIds = selectedUserIds.length === EMPTY_LENGTH;
 
 	if (
 		usersDataStatus === DataStatus.IDLE ||
@@ -90,9 +88,7 @@ const GroupUsersTable = ({
 					totalItemsCount={usersTotalCount}
 				/>
 			</div>
-			{hasError && hasSelectedUserIds && (
-				<div className={styles["error-message"]}>{error}</div>
-			)}
+			{hasError && <span className={styles["error-message"]}>{error}</span>}
 		</>
 	);
 };

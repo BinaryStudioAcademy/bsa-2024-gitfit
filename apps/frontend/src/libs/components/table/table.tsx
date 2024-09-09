@@ -65,9 +65,7 @@ const Table = <T extends object>({
 								{isRowSelectable && (
 									<td className={styles["table-data"]}>
 										<SelectRowCell
-											id={selectableProperties
-												.getRowId(row.original)
-												.toString()}
+											id={selectableProperties.getRowId(row.original)}
 											isChecked={selectableProperties.selectedRowIds.includes(
 												selectableProperties.getRowId(row.original),
 											)}

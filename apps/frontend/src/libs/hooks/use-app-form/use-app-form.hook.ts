@@ -5,6 +5,7 @@ import {
 	type FieldErrors,
 	type FieldValues,
 	useForm,
+	type UseFormClearErrors,
 	type UseFormHandleSubmit,
 	type UseFormProps,
 	type UseFormSetValue,
@@ -22,6 +23,7 @@ type Parameters<T extends FieldValues = FieldValues> = {
 type ReturnValue<T extends FieldValues = FieldValues> = {
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
+	handleErrorsClear: UseFormClearErrors<T>;
 	handleSubmit: UseFormHandleSubmit<T>;
 	handleValueSet: UseFormSetValue<T>;
 	isDirty: boolean;
@@ -42,6 +44,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
 	}
 
 	const {
+		clearErrors,
 		control,
 		formState: { errors, isDirty },
 		handleSubmit,
@@ -51,6 +54,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
 	return {
 		control,
 		errors,
+		handleErrorsClear: clearErrors,
 		handleSubmit,
 		handleValueSet: setValue,
 		isDirty,

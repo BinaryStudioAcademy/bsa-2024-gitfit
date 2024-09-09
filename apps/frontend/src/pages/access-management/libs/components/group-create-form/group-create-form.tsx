@@ -1,4 +1,5 @@
 import { Button, Input, Loader, Select } from "~/libs/components/components.js";
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -26,7 +27,7 @@ type Properties = {
 
 const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { control, errors, handleSubmit, handleValueSet } =
+	const { control, errors, handleErrorsClear, handleSubmit, handleValueSet } =
 		useAppForm<GroupCreateRequestDto>({
 			defaultValues: DEFAULT_GROUP_CREATE_PAYLOAD,
 			validationSchema: groupCreateValidationSchema,
@@ -36,9 +37,18 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 		({ permissions }) => permissions,
 	);
 
+	const { items: selectedUserIds, onToggle: handleUserIdsToggle } =
+		useSelectedItems<number>([]);
+
 	useEffect(() => {
 		void dispatch(permissionActions.loadAll());
 	}, [dispatch]);
+
+	useEffect(() => {
+		if (errors["userIds"] && selectedUserIds.length > EMPTY_LENGTH) {
+			handleErrorsClear("userIds");
+		}
+	}, [selectedUserIds, errors, handleErrorsClear]);
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
@@ -61,9 +71,6 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 	const isLoading =
 		permissionsDataStatus === DataStatus.IDLE ||
 		permissionsDataStatus === DataStatus.PENDING;
-
-	const { items: selectedUserIds, onToggle: handleUserIdsToggle } =
-		useSelectedItems<number>([]);
 
 	if (isLoading) {
 		return <Loader />;
