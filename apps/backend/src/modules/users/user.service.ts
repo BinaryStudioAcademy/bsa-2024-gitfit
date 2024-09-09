@@ -40,8 +40,8 @@ class UserService implements Service {
 			});
 		}
 
-		const { encryptedData: passwordHash, salt: passwordSalt } =
-			await this.encryption.encrypt(password);
+		const { hashedData: passwordHash, salt: passwordSalt } =
+			await this.encryption.hash(password);
 
 		const item = await this.userRepository.create(
 			UserEntity.initializeNew({
