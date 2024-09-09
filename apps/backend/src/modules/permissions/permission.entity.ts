@@ -4,32 +4,52 @@ import { type PermissionGetAllItemResponseDto } from "./libs/types/types.js";
 
 class PermissionEntity implements Entity {
 	private id: null | number;
+	private key!: string;
 	private name!: string;
 
-	private constructor({ id, name }: { id: null | number; name: string }) {
+	private constructor({
+		id,
+		key,
+		name,
+	}: {
+		id: null | number;
+		key: string;
+		name: string;
+	}) {
 		this.id = id;
+		this.key = key;
 		this.name = name;
 	}
 
 	public static initialize({
 		id,
+		key,
 		name,
 	}: {
 		id: null | number;
+		key: string;
 		name: string;
 	}): PermissionEntity {
-		return new PermissionEntity({ id, name });
+		return new PermissionEntity({ id, key, name });
 	}
 
-	public static initializeNew({ name }: { name: string }): PermissionEntity {
+	public static initializeNew({
+		key,
+		name,
+	}: {
+		key: string;
+		name: string;
+	}): PermissionEntity {
 		return new PermissionEntity({
 			id: null,
+			key,
 			name,
 		});
 	}
 
-	public toNewObject(): { name: string } {
+	public toNewObject(): { key: string; name: string } {
 		return {
+			key: this.key,
 			name: this.name,
 		};
 	}
@@ -37,6 +57,7 @@ class PermissionEntity implements Entity {
 	public toObject(): PermissionGetAllItemResponseDto {
 		return {
 			id: this.id as number,
+			key: this.key,
 			name: this.name,
 		};
 	}

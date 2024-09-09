@@ -17,11 +17,11 @@ const apiV1 = new BaseServerApplicationApi(
 	"v1",
 	config,
 	...authController.routes,
+	...permissionController.routes,
 	...projectGroupController.routes,
 	...projectController.routes,
 	...userController.routes,
 	...groupController.routes,
-	...permissionController.routes,
 );
 const serverApplication = new BaseServerApplication({
 	apis: [apiV1],

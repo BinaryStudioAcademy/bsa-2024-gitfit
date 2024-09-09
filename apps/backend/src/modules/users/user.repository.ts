@@ -3,10 +3,9 @@ import {
 	type PaginationResponseDto,
 	type Repository,
 } from "~/libs/types/types.js";
+import { type UserPatchRequestDto } from "~/modules/users/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserModel } from "~/modules/users/user.model.js";
-
-import { type UserPatchRequestDto } from "./libs/types/types.js";
 
 class UserRepository implements Repository {
 	private userModel: typeof UserModel;
@@ -27,7 +26,6 @@ class UserRepository implements Repository {
 			})
 			.returning("*")
 			.execute();
-		user.groups = [];
 
 		return UserEntity.initialize(user);
 	}
@@ -47,9 +45,14 @@ class UserRepository implements Repository {
 		const user = await this.userModel
 			.query()
 			.findById(id)
-			.withGraphFetched("groups")
 			.whereNull("deletedAt")
-			.returning("*")
+			.withGraphFetched("groups.permissions")
+			.modifyGraph("groups", (builder) => {
+				builder.select("user_groups.id", "name");
+			})
+			.modifyGraph("groups.permissions", (builder) => {
+				builder.select("permissions.id", "name", "key");
+			})
 			.execute();
 
 		return user ? UserEntity.initialize(user) : null;
@@ -61,9 +64,9 @@ class UserRepository implements Repository {
 	}: PaginationQueryParameters): Promise<PaginationResponseDto<UserEntity>> {
 		const { results, total } = await this.userModel
 			.query()
-			.page(page, pageSize)
-			.withGraphFetched("groups")
-			.whereNull("deletedAt");
+			.withGraphFetched("groups.permissions")
+			.whereNull("deletedAt")
+			.page(page, pageSize);
 
 		return {
 			items: results.map((user) => UserEntity.initialize(user)),
@@ -77,8 +80,14 @@ class UserRepository implements Repository {
 	): Promise<null | UserEntity> {
 		const query = this.userModel
 			.query()
-			.withGraphFetched("groups")
-			.findOne({ email });
+			.findOne({ email })
+			.withGraphFetched("groups.permissions")
+			.modifyGraph("user_groups.id", (builder) => {
+				builder.select("id", "name");
+			})
+			.modifyGraph("groups.permissions", (builder) => {
+				builder.select("permissions.id", "name", "key");
+			});
 
 		if (!hasDeleted) {
 			query.whereNull("deletedAt");

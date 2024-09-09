@@ -1,6 +1,6 @@
 import { type Entity } from "~/libs/types/types.js";
+import { type PermissionModel } from "~/modules/permissions/permission.model.js";
 
-import { type PermissionModel } from "../permissions/permission.model.js";
 import { type UserModel } from "../users/user.model.js";
 import { type GroupCreateResponseDto } from "./libs/types/types.js";
 

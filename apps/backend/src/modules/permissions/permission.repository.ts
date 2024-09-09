@@ -11,7 +11,7 @@ class PermissionRepository implements Repository {
 	}
 
 	public create(): ReturnType<Repository["create"]> {
-		return Promise.resolve(true);
+		return Promise.resolve(null);
 	}
 
 	public delete(): ReturnType<Repository["delete"]> {
@@ -23,7 +23,7 @@ class PermissionRepository implements Repository {
 	}
 
 	public async findAll(): Promise<{ items: PermissionEntity[] }> {
-		const permissions = await this.permissionModel.query();
+		const permissions = await this.permissionModel.query().execute();
 
 		return {
 			items: permissions.map((permission) =>

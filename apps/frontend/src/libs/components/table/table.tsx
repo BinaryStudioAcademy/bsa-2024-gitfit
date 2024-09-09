@@ -4,6 +4,7 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { SelectRowCell } from "./components/select-row-cell/select-row-cell.js";
@@ -32,6 +33,8 @@ const Table = <T extends object>({
 		getCoreRowModel: getCoreRowModel(),
 	});
 
+	const hasData = data.length !== EMPTY_LENGTH;
+
 	return (
 		<div className={styles["table-container"]}>
 			<table className={styles["table"]}>
@@ -51,25 +54,35 @@ const Table = <T extends object>({
 					))}
 				</thead>
 				<tbody className={styles["table-body"]}>
-					{table.getRowModel().rows.map((row) => (
-						<tr className={styles["table-row"]} key={row.id}>
-							{onRowSelect && selectedIds && name && getRowId && (
-								<td className={styles["table-data"]}>
-									<SelectRowCell
-										id={getRowId(row.original)}
-										isChecked={selectedIds.includes(getRowId(row.original))}
-										name={name}
-										onToggle={onRowSelect}
-									/>
-								</td>
-							)}
-							{row.getVisibleCells().map((cell) => (
-								<td className={styles["table-data"]} key={cell.id}>
-									{flexRender(cell.column.columnDef.cell, cell.getContext())}
-								</td>
-							))}
+					{hasData ? (
+						table.getRowModel().rows.map((row) => (
+							<tr className={styles["table-row"]} key={row.id}>
+								{onRowSelect && selectedIds && name && getRowId && (
+									<td className={styles["table-data"]}>
+										<SelectRowCell
+											id={getRowId(row.original)}
+											isChecked={selectedIds.includes(getRowId(row.original))}
+											name={name}
+											onToggle={onRowSelect}
+										/>
+									</td>
+								)}
+								{row.getVisibleCells().map((cell) => (
+									<td className={styles["table-data"]} key={cell.id}>
+										{flexRender(cell.column.columnDef.cell, cell.getContext())}
+									</td>
+								))}
+							</tr>
+						))
+					) : (
+						<tr className={styles["table-row"]}>
+							<td className={styles["table-data"]} colSpan={columns.length}>
+								<p className={styles["empty-placeholder"]}>
+									There is nothing yet.
+								</p>
+							</td>
 						</tr>
-					))}
+					)}
 				</tbody>
 			</table>
 		</div>

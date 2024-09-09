@@ -4,6 +4,11 @@ type UserAuthResponseDto = {
 	groups: {
 		id: number;
 		name: string;
+		permissions: {
+			id: number;
+			key: string;
+			name: string;
+		}[];
 	}[];
 	id: number;
 	name: string;

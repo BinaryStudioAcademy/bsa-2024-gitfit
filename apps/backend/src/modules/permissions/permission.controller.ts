@@ -43,10 +43,8 @@ class PermissionController extends BaseController {
 	 *                     $ref: "#/components/schemas/Permission"
 	 */
 	private async findAll(): Promise<APIHandlerResponse> {
-		const permissions = await this.permissionService.findAll();
-
 		return {
-			payload: permissions,
+			payload: await this.permissionService.findAll(),
 			status: HTTPCode.OK,
 		};
 	}

@@ -1,30 +1,28 @@
 import { type Entity } from "~/libs/types/types.js";
+import { type GroupModel } from "~/modules/groups/group.model.js";
+import { type PermissionModel } from "~/modules/permissions/permission.model.js";
 
-import { type GroupModel } from "../groups/group.model.js";
 import { type UserAuthResponseDto } from "./libs/types/types.js";
 
 class UserEntity implements Entity {
 	private createdAt: null | string;
-
 	private deletedAt: null | string;
-
 	private email: string;
-
-	private groups: Pick<GroupModel, "id" | "name">[];
-
+	private groups: Array<
+		{
+			permissions: Array<Pick<PermissionModel, "id" | "key" | "name">>;
+		} & Pick<GroupModel, "id" | "name">
+	>;
 	private id: null | number;
-
 	private name: string;
-
 	private passwordHash: string;
-
 	private passwordSalt: string;
 
 	private constructor({
 		createdAt,
 		deletedAt,
 		email,
-		groups,
+		groups = [],
 		id,
 		name,
 		passwordHash,
@@ -33,7 +31,11 @@ class UserEntity implements Entity {
 		createdAt: null | string;
 		deletedAt: null | string;
 		email: string;
-		groups: Pick<GroupModel, "id" | "name">[];
+		groups?: Array<
+			{
+				permissions: Array<Pick<PermissionModel, "id" | "key" | "name">>;
+			} & Pick<GroupModel, "id" | "name">
+		>;
 		id: null | number;
 		name: string;
 		passwordHash: string;
@@ -53,7 +55,7 @@ class UserEntity implements Entity {
 		createdAt,
 		deletedAt,
 		email,
-		groups,
+		groups = [],
 		id,
 		name,
 		passwordHash,
@@ -62,7 +64,11 @@ class UserEntity implements Entity {
 		createdAt: string;
 		deletedAt: null | string;
 		email: string;
-		groups: Pick<GroupModel, "id" | "name">[];
+		groups?: Array<
+			{
+				permissions: Array<Pick<PermissionModel, "id" | "key" | "name">>;
+			} & Pick<GroupModel, "id" | "name">
+		>;
 		id: number;
 		name: string;
 		passwordHash: string;
@@ -82,13 +88,16 @@ class UserEntity implements Entity {
 
 	public static initializeNew({
 		email,
-		groups,
 		name,
 		passwordHash,
 		passwordSalt,
 	}: {
 		email: string;
-		groups: Pick<GroupModel, "id" | "name">[];
+		groups: Array<
+			{
+				permissions: Array<Pick<PermissionModel, "id" | "key" | "name">>;
+			} & Pick<GroupModel, "id" | "name">
+		>;
 		name: string;
 		passwordHash: string;
 		passwordSalt: string;
@@ -97,7 +106,7 @@ class UserEntity implements Entity {
 			createdAt: null,
 			deletedAt: null,
 			email,
-			groups,
+			groups: [],
 			id: null,
 			name,
 			passwordHash,
@@ -128,6 +137,11 @@ class UserEntity implements Entity {
 			groups: this.groups.map((group) => ({
 				id: group.id,
 				name: group.name,
+				permissions: group.permissions.map((permission) => ({
+					id: permission.id,
+					key: permission.key,
+					name: permission.name,
+				})),
 			})),
 			id: this.id as number,
 			name: this.name,

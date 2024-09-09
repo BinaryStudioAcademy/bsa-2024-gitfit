@@ -4,6 +4,7 @@ export {
 	AppEnvironment,
 	ContentType,
 	ExceptionMessage,
+	PermissionKey,
 	ServerErrorType,
 	SortType,
 } from "./libs/enums/enums.js";
@@ -13,6 +14,7 @@ export {
 } from "./libs/exceptions/exceptions.js";
 export {
 	changeCase,
+	checkHasPermission,
 	configureString,
 	formatDate,
 	initDebounce,

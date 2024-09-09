@@ -4,15 +4,12 @@ import {
 	AbstractModel,
 	DatabaseTableName,
 } from "~/libs/modules/database/database.js";
-
-import { GroupModel } from "../groups/group.model.js";
+import { GroupModel } from "~/modules/groups/group.model.js";
 
 class UserModel extends AbstractModel {
 	public deletedAt!: null | string;
 
 	public email!: string;
-
-	public groups!: Pick<GroupModel, "id" | "name">[];
 
 	public name!: string;
 
