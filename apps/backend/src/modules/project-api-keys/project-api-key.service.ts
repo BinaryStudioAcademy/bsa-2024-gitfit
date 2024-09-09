@@ -1,5 +1,6 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
+import { type Token } from "~/libs/modules/token/token.js";
 import { type Service } from "~/libs/types/types.js";
 import { type ProjectRepository } from "~/modules/projects/projects.js";
 import { type UserRepository } from "~/modules/users/users.js";
@@ -12,20 +13,31 @@ import {
 import { ProjectApiKeyEntity } from "./project-api-key.entity.js";
 import { type ProjectApiKeyRepository } from "./project-api-key.repository.js";
 
+type Constructor = {
+	projectApiKeyRepository: ProjectApiKeyRepository;
+	projectRepository: ProjectRepository;
+	token: Token;
+	userRepository: UserRepository;
+};
+
 class ProjectApiKeyService implements Service {
 	private projectApiKeyRepository: ProjectApiKeyRepository;
 
 	private projectRepository: ProjectRepository;
 
+	private token: Token;
+
 	private userRepository: UserRepository;
 
-	public constructor(
-		projectApiKeyRepository: ProjectApiKeyRepository,
-		projectRepository: ProjectRepository,
-		userRepository: UserRepository,
-	) {
+	public constructor({
+		projectApiKeyRepository,
+		projectRepository,
+		token,
+		userRepository,
+	}: Constructor) {
 		this.projectApiKeyRepository = projectApiKeyRepository;
 		this.projectRepository = projectRepository;
+		this.token = token;
 		this.userRepository = userRepository;
 	}
 
@@ -65,7 +77,7 @@ class ProjectApiKeyService implements Service {
 			});
 		}
 
-		const apiKey = "API_KEY"; // TODO: generate api key based on projectId and userId
+		const apiKey = await this.token.createToken({ projectId }, false);
 		const encryptedKey = apiKey; // TODO: encrypt
 
 		const createdApiKeyEntity = await this.projectApiKeyRepository.create(

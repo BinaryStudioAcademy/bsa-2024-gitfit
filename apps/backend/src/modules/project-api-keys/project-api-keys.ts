@@ -1,4 +1,5 @@
 import { logger } from "~/libs/modules/logger/logger.js";
+import { token } from "~/libs/modules/token/token.js";
 import { ProjectModel } from "~/modules/projects/project.model.js";
 import { ProjectRepository } from "~/modules/projects/project.repository.js";
 import { userRepository } from "~/modules/users/users.js";
@@ -10,11 +11,12 @@ import { ProjectApiKeyService } from "./project-api-key.service.js";
 
 const projectRepository = new ProjectRepository(ProjectModel);
 const projectApiKeyRepository = new ProjectApiKeyRepository(ProjectApiKeyModel);
-const projectApiKeyService = new ProjectApiKeyService(
+const projectApiKeyService = new ProjectApiKeyService({
 	projectApiKeyRepository,
 	projectRepository,
+	token,
 	userRepository,
-);
+});
 const projectApiKeyController = new ProjectApiKeyController(
 	logger,
 	projectApiKeyService,
