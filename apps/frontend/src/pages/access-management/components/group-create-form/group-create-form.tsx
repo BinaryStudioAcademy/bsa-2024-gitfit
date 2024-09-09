@@ -6,6 +6,7 @@ import {
 	useAppSelector,
 	useCallback,
 	useEffect,
+	useMemo,
 	useSelectedItems,
 } from "~/libs/hooks/hooks.js";
 import {
@@ -25,7 +26,7 @@ type Properties = {
 
 const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { control, errors, handleSubmit, setValue } =
+	const { control, errors, handleSubmit, handleValueSet } =
 		useAppForm<GroupCreateRequestDto>({
 			defaultValues: DEFAULT_GROUP_CREATE_PAYLOAD,
 			validationSchema: groupCreateValidationSchema,
@@ -52,13 +53,16 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 		[handleSubmit, onSubmit],
 	);
 
-	const permissionOptions = getPermissionOptions(permissions);
+	const permissionOptions = useMemo(
+		() => getPermissionOptions(permissions),
+		[permissions],
+	);
 
 	const isLoading =
 		permissionsDataStatus === DataStatus.IDLE ||
 		permissionsDataStatus === DataStatus.PENDING;
 
-	const { items: selectedUserIds, onToggle: handleToggle } =
+	const { items: selectedUserIds, onToggle: handleUserIdsToggle } =
 		useSelectedItems<number>([]);
 
 	if (isLoading) {
@@ -76,9 +80,9 @@ const GroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 			/>
 			<GroupUsersTable
 				errors={errors}
-				onToggle={handleToggle}
+				onToggle={handleUserIdsToggle}
 				selectedUserIds={selectedUserIds}
-				setValue={setValue}
+				setValue={handleValueSet}
 			/>
 			<Select
 				control={control}

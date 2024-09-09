@@ -1,11 +1,11 @@
-import { configureGroupUsers, create, loadAll } from "./actions.js";
+import { create, loadAll, loadUsers } from "./actions.js";
 import { actions } from "./group.slice.js";
 
 const allActions = {
 	...actions,
-	configureGroupUsers,
 	create,
 	loadAll,
+	loadUsers,
 };
 
 export { allActions as actions };

@@ -5,7 +5,7 @@ import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
 import { type GroupGetAllItemResponseDto } from "../libs/types/types.js";
-import { configureGroupUsers, create, loadAll } from "./actions.js";
+import { create, loadAll, loadUsers } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
@@ -29,17 +29,17 @@ const initialState: State = {
 
 const { actions, name, reducer } = createSlice({
 	extraReducers(builder) {
-		builder.addCase(configureGroupUsers.pending, (state) => {
+		builder.addCase(loadUsers.pending, (state) => {
 			state.usersDataStatus = DataStatus.PENDING;
 		});
 
-		builder.addCase(configureGroupUsers.fulfilled, (state, action) => {
+		builder.addCase(loadUsers.fulfilled, (state, action) => {
 			state.users = action.payload.items;
 			state.usersTotalCount = action.payload.totalItems;
 			state.usersDataStatus = DataStatus.FULFILLED;
 		});
 
-		builder.addCase(configureGroupUsers.rejected, (state) => {
+		builder.addCase(loadUsers.rejected, (state) => {
 			state.usersDataStatus = DataStatus.REJECTED;
 		});
 

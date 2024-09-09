@@ -65,22 +65,22 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		[field, isMulti],
 	);
 
-	const findOptionByValue = useCallback(
+	const handleFindOptionByValue = useCallback(
 		(value: TOptionValue): SelectOption<TOptionValue> | undefined => {
 			return options.find((option) => option.value === value);
 		},
 		[options],
 	);
 
-	const selectedValue = useMemo(() => {
+	const handleSelectedValue = useMemo(() => {
 		if (isMulti) {
 			return (field.value as TOptionValue[])
-				.map((element) => findOptionByValue(element))
+				.map((element) => handleFindOptionByValue(element))
 				.filter(Boolean);
 		}
 
-		return findOptionByValue(field.value as TOptionValue);
-	}, [field.value, findOptionByValue, isMulti]);
+		return handleFindOptionByValue(field.value as TOptionValue);
+	}, [field.value, handleFindOptionByValue, isMulti]);
 
 	return (
 		<label className={styles["label"]}>
@@ -133,7 +133,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 					}),
 				}}
 				unstyled
-				value={selectedValue}
+				value={handleSelectedValue}
 			/>
 		</label>
 	);

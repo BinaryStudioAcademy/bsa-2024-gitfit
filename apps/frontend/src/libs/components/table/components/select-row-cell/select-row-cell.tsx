@@ -16,15 +16,15 @@ const SelectRowCell = ({
 	name,
 	onToggle,
 }: Properties): JSX.Element => {
-	const { control, errors, setValue } = useAppForm({
+	const { control, errors, handleValueSet } = useAppForm({
 		defaultValues: {
 			[name]: isChecked,
 		},
 	});
 
 	useEffect(() => {
-		setValue(name, isChecked);
-	}, [name, isChecked, setValue]);
+		handleValueSet(name, isChecked);
+	}, [name, isChecked, handleValueSet]);
 
 	const watchedValue = useFormWatch({
 		control,

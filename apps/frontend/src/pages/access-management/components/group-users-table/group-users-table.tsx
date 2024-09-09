@@ -14,9 +14,11 @@ import {
 	type GroupCreateRequestDto,
 } from "~/modules/groups/groups.js";
 
+import { type UserRow } from "../../libs/types/types.js";
 import { UsersTable } from "../users-table/users-table.js";
-import { getRowId } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
+
+const getRowId = (row: UserRow): number => row.id;
 
 type Properties = {
 	errors: FieldErrors<GroupCreateRequestDto>;
@@ -43,7 +45,7 @@ const GroupUsersTable = ({
 	});
 
 	useEffect(() => {
-		void dispatch(groupActions.configureGroupUsers({ page, pageSize }));
+		void dispatch(groupActions.loadUsers({ page, pageSize }));
 	}, [dispatch, page, pageSize]);
 
 	useEffect(() => {

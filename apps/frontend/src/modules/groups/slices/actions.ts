@@ -25,11 +25,11 @@ const loadAll = createAsyncThunk<
 	return await groupApi.getAll(query);
 });
 
-const configureGroupUsers = createAsyncThunk<
+const loadUsers = createAsyncThunk<
 	UserGetAllResponseDto,
 	PaginationQueryParameters,
 	AsyncThunkConfig
->(`${sliceName}/configure-group-users`, (query, { extra }) => {
+>(`${sliceName}/load-users`, (query, { extra }) => {
 	const { userApi } = extra;
 
 	return userApi.getAll(query);
@@ -51,4 +51,4 @@ const create = createAsyncThunk<
 	return response;
 });
 
-export { configureGroupUsers, create, loadAll };
+export { create, loadAll, loadUsers };
