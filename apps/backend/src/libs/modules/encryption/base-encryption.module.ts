@@ -43,7 +43,7 @@ class BaseEncryption implements Encryption {
 		);
 
 		return (
-			chipher.update(JSON.stringify(data), INPUT_ENCODING, OUTPUT_ENCODING) +
+			chipher.update(data, INPUT_ENCODING, OUTPUT_ENCODING) +
 			chipher.final(OUTPUT_ENCODING)
 		);
 	}
