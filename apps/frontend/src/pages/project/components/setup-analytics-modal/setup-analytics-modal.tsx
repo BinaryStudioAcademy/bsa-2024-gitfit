@@ -45,11 +45,13 @@ const SetupAnalyticsModal = ({
 		<Modal isOpened={isOpened} onClose={onClose} title="Setup Analytics">
 			<div className={styles["content"]}>
 				<div className={styles["api-key-container"]}>
-					<Output
-						label="API Key"
-						placeholder="No API key"
-						value={project.apiKey}
-					/>
+					<div className={styles["api-key-output"]}>
+						<Output
+							label="API Key"
+							placeholder="No API key"
+							value={project.apiKey}
+						/>
+					</div>
 					<div className={styles["button-wrapper"]}>
 						<Button
 							isDisabled={isGenerateButtonDisabled}
