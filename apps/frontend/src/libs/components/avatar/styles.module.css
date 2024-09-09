@@ -12,7 +12,7 @@
 
 .no-image {
 	border: 2px solid var(--color-border-primary);
-	transition: all 0.3s ease;
+	transition: border 0.3s ease;
 }
 
 .no-image:hover {
