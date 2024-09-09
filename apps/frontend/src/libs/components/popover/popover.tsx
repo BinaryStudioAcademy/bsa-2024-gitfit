@@ -9,17 +9,17 @@ import styles from "./styles.module.css";
 type Properties = {
 	children: React.ReactNode;
 	content: React.ReactNode;
+	hasPositioning?: boolean;
 	isOpened: boolean;
 	onClose: () => void;
-	usePositioning?: boolean;
 };
 
 const Popover = ({
 	children,
 	content,
+	hasPositioning,
 	isOpened,
 	onClose,
-	usePositioning,
 }: Properties): JSX.Element => {
 	const popoverReference = useRef<HTMLDivElement>(null);
 	const popoverTargetReference = useRef<HTMLDivElement>(null);
@@ -27,7 +27,7 @@ const Popover = ({
 	const position = usePopoverPosition(
 		popoverTargetReference,
 		isOpened,
-		usePositioning,
+		hasPositioning,
 	);
 
 	useHandleClickOutside(popoverReference, onClose);
@@ -44,7 +44,6 @@ const Popover = ({
 					<div
 						className={styles["popover-content"]}
 						style={{
-							left: position.left,
 							top: position.top,
 						}}
 					>

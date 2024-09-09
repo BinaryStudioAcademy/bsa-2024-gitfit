@@ -18,10 +18,10 @@ const GroupMenu = ({ groupId, onDelete }: Properties): React.ReactElement => {
 	return (
 		<div className={styles["options-container"]}>
 			<Menu
+				hasPositioning
 				isOpened={isOpened}
 				onClose={onClose}
 				onOpen={onOpen}
-				usePositioning
 			>
 				<MenuItem
 					iconName="trashBin"
