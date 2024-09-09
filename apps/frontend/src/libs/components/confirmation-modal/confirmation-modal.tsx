@@ -12,7 +12,6 @@ type Properties = {
 };
 
 const ConfirmationModal = ({
-	confirmLabel = "Yes, Delete it",
 	content,
 	isOpened,
 	onClose,
@@ -32,7 +31,7 @@ const ConfirmationModal = ({
 				</div>
 				<div className={styles["button-wrapper"]}>
 					<Button
-						label={confirmLabel}
+						label="Confirm"
 						onClick={handleConfirmClick}
 						variant="danger"
 					/>
