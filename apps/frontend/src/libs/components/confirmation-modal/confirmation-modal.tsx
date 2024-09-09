@@ -30,7 +30,7 @@ const ConfirmationModal = ({
 				</div>
 				<div className={styles["button-wrapper"]}>
 					<Button
-						label="Yes, Delete it"
+						label="Confirm"
 						onClick={handleConfirmClick}
 						variant="danger"
 					/>

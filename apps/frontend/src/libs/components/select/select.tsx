@@ -18,6 +18,7 @@ type Properties<TFieldValues extends FieldValues, TOptionValue> = {
 	control: Control<TFieldValues, null>;
 	isLabelHidden?: boolean;
 	isMulti?: boolean;
+	isSearchable?: boolean;
 	label: string;
 	name: FieldPath<TFieldValues>;
 	options: SelectOption<TOptionValue>[];
@@ -30,6 +31,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 	control,
 	isLabelHidden = false,
 	isMulti = false,
+	isSearchable = false,
 	label,
 	name,
 	options,
@@ -116,6 +118,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				}}
 				isClearable={false}
 				isMulti={isMulti}
+				isSearchable={isSearchable}
 				name={name}
 				onChange={handleChange}
 				options={options as PathValue<TFieldValues, Path<TFieldValues>>}
@@ -123,7 +126,12 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				styles={{
 					control: (base) => ({
 						...base,
+						cursor: "pointer",
 						minHeight: "32px",
+					}),
+					option: (base) => ({
+						...base,
+						cursor: "pointer",
 					}),
 				}}
 				unstyled

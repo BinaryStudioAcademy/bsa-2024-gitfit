@@ -75,6 +75,7 @@ export {
 	type ProjectPatchResponseDto,
 	projectPatchValidationSchema,
 	ProjectsApiPath,
+	ProjectValidationRule,
 } from "./modules/projects/projects.js";
 export {
 	type UserAuthResponseDto,
