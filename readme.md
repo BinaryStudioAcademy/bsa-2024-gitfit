@@ -27,6 +27,7 @@ erDiagram
       int id PK
       dateTime created_at
       dateTime updated_at
+      dateTime deleted_at
       citext email
       text password_hash
       text password_salt

@@ -1,5 +1,6 @@
 import {
 	Button,
+	ConfirmationModal,
 	Loader,
 	Modal,
 	PageLayout,
@@ -49,7 +50,7 @@ const Projects = (): JSX.Element => {
 		[dispatch],
 	);
 
-	const hasProject = projects.length === EMPTY_LENGTH;
+	const hasProject = projects.length !== EMPTY_LENGTH;
 
 	const {
 		isOpened: isCreateModalOpen,
@@ -60,6 +61,11 @@ const Projects = (): JSX.Element => {
 		isOpened: isEditModalOpen,
 		onClose: handleEditModalClose,
 		onOpen: handleEditModalOpen,
+	} = useModal();
+	const {
+		isOpened: isDeleteConfirmationModalOpen,
+		onClose: handleDeleteConfirmationModalClose,
+		onOpen: handleDeleteConfirmationModalOpen,
 	} = useModal();
 
 	useEffect(() => {
@@ -82,6 +88,13 @@ const Projects = (): JSX.Element => {
 		[handleEditModalOpen],
 	);
 
+	const handleDeleteClick = useCallback(
+		(project: ProjectGetAllItemResponseDto) => {
+			setSelectedProject(project);
+			handleDeleteConfirmationModalOpen();
+		},
+		[handleDeleteConfirmationModalOpen],
+	);
 	const handleProjectCreateSubmit = useCallback(
 		(payload: ProjectCreateRequestDto) => {
 			void dispatch(projectActions.create(payload));
@@ -100,9 +113,16 @@ const Projects = (): JSX.Element => {
 		[dispatch, selectedProject],
 	);
 
+	const handleProjectDeleteConfirm = useCallback(() => {
+		if (selectedProject) {
+			void dispatch(projectActions.deleteById(selectedProject.id));
+			handleDeleteConfirmationModalClose();
+		}
+	}, [dispatch, selectedProject, handleDeleteConfirmationModalClose]);
+
 	const isLoading =
 		dataStatus === DataStatus.IDLE ||
-		(dataStatus === DataStatus.PENDING && hasProject);
+		(dataStatus === DataStatus.PENDING && !hasProject);
 
 	return (
 		<PageLayout>
@@ -111,19 +131,27 @@ const Projects = (): JSX.Element => {
 				<Button label="Create New" onClick={handleCreateModalOpen} />
 			</header>
 			<ProjectsSearch onChange={handleSearchChange} />
-			<div className={styles["projects-list"]}>
-				{isLoading ? (
-					<Loader />
-				) : (
-					projects.map((project) => (
-						<ProjectCard
-							key={project.id}
-							onEdit={handleEditClick}
-							project={project}
-						/>
-					))
-				)}
-			</div>
+			{isLoading ? (
+				<Loader />
+			) : (
+				<div className={styles["projects-list"]}>
+					{hasProject ? (
+						projects.map((project) => (
+							<ProjectCard
+								key={project.id}
+								onDelete={handleDeleteClick}
+								onEdit={handleEditClick}
+								project={project}
+							/>
+						))
+					) : (
+						<p className={styles["empty-placeholder"]}>
+							No projects found matching your search criteria. Please try
+							different keywords.
+						</p>
+					)}
+				</div>
+			)}
 			<Modal
 				isOpened={isCreateModalOpen}
 				onClose={handleCreateModalClose}
@@ -143,6 +171,12 @@ const Projects = (): JSX.Element => {
 					/>
 				)}
 			</Modal>
+			<ConfirmationModal
+				content="The project will be deleted. This action cannot be undone. Click 'Confirm' to proceed."
+				isOpened={isDeleteConfirmationModalOpen}
+				onClose={handleDeleteConfirmationModalClose}
+				onConfirm={handleProjectDeleteConfirm}
+			/>
 		</PageLayout>
 	);
 };

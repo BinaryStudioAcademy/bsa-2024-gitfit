@@ -67,6 +67,17 @@ class ProjectController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
+				this.delete(
+					options as APIHandlerOptions<{
+						params: { id: string };
+					}>,
+				),
+			method: "DELETE",
+			path: ProjectsApiPath.$ID,
+		});
+
+		this.addRoute({
+			handler: (options) =>
 				this.findAllByName(
 					options as APIHandlerOptions<{
 						query: ProjectGetAllRequestDto;
@@ -139,6 +150,37 @@ class ProjectController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.projectService.create(options.body),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /projects/{id}:
+	 *    delete:
+	 *      description: Deletes project by ID
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          schema:
+	 *            type: integer
+	 *          required: true
+	 *          description: Numeric ID of the project to be deleted
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: boolean
+	 */
+	private async delete(
+		options: APIHandlerOptions<{
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.projectService.delete(Number(options.params.id)),
 			status: HTTPCode.OK,
 		};
 	}

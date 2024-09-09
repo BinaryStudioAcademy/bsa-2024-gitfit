@@ -13,6 +13,7 @@ type IconName =
 	| "rightArrow"
 	| "rightDoubleArrow"
 	| "search"
-	| "strikedEye";
+	| "strikedEye"
+	| "trashBin";
 
 export { type IconName };

@@ -30,7 +30,7 @@ const Auth = (): JSX.Element => {
 		if (authenticatedUser) {
 			navigate(AppRoute.ROOT);
 		}
-	}, [authenticatedUser, navigate]);
+	}, [authenticatedUser, dispatch, navigate]);
 
 	const handleSignInSubmit = useCallback(
 		(payload: UserSignInRequestDto): void => {
