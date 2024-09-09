@@ -5,22 +5,14 @@
 	align-items: flex-end;
 }
 
-.char-counter {
+.description-counter {
+	position: relative;
+	bottom: 8px;
 	align-self: flex-start;
-	margin-top: -8px;
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 1.3;
 	color: var(--color-text-secondary);
-}
-
-.input-error {
-	align-self: flex-start;
-	margin-top: -8px;
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 1.3;
-	color: var(--color-danger);
 }
 
 .button-wrapper {
