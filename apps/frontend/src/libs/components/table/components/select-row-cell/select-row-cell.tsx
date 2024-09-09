@@ -1,7 +1,5 @@
-import { useEffect } from "react";
-
 import { Checkbox } from "~/libs/components/components.js";
-import { useAppForm, useFormWatch } from "~/libs/hooks/hooks.js";
+import { useAppForm, useEffect, useFormWatch } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	id: string;
