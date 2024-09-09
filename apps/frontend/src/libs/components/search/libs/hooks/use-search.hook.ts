@@ -9,9 +9,9 @@ type UseSearch = {
 const useSearch = (): UseSearch => {
 	const [searchParameters, setSearchParameters] = useSearchParams();
 	const searchParameterName = QueryParameterName.SEARCH;
-	const NamedSearchParameter = searchParameters.get(searchParameterName);
+	const searchParameter = searchParameters.get(searchParameterName);
 
-	const [search, setSearch] = useState<string>(NamedSearchParameter ?? "");
+	const [search, setSearch] = useState<string>(searchParameter ?? "");
 
 	useEffect(() => {
 		const updatedSearchParameters = new URLSearchParams(searchParameters);
