@@ -17,7 +17,7 @@ const ToastContainer = (): JSX.Element => {
 			position="top-right"
 			rtl={false}
 			theme="dark"
-			toastClassName={styles["toast-notify"] as string}
+			toastClassName={styles["notification"] as string}
 		/>
 	);
 };

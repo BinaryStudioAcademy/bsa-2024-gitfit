@@ -6,7 +6,7 @@
 	--toastify-font-family: "Inter", sans-serif;
 }
 
-.toast-notify {
+.notification {
 	background-color: var(--color-background-secondary);
 	border: 1px solid var(--color-border-secondary);
 }
