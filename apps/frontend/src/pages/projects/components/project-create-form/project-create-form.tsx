@@ -19,7 +19,7 @@ type Properties = {
 };
 
 const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
-	const { control, errors, handleSubmit, trigger } =
+	const { control, errors, handleSubmit, handleTrigger } =
 		useAppForm<ProjectCreateRequestDto>({
 			defaultValues: DEFAULT_PROJECT_CREATE_PAYLOAD,
 			validationSchema: projectCreateValidationSchema,
@@ -31,8 +31,7 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 		name: "description",
 	});
 
-	const isDescriptionCounterShown =
-		descriptionValue.length <= ProjectValidationRule.DESCRIPTION_MAXIMUM_LENGTH;
+	const isDescriptionCounterShown = Boolean(!errors["description"]?.message);
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
@@ -44,8 +43,8 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 	);
 
 	useEffect(() => {
-		void trigger("description");
-	}, [descriptionValue, trigger]);
+		void handleTrigger("description");
+	}, [descriptionValue, handleTrigger]);
 
 	return (
 		<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>

@@ -23,8 +23,8 @@ type ReturnValue<T extends FieldValues = FieldValues> = {
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
 	handleSubmit: UseFormHandleSubmit<T>;
+	handleTrigger: UseFormTrigger<T>;
 	isDirty: boolean;
-	trigger: UseFormTrigger<T>;
 };
 
 const useAppForm = <T extends FieldValues = FieldValues>({
@@ -52,8 +52,8 @@ const useAppForm = <T extends FieldValues = FieldValues>({
 		control,
 		errors,
 		handleSubmit,
+		handleTrigger: trigger,
 		isDirty,
-		trigger,
 	};
 };
 
