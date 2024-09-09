@@ -4,3 +4,8 @@
 	font-weight: 600;
 	line-height: 120%;
 }
+
+.filters-form-wrapper {
+	display: flex;
+	margin-top: 24px;
+}
