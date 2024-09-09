@@ -1,43 +1,45 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { QueryParameterName } from "~/libs/enums/enums.js";
+import {
+	useCallback,
+	useEffect,
+	useSearchParams,
+	useState,
+} from "~/libs/hooks/hooks.js";
 
-import { useCallback } from "~/libs/hooks/hooks.js";
-
-import { SEARCH_PARAMETER_KEY } from "../constants/constants.js";
-
-type Properties = {
-	searchQuery: string;
-	updateSearchParams: (newSearchValue: string) => void;
+type UseSearch = () => {
+	onSearchChange: (search: string) => void;
+	search: string;
 };
 
-const useSearchQueryParameter = (defaultSearch: string): Properties => {
-	const location = useLocation();
-	const navigate = useNavigate();
+const useSearch: UseSearch = () => {
+	const [searchParameters, setSearchParameters] = useSearchParams();
 
-	const getSearchQuery = useCallback((): string => {
-		const searchParameters = new URLSearchParams(location.search);
+	const searchParameterName = QueryParameterName.SEARCH;
 
-		return searchParameters.get(SEARCH_PARAMETER_KEY) || defaultSearch;
-	}, [location.search, defaultSearch]);
+	const NamedSearchParameter = searchParameters.get(searchParameterName);
 
-	const updateSearchParameters = useCallback(
-		(newSearchValue: string): void => {
-			const searchParameters = new URLSearchParams(location.search);
+	const [search, setSearch] = useState<string>(NamedSearchParameter || "");
 
-			if (newSearchValue) {
-				searchParameters.set(SEARCH_PARAMETER_KEY, newSearchValue);
-			} else {
-				searchParameters.delete(SEARCH_PARAMETER_KEY);
-			}
+	useEffect(() => {
+		const updatedSearchParameters = new URLSearchParams(searchParameters);
 
-			navigate({ search: searchParameters.toString() }, { replace: true });
-		},
-		[location.search, navigate],
-	);
+		if (search) {
+			updatedSearchParameters.set(searchParameterName, search);
+		} else {
+			updatedSearchParameters.delete(searchParameterName);
+		}
+
+		setSearchParameters(updatedSearchParameters);
+	}, [search, searchParameters, searchParameterName, setSearchParameters]);
+
+	const onSearchChange = useCallback((newSearchValue: string) => {
+		setSearch(newSearchValue);
+	}, []);
 
 	return {
-		searchQuery: getSearchQuery(),
-		updateSearchParams: updateSearchParameters,
+		onSearchChange,
+		search,
 	};
 };
 
-export { useSearchQueryParameter };
+export { useSearch };

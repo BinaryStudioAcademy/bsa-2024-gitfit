@@ -3,7 +3,7 @@ import { initDebounce } from "~/libs/helpers/helpers.js";
 import { useAppForm, useEffect, useFormWatch } from "~/libs/hooks/hooks.js";
 
 import { SEARCH_TIMEOUT } from "./libs/constants/constants.js";
-import { useSearchQueryParameter } from "./libs/hooks/hooks.js";
+import { useSearch } from "./libs/hooks/hooks.js";
 
 type Properties = {
 	isLabelHidden: boolean;
@@ -16,10 +16,10 @@ const Search = ({
 	label,
 	onChange,
 }: Properties): JSX.Element => {
-	const { searchQuery, updateSearchParams } = useSearchQueryParameter("");
+	const { onSearchChange, search } = useSearch();
 
 	const { control, errors } = useAppForm({
-		defaultValues: { search: searchQuery },
+		defaultValues: { search },
 		mode: "onChange",
 	});
 
@@ -28,7 +28,7 @@ const Search = ({
 	useEffect(() => {
 		const debouncedOnChange = initDebounce(() => {
 			onChange(value);
-			updateSearchParams(value);
+			onSearchChange(value);
 		}, SEARCH_TIMEOUT);
 
 		debouncedOnChange(value);
@@ -36,7 +36,7 @@ const Search = ({
 		return (): void => {
 			debouncedOnChange.clear();
 		};
-	}, [onChange, value, updateSearchParams]);
+	}, [onChange, value, onSearchChange]);
 
 	return (
 		<Input
