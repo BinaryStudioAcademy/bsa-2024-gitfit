@@ -55,20 +55,22 @@ const ProjectCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 				label="Name"
 				name="name"
 			/>
-			<Input
-				control={control}
-				errors={errors}
-				label="Description"
-				name="description"
-				rowsCount={4}
-			/>
 
-			{isDescriptionCounterShown && (
-				<span className={styles["description-counter"]}>
-					{descriptionValue.length}/
-					{ProjectValidationRule.DESCRIPTION_MAXIMUM_LENGTH}
-				</span>
-			)}
+			<div className={styles["description-wrapper"]}>
+				<Input
+					control={control}
+					errors={errors}
+					label="Description"
+					name="description"
+					rowsCount={4}
+				/>
+				{isDescriptionCounterShown && (
+					<span className={styles["description-counter"]}>
+						{descriptionValue.length}/
+						{ProjectValidationRule.DESCRIPTION_MAXIMUM_LENGTH}
+					</span>
+				)}
+			</div>
 
 			<div className={styles["button-wrapper"]}>
 				<Button label="Create" type="submit" />
