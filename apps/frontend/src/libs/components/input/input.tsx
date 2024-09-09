@@ -12,7 +12,6 @@ import styles from "./styles.module.css";
 
 type Properties<T extends FieldValues> = {
 	autoComplete?: string;
-	checked?: boolean;
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
 	isDisabled?: boolean;
@@ -23,12 +22,11 @@ type Properties<T extends FieldValues> = {
 	placeholder?: string;
 	rightIcon?: JSX.Element;
 	rowsCount?: number;
-	type?: "checkbox" | "email" | "password" | "search" | "text";
+	type?: "email" | "password" | "search" | "text";
 };
 
 const Input = <T extends FieldValues>({
 	autoComplete,
-	checked,
 	control,
 	errors,
 	isDisabled = false,
@@ -53,7 +51,6 @@ const Input = <T extends FieldValues>({
 		isTextArea && styles["input-textarea"],
 		hasLeftIcon && styles["with-left-icon"],
 		hasRightIcon && styles["with-right-icon"],
-		checked && styles["input-checkbox"],
 	);
 
 	return (
@@ -91,7 +88,6 @@ const Input = <T extends FieldValues>({
 				) : (
 					<input
 						autoComplete={autoComplete}
-						checked={checked ? field.value : undefined}
 						className={inputClassNames}
 						disabled={isDisabled}
 						name={field.name}
