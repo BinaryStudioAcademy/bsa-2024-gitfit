@@ -22,7 +22,7 @@ type Properties<T extends FieldValues> = {
 	placeholder?: string;
 	rightIcon?: JSX.Element;
 	rowsCount?: number;
-	type?: "email" | "password" | "search" | "text";
+	type?: "checkbox" | "email" | "password" | "search" | "text";
 };
 
 const Input = <T extends FieldValues>({
@@ -46,11 +46,13 @@ const Input = <T extends FieldValues>({
 	const hasLeftIcon = Boolean(leftIcon);
 	const hasRightIcon = Boolean(rightIcon);
 	const isTextArea = Boolean(rowsCount);
+	const isCheckbox = type === "checkbox";
 	const inputClassNames = getValidClassNames(
 		styles["input-field"],
 		isTextArea && styles["input-textarea"],
 		hasLeftIcon && styles["with-left-icon"],
 		hasRightIcon && styles["with-right-icon"],
+		isCheckbox && styles["input-checkbox"],
 	);
 
 	return (
@@ -88,6 +90,7 @@ const Input = <T extends FieldValues>({
 				) : (
 					<input
 						autoComplete={autoComplete}
+						checked={isCheckbox ? field.value : undefined}
 						className={inputClassNames}
 						disabled={isDisabled}
 						name={field.name}

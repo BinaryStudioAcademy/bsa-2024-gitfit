@@ -23,9 +23,9 @@ const AccessManagement = (): JSX.Element => {
 
 	const {
 		dataStatus: groupsDataStatus,
-		groups,
-		groupsTotalCount,
-	} = useAppSelector(({ groups }) => groups);
+		items: groups,
+		totalCount: groupsTotalCount,
+	} = useAppSelector(({ groups }) => groups.groups);
 
 	const {
 		onPageChange: onUserPageChange,

@@ -8,7 +8,10 @@ type Properties = {
 	groupId: number;
 } & GroupActions;
 
-const GroupOptions = ({ groupId, onEdit }: Properties): React.ReactElement => {
+const GroupOptionsCell = ({
+	groupId,
+	onEdit,
+}: Properties): React.ReactElement => {
 	const { isOpened, onClose, onOpen } = usePopover();
 
 	const handleEdit = useCallback(() => {
@@ -25,4 +28,4 @@ const GroupOptions = ({ groupId, onEdit }: Properties): React.ReactElement => {
 	);
 };
 
-export { GroupOptions };
+export { GroupOptionsCell };

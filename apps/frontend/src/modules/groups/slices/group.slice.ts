@@ -2,50 +2,77 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
+import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
 import { type GroupGetAllItemResponseDto } from "../libs/types/types.js";
-import { loadAll, update } from "./actions.js";
+import { configureGroupUsers, loadAll, update } from "./actions.js";
+
+type EntityState<T> = {
+	dataStatus: ValueOf<typeof DataStatus>;
+	items: T[];
+	totalCount: number;
+};
 
 type State = {
-	dataStatus: ValueOf<typeof DataStatus>;
-	groups: GroupGetAllItemResponseDto[];
-	groupsTotalCount: number;
+	groups: EntityState<GroupGetAllItemResponseDto>;
+	users: EntityState<UserGetAllItemResponseDto>;
 };
 
 const initialState: State = {
-	dataStatus: DataStatus.IDLE,
-	groups: [],
-	groupsTotalCount: 0,
+	groups: {
+		dataStatus: DataStatus.IDLE,
+		items: [],
+		totalCount: 0,
+	},
+	users: {
+		dataStatus: DataStatus.IDLE,
+		items: [],
+		totalCount: 0,
+	},
 };
 
 const { actions, name, reducer } = createSlice({
 	extraReducers(builder) {
+		builder.addCase(configureGroupUsers.pending, (state) => {
+			state.users.dataStatus = DataStatus.PENDING;
+		});
+
+		builder.addCase(configureGroupUsers.fulfilled, (state, action) => {
+			state.users.items = action.payload.items;
+			state.users.totalCount = action.payload.totalItems;
+			state.users.dataStatus = DataStatus.FULFILLED;
+		});
+
+		builder.addCase(configureGroupUsers.rejected, (state) => {
+			state.users.dataStatus = DataStatus.REJECTED;
+		});
+
 		builder.addCase(loadAll.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
+			state.groups.dataStatus = DataStatus.PENDING;
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
-			state.groups = action.payload.items;
-			state.groupsTotalCount = action.payload.totalItems;
-			state.dataStatus = DataStatus.FULFILLED;
+			state.groups.items = action.payload.items;
+			state.groups.totalCount = action.payload.totalItems;
+			state.groups.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadAll.rejected, (state) => {
-			state.groups = [];
-			state.dataStatus = DataStatus.REJECTED;
+			state.groups.items = [];
+			state.groups.dataStatus = DataStatus.REJECTED;
 		});
 
 		builder.addCase(update.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
+			state.groups.dataStatus = DataStatus.PENDING;
 		});
 		builder.addCase(update.fulfilled, (state, action) => {
 			const updatedGroup = action.payload;
-			state.groups = state.groups.map((project) =>
+			state.groups.items = state.groups.items.map((project) =>
 				project.id === updatedGroup.id ? updatedGroup : project,
 			);
 
-			state.dataStatus = DataStatus.FULFILLED;
+			state.groups.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(update.rejected, (state) => {
-			state.dataStatus = DataStatus.REJECTED;
+			state.groups.dataStatus = DataStatus.REJECTED;
 		});
 	},
 	initialState,

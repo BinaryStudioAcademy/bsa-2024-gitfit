@@ -4,6 +4,7 @@ import {
 	type AsyncThunkConfig,
 	type PaginationQueryParameters,
 } from "~/libs/types/types.js";
+import { type UserGetAllResponseDto } from "~/modules/users/users.js";
 
 import {
 	type GroupGetAllResponseDto,
@@ -11,6 +12,16 @@ import {
 	type GroupUpdateResponseDto,
 } from "../libs/types/types.js";
 import { name as sliceName } from "./group.slice.js";
+
+const configureGroupUsers = createAsyncThunk<
+	UserGetAllResponseDto,
+	PaginationQueryParameters,
+	AsyncThunkConfig
+>(`${sliceName}/configure-group-users`, (query, { extra }) => {
+	const { userApi } = extra;
+
+	return userApi.getAll(query);
+});
 
 const loadAll = createAsyncThunk<
 	GroupGetAllResponseDto,
@@ -32,4 +43,4 @@ const update = createAsyncThunk<
 	return await groupApi.update(id, payload);
 });
 
-export { loadAll, update };
+export { configureGroupUsers, loadAll, update };

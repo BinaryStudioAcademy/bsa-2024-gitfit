@@ -1,7 +1,7 @@
 import { formatDate } from "~/libs/helpers/helpers.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
-import { GroupOptions } from "../components/components.js";
+import { GroupOptionsCell } from "../components/components.js";
 import { type GroupActions, type GroupRow } from "../types/types.js";
 
 const getGroupColumns = (actions: GroupActions): TableColumn<GroupRow>[] => [
@@ -20,7 +20,7 @@ const getGroupColumns = (actions: GroupActions): TableColumn<GroupRow>[] => [
 	},
 	{
 		accessorFn: (group: GroupRow): React.ReactNode => (
-			<GroupOptions groupId={group.id} onEdit={actions.onEdit} />
+			<GroupOptionsCell groupId={group.id} onEdit={actions.onEdit} />
 		),
 		header: "",
 		id: "options",
