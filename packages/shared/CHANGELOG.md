@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.9.1...shared-v1.10.0) (2024-09-09)
+
+
+### Features
+
+* restrict users manage groups gf-84 ([#175](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/175)) ([064e3dc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/064e3dce0ecb217f380c313f4844c1b8b336b52a))
+
 ## [1.9.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.9.0...shared-v1.9.1) (2024-09-06)
 
 

@@ -5,6 +5,7 @@ const ExceptionMessage = {
 	INVALID_CREDENTIALS: "Invalid credentials.",
 	INVALID_TOKEN: "Invalid token.",
 	INVALID_TOKEN_NO_USER_ID: "Token is invalid: userId missing.",
+	NO_PERMISSION: "You do not have permission to access this resource.",
 	NO_TOKEN_PROVIDED: "No token provided.",
 	PROJECT_API_KEY_ALREADY_HAS: "Project already has its API key.",
 	PROJECT_GROUP_NAME_USED: "Project group name is already in use.",

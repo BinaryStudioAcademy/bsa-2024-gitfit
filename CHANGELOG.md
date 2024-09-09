@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.15.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.14.0...v1.15.0) (2024-09-09)
+
+
+### Features
+
+* change confirmation modal window on deleting user account gf-216 ([#219](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/219)) ([dd9fd7f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/dd9fd7fdad0801bc325c94babc226c6e04b74fd8))
+* improve toast notification position and design gf-201 ([#225](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/225)) ([f6de004](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f6de004f7a22b69f63c69bd84c224fb20fb4706e))
+
+
+### Bug Fixes
+
+* select hover styles and cursor, add searchable select gf-204 ([#226](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/226)) ([be81fba](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/be81fba5ee1c53111f860fafa5da740289f5fe08))
+
+## [1.14.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.13.0...v1.14.0) (2024-09-09)
+
+
+### Features
+
+* add display message for empty tables gf-206 ([#220](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/220)) ([f21abb7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f21abb76258dc28dd5ed6dd3c669bd552472177a))
+* restrict users manage groups gf-84 ([#175](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/175)) ([064e3dc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/064e3dce0ecb217f380c313f4844c1b8b336b52a))
+
 ## [1.13.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.12.1...v1.13.0) (2024-09-06)
 
 
