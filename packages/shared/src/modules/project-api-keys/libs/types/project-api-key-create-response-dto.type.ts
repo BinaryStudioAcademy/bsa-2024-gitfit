@@ -1,9 +1,9 @@
 type ProjectApiKeyCreateResponseDto = {
 	apiKey: string;
-	createdBy: number;
+	createdByUserId: number;
 	id: number;
 	projectId: number;
-	updatedBy: number;
+	updatedByUserId: number;
 };
 
 export { type ProjectApiKeyCreateResponseDto };

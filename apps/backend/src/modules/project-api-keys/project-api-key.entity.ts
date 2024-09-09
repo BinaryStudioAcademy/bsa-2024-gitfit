@@ -3,7 +3,7 @@ import { type Entity } from "~/libs/types/types.js";
 import { type ProjectApiKeyCreateResponseDto } from "./libs/types/types.js";
 
 class ProjectApiKeyEntity implements Entity {
-	private createdBy!: number;
+	private createdByUserId!: number;
 
 	private encryptedKey!: string;
 
@@ -11,67 +11,67 @@ class ProjectApiKeyEntity implements Entity {
 
 	private projectId!: number;
 
-	private updatedBy!: number;
+	private updatedByUserId!: number;
 
 	private constructor({
-		createdBy,
+		createdByUserId,
 		encryptedKey,
 		id,
 		projectId,
-		updatedBy,
+		updatedByUserId,
 	}: {
-		createdBy: number;
+		createdByUserId: number;
 		encryptedKey: string;
 		id: null | number;
 		projectId: number;
-		updatedBy: number;
+		updatedByUserId: number;
 	}) {
 		this.encryptedKey = encryptedKey;
 		this.id = id;
 		this.projectId = projectId;
-		this.createdBy = createdBy;
-		this.updatedBy = updatedBy;
+		this.createdByUserId = createdByUserId;
+		this.updatedByUserId = updatedByUserId;
 	}
 
 	public static initialize({
-		createdBy,
+		createdByUserId,
 		encryptedKey,
 		id,
 		projectId,
-		updatedBy,
+		updatedByUserId,
 	}: {
-		createdBy: number;
+		createdByUserId: number;
 		encryptedKey: string;
 		id: number;
 		projectId: number;
-		updatedBy: number;
+		updatedByUserId: number;
 	}): ProjectApiKeyEntity {
 		return new ProjectApiKeyEntity({
-			createdBy,
+			createdByUserId,
 			encryptedKey,
 			id,
 			projectId,
-			updatedBy,
+			updatedByUserId,
 		});
 	}
 
 	public static initializeNew({
-		createdBy,
+		createdByUserId,
 		encryptedKey,
 		projectId,
-		updatedBy,
+		updatedByUserId,
 	}: {
-		createdBy: number;
+		createdByUserId: number;
 		encryptedKey: string;
 		projectId: number;
-		updatedBy: number;
+		updatedByUserId: number;
 	}): ProjectApiKeyEntity {
 		return new ProjectApiKeyEntity({
-			createdBy,
+			createdByUserId,
 			encryptedKey,
 			id: null,
 			projectId,
-			updatedBy,
+			updatedByUserId,
 		});
 	}
 
@@ -80,10 +80,10 @@ class ProjectApiKeyEntity implements Entity {
 		"apiKey" | "id"
 	> {
 		return {
-			createdBy: this.createdBy,
+			createdByUserId: this.createdByUserId,
 			encryptedKey: this.encryptedKey,
 			projectId: this.projectId,
-			updatedBy: this.updatedBy,
+			updatedByUserId: this.updatedByUserId,
 		};
 	}
 
@@ -92,11 +92,11 @@ class ProjectApiKeyEntity implements Entity {
 		"apiKey"
 	> {
 		return {
-			createdBy: this.createdBy,
+			createdByUserId: this.createdByUserId,
 			encryptedKey: this.encryptedKey,
 			id: this.id as number,
 			projectId: this.projectId,
-			updatedBy: this.updatedBy,
+			updatedByUserId: this.updatedByUserId,
 		};
 	}
 }

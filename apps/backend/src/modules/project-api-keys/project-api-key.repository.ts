@@ -13,16 +13,16 @@ class ProjectApiKeyRepository implements Repository {
 	public async create(
 		entity: ProjectApiKeyEntity,
 	): Promise<ProjectApiKeyEntity> {
-		const { createdBy, encryptedKey, projectId, updatedBy } =
+		const { createdByUserId, encryptedKey, projectId, updatedByUserId } =
 			entity.toNewObject();
 
 		const projectApiKey = await this.projectApiKeyModel
 			.query()
 			.insert({
-				createdBy,
+				createdByUserId,
 				encryptedKey,
 				projectId,
-				updatedBy,
+				updatedByUserId,
 			})
 			.returning("*")
 			.execute();

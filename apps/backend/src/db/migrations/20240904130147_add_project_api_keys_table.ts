@@ -4,12 +4,12 @@ const TABLE_NAME = "project_api_keys";
 
 const ColumnName = {
 	CREATED_AT: "created_at",
-	CREATED_BY: "created_by",
+	CREATED_BY_USER_ID: "created_by_user_id",
 	ENCRYPTED_KEY: "encrypted_key",
 	ID: "id",
 	PROJECT_ID: "project_id",
 	UPDATED_AT: "updated_at",
-	UPDATED_BY: "updated_by",
+	UPDATED_BY_USER_ID: "updated_by_user_id",
 } as const;
 
 const PROJECTS_TABLE = "projects";
@@ -28,14 +28,14 @@ function up(knex: Knex): Promise<void> {
 			.inTable(PROJECTS_TABLE)
 			.onDelete("CASCADE");
 		table
-			.integer(ColumnName.CREATED_BY)
+			.integer(ColumnName.CREATED_BY_USER_ID)
 			.unsigned()
 			.notNullable()
 			.references("id")
 			.inTable(USERS_TABLE)
 			.onDelete("CASCADE");
 		table
-			.integer(ColumnName.UPDATED_BY)
+			.integer(ColumnName.UPDATED_BY_USER_ID)
 			.unsigned()
 			.notNullable()
 			.references("id")

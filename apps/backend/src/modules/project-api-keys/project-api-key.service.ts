@@ -82,10 +82,10 @@ class ProjectApiKeyService implements Service {
 
 		const createdApiKeyEntity = await this.projectApiKeyRepository.create(
 			ProjectApiKeyEntity.initializeNew({
-				createdBy: userId,
+				createdByUserId: userId,
 				encryptedKey,
 				projectId,
-				updatedBy: userId,
+				updatedByUserId: userId,
 			}),
 		);
 
@@ -93,10 +93,10 @@ class ProjectApiKeyService implements Service {
 
 		return {
 			apiKey,
-			createdBy: createdApiKey.createdBy,
+			createdByUserId: createdApiKey.createdByUserId,
 			id: createdApiKey.id,
 			projectId: createdApiKey.projectId,
-			updatedBy: createdApiKey.updatedBy,
+			updatedByUserId: createdApiKey.updatedByUserId,
 		};
 	}
 
@@ -127,10 +127,10 @@ class ProjectApiKeyService implements Service {
 
 		return {
 			apiKey: decryptedApiKey,
-			createdBy: apiKey.createdBy,
+			createdByUserId: apiKey.createdByUserId,
 			id: apiKey.id,
 			projectId: apiKey.projectId,
-			updatedBy: apiKey.updatedBy,
+			updatedByUserId: apiKey.updatedByUserId,
 		};
 	}
 
