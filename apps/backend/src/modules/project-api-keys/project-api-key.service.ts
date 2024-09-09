@@ -72,7 +72,7 @@ class ProjectApiKeyService implements Service {
 
 		if (isProjectApiKeyExist) {
 			throw new ProjectApiKeyError({
-				message: ExceptionMessage.PROJECT_API_KEY_ALREADY_HAS,
+				message: ExceptionMessage.PROJECT_API_KEY_ALREADY_EXISTS,
 				status: HTTPCode.CONFLICT,
 			});
 		}
