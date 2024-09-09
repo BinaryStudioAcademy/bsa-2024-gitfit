@@ -4,40 +4,38 @@ import { Checkbox } from "~/libs/components/components.js";
 import { useAppForm, useFormWatch } from "~/libs/hooks/hooks.js";
 
 type Properties = {
-	id: number;
+	id: string;
 	isChecked: boolean;
-	name: string;
 	onToggle: (id: number) => void;
 };
 
 const SelectRowCell = ({
 	id,
 	isChecked,
-	name,
 	onToggle,
 }: Properties): JSX.Element => {
 	const { control, errors, handleValueSet } = useAppForm({
 		defaultValues: {
-			[name]: isChecked,
+			[id]: isChecked,
 		},
 	});
 
 	useEffect(() => {
-		handleValueSet(name, isChecked);
-	}, [name, isChecked, handleValueSet]);
+		handleValueSet(id, isChecked);
+	}, [id, isChecked, handleValueSet]);
 
 	const watchedValue = useFormWatch({
 		control,
-		name,
+		name: id,
 	});
 
 	useEffect(() => {
 		if (watchedValue !== isChecked) {
-			onToggle(id);
+			onToggle(+id);
 		}
 	}, [watchedValue, isChecked, id, onToggle]);
 
-	return <Checkbox control={control} errors={errors} name={name} />;
+	return <Checkbox control={control} errors={errors} name={id} />;
 };
 
 export { SelectRowCell };

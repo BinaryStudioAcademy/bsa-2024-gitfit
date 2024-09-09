@@ -10,22 +10,25 @@ import { type TableColumn } from "~/libs/types/types.js";
 import { SelectRowCell } from "./components/select-row-cell/select-row-cell.js";
 import styles from "./styles.module.css";
 
-type Properties<T> = {
+type BaseProperties<T> = {
 	columns: TableColumn<T>[];
 	data: T[];
-	getRowId?: (row: T) => number;
-	name?: string;
-	onRowSelect?: (rowId: number) => void;
-	selectedIds?: number[];
 };
+
+type SelectableProperties<T> = {
+	getRowId: (row: T) => number;
+	onRowSelect: (rowId: number) => void;
+	selectedRowIds: number[];
+};
+
+type Properties<T> =
+	| BaseProperties<T>
+	| (BaseProperties<T> & SelectableProperties<T>);
 
 const Table = <T extends object>({
 	columns,
 	data,
-	getRowId,
-	name,
-	onRowSelect,
-	selectedIds,
+	...selectableProperties
 }: Properties<T>): JSX.Element => {
 	const table = useReactTable({
 		columns,
@@ -35,13 +38,15 @@ const Table = <T extends object>({
 
 	const hasData = data.length !== EMPTY_LENGTH;
 
+	const isRowSelectable = "onRowSelect" in selectableProperties;
+
 	return (
 		<div className={styles["table-container"]}>
 			<table className={styles["table"]}>
 				<thead className={styles["table-head"]}>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<tr className={styles["table-row"]} key={headerGroup.id}>
-							{onRowSelect && <th className={styles["table-header"]} />}
+							{isRowSelectable && <th className={styles["table-header"]} />}
 							{headerGroup.headers.map((header) => (
 								<th className={styles["table-header"]} key={header.id}>
 									{flexRender(
@@ -57,13 +62,16 @@ const Table = <T extends object>({
 					{hasData ? (
 						table.getRowModel().rows.map((row) => (
 							<tr className={styles["table-row"]} key={row.id}>
-								{onRowSelect && selectedIds && name && getRowId && (
+								{isRowSelectable && (
 									<td className={styles["table-data"]}>
 										<SelectRowCell
-											id={getRowId(row.original)}
-											isChecked={selectedIds.includes(getRowId(row.original))}
-											name={name}
-											onToggle={onRowSelect}
+											id={selectableProperties
+												.getRowId(row.original)
+												.toString()}
+											isChecked={selectableProperties.selectedRowIds.includes(
+												selectableProperties.getRowId(row.original),
+											)}
+											onToggle={selectableProperties.onRowSelect}
 										/>
 									</td>
 								)}

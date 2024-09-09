@@ -6,29 +6,21 @@ import { type UserRow } from "../../libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	getRowId?: (row: UserRow) => number;
-	name?: string;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
-	onRowSelect?: (rowId: number) => void;
 	page: number;
 	pageSize: number;
 	paginationBackground?: "primary" | "secondary";
-	selectedIds?: number[];
 	totalItemsCount: number;
 	users: UserGetAllItemResponseDto[];
 };
 
 const UsersTable = ({
-	getRowId,
-	name,
 	onPageChange,
 	onPageSizeChange,
-	onRowSelect,
 	page,
 	pageSize,
 	paginationBackground = "primary",
-	selectedIds,
 	totalItemsCount,
 	users,
 }: Properties): JSX.Element => {
@@ -37,18 +29,7 @@ const UsersTable = ({
 
 	return (
 		<div className={styles["users-table"]}>
-			{onRowSelect && selectedIds && name && getRowId ? (
-				<Table<UserRow>
-					columns={userColumns}
-					data={userData}
-					getRowId={getRowId}
-					name={name}
-					onRowSelect={onRowSelect}
-					selectedIds={selectedIds}
-				/>
-			) : (
-				<Table<UserRow> columns={userColumns} data={userData} />
-			)}
+			<Table<UserRow> columns={userColumns} data={userData} />
 			<TablePagination
 				background={paginationBackground}
 				onPageChange={onPageChange}

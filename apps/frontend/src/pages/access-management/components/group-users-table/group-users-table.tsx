@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { type FieldErrors, type UseFormSetValue } from "react-hook-form";
 
-import { Loader } from "~/libs/components/components.js";
+import {
+	Loader,
+	Table,
+	TablePagination,
+} from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
@@ -14,8 +18,8 @@ import {
 	type GroupCreateRequestDto,
 } from "~/modules/groups/groups.js";
 
+import { getUserColumns, getUserRows } from "../../libs/helpers/helpers.js";
 import { type UserRow } from "../../libs/types/types.js";
-import { UsersTable } from "../users-table/users-table.js";
 import styles from "./styles.module.css";
 
 const getRowId = (row: UserRow): number => row.id;
@@ -40,9 +44,12 @@ const GroupUsersTable = ({
 	);
 
 	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
-		queryParameterPrefix: "user",
+		queryParameterPrefix: "group-user",
 		totalItemsCount: usersTotalCount,
 	});
+
+	const userColumns = getUserColumns();
+	const userData: UserRow[] = getUserRows(users);
 
 	useEffect(() => {
 		void dispatch(groupActions.loadUsers({ page, pageSize }));
@@ -51,6 +58,10 @@ const GroupUsersTable = ({
 	useEffect(() => {
 		setValue("userIds", selectedUserIds);
 	}, [selectedUserIds, setValue]);
+
+	const error = errors["userIds"]?.message;
+	const hasError = Boolean(error);
+	const hasSelectedUserIds = selectedUserIds.length === EMPTY_LENGTH;
 
 	if (
 		usersDataStatus === DataStatus.IDLE ||
@@ -62,21 +73,25 @@ const GroupUsersTable = ({
 	return (
 		<>
 			<span className={styles["table-title"]}>Users</span>
-			<UsersTable
-				getRowId={getRowId}
-				name="userIds"
-				onPageChange={onPageChange}
-				onPageSizeChange={onPageSizeChange}
-				onRowSelect={onToggle}
-				page={page}
-				pageSize={pageSize}
-				paginationBackground="secondary"
-				selectedIds={selectedUserIds}
-				totalItemsCount={usersTotalCount}
-				users={users}
-			/>
-			{selectedUserIds.length === EMPTY_LENGTH && errors.userIds && (
-				<div className={styles["error-message"]}>{errors.userIds.message}</div>
+			<div className={styles["users-table"]}>
+				<Table<UserRow>
+					columns={userColumns}
+					data={userData}
+					getRowId={getRowId}
+					onRowSelect={onToggle}
+					selectedRowIds={selectedUserIds}
+				/>
+				<TablePagination
+					background="secondary"
+					onPageChange={onPageChange}
+					onPageSizeChange={onPageSizeChange}
+					page={page}
+					pageSize={pageSize}
+					totalItemsCount={usersTotalCount}
+				/>
+			</div>
+			{hasError && hasSelectedUserIds && (
+				<div className={styles["error-message"]}>{error}</div>
 			)}
 		</>
 	);
