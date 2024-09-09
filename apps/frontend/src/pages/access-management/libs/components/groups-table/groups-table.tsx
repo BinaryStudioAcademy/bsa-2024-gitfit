@@ -40,7 +40,12 @@ const GroupsTable = ({
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { isOpened, onClose, onOpen } = useModal();
+	const {
+		isOpened: isDeleteModalOpen,
+		onClose: onDeleteModalClose,
+		onOpen: onDeleteModalOpen,
+	} = useModal();
+
 	const [groupToDelete, setGroupToDelete] =
 		useState<GroupGetAllItemResponseDto | null>(null);
 
@@ -49,15 +54,15 @@ const GroupsTable = ({
 			const group = groups.find(({ id }) => id === groupId);
 			setGroupToDelete(group ?? null);
 
-			onOpen();
+			onDeleteModalOpen();
 		},
 	});
 	const groupData: GroupRow[] = getGroupRows(groups);
 
 	const handleModalClose = useCallback(() => {
 		setGroupToDelete(null);
-		onClose();
-	}, [onClose, setGroupToDelete]);
+		onDeleteModalClose();
+	}, [onDeleteModalClose, setGroupToDelete]);
 
 	const handleDeleteConfirm = useCallback(() => {
 		if (groupToDelete) {
@@ -100,7 +105,7 @@ const GroupsTable = ({
 			{groupToDelete && (
 				<ConfirmationModal
 					content="The group will be deleted. This action cannot be undone. Do you want to continue?"
-					isOpened={isOpened}
+					isOpened={isDeleteModalOpen}
 					onClose={handleModalClose}
 					onConfirm={handleDeleteConfirm}
 				/>
