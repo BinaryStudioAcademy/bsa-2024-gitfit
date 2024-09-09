@@ -96,6 +96,8 @@ class ProjectApiKeyController extends BaseController {
 	 *                    $ref: "#/components/schemas/ProjectApiKey"
 	 *        409:
 	 *          description: The project already has API key
+	 *        404:
+	 *          description: Either user or project not found
 	 */
 	private async create(
 		options: APIHandlerOptions<{
