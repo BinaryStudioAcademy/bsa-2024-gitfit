@@ -11,6 +11,7 @@ type Properties = {
 	content: React.ReactNode;
 	isOpened: boolean;
 	onClose: () => void;
+	usePositioning?: boolean;
 };
 
 const Popover = ({
@@ -18,11 +19,16 @@ const Popover = ({
 	content,
 	isOpened,
 	onClose,
+	usePositioning,
 }: Properties): JSX.Element => {
 	const popoverReference = useRef<HTMLDivElement>(null);
 	const popoverTargetReference = useRef<HTMLDivElement>(null);
 
-	const position = usePopoverPosition(popoverTargetReference, isOpened);
+	const position = usePopoverPosition(
+		popoverTargetReference,
+		isOpened,
+		usePositioning,
+	);
 
 	useHandleClickOutside(popoverReference, onClose);
 

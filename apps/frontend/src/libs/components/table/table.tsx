@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-table";
 
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { useEffect, useSelectedItems } from "~/libs/hooks/hooks.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
@@ -58,7 +59,13 @@ const Table = <T extends object>({
 							{onSelect && <th className={styles["table-header"]} />}
 
 							{headerGroup.headers.map((header) => (
-								<th className={styles["table-header"]} key={header.id}>
+								<th
+									className={getValidClassNames(
+										styles["table-header"],
+										header.id === "options" && styles["options-column"],
+									)}
+									key={header.id}
+								>
 									{flexRender(
 										header.column.columnDef.header,
 										header.getContext(),

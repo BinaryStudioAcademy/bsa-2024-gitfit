@@ -1,4 +1,13 @@
-import { Modal, Table, TablePagination } from "~/libs/components/components.js";
+import {
+	ConfirmationModal,
+	Modal,
+	Table,
+	TablePagination,
+} from "~/libs/components/components.js";
+import {
+	FIRST_PAGE,
+	ITEMS_DECREMENT,
+} from "~/libs/components/table-pagination/libs/constants/constants.js";
 import {
 	useAppDispatch,
 	useCallback,
@@ -37,6 +46,8 @@ const GroupsTable = ({
 	const { isOpened, onClose, onOpen } = useModal();
 	const [groupToEdit, setGroupToEdit] =
 		useState<GroupGetAllItemResponseDto | null>(null);
+	const [groupToDelete, setGroupToDelete] =
+		useState<GroupGetAllItemResponseDto | null>(null);
 
 	const handleModalClose = useCallback(() => {
 		setGroupToEdit(null);
@@ -51,7 +62,40 @@ const GroupsTable = ({
 		[dispatch, handleModalClose],
 	);
 
+	const handleDeleteConfirm = useCallback(() => {
+		if (groupToDelete) {
+			void dispatch(groupActions.deleteById(groupToDelete.id))
+				.unwrap()
+				.then(() => {
+					const newTotalCount = totalItemsCount - ITEMS_DECREMENT;
+					const totalPages = Math.max(
+						Math.ceil(newTotalCount / pageSize),
+						FIRST_PAGE,
+					);
+
+					const newPage = Math.min(page, totalPages);
+					onPageChange(newPage);
+				});
+		}
+
+		handleModalClose();
+	}, [
+		dispatch,
+		groupToDelete,
+		handleModalClose,
+		totalItemsCount,
+		page,
+		pageSize,
+		onPageChange,
+	]);
+
 	const groupColumns = getGroupColumns({
+		onDelete: (groupId: number) => {
+			const group = groups.find(({ id }) => id === groupId);
+			setGroupToDelete(group ?? null);
+
+			onOpen();
+		},
 		onEdit: (groupId: number) => {
 			const group = groups.find(({ id }) => id === groupId);
 			setGroupToEdit(group ?? null);
@@ -80,6 +124,15 @@ const GroupsTable = ({
 				>
 					<GroupsUpdateForm group={groupToEdit} onSubmit={handleUpdate} />
 				</Modal>
+			)}
+
+			{groupToDelete && (
+				<ConfirmationModal
+					content="The group will be deleted. This action cannot be undone. Do you want to continue?"
+					isOpened={isOpened}
+					onClose={handleModalClose}
+					onConfirm={handleDeleteConfirm}
+				/>
 			)}
 		</>
 	);

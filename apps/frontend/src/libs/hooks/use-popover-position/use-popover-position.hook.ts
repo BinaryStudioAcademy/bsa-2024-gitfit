@@ -1,24 +1,32 @@
 import { useEffect, useState } from "~/libs/hooks/hooks.js";
 
 type Properties = {
-	left: number;
-	top: number;
+	left?: number;
+	top?: number;
 };
 
 const usePopoverPosition = <T extends HTMLElement>(
 	reference: React.RefObject<T>,
 	isActive: boolean,
+	usePositioning: boolean = false,
 ): Properties => {
-	const [position, setPosition] = useState<Properties>({ left: 0, top: 0 });
+	const [position, setPosition] = useState<Properties>({});
 
 	useEffect(() => {
-		if (reference.current && isActive) {
-			const targetRect = reference.current.getBoundingClientRect();
-			const { left, top } = targetRect;
+		if (!usePositioning || !isActive || !reference.current) {
+			setPosition({});
 
-			setPosition({ left, top });
+			return;
 		}
-	}, [reference, isActive]);
+
+		const { left, top } = reference.current.getBoundingClientRect();
+		const scrollOffset = window.scrollY || document.documentElement.scrollTop;
+
+		setPosition({
+			left,
+			top: top + scrollOffset,
+		});
+	}, [reference, isActive, usePositioning]);
 
 	return position;
 };

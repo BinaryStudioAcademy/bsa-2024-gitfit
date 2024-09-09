@@ -21,6 +21,19 @@ class GroupApi extends BaseHTTPApi {
 	public constructor({ baseUrl, http, storage }: Constructor) {
 		super({ baseUrl, http, path: APIPath.GROUPS, storage });
 	}
+
+	public async deleteById(id: number): Promise<boolean> {
+		const response = await this.load(
+			this.getFullEndpoint(GroupsApiPath.$ID, { id: String(id) }),
+			{
+				hasAuth: true,
+				method: "DELETE",
+			},
+		);
+
+		return await response.json<boolean>();
+	}
+
 	public async getAll(
 		query: PaginationQueryParameters,
 	): Promise<GroupGetAllResponseDto> {

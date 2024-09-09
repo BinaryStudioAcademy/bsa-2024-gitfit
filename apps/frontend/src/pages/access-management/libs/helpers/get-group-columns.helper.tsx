@@ -20,7 +20,11 @@ const getGroupColumns = (actions: GroupActions): TableColumn<GroupRow>[] => [
 	},
 	{
 		accessorFn: (group: GroupRow): React.ReactNode => (
-			<GroupOptionsCell groupId={group.id} onEdit={actions.onEdit} />
+			<GroupOptionsCell
+				groupId={group.id}
+				onDelete={actions.onDelete}
+				onEdit={actions.onEdit}
+			/>
 		),
 		header: "",
 		id: "options",

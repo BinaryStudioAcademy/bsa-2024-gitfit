@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+import { NotificationMessage } from "~/libs/enums/enums.js";
 import {
 	type AsyncThunkConfig,
 	type PaginationQueryParameters,
@@ -33,6 +34,21 @@ const loadAll = createAsyncThunk<
 	return await groupApi.getAll(query);
 });
 
+const deleteById = createAsyncThunk<boolean, number, AsyncThunkConfig>(
+	`${sliceName}/delete-by-id`,
+	async (id, { extra }) => {
+		const { groupApi, toastNotifier } = extra;
+
+		const isDeleted = await groupApi.deleteById(id);
+
+		if (isDeleted) {
+			toastNotifier.showSuccess(NotificationMessage.GROUP_DELETE_SUCCESS);
+		}
+
+		return isDeleted;
+	},
+);
+
 const update = createAsyncThunk<
 	GroupUpdateResponseDto,
 	{ id: number; payload: GroupUpdateRequestDto },
@@ -43,4 +59,4 @@ const update = createAsyncThunk<
 	return await groupApi.update(id, payload);
 });
 
-export { configureGroupUsers, loadAll, update };
+export { configureGroupUsers, deleteById, loadAll, update };

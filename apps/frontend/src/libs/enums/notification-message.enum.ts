@@ -1,4 +1,5 @@
 const NotificationMessage = {
+	GROUP_DELETE_SUCCESS: "Group was successfully deleted.",
 	PROFILE_UPDATE_SUCCESS: "Successfully updated profile information.",
 	PROJECT_CREATE_SUCCESS: "Project was successfully created",
 	PROJECT_DELETE_SUCCESS: "Project was successfully deleted.",

@@ -5,7 +5,7 @@ import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
 import { type GroupGetAllItemResponseDto } from "../libs/types/types.js";
-import { configureGroupUsers, loadAll, update } from "./actions.js";
+import { configureGroupUsers, deleteById, loadAll, update } from "./actions.js";
 
 type EntityState<T> = {
 	dataStatus: ValueOf<typeof DataStatus>;
@@ -73,6 +73,20 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(update.rejected, (state) => {
 			state.groups.dataStatus = DataStatus.REJECTED;
+		});
+		builder.addCase(deleteById.fulfilled, (state, action) => {
+			const deletedGroupId = action.meta.arg;
+			state.groups.items = state.groups.items.filter(
+				(group) => group.id !== deletedGroupId,
+			);
+			state.groups.totalCount -= 1;
+		});
+		builder.addCase(deleteById.fulfilled, (state, action) => {
+			const deletedGroupId = action.meta.arg;
+			state.groups.items = state.groups.items.filter(
+				(group) => group.id !== deletedGroupId,
+			);
+			state.groups.totalCount -= 1;
 		});
 	},
 	initialState,

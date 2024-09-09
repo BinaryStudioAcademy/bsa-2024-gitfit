@@ -7,6 +7,7 @@ type Properties = {
 	isOpened: boolean;
 	onClose: () => void;
 	onOpen: () => void;
+	usePositioning?: boolean;
 };
 
 const Menu = ({
@@ -14,6 +15,7 @@ const Menu = ({
 	isOpened,
 	onClose,
 	onOpen,
+	usePositioning = false,
 }: Properties): JSX.Element => {
 	return (
 		<Popover
@@ -24,6 +26,7 @@ const Menu = ({
 			}
 			isOpened={isOpened}
 			onClose={onClose}
+			usePositioning={usePositioning}
 		>
 			<IconButton
 				iconName="ellipsis"
