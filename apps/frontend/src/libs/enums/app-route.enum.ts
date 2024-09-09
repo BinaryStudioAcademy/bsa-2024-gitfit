@@ -1,6 +1,6 @@
 const AppRoute = {
 	ACCESS_MANAGEMENT: "/access-management",
-	ANALYTICS: "/analitycs",
+	ANALYTICS: "/analytics",
 	ANY: "*",
 	PROFILE: "/profile",
 	PROJECT: "/projects/:id",

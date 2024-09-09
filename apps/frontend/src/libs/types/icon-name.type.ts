@@ -1,6 +1,7 @@
 type IconName =
 	| "access"
 	| "analytics"
+	| "calendar"
 	| "contributors"
 	| "cross"
 	| "ellipsis"
