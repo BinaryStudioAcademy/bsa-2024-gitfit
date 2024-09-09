@@ -18,8 +18,8 @@ import {
 	type GroupCreateRequestDto,
 } from "~/modules/groups/groups.js";
 
-import { getUserColumns, getUserRows } from "../../libs/helpers/helpers.js";
-import { type UserRow } from "../../libs/types/types.js";
+import { getUserColumns, getUserRows } from "../../helpers/helpers.js";
+import { type UserRow } from "../../types/types.js";
 import styles from "./styles.module.css";
 
 const getRowId = (row: UserRow): number => row.id;

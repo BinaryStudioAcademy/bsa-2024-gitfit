@@ -14,9 +14,11 @@ import {
 } from "~/modules/groups/groups.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-import { GroupCreateForm } from "./components/group-create-form/group-create-form.js";
-import { GroupsTable } from "./components/groups-table/groups-table.js";
-import { UsersTable } from "./components/users-table/users-table.js";
+import {
+	GroupCreateForm,
+	GroupsTable,
+	UsersTable,
+} from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const AccessManagement = (): JSX.Element => {
