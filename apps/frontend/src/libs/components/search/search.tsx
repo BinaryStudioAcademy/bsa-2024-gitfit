@@ -16,7 +16,7 @@ const Search = ({
 	label,
 	onChange,
 }: Properties): JSX.Element => {
-	const { onSearchChange, search } = useSearch();
+	const { search, setSearch } = useSearch();
 
 	const { control, errors } = useAppForm({
 		defaultValues: { search },
@@ -28,7 +28,7 @@ const Search = ({
 	useEffect(() => {
 		const debouncedOnChange = initDebounce(() => {
 			onChange(value);
-			onSearchChange(value);
+			setSearch(value);
 		}, SEARCH_TIMEOUT);
 
 		debouncedOnChange(value);
@@ -36,7 +36,7 @@ const Search = ({
 		return (): void => {
 			debouncedOnChange.clear();
 		};
-	}, [onChange, value, onSearchChange]);
+	}, [onChange, value, setSearch]);
 
 	return (
 		<Input

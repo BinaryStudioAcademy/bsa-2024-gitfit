@@ -1,1 +1,1 @@
-export { useSearch } from "./use-search-query-parameter.hook.js";
+export { useSearch } from "./use-search.hook.js";

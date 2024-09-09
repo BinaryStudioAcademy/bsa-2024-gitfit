@@ -34,7 +34,7 @@ import styles from "./styles.module.css";
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { onSearchChange, search } = useSearch();
+	const { search, setSearch } = useSearch();
 
 	const [selectedProject, setSelectedProject] =
 		useState<null | ProjectGetAllItemResponseDto>(null);
@@ -49,9 +49,9 @@ const Projects = (): JSX.Element => {
 	const handleSearchChange = useCallback(
 		(value: string) => {
 			void dispatch(projectActions.loadAll(value));
-			onSearchChange(value);
+			setSearch(value);
 		},
-		[dispatch, onSearchChange],
+		[dispatch, setSearch],
 	);
 
 	const hasProject = projects.length !== EMPTY_LENGTH;
