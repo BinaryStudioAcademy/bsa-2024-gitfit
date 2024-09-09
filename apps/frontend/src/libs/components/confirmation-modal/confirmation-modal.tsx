@@ -4,7 +4,6 @@ import { useCallback } from "~/libs/hooks/hooks.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	confirmLabel?: string;
 	content: string;
 	isOpened: boolean;
 	onClose: () => void;
