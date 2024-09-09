@@ -78,7 +78,7 @@ class ProjectController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
-				this.findAllByName(
+				this.findAll(
 					options as APIHandlerOptions<{
 						query: ProjectGetAllRequestDto;
 					}>,
@@ -209,22 +209,15 @@ class ProjectController extends BaseController {
 	 *                    items:
 	 *                      $ref: "#/components/schemas/Project"
 	 */
-	private async findAllByName(
+	private async findAll(
 		options: APIHandlerOptions<{
 			query: ProjectGetAllRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
 		const { query } = options;
 
-		if (!query.name) {
-			return {
-				payload: await this.projectService.findAll(),
-				status: HTTPCode.OK,
-			};
-		}
-
 		return {
-			payload: await this.projectService.findAllbyName(query),
+			payload: await this.projectService.findAll(query),
 			status: HTTPCode.OK,
 		};
 	}

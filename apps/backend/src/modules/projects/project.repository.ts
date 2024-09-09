@@ -42,27 +42,22 @@ class ProjectRepository implements Repository {
 		return item ? ProjectEntity.initialize(item) : null;
 	}
 
-	public async findAll(): Promise<{ items: ProjectEntity[] }> {
-		const projects = await this.projectModel
+	public async findAll(payload: {
+		name?: string;
+	}): Promise<{ items: ProjectEntity[] }> {
+		const query = this.projectModel
 			.query()
-			.orderBy("created_at", SortType.DESCENDING)
-			.execute();
+			.orderBy("created_at", SortType.DESCENDING);
+
+		if (payload.name) {
+			query.whereILike("name", `%${payload.name}%`);
+		}
+
+		const projects = await query.execute();
 
 		return {
 			items: projects.map((project) => ProjectEntity.initialize(project)),
 		};
-	}
-
-	public async findAllbyName(name: string): Promise<ProjectEntity[]> {
-		const projects = await this.projectModel
-
-			.query()
-			.orderBy("created_at", SortType.DESCENDING)
-
-			.whereILike("name", `%${name}%`)
-			.execute();
-
-		return projects.map((project) => ProjectEntity.initialize(project));
 	}
 
 	public async findByName(name: string): Promise<null | ProjectEntity> {
