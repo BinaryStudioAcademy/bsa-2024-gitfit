@@ -16,7 +16,7 @@ const GroupMenu = ({ groupId, onDelete }: Properties): React.ReactElement => {
 	}, [onDelete, groupId]);
 
 	return (
-		<div className={styles["options-container"]}>
+		<div className={styles["menu-container"]}>
 			<Menu
 				hasPositioning
 				isOpened={isOpened}

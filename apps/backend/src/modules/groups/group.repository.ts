@@ -51,7 +51,7 @@ class GroupRepository implements Repository {
 	}
 
 	public async find(id: number): Promise<GroupModel | null> {
-		const group = await this.groupModel.query().findById(id);
+		const group = await this.groupModel.query().findById(id).execute();
 
 		return group ?? null;
 	}
