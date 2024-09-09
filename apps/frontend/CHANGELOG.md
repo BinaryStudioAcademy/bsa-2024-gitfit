@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.13.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.12.0...frontend-v1.13.0) (2024-09-09)
+
+
+### Features
+
+* add display message for empty tables gf-206 ([#220](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/220)) ([f21abb7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f21abb76258dc28dd5ed6dd3c669bd552472177a))
+* restrict users manage groups gf-84 ([#175](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/175)) ([064e3dc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/064e3dce0ecb217f380c313f4844c1b8b336b52a))
+
 ## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.11.1...frontend-v1.12.0) (2024-09-06)
 
 
