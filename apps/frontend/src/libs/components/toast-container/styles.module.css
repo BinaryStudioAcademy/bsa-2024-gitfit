@@ -5,3 +5,8 @@
 	--toastify-color-error: var(--color-danger);
 	--toastify-font-family: "Inter", sans-serif;
 }
+
+.toast-notify {
+	background-color: var(--color-background-secondary);
+	border: 1px solid var(--color-border-secondary);
+}
