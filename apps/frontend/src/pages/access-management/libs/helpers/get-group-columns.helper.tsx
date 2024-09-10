@@ -25,7 +25,7 @@ const getGroupColumns = (
 			<GroupMenu groupId={group.id} onDelete={onDelete} />
 		),
 		header: "",
-		id: "options",
+		id: "menu",
 		size: 0,
 	},
 ];
