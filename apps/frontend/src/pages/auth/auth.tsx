@@ -1,16 +1,13 @@
 import { useNavigate } from "react-router-dom";
 
 import logoSrc from "~/assets/images/logo-default.svg";
-import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
 import { AppRoute } from "~/libs/enums/enums.js";
-import { getFirstAvailableRoute } from "~/libs/helpers/get-first-available-route.js";
 import {
 	useAppDispatch,
 	useAppSelector,
 	useCallback,
 	useEffect,
 	useLocation,
-	useMemo,
 } from "~/libs/hooks/hooks.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
 import {
@@ -27,21 +24,14 @@ const Auth = (): JSX.Element => {
 	const authenticatedUser = useAppSelector(
 		(state) => state.auth.authenticatedUser,
 	);
-	const userPermissions = useMemo(() => {
-		return authenticatedUser
-			? authenticatedUser.groups.flatMap((group) => group.permissions)
-			: [];
-	}, [authenticatedUser]);
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (authenticatedUser) {
-			navigate(
-				getFirstAvailableRoute(userPermissions, SIDEBAR_ITEMS, AppRoute.ROOT),
-			);
+			navigate(AppRoute.PROJECTS);
 		}
-	}, [authenticatedUser, dispatch, navigate, userPermissions]);
+	}, [authenticatedUser, dispatch, navigate]);
 
 	const handleSignInSubmit = useCallback(
 		(payload: UserSignInRequestDto): void => {
