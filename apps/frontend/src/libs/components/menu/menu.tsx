@@ -4,18 +4,18 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
+	hasFixedPositioning?: boolean;
 	isOpened: boolean;
 	onClose: () => void;
 	onOpen: () => void;
-	usePositioning?: boolean;
 };
 
 const Menu = ({
 	children,
+	hasFixedPositioning = false,
 	isOpened,
 	onClose,
 	onOpen,
-	usePositioning = false,
 }: Properties): JSX.Element => {
 	return (
 		<Popover
@@ -24,9 +24,9 @@ const Menu = ({
 					<div className={styles["options-content"]}>{children}</div>
 				</div>
 			}
+			hasFixedPositioning={hasFixedPositioning}
 			isOpened={isOpened}
 			onClose={onClose}
-			usePositioning={usePositioning}
 		>
 			<IconButton
 				iconName="ellipsis"

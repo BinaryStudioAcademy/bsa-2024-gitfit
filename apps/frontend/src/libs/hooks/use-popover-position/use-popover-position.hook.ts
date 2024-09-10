@@ -7,15 +7,13 @@ type Properties = {
 
 const usePopoverPosition = <T extends HTMLElement>(
 	reference: React.RefObject<T>,
-	isActive: boolean,
-	usePositioning: boolean = false,
+	isOpen: boolean,
+	hasFixedPositioning: boolean = false,
 ): Properties => {
 	const [position, setPosition] = useState<Properties>({});
 
 	useEffect(() => {
-		if (!usePositioning || !isActive || !reference.current) {
-			setPosition({});
-
+		if (!hasFixedPositioning || !reference.current) {
 			return;
 		}
 
@@ -26,7 +24,7 @@ const usePopoverPosition = <T extends HTMLElement>(
 			left,
 			top: top + scrollOffset,
 		});
-	}, [reference, isActive, usePositioning]);
+	}, [reference, isOpen, hasFixedPositioning]);
 
 	return position;
 };

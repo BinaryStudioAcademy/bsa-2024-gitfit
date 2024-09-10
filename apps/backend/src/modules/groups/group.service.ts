@@ -96,6 +96,15 @@ class GroupService implements Service {
 			});
 		}
 
+		const existingGroup = await this.groupRepository.findByName(payload.name);
+
+		if (existingGroup && existingGroup.id !== id) {
+			throw new GroupError({
+				message: ExceptionMessage.GROUP_NAME_USED,
+				status: HTTPCode.CONFLICT,
+			});
+		}
+
 		const { name, permissionIds = [], userIds } = payload;
 
 		const permissions = permissionIds.map((id) => ({ id }));
