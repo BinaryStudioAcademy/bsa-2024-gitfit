@@ -1,9 +1,13 @@
 import { Icon, Input } from "~/libs/components/components.js";
 import { initDebounce } from "~/libs/helpers/helpers.js";
-import { useAppForm, useEffect, useFormWatch } from "~/libs/hooks/hooks.js";
+import {
+	useAppForm,
+	useEffect,
+	useFormWatch,
+	useSearch,
+} from "~/libs/hooks/hooks.js";
 
 import { SEARCH_TIMEOUT } from "./libs/constants/constants.js";
-import { useSearch } from "./libs/hooks/hooks.js";
 
 type Properties = {
 	isLabelHidden: boolean;
@@ -16,7 +20,7 @@ const Search = ({
 	label,
 	onChange,
 }: Properties): JSX.Element => {
-	const { search, setSearch } = useSearch();
+	const { onSearch, search } = useSearch();
 
 	const { control, errors } = useAppForm({
 		defaultValues: { search },
@@ -28,7 +32,7 @@ const Search = ({
 	useEffect(() => {
 		const debouncedOnChange = initDebounce(() => {
 			onChange(value);
-			setSearch(value);
+			onSearch(value);
 		}, SEARCH_TIMEOUT);
 
 		debouncedOnChange(value);
@@ -36,7 +40,7 @@ const Search = ({
 		return (): void => {
 			debouncedOnChange.clear();
 		};
-	}, [onChange, value, setSearch]);
+	}, [onChange, value, onSearch]);
 
 	return (
 		<Input
