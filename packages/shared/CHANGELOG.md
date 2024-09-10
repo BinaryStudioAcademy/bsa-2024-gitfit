@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.11.0...shared-v1.12.0) (2024-09-10)
+
+
+### Features
+
+* add an ablity to create a group gf-79 ([#176](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/176)) ([ad36683](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ad366835d2fce03680d0d1208fde6ba3a56f5e57))
+
 ## [1.11.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.10.0...shared-v1.11.0) (2024-09-09)
 
 
