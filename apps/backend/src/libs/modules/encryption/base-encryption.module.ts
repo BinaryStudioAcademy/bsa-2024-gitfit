@@ -4,12 +4,14 @@ import crypto from "node:crypto";
 import { type Config } from "../config/config.js";
 import { type Encryption, type HashResult } from "./libs/types/types.js";
 
-const INPUT_ENCODING = "utf8";
-const OUTPUT_ENCODING = "base64";
-const INITIAL_VECTOR = "iv";
-
 class BaseEncryption implements Encryption {
 	private algorithm: string;
+
+	private initialVector: crypto.BinaryLike;
+
+	private inputEncoding: crypto.Encoding;
+
+	private outputEncoding: crypto.Encoding;
 
 	private saltRounds: number;
 
@@ -19,6 +21,9 @@ class BaseEncryption implements Encryption {
 		this.saltRounds = config.ENV.ENCRYPTION.SALT_ROUNDS;
 		this.algorithm = config.ENV.ENCRYPTION.ALGORITHM;
 		this.secret = config.ENV.ENCRYPTION.SECRET;
+		this.inputEncoding = "utf8";
+		this.outputEncoding = "base64";
+		this.initialVector = "iv";
 	}
 
 	public async compare(data: string, hash: string): Promise<boolean> {
@@ -29,22 +34,26 @@ class BaseEncryption implements Encryption {
 		const decipher = crypto.createDecipheriv(
 			this.algorithm,
 			this.secret,
-			INITIAL_VECTOR,
+			this.initialVector,
 		);
 
-		return decipher.update(encryptedData, OUTPUT_ENCODING, INPUT_ENCODING);
+		return decipher.update(
+			encryptedData,
+			this.outputEncoding,
+			this.inputEncoding,
+		);
 	}
 
 	public encrypt(data: string): string {
 		const chipher = crypto.createCipheriv(
 			this.algorithm,
 			this.secret,
-			INITIAL_VECTOR,
+			this.initialVector,
 		);
 
 		return (
-			chipher.update(data, INPUT_ENCODING, OUTPUT_ENCODING) +
-			chipher.final(OUTPUT_ENCODING)
+			chipher.update(data, this.inputEncoding, this.outputEncoding) +
+			chipher.final(this.outputEncoding)
 		);
 	}
 
