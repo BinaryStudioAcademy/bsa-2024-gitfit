@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.11.0...backend-v1.12.0) (2024-09-10)
+
+
+### Features
+
+* add admin group gf-227 ([#235](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/235)) ([1114411](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1114411c7ac28c715b13faaa27a790f7395758b5))
+* save search value to query parameters gf-200 ([#218](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/218)) ([8d5cb71](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8d5cb7135a078181a191f653091cf0217cd61023))
+
+## [1.11.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.10.0...backend-v1.11.0) (2024-09-10)
+
+
+### Features
+
+* add an ablity to create a group gf-79 ([#176](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/176)) ([ad36683](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ad366835d2fce03680d0d1208fde6ba3a56f5e57))
+
 ## [1.10.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.9.0...backend-v1.10.0) (2024-09-09)
 
 
