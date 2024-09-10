@@ -26,6 +26,7 @@ const getGroupColumns = (
 		),
 		header: "",
 		id: "options",
+		size: 0,
 	},
 ];
 

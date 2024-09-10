@@ -5,7 +5,6 @@ import {
 } from "@tanstack/react-table";
 
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
-import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -35,11 +34,11 @@ const Table = <T extends object>({
 						<tr className={styles["table-row"]} key={headerGroup.id}>
 							{headerGroup.headers.map((header) => (
 								<th
-									className={getValidClassNames(
-										styles["table-header"],
-										header.id === "options" && styles["options-column"],
-									)}
+									className={styles["table-header"]}
 									key={header.id}
+									style={{
+										width: header.column.columnDef.size,
+									}}
 								>
 									{flexRender(
 										header.column.columnDef.header,
@@ -56,11 +55,11 @@ const Table = <T extends object>({
 							<tr className={styles["table-row"]} key={row.id}>
 								{row.getVisibleCells().map((cell) => (
 									<td
-										className={getValidClassNames(
-											styles["table-data"],
-											cell.column.id === "options" && styles["options-column"],
-										)}
+										className={styles["table-data"]}
 										key={cell.id}
+										style={{
+											width: cell.column.columnDef.size,
+										}}
 									>
 										{typeof cell.getValue() === "object"
 											? (cell.getValue() as React.ReactNode)
