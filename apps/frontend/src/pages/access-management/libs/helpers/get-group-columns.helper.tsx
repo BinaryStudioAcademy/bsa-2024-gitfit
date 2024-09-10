@@ -1,7 +1,7 @@
 import { formatDate } from "~/libs/helpers/helpers.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
-import { GroupOptionsCell } from "../components/components.js";
+import { GroupMenu } from "../components/components.js";
 import { type GroupActions, type GroupRow } from "../types/types.js";
 
 const getGroupColumns = (actions: GroupActions): TableColumn<GroupRow>[] => [
@@ -19,15 +19,14 @@ const getGroupColumns = (actions: GroupActions): TableColumn<GroupRow>[] => [
 		header: "Created At",
 	},
 	{
-		accessorFn: (group: GroupRow): React.ReactNode => (
-			<GroupOptionsCell
-				groupId={group.id}
+		cell: ({ row }): React.ReactNode => (
+			<GroupMenu
+				groupId={row.original.id}
 				onDelete={actions.onDelete}
 				onEdit={actions.onEdit}
 			/>
 		),
 		header: "",
-		id: "options",
 	},
 ];
 

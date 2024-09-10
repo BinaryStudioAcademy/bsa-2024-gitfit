@@ -8,10 +8,7 @@ type Properties = {
 	groupId: number;
 } & GroupActions;
 
-const GroupOptionsCell = ({
-	groupId,
-	onEdit,
-}: Properties): React.ReactElement => {
+const GroupMenu = ({ groupId, onEdit }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
 
 	const handleEdit = useCallback(() => {
@@ -28,4 +25,4 @@ const GroupOptionsCell = ({
 	);
 };
 
-export { GroupOptionsCell };
+export { GroupMenu };

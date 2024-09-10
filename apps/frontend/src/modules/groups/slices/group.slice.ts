@@ -12,6 +12,7 @@ type State = {
 	groupCreateStatus: ValueOf<typeof DataStatus>;
 	groups: GroupGetAllItemResponseDto[];
 	groupsTotalCount: number;
+	groupUpdateStatus: ValueOf<typeof DataStatus>;
 	users: UserGetAllItemResponseDto[];
 	usersDataStatus: ValueOf<typeof DataStatus>;
 	usersTotalCount: number;
@@ -22,6 +23,7 @@ const initialState: State = {
 	groupCreateStatus: DataStatus.IDLE,
 	groups: [],
 	groupsTotalCount: 0,
+	groupUpdateStatus: DataStatus.IDLE,
 	users: [],
 	usersDataStatus: DataStatus.IDLE,
 	usersTotalCount: 0,
@@ -57,7 +59,7 @@ const { actions, name, reducer } = createSlice({
 		});
 
 		builder.addCase(update.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
+			state.groupUpdateStatus = DataStatus.PENDING;
 		});
 		builder.addCase(update.fulfilled, (state, action) => {
 			const updatedGroup = action.payload;
@@ -65,10 +67,10 @@ const { actions, name, reducer } = createSlice({
 				project.id === updatedGroup.id ? updatedGroup : project,
 			);
 
-			state.dataStatus = DataStatus.FULFILLED;
+			state.groupUpdateStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(update.rejected, (state) => {
-			state.dataStatus = DataStatus.REJECTED;
+			state.groupUpdateStatus = DataStatus.REJECTED;
 		});
 
 		builder.addCase(create.pending, (state) => {

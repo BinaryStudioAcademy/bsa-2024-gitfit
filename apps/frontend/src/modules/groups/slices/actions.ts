@@ -58,9 +58,13 @@ const update = createAsyncThunk<
 	{ id: number; payload: GroupUpdateRequestDto },
 	AsyncThunkConfig
 >(`${sliceName}/update`, async ({ id, payload }, { extra }) => {
-	const { groupApi } = extra;
+	const { groupApi, toastNotifier } = extra;
 
-	return await groupApi.update(id, payload);
+	const response = await groupApi.update(id, payload);
+
+	toastNotifier.showSuccess(NotificationMessage.GROUP_UPDATE_SUCCESS);
+
+	return response;
 });
 
 export { create, loadAll, loadUsers, update };

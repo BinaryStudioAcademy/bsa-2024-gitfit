@@ -31,6 +31,12 @@ const AccessManagement = (): JSX.Element => {
 	} = useAppSelector(({ users }) => users);
 
 	const {
+		dataStatus: groupsDataStatus,
+		groups,
+		groupsTotalCount,
+	} = useAppSelector(({ groups }) => groups);
+
+	const {
 		onPageChange: onUserPageChange,
 		onPageSizeChange: onUserPageSizeChange,
 		page: userPage,
@@ -41,17 +47,6 @@ const AccessManagement = (): JSX.Element => {
 	});
 
 	const {
-		isOpened: isModalOpened,
-		onClose: onModalClose,
-		onOpen: onModalOpen,
-	} = useModal();
-	const {
-		dataStatus: groupsDataStatus,
-		groups,
-		groupsTotalCount,
-	} = useAppSelector(({ groups }) => groups);
-
-	const {
 		onPageChange: onGroupPageChange,
 		onPageSizeChange: onGroupPageSizeChange,
 		page: groupPage,
@@ -60,6 +55,12 @@ const AccessManagement = (): JSX.Element => {
 		queryParameterPrefix: "group",
 		totalItemsCount: groupsTotalCount,
 	});
+
+	const {
+		isOpened: isModalOpened,
+		onClose: onModalClose,
+		onOpen: onModalOpen,
+	} = useModal();
 
 	useEffect(() => {
 		void dispatch(
