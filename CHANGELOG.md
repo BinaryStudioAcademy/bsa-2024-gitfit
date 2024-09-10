@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.19.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.18.0...v1.19.0) (2024-09-10)
+
+
+### Features
+
+* add hyphen to name pattern gf-236 ([#251](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/251)) ([63bacee](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/63bacee091c16682bbe0f699afda429225a4a26e))
+* remove ui page gf-243 ([#245](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/245)) ([f19c7ee](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f19c7ee2b416b0a1318c56fe2b6d12cae843181e))
+
+
+### Bug Fixes
+
+* resctict user manage group gf-254 ([#256](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/256)) ([73c7473](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/73c74736ed11930b58260a95fdbea260a4ff40a6))
+
 ## [1.18.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.17.0...v1.18.0) (2024-09-10)
 
 
