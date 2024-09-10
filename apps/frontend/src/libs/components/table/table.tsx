@@ -90,12 +90,7 @@ const Table = <T extends object>({
 											width: cell.column.columnDef.size,
 										}}
 									>
-										{typeof cell.getValue() === "object"
-											? (cell.getValue() as JSX.Element)
-											: flexRender(
-													cell.column.columnDef.cell,
-													cell.getContext(),
-												)}
+										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</td>
 								))}
 							</tr>
