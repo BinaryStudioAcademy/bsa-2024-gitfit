@@ -21,7 +21,7 @@ const getGroupColumns = (
 		header: "Created At",
 	},
 	{
-		accessorFn: (group: GroupRow): React.ReactNode => (
+		cell: ({ row: { original: group } }) => (
 			<GroupMenu groupId={group.id} onDelete={onDelete} />
 		),
 		header: "",
