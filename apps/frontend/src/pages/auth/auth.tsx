@@ -64,7 +64,6 @@ const Auth = (): JSX.Element => {
 		<main className={styles["container"]}>
 			<section className={styles["auth-container"]}>
 				<div className={styles["left-side"]}>
-					{/* TODO: replace logo */}
 					<img alt="logo" className={styles["logo-wrapper"]} src={logoSrc} />
 				</div>
 				<div className={styles["right-side"]}>
