@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.17.0...frontend-v1.18.0) (2024-09-10)
+
+
+### Features
+
+* remove ui page gf-243 ([#245](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/245)) ([f19c7ee](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f19c7ee2b416b0a1318c56fe2b6d12cae843181e))
+
 ## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.16.0...frontend-v1.17.0) (2024-09-10)
 
 

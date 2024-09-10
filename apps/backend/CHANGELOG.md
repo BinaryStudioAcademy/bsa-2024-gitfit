@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.12.0...backend-v1.12.1) (2024-09-10)
+
+
+### Bug Fixes
+
+* resctict user manage group gf-254 ([#256](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/256)) ([73c7473](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/73c74736ed11930b58260a95fdbea260a4ff40a6))
+
 ## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.11.0...backend-v1.12.0) (2024-09-10)
 
 
