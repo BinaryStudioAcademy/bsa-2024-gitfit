@@ -5,7 +5,7 @@ import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
 import { type GroupGetAllItemResponseDto } from "../libs/types/types.js";
-import { create, deleteById, loadAll, loadUsers, update } from "./actions.js";
+import { create, loadAll, loadUsers, update } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
@@ -70,13 +70,7 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(update.rejected, (state) => {
 			state.dataStatus = DataStatus.REJECTED;
 		});
-		builder.addCase(deleteById.fulfilled, (state, action) => {
-			const deletedGroupId = action.meta.arg;
-			state.groups = state.groups.filter(
-				(group) => group.id !== deletedGroupId,
-			);
-			state.groupsTotalCount -= 1;
-		});
+
 		builder.addCase(create.pending, (state) => {
 			state.groupCreateStatus = DataStatus.PENDING;
 		});

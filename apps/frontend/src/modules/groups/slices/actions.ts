@@ -53,21 +53,6 @@ const create = createAsyncThunk<
 	return response;
 });
 
-const deleteById = createAsyncThunk<boolean, number, AsyncThunkConfig>(
-	`${sliceName}/delete-by-id`,
-	async (id, { extra }) => {
-		const { groupApi, toastNotifier } = extra;
-
-		const isDeleted = await groupApi.deleteById(id);
-
-		if (isDeleted) {
-			toastNotifier.showSuccess(NotificationMessage.GROUP_DELETE_SUCCESS);
-		}
-
-		return isDeleted;
-	},
-);
-
 const update = createAsyncThunk<
 	GroupUpdateResponseDto,
 	{ id: number; payload: GroupUpdateRequestDto },
@@ -78,4 +63,4 @@ const update = createAsyncThunk<
 	return await groupApi.update(id, payload);
 });
 
-export { create, deleteById, loadAll, loadUsers, update };
+export { create, loadAll, loadUsers, update };
