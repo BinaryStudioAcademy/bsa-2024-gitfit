@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
-	hasPositioning?: boolean;
+	hasFixedPositioning?: boolean;
 	isOpened: boolean;
 	onClose: () => void;
 	onOpen: () => void;
@@ -12,7 +12,7 @@ type Properties = {
 
 const Menu = ({
 	children,
-	hasPositioning = false,
+	hasFixedPositioning = false,
 	isOpened,
 	onClose,
 	onOpen,
@@ -24,7 +24,7 @@ const Menu = ({
 					<div className={styles["options-content"]}>{children}</div>
 				</div>
 			}
-			hasPositioning={hasPositioning}
+			hasFixedPositioning={hasFixedPositioning}
 			isOpened={isOpened}
 			onClose={onClose}
 		>

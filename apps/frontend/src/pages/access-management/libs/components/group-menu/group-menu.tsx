@@ -18,7 +18,7 @@ const GroupMenu = ({ groupId, onDelete }: Properties): React.ReactElement => {
 	return (
 		<div className={styles["menu-container"]}>
 			<Menu
-				hasPositioning
+				hasFixedPositioning
 				isOpened={isOpened}
 				onClose={onClose}
 				onOpen={onOpen}
