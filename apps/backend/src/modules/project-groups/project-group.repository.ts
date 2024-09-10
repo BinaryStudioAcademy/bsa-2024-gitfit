@@ -50,7 +50,7 @@ class ProjectGroupRepository implements Repository {
 			await trx.rollback();
 
 			throw new ProjectGroupError({
-				message: ExceptionMessage.PROJECT_GROUP_CREATE_FAILED,
+				message: ExceptionMessage.CREATE_PROJECT_GROUP_FAILED,
 				status: HTTPCode.INTERNAL_SERVER_ERROR,
 			});
 		}

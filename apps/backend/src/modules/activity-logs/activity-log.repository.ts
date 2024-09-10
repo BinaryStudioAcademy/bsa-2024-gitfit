@@ -48,7 +48,7 @@ class ActivityLogRepository implements Repository {
 			return ActivityLogEntity.initialize(activityLogWithContributorData);
 		} catch {
 			throw new ActivityLogError({
-				message: ExceptionMessage.ACTIVITY_LOG_CREATE_FAILED,
+				message: ExceptionMessage.CREATE_ACTIVITY_LOG_FAILED,
 				status: HTTPCode.INTERNAL_SERVER_ERROR,
 			});
 		}
