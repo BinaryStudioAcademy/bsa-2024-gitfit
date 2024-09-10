@@ -40,7 +40,11 @@ const SignInForm = ({ onSubmit }: Properties): JSX.Element => {
 	}, []);
 
 	return (
-		<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>
+		<form
+			className={styles["form-wrapper"]}
+			noValidate
+			onSubmit={handleFormSubmit}
+		>
 			<p className={styles["form-text"]}>
 				Don&apos;t have an account?{" "}
 				<Link to={AppRoute.SIGN_UP}>Create new</Link>
