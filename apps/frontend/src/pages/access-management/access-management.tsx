@@ -106,7 +106,9 @@ const AccessManagement = (): JSX.Element => {
 			<section>
 				<div className={styles["section-header"]}>
 					<h2 className={styles["section-title"]}>Groups</h2>
-					<Button label="Create New" onClick={onModalOpen} />
+					<div className={styles["button-wrapper"]}>
+						<Button label="Create New" onClick={onModalOpen} />
+					</div>
 				</div>
 				<GroupsTable
 					groups={groups}

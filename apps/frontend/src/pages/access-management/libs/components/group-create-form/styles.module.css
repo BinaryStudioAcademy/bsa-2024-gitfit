@@ -6,7 +6,6 @@
 
 .button-wrapper {
 	display: flex;
-	flex-direction: column;
 	align-self: flex-end;
 	min-width: 150px;
 }
