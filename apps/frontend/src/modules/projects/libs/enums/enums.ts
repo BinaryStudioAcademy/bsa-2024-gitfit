@@ -1,1 +1,1 @@
-export { ProjectsApiPath } from "@git-fit/shared";
+export { ProjectsApiPath, ProjectValidationRule } from "@git-fit/shared";

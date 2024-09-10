@@ -14,7 +14,7 @@ import {
 import { actions as projectActions } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
-import { SetupAnalyticsModal } from "./components/components.js";
+import { SetupAnalyticsModal } from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
