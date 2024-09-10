@@ -14,7 +14,7 @@ const PermissionKey = {
 
 async function up(knex: Knex): Promise<void> {
 	await knex.transaction(async (trx) => {
-		const [groupId] = (await trx(USER_GROUPS_TABLE)
+		const [group] = (await trx(USER_GROUPS_TABLE)
 			.insert({
 				key: GroupKey.ADMINS,
 				name: "Admins",
@@ -27,7 +27,7 @@ async function up(knex: Knex): Promise<void> {
 
 		await trx(USER_GROUPS_TO_PERMISSIONS_TABLE).insert({
 			permission_id: permission.id,
-			user_group_id: groupId.id,
+			user_group_id: group.id,
 		});
 	});
 }
