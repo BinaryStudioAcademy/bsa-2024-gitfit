@@ -1,5 +1,39 @@
 # Changelog
 
+## [1.19.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.18.0...frontend-v1.19.0) (2024-09-10)
+
+
+### Features
+
+* Update logo in the app gf-242 ([#258](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/258)) ([1b19756](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1b19756be162000933cb8610146b087e70b30e48))
+
+
+### Bug Fixes
+
+* missing error message for invalid email format on Sign Up page gf-252 ([#255](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/255)) ([1851536](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/18515363f8434e4122c42cc1b2ed17374a9625d1))
+
+## [1.18.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.17.0...frontend-v1.18.0) (2024-09-10)
+
+
+### Features
+
+* remove ui page gf-243 ([#245](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/245)) ([f19c7ee](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f19c7ee2b416b0a1318c56fe2b6d12cae843181e))
+
+## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.16.0...frontend-v1.17.0) (2024-09-10)
+
+
+### Features
+
+* save search value to query parameters gf-200 ([#218](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/218)) ([8d5cb71](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8d5cb7135a078181a191f653091cf0217cd61023))
+
+## [1.16.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.15.0...frontend-v1.16.0) (2024-09-10)
+
+
+### Features
+
+* add an ablity to create a group gf-79 ([#176](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/176)) ([ad36683](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ad366835d2fce03680d0d1208fde6ba3a56f5e57))
+* refactor existing sub components gf-233 ([#240](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/240)) ([117a666](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/117a666fbbf8d9c63d1b26df3dfa3b71ca8ee6e9))
+
 ## [1.15.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.14.0...frontend-v1.15.0) (2024-09-09)
 
 

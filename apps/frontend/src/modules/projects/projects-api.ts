@@ -52,14 +52,16 @@ class ProjectApi extends BaseHTTPApi {
 	}
 
 	public async getAll(name = ""): Promise<ProjectGetAllResponseDto> {
-		const endpoint = this.getFullEndpoint(ProjectsApiPath.ROOT, "?name=:name", {
-			name,
-		});
-
-		const response = await this.load(endpoint, {
-			hasAuth: true,
-			method: "GET",
-		});
+		const response = await this.load(
+			this.getFullEndpoint(ProjectsApiPath.ROOT, {}),
+			{
+				hasAuth: true,
+				method: "GET",
+				query: {
+					name,
+				},
+			},
+		);
 
 		return await response.json<ProjectGetAllResponseDto>();
 	}

@@ -7,28 +7,28 @@ import {
 import { AppRoute } from "~/libs/enums/enums.js";
 import { useAppForm, useCallback, useState } from "~/libs/hooks/hooks.js";
 import {
-	type UserSignInRequestDto,
-	userSignInValidationSchema,
+	type UserSignUpRequestDto,
+	userSignUpValidationSchema,
 } from "~/modules/users/users.js";
 
-import { DEFAULT_SIGN_IN_PAYLOAD } from "./libs/constants/constants.js";
+import { DEFAULT_SIGN_UP_PAYLOAD } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	onSubmit: (payload: UserSignInRequestDto) => void;
+	onSubmit: (payload: UserSignUpRequestDto) => void;
 };
 
-const SignInForm = ({ onSubmit }: Properties): JSX.Element => {
-	const { control, errors, handleSubmit } = useAppForm<UserSignInRequestDto>({
-		defaultValues: DEFAULT_SIGN_IN_PAYLOAD,
-		validationSchema: userSignInValidationSchema,
+const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
+	const { control, errors, handleSubmit } = useAppForm<UserSignUpRequestDto>({
+		defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
+		validationSchema: userSignUpValidationSchema,
 	});
 
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit((formData: UserSignInRequestDto) => {
+			void handleSubmit((formData: UserSignUpRequestDto) => {
 				onSubmit(formData);
 			})(event_);
 		},
@@ -40,11 +40,22 @@ const SignInForm = ({ onSubmit }: Properties): JSX.Element => {
 	}, []);
 
 	return (
-		<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>
+		<form
+			className={styles["form-wrapper"]}
+			noValidate
+			onSubmit={handleFormSubmit}
+		>
 			<p className={styles["form-text"]}>
-				Don&apos;t have an account?{" "}
-				<Link to={AppRoute.SIGN_UP}>Create new</Link>
+				Have an account? <Link to={AppRoute.SIGN_IN}>Log in</Link>
 			</p>
+			<Input
+				autoComplete="given-name"
+				control={control}
+				errors={errors}
+				label="Name"
+				name="name"
+				type="text"
+			/>
 			<Input
 				autoComplete="username"
 				control={control}
@@ -70,9 +81,9 @@ const SignInForm = ({ onSubmit }: Properties): JSX.Element => {
 					type={isPasswordVisible ? "text" : "password"}
 				/>
 			</div>
-			<Button label="Log in" type="submit" />
+			<Button label="Create Account" type="submit" />
 		</form>
 	);
 };
 
-export { SignInForm };
+export { SignUpForm };
