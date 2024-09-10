@@ -1,3 +1,4 @@
+export { getFirstAvailableRoute } from "./get-first-available-route.js";
 export { getValidClassNames } from "./get-valid-classes.helper.js";
 export {
 	checkHasPermission,
