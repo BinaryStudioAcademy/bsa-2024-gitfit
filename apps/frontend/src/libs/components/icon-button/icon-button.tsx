@@ -9,7 +9,7 @@ type Properties = {
 	iconName: IconName;
 	isDisabled?: boolean;
 	label: string;
-	onClick?: () => void;
+	onClick: () => void;
 	variant?: "outlined" | "primary";
 };
 

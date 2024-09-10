@@ -57,8 +57,8 @@
 
 .modal-close {
 	position: absolute;
-	top: 15px;
-	right: 15px;
+	top: 20px;
+	right: 20px;
 	z-index: 1;
 	display: flex;
 	align-items: center;

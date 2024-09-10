@@ -27,7 +27,7 @@ const getGroupColumns = (actions: GroupActions): TableColumn<GroupRow>[] => [
 			/>
 		),
 		header: "",
-		id: "options",
+		id: "menu",
 	},
 ];
 

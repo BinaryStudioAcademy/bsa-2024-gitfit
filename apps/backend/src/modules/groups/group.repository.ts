@@ -41,13 +41,8 @@ class GroupRepository implements Repository {
 		return GroupEntity.initialize(group);
 	}
 
-	public async delete(id: number): Promise<boolean> {
-		const deletedRowsCount = await this.groupModel
-			.query()
-			.deleteById(id)
-			.execute();
-
-		return Boolean(deletedRowsCount);
+	public delete(): ReturnType<Repository["delete"]> {
+		return Promise.resolve(true);
 	}
 
 	public async find(id: number): Promise<GroupEntity | null> {

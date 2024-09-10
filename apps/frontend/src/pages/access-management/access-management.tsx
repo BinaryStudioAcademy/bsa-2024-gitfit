@@ -109,6 +109,7 @@ const AccessManagement = (): JSX.Element => {
 
 	const [groupToEdit, setGroupToEdit] =
 		useState<GroupGetAllItemResponseDto | null>(null);
+	const hasGroupToEdit = groupToEdit !== null;
 
 	const handleGroupUpdateSubmit = useCallback(
 		(id: number, payload: GroupUpdateRequestDto) => {
@@ -187,7 +188,7 @@ const AccessManagement = (): JSX.Element => {
 				<GroupCreateForm onSubmit={handleGroupCreateSubmit} />
 			</Modal>
 
-			{groupToEdit && (
+			{hasGroupToEdit && (
 				<Modal
 					isOpened={isUpdateModalOpened}
 					onClose={onUpdateModalClose}

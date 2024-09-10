@@ -36,19 +36,17 @@ const GroupsTable = ({
 	const groupData: GroupRow[] = getGroupRows(groups);
 
 	return (
-		<>
-			<div className={styles["groups-table"]}>
-				<Table<GroupRow> columns={groupColumns} data={groupData} />
-				<TablePagination
-					background={paginationBackground}
-					onPageChange={onPageChange}
-					onPageSizeChange={onPageSizeChange}
-					page={page}
-					pageSize={pageSize}
-					totalItemsCount={totalItemsCount}
-				/>
-			</div>
-		</>
+		<div className={styles["groups-table"]}>
+			<Table<GroupRow> columns={groupColumns} data={groupData} />
+			<TablePagination
+				background={paginationBackground}
+				onPageChange={onPageChange}
+				onPageSizeChange={onPageSizeChange}
+				page={page}
+				pageSize={pageSize}
+				totalItemsCount={totalItemsCount}
+			/>
+		</div>
 	);
 };
 

@@ -78,12 +78,7 @@ const Table = <T extends object>({
 								)}
 								{row.getVisibleCells().map((cell) => (
 									<td className={styles["table-data"]} key={cell.id}>
-										{typeof cell.getValue() === "object"
-											? (cell.getValue() as React.ReactNode)
-											: flexRender(
-													cell.column.columnDef.cell,
-													cell.getContext(),
-												)}
+										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</td>
 								))}
 							</tr>
