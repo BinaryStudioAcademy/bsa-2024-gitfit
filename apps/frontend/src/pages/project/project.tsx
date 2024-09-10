@@ -12,6 +12,7 @@ import {
 } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
+import { ProjectDetailsMenu } from "./components/project-details-menu/project-details-menu.js";
 import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
@@ -54,7 +55,15 @@ const Project = (): JSX.Element => {
 			</div>
 
 			<div className={styles["project-layout"]}>
-				<h1 className={styles["title"]}>{project?.name}</h1>
+				<div className={styles["project-header"]}>
+					<h1 className={styles["title"]}>{project?.name}</h1>
+					{hasProject && (
+						<ProjectDetailsMenu
+							id={(project as ProjectGetAllItemResponseDto).id}
+						/>
+					)}
+				</div>
+
 				<div className={styles["project-description-layout"]}>
 					<h3 className={styles["project-description-title"]}>Description</h3>
 					<p className={styles["project-description"]}>
