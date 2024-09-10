@@ -11,6 +11,7 @@ const projectApi = new ProjectApi({
 });
 
 export { projectApi };
+export { ProjectValidationRule } from "./libs/enums/enums.js";
 export {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,

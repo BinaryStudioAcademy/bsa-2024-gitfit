@@ -1,10 +1,3 @@
-.content {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	margin: 0;
-}
-
 .title {
 	margin: 0;
 	font-size: 30px;
@@ -13,10 +6,17 @@
 }
 
 .section-title {
-	margin: 32px 0 24px;
+	margin: 0;
 	font-size: 24px;
 	font-weight: 600;
 	line-height: 120%;
+}
+
+.section-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 32px 0 24px;
 }
 
 .users-table {

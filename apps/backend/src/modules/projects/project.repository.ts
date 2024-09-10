@@ -27,8 +27,13 @@ class ProjectRepository implements Repository {
 		return ProjectEntity.initialize(user);
 	}
 
-	public delete(): ReturnType<Repository["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const deletedRowsCount = await this.projectModel
+			.query()
+			.deleteById(id)
+			.execute();
+
+		return Boolean(deletedRowsCount);
 	}
 
 	public async find(id: number): Promise<null | ProjectEntity> {
@@ -37,27 +42,20 @@ class ProjectRepository implements Repository {
 		return item ? ProjectEntity.initialize(item) : null;
 	}
 
-	public async findAll(): Promise<{ items: ProjectEntity[] }> {
-		const projects = await this.projectModel
+	public async findAll(name?: string): Promise<{ items: ProjectEntity[] }> {
+		const query = this.projectModel
 			.query()
-			.orderBy("created_at", SortType.DESCENDING)
-			.execute();
+			.orderBy("created_at", SortType.DESCENDING);
+
+		if (name) {
+			query.whereILike("name", `%${name}%`);
+		}
+
+		const projects = await query.execute();
 
 		return {
 			items: projects.map((project) => ProjectEntity.initialize(project)),
 		};
-	}
-
-	public async findAllbyName(name: string): Promise<ProjectEntity[]> {
-		const projects = await this.projectModel
-
-			.query()
-			.orderBy("created_at", SortType.DESCENDING)
-
-			.whereILike("name", `%${name}%`)
-			.execute();
-
-		return projects.map((project) => ProjectEntity.initialize(project));
 	}
 
 	public async findByName(name: string): Promise<null | ProjectEntity> {

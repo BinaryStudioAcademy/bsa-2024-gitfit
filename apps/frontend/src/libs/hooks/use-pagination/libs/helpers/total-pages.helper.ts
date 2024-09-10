@@ -1,4 +1,5 @@
-const calculateTotalPages = (pageSize: number, totalItems: number): number =>
-	Math.ceil(totalItems / pageSize);
+import { FIRST_PAGE } from "../constants/constants.js";
 
+const calculateTotalPages = (pageSize: number, totalItems: number): number =>
+	Math.max(FIRST_PAGE, Math.ceil(totalItems / pageSize));
 export { calculateTotalPages };

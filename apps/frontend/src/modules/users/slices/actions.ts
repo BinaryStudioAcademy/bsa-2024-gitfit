@@ -14,6 +14,18 @@ import {
 
 import { name as sliceName } from "./users.slice.js";
 
+const deleteById = createAsyncThunk<number, number, AsyncThunkConfig>(
+	`${sliceName}/delete`,
+	async (userId, { extra }) => {
+		const { toastNotifier, userApi } = extra;
+
+		await userApi.delete(userId);
+		toastNotifier.showSuccess(NotificationMessage.USER_DELETE_SUCCESS);
+
+		return userId;
+	},
+);
+
 const loadAll = createAsyncThunk<
 	UserGetAllResponseDto,
 	PaginationQueryParameters,
@@ -34,9 +46,9 @@ const updateProfile = createAsyncThunk<
 	const user = await userApi.patch(id, payload);
 	void dispatch(authActions.getAuthenticatedUser());
 
-	toastNotifier.showSuccess(NotificationMessage.SUCCESS_PROFILE_UPDATE);
+	toastNotifier.showSuccess(NotificationMessage.PROFILE_UPDATE_SUCCESS);
 
 	return user;
 });
 
-export { loadAll, updateProfile };
+export { deleteById, loadAll, updateProfile };

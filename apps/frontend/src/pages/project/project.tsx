@@ -18,10 +18,7 @@ const Project = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { id: projectId } = useParams<{ id: string }>();
 
-	const { project, projectStatus } = useAppSelector(({ projects }) => ({
-		project: projects.project,
-		projectStatus: projects.projectStatus,
-	}));
+	const { project, projectStatus } = useAppSelector(({ projects }) => projects);
 
 	useEffect(() => {
 		if (projectId) {

@@ -1,3 +1,3 @@
-type HTTPMethod = "GET" | "PATCH" | "POST";
+type HTTPMethod = "DELETE" | "GET" | "PATCH" | "POST";
 
 export { type HTTPMethod };
