@@ -2,12 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { StorageKey } from "~/libs/modules/storage/storage.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
+
 import {
 	type UserAuthResponseDto,
 	type UserSignInRequestDto,
 	type UserSignUpRequestDto,
-} from "~/modules/users/users.js";
-
+} from "../libs/types/types.js";
 import { name as sliceName } from "./auth.slice.js";
 
 const signIn = createAsyncThunk<

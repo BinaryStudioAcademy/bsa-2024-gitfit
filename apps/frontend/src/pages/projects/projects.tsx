@@ -176,7 +176,7 @@ const Projects = (): JSX.Element => {
 				)}
 			</Modal>
 			<ConfirmationModal
-				content="The project will be deleted. This action cannot be undone. Do you want to continue?"
+				content="The project will be deleted. This action cannot be undone. Click 'Confirm' to proceed."
 				isOpened={isDeleteConfirmationModalOpen}
 				onClose={handleDeleteConfirmationModalClose}
 				onConfirm={handleProjectDeleteConfirm}
