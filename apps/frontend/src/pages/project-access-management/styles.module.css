@@ -1,0 +1,37 @@
+.title {
+	margin: 0;
+	font-size: 30px;
+	font-weight: 600;
+	line-height: 120%;
+}
+
+.user-section-title {
+	margin: 32px 0 24px;
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 120%;
+}
+
+.group-section-title {
+	margin: 0;
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 120%;
+}
+
+.users-table {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.section-wrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 32px 0 24px;
+}
+
+.breadcrumb-container {
+	margin-bottom: 32px;
+}
