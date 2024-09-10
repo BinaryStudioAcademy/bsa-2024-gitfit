@@ -18,7 +18,7 @@ const usePopoverPosition = <T extends HTMLElement>(
 		}
 
 		const { left, top } = reference.current.getBoundingClientRect();
-		const scrollOffset = window.scrollY || document.documentElement.scrollTop;
+		const scrollOffset = document.documentElement.scrollTop;
 
 		setPosition({
 			left,
