@@ -1,7 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { NotificationMessage } from "~/libs/enums/enums.js";
-import { type AsyncThunkConfig } from "~/libs/types/types.js";
+import {
+	type AsyncThunkConfig,
+	type PaginationQueryParameters,
+} from "~/libs/types/types.js";
+import { type UserGetAllResponseDto } from "~/modules/users/users.js";
 
 import {
 	type ProjectGroupCreateRequestDto,
@@ -10,14 +14,24 @@ import {
 } from "../libs/types/types.js";
 import { name as sliceName } from "./project-group.slice.js";
 
+const loadUsers = createAsyncThunk<
+	UserGetAllResponseDto,
+	PaginationQueryParameters,
+	AsyncThunkConfig
+>(`${sliceName}/load-users`, (query, { extra }) => {
+	const { userApi } = extra;
+
+	return userApi.getAll(query);
+});
+
 const loadAllByProjectId = createAsyncThunk<
 	ProjectGroupGetAllResponseDto,
-	string,
+	{ projectId: string; query: PaginationQueryParameters },
 	AsyncThunkConfig
->(`${sliceName}/load-all`, async (parameters, { extra }) => {
+>(`${sliceName}/load-all`, async ({ projectId, query }, { extra }) => {
 	const { projectGroupApi } = extra;
 
-	return await projectGroupApi.getAllByProjectId({ projectId: parameters });
+	return await projectGroupApi.getAllByProjectId(projectId, query);
 });
 
 const create = createAsyncThunk<
@@ -34,4 +48,4 @@ const create = createAsyncThunk<
 	return response;
 });
 
-export { create, loadAllByProjectId };
+export { create, loadAllByProjectId, loadUsers };

@@ -2,6 +2,7 @@ import { APIPath, ContentType } from "~/libs/enums/enums.js";
 import { BaseHTTPApi } from "~/libs/modules/api/api.js";
 import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { ProjectGroupsApiPath } from "./libs/enums/enums.js";
 import {
@@ -36,17 +37,22 @@ class ProjectGroupApi extends BaseHTTPApi {
 		return await response.json<ProjectGroupGetAllItemResponseDto>();
 	}
 
-	public async getAllByProjectId(payload: {
-		projectId: string;
-	}): Promise<ProjectGroupGetAllResponseDto> {
+	public async getAllByProjectId(
+		projectId: string,
+		query: PaginationQueryParameters,
+	): Promise<ProjectGroupGetAllResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(ProjectGroupsApiPath.$ID, {
-				id: payload.projectId,
+				id: projectId,
 			}),
 			{
 				contentType: ContentType.JSON,
 				hasAuth: true,
 				method: "GET",
+				query: {
+					page: String(query.page),
+					pageSize: String(query.pageSize),
+				},
 			},
 		);
 

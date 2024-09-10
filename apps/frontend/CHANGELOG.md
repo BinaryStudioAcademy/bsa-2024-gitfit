@@ -1,5 +1,86 @@
 # Changelog
 
+## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.16.0...frontend-v1.17.0) (2024-09-10)
+
+
+### Features
+
+* save search value to query parameters gf-200 ([#218](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/218)) ([8d5cb71](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8d5cb7135a078181a191f653091cf0217cd61023))
+
+## [1.16.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.15.0...frontend-v1.16.0) (2024-09-10)
+
+
+### Features
+
+* add an ablity to create a group gf-79 ([#176](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/176)) ([ad36683](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ad366835d2fce03680d0d1208fde6ba3a56f5e57))
+* refactor existing sub components gf-233 ([#240](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/240)) ([117a666](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/117a666fbbf8d9c63d1b26df3dfa3b71ca8ee6e9))
+
+## [1.15.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.14.0...frontend-v1.15.0) (2024-09-09)
+
+
+### Features
+
+* add a character counter for the project description gf-188 ([#222](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/222)) ([7c635d5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7c635d51e409cc1e85a89bbd62f1bf8ec4bd2bcd))
+* improve avatar visibility gf-202 ([#228](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/228)) ([d4b7203](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d4b720348e0973e8e36a997509e12b20b7bbdc3c))
+
+## [1.14.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.13.0...frontend-v1.14.0) (2024-09-09)
+
+
+### Features
+
+* change confirmation modal window on deleting user account gf-216 ([#219](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/219)) ([dd9fd7f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/dd9fd7fdad0801bc325c94babc226c6e04b74fd8))
+* improve toast notification position and design gf-201 ([#225](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/225)) ([f6de004](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f6de004f7a22b69f63c69bd84c224fb20fb4706e))
+
+
+### Bug Fixes
+
+* select hover styles and cursor, add searchable select gf-204 ([#226](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/226)) ([be81fba](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/be81fba5ee1c53111f860fafa5da740289f5fe08))
+
+## [1.13.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.12.0...frontend-v1.13.0) (2024-09-09)
+
+
+### Features
+
+* add display message for empty tables gf-206 ([#220](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/220)) ([f21abb7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f21abb76258dc28dd5ed6dd3c669bd552472177a))
+* restrict users manage groups gf-84 ([#175](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/175)) ([064e3dc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/064e3dce0ecb217f380c313f4844c1b8b336b52a))
+
+## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.11.1...frontend-v1.12.0) (2024-09-06)
+
+
+### Features
+
+* Add a "No projects found" message when search field no results on the Projects page gf-187 ([#210](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/210)) ([43bafae](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/43bafae531f87d4109b90fc29a8dafe86581996d))
+* Add an ability to delete personal account gf-146 ([#185](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/185)) ([7fb5001](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7fb500191fc25e2de94679e90501e685317ae339))
+
+## [1.11.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.11.0...frontend-v1.11.1) (2024-09-06)
+
+
+### Bug Fixes
+
+* adjusted the right arrow SVG to not include the fill white attribute in it's path gf-208 ([#213](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/213)) ([0aa5cc3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0aa5cc3f14c54f5aa448dbbbc3794636c0c61527))
+* inappropriate appearance of the scroll element at the Table component on Windows OS gf-197 ([#203](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/203)) ([7781a7a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7781a7af900dbe09f1c1d51bec51eecd4299e8de))
+* internal server error for table pagination on emty tables gf-205 ([#212](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/212)) ([0fd3d03](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0fd3d038afd20985062210c516b2bc790ec6bee5))
+
+## [1.11.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.10.0...frontend-v1.11.0) (2024-09-05)
+
+
+### Features
+
+* Add an ability to delete a project gf-138 ([#168](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/168)) ([76547f4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/76547f4cb6b441974b90b0da7ba57d74c9bc9058))
+
+## [1.10.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.9.0...frontend-v1.10.0) (2024-09-05)
+
+
+### Features
+
+* Add pagination to the groups table gf-83 ([#184](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/184)) ([2b6f1b3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2b6f1b39eb1ea176506dbf82807cfe930cf4c4fb))
+
+
+### Bug Fixes
+
+* Font size of the "Profile" heading doesn`t match the design mockup gf-192 ([#194](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/194)) ([8bcaffc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8bcaffc4c2b84fe4390644ff5027ee2e77dd93d9))
+* update profile success message gf-193 ([#195](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/195)) ([1b262d7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1b262d77b25cb5056dfb674ff0fcd8c51bfc315d))
+
 ## [1.9.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.8.0...frontend-v1.9.0) (2024-09-04)
 
 

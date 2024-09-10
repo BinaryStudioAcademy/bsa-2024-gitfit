@@ -6,6 +6,7 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { ProjectGroupsApiPath } from "./libs/enums/enums.js";
 import {
@@ -74,6 +75,7 @@ class ProjectGroupController extends BaseController {
 				this.findAllByProjectId(
 					options as APIHandlerOptions<{
 						params: ProjectGroupGetAllRequestDto;
+						query: PaginationQueryParameters;
 					}>,
 				),
 			method: "GET",
@@ -146,12 +148,16 @@ class ProjectGroupController extends BaseController {
 	private async findAllByProjectId(
 		options: APIHandlerOptions<{
 			params: ProjectGroupGetAllRequestDto;
+			query: PaginationQueryParameters;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { params } = options;
+		const { params, query } = options;
 
 		return {
-			payload: await this.projectGroupService.findAllByProjectId(params.id),
+			payload: await this.projectGroupService.findAllByProjectId(
+				params.id,
+				query,
+			),
 			status: HTTPCode.OK,
 		};
 	}

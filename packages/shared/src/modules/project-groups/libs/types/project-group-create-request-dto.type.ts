@@ -1,6 +1,6 @@
 type ProjectGroupCreateRequestDto = {
 	name: string;
-	permissionIds?: number[];
+	permissionIds: number[];
 	projectId: number;
 	userIds: number[];
 };

@@ -1,6 +1,10 @@
+import { PAGE_INDEX_OFFSET } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
-import { type Service } from "~/libs/types/types.js";
+import {
+	type PaginationQueryParameters,
+	type Service,
+} from "~/libs/types/types.js";
 
 import { ProjectGroupError } from "./libs/exceptions/exceptions.js";
 import {
@@ -61,12 +65,19 @@ class ProjectGroupService implements Service {
 
 	public async findAllByProjectId(
 		id: number,
+		parameters: PaginationQueryParameters,
 	): Promise<ProjectGroupGetAllResponseDto> {
-		const projectGroups =
-			await this.projectGroupRepository.findAllByProjectId(id);
+		const projectGroups = await this.projectGroupRepository.findAllByProjectId(
+			id,
+			{
+				page: parameters.page - PAGE_INDEX_OFFSET,
+				pageSize: parameters.pageSize,
+			},
+		);
 
 		return {
 			items: projectGroups.items.map((item) => item.toObject()),
+			totalItems: projectGroups.totalItems,
 		};
 	}
 

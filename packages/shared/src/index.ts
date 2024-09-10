@@ -4,6 +4,7 @@ export {
 	AppEnvironment,
 	ContentType,
 	ExceptionMessage,
+	PermissionKey,
 	ServerErrorType,
 	SortType,
 } from "./libs/enums/enums.js";
@@ -13,6 +14,7 @@ export {
 } from "./libs/exceptions/exceptions.js";
 export {
 	changeCase,
+	checkHasPermission,
 	configureString,
 	formatDate,
 	initDebounce,
@@ -48,6 +50,11 @@ export {
 	GroupsApiPath,
 } from "./modules/groups/groups.js";
 export {
+	type PermissionGetAllItemResponseDto,
+	type PermissionGetAllResponseDto,
+	PermissionsApiPath,
+} from "./modules/permissions/permissions.js";
+export {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupCreateResponseDto,
 	projectGroupCreateValidationSchema,
@@ -73,6 +80,7 @@ export {
 	type ProjectPatchResponseDto,
 	projectPatchValidationSchema,
 	ProjectsApiPath,
+	ProjectValidationRule,
 } from "./modules/projects/projects.js";
 export {
 	type UserAuthResponseDto,

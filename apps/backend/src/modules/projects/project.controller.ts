@@ -67,7 +67,18 @@ class ProjectController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
-				this.findAllByName(
+				this.delete(
+					options as APIHandlerOptions<{
+						params: { id: string };
+					}>,
+				),
+			method: "DELETE",
+			path: ProjectsApiPath.$ID,
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.findAll(
 					options as APIHandlerOptions<{
 						query: ProjectGetAllRequestDto;
 					}>,
@@ -145,9 +156,46 @@ class ProjectController extends BaseController {
 
 	/**
 	 * @swagger
+	 * /projects/{id}:
+	 *    delete:
+	 *      description: Deletes project by ID
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          schema:
+	 *            type: integer
+	 *          required: true
+	 *          description: Numeric ID of the project to be deleted
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: boolean
+	 */
+	private async delete(
+		options: APIHandlerOptions<{
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.projectService.delete(Number(options.params.id)),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
 	 * /projects:
 	 *    get:
-	 *      description: Returns an array of projects
+	 *      description: Returns all projects or filters them by name if the 'name' query parameter is provided.
+	 *      parameters:
+	 *        - in: query
+	 *          name: name
+	 *          schema:
+	 *            type: string
+	 *          description: The name to filter projects by (optional).
 	 *      responses:
 	 *        200:
 	 *          description: Successful operation
@@ -155,21 +203,21 @@ class ProjectController extends BaseController {
 	 *            application/json:
 	 *              schema:
 	 *                type: object
-	 * 								properties:
-	 * 									items:
-	 * 										type: array
-	 *                		items:
-	 *                  		$ref: "#/components/schemas/Project"
+	 *                properties:
+	 *                  items:
+	 *                    type: array
+	 *                    items:
+	 *                      $ref: "#/components/schemas/Project"
 	 */
-	private async findAllByName(
+	private async findAll(
 		options: APIHandlerOptions<{
 			query: ProjectGetAllRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { query } = options;
+		const { name } = options.query;
 
 		return {
-			payload: await this.projectService.findAllbyName(query),
+			payload: await this.projectService.findAll(name),
 			status: HTTPCode.OK,
 		};
 	}

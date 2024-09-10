@@ -1,25 +1,26 @@
 import {
+	Button,
+	GroupsTable,
+	Modal,
 	PageLayout,
-	Table,
-	TablePagination,
+	UsersTable,
 } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
+	useCallback,
 	useEffect,
+	useModal,
 	usePagination,
 } from "~/libs/hooks/hooks.js";
-import { actions as groupActions } from "~/modules/groups/groups.js";
+import {
+	actions as groupActions,
+	type GroupCreateRequestDto,
+} from "~/modules/groups/groups.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-import {
-	getGroupColumns,
-	getGroupRows,
-	getUserColumns,
-	getUserRows,
-} from "./libs/helpers/helpers.js";
-import { type GroupRow, type UserRow } from "./libs/types/types.js";
+import { AccessGroupCreateForm } from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const AccessManagement = (): JSX.Element => {
@@ -31,24 +32,59 @@ const AccessManagement = (): JSX.Element => {
 		usersTotalCount,
 	} = useAppSelector(({ users }) => users);
 
-	const { dataStatus: groupsDataStatus, groups } = useAppSelector(
-		({ groups }) => groups,
-	);
-
-	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+	const {
+		onPageChange: onUserPageChange,
+		onPageSizeChange: onUserPageSizeChange,
+		page: userPage,
+		pageSize: userPageSize,
+	} = usePagination({
+		queryParameterPrefix: "user",
 		totalItemsCount: usersTotalCount,
 	});
 
+	const {
+		isOpened: isModalOpened,
+		onClose: onModalClose,
+		onOpen: onModalOpen,
+	} = useModal();
+
+	const {
+		dataStatus: groupsDataStatus,
+		groups,
+		groupsTotalCount,
+	} = useAppSelector(({ groups }) => groups);
+
+	const {
+		onPageChange: onGroupPageChange,
+		onPageSizeChange: onGroupPageSizeChange,
+		page: groupPage,
+		pageSize: groupPageSize,
+	} = usePagination({
+		queryParameterPrefix: "group",
+		totalItemsCount: groupsTotalCount,
+	});
+
 	useEffect(() => {
-		void dispatch(userActions.loadAll({ page, pageSize }));
-		void dispatch(groupActions.loadAll());
-	}, [dispatch, page, pageSize]);
+		void dispatch(
+			userActions.loadAll({ page: userPage, pageSize: userPageSize }),
+		);
+		void dispatch(
+			groupActions.loadAll({ page: groupPage, pageSize: groupPageSize }),
+		);
+	}, [dispatch, userPage, userPageSize, groupPage, groupPageSize]);
 
-	const userColumns = getUserColumns();
-	const userData: UserRow[] = getUserRows(users);
-
-	const groupColumns = getGroupColumns();
-	const groupData: GroupRow[] = getGroupRows(groups);
+	const handleGroupCreateSubmit = useCallback(
+		(payload: GroupCreateRequestDto): void => {
+			void dispatch(
+				groupActions.create({
+					payload,
+					query: { page: userPage, pageSize: userPageSize },
+				}),
+			);
+			onModalClose();
+		},
+		[dispatch, onModalClose, userPage, userPageSize],
+	);
 
 	const isLoading = [usersDataStatus, groupsDataStatus].some(
 		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
@@ -58,22 +94,39 @@ const AccessManagement = (): JSX.Element => {
 		<PageLayout isLoading={isLoading}>
 			<h1 className={styles["title"]}>Access Management</h1>
 			<section>
-				<h2 className={styles["section-title"]}>Users</h2>
-				<div className={styles["users-table"]}>
-					<Table<UserRow> columns={userColumns} data={userData} />
-					<TablePagination
-						onPageChange={onPageChange}
-						onPageSizeChange={onPageSizeChange}
-						page={page}
-						pageSize={pageSize}
-						totalItemsCount={usersTotalCount}
-					/>
+				<div className={styles["section-header"]}>
+					<h2 className={styles["section-title"]}>Users</h2>
 				</div>
+				<UsersTable
+					onPageChange={onUserPageChange}
+					onPageSizeChange={onUserPageSizeChange}
+					page={userPage}
+					pageSize={userPageSize}
+					totalItemsCount={usersTotalCount}
+					users={users}
+				/>
 			</section>
 			<section>
-				<h2 className={styles["section-title"]}>Groups</h2>
-				<Table<GroupRow> columns={groupColumns} data={groupData} />
+				<div className={styles["section-header"]}>
+					<h2 className={styles["section-title"]}>Groups</h2>
+					<Button label="Create New" onClick={onModalOpen} />
+				</div>
+				<GroupsTable
+					groups={groups}
+					onPageChange={onGroupPageChange}
+					onPageSizeChange={onGroupPageSizeChange}
+					page={groupPage}
+					pageSize={groupPageSize}
+					totalItemsCount={groupsTotalCount}
+				/>
 			</section>
+			<Modal
+				isOpened={isModalOpened}
+				onClose={onModalClose}
+				title="Create new group"
+			>
+				<AccessGroupCreateForm onSubmit={handleGroupCreateSubmit} />
+			</Modal>
 		</PageLayout>
 	);
 };

@@ -6,7 +6,6 @@ import { ProjectError } from "./libs/exceptions/exceptions.js";
 import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
-	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
@@ -44,8 +43,17 @@ class ProjectService implements Service {
 		return item.toObject();
 	}
 
-	public delete(): ReturnType<Service["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const isDeleted = await this.projectRepository.delete(id);
+
+		if (!isDeleted) {
+			throw new ProjectError({
+				message: ExceptionMessage.PROJECT_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		return isDeleted;
 	}
 
 	public async find(id: number): Promise<ProjectGetAllItemResponseDto> {
@@ -61,21 +69,11 @@ class ProjectService implements Service {
 		return item.toObject();
 	}
 
-	public async findAll(): Promise<ProjectGetAllResponseDto> {
-		const projects = await this.projectRepository.findAll();
+	public async findAll(name?: string): Promise<ProjectGetAllResponseDto> {
+		const projects = await this.projectRepository.findAll(name);
 
 		return {
 			items: projects.items.map((item) => item.toObject()),
-		};
-	}
-
-	public async findAllbyName(
-		query: ProjectGetAllRequestDto,
-	): Promise<ProjectGetAllResponseDto> {
-		const items = await this.projectRepository.findAllbyName(query.name);
-
-		return {
-			items: items.map((item) => item.toObject()),
 		};
 	}
 

@@ -7,16 +7,17 @@ const ToastContainer = (): JSX.Element => {
 	return (
 		<LibraryToastContainer
 			autoClose={5000}
-			className={styles["toast-container"] ?? ""}
+			className={styles["toast-container"] as string}
 			closeOnClick
 			draggable
 			hideProgressBar={false}
 			newestOnTop={false}
 			pauseOnFocusLoss
 			pauseOnHover
-			position="top-center"
+			position="top-right"
 			rtl={false}
 			theme="dark"
+			toastClassName={styles["notification"] as string}
 		/>
 	);
 };

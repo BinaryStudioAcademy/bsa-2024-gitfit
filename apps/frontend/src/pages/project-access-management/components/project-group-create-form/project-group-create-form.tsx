@@ -1,141 +1,91 @@
-import {
-	Button,
-	Input,
-	Loader,
-	Select,
-	Table,
-	TablePagination,
-} from "~/libs/components/components.js";
+import { GroupCreateForm } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
-	useAppForm,
 	useAppSelector,
-	useCallback,
 	useEffect,
-	useMemo,
 	usePagination,
 } from "~/libs/hooks/hooks.js";
 import {
 	type ProjectGroupCreateRequestDto,
 	projectGroupCreateValidationSchema,
 	type ProjectGroupGetAllItemResponseDto,
+	actions as projectGroupsActions,
 } from "~/modules/project-groups/project-groups.js";
 import { actions as projectPermissionsActions } from "~/modules/project-permissions/project-permissions.js";
 
-import { getUserFromRows } from "../../libs/helpers/get-user-form-rows.helper.js";
 import { DEFAULT_PROJECT_GROUP_CREATE_PAYLOAD } from "./libs/constants/constants.js";
-import {
-	getProjectPermissionOptions,
-	getProjectUserColumns,
-} from "./libs/helpers/helpers.js";
-import styles from "./styles.module.css";
+import { getUsersFromProjectGroups } from "./libs/helpers/helpers.js";
 
 type Properties = {
-	data: ProjectGroupGetAllItemResponseDto[];
 	onSubmit: (payload: ProjectGroupCreateRequestDto) => void;
+	projectGroups: ProjectGroupGetAllItemResponseDto[];
 	projectId: number;
 };
 
 const ProjectGroupCreateForm = ({
-	data,
 	onSubmit,
+	projectGroups,
 	projectId,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { control, errors, handleSubmit } =
-		useAppForm<ProjectGroupCreateRequestDto>({
-			defaultValues: {
-				...DEFAULT_PROJECT_GROUP_CREATE_PAYLOAD,
-				projectId,
-			},
-			validationSchema: projectGroupCreateValidationSchema,
-		});
+	const {
+		projectPermissions,
+		projectPermissionsDataStatus,
+		users,
+		usersDataStatus,
+		usersTotalCount,
+	} = useAppSelector(({ projectGroups, projectPermissions }) => ({
+		projectPermissions: projectPermissions.projectPermissions,
+		projectPermissionsDataStatus: projectPermissions.dataStatus,
+		users: projectGroups.users,
+		usersDataStatus: projectGroups.usersDataStatus,
+		usersTotalCount: projectGroups.usersTotalCount,
+	}));
 
-	const { dataStatus: permissionsDataStatus, projectPermissions } =
-		useAppSelector(({ projectPermissions }) => projectPermissions);
-
-	const { users, usersTotalCount } = useAppSelector(({ users }) => users);
-
-	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+	const usersPagination = usePagination({
+		queryParameterPrefix: "project-group-user",
 		totalItemsCount: usersTotalCount,
 	});
+	const { page, pageSize } = usersPagination;
 
-	const error = errors["userIds"]?.message;
-	const hasError = Boolean(error);
+	const projectUsers = getUsersFromProjectGroups(projectGroups);
+	const usersWithGroups = users.map((user) => {
+		const { groups = [] } = projectUsers.find(({ id }) => id === user.id) ?? {};
 
-	const columns = getProjectUserColumns({
-		control,
-		errors,
-		name: "userIds",
+		return {
+			...user,
+			groups,
+		};
 	});
-
-	// console.log(data);
-	const userData = getUserFromRows(users, data);
 
 	useEffect(() => {
 		void dispatch(projectPermissionsActions.loadAll());
+	}, [dispatch]);
+
+	useEffect(() => {
+		void dispatch(projectGroupsActions.loadUsers({ page, pageSize }));
 	}, [dispatch, page, pageSize]);
 
-	const handleFormSubmit = useCallback(
-		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit((formData: ProjectGroupCreateRequestDto) => {
-				onSubmit(formData);
-			})(event_);
-		},
-		[handleSubmit, onSubmit],
+	const isLoading = [usersDataStatus, projectPermissionsDataStatus].some(
+		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
 	);
-
-	const permissionOptions = useMemo(
-		() => getProjectPermissionOptions(projectPermissions),
-		[projectPermissions],
-	);
-
-	const isLoading =
-		permissionsDataStatus === DataStatus.IDLE ||
-		permissionsDataStatus === DataStatus.PENDING;
-
-	if (isLoading) {
-		return <Loader />;
-	}
 
 	return (
-		<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>
-			<div className={styles["input-wrapper"]}>
-				<Input
-					autoComplete="group name"
-					control={control}
-					errors={errors}
-					label="Name"
-					name="name"
-				/>
-			</div>
-			<div>Users</div>
-			<Table columns={columns} data={userData} />
-			<TablePagination
-				background="secondary"
-				onPageChange={onPageChange}
-				onPageSizeChange={onPageSizeChange}
-				page={page}
-				pageSize={pageSize}
-				totalItemsCount={usersTotalCount}
-			/>
-			{hasError && (
-				<span className={styles["checkbox-error"]}>{error as string}</span>
-			)}
-			<Select
-				control={control}
-				isMulti
-				label="Permissions"
-				name="permissionIds"
-				options={permissionOptions}
-				placeholder="Choose permissions for the group"
-			/>
-			<div className={styles["button-wrapper"]}>
-				<Button label="Create" type="submit" />
-			</div>
-		</form>
+		<GroupCreateForm<ProjectGroupCreateRequestDto>
+			defaultValues={{
+				...DEFAULT_PROJECT_GROUP_CREATE_PAYLOAD,
+				projectId,
+			}}
+			isLoading={isLoading}
+			onSubmit={onSubmit}
+			permissions={projectPermissions}
+			users={usersWithGroups}
+			usersPagination={usersPagination}
+			usersTotalCount={usersTotalCount}
+			validationSchema={projectGroupCreateValidationSchema}
+		/>
 	);
 };
 

@@ -1,10 +1,10 @@
 import {
 	Breadcrumbs,
 	Button,
+	GroupsTable,
 	Modal,
 	PageLayout,
-	Table,
-	TablePagination,
+	UsersTable,
 } from "~/libs/components/components.js";
 import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
 import { configureString } from "~/libs/helpers/helpers.js";
@@ -22,65 +22,81 @@ import { type ProjectGroupCreateRequestDto } from "~/modules/project-groups/proj
 import { actions as projectGroupActions } from "~/modules/project-groups/project-groups.js";
 import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 import { actions as projectActions } from "~/modules/projects/projects.js";
-import { actions as userActions } from "~/modules/users/users.js";
+import { NotFound } from "~/pages/not-found/not-found.jsx";
 
 import { ProjectGroupCreateForm } from "./components/components.js";
-import {
-	getGroupColumns,
-	getGroupRows,
-	getUserColumns,
-	getUserRows,
-} from "./libs/helpers/helpers.js";
-import { type GroupRow, type UserRow } from "./libs/types/types.js";
+import { getUsersFromProjectGroups } from "./components/project-group-create-form/libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 const ProjectAccessManagement = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-
 	const { id } = useParams<{ id: string }>();
-
-	const { project } = useAppSelector(({ projects }) => projects);
+	const {
+		project,
+		projectDataStatus,
+		projectGroups,
+		projectGroupsDataStatus,
+		projectGroupsTotalCount,
+	} = useAppSelector(({ projectGroups, projects }) => ({
+		project: projects.project,
+		projectDataStatus: projects.projectStatus,
+		projectGroups: projectGroups.projectGroups,
+		projectGroupsDataStatus: projectGroups.dataStatus,
+		projectGroupsTotalCount: projectGroups.projectGroupsTotalCount,
+	}));
 
 	const hasProject = Boolean(project);
-
 	const projectRoute = hasProject
 		? configureString(AppRoute.PROJECT, {
 				id: (project as ProjectGetAllItemResponseDto).id.toString(),
 			})
 		: "";
 
-	const { dataStatus: usersDataStatus, usersTotalCount } = useAppSelector(
-		({ users }) => users,
-	);
+	const users = getUsersFromProjectGroups(projectGroups);
+	const usersTotalCount = users.length;
 
-	const { dataStatus: projectGroupsDataStatus, projectGroups } = useAppSelector(
-		({ projectGroups }) => projectGroups,
-	);
-
-	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+	const {
+		onPageChange: onUserPageChange,
+		onPageSizeChange: onUserPageSizeChange,
+		page: userPage,
+		pageSize: userPageSize,
+	} = usePagination({
+		queryParameterPrefix: "project-user",
 		totalItemsCount: usersTotalCount,
 	});
 
-	useEffect(() => {
-		void dispatch(userActions.loadAll({ page, pageSize }));
-
-		if (id) {
-			void dispatch(projectActions.getById({ id }));
-			void dispatch(projectGroupActions.loadAllByProjectId(id));
-		}
-	}, [dispatch, page, pageSize, id]);
-
-	const userColumns = getUserColumns();
-	const userData: UserRow[] = getUserRows(projectGroups);
-
-	const projectGroupColumns = getGroupColumns();
-	const projectGroupData: GroupRow[] = getGroupRows(projectGroups);
+	const {
+		onPageChange: onGroupPageChange,
+		onPageSizeChange: onGroupPageSizeChange,
+		page: groupPage,
+		pageSize: groupPageSize,
+	} = usePagination({
+		queryParameterPrefix: "project-group",
+		totalItemsCount: projectGroupsTotalCount,
+	});
 
 	const {
 		isOpened: isCreateModalOpen,
 		onClose: handleCreateModalClose,
 		onOpen: handleCreateModalOpen,
 	} = useModal();
+
+	useEffect(() => {
+		if (id) {
+			void dispatch(projectActions.getById({ id }));
+		}
+	}, [dispatch, id]);
+
+	useEffect(() => {
+		if (id) {
+			void dispatch(
+				projectGroupActions.loadAllByProjectId({
+					projectId: id,
+					query: { page: groupPage, pageSize: groupPageSize },
+				}),
+			);
+		}
+	}, [dispatch, groupPage, groupPageSize, id]);
 
 	const handleProjectGroupCreateSubmit = useCallback(
 		(payload: ProjectGroupCreateRequestDto) => {
@@ -93,9 +109,15 @@ const ProjectAccessManagement = (): JSX.Element => {
 		[dispatch, handleCreateModalClose],
 	);
 
-	const isLoading = [usersDataStatus, projectGroupsDataStatus].some(
+	const isLoading = [projectDataStatus, projectGroupsDataStatus].some(
 		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
 	);
+
+	const isRejected = projectDataStatus === DataStatus.REJECTED;
+
+	if (isRejected) {
+		return <NotFound />;
+	}
 
 	return (
 		<PageLayout isLoading={isLoading}>
@@ -116,25 +138,27 @@ const ProjectAccessManagement = (): JSX.Element => {
 			<h1 className={styles["title"]}>Access Management</h1>
 			<section>
 				<h2 className={styles["user-section-title"]}>Users</h2>
-				<div className={styles["users-table"]}>
-					<Table<UserRow> columns={userColumns} data={userData} />
-					<TablePagination
-						onPageChange={onPageChange}
-						onPageSizeChange={onPageSizeChange}
-						page={page}
-						pageSize={pageSize}
-						totalItemsCount={usersTotalCount}
-					/>
-				</div>
+				<UsersTable
+					onPageChange={onUserPageChange}
+					onPageSizeChange={onUserPageSizeChange}
+					page={userPage}
+					pageSize={userPageSize}
+					totalItemsCount={usersTotalCount}
+					users={users}
+				/>
 			</section>
 			<section>
 				<div className={styles["section-wrapper"]}>
 					<h2 className={styles["group-section-title"]}>Groups</h2>
 					<Button label="Create New" onClick={handleCreateModalOpen} />
 				</div>
-				<Table<GroupRow>
-					columns={projectGroupColumns}
-					data={projectGroupData}
+				<GroupsTable
+					groups={projectGroups}
+					onPageChange={onGroupPageChange}
+					onPageSizeChange={onGroupPageSizeChange}
+					page={groupPage}
+					pageSize={groupPageSize}
+					totalItemsCount={projectGroupsTotalCount}
 				/>
 			</section>
 			<Modal
@@ -144,8 +168,8 @@ const ProjectAccessManagement = (): JSX.Element => {
 			>
 				{hasProject && (
 					<ProjectGroupCreateForm
-						data={projectGroups}
 						onSubmit={handleProjectGroupCreateSubmit}
+						projectGroups={projectGroups}
 						projectId={(project as ProjectGetAllItemResponseDto).id}
 					/>
 				)}

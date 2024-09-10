@@ -4,7 +4,7 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
-import { create, getById, loadAll, patch } from "./actions.js";
+import { create, deleteById, getById, loadAll, patch } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
@@ -71,6 +71,12 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(patch.rejected, (state) => {
 			state.projectPatchStatus = DataStatus.REJECTED;
+		});
+		builder.addCase(deleteById.fulfilled, (state, action) => {
+			const deletedProjectId = action.meta.arg;
+			state.projects = state.projects.filter(
+				(project) => project.id !== deletedProjectId,
+			);
 		});
 	},
 	initialState,

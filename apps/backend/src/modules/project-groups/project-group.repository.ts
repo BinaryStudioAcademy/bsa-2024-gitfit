@@ -2,7 +2,11 @@ import { transaction } from "objection";
 
 import { changeCase } from "~/libs/helpers/helpers.js";
 import { HTTPCode } from "~/libs/modules/http/libs/enums/enums.js";
-import { type Repository } from "~/libs/types/types.js";
+import {
+	type PaginationQueryParameters,
+	type PaginationResponseDto,
+	type Repository,
+} from "~/libs/types/types.js";
 
 import { ExceptionMessage } from "./libs/enums/enums.js";
 import { ProjectGroupError } from "./libs/exceptions/exceptions.js";
@@ -67,20 +71,23 @@ class ProjectGroupRepository implements Repository {
 
 	public async findAllByProjectId(
 		id: number,
-	): Promise<{ items: ProjectGroupEntity[] }> {
-		const projectGroups = await this.projectGroupModel
+		{ page, pageSize }: PaginationQueryParameters,
+	): Promise<PaginationResponseDto<ProjectGroupEntity>> {
+		const { results, total } = await this.projectGroupModel
 			.query()
+			.page(page, pageSize)
 			.joinRelated("projects")
 			.where("projects.id", id)
 			.withGraphFetched("[permissions, users, projects]");
 
 		return {
-			items: projectGroups.map((projectGroup) =>
+			items: results.map((projectGroup) =>
 				ProjectGroupEntity.initialize({
 					...projectGroup,
 					projectId: { id },
 				}),
 			),
+			totalItems: total,
 		};
 	}
 
