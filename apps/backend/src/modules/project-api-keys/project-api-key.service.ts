@@ -3,8 +3,6 @@ import { type Encryption } from "~/libs/modules/encryption/encryption.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Token } from "~/libs/modules/token/token.js";
 import { type Service } from "~/libs/types/types.js";
-import { type ProjectRepository } from "~/modules/projects/projects.js";
-import { type UserRepository } from "~/modules/users/users.js";
 
 import { ProjectApiKeyError } from "./libs/exceptions/exceptions.js";
 import {
@@ -17,9 +15,7 @@ import { type ProjectApiKeyRepository } from "./project-api-key.repository.js";
 type Constructor = {
 	encryption: Encryption;
 	projectApiKeyRepository: ProjectApiKeyRepository;
-	projectRepository: ProjectRepository;
 	token: Token;
-	userRepository: UserRepository;
 };
 
 class ProjectApiKeyService implements Service {
@@ -27,23 +23,15 @@ class ProjectApiKeyService implements Service {
 
 	private projectApiKeyRepository: ProjectApiKeyRepository;
 
-	private projectRepository: ProjectRepository;
-
 	private token: Token;
-
-	private userRepository: UserRepository;
 
 	public constructor({
 		encryption,
 		projectApiKeyRepository,
-		projectRepository,
 		token,
-		userRepository,
 	}: Constructor) {
 		this.projectApiKeyRepository = projectApiKeyRepository;
-		this.projectRepository = projectRepository;
 		this.token = token;
-		this.userRepository = userRepository;
 		this.encryption = encryption;
 	}
 
@@ -51,26 +39,6 @@ class ProjectApiKeyService implements Service {
 		payload: ProjectApiKeyCreateRequestDto,
 	): Promise<ProjectApiKeyCreateResponseDto> {
 		const { projectId, userId } = payload;
-
-		const isProjectExist = Boolean(
-			await this.projectRepository.find(projectId),
-		);
-
-		if (!isProjectExist) {
-			throw new ProjectApiKeyError({
-				message: ExceptionMessage.PROJECT_NOT_FOUND,
-				status: HTTPCode.NOT_FOUND,
-			});
-		}
-
-		const isUserExist = Boolean(await this.userRepository.find(userId));
-
-		if (!isUserExist) {
-			throw new ProjectApiKeyError({
-				message: ExceptionMessage.USER_NOT_FOUND,
-				status: HTTPCode.NOT_FOUND,
-			});
-		}
 
 		const isProjectApiKeyExist = Boolean(
 			await this.projectApiKeyRepository.findByProjectId(projectId),
@@ -86,24 +54,31 @@ class ProjectApiKeyService implements Service {
 		const apiKey = await this.token.createToken({ projectId }, false);
 		const encryptedKey = this.encryption.encrypt(apiKey);
 
-		const createdApiKeyEntity = await this.projectApiKeyRepository.create(
-			ProjectApiKeyEntity.initializeNew({
-				createdByUserId: userId,
-				encryptedKey,
-				projectId,
-				updatedByUserId: userId,
-			}),
-		);
+		try {
+			const createdApiKeyEntity = await this.projectApiKeyRepository.create(
+				ProjectApiKeyEntity.initializeNew({
+					createdByUserId: userId,
+					encryptedKey,
+					projectId,
+					updatedByUserId: userId,
+				}),
+			);
 
-		const createdApiKey = createdApiKeyEntity.toObject();
+			const createdApiKey = createdApiKeyEntity.toObject();
 
-		return {
-			apiKey,
-			createdByUserId: createdApiKey.createdByUserId,
-			id: createdApiKey.id,
-			projectId: createdApiKey.projectId,
-			updatedByUserId: createdApiKey.updatedByUserId,
-		};
+			return {
+				apiKey,
+				createdByUserId: createdApiKey.createdByUserId,
+				id: createdApiKey.id,
+				projectId: createdApiKey.projectId,
+				updatedByUserId: createdApiKey.updatedByUserId,
+			};
+		} catch {
+			throw new ProjectApiKeyError({
+				message: ExceptionMessage.PROJECT_OR_USER_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
 	}
 
 	public delete(): ReturnType<Service["delete"]> {
