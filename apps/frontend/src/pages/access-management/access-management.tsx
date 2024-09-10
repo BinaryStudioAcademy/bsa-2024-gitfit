@@ -100,15 +100,26 @@ const AccessManagement = (): JSX.Element => {
 
 	const handleGroupDelete = useCallback((): void => {
 		if (groupId !== null) {
-			void dispatch(groupActions.deleteById(groupId)).then(() => {
-				void dispatch(
-					userActions.loadAll({ page: userPage, pageSize: userPageSize }),
-				);
-			});
+			void dispatch(
+				groupActions.deleteById({
+					groupQuery: { page: groupPage, pageSize: groupPageSize },
+					id: groupId,
+					userQuery: { page: userPage, pageSize: userPageSize },
+				}),
+			);
+
 			setGroupId(null);
 			onDeleteModalClose();
 		}
-	}, [dispatch, groupId, userPage, userPageSize, onDeleteModalClose]);
+	}, [
+		dispatch,
+		groupId,
+		userPage,
+		userPageSize,
+		groupPage,
+		groupPageSize,
+		onDeleteModalClose,
+	]);
 
 	const onDelete = useCallback(
 		(id: number): void => {

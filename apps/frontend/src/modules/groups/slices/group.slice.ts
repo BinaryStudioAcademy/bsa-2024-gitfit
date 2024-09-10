@@ -64,10 +64,8 @@ const { actions, name, reducer } = createSlice({
 			state.dataStatus = DataStatus.REJECTED;
 		});
 		builder.addCase(deleteById.fulfilled, (state, action) => {
-			const deletedGroupId = action.meta.arg;
-			state.groups = state.groups.filter(
-				(group) => group.id !== deletedGroupId,
-			);
+			const { id } = action.meta.arg;
+			state.groups = state.groups.filter((group) => group.id !== id);
 			state.groupsTotalCount -= ITEMS_DECREMENT;
 
 			const totalPages = Math.max(
