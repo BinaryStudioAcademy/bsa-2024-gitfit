@@ -27,7 +27,7 @@ class ProjectGroupRepository implements Repository {
 				key,
 				name,
 				permissions,
-				projects: projectId,
+				projects: [projectId],
 				users,
 			};
 
@@ -35,16 +35,13 @@ class ProjectGroupRepository implements Repository {
 				.query(trx)
 				.insertGraph(projectGroupData, { relate: true })
 				.returning("*")
-				.withGraphJoined("[permissions, projects, users]");
+				.withGraphFetched("[permissions, projects, users]");
 
 			await trx.commit();
 
 			return ProjectGroupEntity.initialize({
-				id: createdProjectGroup.id,
-				name: createdProjectGroup.name,
-				permissions,
+				...createdProjectGroup,
 				projectId,
-				users,
 			});
 		} catch {
 			await trx.rollback();
@@ -66,6 +63,25 @@ class ProjectGroupRepository implements Repository {
 
 	public findAll(): ReturnType<Repository["findAll"]> {
 		return Promise.resolve({ items: [] });
+	}
+
+	public async findAllByProjectId(
+		id: number,
+	): Promise<{ items: ProjectGroupEntity[] }> {
+		const projectGroups = await this.projectGroupModel
+			.query()
+			.joinRelated("projects")
+			.where("projects.id", id)
+			.withGraphFetched("[permissions, users, projects]");
+
+		return {
+			items: projectGroups.map((projectGroup) =>
+				ProjectGroupEntity.initialize({
+					...projectGroup,
+					projectId: { id },
+				}),
+			),
+		};
 	}
 
 	public async findByName(name: string): Promise<null | ProjectGroupModel> {

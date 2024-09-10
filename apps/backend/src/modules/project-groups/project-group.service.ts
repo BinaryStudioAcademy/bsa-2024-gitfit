@@ -6,6 +6,7 @@ import { ProjectGroupError } from "./libs/exceptions/exceptions.js";
 import {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupCreateResponseDto,
+	type ProjectGroupGetAllResponseDto,
 } from "./libs/types/types.js";
 import { ProjectGroupEntity } from "./project-group.entity.js";
 import { type ProjectGroupRepository } from "./project-group.repository.js";
@@ -16,7 +17,6 @@ class ProjectGroupService implements Service {
 	public constructor(projectGroupRepository: ProjectGroupRepository) {
 		this.projectGroupRepository = projectGroupRepository;
 	}
-
 	public async create(
 		payload: ProjectGroupCreateRequestDto,
 	): Promise<ProjectGroupCreateResponseDto> {
@@ -57,6 +57,17 @@ class ProjectGroupService implements Service {
 
 	public findAll(): ReturnType<Service["findAll"]> {
 		return Promise.resolve({ items: [] });
+	}
+
+	public async findAllByProjectId(
+		id: number,
+	): Promise<ProjectGroupGetAllResponseDto> {
+		const projectGroups =
+			await this.projectGroupRepository.findAllByProjectId(id);
+
+		return {
+			items: projectGroups.items.map((item) => item.toObject()),
+		};
 	}
 
 	public update(): ReturnType<Service["update"]> {
