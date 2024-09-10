@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.18.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.17.0...v1.18.0) (2024-09-10)
+
+
+### Features
+
+* add admin group gf-227 ([#235](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/235)) ([1114411](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1114411c7ac28c715b13faaa27a790f7395758b5))
+* save search value to query parameters gf-200 ([#218](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/218)) ([8d5cb71](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8d5cb7135a078181a191f653091cf0217cd61023))
+
 ## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.16.0...v1.17.0) (2024-09-10)
 
 
