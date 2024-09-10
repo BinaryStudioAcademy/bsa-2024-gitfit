@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import {
-	FIRST_PAGE,
-	ITEMS_DECREMENT,
-} from "~/libs/components/table-pagination/libs/constants/constants.js";
+import { ITEMS_DECREMENT } from "~/libs/components/table-pagination/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
@@ -16,8 +13,6 @@ type State = {
 	groupCreateStatus: ValueOf<typeof DataStatus>;
 	groups: GroupGetAllItemResponseDto[];
 	groupsTotalCount: number;
-	page: number;
-	pageSize: number;
 	users: UserGetAllItemResponseDto[];
 	usersDataStatus: ValueOf<typeof DataStatus>;
 	usersTotalCount: number;
@@ -28,8 +23,6 @@ const initialState: State = {
 	groupCreateStatus: DataStatus.IDLE,
 	groups: [],
 	groupsTotalCount: 0,
-	page: 1,
-	pageSize: 10,
 	users: [],
 	usersDataStatus: DataStatus.IDLE,
 	usersTotalCount: 0,
@@ -63,16 +56,11 @@ const { actions, name, reducer } = createSlice({
 			state.groups = [];
 			state.dataStatus = DataStatus.REJECTED;
 		});
+
 		builder.addCase(deleteById.fulfilled, (state, action) => {
 			const { id } = action.meta.arg;
 			state.groups = state.groups.filter((group) => group.id !== id);
 			state.groupsTotalCount -= ITEMS_DECREMENT;
-
-			const totalPages = Math.max(
-				Math.ceil(state.groupsTotalCount / state.pageSize),
-				FIRST_PAGE,
-			);
-			state.page = Math.min(state.page, totalPages);
 		});
 		builder.addCase(create.pending, (state) => {
 			state.groupCreateStatus = DataStatus.PENDING;
