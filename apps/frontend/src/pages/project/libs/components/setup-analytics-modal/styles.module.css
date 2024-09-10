@@ -16,10 +16,6 @@
 	align-items: flex-end;
 }
 
-.api-key-output {
-	flex: 1;
-}
-
 .button-wrapper {
 	min-width: 120px;
 }

@@ -51,16 +51,14 @@ const SetupAnalyticsModal = ({
 					className={styles["api-key-container"]}
 					onSubmit={handleGenerateSubmit}
 				>
-					<div className={styles["api-key-output"]}>
-						<Input
-							control={control}
-							errors={errors}
-							isDisabled
-							label="API key"
-							name="apiKey"
-							placeholder="No API key"
-						/>
-					</div>
+					<Input
+						control={control}
+						errors={errors}
+						isDisabled
+						label="API key"
+						name="apiKey"
+						placeholder="No API key"
+					/>
 					<div className={styles["button-wrapper"]}>
 						<Button
 							isDisabled={isGenerateButtonDisabled}
