@@ -40,7 +40,11 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 	}, []);
 
 	return (
-		<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>
+		<form
+			className={styles["form-wrapper"]}
+			noValidate
+			onSubmit={handleFormSubmit}
+		>
 			<p className={styles["form-text"]}>
 				Have an account? <Link to={AppRoute.SIGN_IN}>Log in</Link>
 			</p>
@@ -58,7 +62,7 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 				errors={errors}
 				label="Email"
 				name="email"
-				type="text"
+				type="email"
 			/>
 			<div className={styles["password-container"]}>
 				<Input
