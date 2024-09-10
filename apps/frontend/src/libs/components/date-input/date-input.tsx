@@ -6,14 +6,15 @@ import {
 } from "react-hook-form";
 
 import { Icon, Popover } from "~/libs/components/components.js";
-import { formatDate, getShortWeekday } from "~/libs/helpers/helpers.js";
+import { formatDate } from "~/libs/helpers/helpers.js";
 import {
 	useCallback,
 	useFormController,
 	usePopover,
 } from "~/libs/hooks/hooks.js";
 
-import { MILIS_IN_DAY } from "./libs/constants/constants.js";
+import { MILLIS_IN_DAY } from "./libs/constants/constants.js";
+import { getShortWeekday } from "./libs/helpers/helpers.js";
 import { type DateValue } from "./libs/types/types.js";
 import "./styles.css";
 
@@ -51,7 +52,7 @@ const DateInput = <T extends FieldValues>({
 
 			if (maxRange && startDate && endDate) {
 				const diffInDays =
-					(endDate.getTime() - startDate.getTime()) / MILIS_IN_DAY;
+					(endDate.getTime() - startDate.getTime()) / MILLIS_IN_DAY;
 
 				if (diffInDays > maxRange) {
 					const adjustedEndDate = new Date(startDate.getDate() + maxRange);

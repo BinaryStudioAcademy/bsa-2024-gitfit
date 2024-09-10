@@ -1,1 +1,1 @@
-export { MILIS_IN_DAY } from "./milis-in-day.constant.js";
+export { MILLIS_IN_DAY } from "./millis-in-day.constant.js";
