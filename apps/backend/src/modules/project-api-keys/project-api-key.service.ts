@@ -40,11 +40,10 @@ class ProjectApiKeyService implements Service {
 	): Promise<ProjectApiKeyCreateResponseDto> {
 		const { projectId, userId } = payload;
 
-		const isProjectApiKeyExist = Boolean(
-			await this.projectApiKeyRepository.findByProjectId(projectId),
-		);
+		const existingProjectApiKey =
+			await this.projectApiKeyRepository.findByProjectId(projectId);
 
-		if (isProjectApiKeyExist) {
+		if (existingProjectApiKey) {
 			throw new ProjectApiKeyError({
 				message: ExceptionMessage.PROJECT_API_KEY_ALREADY_EXISTS,
 				status: HTTPCode.CONFLICT,
