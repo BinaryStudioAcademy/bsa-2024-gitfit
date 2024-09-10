@@ -111,7 +111,7 @@ Hide/Show password toggle must be located on the right side of a Password input 
 
 2. Name field:
 
-- the name can contain any characters, including letters, numbers, spaces, and special characters;
+- the name can contain Latin letters, hyphens and spaces;
 - at least 3 characters;
 - max 50 characters;
 
