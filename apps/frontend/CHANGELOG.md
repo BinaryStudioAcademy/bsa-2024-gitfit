@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.19.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.18.0...frontend-v1.19.0) (2024-09-10)
+
+
+### Features
+
+* Update logo in the app gf-242 ([#258](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/258)) ([1b19756](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1b19756be162000933cb8610146b087e70b30e48))
+
+
+### Bug Fixes
+
+* missing error message for invalid email format on Sign Up page gf-252 ([#255](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/255)) ([1851536](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/18515363f8434e4122c42cc1b2ed17374a9625d1))
+
 ## [1.18.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.17.0...frontend-v1.18.0) (2024-09-10)
 
 
