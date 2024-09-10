@@ -12,14 +12,11 @@ const getFirstAvailableRoute = (
 		userPermissions.map((permission) => permission.key),
 	);
 
-	for (const item of sidebarItems) {
-		const itemPermissions = item.pagePermissions ?? [];
-		const hasAccess = itemPermissions.some((permission) =>
-			userPermissionKeys.has(permission),
-		);
-
-		if (hasAccess) {
-			return item.href;
+	for (const { href, pagePermissions = [] } of sidebarItems) {
+		if (
+			pagePermissions.some((permission) => userPermissionKeys.has(permission))
+		) {
+			return href;
 		}
 	}
 
