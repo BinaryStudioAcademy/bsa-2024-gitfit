@@ -27,7 +27,7 @@ import {
 	ProjectCreateForm,
 	ProjectsSearch,
 	ProjectUpdateForm,
-} from "./components/components.js";
+} from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
