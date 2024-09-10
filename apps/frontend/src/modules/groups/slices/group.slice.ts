@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { ITEMS_DECREMENT } from "~/libs/components/table-pagination/libs/constants/constants.js";
+import { ITEMS_CHANGED_COUNT } from "~/libs/components/table-pagination/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
@@ -60,13 +60,14 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(deleteById.fulfilled, (state, action) => {
 			const { id } = action.meta.arg;
 			state.groups = state.groups.filter((group) => group.id !== id);
-			state.groupsTotalCount -= ITEMS_DECREMENT;
+			state.groupsTotalCount -= ITEMS_CHANGED_COUNT;
 		});
 		builder.addCase(create.pending, (state) => {
 			state.groupCreateStatus = DataStatus.PENDING;
 		});
 		builder.addCase(create.fulfilled, (state, action) => {
 			state.groups = [action.payload, ...state.groups];
+			state.groupsTotalCount += ITEMS_CHANGED_COUNT;
 			state.groupCreateStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(create.rejected, (state) => {
