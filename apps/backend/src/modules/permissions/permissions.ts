@@ -1,7 +1,7 @@
 import { logger } from "~/libs/modules/logger/logger.js";
 import { userService } from "~/modules/users/users.js";
 
-import { PermissionController } from "./permission.conroller.js";
+import { PermissionController } from "./permission.controller.js";
 import { PermissionModel } from "./permission.model.js";
 import { PermissionRepository } from "./permission.repository.js";
 import { PermissionService } from "./permission.service.js";

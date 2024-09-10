@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.16.0...v1.17.0) (2024-09-10)
+
+
+### Features
+
+* add an ablity to create a group gf-79 ([#176](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/176)) ([ad36683](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ad366835d2fce03680d0d1208fde6ba3a56f5e57))
+* refactor existing sub components gf-233 ([#240](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/240)) ([117a666](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/117a666fbbf8d9c63d1b26df3dfa3b71ca8ee6e9))
+
+## [1.16.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.15.0...v1.16.0) (2024-09-09)
+
+
+### Features
+
+* add a character counter for the project description gf-188 ([#222](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/222)) ([7c635d5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7c635d51e409cc1e85a89bbd62f1bf8ec4bd2bcd))
+* improve avatar visibility gf-202 ([#228](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/228)) ([d4b7203](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d4b720348e0973e8e36a997509e12b20b7bbdc3c))
+
 ## [1.15.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.14.0...v1.15.0) (2024-09-09)
 
 

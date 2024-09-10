@@ -5,10 +5,10 @@ import {
 	type Path,
 	type PathValue,
 } from "react-hook-form";
-import ReactSelect from "react-select";
+import ReactSelect, { type MultiValue, type SingleValue } from "react-select";
 
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
-import { useFormController } from "~/libs/hooks/hooks.js";
+import { useCallback, useFormController, useMemo } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -49,6 +49,40 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		styles["label-text"],
 		isLabelHidden && "visually-hidden",
 	);
+
+	const handleChange = useCallback(
+		(
+			selectedOptions:
+				| MultiValue<SelectOption<TOptionValue> | undefined>
+				| SingleValue<SelectOption<TOptionValue> | undefined>,
+		): void => {
+			const selectedValues = isMulti
+				? (selectedOptions as MultiValue<SelectOption<TOptionValue>>).map(
+						({ value }) => value,
+					)
+				: (selectedOptions as SingleValue<SelectOption<TOptionValue>>)?.value;
+
+			field.onChange(selectedValues);
+		},
+		[field, isMulti],
+	);
+
+	const handleFindOptionByValue = useCallback(
+		(value: TOptionValue): SelectOption<TOptionValue> | undefined => {
+			return options.find((option) => option.value === value);
+		},
+		[options],
+	);
+
+	const handleSelectedValue = useMemo(() => {
+		if (isMulti) {
+			return (field.value as TOptionValue[])
+				.map((element) => handleFindOptionByValue(element))
+				.filter(Boolean);
+		}
+
+		return handleFindOptionByValue(field.value as TOptionValue);
+	}, [field.value, handleFindOptionByValue, isMulti]);
 
 	return (
 		<label className={styles["label"]}>
@@ -92,7 +126,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				isMulti={isMulti}
 				isSearchable={isSearchable}
 				name={name}
-				onChange={field.onChange}
+				onChange={handleChange}
 				options={options as PathValue<TFieldValues, Path<TFieldValues>>}
 				placeholder={placeholder}
 				styles={{
@@ -107,7 +141,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 					}),
 				}}
 				unstyled
-				value={field.value}
+				value={handleSelectedValue}
 			/>
 		</label>
 	);

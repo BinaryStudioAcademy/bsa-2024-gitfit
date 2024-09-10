@@ -10,6 +10,10 @@ const getUserColumns = (): TableColumn<UserRow>[] => {
 			header: "Name",
 		},
 		{
+			accessorFn: (user: UserRow): string => user.groups.join(", "),
+			header: "Groups",
+		},
+		{
 			accessorFn: (user: UserRow): string =>
 				formatDate(new Date(user.createdAt), "d MMM yyyy HH:mm"),
 			header: "Created At",
