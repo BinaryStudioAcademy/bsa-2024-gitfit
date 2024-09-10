@@ -1,4 +1,9 @@
-import { Button, Modal, PageLayout } from "~/libs/components/components.js";
+import {
+	Button,
+	ConfirmationModal,
+	Modal,
+	PageLayout,
+} from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -7,6 +12,7 @@ import {
 	useEffect,
 	useModal,
 	usePagination,
+	useState,
 } from "~/libs/hooks/hooks.js";
 import {
 	actions as groupActions,
@@ -62,6 +68,14 @@ const AccessManagement = (): JSX.Element => {
 		onOpen: onModalOpen,
 	} = useModal();
 
+	const {
+		isOpened: isDeleteModalOpen,
+		onClose: onDeleteModalClose,
+		onOpen: onDeleteModalOpen,
+	} = useModal();
+
+	const [groupId, setGroupId] = useState<null | number>(null);
+
 	useEffect(() => {
 		void dispatch(
 			userActions.loadAll({ page: userPage, pageSize: userPageSize }),
@@ -82,6 +96,26 @@ const AccessManagement = (): JSX.Element => {
 			onModalClose();
 		},
 		[dispatch, onModalClose, userPage, userPageSize],
+	);
+
+	const handleGroupDelete = useCallback((): void => {
+		if (groupId !== null) {
+			void dispatch(groupActions.deleteById(groupId)).then(() => {
+				void dispatch(
+					userActions.loadAll({ page: userPage, pageSize: userPageSize }),
+				);
+			});
+			setGroupId(null);
+			onDeleteModalClose();
+		}
+	}, [dispatch, groupId, userPage, userPageSize, onDeleteModalClose]);
+
+	const onDelete = useCallback(
+		(id: number): void => {
+			setGroupId(id);
+			onDeleteModalOpen();
+		},
+		[onDeleteModalOpen],
 	);
 
 	const isLoading = [usersDataStatus, groupsDataStatus].some(
@@ -111,6 +145,7 @@ const AccessManagement = (): JSX.Element => {
 				</div>
 				<GroupsTable
 					groups={groups}
+					onDelete={onDelete}
 					onPageChange={onGroupPageChange}
 					onPageSizeChange={onGroupPageSizeChange}
 					page={groupPage}
@@ -125,6 +160,14 @@ const AccessManagement = (): JSX.Element => {
 			>
 				<GroupCreateForm onSubmit={handleGroupCreateSubmit} />
 			</Modal>
+			{groupId !== null && (
+				<ConfirmationModal
+					content="The group will be deleted. This action cannot be undone. Do you want to continue?"
+					isOpened={isDeleteModalOpen}
+					onClose={onDeleteModalClose}
+					onConfirm={handleGroupDelete}
+				/>
+			)}
 		</PageLayout>
 	);
 };
