@@ -3,24 +3,15 @@ import {
 	type PermissionGetAllItemResponseDto,
 } from "~/libs/types/types.js";
 
-const getFirstAvailableRoute = (
+import { checkHasPermission } from "./helpers.js";
+
+const getPermittedNavigationItems = (
+	items: NavigationItem[],
 	userPermissions: PermissionGetAllItemResponseDto[],
-	sidebarItems: NavigationItem[],
-	fallbackRoute: string,
-): string => {
-	const userPermissionKeys = new Set(
-		userPermissions.map((permission) => permission.key),
+): NavigationItem[] => {
+	return items.filter(({ pagePermissions = [] }) =>
+		checkHasPermission(pagePermissions, userPermissions),
 	);
-
-	for (const { href, pagePermissions = [] } of sidebarItems) {
-		if (
-			pagePermissions.some((permission) => userPermissionKeys.has(permission))
-		) {
-			return href;
-		}
-	}
-
-	return fallbackRoute;
 };
 
-export { getFirstAvailableRoute };
+export { getPermittedNavigationItems };

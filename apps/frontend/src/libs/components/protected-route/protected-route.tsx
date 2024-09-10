@@ -9,7 +9,7 @@ import {
 } from "~/libs/enums/enums.js";
 import {
 	checkHasPermission,
-	getFirstAvailableRoute,
+	getPermittedNavigationItems,
 } from "~/libs/helpers/helpers.js";
 import { useAppSelector, useMemo } from "~/libs/hooks/hooks.js";
 import { type ValueOf } from "~/libs/types/types.js";
@@ -54,16 +54,14 @@ const ProtectedRoute = ({
 	);
 
 	if (!hasRequiredPermission) {
-		return (
-			<Navigate
-				replace
-				to={getFirstAvailableRoute(
-					userPermissions,
-					SIDEBAR_ITEMS,
-					AppRoute.ROOT,
-				)}
-			/>
-		);
+		const FIRST_ITEM_INDEX = 0;
+
+		const firstAvailableRoute =
+			getPermittedNavigationItems(SIDEBAR_ITEMS, userPermissions)[
+				FIRST_ITEM_INDEX
+			]?.href || AppRoute.ROOT;
+
+		return <Navigate replace to={firstAvailableRoute} />;
 	}
 
 	return <>{children}</>;
