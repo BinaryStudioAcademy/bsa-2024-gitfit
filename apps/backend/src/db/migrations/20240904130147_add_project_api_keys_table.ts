@@ -1,6 +1,8 @@
 import { type Knex } from "knex";
 
 const TABLE_NAME = "project_api_keys";
+const PROJECTS_TABLE_NAME = "projects";
+const USERS_TABLE_NAME = "users";
 
 const ColumnName = {
 	CREATED_AT: "created_at",
@@ -12,9 +14,6 @@ const ColumnName = {
 	UPDATED_BY_USER_ID: "updated_by_user_id",
 } as const;
 
-const PROJECTS_TABLE = "projects";
-const USERS_TABLE = "users";
-
 function up(knex: Knex): Promise<void> {
 	return knex.schema.createTable(TABLE_NAME, (table) => {
 		table.increments(ColumnName.ID).primary();
@@ -25,21 +24,21 @@ function up(knex: Knex): Promise<void> {
 			.notNullable()
 			.unique()
 			.references("id")
-			.inTable(PROJECTS_TABLE)
+			.inTable(PROJECTS_TABLE_NAME)
 			.onDelete("CASCADE");
 		table
 			.integer(ColumnName.CREATED_BY_USER_ID)
 			.unsigned()
 			.notNullable()
 			.references("id")
-			.inTable(USERS_TABLE)
+			.inTable(USERS_TABLE_NAME)
 			.onDelete("CASCADE");
 		table
 			.integer(ColumnName.UPDATED_BY_USER_ID)
 			.unsigned()
 			.notNullable()
 			.references("id")
-			.inTable(USERS_TABLE)
+			.inTable(USERS_TABLE_NAME)
 			.onDelete("CASCADE");
 		table
 			.dateTime(ColumnName.CREATED_AT)
