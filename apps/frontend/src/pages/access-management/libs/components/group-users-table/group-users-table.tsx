@@ -1,5 +1,4 @@
-import { useCallback, useEffect } from "react";
-import { type Control, type FieldPath } from "react-hook-form";
+import { type FieldErrors, type UseFormSetValue } from "react-hook-form";
 
 import {
 	Loader,
@@ -10,78 +9,86 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
-	useFormController,
+	useEffect,
 	usePagination,
 } from "~/libs/hooks/hooks.js";
-import { actions as groupActions } from "~/modules/groups/groups.js";
-
 import {
-	getGroupUserColumns,
-	getGroupUserRows,
-} from "../../helpers/helpers.js";
-import { type GroupUserRow } from "../../types/types.js";
+	actions as groupActions,
+	type GroupCreateRequestDto,
+} from "~/modules/groups/groups.js";
 
-type Properties<T extends object> = {
-	control: Control<T, null>;
-	name: FieldPath<T>;
+import { getUserColumns, getUserRows } from "../../helpers/helpers.js";
+import { type UserRow } from "../../types/types.js";
+import styles from "./styles.module.css";
+
+const getRowId = (row: UserRow): number => row.id;
+
+type Properties = {
+	errors: FieldErrors<GroupCreateRequestDto>;
+	onToggle: (id: number) => void;
+	selectedUserIds: number[];
+	setValue: UseFormSetValue<GroupCreateRequestDto>;
 };
 
-const GroupUsersTable = <T extends object>({
-	control,
-	name,
-}: Properties<T>): JSX.Element => {
+const GroupUsersTable = ({
+	errors,
+	onToggle,
+	selectedUserIds,
+	setValue,
+}: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { field } = useFormController({ control, name });
-
-	const {
-		dataStatus,
-		items: users,
-		totalCount,
-	} = useAppSelector(({ groups }) => groups.users);
-
-	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
-		queryParameterPrefix: "user",
-		totalItemsCount: totalCount,
-	});
-
-	useEffect(() => {
-		void dispatch(groupActions.configureGroupUsers({ page, pageSize }));
-	}, [dispatch, page, pageSize]);
-
-	const handleUserSelect = useCallback(
-		(userIds: number[]) => {
-			field.onChange(userIds);
-		},
-		[field],
+	const { users, usersDataStatus, usersTotalCount } = useAppSelector(
+		({ groups }) => groups,
 	);
 
-	const isLoading =
-		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
+	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+		queryParameterPrefix: "group-user",
+		totalItemsCount: usersTotalCount,
+	});
 
-	if (isLoading) {
+	const userColumns = getUserColumns();
+	const userData: UserRow[] = getUserRows(users);
+
+	useEffect(() => {
+		void dispatch(groupActions.loadUsers({ page, pageSize }));
+	}, [dispatch, page, pageSize]);
+
+	useEffect(() => {
+		setValue("userIds", selectedUserIds);
+	}, [selectedUserIds, setValue]);
+
+	const error = errors["userIds"]?.message;
+	const hasError = Boolean(error);
+
+	if (
+		usersDataStatus === DataStatus.IDLE ||
+		usersDataStatus === DataStatus.PENDING
+	) {
 		return <Loader />;
 	}
 
-	const userColumns = getGroupUserColumns();
-	const userData: GroupUserRow[] = getGroupUserRows(users);
-
 	return (
 		<>
-			<Table<GroupUserRow>
-				columns={userColumns}
-				data={userData}
-				name="userIds"
-				onSelect={handleUserSelect}
-				selectedIds={field.value}
-			/>
-			<TablePagination
-				onPageChange={onPageChange}
-				onPageSizeChange={onPageSizeChange}
-				page={page}
-				pageSize={pageSize}
-				totalItemsCount={totalCount}
-			/>
+			<span className={styles["table-title"]}>Users</span>
+			<div className={styles["users-table"]}>
+				<Table<UserRow>
+					columns={userColumns}
+					data={userData}
+					getRowId={getRowId}
+					onRowSelect={onToggle}
+					selectedRowIds={selectedUserIds}
+				/>
+				<TablePagination
+					background="secondary"
+					onPageChange={onPageChange}
+					onPageSizeChange={onPageSizeChange}
+					page={page}
+					pageSize={pageSize}
+					totalItemsCount={usersTotalCount}
+				/>
+			</div>
+			{hasError && <span className={styles["error-message"]}>{error}</span>}
 		</>
 	);
 };

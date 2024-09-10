@@ -8,7 +8,7 @@ import {
 import ReactSelect, { type MultiValue, type SingleValue } from "react-select";
 
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
-import { useCallback, useFormController } from "~/libs/hooks/hooks.js";
+import { useCallback, useFormController, useMemo } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -50,17 +50,6 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		isLabelHidden && "visually-hidden",
 	);
 
-	const findOption = (
-		value: TOptionValue,
-	): SelectOption<TOptionValue> | undefined =>
-		options.find((option) => option.value === value);
-
-	const selectedValue = isMulti
-		? (field.value as TOptionValue[])
-				.map((element) => findOption(element))
-				.filter(Boolean)
-		: findOption(field.value as TOptionValue) || null;
-
 	const handleChange = useCallback(
 		(
 			selectedOptions:
@@ -77,6 +66,23 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		},
 		[field, isMulti],
 	);
+
+	const handleFindOptionByValue = useCallback(
+		(value: TOptionValue): SelectOption<TOptionValue> | undefined => {
+			return options.find((option) => option.value === value);
+		},
+		[options],
+	);
+
+	const handleSelectedValue = useMemo(() => {
+		if (isMulti) {
+			return (field.value as TOptionValue[])
+				.map((element) => handleFindOptionByValue(element))
+				.filter(Boolean);
+		}
+
+		return handleFindOptionByValue(field.value as TOptionValue);
+	}, [field.value, handleFindOptionByValue, isMulti]);
 
 	return (
 		<label className={styles["label"]}>
@@ -135,7 +141,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 					}),
 				}}
 				unstyled
-				value={selectedValue}
+				value={handleSelectedValue}
 			/>
 		</label>
 	);

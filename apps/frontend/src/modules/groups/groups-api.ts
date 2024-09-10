@@ -6,6 +6,8 @@ import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { GroupsApiPath } from "./libs/enums/enums.js";
 import {
+	type GroupCreateRequestDto,
+	type GroupCreateResponseDto,
 	type GroupGetAllResponseDto,
 	type GroupUpdateRequestDto,
 	type GroupUpdateResponseDto,
@@ -20,6 +22,22 @@ type Constructor = {
 class GroupApi extends BaseHTTPApi {
 	public constructor({ baseUrl, http, storage }: Constructor) {
 		super({ baseUrl, http, path: APIPath.GROUPS, storage });
+	}
+
+	public async create(
+		payload: GroupCreateRequestDto,
+	): Promise<GroupCreateResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(GroupsApiPath.ROOT, {}),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "POST",
+				payload: JSON.stringify(payload),
+			},
+		);
+
+		return await response.json<GroupCreateResponseDto>();
 	}
 
 	public async deleteById(id: number): Promise<boolean> {

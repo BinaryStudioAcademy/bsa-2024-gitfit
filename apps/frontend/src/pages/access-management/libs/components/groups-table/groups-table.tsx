@@ -1,13 +1,4 @@
-import {
-	ConfirmationModal,
-	Modal,
-	Table,
-	TablePagination,
-} from "~/libs/components/components.js";
-import {
-	FIRST_PAGE,
-	ITEMS_DECREMENT,
-} from "~/libs/components/table-pagination/libs/constants/constants.js";
+import { Modal, Table, TablePagination } from "~/libs/components/components.js";
 import {
 	useAppDispatch,
 	useCallback,
@@ -23,6 +14,7 @@ import {
 import { getGroupColumns, getGroupRows } from "../../helpers/helpers.js";
 import { type GroupRow } from "../../types/types.js";
 import { GroupsUpdateForm } from "../groups-update-form/groups-update-form.js";
+import styles from "./styles.module.css";
 
 type Properties = {
 	groups: GroupGetAllItemResponseDto[];
@@ -30,6 +22,7 @@ type Properties = {
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
 	pageSize: number;
+	paginationBackground?: "primary" | "secondary";
 	totalItemsCount: number;
 };
 
@@ -39,14 +32,13 @@ const GroupsTable = ({
 	onPageSizeChange,
 	page,
 	pageSize,
+	paginationBackground = "primary",
 	totalItemsCount,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const { isOpened, onClose, onOpen } = useModal();
 	const [groupToEdit, setGroupToEdit] =
-		useState<GroupGetAllItemResponseDto | null>(null);
-	const [groupToDelete, setGroupToDelete] =
 		useState<GroupGetAllItemResponseDto | null>(null);
 
 	const handleModalClose = useCallback(() => {
@@ -62,40 +54,8 @@ const GroupsTable = ({
 		[dispatch, handleModalClose],
 	);
 
-	const handleDeleteConfirm = useCallback(() => {
-		if (groupToDelete) {
-			void dispatch(groupActions.deleteById(groupToDelete.id))
-				.unwrap()
-				.then(() => {
-					const newTotalCount = totalItemsCount - ITEMS_DECREMENT;
-					const totalPages = Math.max(
-						Math.ceil(newTotalCount / pageSize),
-						FIRST_PAGE,
-					);
-
-					const newPage = Math.min(page, totalPages);
-					onPageChange(newPage);
-				});
-		}
-
-		handleModalClose();
-	}, [
-		dispatch,
-		groupToDelete,
-		handleModalClose,
-		totalItemsCount,
-		page,
-		pageSize,
-		onPageChange,
-	]);
-
 	const groupColumns = getGroupColumns({
-		onDelete: (groupId: number) => {
-			const group = groups.find(({ id }) => id === groupId);
-			setGroupToDelete(group ?? null);
-
-			onOpen();
-		},
+		onDelete: () => {},
 		onEdit: (groupId: number) => {
 			const group = groups.find(({ id }) => id === groupId);
 			setGroupToEdit(group ?? null);
@@ -107,14 +67,17 @@ const GroupsTable = ({
 
 	return (
 		<>
-			<Table<GroupRow> columns={groupColumns} data={groupData} />
-			<TablePagination
-				onPageChange={onPageChange}
-				onPageSizeChange={onPageSizeChange}
-				page={page}
-				pageSize={pageSize}
-				totalItemsCount={totalItemsCount}
-			/>
+			<div className={styles["groups-table"]}>
+				<Table<GroupRow> columns={groupColumns} data={groupData} />
+				<TablePagination
+					background={paginationBackground}
+					onPageChange={onPageChange}
+					onPageSizeChange={onPageSizeChange}
+					page={page}
+					pageSize={pageSize}
+					totalItemsCount={totalItemsCount}
+				/>
+			</div>
 
 			{groupToEdit && (
 				<Modal
@@ -124,15 +87,6 @@ const GroupsTable = ({
 				>
 					<GroupsUpdateForm group={groupToEdit} onSubmit={handleUpdate} />
 				</Modal>
-			)}
-
-			{groupToDelete && (
-				<ConfirmationModal
-					content="The group will be deleted. This action cannot be undone. Do you want to continue?"
-					isOpened={isOpened}
-					onClose={handleModalClose}
-					onConfirm={handleDeleteConfirm}
-				/>
 			)}
 		</>
 	);

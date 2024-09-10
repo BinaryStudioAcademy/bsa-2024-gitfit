@@ -41,7 +41,9 @@ const TablePagination = ({
 	totalItemsCount,
 }: Properties): JSX.Element => {
 	const { control } = useAppForm<FormData>({
-		defaultValues: { pageSize },
+		defaultValues: {
+			pageSize,
+		},
 	});
 
 	const totalPages = useMemo(
@@ -55,7 +57,8 @@ const TablePagination = ({
 	const { pageSize: changedPageSize } = useFormWatch({ control });
 
 	useEffect(() => {
-		onPageSizeChange(changedPageSize as number);
+		const newPageSize = changedPageSize as number;
+		onPageSizeChange(newPageSize);
 	}, [changedPageSize, onPageSizeChange]);
 
 	const handleFirstPageClick = useCallback(() => {
