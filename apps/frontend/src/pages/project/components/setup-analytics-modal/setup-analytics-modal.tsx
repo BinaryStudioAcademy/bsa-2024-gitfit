@@ -2,6 +2,7 @@ import { Button, Modal } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useCallback,
 } from "~/libs/hooks/hooks.js";
@@ -23,24 +24,33 @@ const SetupAnalyticsModal = ({
 	project,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
+	const { handleSubmit } = useAppForm({
+		defaultValues: {
+			projectId: project.id,
+		},
+	});
 	const { dataStatus } = useAppSelector(({ projectApiKeys }) => projectApiKeys);
 
 	const hasProjectApiKey = project.apiKey !== null;
 	const isGenerateButtonDisabled =
 		hasProjectApiKey || dataStatus === DataStatus.PENDING;
 
-	const handleGenerateSubmit = useCallback(() => {
-		void dispatch(
-			projectApiKeyActions.create({
-				projectId: project.id,
-			}),
-		);
-	}, [dispatch, project]);
+	const handleGenerateSubmit = useCallback(
+		(event_: React.BaseSyntheticEvent): void => {
+			void handleSubmit((formData: { projectId: number }) => {
+				void dispatch(projectApiKeyActions.create(formData));
+			})(event_);
+		},
+		[handleSubmit, dispatch],
+	);
 
 	return (
 		<Modal isOpened={isOpened} onClose={onClose} title="Setup Analytics">
 			<div className={styles["content"]}>
-				<div className={styles["api-key-container"]}>
+				<form
+					className={styles["api-key-container"]}
+					onSubmit={handleGenerateSubmit}
+				>
 					<div className={styles["api-key-output"]}>
 						<Output
 							label="API Key"
@@ -52,10 +62,10 @@ const SetupAnalyticsModal = ({
 						<Button
 							isDisabled={isGenerateButtonDisabled}
 							label="Generate"
-							onClick={handleGenerateSubmit}
+							type="submit"
 						/>
 					</div>
-				</div>
+				</form>
 			</div>
 		</Modal>
 	);
