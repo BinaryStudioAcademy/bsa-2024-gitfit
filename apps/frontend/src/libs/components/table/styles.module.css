@@ -16,6 +16,10 @@
 	background-color: var(--color-background-secondary);
 }
 
+.table .table-checkbox-column {
+	width: 35px;
+}
+
 .table .table-header,
 .table .table-data {
 	padding: 10px 20px;

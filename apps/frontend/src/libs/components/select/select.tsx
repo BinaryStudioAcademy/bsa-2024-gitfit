@@ -5,10 +5,10 @@ import {
 	type Path,
 	type PathValue,
 } from "react-hook-form";
-import ReactSelect from "react-select";
+import ReactSelect, { type MultiValue, type SingleValue } from "react-select";
 
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
-import { useFormController } from "~/libs/hooks/hooks.js";
+import { useCallback, useFormController } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -36,7 +36,9 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 	placeholder,
 	size = "default",
 }: Properties<TFieldValues, TOptionValue>): JSX.Element => {
-	const { field } = useFormController({
+	const {
+		field: { onChange, ...field },
+	} = useFormController({
 		control,
 		name,
 	});
@@ -46,6 +48,26 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 	const labelClassName = getValidClassNames(
 		styles["label-text"],
 		isLabelHidden && "visually-hidden",
+	);
+	const option = [field.value]
+		.flat()
+		.map((value) => options.find((option) => option.value === value))
+		.filter(Boolean);
+
+	const handleChange = useCallback(
+		(
+			option:
+				| MultiValue<SelectOption<TOptionValue> | undefined>
+				| SingleValue<SelectOption<TOptionValue> | undefined>,
+		) => {
+			const values = [option]
+				.flat()
+				.map((option) => option?.value)
+				.filter(Boolean);
+
+			onChange(isMulti ? values : values.pop());
+		},
+		[isMulti, onChange],
 	);
 
 	return (
@@ -89,7 +111,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				isClearable={false}
 				isMulti={isMulti}
 				name={name}
-				onChange={field.onChange}
+				onChange={handleChange}
 				options={options as PathValue<TFieldValues, Path<TFieldValues>>}
 				placeholder={placeholder}
 				styles={{
@@ -99,7 +121,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 					}),
 				}}
 				unstyled
-				value={field.value}
+				value={isMulti ? option : option.pop()}
 			/>
 		</label>
 	);
