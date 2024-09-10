@@ -9,7 +9,6 @@ const token = new BaseToken({
 
 const permanentToken = new BaseToken({
 	algorithm: config.ENV.JWT.ALGORITHM,
-	expirationTime: "",
 	secret: config.ENV.JWT.SECRET,
 });
 
