@@ -93,6 +93,11 @@ class UserEntity implements Entity {
 		passwordSalt,
 	}: {
 		email: string;
+		groups: Array<
+			{
+				permissions: Array<Pick<PermissionModel, "id" | "key" | "name">>;
+			} & Pick<GroupModel, "id" | "name">
+		>;
 		name: string;
 		passwordHash: string;
 		passwordSalt: string;
@@ -111,12 +116,14 @@ class UserEntity implements Entity {
 
 	public toNewObject(): {
 		email: string;
+		groups: Pick<GroupModel, "id" | "name">[];
 		name: string;
 		passwordHash: string;
 		passwordSalt: string;
 	} {
 		return {
 			email: this.email,
+			groups: this.groups,
 			name: this.name,
 			passwordHash: this.passwordHash,
 			passwordSalt: this.passwordSalt,

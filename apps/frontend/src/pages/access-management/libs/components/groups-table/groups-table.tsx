@@ -16,6 +16,7 @@ import {
 
 import { getGroupColumns, getGroupRows } from "../../helpers/helpers.js";
 import { type GroupRow } from "../../types/types.js";
+import styles from "./styles.module.css";
 
 type Properties = {
 	groups: GroupGetAllItemResponseDto[];
@@ -23,6 +24,7 @@ type Properties = {
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
 	pageSize: number;
+	paginationBackground?: "primary" | "secondary";
 	totalItemsCount: number;
 };
 
@@ -32,6 +34,7 @@ const GroupsTable = ({
 	onPageSizeChange,
 	page,
 	pageSize,
+	paginationBackground = "primary",
 	totalItemsCount,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
@@ -70,9 +73,10 @@ const GroupsTable = ({
 	}, [dispatch, groupId, handleModalClose]);
 
 	return (
-		<>
+		<div className={styles["groups-table"]}>
 			<Table<GroupRow> columns={groupColumns} data={groupData} />
 			<TablePagination
+				background={paginationBackground}
 				onPageChange={onPageChange}
 				onPageSizeChange={onPageSizeChange}
 				page={page}
@@ -88,7 +92,7 @@ const GroupsTable = ({
 					onConfirm={handleDeleteConfirm}
 				/>
 			)}
-		</>
+		</div>
 	);
 };
 
