@@ -1,12 +1,10 @@
 import { QueryParameterName } from "~/libs/enums/enums.js";
 import { useEffect, useSearchParams, useState } from "~/libs/hooks/hooks.js";
 
-type UseSearch = {
+const useSearch = (): {
 	onSearch: (search: string) => void;
 	search: string;
-};
-
-const useSearch = (): UseSearch => {
+} => {
 	const [searchParameters, setSearchParameters] = useSearchParams();
 	const searchParameterName = QueryParameterName.SEARCH;
 	const searchParameter = searchParameters.get(searchParameterName) ?? "";
