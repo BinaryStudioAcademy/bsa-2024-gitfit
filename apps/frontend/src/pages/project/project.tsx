@@ -46,42 +46,39 @@ const Project = (): JSX.Element => {
 		return <NotFound />;
 	}
 
+	if (!hasProject) {
+		return (
+			<PageLayout isLoading={isLoading}>
+				<></>
+			</PageLayout>
+		);
+	}
+
 	return (
 		<PageLayout isLoading={isLoading}>
-			{hasProject && (
-				<>
-					<div className={styles["breadcrumb-container"]}>
-						<Breadcrumbs
-							items={[
-								{ href: AppRoute.ROOT, label: "Projects" },
-								{ label: project.name },
-							]}
-						/>
-					</div>
+			<div className={styles["breadcrumb-container"]}>
+				<Breadcrumbs
+					items={[
+						{ href: AppRoute.ROOT, label: "Projects" },
+						{ label: project.name },
+					]}
+				/>
+			</div>
 
-					<div className={styles["project-layout"]}>
-						<h1 className={styles["title"]}>{project.name}</h1>
-						<div className={styles["project-description-layout"]}>
-							<h3 className={styles["project-description-title"]}>
-								Description
-							</h3>
-							<p className={styles["project-description"]}>
-								{project.description}
-							</p>
-						</div>
-						<Button
-							label="Setup analytics"
-							onClick={onSetupAnalyticsModalOpen}
-						/>
-					</div>
+			<div className={styles["project-layout"]}>
+				<h1 className={styles["title"]}>{project.name}</h1>
+				<div className={styles["project-description-layout"]}>
+					<h3 className={styles["project-description-title"]}>Description</h3>
+					<p className={styles["project-description"]}>{project.description}</p>
+				</div>
+				<Button label="Setup analytics" onClick={onSetupAnalyticsModalOpen} />
+			</div>
 
-					<SetupAnalyticsModal
-						isOpened={isSetupAnalyticsModalOpened}
-						onClose={onSetupAnalyticsModalClose}
-						project={project}
-					/>
-				</>
-			)}
+			<SetupAnalyticsModal
+				isOpened={isSetupAnalyticsModalOpened}
+				onClose={onSetupAnalyticsModalClose}
+				project={project}
+			/>
 		</PageLayout>
 	);
 };
