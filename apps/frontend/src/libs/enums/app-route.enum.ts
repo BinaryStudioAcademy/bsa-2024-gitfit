@@ -1,6 +1,7 @@
 const AppRoute = {
 	ACCESS_MANAGEMENT: "/access-management",
 	ANY: "*",
+	CONTRIBUTORS: "/contributors",
 	PROFILE: "/profile",
 	PROJECT: "/projects/:id",
 	ROOT: "/",

@@ -12,6 +12,11 @@ const SIDEBAR_ITEMS: NavigationItem[] = [
 		icon: "access",
 		label: "Access Management",
 	},
+	{
+		href: AppRoute.CONTRIBUTORS,
+		icon: "contributors",
+		label: "Contributors",
+	},
 ];
 
 export { SIDEBAR_ITEMS };
