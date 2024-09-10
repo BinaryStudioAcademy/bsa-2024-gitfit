@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.16.0...frontend-v1.17.0) (2024-09-10)
+
+
+### Features
+
+* save search value to query parameters gf-200 ([#218](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/218)) ([8d5cb71](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8d5cb7135a078181a191f653091cf0217cd61023))
+
 ## [1.16.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.15.0...frontend-v1.16.0) (2024-09-10)
 
 
