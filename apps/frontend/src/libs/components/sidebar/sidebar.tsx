@@ -5,7 +5,7 @@ import {
 	type PermissionGetAllItemResponseDto,
 } from "~/libs/types/types.js";
 
-import { SidebarItem } from "./sidebar-item/sidebar-item.js";
+import { SidebarItem } from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
