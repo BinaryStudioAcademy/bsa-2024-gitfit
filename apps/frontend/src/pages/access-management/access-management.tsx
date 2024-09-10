@@ -38,6 +38,7 @@ const AccessManagement = (): JSX.Element => {
 
 	const {
 		dataStatus: groupsDataStatus,
+		groupDeleteStatus,
 		groups,
 		groupsTotalCount,
 	} = useAppSelector(({ groups }) => groups);
@@ -82,10 +83,34 @@ const AccessManagement = (): JSX.Element => {
 		void dispatch(
 			userActions.loadAll({ page: userPage, pageSize: userPageSize }),
 		);
+	}, [dispatch, userPage, userPageSize, onGroupPageChange]);
+
+	useEffect(() => {
 		void dispatch(
 			groupActions.loadAll({ page: groupPage, pageSize: groupPageSize }),
 		);
-	}, [dispatch, userPage, userPageSize, groupPage, groupPageSize]);
+	}, [dispatch, groupPage, groupPageSize, onGroupPageChange]);
+
+	useEffect(() => {
+		if (groupDeleteStatus === DataStatus.FULFILLED) {
+			const maxGroupPages = Math.ceil(groupsTotalCount / groupPageSize);
+			const maxUserPages = Math.ceil(usersTotalCount / userPageSize);
+			const validGroupPage = Math.min(groupPage, maxGroupPages);
+			const validUserPage = Math.min(userPage, maxUserPages);
+			onGroupPageChange(validGroupPage);
+			onUserPageChange(validUserPage);
+		}
+	}, [
+		groupDeleteStatus,
+		groupPage,
+		groupsTotalCount,
+		groupPageSize,
+		onGroupPageChange,
+		userPage,
+		usersTotalCount,
+		userPageSize,
+		onUserPageChange,
+	]);
 
 	const handleGroupCreateSubmit = useCallback(
 		(payload: GroupCreateRequestDto): void => {
@@ -102,27 +127,12 @@ const AccessManagement = (): JSX.Element => {
 
 	const handleGroupDelete = useCallback((): void => {
 		if (hasSelectedGroup) {
-			void dispatch(
-				groupActions.deleteById({
-					groupQuery: { page: groupPage, pageSize: groupPageSize },
-					id: selectedGroupId as number,
-					userQuery: { page: userPage, pageSize: userPageSize },
-				}),
-			);
+			void dispatch(groupActions.deleteById({ id: selectedGroupId as number }));
 
 			setSelectedGroupId(null);
 			onDeleteModalClose();
 		}
-	}, [
-		hasSelectedGroup,
-		dispatch,
-		groupPage,
-		groupPageSize,
-		selectedGroupId,
-		userPage,
-		userPageSize,
-		onDeleteModalClose,
-	]);
+	}, [hasSelectedGroup, dispatch, selectedGroupId, onDeleteModalClose]);
 
 	const onDelete = useCallback(
 		(id: number): void => {

@@ -11,6 +11,7 @@ import { create, deleteById, loadAll, loadUsers } from "./actions.js";
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
 	groupCreateStatus: ValueOf<typeof DataStatus>;
+	groupDeleteStatus: ValueOf<typeof DataStatus>;
 	groups: GroupGetAllItemResponseDto[];
 	groupsTotalCount: number;
 	users: UserGetAllItemResponseDto[];
@@ -21,6 +22,7 @@ type State = {
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	groupCreateStatus: DataStatus.IDLE,
+	groupDeleteStatus: DataStatus.IDLE,
 	groups: [],
 	groupsTotalCount: 0,
 	users: [],
@@ -57,11 +59,19 @@ const { actions, name, reducer } = createSlice({
 			state.dataStatus = DataStatus.REJECTED;
 		});
 
+		builder.addCase(deleteById.pending, (state) => {
+			state.groupDeleteStatus = DataStatus.PENDING;
+		});
 		builder.addCase(deleteById.fulfilled, (state, action) => {
 			const { id } = action.meta.arg;
 			state.groups = state.groups.filter((group) => group.id !== id);
 			state.groupsTotalCount -= ITEMS_CHANGED_COUNT;
+			state.groupDeleteStatus = DataStatus.FULFILLED;
 		});
+		builder.addCase(deleteById.rejected, (state) => {
+			state.groupDeleteStatus = DataStatus.REJECTED;
+		});
+
 		builder.addCase(create.pending, (state) => {
 			state.groupCreateStatus = DataStatus.PENDING;
 		});
