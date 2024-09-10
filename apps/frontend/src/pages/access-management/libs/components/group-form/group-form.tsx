@@ -10,38 +10,38 @@ import {
 	useMemo,
 	useSelectedItems,
 } from "~/libs/hooks/hooks.js";
+import { type ValidationSchema } from "~/libs/types/types.js";
 import {
-	type GroupGetAllItemResponseDto,
+	type GroupCreateRequestDto,
 	type GroupUpdateRequestDto,
-	groupUpdateValidationSchema,
 } from "~/modules/groups/groups.js";
 import { actions as permissionActions } from "~/modules/permissions/permissions.js";
 
-import { getPermissionOptions } from "../../helpers/helpers.js";
 import { GroupUsersTable } from "../group-users-table/group-users-table.js";
+import { getPermissionOptions } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
-type Properties = {
-	group: GroupGetAllItemResponseDto;
-	onSubmit: (id: number, payload: GroupUpdateRequestDto) => void;
+type GroupRequest = GroupCreateRequestDto | GroupUpdateRequestDto;
+
+type Properties<T extends GroupRequest> = {
+	defaultValues: T;
+	onSubmit: (payload: T) => void;
+	submitLabel: string;
+	validationSchema: ValidationSchema<T>;
 };
 
-const GroupsUpdateForm = ({ group, onSubmit }: Properties): JSX.Element => {
+const GroupForm = <T extends GroupRequest>({
+	defaultValues,
+	onSubmit,
+	submitLabel,
+	validationSchema,
+}: Properties<T>): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { id, name, permissions: groupPermissions, users: groupUsers } = group;
-
-	const permissionIds = groupPermissions.map((permission) => permission.id);
-	const userIds = groupUsers.map((user) => user.id);
-
 	const { control, errors, handleErrorsClear, handleSubmit, handleValueSet } =
-		useAppForm<GroupUpdateRequestDto>({
-			defaultValues: {
-				name,
-				permissionIds,
-				userIds,
-			},
-			validationSchema: groupUpdateValidationSchema,
+		useAppForm<GroupRequest>({
+			defaultValues,
+			validationSchema,
 		});
 
 	const { dataStatus: permissionsDataStatus, permissions } = useAppSelector(
@@ -49,7 +49,7 @@ const GroupsUpdateForm = ({ group, onSubmit }: Properties): JSX.Element => {
 	);
 
 	const { items: selectedUserIds, onToggle: handleUserIdsToggle } =
-		useSelectedItems<number>(userIds);
+		useSelectedItems<number>(defaultValues.userIds);
 
 	useEffect(() => {
 		void dispatch(permissionActions.loadAll());
@@ -63,11 +63,11 @@ const GroupsUpdateForm = ({ group, onSubmit }: Properties): JSX.Element => {
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit((formData: GroupUpdateRequestDto) => {
-				onSubmit(id, formData);
+			void handleSubmit((formData: GroupRequest) => {
+				onSubmit(formData as T);
 			})(event_);
 		},
-		[handleSubmit, id, onSubmit],
+		[handleSubmit, onSubmit],
 	);
 
 	const permissionOptions = useMemo(
@@ -107,10 +107,10 @@ const GroupsUpdateForm = ({ group, onSubmit }: Properties): JSX.Element => {
 				placeholder="Choose permissions"
 			/>
 			<div className={styles["button-wrapper"]}>
-				<Button label="Create" type="submit" />
+				<Button label={submitLabel} type="submit" />
 			</div>
 		</form>
 	);
 };
 
-export { GroupsUpdateForm };
+export { GroupForm };

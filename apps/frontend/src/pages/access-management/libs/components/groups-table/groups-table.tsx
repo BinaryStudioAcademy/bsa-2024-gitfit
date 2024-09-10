@@ -13,7 +13,7 @@ import {
 
 import { getGroupColumns, getGroupRows } from "../../helpers/helpers.js";
 import { type GroupRow } from "../../types/types.js";
-import { GroupsUpdateForm } from "../groups-update-form/groups-update-form.js";
+import { GroupUpdateForm } from "../components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
@@ -85,7 +85,7 @@ const GroupsTable = ({
 					onClose={handleModalClose}
 					title="Update group"
 				>
-					<GroupsUpdateForm group={groupToEdit} onSubmit={handleUpdate} />
+					<GroupUpdateForm group={groupToEdit} onSubmit={handleUpdate} />
 				</Modal>
 			)}
 		</>
