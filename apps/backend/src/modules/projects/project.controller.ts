@@ -79,7 +79,7 @@ class ProjectController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
-				this.findAllByName(
+				this.findAll(
 					options as APIHandlerOptions<{
 						query: ProjectGetAllRequestDto;
 					}>,
@@ -192,7 +192,13 @@ class ProjectController extends BaseController {
 	 * @swagger
 	 * /projects:
 	 *    get:
-	 *      description: Returns an array of projects
+	 *      description: Returns all projects or filters them by name if the 'name' query parameter is provided.
+	 *      parameters:
+	 *        - in: query
+	 *          name: name
+	 *          schema:
+	 *            type: string
+	 *          description: The name to filter projects by (optional).
 	 *      responses:
 	 *        200:
 	 *          description: Successful operation
@@ -200,21 +206,21 @@ class ProjectController extends BaseController {
 	 *            application/json:
 	 *              schema:
 	 *                type: object
-	 * 								properties:
-	 * 									items:
-	 * 										type: array
-	 *                		items:
-	 *                  		$ref: "#/components/schemas/Project"
+	 *                properties:
+	 *                  items:
+	 *                    type: array
+	 *                    items:
+	 *                      $ref: "#/components/schemas/Project"
 	 */
-	private async findAllByName(
+	private async findAll(
 		options: APIHandlerOptions<{
 			query: ProjectGetAllRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { query } = options;
+		const { name } = options.query;
 
 		return {
-			payload: await this.projectService.findAllbyName(query),
+			payload: await this.projectService.findAll(name),
 			status: HTTPCode.OK,
 		};
 	}

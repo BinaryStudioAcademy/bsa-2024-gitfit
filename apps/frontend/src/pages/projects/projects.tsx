@@ -13,6 +13,7 @@ import {
 	useCallback,
 	useEffect,
 	useModal,
+	useSearch,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import {
@@ -27,11 +28,13 @@ import {
 	ProjectCreateForm,
 	ProjectsSearch,
 	ProjectUpdateForm,
-} from "./components/components.js";
+} from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
+
+	const { onSearch, search } = useSearch();
 
 	const [selectedProject, setSelectedProject] =
 		useState<null | ProjectGetAllItemResponseDto>(null);
@@ -40,14 +43,15 @@ const Projects = (): JSX.Element => {
 		useAppSelector(({ projects }) => projects);
 
 	useEffect(() => {
-		void dispatch(projectActions.loadAll());
-	}, [dispatch]);
+		void dispatch(projectActions.loadAll(search));
+	}, [dispatch, search]);
 
 	const handleSearchChange = useCallback(
 		(value: string) => {
 			void dispatch(projectActions.loadAll(value));
+			onSearch(value);
 		},
-		[dispatch],
+		[dispatch, onSearch],
 	);
 
 	const hasProject = projects.length !== EMPTY_LENGTH;

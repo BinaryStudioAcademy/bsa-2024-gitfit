@@ -2,7 +2,7 @@ import { PageLayout } from "~/libs/components/components.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 import { type UserAuthResponseDto } from "~/modules/users/users.js";
 
-import { DeleteAccount, EditUserForm } from "./components/components.js";
+import { DeleteAccount, EditUserForm } from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const Profile = (): JSX.Element => {
