@@ -91,7 +91,7 @@ const Table = <T extends object>({
 										}}
 									>
 										{typeof cell.getValue() === "object"
-											? (cell.getValue() as React.ReactNode)
+											? (cell.getValue() as JSX.Element)
 											: flexRender(
 													cell.column.columnDef.cell,
 													cell.getContext(),

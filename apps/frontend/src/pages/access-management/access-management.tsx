@@ -74,7 +74,9 @@ const AccessManagement = (): JSX.Element => {
 		onOpen: onDeleteModalOpen,
 	} = useModal();
 
-	const [groupId, setGroupId] = useState<null | number>(null);
+	const [selectedGroupId, setSelectedGroupId] = useState<null | number>(null);
+
+	const hasSelectedGroup = Boolean(selectedGroupId);
 
 	useEffect(() => {
 		void dispatch(
@@ -99,31 +101,32 @@ const AccessManagement = (): JSX.Element => {
 	);
 
 	const handleGroupDelete = useCallback((): void => {
-		if (groupId !== null) {
+		if (hasSelectedGroup) {
 			void dispatch(
 				groupActions.deleteById({
 					groupQuery: { page: groupPage, pageSize: groupPageSize },
-					id: groupId,
+					id: selectedGroupId as number,
 					userQuery: { page: userPage, pageSize: userPageSize },
 				}),
 			);
 
-			setGroupId(null);
+			setSelectedGroupId(null);
 			onDeleteModalClose();
 		}
 	}, [
+		hasSelectedGroup,
 		dispatch,
-		groupId,
-		userPage,
-		userPageSize,
 		groupPage,
 		groupPageSize,
+		selectedGroupId,
+		userPage,
+		userPageSize,
 		onDeleteModalClose,
 	]);
 
 	const onDelete = useCallback(
 		(id: number): void => {
-			setGroupId(id);
+			setSelectedGroupId(id);
 			onDeleteModalOpen();
 		},
 		[onDeleteModalOpen],
@@ -171,7 +174,7 @@ const AccessManagement = (): JSX.Element => {
 			>
 				<GroupCreateForm onSubmit={handleGroupCreateSubmit} />
 			</Modal>
-			{groupId !== null && (
+			{hasSelectedGroup && (
 				<ConfirmationModal
 					content="The group will be deleted. This action cannot be undone. Do you want to continue?"
 					isOpened={isDeleteModalOpen}
