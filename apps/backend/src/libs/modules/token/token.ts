@@ -7,5 +7,11 @@ const token = new BaseToken({
 	secret: config.ENV.JWT.SECRET,
 });
 
-export { token };
+const permanentToken = new BaseToken({
+	algorithm: config.ENV.JWT.ALGORITHM,
+	expirationTime: "",
+	secret: config.ENV.JWT.SECRET,
+});
+
+export { permanentToken, token };
 export { type Token } from "./libs/types/types.js";

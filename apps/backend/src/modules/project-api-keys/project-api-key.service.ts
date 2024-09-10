@@ -51,7 +51,7 @@ class ProjectApiKeyService implements Service {
 			});
 		}
 
-		const apiKey = await this.token.createToken({ projectId }, false);
+		const apiKey = await this.token.createToken({ projectId });
 		const encryptedKey = this.encryption.encrypt(apiKey);
 
 		try {

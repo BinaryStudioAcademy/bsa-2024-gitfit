@@ -1,10 +1,7 @@
 import { type JWTPayload } from "jose";
 
 type Token = {
-	createToken: (
-		payload: JWTPayload,
-		hasExpirationTime?: boolean,
-	) => Promise<string>;
+	createToken: (payload: JWTPayload) => Promise<string>;
 	verifyToken: (token: string) => Promise<JWTPayload>;
 };
 

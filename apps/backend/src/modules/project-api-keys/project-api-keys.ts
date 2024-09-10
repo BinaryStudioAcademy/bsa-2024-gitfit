@@ -1,6 +1,6 @@
 import { encryption } from "~/libs/modules/encryption/encryption.js";
 import { logger } from "~/libs/modules/logger/logger.js";
-import { token } from "~/libs/modules/token/token.js";
+import { permanentToken } from "~/libs/modules/token/token.js";
 
 import { ProjectApiKeyController } from "./project-api-key.controller.js";
 import { ProjectApiKeyModel } from "./project-api-key.model.js";
@@ -11,7 +11,7 @@ const projectApiKeyRepository = new ProjectApiKeyRepository(ProjectApiKeyModel);
 const projectApiKeyService = new ProjectApiKeyService({
 	encryption,
 	projectApiKeyRepository,
-	token,
+	token: permanentToken,
 });
 const projectApiKeyController = new ProjectApiKeyController(
 	logger,
