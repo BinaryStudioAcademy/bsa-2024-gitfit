@@ -30,6 +30,10 @@ const Table = <T extends object>({
 	data,
 	...selectableProperties
 }: Properties<T>): JSX.Element => {
+	const { getRowId, onRowSelect, selectedRowIds } = selectableProperties as
+		| Record<keyof SelectableProperties<T>, undefined>
+		| SelectableProperties<T>;
+
 	const table = useReactTable({
 		columns,
 		data,
@@ -37,8 +41,7 @@ const Table = <T extends object>({
 	});
 
 	const hasData = data.length !== EMPTY_LENGTH;
-
-	const isRowSelectable = "onRowSelect" in selectableProperties;
+	const isRowSelectable = typeof onRowSelect === "function";
 
 	return (
 		<div className={styles["table-container"]}>
@@ -65,11 +68,11 @@ const Table = <T extends object>({
 								{isRowSelectable && (
 									<td className={styles["table-data"]}>
 										<SelectRowCell
-											id={selectableProperties.getRowId(row.original)}
-											isChecked={selectableProperties.selectedRowIds.includes(
-												selectableProperties.getRowId(row.original),
+											id={getRowId(row.original)}
+											isChecked={selectedRowIds.includes(
+												getRowId(row.original),
 											)}
-											onToggle={selectableProperties.onRowSelect}
+											onToggle={onRowSelect}
 										/>
 									</td>
 								)}
