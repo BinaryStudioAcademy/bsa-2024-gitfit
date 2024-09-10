@@ -86,7 +86,7 @@ class ProjectController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectsApiPath.ROOT,
-			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
+			preHandler: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
 		});
 
 		this.addRoute({
@@ -98,7 +98,7 @@ class ProjectController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectsApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
+			preHandler: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
 		});
 
 		this.addRoute({
