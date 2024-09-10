@@ -8,7 +8,10 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { ProjectApiKeysApiPath } from "./libs/enums/enums.js";
-import { type ProjectApiKeyCreateRequestDto } from "./libs/types/types.js";
+import {
+	type ProjectApiKeyCreateRequestDto,
+	type UserAuthResponseDto,
+} from "./libs/types/types.js";
 import { projectApiKeyCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectApiKeyService } from "./project-api-key.service.js";
 
@@ -27,7 +30,10 @@ import { type ProjectApiKeyService } from "./project-api-key.service.js";
  *         projectId:
  *           type: number
  *           minimum: 1
- *         userId:
+ *         createdByUserId:
+ *           type: number
+ *           minimum: 1
+ *         updatedByUserId:
  *           type: number
  *           minimum: 1
  *         createdAt:
@@ -54,6 +60,7 @@ class ProjectApiKeyController extends BaseController {
 				this.create(
 					options as APIHandlerOptions<{
 						body: ProjectApiKeyCreateRequestDto;
+						user: UserAuthResponseDto;
 					}>,
 				),
 			method: "POST",
@@ -80,9 +87,6 @@ class ProjectApiKeyController extends BaseController {
 	 *                projectId:
 	 *                  type: number
 	 *                  minimum: 1
-	 *                userId:
-	 *                  type: number
-	 *                  minimum: 1
 	 *      responses:
 	 *        201:
 	 *          description: Successful operation
@@ -102,10 +106,16 @@ class ProjectApiKeyController extends BaseController {
 	private async create(
 		options: APIHandlerOptions<{
 			body: ProjectApiKeyCreateRequestDto;
+			user: UserAuthResponseDto;
 		}>,
 	): Promise<APIHandlerResponse> {
+		const payload = {
+			...options.body,
+			userId: options.user.id,
+		};
+
 		return {
-			payload: await this.projectApiKeyService.create(options.body),
+			payload: await this.projectApiKeyService.create(payload),
 			status: HTTPCode.CREATED,
 		};
 	}

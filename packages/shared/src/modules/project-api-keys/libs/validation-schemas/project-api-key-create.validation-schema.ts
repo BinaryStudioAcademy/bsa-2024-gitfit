@@ -5,7 +5,6 @@ import { type ProjectApiKeyCreateRequestDto } from "../types/types.js";
 const projectApiKeyCreate: z.ZodType<ProjectApiKeyCreateRequestDto> = z
 	.object({
 		projectId: z.number().int().positive(),
-		userId: z.number().int().positive(),
 	})
 	.required();
 

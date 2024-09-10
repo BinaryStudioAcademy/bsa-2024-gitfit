@@ -36,7 +36,7 @@ class ProjectApiKeyService implements Service {
 	}
 
 	public async create(
-		payload: ProjectApiKeyCreateRequestDto,
+		payload: { userId: number } & ProjectApiKeyCreateRequestDto,
 	): Promise<ProjectApiKeyCreateResponseDto> {
 		const { projectId, userId } = payload;
 
@@ -75,7 +75,7 @@ class ProjectApiKeyService implements Service {
 			};
 		} catch {
 			throw new ProjectApiKeyError({
-				message: ExceptionMessage.PROJECT_OR_USER_NOT_FOUND,
+				message: ExceptionMessage.PROJECT_NOT_FOUND,
 				status: HTTPCode.NOT_FOUND,
 			});
 		}

@@ -11,7 +11,6 @@ import {
 	useModal,
 	useParams,
 } from "~/libs/hooks/hooks.js";
-import { type UserAuthResponseDto } from "~/modules/auth/auth.js";
 import { actions as projectActions } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
@@ -23,7 +22,6 @@ const Project = (): JSX.Element => {
 	const { id: projectId } = useParams<{ id: string }>();
 
 	const { project, projectStatus } = useAppSelector(({ projects }) => projects);
-	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
 
 	const {
 		isOpened: isSetupAnalyticsModalOpened,
@@ -78,7 +76,6 @@ const Project = (): JSX.Element => {
 					</div>
 
 					<SetupAnalyticsModal
-						currentUser={authenticatedUser as UserAuthResponseDto}
 						isOpened={isSetupAnalyticsModalOpened}
 						onClose={onSetupAnalyticsModalClose}
 						project={project}

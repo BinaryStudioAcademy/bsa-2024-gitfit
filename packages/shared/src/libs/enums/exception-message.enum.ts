@@ -11,7 +11,6 @@ const ExceptionMessage = {
 	PROJECT_GROUP_NAME_USED: "Project group name is already in use.",
 	PROJECT_NAME_USED: "Project name is already in use.",
 	PROJECT_NOT_FOUND: "Project not found.",
-	PROJECT_OR_USER_NOT_FOUND: "Project or user not found.",
 	TOKEN_EXPIRED: "Token is expired.",
 	USER_NOT_FOUND: "User not found.",
 } as const;
