@@ -7,7 +7,7 @@ import {
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
-import { SelectRowCell } from "./components/components.js";
+import { SelectRowCell } from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 type BaseProperties<T> = {
