@@ -1,4 +1,4 @@
-import { Button, Modal } from "~/libs/components/components.js";
+import { Button, Input, Modal } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -9,7 +9,6 @@ import {
 import { actions as projectApiKeyActions } from "~/modules/project-api-keys/project-api-keys.js";
 import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
-import { Output } from "../components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
@@ -24,8 +23,9 @@ const SetupAnalyticsModal = ({
 	project,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { handleSubmit } = useAppForm({
+	const { control, errors, handleSubmit } = useAppForm({
 		defaultValues: {
+			apiKey: project.apiKey ?? "",
 			projectId: project.id,
 		},
 	});
@@ -37,8 +37,8 @@ const SetupAnalyticsModal = ({
 
 	const handleGenerateSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit((formData: { projectId: number }) => {
-				void dispatch(projectApiKeyActions.create(formData));
+			void handleSubmit(({ projectId }) => {
+				void dispatch(projectApiKeyActions.create({ projectId }));
 			})(event_);
 		},
 		[handleSubmit, dispatch],
@@ -52,10 +52,13 @@ const SetupAnalyticsModal = ({
 					onSubmit={handleGenerateSubmit}
 				>
 					<div className={styles["api-key-output"]}>
-						<Output
-							label="API Key"
+						<Input
+							control={control}
+							errors={errors}
+							isDisabled
+							label="API key"
+							name="apiKey"
 							placeholder="No API key"
-							value={project.apiKey}
 						/>
 					</div>
 					<div className={styles["button-wrapper"]}>
