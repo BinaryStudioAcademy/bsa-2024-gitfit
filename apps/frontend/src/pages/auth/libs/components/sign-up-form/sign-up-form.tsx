@@ -58,7 +58,7 @@ const SignUpForm = ({ onSubmit }: Properties): JSX.Element => {
 				errors={errors}
 				label="Email"
 				name="email"
-				type="email"
+				type="text"
 			/>
 			<div className={styles["password-container"]}>
 				<Input
