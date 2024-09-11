@@ -36,8 +36,9 @@ const Projects = (): JSX.Element => {
 
 	const { onSearch, search } = useSearch();
 
-	const [selectedProject, setSelectedProject] =
-		useState<null | ProjectGetAllItemResponseDto>(null);
+	const [projectToModifyId, setProjectToModifyId] = useState<null | number>(
+		null,
+	);
 
 	const {
 		dataStatus,
@@ -49,10 +50,10 @@ const Projects = (): JSX.Element => {
 	} = useAppSelector(({ projects }) => projects);
 
 	useEffect(() => {
-		if (selectedProject !== null) {
-			void dispatch(projectActions.getById({ id: String(selectedProject.id) }));
+		if (projectToModifyId) {
+			void dispatch(projectActions.getById({ id: String(projectToModifyId) }));
 		}
-	}, [dispatch, selectedProject]);
+	}, [dispatch, projectToModifyId]);
 
 	useEffect(() => {
 		void dispatch(projectActions.loadAll(search));
@@ -98,7 +99,7 @@ const Projects = (): JSX.Element => {
 
 	const handleEditClick = useCallback(
 		(project: ProjectGetAllItemResponseDto) => {
-			setSelectedProject(project);
+			setProjectToModifyId(project.id);
 			handleEditModalOpen();
 		},
 		[handleEditModalOpen],
@@ -106,7 +107,7 @@ const Projects = (): JSX.Element => {
 
 	const handleDeleteClick = useCallback(
 		(project: ProjectGetAllItemResponseDto) => {
-			setSelectedProject(project);
+			setProjectToModifyId(project.id);
 			handleDeleteConfirmationModalOpen();
 		},
 		[handleDeleteConfirmationModalOpen],
@@ -120,25 +121,26 @@ const Projects = (): JSX.Element => {
 
 	const handleProjectEditSubmit = useCallback(
 		(payload: ProjectPatchRequestDto) => {
-			if (selectedProject) {
-				void dispatch(
-					projectActions.patch({ id: selectedProject.id, payload }),
-				);
+			if (projectToModifyId) {
+				void dispatch(projectActions.patch({ id: projectToModifyId, payload }));
+				setProjectToModifyId(null);
 			}
 		},
-		[dispatch, selectedProject],
+		[dispatch, projectToModifyId],
 	);
 
 	const handleProjectDeleteConfirm = useCallback(() => {
-		if (selectedProject) {
-			void dispatch(projectActions.deleteById(selectedProject.id));
+		if (projectToModifyId) {
+			void dispatch(projectActions.deleteById(projectToModifyId));
 			handleDeleteConfirmationModalClose();
 		}
-	}, [dispatch, selectedProject, handleDeleteConfirmationModalClose]);
+	}, [dispatch, projectToModifyId, handleDeleteConfirmationModalClose]);
 
 	const isLoading =
 		dataStatus === DataStatus.IDLE ||
 		(dataStatus === DataStatus.PENDING && !hasProject);
+
+	const isUpdateFormShown = project && projectStatus === DataStatus.FULFILLED;
 
 	return (
 		<PageLayout>
@@ -180,7 +182,7 @@ const Projects = (): JSX.Element => {
 				onClose={handleEditModalClose}
 				title="Update project"
 			>
-				{project && projectStatus === DataStatus.FULFILLED && (
+				{isUpdateFormShown && (
 					<ProjectUpdateForm
 						onSubmit={handleProjectEditSubmit}
 						project={project}
