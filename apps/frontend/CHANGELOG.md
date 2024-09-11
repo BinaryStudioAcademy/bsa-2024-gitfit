@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.21.1...frontend-v1.22.0) (2024-09-11)
+
+
+### Features
+
+* make buttons 100% width gf-232 ([#239](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/239)) ([9267f43](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9267f43310f7bc77e60ec8cb4120dffe3df98c9c))
+
 ## [1.21.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.21.0...frontend-v1.21.1) (2024-09-11)
 
 
