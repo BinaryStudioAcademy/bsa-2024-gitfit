@@ -4,13 +4,13 @@ import { type Token } from "./libs/types/types.js";
 
 type Constructor = {
 	algorithm: string;
-	expirationTime: string;
+	expirationTime?: string;
 	secret: string;
 };
 
 class BaseToken implements Token {
 	private algorithm: string;
-	private expirationTime: string;
+	private expirationTime: string | undefined;
 	private secret: Uint8Array;
 
 	public constructor({ algorithm, expirationTime, secret }: Constructor) {
@@ -20,11 +20,15 @@ class BaseToken implements Token {
 	}
 
 	public async createToken(payload: JWTPayload): Promise<string> {
-		return await new SignJWT(payload)
+		const token = new SignJWT(payload)
 			.setProtectedHeader({ alg: this.algorithm })
-			.setIssuedAt()
-			.setExpirationTime(this.expirationTime)
-			.sign(this.secret);
+			.setIssuedAt();
+
+		if (this.expirationTime) {
+			token.setExpirationTime(this.expirationTime);
+		}
+
+		return await token.sign(this.secret);
 	}
 
 	public async verifyToken(token: string): Promise<JWTPayload> {

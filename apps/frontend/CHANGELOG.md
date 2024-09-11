@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.21.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.21.0...frontend-v1.21.1) (2024-09-11)
+
+
+### Bug Fixes
+
+* fix inconsistent layout of the users table gf-267 ([#273](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/273)) ([b5527bb](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b5527bb62d308635970f963b81566df92c28cb42))
+
+## [1.21.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.20.0...frontend-v1.21.0) (2024-09-11)
+
+
+### Features
+
+* add ability to edit group gf-81 ([#170](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/170)) ([2485667](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/24856674205c965821f2765d4b0b4a891f53a684))
+* Add an ability to generate and retrieve project api key gf-180 ([#223](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/223)) ([1b016c7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1b016c7086a35b1060dcb716740a38cffa42f458))
+
 ## [1.20.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.19.0...frontend-v1.20.0) (2024-09-11)
 
 
