@@ -11,7 +11,7 @@ const NotFound = (): JSX.Element => {
 			<p className={styles["text"]}>
 				Sorry, we can’t find the page you’re looking for.
 			</p>
-			<div className={styles["button-wrapper"]}>
+			<div>
 				<Button href={AppRoute.ROOT} label="Back to home" />
 			</div>
 		</main>

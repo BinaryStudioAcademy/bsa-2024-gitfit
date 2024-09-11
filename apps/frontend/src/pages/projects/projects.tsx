@@ -132,7 +132,7 @@ const Projects = (): JSX.Element => {
 		<PageLayout>
 			<header className={styles["projects-header"]}>
 				<h1 className={styles["title"]}>Projects</h1>
-				<div className={styles["button-wrapper"]}>
+				<div>
 					<Button label="Create New" onClick={handleCreateModalOpen} />
 				</div>
 			</header>

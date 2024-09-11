@@ -28,7 +28,3 @@
 	font-weight: 400;
 	color: var(--color-text-secondary);
 }
-
-.button-wrapper {
-	min-width: 140px;
-}

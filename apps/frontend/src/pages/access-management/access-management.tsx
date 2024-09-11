@@ -197,7 +197,7 @@ const AccessManagement = (): JSX.Element => {
 			<section>
 				<div className={styles["section-header"]}>
 					<h2 className={styles["section-title"]}>Groups</h2>
-					<div className={styles["button-wrapper"]}>
+					<div>
 						<Button label="Create New" onClick={onCreateModalOpen} />
 					</div>
 				</div>
