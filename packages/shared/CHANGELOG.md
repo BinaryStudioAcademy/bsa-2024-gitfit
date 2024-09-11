@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.12.0...shared-v1.13.0) (2024-09-10)
+
+
+### Features
+
+* add hyphen to name pattern gf-236 ([#251](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/251)) ([63bacee](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/63bacee091c16682bbe0f699afda429225a4a26e))
+
 ## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.11.0...shared-v1.12.0) (2024-09-10)
 
 
