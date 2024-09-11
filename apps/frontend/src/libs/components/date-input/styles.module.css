@@ -1,4 +1,4 @@
-:global(.react-calendar) {
+.calendar:global(.react-calendar) {
 	display: flex;
 	flex-direction: column;
 	padding: 12px;

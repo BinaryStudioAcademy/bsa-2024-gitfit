@@ -1,14 +1,16 @@
 import { DateInput, PageLayout } from "~/libs/components/components.js";
 import { useAppForm, useCallback } from "~/libs/hooks/hooks.js";
 
-import { THIRTY_DAYS } from "./libs/constants/constants.js";
+import { ANALYTICS_DATE_MAX_RANGE } from "./libs/constants/constants.js";
 import { subtractDays } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 const Analytics = (): JSX.Element => {
+	const todayDate = new Date();
+
 	const { control, handleSubmit } = useAppForm({
 		defaultValues: {
-			dateRange: [subtractDays(new Date(), THIRTY_DAYS), new Date()],
+			dateRange: [subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE), todayDate],
 		},
 	});
 
@@ -29,8 +31,7 @@ const Analytics = (): JSX.Element => {
 					<DateInput
 						control={control}
 						maxDate={new Date()}
-						maxRange={30}
-						minDate={new Date("01-01-1999")}
+						maxRange={ANALYTICS_DATE_MAX_RANGE}
 						name="dateRange"
 					/>
 				</form>

@@ -13,8 +13,7 @@ import {
 	usePopover,
 } from "~/libs/hooks/hooks.js";
 
-import { MILLIS_IN_DAY } from "./libs/constants/constants.js";
-import { getShortWeekday } from "./libs/helpers/helpers.js";
+import { addDays, getDifferenceInDays } from "./libs/helpers/helpers.js";
 import { type DateValue } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
@@ -51,11 +50,10 @@ const DateInput = <T extends FieldValues>({
 			const [startDate, endDate] = dates as Date[];
 
 			if (maxRange && startDate && endDate) {
-				const diffInDays =
-					(endDate.getTime() - startDate.getTime()) / MILLIS_IN_DAY;
+				const diffInDays = getDifferenceInDays(endDate, startDate);
 
 				if (diffInDays > maxRange) {
-					const adjustedEndDate = new Date(startDate.getDate() + maxRange);
+					const adjustedEndDate = addDays(startDate, maxRange);
 					field.onChange([startDate, adjustedEndDate]);
 
 					return;
@@ -67,13 +65,21 @@ const DateInput = <T extends FieldValues>({
 		[field, maxRange],
 	);
 
+	const formatShortWeekday = useCallback(
+		(_locale: string | undefined, date: Date): string => {
+			return formatDate(date, "EEEEEE");
+		},
+		[],
+	);
+
 	return (
 		<div>
 			<Popover
 				content={
 					<Calendar
 						calendarType="gregory"
-						formatShortWeekday={getShortWeekday}
+						className={styles["calendar"]}
+						formatShortWeekday={formatShortWeekday}
 						locale="en"
 						maxDate={maxDate ?? new Date()}
 						minDate={minDate ?? new Date("01-01-1999")}
@@ -94,7 +100,7 @@ const DateInput = <T extends FieldValues>({
 					<span className={styles["calendar-icon-wrapper"]}>
 						<Icon height={20} name="calendar" width={20} />
 					</span>
-					{getSelectedDateRange() || "Choose date"}
+					{getSelectedDateRange()}
 				</button>
 			</Popover>
 		</div>

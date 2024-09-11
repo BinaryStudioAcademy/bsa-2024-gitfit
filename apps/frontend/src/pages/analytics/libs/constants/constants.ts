@@ -1,1 +1,1 @@
-export { THIRTY_DAYS } from "./thirty-days.constant.js";
+export { ANALYTICS_DATE_MAX_RANGE } from "./analytics-date-max-range.constant.js";

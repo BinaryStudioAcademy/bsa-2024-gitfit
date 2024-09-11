@@ -13,10 +13,12 @@ export {
 	ValidationError,
 } from "./libs/exceptions/exceptions.js";
 export {
+	addDays,
 	changeCase,
 	checkHasPermission,
 	configureString,
 	formatDate,
+	getDifferenceInDays,
 	initDebounce,
 	subtractDays,
 } from "./libs/helpers/helpers.js";

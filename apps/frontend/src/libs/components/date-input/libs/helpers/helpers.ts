@@ -1,1 +1,1 @@
-export { getShortWeekday } from "./get-short-weekday.helper.js";
+export { addDays, getDifferenceInDays } from "@git-fit/shared";
