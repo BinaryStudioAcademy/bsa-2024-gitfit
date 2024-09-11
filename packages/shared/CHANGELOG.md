@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.14.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.13.0...shared-v1.14.0) (2024-09-11)
+
+
+### Features
+
+* add an ability to delete a group gf-80 ([#128](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/128)) ([53f0f6d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/53f0f6d92fa7f8294af49251b8cae39ef80c6869))
+* add view all projects permission gf-230 ([#253](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/253)) ([60fe403](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/60fe403d6285606bd8a26924dd786fe7166b821c))
+
 ## [1.13.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.12.0...shared-v1.13.0) (2024-09-10)
 
 

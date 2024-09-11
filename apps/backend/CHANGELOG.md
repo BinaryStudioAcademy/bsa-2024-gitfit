@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.13.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.12.1...backend-v1.13.0) (2024-09-11)
+
+
+### Features
+
+* add an ability to delete a group gf-80 ([#128](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/128)) ([53f0f6d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/53f0f6d92fa7f8294af49251b8cae39ef80c6869))
+* add view all projects permission gf-230 ([#253](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/253)) ([60fe403](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/60fe403d6285606bd8a26924dd786fe7166b821c))
+
+
+### Bug Fixes
+
+* refactor groups find all fetching logic gf-266 ([#269](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/269)) ([c39f451](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c39f4517505ac59edbcec68e84abb1d118e6b77c))
+
 ## [1.12.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.12.0...backend-v1.12.1) (2024-09-10)
 
 
