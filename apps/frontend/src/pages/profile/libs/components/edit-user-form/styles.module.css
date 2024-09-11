@@ -3,6 +3,7 @@
 	flex-direction: column;
 	gap: 24px;
 	align-items: flex-start;
+	width: 100%;
 }
 
 .inputs-wrapper {
@@ -10,5 +11,5 @@
 	flex-direction: column;
 	gap: 16px;
 	width: 100%;
-	min-width: 500px;
+	max-width: 500px;
 }
