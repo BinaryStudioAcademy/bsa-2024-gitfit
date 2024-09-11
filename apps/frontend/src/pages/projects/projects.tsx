@@ -183,6 +183,8 @@ const Projects = (): JSX.Element => {
 		dataStatus === DataStatus.IDLE ||
 		(dataStatus === DataStatus.PENDING && !hasProject);
 
+	const isLoadingMore = hasMoreProjects && dataStatus === DataStatus.PENDING;
+
 	return (
 		<PageLayout>
 			<header className={styles["projects-header"]}>
@@ -211,6 +213,7 @@ const Projects = (): JSX.Element => {
 					)}
 
 					<div ref={sentinelReference} />
+					{isLoadingMore && <Loader />}
 				</div>
 			)}
 			<Modal
