@@ -54,14 +54,13 @@ const ProtectedRoute = ({
 	);
 
 	if (!hasRequiredPermission) {
-		const FIRST_ITEM_INDEX = 0;
+		const [navigationItem] = getPermittedNavigationItems(
+			SIDEBAR_ITEMS,
+			userPermissions,
+		);
+		const redirectLink = navigationItem?.href ?? AppRoute.ROOT;
 
-		const firstAvailableRoute =
-			getPermittedNavigationItems(SIDEBAR_ITEMS, userPermissions)[
-				FIRST_ITEM_INDEX
-			]?.href || AppRoute.ROOT;
-
-		return <Navigate replace to={firstAvailableRoute} />;
+		return <Navigate replace to={redirectLink} />;
 	}
 
 	return <>{children}</>;

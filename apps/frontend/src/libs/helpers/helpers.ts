@@ -1,4 +1,4 @@
-export { getPermittedNavigationItems } from "./get-first-available-route.js";
+export { getPermittedNavigationItems } from "./get-permitted-navigation-items/get-permitted-navigation-items.helper.js";
 export { getValidClassNames } from "./get-valid-classes.helper.js";
 export {
 	checkHasPermission,
