@@ -16,7 +16,7 @@ import {
 import { MILLIS_IN_DAY } from "./libs/constants/constants.js";
 import { getShortWeekday } from "./libs/helpers/helpers.js";
 import { type DateValue } from "./libs/types/types.js";
-import "./styles.css";
+import styles from "./styles.module.css";
 
 type Properties<T extends FieldValues> = {
 	control: Control<T, null>;
@@ -90,8 +90,10 @@ const DateInput = <T extends FieldValues>({
 				isOpened={isOpened}
 				onClose={onClose}
 			>
-				<button className="date-input-trigger" onClick={onOpen}>
-					<Icon height={20} name="calendar" width={20} />
+				<button className={styles["date-input-trigger"]} onClick={onOpen}>
+					<span className={styles["calendar-icon-wrapper"]}>
+						<Icon height={20} name="calendar" width={20} />
+					</span>
 					{getSelectedDateRange() || "Choose date"}
 				</button>
 			</Popover>
