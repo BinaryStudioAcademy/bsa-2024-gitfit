@@ -24,11 +24,12 @@ const Auth = (): JSX.Element => {
 	const authenticatedUser = useAppSelector(
 		(state) => state.auth.authenticatedUser,
 	);
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (authenticatedUser) {
-			navigate(AppRoute.ROOT);
+			navigate(AppRoute.PROJECTS);
 		}
 	}, [authenticatedUser, dispatch, navigate]);
 
