@@ -1,32 +1,51 @@
 import {
 	Breadcrumbs,
 	Button,
+	Modal,
 	PageLayout,
 } from "~/libs/components/components.js";
 import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
+	useCallback,
 	useEffect,
 	useModal,
+	useNavigate,
 	useParams,
 } from "~/libs/hooks/hooks.js";
-import { actions as projectActions } from "~/modules/projects/projects.js";
+import {
+	actions as projectActions,
+	type ProjectPatchRequestDto,
+} from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
+import { ProjectUpdateForm } from "~/pages/projects/libs/components/components.js";
 
-import { SetupAnalyticsModal } from "./libs/components/components.js";
+import {
+	ProjectMenu,
+	SetupAnalyticsModal,
+} from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate(); // Hook to handle navigation
 	const { id: projectId } = useParams<{ id: string }>();
 
-	const { project, projectStatus } = useAppSelector(({ projects }) => projects);
+	const { project, projectPatchStatus, projectStatus } = useAppSelector(
+		({ projects }) => projects,
+	);
 
 	const {
 		isOpened: isSetupAnalyticsModalOpened,
 		onClose: onSetupAnalyticsModalClose,
 		onOpen: onSetupAnalyticsModalOpen,
+	} = useModal();
+
+	const {
+		isOpened: isEditModalOpen,
+		onClose: handleEditModalClose,
+		onOpen: handleEditModalOpen,
 	} = useModal();
 
 	useEffect(() => {
@@ -35,12 +54,39 @@ const Project = (): JSX.Element => {
 		}
 	}, [dispatch, projectId]);
 
+	useEffect(() => {
+		if (projectPatchStatus === DataStatus.FULFILLED && projectId) {
+			void dispatch(projectActions.getById({ id: projectId }));
+		}
+	}, [dispatch, projectPatchStatus, projectId]);
+
 	const isLoading =
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
-
 	const isRejected = projectStatus === DataStatus.REJECTED;
-
 	const hasProject = project !== null;
+
+	useEffect(() => {
+		if (projectPatchStatus === DataStatus.FULFILLED) {
+			handleEditModalClose();
+		}
+	}, [projectPatchStatus, handleEditModalClose]);
+
+	const handleEditProject = useCallback(() => {
+		handleEditModalOpen();
+	}, [handleEditModalOpen]);
+
+	const handleManageAccess = useCallback(() => {
+		navigate(AppRoute.ACCESS_MANAGEMENT);
+	}, [navigate]);
+
+	const handleProjectEditSubmit = useCallback(
+		(payload: ProjectPatchRequestDto) => {
+			if (project) {
+				void dispatch(projectActions.patch({ id: project.id, payload }));
+			}
+		},
+		[dispatch, project],
+	);
 
 	if (isRejected) {
 		return <NotFound />;
@@ -61,6 +107,12 @@ const Project = (): JSX.Element => {
 
 					<div className={styles["project-layout"]}>
 						<h1 className={styles["title"]}>{project.name}</h1>
+
+						<ProjectMenu
+							onEdit={handleEditProject}
+							onManageAccess={handleManageAccess}
+						/>
+
 						<div className={styles["project-description-layout"]}>
 							<h3 className={styles["project-description-title"]}>
 								Description
@@ -69,11 +121,23 @@ const Project = (): JSX.Element => {
 								{project.description}
 							</p>
 						</div>
+
 						<Button
 							label="Setup analytics"
 							onClick={onSetupAnalyticsModalOpen}
 						/>
 					</div>
+
+					<Modal
+						isOpened={isEditModalOpen}
+						onClose={handleEditModalClose}
+						title="Update project"
+					>
+						<ProjectUpdateForm
+							onSubmit={handleProjectEditSubmit}
+							project={project}
+						/>
+					</Modal>
 
 					<SetupAnalyticsModal
 						isOpened={isSetupAnalyticsModalOpened}
