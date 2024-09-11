@@ -48,31 +48,26 @@ const Project = (): JSX.Element => {
 		onOpen: handleEditModalOpen,
 	} = useModal();
 
-	// Fetch project by ID
 	useEffect(() => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
 		}
 	}, [dispatch, projectId]);
 
-	// Refetch project after successful patch
 	useEffect(() => {
 		if (projectPatchStatus === DataStatus.FULFILLED && projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
 		}
 	}, [dispatch, projectPatchStatus, projectId]);
 
-	// Handle project edit
 	const handleEditProject = useCallback(() => {
 		handleEditModalOpen();
 	}, [handleEditModalOpen]);
 
-	// Handle manage access redirection
 	const handleManageAccess = useCallback(() => {
 		navigate(AppRoute.ACCESS_MANAGEMENT);
 	}, [navigate]);
 
-	// Submit edited project
 	const handleProjectEditSubmit = useCallback(
 		(payload: ProjectPatchRequestDto) => {
 			if (project) {
@@ -82,7 +77,6 @@ const Project = (): JSX.Element => {
 		[dispatch, project],
 	);
 
-	// Handle loading and error states
 	const isLoading =
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
 	const isRejected = projectStatus === DataStatus.REJECTED;
@@ -129,7 +123,6 @@ const Project = (): JSX.Element => {
 						/>
 					</div>
 
-					{/* Edit Project Modal */}
 					<Modal
 						isOpened={isEditModalOpen}
 						onClose={handleEditModalClose}
@@ -141,7 +134,6 @@ const Project = (): JSX.Element => {
 						/>
 					</Modal>
 
-					{/* Setup Analytics Modal */}
 					<SetupAnalyticsModal
 						isOpened={isSetupAnalyticsModalOpened}
 						onClose={onSetupAnalyticsModalClose}
