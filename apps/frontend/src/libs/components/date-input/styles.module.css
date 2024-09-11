@@ -107,11 +107,8 @@
 	display: flex;
 	gap: 8px;
 	align-items: center;
+	width: 270px;
 	padding: 10px 16px;
-	font-family: inherit;
-	font-size: 14px;
-	font-weight: 400;
-	line-height: 1.5;
 	color: inherit;
 	background-color: var(--color-background-secondary);
 	border: 1px solid var(--color-border-primary);
@@ -121,4 +118,17 @@
 .calendar-icon-wrapper {
 	line-height: 100%;
 	color: var(--color-text-secondary);
+}
+
+.date-input-text {
+	flex-grow: 1;
+	padding: 0;
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.5;
+	color: inherit;
+	pointer-events: none;
+	background-color: transparent;
+	border: none;
 }

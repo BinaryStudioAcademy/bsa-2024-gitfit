@@ -19,17 +19,13 @@ import styles from "./styles.module.css";
 
 type Properties<T extends FieldValues> = {
 	control: Control<T, null>;
-	maxDate?: Date;
 	maxRange?: number;
-	minDate?: Date;
 	name: FieldPath<T>;
 };
 
 const DateInput = <T extends FieldValues>({
 	control,
-	maxDate,
 	maxRange,
-	minDate,
 	name,
 }: Properties<T>): JSX.Element => {
 	const { field } = useFormController({
@@ -81,8 +77,6 @@ const DateInput = <T extends FieldValues>({
 						className={styles["calendar"]}
 						formatShortWeekday={formatShortWeekday}
 						locale="en"
-						maxDate={maxDate ?? new Date()}
-						minDate={minDate ?? new Date("01-01-1999")}
 						next2Label={null}
 						nextLabel={<Icon height={16} name="rightArrow" width={16} />}
 						onChange={handleDateChange}
@@ -100,7 +94,12 @@ const DateInput = <T extends FieldValues>({
 					<span className={styles["calendar-icon-wrapper"]}>
 						<Icon height={20} name="calendar" width={20} />
 					</span>
-					{getSelectedDateRange()}
+					<input
+						className={styles["date-input-text"]}
+						readOnly
+						type="text"
+						value={getSelectedDateRange()}
+					/>
 				</button>
 			</Popover>
 		</div>
