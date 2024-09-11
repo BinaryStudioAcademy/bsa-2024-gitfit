@@ -63,7 +63,7 @@ class ProjectEntity implements Entity {
 		};
 	}
 
-	public toObject(): ProjectGetAllItemResponseDto {
+	public toObject(): { description: string } & ProjectGetAllItemResponseDto {
 		return {
 			description: this.description,
 			id: this.id as number,
