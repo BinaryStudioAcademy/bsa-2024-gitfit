@@ -17,8 +17,9 @@ import {
 	type GroupCreateRequestDto,
 } from "~/modules/groups/groups.js";
 
-import { getUserColumns, getUserRows } from "../../helpers/helpers.js";
+import { getUserRows } from "../../helpers/helpers.js";
 import { type UserRow } from "../../types/types.js";
+import { getGroupUsersColumns } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 const getRowId = (row: UserRow): number => row.id;
@@ -47,7 +48,7 @@ const GroupUsersTable = ({
 		totalItemsCount: usersTotalCount,
 	});
 
-	const userColumns = getUserColumns();
+	const userColumns = getGroupUsersColumns();
 	const userData: UserRow[] = getUserRows(users);
 
 	useEffect(() => {
@@ -71,7 +72,7 @@ const GroupUsersTable = ({
 	return (
 		<>
 			<span className={styles["table-title"]}>Users</span>
-			<div className={styles["users-table"]}>
+			<div className={styles["group-users-table"]}>
 				<Table<UserRow>
 					columns={userColumns}
 					data={userData}

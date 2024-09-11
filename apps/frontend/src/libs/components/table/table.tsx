@@ -49,7 +49,14 @@ const Table = <T extends object>({
 				<thead className={styles["table-head"]}>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<tr className={styles["table-row"]} key={headerGroup.id}>
-							{isRowSelectable && <th className={styles["table-header"]} />}
+							{isRowSelectable && (
+								<th
+									className={styles["table-header"]}
+									style={{
+										width: 40,
+									}}
+								/>
+							)}
 							{headerGroup.headers.map((header) => (
 								<th
 									className={styles["table-header"]}
@@ -72,7 +79,12 @@ const Table = <T extends object>({
 						table.getRowModel().rows.map((row) => (
 							<tr className={styles["table-row"]} key={row.id}>
 								{isRowSelectable && (
-									<td className={styles["table-data"]}>
+									<td
+										className={styles["table-data"]}
+										style={{
+											width: 40,
+										}}
+									>
 										<SelectRowCell
 											id={getRowId(row.original)}
 											isChecked={selectedRowIds.includes(
