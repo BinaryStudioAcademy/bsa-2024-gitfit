@@ -14,7 +14,9 @@ type EnvironmentSchema = {
 		POOL_MIN: number;
 	};
 	ENCRYPTION: {
+		ALGORITHM: string;
 		SALT_ROUNDS: number;
+		SECRET: string;
 	};
 	JWT: {
 		ALGORITHM: string;

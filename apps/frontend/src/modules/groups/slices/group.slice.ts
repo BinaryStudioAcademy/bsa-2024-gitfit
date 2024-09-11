@@ -6,7 +6,7 @@ import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
 import { type GroupGetAllItemResponseDto } from "../libs/types/types.js";
-import { create, deleteById, loadAll, loadUsers } from "./actions.js";
+import { create, deleteById, loadAll, loadUsers, update } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
@@ -14,6 +14,7 @@ type State = {
 	groupDeleteStatus: ValueOf<typeof DataStatus>;
 	groups: GroupGetAllItemResponseDto[];
 	groupsTotalCount: number;
+	groupUpdateStatus: ValueOf<typeof DataStatus>;
 	users: UserGetAllItemResponseDto[];
 	usersDataStatus: ValueOf<typeof DataStatus>;
 	usersTotalCount: number;
@@ -25,6 +26,7 @@ const initialState: State = {
 	groupDeleteStatus: DataStatus.IDLE,
 	groups: [],
 	groupsTotalCount: 0,
+	groupUpdateStatus: DataStatus.IDLE,
 	users: [],
 	usersDataStatus: DataStatus.IDLE,
 	usersTotalCount: 0,
@@ -70,6 +72,21 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(deleteById.rejected, (state) => {
 			state.groupDeleteStatus = DataStatus.REJECTED;
+		});
+
+		builder.addCase(update.pending, (state) => {
+			state.groupUpdateStatus = DataStatus.PENDING;
+		});
+		builder.addCase(update.fulfilled, (state, action) => {
+			const updatedGroup = action.payload;
+			state.groups = state.groups.map((group) =>
+				group.id === updatedGroup.id ? updatedGroup : group,
+			);
+
+			state.groupUpdateStatus = DataStatus.FULFILLED;
+		});
+		builder.addCase(update.rejected, (state) => {
+			state.groupUpdateStatus = DataStatus.REJECTED;
 		});
 
 		builder.addCase(create.pending, (state) => {

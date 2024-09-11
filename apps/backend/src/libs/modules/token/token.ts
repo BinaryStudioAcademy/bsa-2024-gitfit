@@ -7,5 +7,10 @@ const token = new BaseToken({
 	secret: config.ENV.JWT.SECRET,
 });
 
-export { token };
+const projectApiKey = new BaseToken({
+	algorithm: config.ENV.JWT.ALGORITHM,
+	secret: config.ENV.JWT.SECRET,
+});
+
+export { projectApiKey, token };
 export { type Token } from "./libs/types/types.js";

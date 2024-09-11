@@ -61,13 +61,16 @@ const usePagination: UsePagination = ({
 	const onPageChange = useCallback(
 		(newPage: number) => {
 			const totalPages = calculateTotalPages(pageSize, totalItemsCount);
+			const validPage = Math.max(FIRST_PAGE, Math.min(newPage, totalPages));
 
-			if (page >= FIRST_PAGE && page <= totalPages) {
-				setPage(newPage);
-			}
+			setPage(validPage);
 		},
 		[page, pageSize, totalItemsCount],
 	);
+
+	useEffect(() => {
+		onPageChange(page);
+	}, [totalItemsCount]);
 
 	const onPageSizeChange = useCallback(
 		(newPageSize: number) => {

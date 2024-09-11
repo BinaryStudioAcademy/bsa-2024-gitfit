@@ -1,12 +1,14 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
+import { type ProjectApiKeyService } from "~/modules/project-api-keys/project-api-key.service.js";
 
 import { ProjectError } from "./libs/exceptions/exceptions.js";
 import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
+	type ProjectGetByIdResponseDto,
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 } from "./libs/types/types.js";
@@ -14,10 +16,16 @@ import { ProjectEntity } from "./project.entity.js";
 import { type ProjectRepository } from "./project.repository.js";
 
 class ProjectService implements Service {
+	private projectApiKeyService: ProjectApiKeyService;
+
 	private projectRepository: ProjectRepository;
 
-	public constructor(projectRepository: ProjectRepository) {
+	public constructor(
+		projectRepository: ProjectRepository,
+		projectApiKeyService: ProjectApiKeyService,
+	) {
 		this.projectRepository = projectRepository;
+		this.projectApiKeyService = projectApiKeyService;
 	}
 
 	public async create(
@@ -56,7 +64,7 @@ class ProjectService implements Service {
 		return isDeleted;
 	}
 
-	public async find(id: number): Promise<ProjectGetAllItemResponseDto> {
+	public async find(id: number): Promise<ProjectGetByIdResponseDto> {
 		const item = await this.projectRepository.find(id);
 
 		if (!item) {
@@ -66,7 +74,18 @@ class ProjectService implements Service {
 			});
 		}
 
-		return item.toObject();
+		const project = item.toObject();
+
+		const projectApiKey = await this.projectApiKeyService.findByProjectId(
+			project.id,
+		);
+
+		const apiKey = projectApiKey ? projectApiKey.apiKey : null;
+
+		return {
+			...project,
+			apiKey,
+		};
 	}
 
 	public async findAll(name?: string): Promise<ProjectGetAllResponseDto> {
@@ -103,7 +122,18 @@ class ProjectService implements Service {
 
 		const updatedItem = await this.projectRepository.patch(id, projectData);
 
-		return updatedItem.toObject();
+		const project = updatedItem.toObject();
+
+		const projectApiKey = await this.projectApiKeyService.findByProjectId(
+			project.id,
+		);
+
+		const apiKey = projectApiKey ? projectApiKey.apiKey : null;
+
+		return {
+			...project,
+			apiKey,
+		};
 	}
 
 	public update(): ReturnType<Service["update"]> {

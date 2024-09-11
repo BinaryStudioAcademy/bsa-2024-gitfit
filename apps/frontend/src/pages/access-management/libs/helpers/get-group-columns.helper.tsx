@@ -4,9 +4,10 @@ import { type TableColumn } from "~/libs/types/types.js";
 import { GroupMenu } from "../components/components.js";
 import { type GroupRow } from "../types/types.js";
 
-const getGroupColumns = (
-	onDelete: (groupId: number) => void,
-): TableColumn<GroupRow>[] => [
+const getGroupColumns = (actions: {
+	onDelete: (groupId: number) => void;
+	onEdit: (groupId: number) => void;
+}): TableColumn<GroupRow>[] => [
 	{
 		accessorKey: "name",
 		header: "Name",
@@ -21,8 +22,12 @@ const getGroupColumns = (
 		header: "Created At",
 	},
 	{
-		cell: ({ row: { original: group } }) => (
-			<GroupMenu groupId={group.id} onDelete={onDelete} />
+		cell: ({ row: { original: group } }): React.ReactNode => (
+			<GroupMenu
+				groupId={group.id}
+				onDelete={actions.onDelete}
+				onEdit={actions.onEdit}
+			/>
 		),
 		header: "",
 		id: "menu",
