@@ -62,6 +62,7 @@ class GroupRepository implements Repository {
 	}: PaginationQueryParameters): Promise<PaginationResponseDto<GroupEntity>> {
 		const { results, total } = await this.groupModel
 			.query()
+			.orderBy("createdAt", "desc")
 			.page(page, pageSize)
 			.withGraphFetched("[permissions, users]");
 
