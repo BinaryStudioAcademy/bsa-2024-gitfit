@@ -24,11 +24,11 @@ const Popover = ({
 	const popoverReference = useRef<HTMLDivElement>(null);
 	const popoverTargetReference = useRef<HTMLDivElement>(null);
 
-	const position = usePopoverPosition(
-		popoverTargetReference,
-		isOpened,
-		hasFixedPositioning,
-	);
+	const position = usePopoverPosition({
+		hasFixedPositioning: hasFixedPositioning ?? false,
+		isOpen: isOpened,
+		reference: popoverTargetReference,
+	});
 
 	useHandleClickOutside(popoverReference, onClose);
 
