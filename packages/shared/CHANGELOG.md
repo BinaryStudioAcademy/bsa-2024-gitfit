@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.15.0...shared-v1.15.1) (2024-09-11)
+
+
+### Bug Fixes
+
+* refactor group validation messages gf-262 ([#275](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/275)) ([1ac5ccc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1ac5ccccd76356099a15a178cd6ab2c347de3b68))
+
 ## [1.15.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.14.0...shared-v1.15.0) (2024-09-11)
 
 
