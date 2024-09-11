@@ -51,7 +51,13 @@ const Table = <T extends object>({
 						<tr className={styles["table-row"]} key={headerGroup.id}>
 							{isRowSelectable && <th className={styles["table-header"]} />}
 							{headerGroup.headers.map((header) => (
-								<th className={styles["table-header"]} key={header.id}>
+								<th
+									className={styles["table-header"]}
+									key={header.id}
+									style={{
+										width: header.column.columnDef.size,
+									}}
+								>
 									{flexRender(
 										header.column.columnDef.header,
 										header.getContext(),
@@ -77,7 +83,13 @@ const Table = <T extends object>({
 									</td>
 								)}
 								{row.getVisibleCells().map((cell) => (
-									<td className={styles["table-data"]} key={cell.id}>
+									<td
+										className={styles["table-data"]}
+										key={cell.id}
+										style={{
+											width: cell.column.columnDef.size,
+										}}
+									>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</td>
 								))}

@@ -66,6 +66,15 @@ class GroupController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
+				this.deleteGroup(
+					options as APIHandlerOptions<{ params: { id: string } }>,
+				),
+			method: "DELETE",
+			path: GroupsApiPath.$ID,
+		});
+
+		this.addRoute({
+			handler: (options) =>
 				this.findAll(
 					options as APIHandlerOptions<{
 						query: PaginationQueryParameters;
@@ -127,6 +136,37 @@ class GroupController extends BaseController {
 		return {
 			payload: await this.groupService.create(options.body),
 			status: HTTPCode.CREATED,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /groups/{id}:
+	 *   delete:
+	 *     description: Delete a group by ID
+	 *     parameters:
+	 *       - in: path
+	 *         name: id
+	 *         required: true
+	 *         schema:
+	 *           type: number
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: boolean
+	 *       404:
+	 *         description: Group not found
+	 */
+
+	private async deleteGroup(
+		options: APIHandlerOptions<{ params: { id: string } }>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.groupService.delete(Number(options.params.id)),
+			status: HTTPCode.OK,
 		};
 	}
 
