@@ -12,8 +12,8 @@ import {
 	useAppSelector,
 	useCallback,
 	useEffect,
+	useIntersectionObserver,
 	useModal,
-	useRef,
 	useSearch,
 	useState,
 } from "~/libs/hooks/hooks.js";
@@ -34,8 +34,6 @@ import {
 } from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
-const FIRST_ITEM = 0;
-
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
@@ -54,51 +52,29 @@ const Projects = (): JSX.Element => {
 		projects,
 	} = useAppSelector(({ projects }) => projects);
 
-	const sentinelReference = useRef<HTMLDivElement | null>(null);
+	const loadMoreProjects = useCallback(() => {
+		if (dataStatus !== DataStatus.PENDING) {
+			void dispatch(
+				projectActions.loadMore({
+					limit: INFINITE_SCROLL_LOAD_COUNT,
+					name: search,
+					start: start + INFINITE_SCROLL_LOAD_COUNT,
+				}),
+			);
+
+			setStart((previousStart) => previousStart + INFINITE_SCROLL_LOAD_COUNT);
+		}
+	}, [dispatch, search, start, dataStatus]);
+
+	const sentinelReference = useIntersectionObserver<HTMLDivElement>({
+		isEnabled: hasMoreProjects && dataStatus !== DataStatus.PENDING,
+		onIntersect: loadMoreProjects,
+	});
 
 	useEffect(() => {
 		void dispatch(projectActions.loadAll(search));
 		setStart(DEFAULT_START);
 	}, [dispatch, search]);
-
-	useEffect(() => {
-		const observer = new IntersectionObserver(
-			(entries: IntersectionObserverEntry[]) => {
-				const firstEntry = entries[FIRST_ITEM];
-
-				if (
-					firstEntry?.isIntersecting &&
-					hasMoreProjects &&
-					dataStatus !== DataStatus.PENDING
-				) {
-					void dispatch(
-						projectActions.loadMore({
-							limit: INFINITE_SCROLL_LOAD_COUNT,
-							name: search,
-							start: start + INFINITE_SCROLL_LOAD_COUNT,
-						}),
-					);
-
-					setStart(
-						(previousStart) => previousStart + INFINITE_SCROLL_LOAD_COUNT,
-					);
-				}
-			},
-		);
-
-		const sentinelNode = sentinelReference.current;
-		const hasSentinelNode = sentinelNode !== null;
-
-		if (hasSentinelNode) {
-			observer.observe(sentinelNode);
-		}
-
-		return (): void => {
-			if (hasSentinelNode) {
-				observer.unobserve(sentinelNode);
-			}
-		};
-	}, [dispatch, dataStatus, hasMoreProjects, search, start]);
 
 	const handleSearchChange = useCallback(
 		(value: string) => {
