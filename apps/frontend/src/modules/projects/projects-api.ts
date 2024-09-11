@@ -7,6 +7,7 @@ import { ProjectsApiPath } from "./libs/enums/enums.js";
 import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
+	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
 	type ProjectGetByIdResponseDto,
 	type ProjectPatchRequestDto,
@@ -52,14 +53,18 @@ class ProjectApi extends BaseHTTPApi {
 		return await response.json<boolean>();
 	}
 
-	public async getAll(name = ""): Promise<ProjectGetAllResponseDto> {
+	public async getAll(
+		query: ProjectGetAllRequestDto,
+	): Promise<ProjectGetAllResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(ProjectsApiPath.ROOT, {}),
 			{
 				hasAuth: true,
 				method: "GET",
 				query: {
-					name,
+					limit: String(query.limit),
+					name: query.name,
+					start: String(query.start),
 				},
 			},
 		);

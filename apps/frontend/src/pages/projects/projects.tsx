@@ -29,6 +29,7 @@ import {
 	ProjectsSearch,
 	ProjectUpdateForm,
 } from "./libs/components/components.js";
+import { INFINITE_SCROLL_LOAD_COUNT } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
@@ -43,12 +44,24 @@ const Projects = (): JSX.Element => {
 		useAppSelector(({ projects }) => projects);
 
 	useEffect(() => {
-		void dispatch(projectActions.loadAll(search));
+		void dispatch(
+			projectActions.loadAll({
+				limit: INFINITE_SCROLL_LOAD_COUNT,
+				name: search,
+				start: 0,
+			}),
+		);
 	}, [dispatch, search]);
 
 	const handleSearchChange = useCallback(
 		(value: string) => {
-			void dispatch(projectActions.loadAll(value));
+			void dispatch(
+				projectActions.loadAll({
+					limit: INFINITE_SCROLL_LOAD_COUNT,
+					name: value,
+					start: 0,
+				}),
+			);
 			onSearch(value);
 		},
 		[dispatch, onSearch],
