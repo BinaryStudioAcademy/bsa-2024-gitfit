@@ -25,6 +25,21 @@ const loadAll = createAsyncThunk<
 	return await groupApi.getAll(query);
 });
 
+const deleteById = createAsyncThunk<boolean, { id: number }, AsyncThunkConfig>(
+	`${sliceName}/delete-by-id`,
+	async ({ id }, { extra }) => {
+		const { groupApi, toastNotifier } = extra;
+
+		const isDeleted = await groupApi.deleteById(id);
+
+		if (isDeleted) {
+			toastNotifier.showSuccess(NotificationMessage.GROUP_DELETE_SUCCESS);
+		}
+
+		return isDeleted;
+	},
+);
+
 const loadUsers = createAsyncThunk<
 	UserGetAllResponseDto,
 	PaginationQueryParameters,
@@ -51,4 +66,4 @@ const create = createAsyncThunk<
 	return response;
 });
 
-export { create, loadAll, loadUsers };
+export { create, deleteById, loadAll, loadUsers };

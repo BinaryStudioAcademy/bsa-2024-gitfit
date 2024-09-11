@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.20.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.19.0...v1.20.0) (2024-09-10)
+
+
+### Features
+
+* Update logo in the app gf-242 ([#258](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/258)) ([1b19756](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1b19756be162000933cb8610146b087e70b30e48))
+
+
+### Bug Fixes
+
+* missing error message for invalid email format on Sign Up page gf-252 ([#255](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/255)) ([1851536](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/18515363f8434e4122c42cc1b2ed17374a9625d1))
+
+## [1.19.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.18.0...v1.19.0) (2024-09-10)
+
+
+### Features
+
+* add hyphen to name pattern gf-236 ([#251](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/251)) ([63bacee](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/63bacee091c16682bbe0f699afda429225a4a26e))
+* remove ui page gf-243 ([#245](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/245)) ([f19c7ee](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f19c7ee2b416b0a1318c56fe2b6d12cae843181e))
+
+
+### Bug Fixes
+
+* resctict user manage group gf-254 ([#256](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/256)) ([73c7473](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/73c74736ed11930b58260a95fdbea260a4ff40a6))
+
 ## [1.18.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.17.0...v1.18.0) (2024-09-10)
 
 
