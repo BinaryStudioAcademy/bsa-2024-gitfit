@@ -61,9 +61,9 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 									</ProtectedRoute>
 								),
 								path: AppRoute.ANALYTICS,
-              },
-              {
-                element: (
+							},
+							{
+								element: (
 									<ProtectedRoute>
 										<Home />
 									</ProtectedRoute>
