@@ -4,11 +4,10 @@ import {
 	AbstractModel,
 	DatabaseTableName,
 } from "~/libs/modules/database/database.js";
-
-import { ContributorModel } from "./contributor.model.js";
+import { ContributorModel } from "~/modules/contributors/contributors.js";
 
 class GitEmailModel extends AbstractModel {
-	public contributor?: ContributorModel;
+	public contributor!: ContributorModel;
 	public contributorId!: number;
 	public email!: string;
 

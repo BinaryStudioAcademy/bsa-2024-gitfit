@@ -4,11 +4,10 @@ import {
 	AbstractModel,
 	DatabaseTableName,
 } from "~/libs/modules/database/database.js";
+import { type ContributorModel } from "~/modules/contributors/contributors.js";
+import { GitEmailModel } from "~/modules/git-emails/git-emails.js";
 import { ProjectModel } from "~/modules/projects/project.model.js";
 import { UserModel } from "~/modules/users/user.model.js";
-
-import { type ContributorModel } from "./contributor.model.js";
-import { GitEmailModel } from "./git-email.model.js";
 
 class ActivityLogModel extends AbstractModel {
 	public commitsNumber!: number;

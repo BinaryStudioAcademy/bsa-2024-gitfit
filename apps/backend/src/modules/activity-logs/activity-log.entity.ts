@@ -1,9 +1,9 @@
 import { type Entity } from "~/libs/types/types.js";
+import { type ContributorModel } from "~/modules/contributors/contributors.js";
+import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 
 import { type ProjectModel } from "../projects/project.model.js";
 import { type UserModel } from "../users/user.model.js";
-import { type ContributorModel } from "./contributor.model.js";
-import { type GitEmailModel } from "./git-email.model.js";
 import { type ActivityLogGetAllItemResponseDto } from "./libs/types/types.js";
 
 class ActivityLogEntity implements Entity {
