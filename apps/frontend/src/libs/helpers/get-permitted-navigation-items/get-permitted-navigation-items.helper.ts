@@ -1,9 +1,9 @@
-import { checkHasPermission } from "@git-fit/shared";
-
 import {
 	type NavigationItem,
 	type PermissionGetAllItemResponseDto,
 } from "~/libs/types/types.js";
+
+import { checkHasPermission } from "../helpers.js";
 
 const getPermittedNavigationItems = (
 	items: NavigationItem[],
