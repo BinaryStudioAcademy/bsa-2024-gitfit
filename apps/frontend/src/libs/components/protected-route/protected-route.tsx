@@ -1,15 +1,18 @@
 import { Navigate } from "react-router-dom";
 
 import { Loader } from "~/libs/components/components.js";
+import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
 import {
 	AppRoute,
 	DataStatus,
 	type PermissionKey,
 } from "~/libs/enums/enums.js";
-import { checkHasPermission } from "~/libs/helpers/helpers.js";
-import { useAppSelector } from "~/libs/hooks/hooks.js";
+import {
+	checkHasPermission,
+	getPermittedNavigationItems,
+} from "~/libs/helpers/helpers.js";
+import { useAppSelector, useMemo } from "~/libs/hooks/hooks.js";
 import { type ValueOf } from "~/libs/types/types.js";
-import { NotFound } from "~/pages/not-found/not-found.jsx";
 
 import styles from "./styles.module.css";
 
@@ -23,6 +26,12 @@ const ProtectedRoute = ({
 	routePermissions = [],
 }: Properties): JSX.Element => {
 	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
+
+	const userPermissions = useMemo(() => {
+		return (
+			authenticatedUser?.groups.flatMap((group) => group.permissions) ?? []
+		);
+	}, [authenticatedUser]);
 
 	const isLoading =
 		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
@@ -41,11 +50,17 @@ const ProtectedRoute = ({
 
 	const hasRequiredPermission = checkHasPermission(
 		routePermissions,
-		authenticatedUser.groups.flatMap((group) => group.permissions),
+		userPermissions,
 	);
 
 	if (!hasRequiredPermission) {
-		return <NotFound />;
+		const [navigationItem] = getPermittedNavigationItems(
+			SIDEBAR_ITEMS,
+			userPermissions,
+		);
+		const redirectLink = navigationItem?.href ?? AppRoute.ROOT;
+
+		return <Navigate replace to={redirectLink} />;
 	}
 
 	return <>{children}</>;

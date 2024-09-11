@@ -62,7 +62,7 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "POST",
 			path: ProjectGroupsApiPath.ROOT,
-			preHandler: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 			validation: {
 				body: projectGroupCreateValidationSchema,
 			},

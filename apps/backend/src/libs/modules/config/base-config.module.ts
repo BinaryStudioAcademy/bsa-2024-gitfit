@@ -77,11 +77,23 @@ class BaseConfig implements Config {
 				},
 			},
 			ENCRYPTION: {
+				ALGORITHM: {
+					default: null,
+					doc: "Data encryption algorithm",
+					env: "ENCRYPTION_ALGORITHM",
+					format: String,
+				},
 				SALT_ROUNDS: {
 					default: null,
 					doc: "Data encryption salt rounds",
 					env: "ENCRYPTION_SALT_ROUNDS",
 					format: Number,
+				},
+				SECRET: {
+					default: null,
+					doc: "Data encryption secret",
+					env: "ENCRYPTION_SECRET",
+					format: String,
 				},
 			},
 			JWT: {

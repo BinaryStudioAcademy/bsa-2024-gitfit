@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.14.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.13.0...backend-v1.14.0) (2024-09-11)
+
+
+### Features
+
+* add ability to edit group gf-81 ([#170](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/170)) ([2485667](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/24856674205c965821f2765d4b0b4a891f53a684))
+* Add an ability to generate and retrieve project api key gf-180 ([#223](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/223)) ([1b016c7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1b016c7086a35b1060dcb716740a38cffa42f458))
+
+## [1.13.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.12.1...backend-v1.13.0) (2024-09-11)
+
+
+### Features
+
+* add an ability to delete a group gf-80 ([#128](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/128)) ([53f0f6d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/53f0f6d92fa7f8294af49251b8cae39ef80c6869))
+* add view all projects permission gf-230 ([#253](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/253)) ([60fe403](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/60fe403d6285606bd8a26924dd786fe7166b821c))
+
+
+### Bug Fixes
+
+* refactor groups find all fetching logic gf-266 ([#269](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/269)) ([c39f451](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c39f4517505ac59edbcec68e84abb1d118e6b77c))
+
+## [1.12.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.12.0...backend-v1.12.1) (2024-09-10)
+
+
+### Bug Fixes
+
+* resctict user manage group gf-254 ([#256](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/256)) ([73c7473](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/73c74736ed11930b58260a95fdbea260a4ff40a6))
+
 ## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.11.0...backend-v1.12.0) (2024-09-10)
 
 

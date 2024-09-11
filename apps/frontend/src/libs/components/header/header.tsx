@@ -22,10 +22,7 @@ const Header = (): JSX.Element => {
 	return (
 		<header className={styles["header"]}>
 			<NavLink className={styles["logo-link"] as string} to={AppRoute.ROOT}>
-				<div className={styles["logo-container"]}>
-					<img alt="GitFit logo" className={styles["logo-img"]} src={logoSrc} />
-					<span className={styles["logo-text"]}>Logo</span>
-				</div>
+				<img alt="GitFit logo" className={styles["logo-img"]} src={logoSrc} />
 			</NavLink>
 			<UserPopover
 				email={email}

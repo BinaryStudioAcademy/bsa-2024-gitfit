@@ -3,10 +3,10 @@ import { type NavigationItem } from "~/libs/types/types.js";
 
 const SIDEBAR_ITEMS: NavigationItem[] = [
 	{
-		href: AppRoute.ROOT,
+		href: AppRoute.PROJECTS,
 		icon: "project",
 		label: "Projects",
-		pagePermissions: [PermissionKey.MANAGE_ALL_PROJECTS],
+		pagePermissions: [PermissionKey.VIEW_ALL_PROJECTS],
 	},
 	{
 		href: AppRoute.ACCESS_MANAGEMENT,

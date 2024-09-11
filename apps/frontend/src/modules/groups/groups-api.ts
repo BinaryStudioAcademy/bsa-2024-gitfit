@@ -9,6 +9,8 @@ import {
 	type GroupCreateRequestDto,
 	type GroupCreateResponseDto,
 	type GroupGetAllResponseDto,
+	type GroupUpdateRequestDto,
+	type GroupUpdateResponseDto,
 } from "./libs/types/types.js";
 
 type Constructor = {
@@ -38,6 +40,18 @@ class GroupApi extends BaseHTTPApi {
 		return await response.json<GroupCreateResponseDto>();
 	}
 
+	public async deleteById(id: number): Promise<boolean> {
+		const response = await this.load(
+			this.getFullEndpoint(GroupsApiPath.$ID, { id: String(id) }),
+			{
+				hasAuth: true,
+				method: "DELETE",
+			},
+		);
+
+		return await response.json<boolean>();
+	}
+
 	public async getAll(
 		query: PaginationQueryParameters,
 	): Promise<GroupGetAllResponseDto> {
@@ -54,6 +68,23 @@ class GroupApi extends BaseHTTPApi {
 		);
 
 		return await response.json<GroupGetAllResponseDto>();
+	}
+
+	public async update(
+		id: number,
+		payload: GroupUpdateRequestDto,
+	): Promise<GroupUpdateResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(GroupsApiPath.$ID, { id: String(id) }),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "PUT",
+				payload: JSON.stringify(payload),
+			},
+		);
+
+		return await response.json<GroupUpdateResponseDto>();
 	}
 }
 

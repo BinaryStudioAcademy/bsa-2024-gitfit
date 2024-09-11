@@ -5,6 +5,7 @@ export {
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
+	type ProjectGetByIdResponseDto,
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 } from "./libs/types/types.js";

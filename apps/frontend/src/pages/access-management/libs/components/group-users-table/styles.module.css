@@ -5,6 +5,12 @@
 	line-height: 1.2;
 }
 
+.group-users-table {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
 .error-message {
 	font-size: 14px;
 	font-weight: 500;

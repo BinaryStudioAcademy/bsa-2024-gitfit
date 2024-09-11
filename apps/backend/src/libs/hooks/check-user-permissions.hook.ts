@@ -6,7 +6,7 @@ import { type APIPreHandler } from "~/libs/modules/controller/controller.js";
 import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
 
 const checkUserPermissions = (routePermissions: string[]): APIPreHandler => {
-	return (request: FastifyRequest): void => {
+	return (request: FastifyRequest, _, done): void => {
 		const { user } = request;
 
 		if (!user) {
@@ -27,6 +27,8 @@ const checkUserPermissions = (routePermissions: string[]): APIPreHandler => {
 				status: HTTPCode.FORBIDDEN,
 			});
 		}
+
+		done();
 	};
 };
 

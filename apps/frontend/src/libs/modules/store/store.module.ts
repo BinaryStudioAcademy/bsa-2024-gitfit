@@ -16,6 +16,10 @@ import {
 	reducer as permissionReducer,
 } from "~/modules/permissions/permissions.js";
 import {
+	projectApiKeysApi,
+	reducer as projectApiKeysReducer,
+} from "~/modules/project-api-keys/project-api-keys.js";
+import {
 	projectApi,
 	reducer as projectsReducer,
 } from "~/modules/projects/projects.js";
@@ -47,6 +51,7 @@ class Store {
 				auth: authReducer,
 				groups: groupsReducer,
 				permissions: permissionReducer,
+				projectApiKeys: projectApiKeysReducer,
 				projects: projectsReducer,
 				users: usersReducer,
 			},
@@ -59,6 +64,7 @@ class Store {
 			groupApi,
 			permissionApi,
 			projectApi,
+			projectApiKeysApi,
 			storage,
 			toastNotifier,
 			userApi,
