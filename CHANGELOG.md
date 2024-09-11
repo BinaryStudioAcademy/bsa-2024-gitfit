@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.22.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.22.0...v1.22.1) (2024-09-11)
+
+
+### Bug Fixes
+
+* fix inconsistent layout of the users table gf-267 ([#273](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/273)) ([b5527bb](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b5527bb62d308635970f963b81566df92c28cb42))
+* refactor group validation messages gf-262 ([#275](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/275)) ([1ac5ccc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1ac5ccccd76356099a15a178cd6ab2c347de3b68))
+
 ## [1.22.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.21.0...v1.22.0) (2024-09-11)
 
 
