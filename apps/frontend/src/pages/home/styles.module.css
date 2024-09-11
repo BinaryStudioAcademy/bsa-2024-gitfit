@@ -1,0 +1,11 @@
+.title {
+	margin: 0;
+	font-size: 30px;
+	font-weight: 600;
+	line-height: 120%;
+}
+
+.home-header {
+	display: flex;
+	justify-content: space-between;
+}

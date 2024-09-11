@@ -1,4 +1,5 @@
-import { APIPath } from "~/libs/enums/enums.js";
+import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import { checkUserPermissions } from "~/libs/hooks/hooks.js";
 import {
 	type APIHandlerOptions,
 	type APIHandlerResponse,
@@ -85,6 +86,7 @@ class ProjectController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectsApiPath.ROOT,
+			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
 		});
 
 		this.addRoute({
@@ -96,6 +98,7 @@ class ProjectController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
 		});
 
 		this.addRoute({
