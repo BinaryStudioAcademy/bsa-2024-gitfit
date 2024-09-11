@@ -8,7 +8,7 @@ type Properties = {
 	onDelete: (groupId: number) => void;
 };
 
-const GroupMenu = ({ groupId, onDelete }: Properties): React.ReactElement => {
+const GroupMenu = ({ groupId, onDelete }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
 
 	const handleDeleteClick = useCallback(() => {
