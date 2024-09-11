@@ -7,8 +7,6 @@ import { type Encryption, type HashResult } from "./libs/types/types.js";
 class BaseEncryption implements Encryption {
 	private algorithm: string;
 
-	private initialVector: crypto.BinaryLike;
-
 	private inputEncoding: crypto.Encoding;
 
 	private outputEncoding: crypto.Encoding;
@@ -23,7 +21,6 @@ class BaseEncryption implements Encryption {
 		this.secret = config.ENV.ENCRYPTION.SECRET;
 		this.inputEncoding = "utf8";
 		this.outputEncoding = "base64";
-		this.initialVector = "iv";
 	}
 
 	public async compare(data: string, hash: string): Promise<boolean> {
@@ -31,11 +28,7 @@ class BaseEncryption implements Encryption {
 	}
 
 	public decrypt(encryptedData: string): string {
-		const decipher = crypto.createDecipheriv(
-			this.algorithm,
-			this.secret,
-			this.initialVector,
-		);
+		const decipher = crypto.createDecipheriv(this.algorithm, this.secret, null);
 
 		return decipher.update(
 			encryptedData,
@@ -45,11 +38,7 @@ class BaseEncryption implements Encryption {
 	}
 
 	public encrypt(data: string): string {
-		const chipher = crypto.createCipheriv(
-			this.algorithm,
-			this.secret,
-			this.initialVector,
-		);
+		const chipher = crypto.createCipheriv(this.algorithm, this.secret, null);
 
 		return (
 			chipher.update(data, this.inputEncoding, this.outputEncoding) +
