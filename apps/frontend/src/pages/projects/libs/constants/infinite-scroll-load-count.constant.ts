@@ -1,3 +1,3 @@
-const INFINITE_SCROLL_LOAD_COUNT: number = 3;
+const INFINITE_SCROLL_LOAD_COUNT: number = 10;
 
 export { INFINITE_SCROLL_LOAD_COUNT };

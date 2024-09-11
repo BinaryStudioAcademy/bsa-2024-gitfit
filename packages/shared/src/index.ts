@@ -31,6 +31,7 @@ export {
 export { type Storage } from "./libs/modules/storage/storage.js";
 export {
 	type InfiniteScrollQueryParameters,
+	type InfiniteScrollResponseDto,
 	type PaginationQueryParameters,
 	type PaginationResponseDto,
 	type ServerCommonErrorResponse,
