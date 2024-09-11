@@ -49,6 +49,9 @@ export {
 	type GroupGetAllItemResponseDto,
 	type GroupGetAllResponseDto,
 	GroupsApiPath,
+	type GroupUpdateRequestDto,
+	type GroupUpdateResponseDto,
+	groupUpdateValidationSchema,
 } from "./modules/groups/groups.js";
 export {
 	type PermissionGetAllItemResponseDto,
