@@ -41,7 +41,7 @@ const Project = (): JSX.Element => {
 
 	const isRejected = projectStatus === DataStatus.REJECTED;
 
-	const hasProject = project !== null;
+	const hasProject = Boolean(project) && project !== null;
 
 	if (isRejected) {
 		return <NotFound />;
