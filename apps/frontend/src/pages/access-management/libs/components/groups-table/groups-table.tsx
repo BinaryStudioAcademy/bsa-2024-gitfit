@@ -7,6 +7,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	groups: GroupGetAllItemResponseDto[];
+	onDelete: (id: number) => void;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
@@ -17,6 +18,7 @@ type Properties = {
 
 const GroupsTable = ({
 	groups,
+	onDelete,
 	onPageChange,
 	onPageSizeChange,
 	page,
@@ -24,7 +26,7 @@ const GroupsTable = ({
 	paginationBackground = "primary",
 	totalItemsCount,
 }: Properties): JSX.Element => {
-	const groupColumns = getGroupColumns();
+	const groupColumns = getGroupColumns(onDelete);
 	const groupData: GroupRow[] = getGroupRows(groups);
 
 	return (

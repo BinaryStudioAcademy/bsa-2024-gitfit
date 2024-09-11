@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import logoSrc from "~/assets/images/logo-default.svg";
+import logoSrc from "~/assets/images/logo.svg";
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -24,11 +24,12 @@ const Auth = (): JSX.Element => {
 	const authenticatedUser = useAppSelector(
 		(state) => state.auth.authenticatedUser,
 	);
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (authenticatedUser) {
-			navigate(AppRoute.ROOT);
+			navigate(AppRoute.PROJECTS);
 		}
 	}, [authenticatedUser, dispatch, navigate]);
 
@@ -64,7 +65,6 @@ const Auth = (): JSX.Element => {
 		<main className={styles["container"]}>
 			<section className={styles["auth-container"]}>
 				<div className={styles["left-side"]}>
-					{/* TODO: replace logo */}
 					<img alt="logo" className={styles["logo-wrapper"]} src={logoSrc} />
 				</div>
 				<div className={styles["right-side"]}>

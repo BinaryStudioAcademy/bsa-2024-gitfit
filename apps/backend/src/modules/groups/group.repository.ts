@@ -41,12 +41,19 @@ class GroupRepository implements Repository {
 		return GroupEntity.initialize(group);
 	}
 
-	public delete(): ReturnType<Repository["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const deletedRowsCount = await this.groupModel
+			.query()
+			.deleteById(id)
+			.execute();
+
+		return Boolean(deletedRowsCount);
 	}
 
-	public find(): ReturnType<Repository["find"]> {
-		return Promise.resolve(null);
+	public async find(id: number): Promise<GroupModel | null> {
+		const group = await this.groupModel.query().findById(id).execute();
+
+		return group ?? null;
 	}
 
 	public async findAll({
@@ -55,6 +62,7 @@ class GroupRepository implements Repository {
 	}: PaginationQueryParameters): Promise<PaginationResponseDto<GroupEntity>> {
 		const { results, total } = await this.groupModel
 			.query()
+			.orderBy("createdAt", "desc")
 			.page(page, pageSize)
 			.withGraphFetched("[permissions, users]");
 

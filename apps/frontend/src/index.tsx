@@ -13,6 +13,7 @@ import { store } from "~/libs/modules/store/store.js";
 import { AccessManagement } from "~/pages/access-management/access-management.jsx";
 import { Analytics } from "~/pages/analytics/analytics.jsx";
 import { Auth } from "~/pages/auth/auth.jsx";
+import { Home } from "~/pages/home/home.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { Profile } from "~/pages/profile/profile.jsx";
 import { Project } from "~/pages/project/project.jsx";
@@ -27,11 +28,13 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 						children: [
 							{
 								element: (
-									<ProtectedRoute>
+									<ProtectedRoute
+										routePermissions={[PermissionKey.VIEW_ALL_PROJECTS]}
+									>
 										<Projects />
 									</ProtectedRoute>
 								),
-								path: AppRoute.ROOT,
+								path: AppRoute.PROJECTS,
 							},
 							{
 								element: (
@@ -58,6 +61,14 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 									</ProtectedRoute>
 								),
 								path: AppRoute.ANALYTICS,
+              },
+              {
+                element: (
+									<ProtectedRoute>
+										<Home />
+									</ProtectedRoute>
+								),
+								path: AppRoute.ROOT,
 							},
 							{
 								element: <Auth />,

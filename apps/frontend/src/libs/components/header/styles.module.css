@@ -8,24 +8,14 @@
 	border-bottom: 1px solid var(--color-border-primary);
 }
 
-.logo-container {
-	display: inline-flex;
-	gap: 8px;
-	align-items: center;
-	justify-content: center;
-}
-
 .logo-img {
-	width: 24px;
-	height: 24px;
-}
-
-.logo-text {
-	font-size: 16px;
-	font-weight: 500;
+	height: 40px;
 }
 
 .logo-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	color: var(--color-text-primary);
 	cursor: pointer;
 }

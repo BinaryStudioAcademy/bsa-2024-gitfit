@@ -43,7 +43,7 @@ const Project = (): JSX.Element => {
 				{hasProject && (
 					<Breadcrumbs
 						items={[
-							{ href: AppRoute.ROOT, label: "Projects" },
+							{ href: AppRoute.PROJECTS, label: "Projects" },
 							{ label: (project as ProjectGetAllItemResponseDto).name },
 						]}
 					/>
