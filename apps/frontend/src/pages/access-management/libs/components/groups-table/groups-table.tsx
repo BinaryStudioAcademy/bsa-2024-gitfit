@@ -32,10 +32,9 @@ const GroupsTable = ({
 	const handleEdit = useCallback(
 		(groupId: number): void => {
 			const group = groups.find(({ id }) => id === groupId);
-			const hasGroup = Boolean(group);
 
-			if (hasGroup) {
-				onEdit(group as GroupGetAllItemResponseDto);
+			if (group) {
+				onEdit(group);
 			}
 		},
 		[groups, onEdit],
