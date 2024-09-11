@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.21.0...frontend-v1.21.1) (2024-09-11)
+
+
+### Bug Fixes
+
+* fix inconsistent layout of the users table gf-267 ([#273](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/273)) ([b5527bb](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b5527bb62d308635970f963b81566df92c28cb42))
+
 ## [1.21.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.20.0...frontend-v1.21.0) (2024-09-11)
 
 
