@@ -59,7 +59,13 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 								path: AppRoute.SIGN_UP,
 							},
 							{
-								element: <Project />,
+								element: (
+									<ProtectedRoute
+										routePermissions={[PermissionKey.MANAGE_ALL_PROJECTS]}
+									>
+										<Project />
+									</ProtectedRoute>
+								),
 								path: AppRoute.PROJECT,
 							},
 						],

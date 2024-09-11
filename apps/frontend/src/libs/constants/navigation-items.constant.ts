@@ -6,6 +6,7 @@ const SIDEBAR_ITEMS: NavigationItem[] = [
 		href: AppRoute.ROOT,
 		icon: "project",
 		label: "Projects",
+		pagePermissions: [PermissionKey.MANAGE_ALL_PROJECTS],
 	},
 	{
 		href: AppRoute.ACCESS_MANAGEMENT,
