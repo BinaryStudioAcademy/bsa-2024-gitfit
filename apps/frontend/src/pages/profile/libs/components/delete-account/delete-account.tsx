@@ -27,11 +27,13 @@ const DeleteAccount = ({ userId }: Properties): JSX.Element => {
 		<div className={styles["profile-delete"]}>
 			<h2 className={styles["delete-title"]}>Delete account</h2>
 			<p className={styles["delete-text"]}>This action cannot be undone.</p>
-			<Button
-				label="Delete Your Account"
-				onClick={handleDeleteClick}
-				variant="danger"
-			/>
+			<div>
+				<Button
+					label="Delete Your Account"
+					onClick={handleDeleteClick}
+					variant="danger"
+				/>
+			</div>
 			<ConfirmationModal
 				content="This account will be deleted. This action cannot be undone. Click 'Confirm' to proceed."
 				isOpened={isOpened}
