@@ -39,8 +39,20 @@ const Projects = (): JSX.Element => {
 	const [selectedProject, setSelectedProject] =
 		useState<null | ProjectGetAllItemResponseDto>(null);
 
-	const { dataStatus, projectCreateStatus, projectPatchStatus, projects } =
-		useAppSelector(({ projects }) => projects);
+	const {
+		dataStatus,
+		project,
+		projectCreateStatus,
+		projectPatchStatus,
+		projects,
+		projectStatus,
+	} = useAppSelector(({ projects }) => projects);
+
+	useEffect(() => {
+		if (selectedProject !== null) {
+			void dispatch(projectActions.getById({ id: String(selectedProject.id) }));
+		}
+	}, [dispatch, selectedProject]);
 
 	useEffect(() => {
 		void dispatch(projectActions.loadAll(search));
@@ -168,10 +180,10 @@ const Projects = (): JSX.Element => {
 				onClose={handleEditModalClose}
 				title="Update project"
 			>
-				{selectedProject && (
+				{project && projectStatus === DataStatus.FULFILLED && (
 					<ProjectUpdateForm
 						onSubmit={handleProjectEditSubmit}
-						project={selectedProject}
+						project={project}
 					/>
 				)}
 			</Modal>
