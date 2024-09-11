@@ -28,12 +28,14 @@ const GroupsTable = ({
 	paginationBackground = "primary",
 	totalItemsCount,
 }: Properties): JSX.Element => {
+	const handleEdit = (groupId: number): void => {
+		const group = groups.find(({ id }) => id === groupId);
+		onEdit(group as GroupGetAllItemResponseDto);
+	};
+
 	const groupColumns = getGroupColumns({
 		onDelete,
-		onEdit: (groupId: number) => {
-			const group = groups.find(({ id }) => id === groupId);
-			onEdit(group as GroupGetAllItemResponseDto);
-		},
+		onEdit: handleEdit,
 	});
 	const groupData: GroupRow[] = getGroupRows(groups);
 

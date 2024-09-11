@@ -1,12 +1,13 @@
 import { Menu, MenuItem } from "~/libs/components/components.js";
 import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
-import { type GroupActions } from "../../types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
 	groupId: number;
-} & GroupActions;
+	onDelete: (groupId: number) => void;
+	onEdit: (groupId: number) => void;
+};
 
 const GroupMenu = ({ groupId, onDelete, onEdit }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();

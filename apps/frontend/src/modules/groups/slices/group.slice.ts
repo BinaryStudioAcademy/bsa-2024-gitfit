@@ -79,8 +79,8 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(update.fulfilled, (state, action) => {
 			const updatedGroup = action.payload;
-			state.groups = state.groups.map((project) =>
-				project.id === updatedGroup.id ? updatedGroup : project,
+			state.groups = state.groups.map((group) =>
+				group.id === updatedGroup.id ? updatedGroup : group,
 			);
 
 			state.groupUpdateStatus = DataStatus.FULFILLED;

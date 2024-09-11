@@ -6,7 +6,6 @@ import {
 	useState,
 } from "~/libs/hooks/hooks.js";
 
-import { FIRST_PAGE } from "./libs/constants/constants.js";
 import {
 	calculateTotalPages,
 	getInitialPage,
@@ -61,13 +60,16 @@ const usePagination: UsePagination = ({
 	const onPageChange = useCallback(
 		(newPage: number) => {
 			const totalPages = calculateTotalPages(pageSize, totalItemsCount);
+			const validPage = Math.min(newPage, totalPages);
 
-			if (page >= FIRST_PAGE && page <= totalPages) {
-				setPage(newPage);
-			}
+			setPage(validPage);
 		},
 		[page, pageSize, totalItemsCount],
 	);
+
+	useEffect(() => {
+		onPageChange(page);
+	}, [totalItemsCount]);
 
 	const onPageSizeChange = useCallback(
 		(newPageSize: number) => {
