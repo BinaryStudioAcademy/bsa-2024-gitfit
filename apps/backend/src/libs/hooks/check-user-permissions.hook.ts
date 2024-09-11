@@ -16,9 +16,11 @@ const checkUserPermissions = (routePermissions: string[]): APIPreHandler => {
 			});
 		}
 
-		const hasPermission = checkHasPermission(
-			routePermissions,
-			user.groups.flatMap((group) => group.permissions),
+		const hasPermission = routePermissions.some((requiredPermission) =>
+			checkHasPermission(
+				[requiredPermission],
+				user.groups.flatMap((group) => group.permissions),
+			),
 		);
 
 		if (!hasPermission) {
