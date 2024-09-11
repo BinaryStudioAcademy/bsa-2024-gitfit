@@ -141,7 +141,9 @@ const ProjectAccessManagement = (): JSX.Element => {
 			</div>
 			<h1 className={styles["title"]}>Access Management</h1>
 			<section>
-				<h2 className={styles["user-section-title"]}>Users</h2>
+				<div className={styles["section-header"]}>
+					<h2 className={styles["section-title"]}>Users</h2>
+				</div>
 				<UsersTable
 					onPageChange={onUserPageChange}
 					onPageSizeChange={onUserPageSizeChange}
@@ -152,9 +154,11 @@ const ProjectAccessManagement = (): JSX.Element => {
 				/>
 			</section>
 			<section>
-				<div className={styles["section-wrapper"]}>
-					<h2 className={styles["group-section-title"]}>Groups</h2>
-					<Button label="Create New" onClick={onCreateModalOpen} />
+				<div className={styles["section-header"]}>
+					<h2 className={styles["section-title"]}>Groups</h2>
+					<div>
+						<Button label="Create New" onClick={onCreateModalOpen} />
+					</div>
 				</div>
 				<GroupsTable
 					groups={projectGroups}

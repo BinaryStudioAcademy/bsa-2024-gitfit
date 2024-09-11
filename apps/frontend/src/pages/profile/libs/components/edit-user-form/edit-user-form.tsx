@@ -61,7 +61,7 @@ const EditUserForm = ({ user }: Properties): JSX.Element => {
 				/>
 			</div>
 
-			<div className={styles["button-wrapper"]}>
+			<div>
 				<Button isDisabled={!isDirty} label="Update Profile" type="submit" />
 			</div>
 		</form>

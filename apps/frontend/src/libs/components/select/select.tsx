@@ -51,8 +51,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		styles["label-text"],
 		isLabelHidden && "visually-hidden",
 	);
-	const option = [field.value]
-		.flat()
+	const option = (Array.isArray(field.value) ? field.value : [field.value])
 		.map((value) => options.find((option) => option.value === value))
 		.filter(Boolean);
 
@@ -62,10 +61,10 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				| MultiValue<SelectOption<TOptionValue> | undefined>
 				| SingleValue<SelectOption<TOptionValue> | undefined>,
 		) => {
-			const values = [option]
-				.flat()
-				.map((option) => option?.value)
-				.filter(Boolean);
+			const options = (Array.isArray(option) ? option : [option]) as MultiValue<
+				SelectOption<TOptionValue> | undefined
+			>;
+			const values = options.map((option) => option?.value).filter(Boolean);
 
 			onChange(isMulti ? values : values.pop());
 		},
