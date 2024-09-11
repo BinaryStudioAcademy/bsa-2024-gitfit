@@ -29,7 +29,7 @@ import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const navigate = useNavigate(); // Hook to handle navigation
+	const navigate = useNavigate();
 	const { id: projectId } = useParams<{ id: string }>();
 
 	const { project, projectPatchStatus, projectStatus } = useAppSelector(
@@ -48,37 +48,31 @@ const Project = (): JSX.Element => {
 		onOpen: handleEditModalOpen,
 	} = useModal();
 
+	// Fetch project by ID
 	useEffect(() => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
 		}
 	}, [dispatch, projectId]);
 
+	// Refetch project after successful patch
 	useEffect(() => {
 		if (projectPatchStatus === DataStatus.FULFILLED && projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
 		}
 	}, [dispatch, projectPatchStatus, projectId]);
 
-	const isLoading =
-		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
-	const isRejected = projectStatus === DataStatus.REJECTED;
-	const hasProject = project !== null;
-
-	useEffect(() => {
-		if (projectPatchStatus === DataStatus.FULFILLED) {
-			handleEditModalClose();
-		}
-	}, [projectPatchStatus, handleEditModalClose]);
-
+	// Handle project edit
 	const handleEditProject = useCallback(() => {
 		handleEditModalOpen();
 	}, [handleEditModalOpen]);
 
+	// Handle manage access redirection
 	const handleManageAccess = useCallback(() => {
 		navigate(AppRoute.ACCESS_MANAGEMENT);
 	}, [navigate]);
 
+	// Submit edited project
 	const handleProjectEditSubmit = useCallback(
 		(payload: ProjectPatchRequestDto) => {
 			if (project) {
@@ -88,13 +82,18 @@ const Project = (): JSX.Element => {
 		[dispatch, project],
 	);
 
+	// Handle loading and error states
+	const isLoading =
+		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
+	const isRejected = projectStatus === DataStatus.REJECTED;
+
 	if (isRejected) {
 		return <NotFound />;
 	}
 
 	return (
 		<PageLayout isLoading={isLoading}>
-			{hasProject && (
+			{project && (
 				<>
 					<div className={styles["breadcrumb-container"]}>
 						<Breadcrumbs
@@ -106,12 +105,14 @@ const Project = (): JSX.Element => {
 					</div>
 
 					<div className={styles["project-layout"]}>
-						<h1 className={styles["title"]}>{project.name}</h1>
+						<div className={styles["header-container"]}>
+							<h1 className={styles["title"]}>{project.name}</h1>
 
-						<ProjectMenu
-							onEdit={handleEditProject}
-							onManageAccess={handleManageAccess}
-						/>
+							<ProjectMenu
+								onEdit={handleEditProject}
+								onManageAccess={handleManageAccess}
+							/>
+						</div>
 
 						<div className={styles["project-description-layout"]}>
 							<h3 className={styles["project-description-title"]}>
@@ -128,6 +129,7 @@ const Project = (): JSX.Element => {
 						/>
 					</div>
 
+					{/* Edit Project Modal */}
 					<Modal
 						isOpened={isEditModalOpen}
 						onClose={handleEditModalClose}
@@ -139,6 +141,7 @@ const Project = (): JSX.Element => {
 						/>
 					</Modal>
 
+					{/* Setup Analytics Modal */}
 					<SetupAnalyticsModal
 						isOpened={isSetupAnalyticsModalOpened}
 						onClose={onSetupAnalyticsModalClose}
