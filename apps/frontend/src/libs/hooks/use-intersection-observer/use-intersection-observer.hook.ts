@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from "~/libs/hooks/hooks.js";
 
 const FIRST_ITEM = 0;
 
