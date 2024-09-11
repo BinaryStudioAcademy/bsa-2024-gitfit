@@ -8,8 +8,13 @@ type Properties = {
 	groupId: number;
 } & GroupActions;
 
-const GroupMenu = ({ groupId, onEdit }: Properties): JSX.Element => {
+const GroupMenu = ({ groupId, onDelete, onEdit }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
+
+	const handleDeleteClick = useCallback(() => {
+		onDelete(groupId);
+		onClose();
+	}, [groupId, onDelete, onClose]);
 
 	const handleEdit = useCallback(() => {
 		onEdit(groupId);
@@ -17,9 +22,20 @@ const GroupMenu = ({ groupId, onEdit }: Properties): JSX.Element => {
 	}, [groupId, onEdit, onClose]);
 
 	return (
-		<div className={styles["options-cell"]}>
-			<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+		<div className={styles["menu-container"]}>
+			<Menu
+				hasFixedPositioning
+				isOpened={isOpened}
+				onClose={onClose}
+				onOpen={onOpen}
+			>
 				<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
+				<MenuItem
+					iconName="trashBin"
+					label="Delete"
+					onClick={handleDeleteClick}
+					variant="danger"
+				/>
 			</Menu>
 		</div>
 	);

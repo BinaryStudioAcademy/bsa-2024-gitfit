@@ -6,7 +6,6 @@ import {
 	type PaginationQueryParameters,
 } from "~/libs/types/types.js";
 import { type UserGetAllResponseDto } from "~/modules/users/users.js";
-import { actions as userActions } from "~/modules/users/users.js";
 
 import {
 	type GroupCreateRequestDto,
@@ -27,6 +26,21 @@ const loadAll = createAsyncThunk<
 	return await groupApi.getAll(query);
 });
 
+const deleteById = createAsyncThunk<boolean, { id: number }, AsyncThunkConfig>(
+	`${sliceName}/delete-by-id`,
+	async ({ id }, { extra }) => {
+		const { groupApi, toastNotifier } = extra;
+
+		const isDeleted = await groupApi.deleteById(id);
+
+		if (isDeleted) {
+			toastNotifier.showSuccess(NotificationMessage.GROUP_DELETE_SUCCESS);
+		}
+
+		return isDeleted;
+	},
+);
+
 const loadUsers = createAsyncThunk<
 	UserGetAllResponseDto,
 	PaginationQueryParameters,
@@ -39,16 +53,14 @@ const loadUsers = createAsyncThunk<
 
 const create = createAsyncThunk<
 	GroupCreateResponseDto,
-	{ payload: GroupCreateRequestDto; query: PaginationQueryParameters },
+	GroupCreateRequestDto,
 	AsyncThunkConfig
->(`${sliceName}/create`, async ({ payload, query }, { dispatch, extra }) => {
+>(`${sliceName}/create`, async (payload, { extra }) => {
 	const { groupApi, toastNotifier } = extra;
 
 	const response = await groupApi.create(payload);
 
 	toastNotifier.showSuccess(NotificationMessage.GROUP_CREATE_SUCCESS);
-
-	void dispatch(userActions.loadAll(query));
 
 	return response;
 });
@@ -67,4 +79,4 @@ const update = createAsyncThunk<
 	return response;
 });
 
-export { create, loadAll, loadUsers, update };
+export { create, deleteById, loadAll, loadUsers, update };

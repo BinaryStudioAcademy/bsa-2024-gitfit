@@ -19,15 +19,16 @@ const getGroupColumns = (actions: GroupActions): TableColumn<GroupRow>[] => [
 		header: "Created At",
 	},
 	{
-		cell: ({ row }): React.ReactNode => (
+		cell: ({ row: { original: group } }): React.ReactNode => (
 			<GroupMenu
-				groupId={row.original.id}
+				groupId={group.id}
 				onDelete={actions.onDelete}
 				onEdit={actions.onEdit}
 			/>
 		),
 		header: "",
 		id: "menu",
+		size: 0,
 	},
 ];
 

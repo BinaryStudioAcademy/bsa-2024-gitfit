@@ -7,6 +7,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	groups: GroupGetAllItemResponseDto[];
+	onDelete: (id: number) => void;
 	onEdit: (group: GroupGetAllItemResponseDto) => void;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
@@ -18,6 +19,7 @@ type Properties = {
 
 const GroupsTable = ({
 	groups,
+	onDelete,
 	onEdit,
 	onPageChange,
 	onPageSizeChange,
@@ -27,7 +29,7 @@ const GroupsTable = ({
 	totalItemsCount,
 }: Properties): JSX.Element => {
 	const groupColumns = getGroupColumns({
-		onDelete: () => {},
+		onDelete,
 		onEdit: (groupId: number) => {
 			const group = groups.find(({ id }) => id === groupId);
 			onEdit(group as GroupGetAllItemResponseDto);

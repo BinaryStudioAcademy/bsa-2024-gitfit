@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { ITEMS_CHANGED_COUNT } from "~/libs/components/table-pagination/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
 import { type GroupGetAllItemResponseDto } from "../libs/types/types.js";
-import { create, loadAll, loadUsers, update } from "./actions.js";
+import { create, deleteById, loadAll, loadUsers, update } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
 	groupCreateStatus: ValueOf<typeof DataStatus>;
+	groupDeleteStatus: ValueOf<typeof DataStatus>;
 	groups: GroupGetAllItemResponseDto[];
 	groupsTotalCount: number;
 	groupUpdateStatus: ValueOf<typeof DataStatus>;
@@ -21,6 +23,7 @@ type State = {
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	groupCreateStatus: DataStatus.IDLE,
+	groupDeleteStatus: DataStatus.IDLE,
 	groups: [],
 	groupsTotalCount: 0,
 	groupUpdateStatus: DataStatus.IDLE,
@@ -58,6 +61,19 @@ const { actions, name, reducer } = createSlice({
 			state.dataStatus = DataStatus.REJECTED;
 		});
 
+		builder.addCase(deleteById.pending, (state) => {
+			state.groupDeleteStatus = DataStatus.PENDING;
+		});
+		builder.addCase(deleteById.fulfilled, (state, action) => {
+			const { id } = action.meta.arg;
+			state.groups = state.groups.filter((group) => group.id !== id);
+			state.groupsTotalCount -= ITEMS_CHANGED_COUNT;
+			state.groupDeleteStatus = DataStatus.FULFILLED;
+		});
+		builder.addCase(deleteById.rejected, (state) => {
+			state.groupDeleteStatus = DataStatus.REJECTED;
+		});
+
 		builder.addCase(update.pending, (state) => {
 			state.groupUpdateStatus = DataStatus.PENDING;
 		});
@@ -78,6 +94,7 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(create.fulfilled, (state, action) => {
 			state.groups = [action.payload, ...state.groups];
+			state.groupsTotalCount += ITEMS_CHANGED_COUNT;
 			state.groupCreateStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(create.rejected, (state) => {

@@ -1,4 +1,9 @@
-import { Button, Modal, PageLayout } from "~/libs/components/components.js";
+import {
+	Button,
+	ConfirmationModal,
+	Modal,
+	PageLayout,
+} from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -37,6 +42,7 @@ const AccessManagement = (): JSX.Element => {
 	const {
 		dataStatus: groupsDataStatus,
 		groupCreateStatus,
+		groupDeleteStatus,
 		groups,
 		groupsTotalCount,
 		groupUpdateStatus,
@@ -74,37 +80,37 @@ const AccessManagement = (): JSX.Element => {
 		onOpen: onUpdateModalOpen,
 	} = useModal();
 
-	const handleUsersChange = useCallback(() => {
+	const {
+		isOpened: isDeleteModalOpen,
+		onClose: onDeleteModalClose,
+		onOpen: onDeleteModalOpen,
+	} = useModal();
+
+	const fetchUsers = useCallback(() => {
 		void dispatch(
 			userActions.loadAll({ page: userPage, pageSize: userPageSize }),
 		);
 	}, [dispatch, userPage, userPageSize]);
 
-	const handleGroupsChange = useCallback(() => {
+	const fetchGroups = useCallback(() => {
 		void dispatch(
 			groupActions.loadAll({ page: groupPage, pageSize: groupPageSize }),
 		);
 	}, [dispatch, groupPage, groupPageSize]);
 
 	useEffect(() => {
-		handleUsersChange();
-	}, [handleUsersChange]);
+		fetchUsers();
+	}, [fetchUsers]);
 
 	useEffect(() => {
-		handleGroupsChange();
-	}, [handleGroupsChange]);
+		fetchGroups();
+	}, [fetchGroups]);
 
 	const handleGroupCreateSubmit = useCallback(
 		(payload: GroupCreateRequestDto): void => {
-			void dispatch(
-				groupActions.create({
-					payload,
-					query: { page: userPage, pageSize: userPageSize },
-				}),
-			);
-			onCreateModalClose();
+			void dispatch(groupActions.create(payload));
 		},
-		[dispatch, onCreateModalClose, userPage, userPageSize],
+		[dispatch],
 	);
 
 	const [groupToEdit, setGroupToEdit] =
@@ -126,20 +132,65 @@ const AccessManagement = (): JSX.Element => {
 		[onUpdateModalOpen],
 	);
 
+	const [selectedGroupId, setSelectedGroupId] = useState<null | number>(null);
+	const hasSelectedGroup = Boolean(selectedGroupId);
+
+	const handleGroupDelete = useCallback((): void => {
+		if (hasSelectedGroup) {
+			void dispatch(groupActions.deleteById({ id: selectedGroupId as number }));
+		}
+	}, [hasSelectedGroup, dispatch, selectedGroupId]);
+
+	const onDelete = useCallback(
+		(id: number): void => {
+			setSelectedGroupId(id);
+			onDeleteModalOpen();
+		},
+		[onDeleteModalOpen],
+	);
+
+	const setValidPage = useCallback(() => {
+		const maxGroupPages = Math.ceil(groupsTotalCount / groupPageSize);
+		const maxUserPages = Math.ceil(usersTotalCount / userPageSize);
+		const validGroupPage = Math.min(groupPage, maxGroupPages);
+		const validUserPage = Math.min(userPage, maxUserPages);
+		onGroupPageChange(validGroupPage);
+		onUserPageChange(validUserPage);
+	}, [
+		groupPage,
+		groupsTotalCount,
+		groupPageSize,
+		onGroupPageChange,
+		userPage,
+		usersTotalCount,
+		userPageSize,
+		onUserPageChange,
+	]);
+
 	useEffect(() => {
 		if (groupCreateStatus === DataStatus.FULFILLED) {
-			handleUsersChange();
+			setValidPage();
+			fetchUsers();
 			onCreateModalClose();
 		}
-	}, [groupCreateStatus, handleUsersChange, onCreateModalClose]);
+	}, [groupCreateStatus, onCreateModalClose, setValidPage, fetchUsers]);
 
 	useEffect(() => {
 		if (groupUpdateStatus === DataStatus.FULFILLED) {
-			handleUsersChange();
+			fetchUsers();
 			onUpdateModalClose();
 			setGroupToEdit(null);
 		}
-	}, [groupUpdateStatus, handleUsersChange, onUpdateModalClose]);
+	}, [groupUpdateStatus, onUpdateModalClose, fetchUsers]);
+
+	useEffect(() => {
+		if (groupDeleteStatus === DataStatus.FULFILLED) {
+			setValidPage();
+			fetchUsers();
+			onDeleteModalClose();
+			setSelectedGroupId(null);
+		}
+	}, [groupDeleteStatus, onDeleteModalClose, setValidPage, fetchUsers]);
 
 	const isLoading = [usersDataStatus, groupsDataStatus].some(
 		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
@@ -171,6 +222,7 @@ const AccessManagement = (): JSX.Element => {
 
 				<GroupsTable
 					groups={groups}
+					onDelete={onDelete}
 					onEdit={onEdit}
 					onPageChange={onGroupPageChange}
 					onPageSizeChange={onGroupPageSizeChange}
@@ -199,6 +251,15 @@ const AccessManagement = (): JSX.Element => {
 						onSubmit={handleGroupUpdateSubmit}
 					/>
 				</Modal>
+			)}
+
+			{hasSelectedGroup && (
+				<ConfirmationModal
+					content="The group will be deleted. This action cannot be undone. Do you want to continue?"
+					isOpened={isDeleteModalOpen}
+					onClose={onDeleteModalClose}
+					onConfirm={handleGroupDelete}
+				/>
 			)}
 		</PageLayout>
 	);
