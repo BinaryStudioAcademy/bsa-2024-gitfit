@@ -2,7 +2,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
-	width: 100%;
+	align-items: flex-start;
 }
 
 .inputs-wrapper {
@@ -10,10 +10,9 @@
 	flex-direction: column;
 	gap: 16px;
 	width: 100%;
-	max-width: 500px;
+	min-width: 500px;
 }
 
 .button-wrapper {
-	display: flex;
-	justify-content: flex-start;
+	min-width: 140px;
 }

@@ -24,3 +24,7 @@
 	flex-direction: column;
 	gap: 20px;
 }
+
+.button-wrapper {
+	min-width: 120px;
+}
