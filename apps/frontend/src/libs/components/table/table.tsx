@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-table";
 
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { SelectRowCell } from "./libs/components/components.js";
@@ -49,7 +50,14 @@ const Table = <T extends object>({
 				<thead className={styles["table-head"]}>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<tr className={styles["table-row"]} key={headerGroup.id}>
-							{isRowSelectable && <th className={styles["table-header"]} />}
+							{isRowSelectable && (
+								<th
+									className={getValidClassNames(
+										styles["table-header"],
+										styles["cell-min-content"],
+									)}
+								/>
+							)}
 							{headerGroup.headers.map((header) => (
 								<th
 									className={styles["table-header"]}
@@ -72,7 +80,12 @@ const Table = <T extends object>({
 						table.getRowModel().rows.map((row) => (
 							<tr className={styles["table-row"]} key={row.id}>
 								{isRowSelectable && (
-									<td className={styles["table-data"]}>
+									<td
+										className={getValidClassNames(
+											styles["table-data"],
+											styles["cell-min-content"],
+										)}
+									>
 										<SelectRowCell
 											id={getRowId(row.original)}
 											isChecked={selectedRowIds.includes(
