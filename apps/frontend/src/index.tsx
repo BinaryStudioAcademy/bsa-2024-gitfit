@@ -70,11 +70,7 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 								path: AppRoute.SIGN_UP,
 							},
 							{
-								element: (
-									<ProtectedRoute>
-										<Project />
-									</ProtectedRoute>
-								),
+								element: <Project />,
 								path: AppRoute.PROJECT,
 							},
 						],

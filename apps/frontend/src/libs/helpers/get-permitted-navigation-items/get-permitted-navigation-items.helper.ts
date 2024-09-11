@@ -10,7 +10,9 @@ const getPermittedNavigationItems = (
 	userPermissions: PermissionGetAllItemResponseDto[],
 ): NavigationItem[] => {
 	return items.filter(({ pagePermissions = [] }) =>
-		checkHasPermission(pagePermissions, userPermissions),
+		pagePermissions.some((requiredPermission) =>
+			checkHasPermission([requiredPermission], userPermissions),
+		),
 	);
 };
 

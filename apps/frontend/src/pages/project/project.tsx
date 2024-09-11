@@ -92,7 +92,7 @@ const Project = (): JSX.Element => {
 					<div className={styles["breadcrumb-container"]}>
 						<Breadcrumbs
 							items={[
-								{ href: AppRoute.ROOT, label: "Projects" },
+								{ href: AppRoute.PROJECTS, label: "Projects" },
 								{ label: project.name },
 							]}
 						/>
