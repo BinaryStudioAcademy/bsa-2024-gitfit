@@ -1,40 +1,48 @@
-import { ExceptionMessage } from "~/libs/enums/enums.js";
-import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 import { type ContributorService } from "~/modules/contributors/contributors.js";
 import { type GitEmailService } from "~/modules/git-emails/git-emails.js";
+import { type ProjectApiKeyService } from "~/modules/project-api-keys/project-api-keys.js";
 
 import { ActivityLogEntity } from "./activity-log.entity.js";
 import { type ActivityLogRepository } from "./activity-log.repository.js";
-import { ActivityLogError } from "./libs/exceptions/exceptions.js";
 import {
 	type ActivityLogCreateRequestDto,
 	type ActivityLogGetAllResponseDto,
 } from "./libs/types/types.js";
 
+type Constructor = {
+	activityLogRepository: ActivityLogRepository;
+	contributorService: ContributorService;
+	gitEmailService: GitEmailService;
+	projectApiKeyService: ProjectApiKeyService;
+};
+
 class ActivityLogService implements Service {
 	private activityLogRepository: ActivityLogRepository;
 	private contributorService: ContributorService;
 	private gitEmailService: GitEmailService;
+	private projectApiKeyService: ProjectApiKeyService;
 
-	public constructor(
-		activityLogRepository: ActivityLogRepository,
-		contributorService: ContributorService,
-		gitEmailService: GitEmailService,
-	) {
+	public constructor({
+		activityLogRepository,
+		contributorService,
+		gitEmailService,
+		projectApiKeyService,
+	}: Constructor) {
 		this.activityLogRepository = activityLogRepository;
 		this.contributorService = contributorService;
 		this.gitEmailService = gitEmailService;
+		this.projectApiKeyService = projectApiKeyService;
 	}
 
 	public async create(
 		payload: ActivityLogCreateRequestDto,
 	): Promise<ActivityLogGetAllResponseDto> {
-		// TODO: extract projectId and createdByUserId from token
-		//		 and check if there are any in the database
-		//       if there is no verification in decode method
-		const project = { id: 1 };
-		const createdByUser = { id: 1 };
+		// TODO: retrieve token from auth headers
+		const existingProjectApiKey =
+			await this.projectApiKeyService.findByApiKey("placeholder");
+
+		const { projectId, updatedByUserId } = existingProjectApiKey;
 
 		const createdActivityLogs: ActivityLogGetAllResponseDto = {
 			items: [],
@@ -63,25 +71,18 @@ class ActivityLogService implements Service {
 					});
 				}
 
-				try {
-					const activityLog = await this.activityLogRepository.create(
-						ActivityLogEntity.initializeNew({
-							commitsNumber,
-							contributor: { id: contributor.id, name: contributor.name },
-							createdByUser,
-							date,
-							gitEmail: { id: gitEmail.id },
-							project,
-						}),
-					);
+				const activityLog = await this.activityLogRepository.create(
+					ActivityLogEntity.initializeNew({
+						commitsNumber,
+						contributor: { id: contributor.id, name: contributor.name },
+						createdByUser: { id: updatedByUserId },
+						date,
+						gitEmail: { id: gitEmail.id },
+						project: { id: projectId },
+					}),
+				);
 
-					createdActivityLogs.items.push(activityLog.toObject());
-				} catch {
-					throw new ActivityLogError({
-						message: ExceptionMessage.CREATE_ACTIVITY_LOG_FAILED,
-						status: HTTPCode.INTERNAL_SERVER_ERROR,
-					});
-				}
+				createdActivityLogs.items.push(activityLog.toObject());
 			}
 		}
 

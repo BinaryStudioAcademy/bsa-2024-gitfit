@@ -1,6 +1,7 @@
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
+import { type ContributorRepository } from "~/modules/contributors/contributors.js";
 
 import { GitEmailEntity } from "./git-email.entity.js";
 import { type GitEmailRepository } from "./git-email.repository.js";
@@ -11,9 +12,14 @@ import {
 } from "./libs/types/types.js";
 
 class GitEmailService implements Service {
+	private contributorRepository: ContributorRepository;
 	private gitEmailRepository: GitEmailRepository;
 
-	public constructor(gitEmailRepository: GitEmailRepository) {
+	public constructor(
+		contributorRepository: ContributorRepository,
+		gitEmailRepository: GitEmailRepository,
+	) {
+		this.contributorRepository = contributorRepository;
 		this.gitEmailRepository = gitEmailRepository;
 	}
 
@@ -28,6 +34,16 @@ class GitEmailService implements Service {
 			throw new GitEmailError({
 				message: ExceptionMessage.GIT_EMAIL_USED,
 				status: HTTPCode.CONFLICT,
+			});
+		}
+
+		const existingContributor =
+			await this.contributorRepository.find(contributorId);
+
+		if (!existingContributor) {
+			throw new GitEmailError({
+				message: ExceptionMessage.CONTRIBUTOR_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
 			});
 		}
 
