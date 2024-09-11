@@ -20,15 +20,15 @@ class BaseToken implements Token {
 	}
 
 	public async createToken(payload: JWTPayload): Promise<string> {
-		const jwt = new SignJWT(payload)
+		const token = new SignJWT(payload)
 			.setProtectedHeader({ alg: this.algorithm })
 			.setIssuedAt();
 
 		if (this.expirationTime) {
-			jwt.setExpirationTime(this.expirationTime);
+			token.setExpirationTime(this.expirationTime);
 		}
 
-		return await jwt.sign(this.secret);
+		return await token.sign(this.secret);
 	}
 
 	public async verifyToken(token: string): Promise<JWTPayload> {
