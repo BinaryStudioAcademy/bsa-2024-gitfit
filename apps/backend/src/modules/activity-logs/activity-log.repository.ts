@@ -1,12 +1,9 @@
-import { ExceptionMessage } from "~/libs/enums/enums.js";
-import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Repository } from "~/libs/types/types.js";
+import { type ContributorModel } from "~/modules/contributors/contributors.js";
+import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 
 import { ActivityLogEntity } from "./activity-log.entity.js";
 import { type ActivityLogModel } from "./activity-log.model.js";
-import { type ContributorModel } from "./contributor.model.js";
-import { type GitEmailModel } from "./git-email.model.js";
-import { ActivityLogError } from "./libs/exceptions/exceptions.js";
 
 class ActivityLogRepository implements Repository {
 	private activityLogModel: typeof ActivityLogModel;
@@ -25,33 +22,26 @@ class ActivityLogRepository implements Repository {
 			project,
 		} = entity.toNewObject();
 
-		try {
-			const activityLogData = {
-				commitsNumber,
-				createdByUser,
-				date,
-				gitEmail,
-				project,
-			};
+		const activityLogData = {
+			commitsNumber,
+			createdByUser,
+			date,
+			gitEmail,
+			project,
+		};
 
-			const createdActivityLog = await this.activityLogModel
-				.query()
-				.insertGraph(activityLogData, { relate: true })
-				.returning("*")
-				.withGraphFetched("[gitEmail, project, createdByUser]");
+		const createdActivityLog = await this.activityLogModel
+			.query()
+			.insertGraph(activityLogData, { relate: true })
+			.returning("*")
+			.withGraphFetched("[gitEmail, project, createdByUser]");
 
-			const activityLogWithContributorData = {
-				...createdActivityLog,
-				contributor,
-			};
+		const activityLogWithContributorData = {
+			...createdActivityLog,
+			contributor,
+		};
 
-			return ActivityLogEntity.initialize(activityLogWithContributorData);
-		} catch {
-			throw new ActivityLogError({
-				message: ExceptionMessage.CREATE_ACTIVITY_LOG_FAILED,
-				status: HTTPCode.INTERNAL_SERVER_ERROR,
-			});
-		}
+		return ActivityLogEntity.initialize(activityLogWithContributorData);
 	}
 
 	public delete(): ReturnType<Repository["delete"]> {

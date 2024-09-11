@@ -1,6 +1,11 @@
 import { Icon, Input } from "~/libs/components/components.js";
 import { initDebounce } from "~/libs/helpers/helpers.js";
-import { useAppForm, useEffect, useFormWatch } from "~/libs/hooks/hooks.js";
+import {
+	useAppForm,
+	useEffect,
+	useFormWatch,
+	useSearch,
+} from "~/libs/hooks/hooks.js";
 
 import { SEARCH_TIMEOUT } from "./libs/constants/constants.js";
 
@@ -15,8 +20,10 @@ const Search = ({
 	label,
 	onChange,
 }: Properties): JSX.Element => {
+	const { onSearch, search } = useSearch();
+
 	const { control, errors } = useAppForm({
-		defaultValues: { search: "" },
+		defaultValues: { search },
 		mode: "onChange",
 	});
 
@@ -25,13 +32,15 @@ const Search = ({
 	useEffect(() => {
 		const debouncedOnChange = initDebounce(() => {
 			onChange(value);
+			onSearch(value);
 		}, SEARCH_TIMEOUT);
+
 		debouncedOnChange(value);
 
 		return (): void => {
 			debouncedOnChange.clear();
 		};
-	}, [onChange, value]);
+	}, [onChange, value, onSearch]);
 
 	return (
 		<Input

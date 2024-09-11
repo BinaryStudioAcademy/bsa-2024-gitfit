@@ -1,4 +1,5 @@
-import { APIPath } from "~/libs/enums/enums.js";
+import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import { checkUserPermissions } from "~/libs/hooks/hooks.js";
 import {
 	type APIHandlerOptions,
 	type APIHandlerResponse,
@@ -57,9 +58,19 @@ class GroupController extends BaseController {
 				),
 			method: "POST",
 			path: GroupsApiPath.ROOT,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
 			validation: {
 				body: groupCreateValidationSchema,
 			},
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.deleteGroup(
+					options as APIHandlerOptions<{ params: { id: string } }>,
+				),
+			method: "DELETE",
+			path: GroupsApiPath.$ID,
 		});
 
 		this.addRoute({
@@ -125,6 +136,37 @@ class GroupController extends BaseController {
 		return {
 			payload: await this.groupService.create(options.body),
 			status: HTTPCode.CREATED,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /groups/{id}:
+	 *   delete:
+	 *     description: Delete a group by ID
+	 *     parameters:
+	 *       - in: path
+	 *         name: id
+	 *         required: true
+	 *         schema:
+	 *           type: number
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: boolean
+	 *       404:
+	 *         description: Group not found
+	 */
+
+	private async deleteGroup(
+		options: APIHandlerOptions<{ params: { id: string } }>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.groupService.delete(Number(options.params.id)),
+			status: HTTPCode.OK,
 		};
 	}
 

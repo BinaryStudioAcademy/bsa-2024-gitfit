@@ -19,7 +19,9 @@
 	gap: 10px;
 	min-width: 800px;
 	min-height: 190px;
+	max-height: 90%;
 	padding: 24px;
+	overflow-y: auto;
 	background: var(--color-background-secondary);
 	border: 1px solid var(--color-border-secondary);
 	border-radius: 8px;
@@ -55,8 +57,8 @@
 
 .modal-close {
 	position: absolute;
-	top: 20px;
-	right: 20px;
+	top: 16px;
+	right: 16px;
 	z-index: 1;
 	display: flex;
 	align-items: center;

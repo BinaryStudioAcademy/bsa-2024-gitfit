@@ -1,5 +1,68 @@
 # Changelog
 
+## [1.19.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.18.0...frontend-v1.19.0) (2024-09-10)
+
+
+### Features
+
+* Update logo in the app gf-242 ([#258](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/258)) ([1b19756](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1b19756be162000933cb8610146b087e70b30e48))
+
+
+### Bug Fixes
+
+* missing error message for invalid email format on Sign Up page gf-252 ([#255](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/255)) ([1851536](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/18515363f8434e4122c42cc1b2ed17374a9625d1))
+
+## [1.18.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.17.0...frontend-v1.18.0) (2024-09-10)
+
+
+### Features
+
+* remove ui page gf-243 ([#245](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/245)) ([f19c7ee](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f19c7ee2b416b0a1318c56fe2b6d12cae843181e))
+
+## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.16.0...frontend-v1.17.0) (2024-09-10)
+
+
+### Features
+
+* save search value to query parameters gf-200 ([#218](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/218)) ([8d5cb71](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8d5cb7135a078181a191f653091cf0217cd61023))
+
+## [1.16.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.15.0...frontend-v1.16.0) (2024-09-10)
+
+
+### Features
+
+* add an ablity to create a group gf-79 ([#176](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/176)) ([ad36683](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ad366835d2fce03680d0d1208fde6ba3a56f5e57))
+* refactor existing sub components gf-233 ([#240](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/240)) ([117a666](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/117a666fbbf8d9c63d1b26df3dfa3b71ca8ee6e9))
+
+## [1.15.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.14.0...frontend-v1.15.0) (2024-09-09)
+
+
+### Features
+
+* add a character counter for the project description gf-188 ([#222](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/222)) ([7c635d5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7c635d51e409cc1e85a89bbd62f1bf8ec4bd2bcd))
+* improve avatar visibility gf-202 ([#228](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/228)) ([d4b7203](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d4b720348e0973e8e36a997509e12b20b7bbdc3c))
+
+## [1.14.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.13.0...frontend-v1.14.0) (2024-09-09)
+
+
+### Features
+
+* change confirmation modal window on deleting user account gf-216 ([#219](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/219)) ([dd9fd7f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/dd9fd7fdad0801bc325c94babc226c6e04b74fd8))
+* improve toast notification position and design gf-201 ([#225](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/225)) ([f6de004](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f6de004f7a22b69f63c69bd84c224fb20fb4706e))
+
+
+### Bug Fixes
+
+* select hover styles and cursor, add searchable select gf-204 ([#226](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/226)) ([be81fba](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/be81fba5ee1c53111f860fafa5da740289f5fe08))
+
+## [1.13.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.12.0...frontend-v1.13.0) (2024-09-09)
+
+
+### Features
+
+* add display message for empty tables gf-206 ([#220](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/220)) ([f21abb7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f21abb76258dc28dd5ed6dd3c669bd552472177a))
+* restrict users manage groups gf-84 ([#175](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/175)) ([064e3dc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/064e3dce0ecb217f380c313f4844c1b8b336b52a))
+
 ## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.11.1...frontend-v1.12.0) (2024-09-06)
 
 

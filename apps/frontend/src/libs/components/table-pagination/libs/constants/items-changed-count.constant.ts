@@ -1,0 +1,3 @@
+const ITEMS_CHANGED_COUNT = 1;
+
+export { ITEMS_CHANGED_COUNT };

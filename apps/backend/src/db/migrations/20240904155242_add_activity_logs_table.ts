@@ -20,7 +20,7 @@ const USERS_TABLE = "users";
 function up(knex: Knex): Promise<void> {
 	return knex.schema.createTable(TABLE_NAME, (table) => {
 		table.increments(ColumnName.ID).primary();
-		table.integer(ColumnName.COMMITS_NUMBER).notNullable();
+		table.integer(ColumnName.COMMITS_NUMBER).unsigned().notNullable();
 		table.dateTime(ColumnName.DATE).notNullable();
 		table
 			.integer(ColumnName.CREATED_BY_USER_ID)

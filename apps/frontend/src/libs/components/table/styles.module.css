@@ -54,3 +54,12 @@
 .table .table-row:last-child .table-data {
 	border-bottom: none;
 }
+
+.empty-placeholder {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 150%;
+	color: var(--color-text-secondary);
+	text-align: center;
+}
