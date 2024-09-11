@@ -96,6 +96,7 @@
 	font-weight: 500;
 	line-height: 1.5;
 	color: var(--color-text-primary);
+	cursor: "pointer";
 	border-bottom: var(--color-border-primary) 1px solid;
 	border-radius: 4px;
 }
@@ -108,16 +109,13 @@
 	border-color: var(--color-border-secondary);
 }
 
+.control:hover,
 .control-focused {
 	border-color: var(--color-brand-primary);
 }
 
 .option-focused {
-	background-color: color-mix(
-		in srgb,
-		var(--color-brand-primary-hover),
-		black 40%
-	);
+	background-color: var(--color-background-hover);
 }
 
 .option-selected {
@@ -134,5 +132,4 @@
 
 .input {
 	color: var(--color-text-primary);
-	caret-color: transparent;
 }

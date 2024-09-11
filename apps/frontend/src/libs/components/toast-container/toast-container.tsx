@@ -14,9 +14,10 @@ const ToastContainer = (): JSX.Element => {
 			newestOnTop={false}
 			pauseOnFocusLoss
 			pauseOnHover
-			position="top-center"
+			position="top-right"
 			rtl={false}
 			theme="dark"
+			toastClassName={styles["notification"] as string}
 		/>
 	);
 };

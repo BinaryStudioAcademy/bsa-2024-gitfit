@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.13.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.12.0...shared-v1.13.0) (2024-09-10)
+
+
+### Features
+
+* add hyphen to name pattern gf-236 ([#251](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/251)) ([63bacee](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/63bacee091c16682bbe0f699afda429225a4a26e))
+
+## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.11.0...shared-v1.12.0) (2024-09-10)
+
+
+### Features
+
+* add an ablity to create a group gf-79 ([#176](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/176)) ([ad36683](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ad366835d2fce03680d0d1208fde6ba3a56f5e57))
+
+## [1.11.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.10.0...shared-v1.11.0) (2024-09-09)
+
+
+### Features
+
+* add a character counter for the project description gf-188 ([#222](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/222)) ([7c635d5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7c635d51e409cc1e85a89bbd62f1bf8ec4bd2bcd))
+
+## [1.10.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.9.1...shared-v1.10.0) (2024-09-09)
+
+
+### Features
+
+* restrict users manage groups gf-84 ([#175](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/175)) ([064e3dc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/064e3dce0ecb217f380c313f4844c1b8b336b52a))
+
 ## [1.9.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.9.0...shared-v1.9.1) (2024-09-06)
 
 
