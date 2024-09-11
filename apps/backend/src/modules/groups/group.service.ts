@@ -13,6 +13,8 @@ import {
 	type GroupCreateRequestDto,
 	type GroupCreateResponseDto,
 	type GroupGetAllResponseDto,
+	type GroupUpdateRequestDto,
+	type GroupUpdateResponseDto,
 } from "./libs/types/types.js";
 
 class GroupService implements Service {
@@ -81,8 +83,43 @@ class GroupService implements Service {
 		};
 	}
 
-	public update(): ReturnType<Service["update"]> {
-		return Promise.resolve(null);
+	public async update(
+		id: number,
+		payload: GroupUpdateRequestDto,
+	): Promise<GroupUpdateResponseDto> {
+		const group = await this.groupRepository.find(id);
+
+		if (!group) {
+			throw new GroupError({
+				message: ExceptionMessage.GROUP_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		const existingGroup = await this.groupRepository.findByName(payload.name);
+
+		if (existingGroup && existingGroup.id !== id) {
+			throw new GroupError({
+				message: ExceptionMessage.GROUP_NAME_USED,
+				status: HTTPCode.CONFLICT,
+			});
+		}
+
+		const { name, permissionIds = [], userIds } = payload;
+
+		const permissions = permissionIds.map((id) => ({ id }));
+		const users = userIds.map((id) => ({ id }));
+
+		const updatedGroup = await this.groupRepository.update(
+			id,
+			GroupEntity.initializeNew({
+				name,
+				permissions,
+				users,
+			}),
+		);
+
+		return updatedGroup.toObject();
 	}
 }
 

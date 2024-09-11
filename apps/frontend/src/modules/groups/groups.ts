@@ -15,6 +15,11 @@ export {
 	type GroupCreateRequestDto,
 	type GroupGetAllItemResponseDto,
 	type GroupGetAllResponseDto,
+	type GroupUpdateRequestDto,
+	type GroupUpdateResponseDto,
 } from "./libs/types/types.js";
-export { groupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+export {
+	groupCreateValidationSchema,
+	groupUpdateValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
 export { actions, reducer } from "./slices/groups.js";

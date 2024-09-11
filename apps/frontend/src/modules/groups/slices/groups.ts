@@ -1,4 +1,4 @@
-import { create, deleteById, loadAll, loadUsers } from "./actions.js";
+import { create, deleteById, loadAll, loadUsers, update } from "./actions.js";
 import { actions } from "./group.slice.js";
 
 const allActions = {
@@ -7,6 +7,7 @@ const allActions = {
 	deleteById,
 	loadAll,
 	loadUsers,
+	update,
 };
 
 export { allActions as actions };

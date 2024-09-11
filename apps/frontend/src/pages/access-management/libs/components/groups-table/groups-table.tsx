@@ -8,6 +8,7 @@ import styles from "./styles.module.css";
 type Properties = {
 	groups: GroupGetAllItemResponseDto[];
 	onDelete: (id: number) => void;
+	onEdit: (group: GroupGetAllItemResponseDto) => void;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
@@ -19,6 +20,7 @@ type Properties = {
 const GroupsTable = ({
 	groups,
 	onDelete,
+	onEdit,
 	onPageChange,
 	onPageSizeChange,
 	page,
@@ -26,7 +28,15 @@ const GroupsTable = ({
 	paginationBackground = "primary",
 	totalItemsCount,
 }: Properties): JSX.Element => {
-	const groupColumns = getGroupColumns(onDelete);
+	const handleEdit = (groupId: number): void => {
+		const group = groups.find(({ id }) => id === groupId);
+		onEdit(group as GroupGetAllItemResponseDto);
+	};
+
+	const groupColumns = getGroupColumns({
+		onDelete,
+		onEdit: handleEdit,
+	});
 	const groupData: GroupRow[] = getGroupRows(groups);
 
 	return (

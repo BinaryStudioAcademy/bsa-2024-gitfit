@@ -6,14 +6,21 @@ import styles from "./styles.module.css";
 type Properties = {
 	groupId: number;
 	onDelete: (groupId: number) => void;
+	onEdit: (groupId: number) => void;
 };
 
-const GroupMenu = ({ groupId, onDelete }: Properties): JSX.Element => {
+const GroupMenu = ({ groupId, onDelete, onEdit }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
 
 	const handleDeleteClick = useCallback(() => {
 		onDelete(groupId);
-	}, [onDelete, groupId]);
+		onClose();
+	}, [groupId, onDelete, onClose]);
+
+	const handleEdit = useCallback(() => {
+		onEdit(groupId);
+		onClose();
+	}, [groupId, onEdit, onClose]);
 
 	return (
 		<div className={styles["menu-container"]}>
@@ -23,6 +30,7 @@ const GroupMenu = ({ groupId, onDelete }: Properties): JSX.Element => {
 				onClose={onClose}
 				onOpen={onOpen}
 			>
+				<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
 				<MenuItem
 					iconName="trashBin"
 					label="Delete"
