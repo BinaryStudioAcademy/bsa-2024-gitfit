@@ -1,0 +1,3 @@
+const TABLE_MAX_HEIGHT = 490;
+
+export { TABLE_MAX_HEIGHT };

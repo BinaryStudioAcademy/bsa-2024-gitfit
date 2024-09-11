@@ -6,14 +6,17 @@ import {
 
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
+import { useEffect, useRef, useState } from "~/libs/hooks/hooks.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { SelectRowCell } from "./libs/components/components.js";
+import { TABLE_MAX_HEIGHT } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type BaseProperties<T> = {
 	columns: TableColumn<T>[];
 	data: T[];
+	isMenuOpened?: boolean;
 };
 
 type SelectableProperties<T> = {
@@ -29,6 +32,7 @@ type Properties<T> =
 const Table = <T extends object>({
 	columns,
 	data,
+	isMenuOpened,
 	...selectableProperties
 }: Properties<T>): JSX.Element => {
 	const { getRowId, onRowSelect, selectedRowIds } = selectableProperties as
@@ -44,8 +48,19 @@ const Table = <T extends object>({
 	const hasData = data.length !== EMPTY_LENGTH;
 	const isRowSelectable = typeof onRowSelect === "function";
 
+	const tableContainerReference = useRef<HTMLDivElement | null>(null);
+	const [isScrollPresent, setIsScrollPresent] = useState<boolean>(false);
+
+	useEffect(() => {
+		const container = tableContainerReference.current;
+
+		if (container) {
+			setIsScrollPresent(container.scrollHeight >= TABLE_MAX_HEIGHT);
+		}
+	}, [data, isMenuOpened]);
+
 	return (
-		<div className={styles["table-container"]}>
+		<div className={styles["table-container"]} ref={tableContainerReference}>
 			<table className={styles["table"]}>
 				<thead className={styles["table-head"]}>
 					{table.getHeaderGroups().map((headerGroup) => (
@@ -75,7 +90,12 @@ const Table = <T extends object>({
 						</tr>
 					))}
 				</thead>
-				<tbody className={styles["table-body"]}>
+				<tbody
+					className={getValidClassNames(
+						styles["table-body"],
+						isScrollPresent && isMenuOpened && styles["table-body--no-scroll"],
+					)}
+				>
 					{hasData ? (
 						table.getRowModel().rows.map((row) => (
 							<tr className={styles["table-row"]} key={row.id}>
