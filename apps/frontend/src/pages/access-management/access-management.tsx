@@ -1,6 +1,8 @@
 import {
 	Button,
+	ConfirmationModal,
 	GroupsTable,
+	GroupUpdateForm,
 	Modal,
 	PageLayout,
 	UsersTable,
@@ -13,11 +15,15 @@ import {
 	useEffect,
 	useModal,
 	usePagination,
+	useState,
 } from "~/libs/hooks/hooks.js";
 import {
 	actions as groupActions,
 	type GroupCreateRequestDto,
+	type GroupGetAllItemResponseDto,
+	type GroupUpdateRequestDto,
 } from "~/modules/groups/groups.js";
+import { actions as permissionActions } from "~/modules/permissions/permissions.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
 import { AccessGroupCreateForm } from "./libs/components/components.js";
@@ -33,6 +39,24 @@ const AccessManagement = (): JSX.Element => {
 	} = useAppSelector(({ users }) => users);
 
 	const {
+		groupCreateStatus,
+		groupDeleteStatus,
+		groups,
+		groupsDataStatus,
+		groupsTotalCount,
+		groupUpdateStatus,
+		permissions,
+	} = useAppSelector(({ groups, permissions }) => ({
+		groupCreateStatus: groups.groupCreateStatus,
+		groupDeleteStatus: groups.groupDeleteStatus,
+		groups: groups.groups,
+		groupsDataStatus: groups.dataStatus,
+		groupsTotalCount: groups.groupsTotalCount,
+		groupUpdateStatus: groups.groupUpdateStatus,
+		permissions: permissions.permissions,
+	}));
+
+	const {
 		onPageChange: onUserPageChange,
 		onPageSizeChange: onUserPageSizeChange,
 		page: userPage,
@@ -41,18 +65,6 @@ const AccessManagement = (): JSX.Element => {
 		queryParameterPrefix: "user",
 		totalItemsCount: usersTotalCount,
 	});
-
-	const {
-		isOpened: isModalOpened,
-		onClose: onModalClose,
-		onOpen: onModalOpen,
-	} = useModal();
-
-	const {
-		dataStatus: groupsDataStatus,
-		groups,
-		groupsTotalCount,
-	} = useAppSelector(({ groups }) => groups);
 
 	const {
 		onPageChange: onGroupPageChange,
@@ -64,27 +76,117 @@ const AccessManagement = (): JSX.Element => {
 		totalItemsCount: groupsTotalCount,
 	});
 
-	useEffect(() => {
+	const {
+		isOpened: isCreateModalOpened,
+		onClose: onCreateModalClose,
+		onOpen: onCreateModalOpen,
+	} = useModal();
+
+	const {
+		isOpened: isUpdateModalOpened,
+		onClose: onUpdateModalClose,
+		onOpen: onUpdateModalOpen,
+	} = useModal();
+
+	const {
+		isOpened: isDeleteModalOpen,
+		onClose: onDeleteModalClose,
+		onOpen: onDeleteModalOpen,
+	} = useModal();
+
+	const handleLoadUsers = useCallback(() => {
 		void dispatch(
 			userActions.loadAll({ page: userPage, pageSize: userPageSize }),
 		);
+	}, [dispatch, userPage, userPageSize]);
+
+	const handleLoadGroups = useCallback(() => {
 		void dispatch(
 			groupActions.loadAll({ page: groupPage, pageSize: groupPageSize }),
 		);
-	}, [dispatch, userPage, userPageSize, groupPage, groupPageSize]);
+	}, [dispatch, groupPage, groupPageSize]);
+
+	const handleLoadPermissions = useCallback(() => {
+		void dispatch(permissionActions.loadAll());
+	}, [dispatch]);
+
+	useEffect(() => {
+		handleLoadUsers();
+	}, [handleLoadUsers]);
+
+	useEffect(() => {
+		handleLoadGroups();
+	}, [handleLoadGroups]);
+
+	useEffect(() => {
+		handleLoadPermissions();
+	}, [handleLoadPermissions]);
 
 	const handleGroupCreateSubmit = useCallback(
 		(payload: GroupCreateRequestDto): void => {
-			void dispatch(
-				groupActions.create({
-					payload,
-					query: { page: userPage, pageSize: userPageSize },
-				}),
-			);
-			onModalClose();
+			void dispatch(groupActions.create(payload));
 		},
-		[dispatch, onModalClose, userPage, userPageSize],
+		[dispatch],
 	);
+
+	const [groupToEdit, setGroupToEdit] =
+		useState<GroupGetAllItemResponseDto | null>(null);
+	const hasGroupToEdit = groupToEdit !== null;
+
+	const [groupToDeleteId, setGroupToDeleteId] = useState<null | number>(null);
+	const hasGroupToDelete = Boolean(groupToDeleteId);
+
+	const handleGroupUpdateSubmit = useCallback(
+		(id: number, payload: GroupUpdateRequestDto) => {
+			void dispatch(groupActions.update({ id, payload }));
+		},
+		[dispatch],
+	);
+
+	const handleGroupDeleteSubmit = useCallback((): void => {
+		if (hasGroupToDelete) {
+			void dispatch(groupActions.deleteById({ id: groupToDeleteId as number }));
+		}
+	}, [hasGroupToDelete, dispatch, groupToDeleteId]);
+
+	const handleEdit = useCallback(
+		(group: GroupGetAllItemResponseDto): void => {
+			setGroupToEdit(group);
+			onUpdateModalOpen();
+		},
+		[onUpdateModalOpen],
+	);
+
+	const handleDelete = useCallback(
+		(id: number): void => {
+			setGroupToDeleteId(id);
+			onDeleteModalOpen();
+		},
+		[onDeleteModalOpen],
+	);
+
+	useEffect(() => {
+		if (groupCreateStatus === DataStatus.FULFILLED) {
+			handleLoadUsers();
+			onCreateModalClose();
+		}
+	}, [groupCreateStatus, onCreateModalClose, handleLoadUsers]);
+
+	useEffect(() => {
+		if (groupUpdateStatus === DataStatus.FULFILLED) {
+			handleLoadUsers();
+			onUpdateModalClose();
+			setGroupToEdit(null);
+		}
+	}, [groupUpdateStatus, onUpdateModalClose, handleLoadUsers]);
+
+	useEffect(() => {
+		if (groupDeleteStatus === DataStatus.FULFILLED) {
+			handleLoadUsers();
+			onDeleteModalClose();
+			setGroupToDeleteId(null);
+		}
+	}, [groupDeleteStatus, onDeleteModalClose, handleLoadUsers]);
 
 	const isLoading = [usersDataStatus, groupsDataStatus].some(
 		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
@@ -93,6 +195,7 @@ const AccessManagement = (): JSX.Element => {
 	return (
 		<PageLayout isLoading={isLoading}>
 			<h1 className={styles["title"]}>Access Management</h1>
+
 			<section>
 				<div className={styles["section-header"]}>
 					<h2 className={styles["section-title"]}>Users</h2>
@@ -106,13 +209,17 @@ const AccessManagement = (): JSX.Element => {
 					users={users}
 				/>
 			</section>
+
 			<section>
 				<div className={styles["section-header"]}>
 					<h2 className={styles["section-title"]}>Groups</h2>
-					<Button label="Create New" onClick={onModalOpen} />
+					<Button label="Create New" onClick={onCreateModalOpen} />
 				</div>
+
 				<GroupsTable
 					groups={groups}
+					onDelete={handleDelete}
+					onEdit={handleEdit}
 					onPageChange={onGroupPageChange}
 					onPageSizeChange={onGroupPageSizeChange}
 					page={groupPage}
@@ -120,13 +227,39 @@ const AccessManagement = (): JSX.Element => {
 					totalItemsCount={groupsTotalCount}
 				/>
 			</section>
+
 			<Modal
-				isOpened={isModalOpened}
-				onClose={onModalClose}
+				isOpened={isCreateModalOpened}
+				onClose={onCreateModalClose}
 				title="Create new group"
 			>
 				<AccessGroupCreateForm onSubmit={handleGroupCreateSubmit} />
 			</Modal>
+
+			{hasGroupToEdit && (
+				<Modal
+					isOpened={isUpdateModalOpened}
+					onClose={onUpdateModalClose}
+					title="Update group"
+				>
+					<GroupUpdateForm
+						allPermissions={permissions}
+						allUsers={users}
+						group={groupToEdit}
+						onSubmit={handleGroupUpdateSubmit}
+						usersTotalCount={usersTotalCount}
+					/>
+				</Modal>
+			)}
+
+			{hasGroupToDelete && (
+				<ConfirmationModal
+					content="The group will be deleted. This action cannot be undone. Do you want to continue?"
+					isOpened={isDeleteModalOpen}
+					onClose={onDeleteModalClose}
+					onConfirm={handleGroupDeleteSubmit}
+				/>
+			)}
 		</PageLayout>
 	);
 };

@@ -5,6 +5,8 @@ export { Button } from "./button/button.js";
 export { Checkbox } from "./checkbox/checkbox.js";
 export { ConfirmationModal } from "./confirmation-modal/confirmation-modal.js";
 export { GroupCreateForm } from "./group-create-form/group-create-form.js";
+export { GroupMenu } from "./group-menu/group-menu.js";
+export { GroupUpdateForm } from "./group-update-form/group-update-form.js";
 export { GroupsTable } from "./groups-table/groups-table.js";
 export { Header } from "./header/header.js";
 export { Icon } from "./icon/icon.js";

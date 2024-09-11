@@ -3,6 +3,7 @@ import { type ToastNotifier } from "~/libs/modules/toast-notifier/toast-notifier
 import { type authApi } from "~/modules/auth/auth.js";
 import { type groupApi } from "~/modules/groups/groups.js";
 import { type permissionApi } from "~/modules/permissions/permissions.js";
+import { type projectApiKeysApi } from "~/modules/project-api-keys/project-api-keys.js";
 import { type projectGroupApi } from "~/modules/project-groups/project-groups.js";
 import { type projectPermissionsApi } from "~/modules/project-permissions/project-permissions.js";
 import { type projectApi } from "~/modules/projects/projects.js";
@@ -13,6 +14,7 @@ type ExtraArguments = {
 	groupApi: typeof groupApi;
 	permissionApi: typeof permissionApi;
 	projectApi: typeof projectApi;
+	projectApiKeysApi: typeof projectApiKeysApi;
 	projectGroupApi: typeof projectGroupApi;
 	projectPermissionsApi: typeof projectPermissionsApi;
 	storage: Storage;

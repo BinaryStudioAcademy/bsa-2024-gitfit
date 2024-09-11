@@ -41,12 +41,19 @@ class GroupRepository implements Repository {
 		return GroupEntity.initialize(group);
 	}
 
-	public delete(): ReturnType<Repository["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const deletedRowsCount = await this.groupModel
+			.query()
+			.deleteById(id)
+			.execute();
+
+		return Boolean(deletedRowsCount);
 	}
 
-	public find(): ReturnType<Repository["find"]> {
-		return Promise.resolve(null);
+	public async find(id: number): Promise<GroupEntity | null> {
+		const group = await this.groupModel.query().findById(id);
+
+		return group ? GroupEntity.initialize(group) : null;
 	}
 
 	public async findAll({
@@ -55,6 +62,7 @@ class GroupRepository implements Repository {
 	}: PaginationQueryParameters): Promise<PaginationResponseDto<GroupEntity>> {
 		const { results, total } = await this.groupModel
 			.query()
+			.orderBy("createdAt", "desc")
 			.page(page, pageSize)
 			.withGraphFetched("[permissions, users]");
 
@@ -71,8 +79,32 @@ class GroupRepository implements Repository {
 		return group ?? null;
 	}
 
-	public update(): ReturnType<Repository["update"]> {
-		return Promise.resolve(null);
+	public async update(id: number, entity: GroupEntity): Promise<GroupEntity> {
+		const { name, permissions, users } = entity.toNewObject();
+		const key = changeCase(name, "snakeCase");
+
+		const trx = await transaction.start(this.groupModel.knex());
+
+		const groupData = {
+			id,
+			key,
+			name,
+			permissions,
+			users,
+		};
+
+		const group = await this.groupModel
+			.query(trx)
+			.upsertGraph(groupData, {
+				relate: true,
+				unrelate: true,
+			})
+			.returning("*")
+			.withGraphFetched("[permissions, users]");
+
+		await trx.commit();
+
+		return GroupEntity.initialize(group);
 	}
 }
 

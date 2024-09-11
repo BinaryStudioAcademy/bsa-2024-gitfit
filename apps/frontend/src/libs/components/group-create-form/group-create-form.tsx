@@ -1,3 +1,4 @@
+import { type ProjectGroupCreateRequestDto } from "@git-fit/shared";
 import { type DefaultValues } from "react-hook-form";
 
 import { Button, Input, Loader, Select } from "~/libs/components/components.js";
@@ -11,7 +12,10 @@ import {
 	useSelectedItems,
 } from "~/libs/hooks/hooks.js";
 import { type ValidationSchema } from "~/libs/types/types.js";
-import { type GroupCreateRequestDto } from "~/modules/groups/groups.js";
+import {
+	type GroupCreateRequestDto,
+	type GroupUpdateRequestDto,
+} from "~/modules/groups/groups.js";
 import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/permissions.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
@@ -19,35 +23,44 @@ import { GroupUsersTable } from "../group-users-table/group-users-table.js";
 import { getPermissionOptions } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
-type Properties<T extends GroupCreateRequestDto> = {
+type GroupRequest =
+	| GroupCreateRequestDto
+	| GroupUpdateRequestDto
+	| ProjectGroupCreateRequestDto;
+
+type Properties<T extends GroupRequest> = {
 	defaultValues: DefaultValues<T>;
 	isLoading?: boolean;
 	onSubmit: (payload: T) => void;
 	permissions: PermissionGetAllItemResponseDto[];
+	submitLabel: string;
 	users: Omit<UserGetAllItemResponseDto, "email">[];
 	usersPagination: UsePaginationValues;
 	usersTotalCount: number;
 	validationSchema: ValidationSchema<T>;
 };
 
-const GroupCreateForm = <T extends GroupCreateRequestDto>({
+const GroupCreateForm = <T extends GroupRequest>({
 	defaultValues,
 	isLoading,
 	onSubmit,
 	permissions,
+	submitLabel,
 	users,
 	usersPagination,
 	usersTotalCount,
 	validationSchema,
 }: Properties<T>): JSX.Element => {
 	const { control, errors, handleErrorsClear, handleSubmit, handleValueSet } =
-		useAppForm<GroupCreateRequestDto>({
+		useAppForm<GroupRequest>({
 			defaultValues,
 			validationSchema,
 		});
 
 	const { items: selectedUserIds, onToggle: handleUserIdsToggle } =
-		useSelectedItems<number>([]);
+		useSelectedItems<number>(
+			(defaultValues.userIds?.filter(Boolean) ?? []) as number[],
+		);
 
 	useEffect(() => {
 		if (errors["userIds"] && selectedUserIds.length > EMPTY_LENGTH) {
@@ -100,7 +113,7 @@ const GroupCreateForm = <T extends GroupCreateRequestDto>({
 				placeholder="Choose permissions"
 			/>
 			<div className={styles["button-wrapper"]}>
-				<Button label="Create" type="submit" />
+				<Button label={submitLabel} type="submit" />
 			</div>
 		</form>
 	);

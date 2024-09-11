@@ -50,7 +50,14 @@ const Table = <T extends object>({
 				<thead className={styles["table-head"]}>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<tr className={styles["table-row"]} key={headerGroup.id}>
-							{isRowSelectable && <th className={styles["table-header"]} />}
+							{isRowSelectable && (
+								<th
+									className={getValidClassNames(
+										styles["table-header"],
+										styles["cell-min-content"],
+									)}
+								/>
+							)}
 							{headerGroup.headers.map((header) => (
 								<th
 									className={getValidClassNames(
@@ -59,6 +66,9 @@ const Table = <T extends object>({
 											styles["table-checkbox-column"],
 									)}
 									key={header.id}
+									style={{
+										width: header.column.columnDef.size,
+									}}
 								>
 									{flexRender(
 										header.column.columnDef.header,
@@ -74,7 +84,12 @@ const Table = <T extends object>({
 						table.getRowModel().rows.map((row) => (
 							<tr className={styles["table-row"]} key={row.id}>
 								{isRowSelectable && (
-									<td className={styles["table-data"]}>
+									<td
+										className={getValidClassNames(
+											styles["table-data"],
+											styles["cell-min-content"],
+										)}
+									>
 										<SelectRowCell
 											id={getRowId(row.original)}
 											isChecked={selectedRowIds.includes(
@@ -92,6 +107,9 @@ const Table = <T extends object>({
 												styles["table-checkbox-column"],
 										)}
 										key={cell.id}
+										style={{
+											width: cell.column.columnDef.size,
+										}}
 									>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</td>

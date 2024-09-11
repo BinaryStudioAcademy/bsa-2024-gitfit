@@ -48,7 +48,7 @@ const GroupUsersTable = ({
 	return (
 		<>
 			<span className={styles["table-title"]}>Users</span>
-			<div className={styles["users-table"]}>
+			<div className={styles["group-users-table"]}>
 				<Table<UserRow>
 					columns={userColumns}
 					data={userData}

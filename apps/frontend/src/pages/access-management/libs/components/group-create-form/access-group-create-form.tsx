@@ -60,6 +60,7 @@ const AccessGroupCreateForm = ({ onSubmit }: Properties): JSX.Element => {
 			isLoading={isLoading}
 			onSubmit={onSubmit}
 			permissions={permissions}
+			submitLabel="Submit"
 			users={users}
 			usersPagination={usersPagination}
 			usersTotalCount={usersTotalCount}

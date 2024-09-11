@@ -4,6 +4,7 @@ const AppRoute = {
 	PROFILE: "/profile",
 	PROJECT: "/projects/:id",
 	PROJECT_ACCESS_MANAGEMENT: "/projects/:id/access-management",
+	PROJECTS: "/projects",
 	ROOT: "/",
 	SIGN_IN: "/sign-in",
 	SIGN_UP: "/sign-up",

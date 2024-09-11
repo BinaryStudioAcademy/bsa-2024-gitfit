@@ -81,6 +81,7 @@ const ProjectGroupCreateForm = ({
 			isLoading={isLoading}
 			onSubmit={onSubmit}
 			permissions={projectPermissions}
+			submitLabel="Submit"
 			users={usersWithGroups}
 			usersPagination={usersPagination}
 			usersTotalCount={usersTotalCount}

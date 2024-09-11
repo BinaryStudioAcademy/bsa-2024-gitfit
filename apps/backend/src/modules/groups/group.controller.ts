@@ -11,8 +11,14 @@ import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { type GroupService } from "./group.service.js";
 import { GroupsApiPath } from "./libs/enums/enum.js";
-import { type GroupCreateRequestDto } from "./libs/types/types.js";
-import { groupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+import {
+	type GroupCreateRequestDto,
+	type GroupUpdateRequestDto,
+} from "./libs/types/types.js";
+import {
+	groupCreateValidationSchema,
+	groupUpdateValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
 
 /**
  * @swagger
@@ -66,6 +72,15 @@ class GroupController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
+				this.deleteGroup(
+					options as APIHandlerOptions<{ params: { id: string } }>,
+				),
+			method: "DELETE",
+			path: GroupsApiPath.$ID,
+		});
+
+		this.addRoute({
+			handler: (options) =>
 				this.findAll(
 					options as APIHandlerOptions<{
 						query: PaginationQueryParameters;
@@ -73,6 +88,21 @@ class GroupController extends BaseController {
 				),
 			method: "GET",
 			path: GroupsApiPath.ROOT,
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.update(
+					options as APIHandlerOptions<{
+						body: GroupUpdateRequestDto;
+						params: { id: string };
+					}>,
+				),
+			method: "PUT",
+			path: GroupsApiPath.$ID,
+			validation: {
+				body: groupUpdateValidationSchema,
+			},
 		});
 	}
 
@@ -132,6 +162,37 @@ class GroupController extends BaseController {
 
 	/**
 	 * @swagger
+	 * /groups/{id}:
+	 *   delete:
+	 *     description: Delete a group by ID
+	 *     parameters:
+	 *       - in: path
+	 *         name: id
+	 *         required: true
+	 *         schema:
+	 *           type: number
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: boolean
+	 *       404:
+	 *         description: Group not found
+	 */
+
+	private async deleteGroup(
+		options: APIHandlerOptions<{ params: { id: string } }>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.groupService.delete(Number(options.params.id)),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
 	 * /groups:
 	 *   get:
 	 *     description: Returns an array of groups with pagination
@@ -169,6 +230,57 @@ class GroupController extends BaseController {
 	}>): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.groupService.findAll(query),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /groups/{id}:
+	 *    update:
+	 *      tags:
+	 *        - Groups
+	 *      description: Update group info
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          description: ID of the group to update
+	 *          schema:
+	 *            type: string
+	 *      requestBody:
+	 *        description: Updated group object
+	 *        content:
+	 *          application/json:
+	 *            schema:
+	 *              type: object
+	 *              properties:
+	 *                name:
+	 *                  type: string
+	 *                description:
+	 *                  type: string
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 *                properties:
+	 *                  message:
+	 *                    type: object
+	 *                    $ref: "#/components/schemas/Group"
+	 */
+
+	private async update(
+		options: APIHandlerOptions<{
+			body: GroupUpdateRequestDto;
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		const groupId = Number(options.params.id);
+
+		return {
+			payload: await this.groupService.update(groupId, options.body),
 			status: HTTPCode.OK,
 		};
 	}

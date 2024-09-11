@@ -76,9 +76,9 @@ const ProjectAccessManagement = (): JSX.Element => {
 	});
 
 	const {
-		isOpened: isCreateModalOpen,
-		onClose: handleCreateModalClose,
-		onOpen: handleCreateModalOpen,
+		isOpened: isCreateModalOpened,
+		onClose: onCreateModalClose,
+		onOpen: onCreateModalOpen,
 	} = useModal();
 
 	useEffect(() => {
@@ -87,7 +87,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 		}
 	}, [dispatch, id]);
 
-	useEffect(() => {
+	const handleLoadGroups = useCallback(() => {
 		if (id) {
 			void dispatch(
 				projectGroupActions.loadAllByProjectId({
@@ -98,15 +98,19 @@ const ProjectAccessManagement = (): JSX.Element => {
 		}
 	}, [dispatch, groupPage, groupPageSize, id]);
 
+	useEffect(() => {
+		handleLoadGroups();
+	}, [handleLoadGroups]);
+
 	const handleProjectGroupCreateSubmit = useCallback(
 		(payload: ProjectGroupCreateRequestDto) => {
 			void dispatch(projectGroupActions.create(payload))
 				.unwrap()
 				.then(() => {
-					handleCreateModalClose();
+					onCreateModalClose();
 				});
 		},
-		[dispatch, handleCreateModalClose],
+		[dispatch, onCreateModalClose],
 	);
 
 	const isLoading = [projectDataStatus, projectGroupsDataStatus].some(
@@ -150,7 +154,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 			<section>
 				<div className={styles["section-wrapper"]}>
 					<h2 className={styles["group-section-title"]}>Groups</h2>
-					<Button label="Create New" onClick={handleCreateModalOpen} />
+					<Button label="Create New" onClick={onCreateModalOpen} />
 				</div>
 				<GroupsTable
 					groups={projectGroups}
@@ -162,8 +166,8 @@ const ProjectAccessManagement = (): JSX.Element => {
 				/>
 			</section>
 			<Modal
-				isOpened={isCreateModalOpen}
-				onClose={handleCreateModalClose}
+				isOpened={isCreateModalOpened}
+				onClose={onCreateModalClose}
 				title="Create new project"
 			>
 				{hasProject && (
