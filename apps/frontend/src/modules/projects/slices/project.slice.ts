@@ -4,14 +4,14 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import {
 	type ProjectGetAllItemResponseDto,
-	type ProjectGetResponseDto,
+	type ProjectGetByIdResponseDto,
 } from "~/modules/projects/projects.js";
 
 import { create, deleteById, getById, loadAll, patch } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
-	project: null | ProjectGetResponseDto;
+	project: null | ProjectGetByIdResponseDto;
 	projectCreateStatus: ValueOf<typeof DataStatus>;
 	projectPatchStatus: ValueOf<typeof DataStatus>;
 	projects: ProjectGetAllItemResponseDto[];

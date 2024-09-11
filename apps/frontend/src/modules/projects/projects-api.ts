@@ -8,7 +8,7 @@ import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
-	type ProjectGetResponseDto,
+	type ProjectGetByIdResponseDto,
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 } from "./libs/types/types.js";
@@ -69,7 +69,7 @@ class ProjectApi extends BaseHTTPApi {
 
 	public async getById(payload: {
 		id: string;
-	}): Promise<ProjectGetResponseDto> {
+	}): Promise<ProjectGetByIdResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(ProjectsApiPath.$ID, { id: payload.id }),
 			{
@@ -78,7 +78,7 @@ class ProjectApi extends BaseHTTPApi {
 			},
 		);
 
-		return await response.json<ProjectGetResponseDto>();
+		return await response.json<ProjectGetByIdResponseDto>();
 	}
 
 	public async patch(

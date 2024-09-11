@@ -6,7 +6,7 @@ import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
-	type ProjectGetResponseDto,
+	type ProjectGetByIdResponseDto,
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 } from "~/modules/projects/projects.js";
@@ -14,7 +14,7 @@ import {
 import { name as sliceName } from "./project.slice.js";
 
 const getById = createAsyncThunk<
-	ProjectGetResponseDto,
+	ProjectGetByIdResponseDto,
 	{ id: string },
 	AsyncThunkConfig
 >(`${sliceName}/getById`, async (payload, { extra }) => {

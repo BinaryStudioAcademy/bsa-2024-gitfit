@@ -3,7 +3,7 @@ export {
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
-	type ProjectGetResponseDto,
+	type ProjectGetByIdResponseDto,
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 } from "@git-fit/shared";
