@@ -58,6 +58,13 @@ export {
 	PermissionsApiPath,
 } from "./modules/permissions/permissions.js";
 export {
+	type ProjectApiKeyCreateRequestDto,
+	type ProjectApiKeyCreateResponseDto,
+	projectApiKeyCreateValidationSchema,
+	ProjectApiKeyError,
+	ProjectApiKeysApiPath,
+} from "./modules/project-api-keys/projects-api-keys.js";
+export {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupCreateResponseDto,
 	projectGroupCreateValidationSchema,
@@ -71,6 +78,7 @@ export {
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
+	type ProjectGetByIdResponseDto,
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 	projectPatchValidationSchema,
