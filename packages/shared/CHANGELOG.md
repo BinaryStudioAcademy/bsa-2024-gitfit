@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.15.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.14.0...shared-v1.15.0) (2024-09-11)
+
+
+### Features
+
+* add ability to edit group gf-81 ([#170](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/170)) ([2485667](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/24856674205c965821f2765d4b0b4a891f53a684))
+* Add an ability to generate and retrieve project api key gf-180 ([#223](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/223)) ([1b016c7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1b016c7086a35b1060dcb716740a38cffa42f458))
+
 ## [1.14.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.13.0...shared-v1.14.0) (2024-09-11)
 
 
