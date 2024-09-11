@@ -58,6 +58,7 @@ class ActivityLogController extends BaseController {
 				this.create(
 					options as APIHandlerOptions<{
 						body: ActivityLogCreateRequestDto;
+						headers: Record<string, string | undefined>;
 					}>,
 				),
 			method: "POST",
@@ -116,10 +117,19 @@ class ActivityLogController extends BaseController {
 	private async create(
 		options: APIHandlerOptions<{
 			body: ActivityLogCreateRequestDto;
+			headers: Record<string, string | undefined>;
 		}>,
 	): Promise<APIHandlerResponse> {
+		const authorizationHeader = options.headers["authorization"];
+		const apiKey = authorizationHeader?.replace("Bearer ", "") ?? "";
+
+		const payload = {
+			apiKey,
+			...options.body,
+		};
+
 		return {
-			payload: await this.activityLogService.create(options.body),
+			payload: await this.activityLogService.create(payload),
 			status: HTTPCode.CREATED,
 		};
 	}

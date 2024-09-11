@@ -126,7 +126,7 @@ class ProjectApiKeyService implements Service {
 		if (!apiKeyEnitity) {
 			throw new ProjectApiKeyError({
 				message: ExceptionMessage.PROJECT_API_KEY_NOT_FOUND,
-				status: HTTPCode.CONFLICT,
+				status: HTTPCode.NOT_FOUND,
 			});
 		}
 

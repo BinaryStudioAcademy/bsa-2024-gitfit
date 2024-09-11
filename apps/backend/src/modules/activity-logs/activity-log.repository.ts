@@ -34,7 +34,8 @@ class ActivityLogRepository implements Repository {
 			.query()
 			.insertGraph(activityLogData, { relate: true })
 			.returning("*")
-			.withGraphFetched("[gitEmail, project, createdByUser]");
+			.withGraphFetched("[gitEmail, project, createdByUser]")
+			.execute();
 
 		const activityLogWithContributorData = {
 			...createdActivityLog,
@@ -55,7 +56,8 @@ class ActivityLogRepository implements Repository {
 	public async findAll(): Promise<{ items: ActivityLogEntity[] }> {
 		const activityLogs = await this.activityLogModel
 			.query()
-			.withGraphFetched("[gitEmail.[contributor], project, createdByUser]");
+			.withGraphFetched("[gitEmail.[contributor], project, createdByUser]")
+			.execute();
 
 		const activityLogWithContributorData = activityLogs.map((log) => {
 			const gitEmail = log.gitEmail as {

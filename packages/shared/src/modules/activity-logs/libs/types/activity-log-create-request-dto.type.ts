@@ -2,6 +2,7 @@ import { type ActivityLogCreateItemRequestDto } from "./activity-log-create-item
 
 type ActivityLogCreateRequestDto = {
 	items: ActivityLogCreateItemRequestDto[];
+	userId: number;
 };
 
 export { type ActivityLogCreateRequestDto };

@@ -1,7 +1,6 @@
 const ExceptionMessage = {
 	CONTRIBUTOR_NAME_USED: "Contributor name is already in use.",
 	CONTRIBUTOR_NOT_FOUND: "Contributor not found.",
-	CREATE_PROJECT_GROUP_FAILED: "Failed to create project group.",
 	EMAIL_USED: "Email address is already in use.",
 	GIT_EMAIL_USED: "Git email is already in use.",
 	GROUP_NAME_USED: "Group name is already in use.",
@@ -13,6 +12,7 @@ const ExceptionMessage = {
 	NO_TOKEN_PROVIDED: "No token provided.",
 	PROJECT_API_KEY_ALREADY_EXISTS: "API key already exists for the project.",
 	PROJECT_API_KEY_NOT_FOUND: "API key not found.",
+	PROJECT_GROUP_CREATE_FAILED: "Failed to create project group.",
 	PROJECT_GROUP_NAME_USED: "Project group name is already in use.",
 	PROJECT_NAME_USED: "Project name is already in use.",
 	PROJECT_NOT_FOUND: "Project not found.",

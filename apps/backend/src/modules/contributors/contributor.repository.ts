@@ -28,7 +28,7 @@ class ContributorRepository implements Repository {
 	}
 
 	public async find(id: number): Promise<ContributorEntity | null> {
-		const item = await this.contributorModel.query().findById(id);
+		const item = await this.contributorModel.query().findById(id).execute();
 
 		return item ? ContributorEntity.initialize(item) : null;
 	}
@@ -38,7 +38,10 @@ class ContributorRepository implements Repository {
 	}
 
 	public async findByName(name: string): Promise<ContributorEntity | null> {
-		const item = await this.contributorModel.query().findOne({ name });
+		const item = await this.contributorModel
+			.query()
+			.findOne({ name })
+			.execute();
 
 		return item ? ContributorEntity.initialize(item) : null;
 	}

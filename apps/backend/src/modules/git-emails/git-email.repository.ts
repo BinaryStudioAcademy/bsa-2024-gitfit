@@ -37,7 +37,7 @@ class GitEmailRepository implements Repository {
 	}
 
 	public async findByEmail(email: string): Promise<GitEmailEntity | null> {
-		const item = await this.gitEmailModel.query().findOne({ email });
+		const item = await this.gitEmailModel.query().findOne({ email }).execute();
 
 		return item ? GitEmailEntity.initialize(item) : null;
 	}
