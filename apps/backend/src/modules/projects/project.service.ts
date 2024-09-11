@@ -8,6 +8,7 @@ import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllResponseDto,
+	type ProjectGetResponseDto,
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 } from "./libs/types/types.js";
@@ -63,7 +64,7 @@ class ProjectService implements Service {
 		return isDeleted;
 	}
 
-	public async find(id: number): Promise<ProjectGetAllItemResponseDto> {
+	public async find(id: number): Promise<ProjectGetResponseDto> {
 		const item = await this.projectRepository.find(id);
 
 		if (!item) {

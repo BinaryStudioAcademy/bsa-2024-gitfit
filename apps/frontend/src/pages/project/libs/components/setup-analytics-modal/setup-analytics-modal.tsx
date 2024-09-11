@@ -7,14 +7,14 @@ import {
 	useCallback,
 } from "~/libs/hooks/hooks.js";
 import { actions as projectApiKeyActions } from "~/modules/project-api-keys/project-api-keys.js";
-import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
+import { type ProjectGetResponseDto } from "~/modules/projects/projects.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
 	isOpened: boolean;
 	onClose: () => void;
-	project: ProjectGetAllItemResponseDto;
+	project: ProjectGetResponseDto;
 };
 
 const SetupAnalyticsModal = ({

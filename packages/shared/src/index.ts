@@ -75,6 +75,7 @@ export {
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
+	type ProjectGetResponseDto,
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 	projectPatchValidationSchema,
