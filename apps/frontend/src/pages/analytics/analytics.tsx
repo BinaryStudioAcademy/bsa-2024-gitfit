@@ -2,13 +2,13 @@ import { DateInput, PageLayout } from "~/libs/components/components.js";
 import { useAppForm, useCallback } from "~/libs/hooks/hooks.js";
 
 import { THIRTY_DAYS } from "./libs/constants/constants.js";
-import { subDays } from "./libs/helpers/helpers.js";
+import { subtractDays } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 const Analytics = (): JSX.Element => {
 	const { control, handleSubmit } = useAppForm({
 		defaultValues: {
-			dateRange: [subDays(new Date(), THIRTY_DAYS), new Date()],
+			dateRange: [subtractDays(new Date(), THIRTY_DAYS), new Date()],
 		},
 	});
 

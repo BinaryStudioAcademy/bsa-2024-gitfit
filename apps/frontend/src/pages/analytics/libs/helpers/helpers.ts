@@ -1,1 +1,1 @@
-export { subDays } from "date-fns";
+export { subtractDays } from "@git-fit/shared";
