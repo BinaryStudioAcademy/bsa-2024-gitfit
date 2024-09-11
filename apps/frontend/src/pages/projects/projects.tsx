@@ -13,10 +13,13 @@ import {
 	useCallback,
 	useEffect,
 	useModal,
+	useRef,
 	useSearch,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import {
+	DEFAULT_START,
+	INFINITE_SCROLL_LOAD_COUNT,
 	actions as projectActions,
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
@@ -29,8 +32,9 @@ import {
 	ProjectsSearch,
 	ProjectUpdateForm,
 } from "./libs/components/components.js";
-import { INFINITE_SCROLL_LOAD_COUNT } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
+
+const FIRST_ITEM = 0;
 
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
@@ -40,29 +44,67 @@ const Projects = (): JSX.Element => {
 	const [selectedProject, setSelectedProject] =
 		useState<null | ProjectGetAllItemResponseDto>(null);
 
-	const { dataStatus, projectCreateStatus, projectPatchStatus, projects } =
-		useAppSelector(({ projects }) => projects);
+	const [start, setStart] = useState<number>(DEFAULT_START);
+
+	const {
+		dataStatus,
+		hasMoreProjects,
+		projectCreateStatus,
+		projectPatchStatus,
+		projects,
+	} = useAppSelector(({ projects }) => projects);
+
+	const sentinelReference = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
-		void dispatch(
-			projectActions.loadAll({
-				limit: INFINITE_SCROLL_LOAD_COUNT,
-				name: search,
-				start: 0,
-			}),
-		);
+		void dispatch(projectActions.loadAll(search));
+		setStart(DEFAULT_START);
 	}, [dispatch, search]);
+
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries: IntersectionObserverEntry[]) => {
+				const firstEntry = entries[FIRST_ITEM];
+
+				if (
+					firstEntry?.isIntersecting &&
+					hasMoreProjects &&
+					dataStatus !== DataStatus.PENDING
+				) {
+					void dispatch(
+						projectActions.loadMore({
+							limit: INFINITE_SCROLL_LOAD_COUNT,
+							name: search,
+							start: start + INFINITE_SCROLL_LOAD_COUNT,
+						}),
+					);
+
+					setStart(
+						(previousStart) => previousStart + INFINITE_SCROLL_LOAD_COUNT,
+					);
+				}
+			},
+		);
+
+		const sentinelNode = sentinelReference.current;
+		const hasSentinelNode = sentinelNode !== null;
+
+		if (hasSentinelNode) {
+			observer.observe(sentinelNode);
+		}
+
+		return (): void => {
+			if (hasSentinelNode) {
+				observer.unobserve(sentinelNode);
+			}
+		};
+	}, [dispatch, dataStatus, hasMoreProjects, search, start]);
 
 	const handleSearchChange = useCallback(
 		(value: string) => {
-			void dispatch(
-				projectActions.loadAll({
-					limit: INFINITE_SCROLL_LOAD_COUNT,
-					name: value,
-					start: 0,
-				}),
-			);
+			void dispatch(projectActions.loadAll(value));
 			onSearch(value);
+			setStart(DEFAULT_START);
 		},
 		[dispatch, onSearch],
 	);
@@ -167,6 +209,8 @@ const Projects = (): JSX.Element => {
 							different keywords.
 						</p>
 					)}
+
+					<div ref={sentinelReference} />
 				</div>
 			)}
 			<Modal

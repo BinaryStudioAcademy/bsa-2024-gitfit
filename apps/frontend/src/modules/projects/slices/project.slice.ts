@@ -7,10 +7,18 @@ import {
 	type ProjectGetByIdResponseDto,
 } from "~/modules/projects/projects.js";
 
-import { create, deleteById, getById, loadAll, patch } from "./actions.js";
+import {
+	create,
+	deleteById,
+	getById,
+	loadAll,
+	loadMore,
+	patch,
+} from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
+	hasMoreProjects: boolean;
 	project: null | ProjectGetByIdResponseDto;
 	projectCreateStatus: ValueOf<typeof DataStatus>;
 	projectPatchStatus: ValueOf<typeof DataStatus>;
@@ -20,6 +28,7 @@ type State = {
 
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
+	hasMoreProjects: false,
 	project: null,
 	projectCreateStatus: DataStatus.IDLE,
 	projectPatchStatus: DataStatus.IDLE,
@@ -40,17 +49,34 @@ const { actions, name, reducer } = createSlice({
 			state.project = null;
 			state.projectStatus = DataStatus.REJECTED;
 		});
+
 		builder.addCase(loadAll.pending, (state) => {
 			state.dataStatus = DataStatus.PENDING;
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
 			state.projects = action.payload.items;
+			state.hasMoreProjects = action.payload.hasMore;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadAll.rejected, (state) => {
 			state.projects = [];
+			state.hasMoreProjects = false;
 			state.dataStatus = DataStatus.REJECTED;
 		});
+
+		builder.addCase(loadMore.pending, (state) => {
+			state.dataStatus = DataStatus.PENDING;
+		});
+		builder.addCase(loadMore.fulfilled, (state, action) => {
+			state.projects = [...state.projects, ...action.payload.items];
+			state.hasMoreProjects = action.payload.hasMore;
+			state.dataStatus = DataStatus.FULFILLED;
+		});
+		builder.addCase(loadMore.rejected, (state) => {
+			state.hasMoreProjects = false;
+			state.dataStatus = DataStatus.REJECTED;
+		});
+
 		builder.addCase(create.pending, (state) => {
 			state.projectCreateStatus = DataStatus.PENDING;
 		});
@@ -61,6 +87,7 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(create.rejected, (state) => {
 			state.projectCreateStatus = DataStatus.REJECTED;
 		});
+
 		builder.addCase(patch.pending, (state) => {
 			state.projectPatchStatus = DataStatus.PENDING;
 		});
@@ -75,6 +102,7 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(patch.rejected, (state) => {
 			state.projectPatchStatus = DataStatus.REJECTED;
 		});
+
 		builder.addCase(deleteById.fulfilled, (state, action) => {
 			const deletedProjectId = action.meta.arg;
 			state.projects = state.projects.filter(

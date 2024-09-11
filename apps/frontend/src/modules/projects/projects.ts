@@ -11,6 +11,10 @@ const projectApi = new ProjectApi({
 });
 
 export { projectApi };
+export {
+	DEFAULT_START,
+	INFINITE_SCROLL_LOAD_COUNT,
+} from "./libs/constants/constants.js";
 export { ProjectValidationRule } from "./libs/enums/enums.js";
 export {
 	type ProjectCreateRequestDto,
