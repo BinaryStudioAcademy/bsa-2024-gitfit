@@ -55,7 +55,7 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							},
 							{
 								element: (
-									<ProtectedRoute isEnableWithoutPermission>
+									<ProtectedRoute isAvailableWithoutPermission>
 										<Home />
 									</ProtectedRoute>
 								),

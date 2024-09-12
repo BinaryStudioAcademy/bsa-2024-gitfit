@@ -20,13 +20,13 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
-	isEnableWithoutPermission?: boolean;
+	isAvailableWithoutPermission?: boolean;
 	routePermissions?: ValueOf<typeof PermissionKey>[];
 };
 
 const ProtectedRoute = ({
 	children,
-	isEnableWithoutPermission = false,
+	isAvailableWithoutPermission = false,
 	routePermissions = [],
 }: Properties): JSX.Element => {
 	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
@@ -59,8 +59,8 @@ const ProtectedRoute = ({
 	);
 
 	const hasPermission =
-		(!isEnableWithoutPermission && hasRequiredPermission) ||
-		(isEnableWithoutPermission && !hasUsersPermissions);
+		(!isAvailableWithoutPermission && hasRequiredPermission) ||
+		(isAvailableWithoutPermission && !hasUsersPermissions);
 
 	if (!hasPermission) {
 		if (!hasUsersPermissions) {
