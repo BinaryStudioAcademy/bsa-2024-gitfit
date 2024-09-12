@@ -29,13 +29,13 @@ const create = createAsyncThunk<
 
 const copy = createAsyncThunk<string, string, AsyncThunkConfig>(
 	`${sliceName}/copy`,
-	async (projectApiKeysApi, { extra }) => {
+	async (projectApiKey, { extra }) => {
 		const { toastNotifier } = extra;
 
-		await navigator.clipboard.writeText(projectApiKeysApi);
+		await navigator.clipboard.writeText(projectApiKey);
 		toastNotifier.showSuccess(NotificationMessage.PROJECT_API_KEY_COPY_SUCCESS);
 
-		return projectApiKeysApi;
+		return projectApiKey;
 	},
 );
 
