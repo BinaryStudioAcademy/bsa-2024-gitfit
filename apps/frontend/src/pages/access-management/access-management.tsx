@@ -1,11 +1,8 @@
 import {
 	Button,
 	ConfirmationModal,
-	GroupsTable,
-	GroupUpdateForm,
 	Modal,
 	PageLayout,
-	UsersTable,
 } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
@@ -23,10 +20,14 @@ import {
 	type GroupGetAllItemResponseDto,
 	type GroupUpdateRequestDto,
 } from "~/modules/groups/groups.js";
-import { actions as permissionActions } from "~/modules/permissions/permissions.js";
 import { actions as userActions } from "~/modules/users/users.js";
 
-import { AccessGroupCreateForm } from "./libs/components/components.js";
+import {
+	GroupCreateForm,
+	GroupsTable,
+	GroupUpdateForm,
+	UsersTable,
+} from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const AccessManagement = (): JSX.Element => {
@@ -39,22 +40,13 @@ const AccessManagement = (): JSX.Element => {
 	} = useAppSelector(({ users }) => users);
 
 	const {
+		dataStatus: groupsDataStatus,
 		groupCreateStatus,
 		groupDeleteStatus,
 		groups,
-		groupsDataStatus,
 		groupsTotalCount,
 		groupUpdateStatus,
-		permissions,
-	} = useAppSelector(({ groups, permissions }) => ({
-		groupCreateStatus: groups.groupCreateStatus,
-		groupDeleteStatus: groups.groupDeleteStatus,
-		groups: groups.groups,
-		groupsDataStatus: groups.dataStatus,
-		groupsTotalCount: groups.groupsTotalCount,
-		groupUpdateStatus: groups.groupUpdateStatus,
-		permissions: permissions.permissions,
-	}));
+	} = useAppSelector(({ groups }) => groups);
 
 	const {
 		onPageChange: onUserPageChange,
@@ -106,10 +98,6 @@ const AccessManagement = (): JSX.Element => {
 		);
 	}, [dispatch, groupPage, groupPageSize]);
 
-	const handleLoadPermissions = useCallback(() => {
-		void dispatch(permissionActions.loadAll());
-	}, [dispatch]);
-
 	useEffect(() => {
 		handleLoadUsers();
 	}, [handleLoadUsers]);
@@ -117,10 +105,6 @@ const AccessManagement = (): JSX.Element => {
 	useEffect(() => {
 		handleLoadGroups();
 	}, [handleLoadGroups]);
-
-	useEffect(() => {
-		handleLoadPermissions();
-	}, [handleLoadPermissions]);
 
 	const handleGroupCreateSubmit = useCallback(
 		(payload: GroupCreateRequestDto): void => {
@@ -235,7 +219,7 @@ const AccessManagement = (): JSX.Element => {
 				onClose={onCreateModalClose}
 				title="Create new group"
 			>
-				<AccessGroupCreateForm onSubmit={handleGroupCreateSubmit} />
+				<GroupCreateForm onSubmit={handleGroupCreateSubmit} />
 			</Modal>
 
 			{hasGroupToEdit && (
@@ -245,11 +229,8 @@ const AccessManagement = (): JSX.Element => {
 					title="Update group"
 				>
 					<GroupUpdateForm
-						allPermissions={permissions}
-						allUsers={users}
 						group={groupToEdit}
 						onSubmit={handleGroupUpdateSubmit}
-						usersTotalCount={usersTotalCount}
 					/>
 				</Modal>
 			)}

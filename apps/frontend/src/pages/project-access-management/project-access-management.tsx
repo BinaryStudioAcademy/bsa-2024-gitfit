@@ -1,10 +1,8 @@
 import {
 	Breadcrumbs,
 	Button,
-	GroupsTable,
 	Modal,
 	PageLayout,
-	UsersTable,
 } from "~/libs/components/components.js";
 import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
 import { configureString } from "~/libs/helpers/helpers.js";
@@ -24,8 +22,10 @@ import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.j
 import { actions as projectActions } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
-import { ProjectGroupCreateForm } from "./components/components.js";
-import { getUsersFromProjectGroups } from "./components/project-group-create-form/libs/helpers/helpers.js";
+import { ProjectGroupCreateForm } from "./libs/components/components.js";
+import { getUsersFromProjectGroups } from "./libs/components/project-group-create-form/libs/helpers/helpers.js";
+import { ProjectGroupsTable } from "./libs/components/project-groups-table/project-groups-table.js";
+import { UsersTable } from "./libs/components/users-table/users-table.js";
 import styles from "./styles.module.css";
 
 const ProjectAccessManagement = (): JSX.Element => {
@@ -160,12 +160,12 @@ const ProjectAccessManagement = (): JSX.Element => {
 						<Button label="Create New" onClick={onCreateModalOpen} />
 					</div>
 				</div>
-				<GroupsTable
-					groups={projectGroups}
+				<ProjectGroupsTable
 					onPageChange={onGroupPageChange}
 					onPageSizeChange={onGroupPageSizeChange}
 					page={groupPage}
 					pageSize={groupPageSize}
+					projectGroups={projectGroups}
 					totalItemsCount={projectGroupsTotalCount}
 				/>
 			</section>
