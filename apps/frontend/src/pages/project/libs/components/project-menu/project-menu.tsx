@@ -1,9 +1,7 @@
-import { useCallback } from "react";
-
 import { Menu, MenuItem, NavLink } from "~/libs/components/components.js";
 import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
-import { useAppSelector, usePopover } from "~/libs/hooks/hooks.js";
+import { useAppSelector, useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	onEdit: () => void;
