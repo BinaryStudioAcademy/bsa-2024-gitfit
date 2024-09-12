@@ -1,3 +1,4 @@
+import { SortType } from "~/libs/enums/enums.js";
 import {
 	type PaginationQueryParameters,
 	type PaginationResponseDto,
@@ -64,7 +65,7 @@ class UserRepository implements Repository {
 	}: PaginationQueryParameters): Promise<PaginationResponseDto<UserEntity>> {
 		const { results, total } = await this.userModel
 			.query()
-			.orderBy("createdAt", "desc")
+			.orderBy("createdAt", SortType.DESCENDING)
 			.withGraphFetched("groups.permissions")
 			.whereNull("deletedAt")
 			.page(page, pageSize);
