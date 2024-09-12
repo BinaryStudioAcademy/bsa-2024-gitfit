@@ -77,7 +77,6 @@ const SetupAnalyticsModal = ({
 								onClick={handleCopyClick}
 							/>
 						}
-						textOverflow="clip"
 					/>
 					<div className={styles["button-wrapper"]}>
 						<Button
