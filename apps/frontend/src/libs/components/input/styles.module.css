@@ -30,11 +30,18 @@
 	font-weight: 400;
 	line-height: 1.5;
 	color: inherit;
-	text-overflow: ellipsis;
 	background-color: var(--color-background-secondary);
 	border: 1px solid var(--color-border-primary);
 	border-radius: inherit;
 	transition: all 0.3s ease;
+}
+
+.text-overflow-clip {
+	text-overflow: clip;
+}
+
+.text-overflow-ellipsis {
+	text-overflow: ellipsis;
 }
 
 .input-field:disabled {
@@ -71,11 +78,11 @@
 }
 
 .input-field.with-left-icon {
-	padding-left: 40px;
+	padding-left: 48px;
 }
 
 .input-field.with-right-icon {
-	padding-right: 40px;
+	padding-right: 48px;
 }
 
 .input-error {

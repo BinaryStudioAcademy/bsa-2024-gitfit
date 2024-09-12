@@ -16,12 +16,14 @@ type Properties<T extends FieldValues> = {
 	errors: FieldErrors<T>;
 	isDisabled?: boolean;
 	isLabelHidden?: boolean;
+	isReadOnly?: boolean;
 	label: string;
 	leftIcon?: JSX.Element;
 	name: FieldPath<T>;
 	placeholder?: string;
 	rightIcon?: JSX.Element;
 	rowsCount?: number;
+	textOverflow?: "clip" | "ellipsis";
 	type?: "email" | "password" | "search" | "text";
 };
 
@@ -31,12 +33,14 @@ const Input = <T extends FieldValues>({
 	errors,
 	isDisabled = false,
 	isLabelHidden = false,
+	isReadOnly = false,
 	label,
 	leftIcon,
 	name,
 	placeholder = "",
 	rightIcon,
 	rowsCount,
+	textOverflow = "ellipsis",
 	type = "text",
 }: Properties<T>): JSX.Element => {
 	const { field } = useFormController({ control, name });
@@ -51,6 +55,7 @@ const Input = <T extends FieldValues>({
 		isTextArea && styles["input-textarea"],
 		hasLeftIcon && styles["with-left-icon"],
 		hasRightIcon && styles["with-right-icon"],
+		styles[`text-overflow-${textOverflow}`],
 	);
 
 	return (
@@ -82,6 +87,7 @@ const Input = <T extends FieldValues>({
 						name={field.name}
 						onChange={field.onChange}
 						placeholder={placeholder}
+						readOnly={isReadOnly}
 						rows={rowsCount}
 						value={field.value}
 					/>
@@ -93,6 +99,7 @@ const Input = <T extends FieldValues>({
 						name={field.name}
 						onChange={field.onChange}
 						placeholder={placeholder}
+						readOnly={isReadOnly}
 						type={type}
 						value={field.value}
 					/>
