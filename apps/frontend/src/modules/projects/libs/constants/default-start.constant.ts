@@ -1,3 +1,3 @@
-const DEFAULT_START: number = 0;
+const DEFAULT_START = 0;
 
 export { DEFAULT_START };
