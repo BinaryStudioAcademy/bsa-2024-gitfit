@@ -117,10 +117,12 @@ const Project = (): JSX.Element => {
 							</p>
 						</div>
 
-						<Button
-							label="Setup analytics"
-							onClick={onSetupAnalyticsModalOpen}
-						/>
+						<div>
+							<Button
+								label="Setup analytics"
+								onClick={onSetupAnalyticsModalOpen}
+							/>
+						</div>
 					</div>
 
 					<Modal
