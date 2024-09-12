@@ -39,6 +39,8 @@ const SetupAnalyticsModal = ({
 	const hasProjectApiKey = project.apiKey !== null;
 	const isGenerateButtonDisabled =
 		hasProjectApiKey || dataStatus === DataStatus.PENDING;
+	const isCopyButtonDisabled =
+		!hasProjectApiKey || dataStatus === DataStatus.PENDING;
 
 	const handleGenerateSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
@@ -50,12 +52,10 @@ const SetupAnalyticsModal = ({
 	);
 
 	const handleCopyToClipboardClick = useCallback(() => {
-		if (hasProjectApiKey) {
-			void dispatch(
-				projectApiKeyActions.copyToClipboard(project.apiKey as string),
-			);
-		}
-	}, [dispatch, hasProjectApiKey, project.apiKey]);
+		void dispatch(
+			projectApiKeyActions.copyToClipboard(project.apiKey as string),
+		);
+	}, [dispatch, project.apiKey]);
 
 	return (
 		<Modal isOpened={isOpened} onClose={onClose} title="Setup Analytics">
@@ -75,6 +75,7 @@ const SetupAnalyticsModal = ({
 						rightIcon={
 							<IconButton
 								iconName="clipboard"
+								isDisabled={isCopyButtonDisabled}
 								label="Copy API key"
 								onClick={handleCopyToClipboardClick}
 							/>
