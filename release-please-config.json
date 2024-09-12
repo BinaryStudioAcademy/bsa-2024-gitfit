@@ -13,6 +13,9 @@
 		},
 		"packages/shared": {
 			"release-type": "node"
+		},
+		"scripts/analytics": {
+			"release-type": "node"
 		}
 	}
 }
