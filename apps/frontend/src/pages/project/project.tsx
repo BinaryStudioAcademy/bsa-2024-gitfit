@@ -51,15 +51,12 @@ const Project = (): JSX.Element => {
 	useEffect(() => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
-		}
-	}, [dispatch, projectId]);
 
-	useEffect(() => {
-		if (projectPatchStatus === DataStatus.FULFILLED && projectId) {
-			void dispatch(projectActions.getById({ id: projectId }));
-			handleEditModalClose();
+			if (projectPatchStatus === DataStatus.FULFILLED) {
+				handleEditModalClose();
+			}
 		}
-	}, [dispatch, projectPatchStatus, projectId, handleEditModalClose]);
+	}, [dispatch, projectId, projectPatchStatus, handleEditModalClose]);
 
 	const handleEditProject = useCallback(() => {
 		handleEditModalOpen();
