@@ -11,7 +11,6 @@ import {
 	useCallback,
 	useEffect,
 	useModal,
-	useNavigate,
 	useParams,
 } from "~/libs/hooks/hooks.js";
 import {
@@ -29,7 +28,6 @@ import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const navigate = useNavigate();
 	const { id: projectId } = useParams<{ id: string }>();
 
 	const { project, projectPatchStatus, projectStatus } = useAppSelector(
@@ -61,10 +59,6 @@ const Project = (): JSX.Element => {
 	const handleEditProject = useCallback(() => {
 		handleEditModalOpen();
 	}, [handleEditModalOpen]);
-
-	const handleManageAccess = useCallback(() => {
-		navigate(AppRoute.ACCESS_MANAGEMENT);
-	}, [navigate]);
 
 	const handleProjectEditSubmit = useCallback(
 		(payload: ProjectPatchRequestDto) => {
@@ -100,10 +94,7 @@ const Project = (): JSX.Element => {
 						<div className={styles["header-container"]}>
 							<h1 className={styles["title"]}>{project.name}</h1>
 
-							<ProjectMenu
-								onEdit={handleEditProject}
-								onManageAccess={handleManageAccess}
-							/>
+							<ProjectMenu onEdit={handleEditProject} />
 						</div>
 
 						<div className={styles["project-description-layout"]}>
