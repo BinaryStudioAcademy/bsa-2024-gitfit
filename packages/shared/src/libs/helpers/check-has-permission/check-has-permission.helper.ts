@@ -4,10 +4,8 @@ const checkHasPermission = (
 	requiredPermissions: string[],
 	permissions: PermissionGetAllItemResponseDto[],
 ): boolean => {
-	return requiredPermissions.some((requiredPermission) =>
-		permissions.some(
-			(userPermission) => userPermission.key === requiredPermission,
-		),
+	return requiredPermissions.every((permission) =>
+		permissions.some((userPermission) => userPermission.key === permission),
 	);
 };
 
