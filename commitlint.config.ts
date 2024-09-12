@@ -14,7 +14,11 @@ const config: UserConfig = {
 		"scope-enum": [
 			RuleConfigSeverity.Error,
 			"always",
-			[...ProjectPrefix.SCOPES.APPS, ...ProjectPrefix.SCOPES.PACKAGES],
+			[
+				...ProjectPrefix.SCOPES.APPS,
+				...ProjectPrefix.SCOPES.PACKAGES,
+				...ProjectPrefix.SCOPES.SCRIPTS,
+			],
 		],
 	},
 };
