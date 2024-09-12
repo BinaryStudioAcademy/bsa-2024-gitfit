@@ -53,7 +53,7 @@ const Project = (): JSX.Element => {
 					<div className={styles["breadcrumb-container"]}>
 						<Breadcrumbs
 							items={[
-								{ href: AppRoute.ROOT, label: "Projects" },
+								{ href: AppRoute.PROJECTS, label: "Projects" },
 								{ label: project.name },
 							]}
 						/>
@@ -69,10 +69,12 @@ const Project = (): JSX.Element => {
 								{project.description}
 							</p>
 						</div>
-						<Button
-							label="Setup analytics"
-							onClick={onSetupAnalyticsModalOpen}
-						/>
+						<div>
+							<Button
+								label="Setup analytics"
+								onClick={onSetupAnalyticsModalOpen}
+							/>
+						</div>
 					</div>
 
 					<SetupAnalyticsModal

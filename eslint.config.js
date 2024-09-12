@@ -25,7 +25,7 @@ const filesConfig = {
 
 /** @type {FlatConfig} */
 const ignoresConfig = {
-	ignores: ["apps", "packages", "dangerfile.ts"],
+	ignores: ["apps", "packages", "scripts", "dangerfile.ts"],
 };
 
 /** @type {FlatConfig} */
