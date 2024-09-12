@@ -1,5 +1,6 @@
 import { transaction } from "objection";
 
+import { SortType } from "~/libs/enums/enums.js";
 import { changeCase } from "~/libs/helpers/helpers.js";
 import {
 	type PaginationQueryParameters,
@@ -62,7 +63,7 @@ class GroupRepository implements Repository {
 	}: PaginationQueryParameters): Promise<PaginationResponseDto<GroupEntity>> {
 		const { results, total } = await this.groupModel
 			.query()
-			.orderBy("createdAt", "desc")
+			.orderBy("createdAt", SortType.DESCENDING)
 			.page(page, pageSize)
 			.withGraphFetched("[permissions, users]");
 
