@@ -172,7 +172,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 			<Modal
 				isOpened={isCreateModalOpened}
 				onClose={onCreateModalClose}
-				title="Create new project"
+				title="Create new group"
 			>
 				{hasProject && (
 					<ProjectGroupCreateForm
