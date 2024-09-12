@@ -85,7 +85,7 @@
 :global(.react-calendar__year-view__months__month),
 :global(.react-calendar__century-view__decades__decade),
 :global(.react-calendar__decade-view__years__year) {
-	min-width: 128px;
+	min-width: 100%;
 }
 
 :global(.react-calendar__tile--range) {
@@ -101,6 +101,16 @@
 :global(.react-calendar__tile--rangeEnd) {
 	background-color: var(--color-brand-primary);
 	border-radius: 0 6px 6px 0;
+}
+
+:global(.react-calendar__month-view) {
+	max-width: 224px;
+}
+
+:global(.react-calendar__year-view__months),
+:global(.react-calendar__decade-view__years),
+:global(.react-calendar__century-view__decades) {
+	max-width: 128px;
 }
 
 .date-input-trigger {
