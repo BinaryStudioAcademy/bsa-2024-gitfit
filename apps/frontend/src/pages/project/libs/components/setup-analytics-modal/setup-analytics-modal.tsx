@@ -1,4 +1,9 @@
-import { Button, Input, Modal } from "~/libs/components/components.js";
+import {
+	Button,
+	IconButton,
+	Input,
+	Modal,
+} from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -44,6 +49,12 @@ const SetupAnalyticsModal = ({
 		[handleSubmit, dispatch],
 	);
 
+	const handleCopyClick = useCallback(() => {
+		if (hasProjectApiKey) {
+			void dispatch(projectApiKeyActions.copy(project.apiKey as string));
+		}
+	}, [dispatch, hasProjectApiKey, project.apiKey]);
+
 	return (
 		<Modal isOpened={isOpened} onClose={onClose} title="Setup Analytics">
 			<div className={styles["content"]}>
@@ -54,10 +65,19 @@ const SetupAnalyticsModal = ({
 					<Input
 						control={control}
 						errors={errors}
-						isDisabled
+						isDisabled={!hasProjectApiKey}
+						isReadOnly={hasProjectApiKey}
 						label="API key"
 						name="apiKey"
 						placeholder="No API key"
+						rightIcon={
+							<IconButton
+								iconName="clipboard"
+								label="Copy API key"
+								onClick={handleCopyClick}
+							/>
+						}
+						textOverflow="clip"
 					/>
 					<div className={styles["button-wrapper"]}>
 						<Button

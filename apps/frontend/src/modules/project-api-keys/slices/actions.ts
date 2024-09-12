@@ -27,4 +27,16 @@ const create = createAsyncThunk<
 	return response;
 });
 
-export { create };
+const copy = createAsyncThunk<string, string, AsyncThunkConfig>(
+	`${sliceName}/copy`,
+	async (projectApiKeysApi, { extra }) => {
+		const { toastNotifier } = extra;
+
+		await navigator.clipboard.writeText(projectApiKeysApi);
+		toastNotifier.showSuccess(NotificationMessage.PROJECT_API_KEY_COPY_SUCCESS);
+
+		return projectApiKeysApi;
+	},
+);
+
+export { copy, create };
