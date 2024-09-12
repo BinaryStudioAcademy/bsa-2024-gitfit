@@ -1,10 +1,11 @@
 import { Navigate } from "react-router-dom";
 
 import { Loader } from "~/libs/components/components.js";
-import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
+import { EMPTY_LENGTH, SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
 import {
 	AppRoute,
 	DataStatus,
+	NotificationMessage,
 	type PermissionKey,
 } from "~/libs/enums/enums.js";
 import {
@@ -12,17 +13,20 @@ import {
 	getPermittedNavigationItems,
 } from "~/libs/helpers/helpers.js";
 import { useAppSelector, useMemo } from "~/libs/hooks/hooks.js";
+import { toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
+	isEnableWithoutPermission?: boolean;
 	routePermissions?: ValueOf<typeof PermissionKey>[];
 };
 
 const ProtectedRoute = ({
 	children,
+	isEnableWithoutPermission = false,
 	routePermissions = [],
 }: Properties): JSX.Element => {
 	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
@@ -48,12 +52,21 @@ const ProtectedRoute = ({
 		return <Navigate replace to={AppRoute.SIGN_IN} />;
 	}
 
+	const hasUsersPermissions = userPermissions.length > EMPTY_LENGTH;
 	const hasRequiredPermission = checkHasPermission(
 		routePermissions,
 		userPermissions,
 	);
 
-	if (!hasRequiredPermission) {
+	const hasPermission =
+		(!isEnableWithoutPermission && hasRequiredPermission) ||
+		(isEnableWithoutPermission && !hasUsersPermissions);
+
+	if (!hasPermission) {
+		if (!hasUsersPermissions) {
+			toastNotifier.showInfo(NotificationMessage.ACCESS_DENIED);
+		}
+
 		const [navigationItem] = getPermittedNavigationItems(
 			SIDEBAR_ITEMS,
 			userPermissions,
