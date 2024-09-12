@@ -62,7 +62,7 @@ class ActivityLogController extends BaseController {
 					}>,
 				),
 			method: "POST",
-			path: ActivityLogsApiPath.SAVE,
+			path: ActivityLogsApiPath.ROOT,
 			validation: {
 				body: activityLogCreateValidationSchema,
 			},
