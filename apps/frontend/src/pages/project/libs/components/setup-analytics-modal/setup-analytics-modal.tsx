@@ -67,8 +67,7 @@ const SetupAnalyticsModal = ({
 					<Input
 						control={control}
 						errors={errors}
-						isDisabled={!hasProjectApiKey}
-						isReadOnly={hasProjectApiKey}
+						isReadOnly
 						label="API key"
 						name="apiKey"
 						placeholder="No API key"
