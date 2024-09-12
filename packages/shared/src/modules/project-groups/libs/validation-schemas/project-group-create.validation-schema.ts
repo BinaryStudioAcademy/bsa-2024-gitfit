@@ -17,7 +17,7 @@ const projectGroupCreate: z.ZodType<ProjectGroupCreateRequestDto> = z
 			.max(ProjectGroupValidationRule.NAME_MAXIMUM_LENGTH, {
 				message: ProjectGroupValidationMessage.NAME_TOO_LONG,
 			}),
-		permissionIds: z.array(z.number().int().positive()).optional(),
+		permissionIds: z.array(z.number().int().positive()),
 		projectId: z
 			.number({
 				required_error: ProjectGroupValidationMessage.PROJECT_ID_REQUIRED,

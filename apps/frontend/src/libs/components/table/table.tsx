@@ -60,11 +60,7 @@ const Table = <T extends object>({
 							)}
 							{headerGroup.headers.map((header) => (
 								<th
-									className={getValidClassNames(
-										styles["table-header"],
-										header.column.id === "checkbox" &&
-											styles["table-checkbox-column"],
-									)}
+									className={styles["table-header"]}
 									key={header.id}
 									style={{
 										width: header.column.columnDef.size,
@@ -101,11 +97,7 @@ const Table = <T extends object>({
 								)}
 								{row.getVisibleCells().map((cell) => (
 									<td
-										className={getValidClassNames(
-											styles["table-data"],
-											cell.column.id === "checkbox" &&
-												styles["table-checkbox-column"],
-										)}
+										className={styles["table-data"]}
 										key={cell.id}
 										style={{
 											width: cell.column.columnDef.size,

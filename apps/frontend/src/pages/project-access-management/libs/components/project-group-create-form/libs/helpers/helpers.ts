@@ -1,1 +1,1 @@
-export { getUsersFromProjectGroups } from "./get-users-from-project-groups.js";
+export { getUsersFromProjectGroups } from "./get-users-from-project-groups.helper.js";

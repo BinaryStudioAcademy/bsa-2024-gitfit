@@ -10,23 +10,26 @@ type Properties = {
 };
 
 const ProjectDetailsMenu = ({ id }: Properties): JSX.Element => {
-	const projectRoute = configureString(AppRoute.PROJECT_ACCESS_MANAGEMENT, {
-		id: id.toString(),
-	});
+	const projectAccessManagementRoute = configureString(
+		AppRoute.PROJECT_ACCESS_MANAGEMENT,
+		{
+			id: id.toString(),
+		},
+	);
 
 	const { isOpened, onClose, onOpen } = usePopover();
 	const navigate = useNavigate();
 
-	const handleManageClick = useCallback(() => {
-		navigate(projectRoute);
-	}, [navigate, projectRoute]);
+	const handleManagementClick = useCallback(() => {
+		navigate(projectAccessManagementRoute);
+	}, [navigate, projectAccessManagementRoute]);
 
 	return (
 		<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
 			<MenuItem
 				iconName="access"
 				label="Manage Access"
-				onClick={handleManageClick}
+				onClick={handleManagementClick}
 			/>
 		</Menu>
 	);

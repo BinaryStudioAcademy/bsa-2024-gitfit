@@ -12,8 +12,7 @@ class ProjectGroupEntity implements Entity {
 	private permissions!: (Partial<Pick<ProjectPermissionModel, "name">> &
 		Pick<ProjectPermissionModel, "id">)[];
 	private projectId!: Pick<ProjectModel, "id">;
-	private users!: (Partial<Pick<UserModel, "createdAt">> &
-		Partial<Pick<UserModel, "name">> &
+	private users!: (Partial<Pick<UserModel, "createdAt" | "name">> &
 		Pick<UserModel, "id">)[];
 
 	private constructor({
@@ -30,8 +29,7 @@ class ProjectGroupEntity implements Entity {
 		permissions: (Partial<Pick<ProjectPermissionModel, "name">> &
 			Pick<ProjectPermissionModel, "id">)[];
 		projectId: Pick<ProjectModel, "id">;
-		users: (Partial<Pick<UserModel, "createdAt">> &
-			Partial<Pick<UserModel, "name">> &
+		users: (Partial<Pick<UserModel, "createdAt" | "name">> &
 			Pick<UserModel, "id">)[];
 	}) {
 		this.createdAt = createdAt;

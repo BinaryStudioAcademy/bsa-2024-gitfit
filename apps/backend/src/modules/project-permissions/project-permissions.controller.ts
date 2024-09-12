@@ -47,10 +47,8 @@ class ProjectPermissionsController extends BaseController {
 	 */
 
 	private async findAll(): Promise<APIHandlerResponse> {
-		const projectPermissions = await this.projectPermissionService.findAll();
-
 		return {
-			payload: projectPermissions,
+			payload: await this.projectPermissionService.findAll(),
 			status: HTTPCode.OK,
 		};
 	}

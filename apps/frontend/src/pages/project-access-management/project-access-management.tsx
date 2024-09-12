@@ -18,7 +18,6 @@ import {
 import { type ValueOf } from "~/libs/types/types.js";
 import { type ProjectGroupCreateRequestDto } from "~/modules/project-groups/project-groups.js";
 import { actions as projectGroupActions } from "~/modules/project-groups/project-groups.js";
-import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 import { actions as projectActions } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
@@ -45,10 +44,10 @@ const ProjectAccessManagement = (): JSX.Element => {
 		projectGroupsTotalCount: projectGroups.projectGroupsTotalCount,
 	}));
 
-	const hasProject = Boolean(project);
+	const hasProject = project !== null;
 	const projectRoute = hasProject
 		? configureString(AppRoute.PROJECT, {
-				id: (project as ProjectGetAllItemResponseDto).id.toString(),
+				id: project.id.toString(),
 			})
 		: "";
 
@@ -125,63 +124,63 @@ const ProjectAccessManagement = (): JSX.Element => {
 
 	return (
 		<PageLayout isLoading={isLoading}>
-			<div className={styles["breadcrumb-container"]}>
-				{hasProject && (
-					<Breadcrumbs
-						items={[
-							{ href: AppRoute.ROOT, label: "Projects" },
-							{
-								href: projectRoute as ValueOf<typeof AppRoute>,
-								label: (project as ProjectGetAllItemResponseDto).name,
-							},
-							{ label: "Access Management" },
-						]}
-					/>
-				)}
-			</div>
-			<h1 className={styles["title"]}>Access Management</h1>
-			<section>
-				<div className={styles["section-header"]}>
-					<h2 className={styles["section-title"]}>Users</h2>
-				</div>
-				<UsersTable
-					onPageChange={onUserPageChange}
-					onPageSizeChange={onUserPageSizeChange}
-					page={userPage}
-					pageSize={userPageSize}
-					totalItemsCount={usersTotalCount}
-					users={users}
-				/>
-			</section>
-			<section>
-				<div className={styles["section-header"]}>
-					<h2 className={styles["section-title"]}>Groups</h2>
-					<div>
-						<Button label="Create New" onClick={onCreateModalOpen} />
+			{hasProject && (
+				<>
+					<div className={styles["breadcrumb-container"]}>
+						<Breadcrumbs
+							items={[
+								{ href: AppRoute.ROOT, label: "Projects" },
+								{
+									href: projectRoute as ValueOf<typeof AppRoute>,
+									label: project.name,
+								},
+								{ label: "Access Management" },
+							]}
+						/>
 					</div>
-				</div>
-				<ProjectGroupsTable
-					onPageChange={onGroupPageChange}
-					onPageSizeChange={onGroupPageSizeChange}
-					page={groupPage}
-					pageSize={groupPageSize}
-					projectGroups={projectGroups}
-					totalItemsCount={projectGroupsTotalCount}
-				/>
-			</section>
-			<Modal
-				isOpened={isCreateModalOpened}
-				onClose={onCreateModalClose}
-				title="Create new group"
-			>
-				{hasProject && (
-					<ProjectGroupCreateForm
-						onSubmit={handleProjectGroupCreateSubmit}
-						projectGroups={projectGroups}
-						projectId={(project as ProjectGetAllItemResponseDto).id}
-					/>
-				)}
-			</Modal>
+					<h1 className={styles["title"]}>Access Management</h1>
+					<section>
+						<div className={styles["section-header"]}>
+							<h2 className={styles["section-title"]}>Users</h2>
+						</div>
+						<UsersTable
+							onPageChange={onUserPageChange}
+							onPageSizeChange={onUserPageSizeChange}
+							page={userPage}
+							pageSize={userPageSize}
+							totalItemsCount={usersTotalCount}
+							users={users}
+						/>
+					</section>
+					<section>
+						<div className={styles["section-header"]}>
+							<h2 className={styles["section-title"]}>Groups</h2>
+							<div>
+								<Button label="Create New" onClick={onCreateModalOpen} />
+							</div>
+						</div>
+						<ProjectGroupsTable
+							onPageChange={onGroupPageChange}
+							onPageSizeChange={onGroupPageSizeChange}
+							page={groupPage}
+							pageSize={groupPageSize}
+							projectGroups={projectGroups}
+							totalItemsCount={projectGroupsTotalCount}
+						/>
+					</section>
+					<Modal
+						isOpened={isCreateModalOpened}
+						onClose={onCreateModalClose}
+						title="Create new group"
+					>
+						<ProjectGroupCreateForm
+							onSubmit={handleProjectGroupCreateSubmit}
+							projectGroups={projectGroups}
+							projectId={project.id}
+						/>
+					</Modal>
+				</>
+			)}
 		</PageLayout>
 	);
 };
