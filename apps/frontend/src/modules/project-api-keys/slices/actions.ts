@@ -27,8 +27,8 @@ const create = createAsyncThunk<
 	return response;
 });
 
-const copy = createAsyncThunk<string, string, AsyncThunkConfig>(
-	`${sliceName}/copy`,
+const copyToClipboard = createAsyncThunk<string, string, AsyncThunkConfig>(
+	`${sliceName}/copy-to-clipboard`,
 	async (projectApiKey, { extra }) => {
 		const { toastNotifier } = extra;
 
@@ -39,4 +39,4 @@ const copy = createAsyncThunk<string, string, AsyncThunkConfig>(
 	},
 );
 
-export { copy, create };
+export { copyToClipboard, create };

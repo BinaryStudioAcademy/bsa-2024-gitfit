@@ -49,9 +49,11 @@ const SetupAnalyticsModal = ({
 		[handleSubmit, dispatch],
 	);
 
-	const handleCopyClick = useCallback(() => {
+	const handleCopyToClipboardClick = useCallback(() => {
 		if (hasProjectApiKey) {
-			void dispatch(projectApiKeyActions.copy(project.apiKey as string));
+			void dispatch(
+				projectApiKeyActions.copyToClipboard(project.apiKey as string),
+			);
 		}
 	}, [dispatch, hasProjectApiKey, project.apiKey]);
 
@@ -74,7 +76,7 @@ const SetupAnalyticsModal = ({
 							<IconButton
 								iconName="clipboard"
 								label="Copy API key"
-								onClick={handleCopyClick}
+								onClick={handleCopyToClipboardClick}
 							/>
 						}
 					/>
