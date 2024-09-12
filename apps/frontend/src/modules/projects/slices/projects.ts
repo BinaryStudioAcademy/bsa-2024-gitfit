@@ -1,4 +1,11 @@
-import { create, deleteById, getById, loadAll, patch } from "./actions.js";
+import {
+	create,
+	deleteById,
+	getById,
+	loadAll,
+	patch,
+	updateApiKey,
+} from "./actions.js";
 import { actions } from "./project.slice.js";
 
 const allActions = {
@@ -8,6 +15,7 @@ const allActions = {
 	getById,
 	loadAll,
 	patch,
+	updateApiKey,
 };
 
 export { allActions as actions };

@@ -7,7 +7,14 @@ import {
 	type ProjectGetByIdResponseDto,
 } from "~/modules/projects/projects.js";
 
-import { create, deleteById, getById, loadAll, patch } from "./actions.js";
+import {
+	create,
+	deleteById,
+	getById,
+	loadAll,
+	patch,
+	updateApiKey,
+} from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
@@ -80,6 +87,11 @@ const { actions, name, reducer } = createSlice({
 			state.projects = state.projects.filter(
 				(project) => project.id !== deletedProjectId,
 			);
+		});
+		builder.addCase(updateApiKey, (state, action) => {
+			if (state.project) {
+				state.project.apiKey = action.payload;
+			}
 		});
 	},
 	initialState,

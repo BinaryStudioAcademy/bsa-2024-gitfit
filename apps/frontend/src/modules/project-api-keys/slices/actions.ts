@@ -16,13 +16,12 @@ const create = createAsyncThunk<
 	AsyncThunkConfig
 >(`${sliceName}/create`, async (payload, { dispatch, extra }) => {
 	const { projectApiKeysApi, toastNotifier } = extra;
-	const { projectId } = payload;
 
 	const response = await projectApiKeysApi.create(payload);
 
 	toastNotifier.showSuccess(NotificationMessage.PROJECT_API_KEY_CREATE_SUCCESS);
 
-	void dispatch(projectActions.getById({ id: String(projectId) }));
+	void dispatch(projectActions.updateApiKey(response.apiKey));
 
 	return response;
 });
