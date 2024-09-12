@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { ITEMS_CHANGED_COUNT } from "~/libs/components/table-pagination/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
@@ -58,6 +59,7 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(create.fulfilled, (state, action) => {
 			state.projectGroups = [action.payload, ...state.projectGroups];
+			state.projectGroupsTotalCount += ITEMS_CHANGED_COUNT;
 			state.projectGroupCreateStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(create.rejected, (state) => {
