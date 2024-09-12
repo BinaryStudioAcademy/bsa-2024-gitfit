@@ -165,7 +165,9 @@ const Projects = (): JSX.Element => {
 		<PageLayout>
 			<header className={styles["projects-header"]}>
 				<h1 className={styles["title"]}>Projects</h1>
-				<Button label="Create New" onClick={handleCreateModalOpen} />
+				<div>
+					<Button label="Create New" onClick={handleCreateModalOpen} />
+				</div>
 			</header>
 			<ProjectsSearch onChange={handleSearchChange} />
 			{isLoading ? (
