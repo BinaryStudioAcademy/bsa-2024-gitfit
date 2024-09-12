@@ -64,6 +64,7 @@ class UserRepository implements Repository {
 	}: PaginationQueryParameters): Promise<PaginationResponseDto<UserEntity>> {
 		const { results, total } = await this.userModel
 			.query()
+			.orderBy("createdAt", "desc")
 			.withGraphFetched("groups.permissions")
 			.whereNull("deletedAt")
 			.page(page, pageSize);
