@@ -11,23 +11,23 @@ const getGroupColumns = (actions: {
 	{
 		accessorKey: "name",
 		header: "Name",
-		size: 100,
+		size: 200,
 	},
 	{
 		accessorFn: (group: GroupRow): string => group.permissions.join(", "),
 		header: "Permissions",
-		size: 200,
+		size: 300,
 	},
 	{
 		accessorKey: "userCount",
 		header: "Users",
-		size: 50,
+		size: 100,
 	},
 	{
 		accessorFn: (group: GroupRow): string =>
 			formatDate(new Date(group.createdAt), "d MMM yyyy HH:mm"),
 		header: "Created At",
-		size: 100,
+		size: 200,
 	},
 	{
 		cell: ({ row: { original: group } }): React.ReactNode => (
@@ -39,7 +39,7 @@ const getGroupColumns = (actions: {
 		),
 		header: "",
 		id: "menu",
-		size: 0,
+		size: 75,
 	},
 ];
 
