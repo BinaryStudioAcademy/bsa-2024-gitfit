@@ -1,5 +1,6 @@
 import { transaction } from "objection";
 
+import { SortType } from "~/libs/enums/enums.js";
 import { changeCase } from "~/libs/helpers/helpers.js";
 import { HTTPCode } from "~/libs/modules/http/libs/enums/enums.js";
 import {
@@ -75,6 +76,7 @@ class ProjectGroupRepository implements Repository {
 	): Promise<PaginationResponseDto<ProjectGroupEntity>> {
 		const { results, total } = await this.projectGroupModel
 			.query()
+			.orderBy("createdAt", SortType.DESCENDING)
 			.page(page, pageSize)
 			.joinRelated("projects")
 			.where("projects.id", id)

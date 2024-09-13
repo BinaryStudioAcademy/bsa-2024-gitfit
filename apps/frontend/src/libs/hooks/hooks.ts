@@ -3,7 +3,6 @@ export { useAppForm } from "./use-app-form/use-app-form.hook.js";
 export { useAppSelector } from "./use-app-selector/use-app-selector.hook.js";
 export { useHandleClickOutside } from "./use-handle-click-outside/use-handle-click-outside.hook.js";
 export { useModal } from "./use-modal-state/use-modal-state.hook.js";
-export { type UsePaginationValues } from "./use-pagination/libs/types/types.js";
 export { usePagination } from "./use-pagination/use-pagination.hook.js";
 export { usePopoverPosition } from "./use-popover-position/use-popover-position.hook.js";
 export { usePopover } from "./use-popover-state/use-popover-state.hook.js";

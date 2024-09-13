@@ -43,16 +43,19 @@ const ProjectGroupCreateForm = ({
 		};
 	});
 
-	const usersPagination = usePagination({
+	const { page: userPage, pageSize: userPageSize } = usePagination({
 		queryParameterPrefix: "project-group-user",
 		totalItemsCount: usersTotalCount,
 	});
 
-	const { page, pageSize } = usersPagination;
-
 	useEffect(() => {
-		void dispatch(projectGroupsActions.loadUsers({ page, pageSize }));
-	}, [dispatch, page, pageSize]);
+		void dispatch(
+			projectGroupsActions.loadUsers({
+				page: userPage,
+				pageSize: userPageSize,
+			}),
+		);
+	}, [dispatch, userPage, userPageSize]);
 
 	return (
 		<ProjectGroupForm

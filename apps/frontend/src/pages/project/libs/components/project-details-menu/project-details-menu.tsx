@@ -6,14 +6,14 @@ import { configureString } from "~/libs/helpers/helpers.js";
 import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
 type Properties = {
-	id: number;
+	projectId: number;
 };
 
-const ProjectDetailsMenu = ({ id }: Properties): JSX.Element => {
+const ProjectDetailsMenu = ({ projectId }: Properties): JSX.Element => {
 	const projectAccessManagementRoute = configureString(
 		AppRoute.PROJECT_ACCESS_MANAGEMENT,
 		{
-			id: id.toString(),
+			id: projectId.toString(),
 		},
 	);
 

@@ -8,9 +8,10 @@ import {
 import ReactSelect, { type MultiValue, type SingleValue } from "react-select";
 
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
-import { useCallback, useFormController } from "~/libs/hooks/hooks.js";
+import { useCallback, useFormController, useMemo } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 
+import { FIRST_OPTION_INDEX } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties<TFieldValues extends FieldValues, TOptionValue> = {
@@ -38,9 +39,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 	placeholder,
 	size = "default",
 }: Properties<TFieldValues, TOptionValue>): JSX.Element => {
-	const {
-		field: { onChange, ...field },
-	} = useFormController({
+	const { field } = useFormController({
 		control,
 		name,
 	});
@@ -51,24 +50,38 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		styles["label-text"],
 		isLabelHidden && "visually-hidden",
 	);
-	const option = (Array.isArray(field.value) ? field.value : [field.value])
-		.map((value) => options.find((option) => option.value === value))
-		.filter(Boolean);
+
+	const value = useMemo(() => {
+		const fieldValue = Array.isArray(field.value) ? field.value : [field.value];
+
+		const matchedOptions = fieldValue
+			.map((value) => options.find((option) => option.value === value))
+			.filter(Boolean);
+
+		return isMulti
+			? matchedOptions
+			: matchedOptions[FIRST_OPTION_INDEX] || null;
+	}, [field.value, options, isMulti]);
 
 	const handleChange = useCallback(
 		(
-			option:
+			selectedOptions:
 				| MultiValue<SelectOption<TOptionValue> | undefined>
 				| SingleValue<SelectOption<TOptionValue> | undefined>,
 		) => {
-			const options = (Array.isArray(option) ? option : [option]) as MultiValue<
-				SelectOption<TOptionValue> | undefined
-			>;
-			const values = options.map((option) => option?.value).filter(Boolean);
-
-			onChange(isMulti ? values : values.pop());
+			if (isMulti) {
+				const multiValues = (
+					selectedOptions as MultiValue<SelectOption<TOptionValue>>
+				).map(({ value }) => value);
+				field.onChange(multiValues);
+			} else {
+				const singleValue = (
+					selectedOptions as SingleValue<SelectOption<TOptionValue>>
+				)?.value;
+				field.onChange(singleValue ?? null);
+			}
 		},
-		[isMulti, onChange],
+		[isMulti, field],
 	);
 
 	return (
@@ -128,7 +141,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 					}),
 				}}
 				unstyled
-				value={isMulti ? option : option.pop()}
+				value={value}
 			/>
 		</label>
 	);

@@ -30,19 +30,17 @@ import styles from "./styles.module.css";
 const ProjectAccessManagement = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { id } = useParams<{ id: string }>();
+
+	const { project, projectStatus: projectDataStatus } = useAppSelector(
+		({ projects }) => projects,
+	);
+
 	const {
-		project,
-		projectDataStatus,
+		dataStatus: projectGroupsDataStatus,
+		projectGroupCreateStatus,
 		projectGroups,
-		projectGroupsDataStatus,
 		projectGroupsTotalCount,
-	} = useAppSelector(({ projectGroups, projects }) => ({
-		project: projects.project,
-		projectDataStatus: projects.projectStatus,
-		projectGroups: projectGroups.projectGroups,
-		projectGroupsDataStatus: projectGroups.dataStatus,
-		projectGroupsTotalCount: projectGroups.projectGroupsTotalCount,
-	}));
+	} = useAppSelector(({ projectGroups }) => projectGroups);
 
 	const hasProject = project !== null;
 	const projectRoute = hasProject
@@ -103,18 +101,26 @@ const ProjectAccessManagement = (): JSX.Element => {
 
 	const handleProjectGroupCreateSubmit = useCallback(
 		(payload: ProjectGroupCreateRequestDto) => {
-			void dispatch(projectGroupActions.create(payload))
-				.unwrap()
-				.then(() => {
-					onCreateModalClose();
-				});
+			void dispatch(projectGroupActions.create(payload));
 		},
-		[dispatch, onCreateModalClose],
+		[dispatch],
 	);
 
-	const isLoading = [projectDataStatus, projectGroupsDataStatus].some(
-		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
-	);
+	useEffect(() => {
+		if (projectGroupCreateStatus === DataStatus.FULFILLED) {
+			onCreateModalClose();
+		}
+	}, [projectGroupCreateStatus, onCreateModalClose]);
+
+	const isProjectLoading =
+		projectDataStatus === DataStatus.IDLE ||
+		projectDataStatus === DataStatus.PENDING;
+
+	const isProjectGroupsLoading =
+		projectGroupsDataStatus === DataStatus.IDLE ||
+		projectGroupsDataStatus === DataStatus.PENDING;
+
+	const isLoading = isProjectLoading || isProjectGroupsLoading;
 
 	const isRejected = projectDataStatus === DataStatus.REJECTED;
 

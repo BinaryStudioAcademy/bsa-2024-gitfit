@@ -12,7 +12,7 @@ const getGroupUsersColumns = (): TableColumn<UserRow>[] => {
 		{
 			accessorFn: (user: UserRow): string => user.groups.join(", "),
 			header: "Groups",
-			size: 452,
+			size: 450,
 		},
 		{
 			accessorFn: (user: UserRow): string =>

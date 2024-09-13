@@ -12,7 +12,16 @@ import {
 	getInitialPage,
 	getInitialPageSize,
 } from "./libs/helpers/helpers.js";
-import { type UsePagination } from "./libs/types/types.js";
+
+type UsePagination = (parameters: {
+	queryParameterPrefix: string;
+	totalItemsCount: number;
+}) => {
+	onPageChange: (page: number) => void;
+	onPageSizeChange: (pageSize: number) => void;
+	page: number;
+	pageSize: number;
+};
 
 const usePagination: UsePagination = ({
 	queryParameterPrefix,
