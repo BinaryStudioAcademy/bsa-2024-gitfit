@@ -1,3 +1,0 @@
-const TABLE_BODY_MAX_HEIGHT = 450;
-
-export { TABLE_BODY_MAX_HEIGHT };

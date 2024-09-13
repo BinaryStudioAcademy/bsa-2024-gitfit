@@ -47,11 +47,11 @@
 
 .table .table-body {
 	display: block;
+	max-height: 450px;
 	overflow-y: auto;
 }
 
 .table .table-body--no-scroll {
-	padding-right: 10px;
 	overflow-y: hidden;
 }
 

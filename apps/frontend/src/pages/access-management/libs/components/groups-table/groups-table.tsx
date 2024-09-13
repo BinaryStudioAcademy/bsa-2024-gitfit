@@ -68,7 +68,7 @@ const GroupsTable = ({
 			<Table<GroupRow>
 				columns={groupColumns}
 				data={groupData}
-				isMenuOpened={isMenuOpened}
+				isScrollDisabled={isMenuOpened}
 			/>
 			<TablePagination
 				background={paginationBackground}

@@ -6,17 +6,15 @@ import {
 
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
-import { useEffect, useRef, useState } from "~/libs/hooks/hooks.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { SelectRowCell } from "./libs/components/components.js";
-import { TABLE_BODY_MAX_HEIGHT } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type BaseProperties<T> = {
 	columns: TableColumn<T>[];
 	data: T[];
-	isMenuOpened?: boolean;
+	isScrollDisabled?: boolean;
 };
 
 type SelectableProperties<T> = {
@@ -32,7 +30,7 @@ type Properties<T> =
 const Table = <T extends object>({
 	columns,
 	data,
-	isMenuOpened,
+	isScrollDisabled,
 	...selectableProperties
 }: Properties<T>): JSX.Element => {
 	const { getRowId, onRowSelect, selectedRowIds } = selectableProperties as
@@ -47,17 +45,6 @@ const Table = <T extends object>({
 
 	const hasData = data.length !== EMPTY_LENGTH;
 	const isRowSelectable = typeof onRowSelect === "function";
-
-	const tableBodyReference = useRef<HTMLTableSectionElement | null>(null);
-	const [isScrollPresent, setIsScrollPresent] = useState<boolean>(false);
-
-	useEffect(() => {
-		const tableBody = tableBodyReference.current;
-
-		if (tableBody) {
-			setIsScrollPresent(tableBody.scrollHeight > TABLE_BODY_MAX_HEIGHT);
-		}
-	}, [data, isMenuOpened]);
 
 	return (
 		<div className={styles["table-container"]}>
@@ -77,9 +64,7 @@ const Table = <T extends object>({
 								<th
 									className={styles["table-header"]}
 									key={header.id}
-									style={{
-										width: header.column.columnDef.size,
-									}}
+									style={{ width: header.column.columnDef.size }}
 								>
 									{flexRender(
 										header.column.columnDef.header,
@@ -93,10 +78,8 @@ const Table = <T extends object>({
 				<tbody
 					className={getValidClassNames(
 						styles["table-body"],
-						isScrollPresent && isMenuOpened && styles["table-body--no-scroll"],
+						isScrollDisabled && styles["table-body--no-scroll"],
 					)}
-					ref={tableBodyReference}
-					style={{ maxHeight: `${TABLE_BODY_MAX_HEIGHT.toString()}px` }}
 				>
 					{hasData ? (
 						table.getRowModel().rows.map((row) => (
@@ -121,9 +104,7 @@ const Table = <T extends object>({
 									<td
 										className={styles["table-data"]}
 										key={cell.id}
-										style={{
-											width: cell.column.columnDef.size,
-										}}
+										style={{ width: cell.column.columnDef.size }}
 									>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</td>
