@@ -24,6 +24,7 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(create.rejected, (state) => {
 			state.dataStatus = DataStatus.REJECTED;
 		});
+
 		builder.addCase(copyToClipboard.pending, (state) => {
 			state.dataStatus = DataStatus.PENDING;
 		});
