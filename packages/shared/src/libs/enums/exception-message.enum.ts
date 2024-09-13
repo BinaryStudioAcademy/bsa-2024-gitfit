@@ -9,7 +9,7 @@ const ExceptionMessage = {
 	NO_TOKEN_PROVIDED: "No token provided.",
 	PROJECT_API_KEY_ALREADY_EXISTS: "API key already exists for the project.",
 	PROJECT_API_KEY_NOT_FOUND: "API key not found.",
-	PROJECT_API_KEY_UPDATE_FAILED: "Failed to update project API key.",
+	PROJECT_API_KEY_UPDATE_FAILED: "Project API key update failed.",
 	PROJECT_GROUP_NAME_USED: "Project group name is already in use.",
 	PROJECT_NAME_USED: "Project name is already in use.",
 	PROJECT_NOT_FOUND: "Project not found.",
