@@ -91,29 +91,22 @@ const GroupUsersTable = ({
 				<Loader />
 			) : (
 				<div className={styles["group-users-table"]}>
-					{hasUserRows ? (
-						<>
-							<Table<UserRow>
-								columns={userColumns}
-								data={userData}
-								getRowId={getRowId}
-								onRowSelect={onToggle}
-								selectedRowIds={selectedUserIds}
-							/>
-							<TablePagination
-								background="secondary"
-								onPageChange={onPageChange}
-								onPageSizeChange={onPageSizeChange}
-								page={page}
-								pageSize={pageSize}
-								totalItemsCount={usersTotalCount}
-							/>
-						</>
-					) : (
-						<p className={styles["empty-placeholder"]}>
-							No users found matching your search criteria.
-						</p>
-					)}
+					<Table<UserRow>
+						columns={userColumns}
+						data={userData}
+						getRowId={getRowId}
+						noDataMessage="No users matching your search criteria."
+						onRowSelect={onToggle}
+						selectedRowIds={selectedUserIds}
+					/>
+					<TablePagination
+						background="secondary"
+						onPageChange={onPageChange}
+						onPageSizeChange={onPageSizeChange}
+						page={page}
+						pageSize={pageSize}
+						totalItemsCount={usersTotalCount}
+					/>
 				</div>
 			)}
 			{hasError && <span className={styles["error-message"]}>{error}</span>}
