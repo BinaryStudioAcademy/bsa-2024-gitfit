@@ -34,7 +34,8 @@ class ProjectApiKeyRepository implements Repository {
 		const deletedRowsCount = await this.projectApiKeyModel
 			.query()
 			.delete()
-			.where("project_id", projectId);
+			.where("project_id", projectId)
+			.execute();
 
 		return Boolean(deletedRowsCount);
 	}
