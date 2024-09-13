@@ -32,7 +32,7 @@
 	min-height: 60px;
 	font-weight: 400;
 	line-height: 150%;
-	word-wrap: break-word;
+	word-wrap: normal;
 }
 
 .table .table-header {
