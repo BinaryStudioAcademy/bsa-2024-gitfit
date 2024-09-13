@@ -11,14 +11,17 @@ class GitEmailRepository implements Repository {
 	}
 
 	public async create(entity: GitEmailEntity): Promise<GitEmailEntity> {
-		const { contributor, email } = entity.toNewObject();
+		const { contributorId, email } = entity.toNewObject();
 
 		const gitEmail = await this.gitEmailModel
 			.query()
 			.insert({
-				contributor,
-				contributorId: contributor.id,
+				contributorId,
 				email,
+			})
+			.withGraphFetched("contributor")
+			.modifyGraph("contributor", (builder) => {
+				builder.select("id", "name");
 			})
 			.execute();
 

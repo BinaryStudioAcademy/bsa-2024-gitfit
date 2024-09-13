@@ -1,8 +1,5 @@
 type GitEmailCreateRequestDto = {
-	contributor: {
-		id: number;
-		name: string;
-	};
+	contributorId: number;
 	email: string;
 };
 

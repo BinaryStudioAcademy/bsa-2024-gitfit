@@ -20,7 +20,7 @@ class GitEmailService implements Service {
 	public async create(
 		payload: GitEmailCreateRequestDto,
 	): Promise<GitEmailGetAllItemResponseDto> {
-		const { contributor, email } = payload;
+		const { contributorId, email } = payload;
 
 		const existingGitEmail = await this.gitEmailRepository.findByEmail(email);
 
@@ -33,7 +33,7 @@ class GitEmailService implements Service {
 
 		const item = await this.gitEmailRepository.create(
 			GitEmailEntity.initializeNew({
-				contributor,
+				contributorId,
 				email,
 			}),
 		);

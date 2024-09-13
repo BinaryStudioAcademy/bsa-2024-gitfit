@@ -63,7 +63,7 @@ class ActivityLogService implements Service {
 					});
 
 					gitEmail = await this.gitEmailService.create({
-						contributor,
+						contributorId: contributor.id,
 						email: authorEmail,
 					});
 				}
