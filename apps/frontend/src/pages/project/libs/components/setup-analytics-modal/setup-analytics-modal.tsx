@@ -32,16 +32,19 @@ const SetupAnalyticsModal = ({
 	const { dataStatus } = useAppSelector(({ projectApiKeys }) => projectApiKeys);
 
 	const hasProjectApiKey = project.apiKey !== null;
-	const isGenerateButtonDisabled =
-		hasProjectApiKey || dataStatus === DataStatus.PENDING;
+	const isGenerateButtonDisabled = dataStatus === DataStatus.PENDING;
 
 	const handleGenerateSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit(({ projectId }) => {
-				void dispatch(projectApiKeyActions.create({ projectId }));
+				if (hasProjectApiKey) {
+					void dispatch(projectApiKeyActions.patch({ projectId }));
+				} else {
+					void dispatch(projectApiKeyActions.create({ projectId }));
+				}
 			})(event_);
 		},
-		[handleSubmit, dispatch],
+		[handleSubmit, dispatch, hasProjectApiKey],
 	);
 
 	return (
@@ -62,7 +65,7 @@ const SetupAnalyticsModal = ({
 					<div className={styles["button-wrapper"]}>
 						<Button
 							isDisabled={isGenerateButtonDisabled}
-							label="Generate"
+							label={hasProjectApiKey ? "Regenerate" : "Generate"}
 							type="submit"
 						/>
 					</div>

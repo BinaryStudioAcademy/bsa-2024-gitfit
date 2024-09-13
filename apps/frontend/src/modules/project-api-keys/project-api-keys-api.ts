@@ -7,6 +7,8 @@ import { ProjectApiKeysApiPath } from "./libs/enums/enums.js";
 import {
 	type ProjectApiKeyCreateRequestDto,
 	type ProjectApiKeyCreateResponseDto,
+	type ProjectApiKeyPatchRequestDto,
+	type ProjectApiKeyPatchResponseDto,
 } from "./libs/types/types.js";
 
 type Constructor = {
@@ -34,6 +36,22 @@ class ProjectApiKeysApi extends BaseHTTPApi {
 		);
 
 		return await response.json<ProjectApiKeyCreateResponseDto>();
+	}
+
+	public async patch(
+		payload: ProjectApiKeyPatchRequestDto,
+	): Promise<ProjectApiKeyPatchResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(ProjectApiKeysApiPath.ROOT, {}),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "PATCH",
+				payload: JSON.stringify(payload),
+			},
+		);
+
+		return await response.json<ProjectApiKeyPatchResponseDto>();
 	}
 }
 
