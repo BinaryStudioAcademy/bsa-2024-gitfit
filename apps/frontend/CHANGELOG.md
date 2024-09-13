@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.24.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.23.0...frontend-v1.24.0) (2024-09-13)
+
+
+### Features
+
+* Add an ability to copy project api key gf-284 ([#292](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/292)) ([1251eb9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1251eb969f3f6dd8f1abe7eb7887605f2931d410))
+
+
+### Bug Fixes
+
+* rename setup analytics button to match the design gf-308 ([#309](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/309)) ([abcbde2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/abcbde2612c4c40215f188b748408db42ecd2835))
+
 ## [1.23.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.22.1...frontend-v1.23.0) (2024-09-13)
 
 
