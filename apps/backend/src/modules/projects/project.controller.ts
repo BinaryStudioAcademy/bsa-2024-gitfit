@@ -135,8 +135,8 @@ class ProjectController extends BaseController {
 	 *                description:
 	 *                  type: string
 	 *      responses:
-	 *        200:
-	 *          description: Successful operation
+	 *        201:
+	 *          description: Project was successfully created
 	 *          content:
 	 *            application/json:
 	 *              schema:
