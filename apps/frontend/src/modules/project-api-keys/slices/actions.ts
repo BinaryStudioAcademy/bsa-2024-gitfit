@@ -6,7 +6,6 @@ import {
 	type ProjectApiKeyCreateRequestDto,
 	type ProjectApiKeyCreateResponseDto,
 } from "~/modules/project-api-keys/project-api-keys.js";
-import { actions as projectActions } from "~/modules/projects/projects.js";
 
 import { name as sliceName } from "./project-api-keys.slice.js";
 
@@ -14,15 +13,12 @@ const create = createAsyncThunk<
 	ProjectApiKeyCreateResponseDto,
 	ProjectApiKeyCreateRequestDto,
 	AsyncThunkConfig
->(`${sliceName}/create`, async (payload, { dispatch, extra }) => {
+>(`${sliceName}/create`, async (payload, { extra }) => {
 	const { projectApiKeysApi, toastNotifier } = extra;
-	const { projectId } = payload;
 
 	const response = await projectApiKeysApi.create(payload);
 
 	toastNotifier.showSuccess(NotificationMessage.PROJECT_API_KEY_CREATE_SUCCESS);
-
-	void dispatch(projectActions.getById({ id: String(projectId) }));
 
 	return response;
 });

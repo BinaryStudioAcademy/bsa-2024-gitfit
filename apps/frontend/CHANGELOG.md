@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.22.0...frontend-v1.22.1) (2024-09-12)
+
+
+### Bug Fixes
+
+* adjusted path for project page breadcrumbs gf-283 ([#286](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/286)) ([384ec02](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/384ec022fe92e04042a8fe89b8b5317061dbff9a))
+
 ## [1.22.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.21.1...frontend-v1.22.0) (2024-09-11)
 
 

@@ -45,7 +45,7 @@ const config: DangerConfig = {
 	},
 	TITLE: {
 		PATTERN: new RegExp(
-			`^(${ProjectPrefix.CHANGE_TYPES.join("|")})(\\((${ProjectPrefix.SCOPES.APPS.join("|")}|${ProjectPrefix.SCOPES.PACKAGES.join("|")})(\\/(${ProjectPrefix.SCOPES.APPS.join("|")}|${ProjectPrefix.SCOPES.PACKAGES.join("|")}))*\\))?: (.*\\S )?(${ProjectPrefix.ISSUE_PREFIXES.join("|")})-[0-9]{1,6}((\\.[0-9]+){1,2})?$`,
+			`^(${ProjectPrefix.CHANGE_TYPES.join("|")})(\\((${ProjectPrefix.SCOPES.APPS.join("|")}|${ProjectPrefix.SCOPES.PACKAGES.join("|")}|${ProjectPrefix.SCOPES.SCRIPTS.join("|")})(\\/(${ProjectPrefix.SCOPES.APPS.join("|")}|${ProjectPrefix.SCOPES.PACKAGES.join("|")}|${ProjectPrefix.SCOPES.SCRIPTS.join("|")}))*\\))?: (.*\\S )?(${ProjectPrefix.ISSUE_PREFIXES.join("|")})-[0-9]{1,6}((\\.[0-9]+){1,2})?$`,
 		),
 	},
 };
