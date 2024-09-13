@@ -1,8 +1,8 @@
 import { DateInput, PageLayout } from "~/libs/components/components.js";
+import { subtractDays } from "~/libs/helpers/helpers.js";
 import { useAppForm, useCallback } from "~/libs/hooks/hooks.js";
 
 import { ANALYTICS_DATE_MAX_RANGE } from "./libs/constants/constants.js";
-import { subtractDays } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 const Analytics = (): JSX.Element => {

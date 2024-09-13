@@ -6,25 +6,30 @@ import {
 } from "react-hook-form";
 
 import { Icon, Popover } from "~/libs/components/components.js";
-import { formatDate } from "~/libs/helpers/helpers.js";
+import {
+	addDays,
+	formatDate,
+	getDifferenceInDays,
+} from "~/libs/helpers/helpers.js";
 import {
 	useCallback,
 	useFormController,
 	usePopover,
 } from "~/libs/hooks/hooks.js";
 
-import { addDays, getDifferenceInDays } from "./libs/helpers/helpers.js";
 import { type DateValue } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties<T extends FieldValues> = {
 	control: Control<T, null>;
+	maxDate?: Date;
 	maxRange?: number;
 	name: FieldPath<T>;
 };
 
 const DateInput = <T extends FieldValues>({
 	control,
+	maxDate,
 	maxRange,
 	name,
 }: Properties<T>): JSX.Element => {
@@ -38,7 +43,11 @@ const DateInput = <T extends FieldValues>({
 	const getSelectedDateRange = (): string => {
 		const [startDate, endDate] = field.value as Date[];
 
-		return `${formatDate(startDate as Date, "MMM d, yyyy")} - ${formatDate(endDate as Date, "MMM d, yyyy")}`;
+		if (!startDate || !endDate) {
+			return "Choose date range";
+		}
+
+		return `${formatDate(startDate, "MMM d, yyyy")} - ${formatDate(endDate, "MMM d, yyyy")}`;
 	};
 
 	const handleDateChange = useCallback(
@@ -61,7 +70,7 @@ const DateInput = <T extends FieldValues>({
 		[field, maxRange],
 	);
 
-	const formatShortWeekday = useCallback(
+	const handleFormatShortWeekday = useCallback(
 		(_locale: string | undefined, date: Date): string => {
 			return formatDate(date, "EEEEEE");
 		},
@@ -75,8 +84,9 @@ const DateInput = <T extends FieldValues>({
 					<Calendar
 						calendarType="gregory"
 						className={styles["calendar"]}
-						formatShortWeekday={formatShortWeekday}
+						formatShortWeekday={handleFormatShortWeekday}
 						locale="en"
+						maxDate={maxDate ?? new Date()}
 						next2Label={null}
 						nextLabel={<Icon height={16} name="rightArrow" width={16} />}
 						onChange={handleDateChange}
