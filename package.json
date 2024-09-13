@@ -1,10 +1,11 @@
 {
 	"name": "git-fit",
-	"version": "1.23.0",
+	"version": "1.23.1",
 	"type": "module",
 	"workspaces": [
 		"apps/*",
-		"packages/*"
+		"packages/*",
+		"scripts/*"
 	],
 	"engines": {
 		"node": "20.x.x",
