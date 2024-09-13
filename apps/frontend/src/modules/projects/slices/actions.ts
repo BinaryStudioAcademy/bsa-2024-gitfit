@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { NotificationMessage } from "~/libs/enums/enums.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
@@ -76,6 +76,4 @@ const deleteById = createAsyncThunk<boolean, number, AsyncThunkConfig>(
 	},
 );
 
-const updateApiKey = createAction<string>(`${sliceName}/update-api-key`);
-
-export { create, deleteById, getById, loadAll, patch, updateApiKey };
+export { create, deleteById, getById, loadAll, patch };
