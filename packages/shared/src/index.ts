@@ -62,6 +62,9 @@ export {
 	type ProjectApiKeyCreateResponseDto,
 	projectApiKeyCreateValidationSchema,
 	ProjectApiKeyError,
+	type ProjectApiKeyPatchRequestDto,
+	type ProjectApiKeyPatchResponseDto,
+	projectApiKeyPatchValidationSchema,
 	ProjectApiKeysApiPath,
 } from "./modules/project-api-keys/projects-api-keys.js";
 export {
