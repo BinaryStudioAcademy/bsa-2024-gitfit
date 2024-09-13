@@ -5,7 +5,7 @@ import { useAppSelector, useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	onEdit: () => void;
-	onManageAccess?: () => void;
+	onManageAccess: () => void;
 };
 
 const ProjectMenu = ({
@@ -21,10 +21,9 @@ const ProjectMenu = ({
 	}, [onEdit, onClose]);
 
 	const handleManageAccessClick = useCallback(() => {
-		if (onManageAccess) {
-			onManageAccess();
-			onClose();
-		}
+		// No need to check for onManageAccess
+		onManageAccess();
+		onClose();
 	}, [onManageAccess, onClose]);
 
 	if (!authenticatedUser) {

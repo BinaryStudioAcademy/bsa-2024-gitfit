@@ -27,6 +27,7 @@ import {
 import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
+	const handleManageAccess = useCallback(() => {}, []);
 	const dispatch = useAppDispatch();
 	const { id: projectId } = useParams<{ id: string }>();
 
@@ -73,13 +74,15 @@ const Project = (): JSX.Element => {
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
 	const isRejected = projectStatus === DataStatus.REJECTED;
 
+	const hasProject = project !== null;
+
 	if (isRejected) {
 		return <NotFound />;
 	}
 
 	return (
 		<PageLayout isLoading={isLoading}>
-			{project && (
+			{hasProject && (
 				<>
 					<div className={styles["breadcrumb-container"]}>
 						<Breadcrumbs
@@ -94,7 +97,10 @@ const Project = (): JSX.Element => {
 						<div className={styles["header-container"]}>
 							<h1 className={styles["title"]}>{project.name}</h1>
 
-							<ProjectMenu onEdit={handleEditProject} />
+							<ProjectMenu
+								onEdit={handleEditProject}
+								onManageAccess={handleManageAccess}
+							/>
 						</div>
 
 						<div className={styles["project-description-layout"]}>
