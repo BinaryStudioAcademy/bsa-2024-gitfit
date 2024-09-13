@@ -5,8 +5,6 @@ import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import {
 	type ProjectApiKeyCreateRequestDto,
 	type ProjectApiKeyCreateResponseDto,
-	type ProjectApiKeyPatchRequestDto,
-	type ProjectApiKeyPatchResponseDto,
 } from "~/modules/project-api-keys/project-api-keys.js";
 
 import { name as sliceName } from "./project-api-keys.slice.js";
@@ -25,18 +23,16 @@ const create = createAsyncThunk<
 	return response;
 });
 
-const patch = createAsyncThunk<
-	ProjectApiKeyPatchResponseDto,
-	ProjectApiKeyPatchRequestDto,
-	AsyncThunkConfig
->(`${sliceName}/patch`, async (payload, { extra }) => {
-	const { projectApiKeysApi, toastNotifier } = extra;
+const copyToClipboard = createAsyncThunk<string, string, AsyncThunkConfig>(
+	`${sliceName}/copy-to-clipboard`,
+	async (projectApiKey, { extra }) => {
+		const { toastNotifier } = extra;
 
-	const response = await projectApiKeysApi.patch(payload);
+		await navigator.clipboard.writeText(projectApiKey);
+		toastNotifier.showSuccess(NotificationMessage.PROJECT_API_KEY_COPY_SUCCESS);
 
-	toastNotifier.showSuccess(NotificationMessage.PROJECT_API_KEY_UPDATE_SUCCESS);
+		return projectApiKey;
+	},
+);
 
-	return response;
-});
-
-export { create, patch };
+export { copyToClipboard, create };

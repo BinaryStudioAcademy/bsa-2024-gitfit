@@ -3,6 +3,7 @@ const NotificationMessage = {
 	GROUP_DELETE_SUCCESS: "Group was successfully deleted.",
 	GROUP_UPDATE_SUCCESS: "Group was successfully updated.",
 	PROFILE_UPDATE_SUCCESS: "Your profile has been successfully updated.",
+	PROJECT_API_KEY_COPY_SUCCESS: "Project API key was successfully copied.",
 	PROJECT_API_KEY_CREATE_SUCCESS: "Project API key was successfully generated.",
 	PROJECT_API_KEY_UPDATE_SUCCESS:
 		"Project API key was successfully regenerated.",

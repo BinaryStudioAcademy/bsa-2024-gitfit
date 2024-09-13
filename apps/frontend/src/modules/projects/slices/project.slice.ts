@@ -87,11 +87,6 @@ const { actions, name, reducer } = createSlice({
 				state.project.apiKey = action.payload.apiKey;
 			}
 		});
-		builder.addCase(projectApiKeyActions.patch.fulfilled, (state, action) => {
-			if (state.project) {
-				state.project.apiKey = action.payload.apiKey;
-			}
-		});
 	},
 	initialState,
 	name: "projects",
