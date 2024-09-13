@@ -3,7 +3,7 @@ type GroupRow = {
 	id: number;
 	name: string;
 	permissions: string[];
-	users: number;
+	userCount: number;
 };
 
 export { type GroupRow };

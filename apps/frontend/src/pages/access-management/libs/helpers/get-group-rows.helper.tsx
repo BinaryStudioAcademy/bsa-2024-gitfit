@@ -8,7 +8,7 @@ const getGroupRows = (groups: GroupGetAllItemResponseDto[]): GroupRow[] =>
 		id: group.id,
 		name: group.name,
 		permissions: group.permissions.map((permission) => permission.name),
-		users: group.users.length,
+		userCount: group.users.length,
 	}));
 
 export { getGroupRows };

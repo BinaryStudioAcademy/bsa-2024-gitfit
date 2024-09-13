@@ -19,7 +19,7 @@ const getGroupColumns = (actions: {
 		size: 200,
 	},
 	{
-		accessorKey: "users",
+		accessorKey: "userCount",
 		header: "Users",
 		size: 50,
 	},
