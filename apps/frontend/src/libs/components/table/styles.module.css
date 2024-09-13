@@ -47,7 +47,6 @@
 
 .table .table-body {
 	display: block;
-	max-height: 450px;
 	overflow-y: auto;
 }
 

@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "~/libs/hooks/hooks.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { SelectRowCell } from "./libs/components/components.js";
-import { TABLE_MAX_HEIGHT } from "./libs/constants/constants.js";
+import { TABLE_BODY_MAX_HEIGHT } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type BaseProperties<T> = {
@@ -48,19 +48,19 @@ const Table = <T extends object>({
 	const hasData = data.length !== EMPTY_LENGTH;
 	const isRowSelectable = typeof onRowSelect === "function";
 
-	const tableContainerReference = useRef<HTMLDivElement | null>(null);
+	const tableBodyReference = useRef<HTMLTableSectionElement | null>(null);
 	const [isScrollPresent, setIsScrollPresent] = useState<boolean>(false);
 
 	useEffect(() => {
-		const container = tableContainerReference.current;
+		const tableBody = tableBodyReference.current;
 
-		if (container) {
-			setIsScrollPresent(container.scrollHeight >= TABLE_MAX_HEIGHT);
+		if (tableBody) {
+			setIsScrollPresent(tableBody.scrollHeight > TABLE_BODY_MAX_HEIGHT);
 		}
 	}, [data, isMenuOpened]);
 
 	return (
-		<div className={styles["table-container"]} ref={tableContainerReference}>
+		<div className={styles["table-container"]}>
 			<table className={styles["table"]}>
 				<thead className={styles["table-head"]}>
 					{table.getHeaderGroups().map((headerGroup) => (
@@ -95,6 +95,8 @@ const Table = <T extends object>({
 						styles["table-body"],
 						isScrollPresent && isMenuOpened && styles["table-body--no-scroll"],
 					)}
+					ref={tableBodyReference}
+					style={{ maxHeight: `${TABLE_BODY_MAX_HEIGHT.toString()}px` }}
 				>
 					{hasData ? (
 						table.getRowModel().rows.map((row) => (
