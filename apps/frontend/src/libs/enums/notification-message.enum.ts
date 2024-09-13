@@ -1,6 +1,6 @@
 const NotificationMessage = {
 	ACCESS_DENIED:
-		"You don't have access to any pages for now. Please contact an admin to enable access for you.",
+		"You do not have permission to access this page. Please contact an administrator to request access.",
 	GROUP_CREATE_SUCCESS: "Group was successfully created.",
 	GROUP_DELETE_SUCCESS: "Group was successfully deleted.",
 	GROUP_UPDATE_SUCCESS: "Group was successfully updated.",
