@@ -153,7 +153,7 @@ class ProjectController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.projectService.create(options.body),
-			status: HTTPCode.OK,
+			status: HTTPCode.CREATED,
 		};
 	}
 
