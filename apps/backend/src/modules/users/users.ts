@@ -10,7 +10,7 @@ const userRepository = new UserRepository(UserModel);
 const userService = new UserService(userRepository, encryption);
 const userController = new UserController(logger, userService);
 
-export { userController, userRepository, userService };
+export { userController, userService };
 export { UserError } from "./libs/exceptions/exceptions.js";
 export {
 	type UserAuthResponseDto,

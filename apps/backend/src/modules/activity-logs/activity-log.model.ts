@@ -4,17 +4,15 @@ import {
 	AbstractModel,
 	DatabaseTableName,
 } from "~/libs/modules/database/database.js";
-import { type ContributorModel } from "~/modules/contributors/contributors.js";
 import { GitEmailModel } from "~/modules/git-emails/git-emails.js";
 import { ProjectModel } from "~/modules/projects/project.model.js";
 import { UserModel } from "~/modules/users/user.model.js";
 
 class ActivityLogModel extends AbstractModel {
 	public commitsNumber!: number;
-	public contributor!: Pick<ContributorModel, "id" | "name">;
 	public createdByUser!: Pick<UserModel, "id">;
 	public date!: string;
-	public gitEmail!: Pick<GitEmailModel, "id">;
+	public gitEmail!: Pick<GitEmailModel, "contributor" | "id">;
 	public project!: Pick<ProjectModel, "id">;
 
 	public static override get relationMappings(): RelationMappings {

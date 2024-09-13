@@ -1,71 +1,72 @@
 import { type Entity } from "~/libs/types/types.js";
+import { type ContributorModel } from "~/modules//contributors/contributors.js";
 
 import { type GitEmailGetAllItemResponseDto } from "./libs/types/types.js";
 
 class GitEmailEntity implements Entity {
-	private contributorId!: number;
+	private contributor!: Pick<ContributorModel, "id" | "name">;
 
 	private email!: string;
 
 	private id!: null | number;
 
 	private constructor({
-		contributorId,
+		contributor,
 		email,
 		id,
 	}: {
-		contributorId: number;
+		contributor: Pick<ContributorModel, "id" | "name">;
 		email: string;
 		id: null | number;
 	}) {
-		this.contributorId = contributorId;
+		this.contributor = contributor;
 		this.email = email;
 		this.id = id;
 	}
 
 	public static initialize({
-		contributorId,
+		contributor,
 		email,
 		id,
 	}: {
-		contributorId: number;
+		contributor: Pick<ContributorModel, "id" | "name">;
 		email: string;
 		id: number;
 	}): GitEmailEntity {
 		return new GitEmailEntity({
-			contributorId,
+			contributor,
 			email,
 			id,
 		});
 	}
 
 	public static initializeNew({
-		contributorId,
+		contributor,
 		email,
 	}: {
-		contributorId: number;
+		contributor: Pick<ContributorModel, "id" | "name">;
 		email: string;
 	}): GitEmailEntity {
 		return new GitEmailEntity({
-			contributorId,
+			contributor,
 			email,
 			id: null,
 		});
 	}
 
 	public toNewObject(): {
-		contributorId: number;
+		contributor: Pick<ContributorModel, "id" | "name">;
 		email: string;
 	} {
 		return {
-			contributorId: this.contributorId,
+			contributor: this.contributor,
 			email: this.email,
 		};
 	}
 
 	public toObject(): GitEmailGetAllItemResponseDto {
 		return {
-			contributorId: this.contributorId,
+			contributor: this.contributor,
 			email: this.email,
 			id: this.id as number,
 		};

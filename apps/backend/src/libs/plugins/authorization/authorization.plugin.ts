@@ -5,7 +5,7 @@ import { JWTExpired } from "jose/errors";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Token } from "~/libs/modules/token/token.js";
-import { type WhiteRoute } from "~/libs/types/types.js";
+import { type HTTPMethod, type WhiteRoute } from "~/libs/types/types.js";
 import { AuthError } from "~/modules/auth/auth.js";
 import { type UserService } from "~/modules/users/user.service.js";
 
@@ -23,7 +23,13 @@ const authorization = fp<Options>((fastify, options, done) => {
 	fastify.decorateRequest("user", null);
 
 	fastify.addHook("onRequest", async (request: FastifyRequest) => {
-		if (checkIsWhiteRoute(request.url, request.method, whiteRoutes)) {
+		if (
+			checkIsWhiteRoute({
+				method: request.method as HTTPMethod,
+				url: request.url,
+				whiteRoutes,
+			})
+		) {
 			return;
 		}
 

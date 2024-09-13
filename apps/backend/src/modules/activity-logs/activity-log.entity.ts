@@ -1,5 +1,4 @@
 import { type Entity } from "~/libs/types/types.js";
-import { type ContributorModel } from "~/modules/contributors/contributors.js";
 import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 
 import { type ProjectModel } from "../projects/project.model.js";
@@ -8,16 +7,14 @@ import { type ActivityLogGetAllItemResponseDto } from "./libs/types/types.js";
 
 class ActivityLogEntity implements Entity {
 	private commitsNumber!: number;
-	private contributor!: Pick<ContributorModel, "id" | "name">;
 	private createdByUser!: Pick<UserModel, "id">;
 	private date!: string;
-	private gitEmail!: Pick<GitEmailModel, "id">;
+	private gitEmail!: Pick<GitEmailModel, "contributor" | "id">;
 	private id: null | number;
 	private project!: Pick<ProjectModel, "id">;
 
 	private constructor({
 		commitsNumber,
-		contributor,
 		createdByUser,
 		date,
 		gitEmail,
@@ -25,15 +22,13 @@ class ActivityLogEntity implements Entity {
 		project,
 	}: {
 		commitsNumber: number;
-		contributor: Pick<ContributorModel, "id" | "name">;
 		createdByUser: Pick<UserModel, "id">;
 		date: string;
-		gitEmail: Pick<GitEmailModel, "id">;
+		gitEmail: Pick<GitEmailModel, "contributor" | "id">;
 		id: null | number;
 		project: Pick<ProjectModel, "id">;
 	}) {
 		this.commitsNumber = commitsNumber;
-		this.contributor = contributor;
 		this.createdByUser = createdByUser;
 		this.date = date;
 		this.gitEmail = gitEmail;
@@ -43,7 +38,6 @@ class ActivityLogEntity implements Entity {
 
 	public static initialize({
 		commitsNumber,
-		contributor,
 		createdByUser,
 		date,
 		gitEmail,
@@ -51,16 +45,14 @@ class ActivityLogEntity implements Entity {
 		project,
 	}: {
 		commitsNumber: number;
-		contributor: Pick<ContributorModel, "id" | "name">;
 		createdByUser: Pick<UserModel, "id">;
 		date: string;
-		gitEmail: Pick<GitEmailModel, "id">;
+		gitEmail: Pick<GitEmailModel, "contributor" | "id">;
 		id: null | number;
 		project: Pick<ProjectModel, "id">;
 	}): ActivityLogEntity {
 		return new ActivityLogEntity({
 			commitsNumber,
-			contributor,
 			createdByUser,
 			date,
 			gitEmail,
@@ -71,22 +63,19 @@ class ActivityLogEntity implements Entity {
 
 	public static initializeNew({
 		commitsNumber,
-		contributor,
 		createdByUser,
 		date,
 		gitEmail,
 		project,
 	}: {
 		commitsNumber: number;
-		contributor: Pick<ContributorModel, "id" | "name">;
 		createdByUser: Pick<UserModel, "id">;
 		date: string;
-		gitEmail: Pick<GitEmailModel, "id">;
+		gitEmail: Pick<GitEmailModel, "contributor" | "id">;
 		project: Pick<ProjectModel, "id">;
 	}): ActivityLogEntity {
 		return new ActivityLogEntity({
 			commitsNumber,
-			contributor,
 			createdByUser,
 			date,
 			gitEmail,
@@ -97,15 +86,13 @@ class ActivityLogEntity implements Entity {
 
 	public toNewObject(): {
 		commitsNumber: number;
-		contributor: Pick<ContributorModel, "id" | "name">;
 		createdByUser: Pick<UserModel, "id">;
 		date: string;
-		gitEmail: Pick<GitEmailModel, "id">;
+		gitEmail: Pick<GitEmailModel, "contributor" | "id">;
 		project: Pick<ProjectModel, "id">;
 	} {
 		return {
 			commitsNumber: this.commitsNumber,
-			contributor: this.contributor,
 			createdByUser: this.createdByUser,
 			date: this.date,
 			gitEmail: this.gitEmail,
@@ -116,10 +103,12 @@ class ActivityLogEntity implements Entity {
 	public toObject(): ActivityLogGetAllItemResponseDto {
 		return {
 			commitsNumber: this.commitsNumber,
-			contributor: this.contributor,
 			createdByUser: { id: this.createdByUser.id },
 			date: this.date,
-			gitEmail: { id: this.gitEmail.id },
+			gitEmail: {
+				contributor: this.gitEmail.contributor,
+				id: this.gitEmail.id,
+			},
 			id: this.id as number,
 			project: { id: this.project.id },
 		};

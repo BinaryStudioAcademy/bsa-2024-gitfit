@@ -1,5 +1,7 @@
+import { type HTTPMethod } from "./types.js";
+
 type WhiteRoute = {
-	methods: string[];
+	methods: HTTPMethod[];
 	path: string;
 };
 

@@ -1,5 +1,8 @@
 type GitEmailGetAllItemResponseDto = {
-	contributorId: number;
+	contributor: {
+		id: number;
+		name: string;
+	};
 	email: string;
 	id: number;
 };

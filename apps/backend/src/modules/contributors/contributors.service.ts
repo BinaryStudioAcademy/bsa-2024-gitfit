@@ -22,16 +22,6 @@ class ContributorService implements Service {
 	): Promise<ContributorGetAllItemResponseDto> {
 		const { name } = payload;
 
-		const existingContributor =
-			await this.contributorRepository.findByName(name);
-
-		if (existingContributor) {
-			throw new ContributorError({
-				message: ExceptionMessage.CONTRIBUTOR_NAME_USED,
-				status: HTTPCode.CONFLICT,
-			});
-		}
-
 		const item = await this.contributorRepository.create(
 			ContributorEntity.initializeNew({
 				name,

@@ -34,7 +34,7 @@ import { activityLogCreateValidationSchema } from "./libs/validation-schemas/val
  *         gitEmailId:
  *           type: number
  *           minimum: 1
- *         ptojectId:
+ *         ptojectId :
  *           type: number
  *           minimum: 1
  *         createdAt:

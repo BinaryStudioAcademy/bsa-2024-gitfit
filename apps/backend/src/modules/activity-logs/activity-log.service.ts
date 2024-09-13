@@ -38,7 +38,6 @@ class ActivityLogService implements Service {
 	public async create(
 		payload: { apiKey: string } & ActivityLogCreateRequestDto,
 	): Promise<ActivityLogGetAllResponseDto> {
-		// TODO: retrieve token from auth headers
 		const { apiKey, items, userId } = payload;
 
 		const existingProjectApiKey =
@@ -56,19 +55,15 @@ class ActivityLogService implements Service {
 			for (const logItem of items) {
 				const { authorEmail, authorName, commitsNumber } = logItem;
 
-				let contributor = await this.contributorService.findByName(authorName);
-
-				if (!contributor) {
-					contributor = await this.contributorService.create({
-						name: authorName,
-					});
-				}
-
 				let gitEmail = await this.gitEmailService.findByEmail(authorEmail);
 
 				if (!gitEmail) {
+					const contributor = await this.contributorService.create({
+						name: authorName,
+					});
+
 					gitEmail = await this.gitEmailService.create({
-						contributorId: contributor.id,
+						contributor,
 						email: authorEmail,
 					});
 				}
@@ -76,10 +71,9 @@ class ActivityLogService implements Service {
 				const activityLog = await this.activityLogRepository.create(
 					ActivityLogEntity.initializeNew({
 						commitsNumber,
-						contributor: { id: contributor.id, name: contributor.name },
 						createdByUser: { id: userId },
 						date,
-						gitEmail: { id: gitEmail.id },
+						gitEmail: { contributor: gitEmail.contributor, id: gitEmail.id },
 						project: { id: projectId },
 					}),
 				);

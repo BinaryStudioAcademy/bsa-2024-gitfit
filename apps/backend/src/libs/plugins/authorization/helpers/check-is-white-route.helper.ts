@@ -1,10 +1,16 @@
-import { type WhiteRoute } from "~/libs/types/types.js";
+import { type HTTPMethod, type WhiteRoute } from "~/libs/types/types.js";
 
-const checkIsWhiteRoute = (
-	url: string,
-	method: string,
-	whiteRoutes: WhiteRoute[],
-): boolean => {
+type WhiteRouteOptions = {
+	method: HTTPMethod;
+	url: string;
+	whiteRoutes: WhiteRoute[];
+};
+
+const checkIsWhiteRoute = ({
+	method,
+	url,
+	whiteRoutes,
+}: WhiteRouteOptions): boolean => {
 	const apiUrlRegex = /^\/api\/v\d+(\/.+)$/;
 	const match = url.match(apiUrlRegex);
 	const [, route] = match ?? [];

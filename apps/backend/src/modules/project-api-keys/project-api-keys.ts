@@ -3,7 +3,7 @@ import { logger } from "~/libs/modules/logger/logger.js";
 import { projectApiKey } from "~/libs/modules/token/token.js";
 import { ProjectModel } from "~/modules/projects/project.model.js";
 import { ProjectRepository } from "~/modules/projects/project.repository.js";
-import { userRepository } from "~/modules/users/users.js";
+import { userService } from "~/modules/users/users.js";
 
 import { ProjectApiKeyController } from "./project-api-key.controller.js";
 import { ProjectApiKeyModel } from "./project-api-key.model.js";
@@ -17,7 +17,7 @@ const projectApiKeyService = new ProjectApiKeyService({
 	projectApiKeyRepository,
 	projectRepository,
 	token: projectApiKey,
-	userRepository,
+	userService,
 });
 const projectApiKeyController = new ProjectApiKeyController(
 	logger,

@@ -4,7 +4,7 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Token } from "~/libs/modules/token/token.js";
 import { type Service } from "~/libs/types/types.js";
 import { type ProjectRepository } from "~/modules/projects/project.repository.js";
-import { type UserRepository } from "~/modules/users/users.js";
+import { type UserService } from "~/modules/users/users.js";
 
 import { ProjectApiKeyError } from "./libs/exceptions/exceptions.js";
 import {
@@ -19,7 +19,7 @@ type Constructor = {
 	projectApiKeyRepository: ProjectApiKeyRepository;
 	projectRepository: ProjectRepository;
 	token: Token;
-	userRepository: UserRepository;
+	userService: UserService;
 };
 
 class ProjectApiKeyService implements Service {
@@ -31,20 +31,20 @@ class ProjectApiKeyService implements Service {
 
 	private token: Token;
 
-	private userRepository: UserRepository;
+	private userService: UserService;
 
 	public constructor({
 		encryption,
 		projectApiKeyRepository,
 		projectRepository,
 		token,
-		userRepository,
+		userService,
 	}: Constructor) {
 		this.projectApiKeyRepository = projectApiKeyRepository;
 		this.token = token;
 		this.projectRepository = projectRepository;
 		this.encryption = encryption;
-		this.userRepository = userRepository;
+		this.userService = userService;
 	}
 
 	public async create(
@@ -61,9 +61,9 @@ class ProjectApiKeyService implements Service {
 			});
 		}
 
-		const existingUser = await this.userRepository.find(userId);
-
-		if (!existingUser) {
+		try {
+			await this.userService.find(userId);
+		} catch {
 			throw new ProjectApiKeyError({
 				message: ExceptionMessage.USER_NOT_FOUND,
 				status: HTTPCode.NOT_FOUND,
