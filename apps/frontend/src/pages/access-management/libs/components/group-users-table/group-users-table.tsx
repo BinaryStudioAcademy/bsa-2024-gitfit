@@ -75,11 +75,11 @@ const GroupUsersTable = ({
 	const error = errors["userIds"]?.message;
 	const hasError = Boolean(error);
 
-	const hasUser = userData.length !== EMPTY_LENGTH;
+	const hasUserRows = userData.length !== EMPTY_LENGTH;
 
 	const isLoading =
 		usersDataStatus === DataStatus.IDLE ||
-		(usersDataStatus === DataStatus.PENDING && !hasUser);
+		(usersDataStatus === DataStatus.PENDING && !hasUserRows);
 
 	return (
 		<>
@@ -91,7 +91,7 @@ const GroupUsersTable = ({
 				<Loader />
 			) : (
 				<div className={styles["group-users-table"]}>
-					{hasUser ? (
+					{hasUserRows ? (
 						<>
 							<Table<UserRow>
 								columns={userColumns}

@@ -9,7 +9,12 @@ type Properties = {
 const GroupUsersSearch = ({ onChange }: Properties): JSX.Element => {
 	return (
 		<div className={styles["search-container"]}>
-			<Search isLabelHidden label="Enter name" onChange={onChange} />
+			<Search
+				isLabelHidden
+				label="Users search"
+				onChange={onChange}
+				placeholder="Enter name"
+			/>
 		</div>
 	);
 };

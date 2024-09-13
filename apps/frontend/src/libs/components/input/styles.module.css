@@ -64,6 +64,7 @@
 
 .input-icon-left {
 	left: 10px;
+	display: flex;
 }
 
 .input-icon-right {
