@@ -13,18 +13,16 @@ const getUsersFromProjectGroups = (
 		for (const user of projectGroup.users) {
 			const userGroups = userProjectGroupsMap[user.id]?.groups ?? [];
 
-			userProjectGroupsMap[user.id] =
-				(user.id,
-				{
-					...user,
-					groups: [
-						...userGroups,
-						{
-							id: projectGroup.id,
-							name: projectGroup.name,
-						},
-					],
-				});
+			userProjectGroupsMap[user.id] = {
+				...user,
+				groups: [
+					...userGroups,
+					{
+						id: projectGroup.id,
+						name: projectGroup.name,
+					},
+				],
+			};
 		}
 	}
 
