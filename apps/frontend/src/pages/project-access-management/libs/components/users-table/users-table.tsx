@@ -12,7 +12,7 @@ type Properties = {
 	pageSize: number;
 	paginationBackground?: "primary" | "secondary";
 	totalItemsCount: number;
-	users: Omit<UserGetAllItemResponseDto, "email">[];
+	users: UserGetAllItemResponseDto[];
 };
 
 const UsersTable = ({

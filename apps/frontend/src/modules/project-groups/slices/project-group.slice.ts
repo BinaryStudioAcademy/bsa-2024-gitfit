@@ -13,7 +13,7 @@ type State = {
 	projectGroupCreateStatus: ValueOf<typeof DataStatus>;
 	projectGroups: ProjectGroupGetAllItemResponseDto[];
 	projectGroupsTotalCount: number;
-	users: Omit<UserGetAllItemResponseDto, "email">[];
+	users: UserGetAllItemResponseDto[];
 	usersDataStatus: ValueOf<typeof DataStatus>;
 	usersTotalCount: number;
 };

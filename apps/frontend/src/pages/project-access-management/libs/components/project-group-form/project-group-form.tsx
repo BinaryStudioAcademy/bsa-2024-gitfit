@@ -23,7 +23,7 @@ type Properties<T extends ProjectGroupCreateRequestDto> = {
 	defaultValues: T;
 	onSubmit: (payload: T) => void;
 	submitLabel: string;
-	users: Omit<UserGetAllItemResponseDto, "email">[];
+	users: UserGetAllItemResponseDto[];
 	validationSchema: ValidationSchema<T>;
 };
 

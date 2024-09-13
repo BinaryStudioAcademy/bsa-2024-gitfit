@@ -3,11 +3,8 @@ import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
 const getUsersFromProjectGroups = (
 	projectGroups: ProjectGroupGetAllItemResponseDto[],
-): Omit<UserGetAllItemResponseDto, "email">[] => {
-	const userProjectGroupsMap: Record<
-		number,
-		Omit<UserGetAllItemResponseDto, "email">
-	> = {};
+): UserGetAllItemResponseDto[] => {
+	const userProjectGroupsMap: Record<number, UserGetAllItemResponseDto> = {};
 
 	for (const projectGroup of projectGroups) {
 		for (const user of projectGroup.users) {

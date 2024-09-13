@@ -9,11 +9,11 @@ class ProjectGroupEntity implements Entity {
 	private createdAt: null | string;
 	private id: null | number;
 	private name!: string;
-	private permissions!: (Partial<Pick<ProjectPermissionModel, "name">> &
-		Pick<ProjectPermissionModel, "id">)[];
+	private permissions!: Partial<Pick<ProjectPermissionModel, "id" | "name">>[];
 	private projectId!: Pick<ProjectModel, "id">;
-	private users!: (Partial<Pick<UserModel, "createdAt" | "name">> &
-		Pick<UserModel, "id">)[];
+	private users!: Partial<
+		Pick<UserModel, "createdAt" | "email" | "id" | "name">
+	>[];
 
 	private constructor({
 		createdAt,
@@ -26,11 +26,9 @@ class ProjectGroupEntity implements Entity {
 		createdAt: null | string;
 		id: null | number;
 		name: string;
-		permissions: (Partial<Pick<ProjectPermissionModel, "name">> &
-			Pick<ProjectPermissionModel, "id">)[];
+		permissions: Partial<Pick<ProjectPermissionModel, "id" | "name">>[];
 		projectId: Pick<ProjectModel, "id">;
-		users: (Partial<Pick<UserModel, "createdAt" | "name">> &
-			Pick<UserModel, "id">)[];
+		users: Partial<Pick<UserModel, "createdAt" | "email" | "id" | "name">>[];
 	}) {
 		this.createdAt = createdAt;
 		this.id = id;
@@ -53,7 +51,7 @@ class ProjectGroupEntity implements Entity {
 		name: string;
 		permissions: Pick<ProjectPermissionModel, "id" | "name">[];
 		projectId: Pick<ProjectModel, "id">;
-		users: Pick<UserModel, "createdAt" | "id" | "name">[];
+		users: Pick<UserModel, "createdAt" | "email" | "id" | "name">[];
 	}): ProjectGroupEntity {
 		return new ProjectGroupEntity({
 			createdAt,
@@ -94,9 +92,15 @@ class ProjectGroupEntity implements Entity {
 	} {
 		return {
 			name: this.name,
-			permissions: this.permissions,
+			permissions: this.permissions as Pick<
+				ProjectPermissionModel,
+				"id" | "name"
+			>[],
 			projectId: this.projectId,
-			users: this.users,
+			users: this.users as Pick<
+				UserModel,
+				"createdAt" | "email" | "id" | "name"
+			>[],
 		};
 	}
 
@@ -112,9 +116,10 @@ class ProjectGroupEntity implements Entity {
 			projectId: this.projectId,
 			users: this.users.map((user) => ({
 				createdAt: user.createdAt,
+				email: user.email,
 				id: user.id,
 				name: user.name,
-			})) as Pick<UserModel, "createdAt" | "id" | "name">[],
+			})) as Pick<UserModel, "createdAt" | "email" | "id" | "name">[],
 		};
 	}
 }

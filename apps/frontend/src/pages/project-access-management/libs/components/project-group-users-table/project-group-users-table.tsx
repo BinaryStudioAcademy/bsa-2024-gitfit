@@ -28,7 +28,7 @@ type Properties = {
 	onToggle: (id: number) => void;
 	selectedUserIds: number[];
 	setValue: UseFormSetValue<ProjectGroupCreateRequestDto>;
-	users: Omit<UserGetAllItemResponseDto, "email">[];
+	users: UserGetAllItemResponseDto[];
 };
 
 const ProjectGroupUsersTable = ({
