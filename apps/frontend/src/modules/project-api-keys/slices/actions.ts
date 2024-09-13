@@ -29,15 +29,12 @@ const patch = createAsyncThunk<
 	ProjectApiKeyPatchResponseDto,
 	ProjectApiKeyPatchRequestDto,
 	AsyncThunkConfig
->(`${sliceName}/patch`, async (payload, { dispatch, extra }) => {
+>(`${sliceName}/patch`, async (payload, { extra }) => {
 	const { projectApiKeysApi, toastNotifier } = extra;
-	const { projectId } = payload;
 
 	const response = await projectApiKeysApi.patch(payload);
 
 	toastNotifier.showSuccess(NotificationMessage.PROJECT_API_KEY_UPDATE_SUCCESS);
-
-	void dispatch(projectActions.getById({ id: String(projectId) }));
 
 	return response;
 });
