@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.24.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.23.1...v1.24.0) (2024-09-13)
+
+
+### Features
+
+* Add users column to the groups table gf-301 ([#304](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/304)) ([9210049](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/92100497bf886396fbe8610cef88802717cbbf06))
+* **analytics:** add new workspace for analytics gf-296 ([#298](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/298)) ([6388631](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/638863144608db4eaa22e13a061fa1f6cdb03207))
+* not return description on get all request gf-259 ([#279](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/279)) ([787244c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/787244c7e163d659aa98289e06fe5204c8bfe25d))
+
+
+### Bug Fixes
+
+* refactor table data word break styles gf-299 ([#300](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/300)) ([60cb964](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/60cb964929386b26088abbfbd4a83ecc5fd13f53))
+* The page reloads after generating the API key gf-289 ([#293](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/293)) ([c899e03](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c899e031f848345b7170c684ba94c014751fc8b1))
+* The users are not sorted correctly at the "Users" table in the "Access Managment" page gf-290 ([#294](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/294)) ([3a9e255](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3a9e255cba70a9b21853e7c56bde4e822cb36a36))
+
+## [1.23.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.23.0...v1.23.1) (2024-09-12)
+
+
+### Bug Fixes
+
+* adjusted path for project page breadcrumbs gf-283 ([#286](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/286)) ([384ec02](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/384ec022fe92e04042a8fe89b8b5317061dbff9a))
+
 ## [1.23.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.22.1...v1.23.0) (2024-09-11)
 
 

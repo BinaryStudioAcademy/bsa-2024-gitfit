@@ -19,6 +19,9 @@ const config: KnipConfig = {
 			ignore: ["src/**/**"],
 			includeEntryExports: true,
 		},
+		"scripts/analytics": {
+			entry: ["src/index.ts"],
+		},
 	},
 };
 
