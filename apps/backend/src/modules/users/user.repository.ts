@@ -6,7 +6,7 @@ import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserModel } from "~/modules/users/user.model.js";
 
 import {
-	type UserGetAllQueryParametersRequiredName,
+	type UserGetAllQueryParameters,
 	type UserPatchRequestDto,
 } from "./libs/types/types.js";
 
@@ -62,7 +62,7 @@ class UserRepository implements Repository {
 	}
 
 	public async findAll(
-		parameters: UserGetAllQueryParametersRequiredName,
+		parameters: UserGetAllQueryParameters,
 	): Promise<PaginationResponseDto<UserEntity>> {
 		const { name, page, pageSize } = parameters;
 

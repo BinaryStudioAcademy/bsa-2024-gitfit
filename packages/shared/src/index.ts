@@ -90,7 +90,6 @@ export {
 	UserError,
 	type UserGetAllItemResponseDto,
 	type UserGetAllQueryParameters,
-	type UserGetAllQueryParametersRequiredName,
 	type UserGetAllResponseDto,
 	type UserPatchRequestDto,
 	type UserPatchResponseDto,
