@@ -6,7 +6,7 @@ import {
 	useFormWatch,
 } from "~/libs/hooks/hooks.js";
 import {
-	type ProjectGetAllItemResponseDto,
+	type ProjectGetByIdResponseDto,
 	type ProjectPatchRequestDto,
 	projectPatchValidationSchema,
 	ProjectValidationRule,
@@ -16,7 +16,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	onSubmit: (payload: ProjectPatchRequestDto) => void;
-	project: ProjectGetAllItemResponseDto;
+	project: ProjectGetByIdResponseDto;
 };
 
 const ProjectUpdateForm = ({ onSubmit, project }: Properties): JSX.Element => {
