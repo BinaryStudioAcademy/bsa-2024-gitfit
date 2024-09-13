@@ -9,6 +9,8 @@ import { ProjectApiKeyError } from "./libs/exceptions/exceptions.js";
 import {
 	type ProjectApiKeyCreateRequestDto,
 	type ProjectApiKeyCreateResponseDto,
+	type ProjectApiKeyPatchRequestDto,
+	type ProjectApiKeyPatchResponseDto,
 } from "./libs/types/types.js";
 import { ProjectApiKeyEntity } from "./project-api-key.entity.js";
 import { type ProjectApiKeyRepository } from "./project-api-key.repository.js";
@@ -119,6 +121,51 @@ class ProjectApiKeyService implements Service {
 			id: apiKey.id,
 			projectId: apiKey.projectId,
 			updatedByUserId: apiKey.updatedByUserId,
+		};
+	}
+
+	public async patch(
+		payload: { userId: number } & ProjectApiKeyPatchRequestDto,
+	): Promise<ProjectApiKeyPatchResponseDto> {
+		const { projectId, userId } = payload;
+
+		const existingProject = await this.projectRepository.find(projectId);
+
+		if (!existingProject) {
+			throw new ProjectApiKeyError({
+				message: ExceptionMessage.PROJECT_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		const existingProjectApiKey =
+			await this.projectApiKeyRepository.findByProjectId(projectId);
+
+		if (!existingProjectApiKey) {
+			throw new ProjectApiKeyError({
+				message: ExceptionMessage.PROJECT_API_KEY_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		const newApiKey = await this.token.createToken({ projectId });
+		const encryptedNewKey = this.encryption.encrypt(newApiKey);
+
+		const updatedApiKeyEntity = await this.projectApiKeyRepository.patch(
+			projectId,
+			userId,
+			encryptedNewKey,
+		);
+
+		if (!updatedApiKeyEntity) {
+			throw new ProjectApiKeyError({
+				message: ExceptionMessage.PROJECT_API_KEY_UPDATE_FAILED,
+				status: HTTPCode.INTERNAL_SERVER_ERROR,
+			});
+		}
+
+		return {
+			apiKey: newApiKey,
 		};
 	}
 

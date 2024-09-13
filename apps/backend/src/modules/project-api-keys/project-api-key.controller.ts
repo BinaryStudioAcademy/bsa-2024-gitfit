@@ -10,9 +10,13 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 import { ProjectApiKeysApiPath } from "./libs/enums/enums.js";
 import {
 	type ProjectApiKeyCreateRequestDto,
+	type ProjectApiKeyPatchRequestDto,
 	type UserAuthResponseDto,
 } from "./libs/types/types.js";
-import { projectApiKeyCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+import {
+	projectApiKeyCreateValidationSchema,
+	projectApiKeyPatchValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectApiKeyService } from "./project-api-key.service.js";
 
 /**
@@ -69,6 +73,21 @@ class ProjectApiKeyController extends BaseController {
 				body: projectApiKeyCreateValidationSchema,
 			},
 		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.patch(
+					options as APIHandlerOptions<{
+						body: ProjectApiKeyCreateRequestDto;
+						user: UserAuthResponseDto;
+					}>,
+				),
+			method: "PATCH",
+			path: ProjectApiKeysApiPath.ROOT,
+			validation: {
+				body: projectApiKeyPatchValidationSchema,
+			},
+		});
 	}
 
 	/**
@@ -117,6 +136,53 @@ class ProjectApiKeyController extends BaseController {
 		return {
 			payload: await this.projectApiKeyService.create(payload),
 			status: HTTPCode.CREATED,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /project-api-keys/regenerate:
+	 *    patch:
+	 *      description: Regenerates the API key for the specified project
+	 *      requestBody:
+	 *        description: Project ID for which to regenerate the API key
+	 *        required: true
+	 *        content:
+	 *          application/json:
+	 *            schema:
+	 *              type: object
+	 *              properties:
+	 *                projectId:
+	 *                  type: number
+	 *                  minimum: 1
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 *                properties:
+	 *                  message:
+	 *                    type: object
+	 *                    $ref: "#/components/schemas/ProjectApiKey"
+	 *        404:
+	 *          description: Project not found or API key not found
+	 */
+	private async patch(
+		options: APIHandlerOptions<{
+			body: ProjectApiKeyPatchRequestDto;
+			user: UserAuthResponseDto;
+		}>,
+	): Promise<APIHandlerResponse> {
+		const payload = {
+			...options.body,
+			userId: options.user.id,
+		};
+
+		return {
+			payload: await this.projectApiKeyService.patch(payload),
+			status: HTTPCode.OK,
 		};
 	}
 }

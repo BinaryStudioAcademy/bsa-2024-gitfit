@@ -1,1 +1,4 @@
-export { projectApiKeyCreateValidationSchema } from "@git-fit/shared";
+export {
+	projectApiKeyCreateValidationSchema,
+	projectApiKeyPatchValidationSchema,
+} from "@git-fit/shared";

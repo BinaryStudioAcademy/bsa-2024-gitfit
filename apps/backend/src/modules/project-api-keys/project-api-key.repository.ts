@@ -53,6 +53,24 @@ class ProjectApiKeyRepository implements Repository {
 		return projectApiKey ? ProjectApiKeyEntity.initialize(projectApiKey) : null;
 	}
 
+	public async patch(
+		projectId: number,
+		updatedByUserId: number,
+		encryptedKey: string,
+	): Promise<null | ProjectApiKeyEntity> {
+		const [updatedApiKey] = await this.projectApiKeyModel
+			.query()
+			.patch({
+				encryptedKey,
+				updatedByUserId,
+			})
+			.where({ projectId })
+			.returning("*")
+			.execute();
+
+		return updatedApiKey ? ProjectApiKeyEntity.initialize(updatedApiKey) : null;
+	}
+
 	public update(): ReturnType<Repository["update"]> {
 		return Promise.resolve(null);
 	}
