@@ -7,6 +7,7 @@ import { ActivityLogEntity } from "./activity-log.entity.js";
 import { type ActivityLogRepository } from "./activity-log.repository.js";
 import {
 	type ActivityLogCreateRequestDto,
+	type ActivityLogCreationData,
 	type ActivityLogGetAllResponseDto,
 } from "./libs/types/types.js";
 
@@ -35,6 +36,38 @@ class ActivityLogService implements Service {
 		this.projectApiKeyService = projectApiKeyService;
 	}
 
+	private async createActivityLog({
+		date,
+		logItem,
+		projectId,
+		userId,
+	}: ActivityLogCreationData): Promise<ActivityLogEntity> {
+		const { authorEmail, authorName, commitsNumber } = logItem;
+
+		let gitEmail = await this.gitEmailService.findByEmail(authorEmail);
+
+		if (!gitEmail) {
+			const contributor = await this.contributorService.create({
+				name: authorName,
+			});
+
+			gitEmail = await this.gitEmailService.create({
+				contributorId: contributor.id,
+				email: authorEmail,
+			});
+		}
+
+		return await this.activityLogRepository.create(
+			ActivityLogEntity.initializeNew({
+				commitsNumber,
+				createdByUser: { id: userId },
+				date,
+				gitEmail: { contributor: gitEmail.contributor, id: gitEmail.id },
+				project: { id: projectId },
+			}),
+		);
+	}
+
 	public async create(
 		payload: { apiKey: string } & ActivityLogCreateRequestDto,
 	): Promise<ActivityLogGetAllResponseDto> {
@@ -53,30 +86,12 @@ class ActivityLogService implements Service {
 			const { date, items } = record;
 
 			for (const logItem of items) {
-				const { authorEmail, authorName, commitsNumber } = logItem;
-
-				let gitEmail = await this.gitEmailService.findByEmail(authorEmail);
-
-				if (!gitEmail) {
-					const contributor = await this.contributorService.create({
-						name: authorName,
-					});
-
-					gitEmail = await this.gitEmailService.create({
-						contributorId: contributor.id,
-						email: authorEmail,
-					});
-				}
-
-				const activityLog = await this.activityLogRepository.create(
-					ActivityLogEntity.initializeNew({
-						commitsNumber,
-						createdByUser: { id: userId },
-						date,
-						gitEmail: { contributor: gitEmail.contributor, id: gitEmail.id },
-						project: { id: projectId },
-					}),
-				);
+				const activityLog = await this.createActivityLog({
+					date,
+					logItem,
+					projectId,
+					userId,
+				});
 
 				createdActivityLogs.items.push(activityLog.toObject());
 			}
