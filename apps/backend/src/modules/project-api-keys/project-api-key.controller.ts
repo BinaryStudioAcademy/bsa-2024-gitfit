@@ -69,17 +69,6 @@ class ProjectApiKeyController extends BaseController {
 				body: projectApiKeyCreateValidationSchema,
 			},
 		});
-
-		this.addRoute({
-			handler: (options) =>
-				this.delete(
-					options as APIHandlerOptions<{
-						params: { projectId: string };
-					}>,
-				),
-			method: "DELETE",
-			path: ProjectApiKeysApiPath.$ID,
-		});
 	}
 
 	/**
@@ -128,43 +117,6 @@ class ProjectApiKeyController extends BaseController {
 		return {
 			payload: await this.projectApiKeyService.create(payload),
 			status: HTTPCode.CREATED,
-		};
-	}
-	/**
-	 * @swagger
-	 * /project-api-keys/{id}:
-	 *   delete:
-	 *     description: Deletes an API key for a specific project.
-	 *     parameters:
-	 *       - in: path
-	 *         name: id
-	 *         required: true
-	 *         description: ID of the project for which the API key should be deleted
-	 *         schema:
-	 *           type: number
-	 *           minimum: 1
-	 *     responses:
-	 *       200:
-	 *         description: Successfully deleted the API key
-	 *         content:
-	 *           application/json:
-	 *             schema:
-	 *               type: boolean
-	 *               example: true
-	 *       404:
-	 *         description: Project not found or no API key to delete
-	 *         content:
-	 */
-	private async delete(
-		options: APIHandlerOptions<{
-			params: { projectId: string };
-		}>,
-	): Promise<APIHandlerResponse> {
-		return {
-			payload: await this.projectApiKeyService.delete(
-				Number(options.params.projectId),
-			),
-			status: HTTPCode.OK,
 		};
 	}
 }

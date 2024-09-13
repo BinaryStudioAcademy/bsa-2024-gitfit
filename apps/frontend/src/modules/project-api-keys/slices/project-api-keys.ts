@@ -1,11 +1,10 @@
-import { copyToClipboard, create, deleteByProjectId } from "./actions.js";
+import { copyToClipboard, create } from "./actions.js";
 import { actions } from "./project-api-keys.slice.js";
 
 const allActions = {
 	...actions,
 	copyToClipboard,
 	create,
-	deleteByProjectId,
 };
 
 export { allActions as actions };

@@ -23,15 +23,6 @@ const create = createAsyncThunk<
 	return response;
 });
 
-const deleteByProjectId = createAsyncThunk<boolean, number, AsyncThunkConfig>(
-	`${sliceName}/delete`,
-	async (projectId, { extra }) => {
-		const { projectApiKeysApi } = extra;
-
-		return await projectApiKeysApi.delete(projectId);
-	},
-);
-
 const copyToClipboard = createAsyncThunk<string, string, AsyncThunkConfig>(
 	`${sliceName}/copy-to-clipboard`,
 	async (projectApiKey, { extra }) => {
@@ -44,4 +35,4 @@ const copyToClipboard = createAsyncThunk<string, string, AsyncThunkConfig>(
 	},
 );
 
-export { copyToClipboard, create, deleteByProjectId };
+export { copyToClipboard, create };

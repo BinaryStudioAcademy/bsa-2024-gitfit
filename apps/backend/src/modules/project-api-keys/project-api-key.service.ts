@@ -59,10 +59,7 @@ class ProjectApiKeyService implements Service {
 			await this.projectApiKeyRepository.findByProjectId(projectId);
 
 		if (existingProjectApiKey) {
-			throw new ProjectApiKeyError({
-				message: ExceptionMessage.PROJECT_API_KEY_ALREADY_EXISTS,
-				status: HTTPCode.CONFLICT,
-			});
+			await this.projectApiKeyRepository.delete(projectId);
 		}
 
 		const apiKey = await this.token.createToken({ projectId });
@@ -88,17 +85,8 @@ class ProjectApiKeyService implements Service {
 		};
 	}
 
-	public async delete(projectId: number): Promise<boolean> {
-		const isDeleted = await this.projectApiKeyRepository.delete(projectId);
-
-		if (!isDeleted) {
-			throw new ProjectApiKeyError({
-				message: ExceptionMessage.PROJECT_NOT_FOUND,
-				status: HTTPCode.NOT_FOUND,
-			});
-		}
-
-		return isDeleted;
+	public delete(): ReturnType<Service["delete"]> {
+		return Promise.resolve(true);
 	}
 
 	public find(): ReturnType<Service["find"]> {

@@ -38,27 +38,16 @@ const SetupAnalyticsModal = ({
 	const { dataStatus } = useAppSelector(({ projectApiKeys }) => projectApiKeys);
 
 	const hasProjectApiKey = project.apiKey !== null;
-	const isGenerateButtonDisabled = dataStatus === DataStatus.PENDING;
 	const isCopyButtonDisabled =
 		!hasProjectApiKey || dataStatus === DataStatus.PENDING;
 
 	const handleGenerateSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit(async ({ projectId }) => {
-				if (hasProjectApiKey) {
-					const deleteResult = await dispatch(
-						projectApiKeyActions.deleteByProjectId(projectId),
-					);
-
-					if (deleteResult.payload) {
-						await dispatch(projectApiKeyActions.create({ projectId }));
-					}
-				} else {
-					await dispatch(projectApiKeyActions.create({ projectId }));
-				}
+			void handleSubmit(({ projectId }: { projectId: number }) => {
+				return dispatch(projectApiKeyActions.create({ projectId }));
 			})(event_);
 		},
-		[handleSubmit, dispatch, hasProjectApiKey],
+		[handleSubmit, dispatch],
 	);
 
 	const handleCopyToClipboardClick = useCallback(() => {
@@ -96,7 +85,6 @@ const SetupAnalyticsModal = ({
 					/>
 					<div className={styles["button-wrapper"]}>
 						<Button
-							isDisabled={isGenerateButtonDisabled}
 							label={hasProjectApiKey ? "Regenerate" : "Generate"}
 							type="submit"
 						/>

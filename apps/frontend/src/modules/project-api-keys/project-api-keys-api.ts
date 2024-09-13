@@ -35,20 +35,6 @@ class ProjectApiKeysApi extends BaseHTTPApi {
 
 		return await response.json<ProjectApiKeyCreateResponseDto>();
 	}
-
-	public async delete(projectId: number): Promise<boolean> {
-		const response = await this.load(
-			this.getFullEndpoint(ProjectApiKeysApiPath.$ID, {
-				projectId: String(projectId),
-			}),
-			{
-				hasAuth: true,
-				method: "DELETE",
-			},
-		);
-
-		return await response.json<boolean>();
-	}
 }
 
 export { ProjectApiKeysApi };
