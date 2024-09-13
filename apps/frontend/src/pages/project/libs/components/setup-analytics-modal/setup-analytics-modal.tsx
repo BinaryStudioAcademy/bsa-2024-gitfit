@@ -5,6 +5,7 @@ import {
 	useAppForm,
 	useAppSelector,
 	useCallback,
+	useEffect,
 } from "~/libs/hooks/hooks.js";
 import { actions as projectApiKeyActions } from "~/modules/project-api-keys/project-api-keys.js";
 import { type ProjectGetByIdResponseDto } from "~/modules/projects/projects.js";
@@ -23,7 +24,7 @@ const SetupAnalyticsModal = ({
 	project,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { control, errors, handleSubmit } = useAppForm({
+	const { control, errors, handleSubmit, handleValueSet } = useAppForm({
 		defaultValues: {
 			apiKey: project.apiKey ?? "",
 			projectId: project.id,
@@ -46,6 +47,10 @@ const SetupAnalyticsModal = ({
 		},
 		[handleSubmit, dispatch, hasProjectApiKey],
 	);
+
+	useEffect(() => {
+		handleValueSet("apiKey", project.apiKey ?? "");
+	}, [handleValueSet, project.apiKey]);
 
 	return (
 		<Modal isOpened={isOpened} onClose={onClose} title="Setup Analytics">

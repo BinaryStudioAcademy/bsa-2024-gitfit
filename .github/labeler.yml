@@ -24,6 +24,11 @@ frontend:
           - "apps/frontend/**/*"
           - "!apps/frontend/.env.example"
 
+scripts:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "scripts/analytics/**/*"
+
 docs:
   - changed-files:
       - any-glob-to-any-file:

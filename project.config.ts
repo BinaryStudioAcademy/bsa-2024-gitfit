@@ -17,6 +17,7 @@ const ProjectPrefix = {
 	SCOPES: {
 		APPS: ["frontend", "backend"],
 		PACKAGES: ["shared"],
+		SCRIPTS: ["analytics"],
 	},
 } as const;
 
