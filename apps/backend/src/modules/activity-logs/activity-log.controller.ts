@@ -86,32 +86,29 @@ class ActivityLogController extends BaseController {
 	 *       content:
 	 *         application/json:
 	 *           schema:
-	 *       		type: object
-	 *       		properties:
-	 *         			items:
-	 *           			type: array
-	 * 						date:
-	 * 							type: string
-	 * 							format: date-time
-	 *         				items:
-	 *           				type: array
-	 *           			items:
-	 *            				 type: object
-	 *            				 properties:
-	 *              				 authorEmail:
-	 *                 					type: string
-	 *               				 authorName:
-	 *                					type: string
-	 *              				 commitsNumber:
-	 *                					type: number
-	 *                 					format: integer
+	 *             type: object
+	 *             properties:
+	 *               items:
+	 *                 type: array
+	 *                 items:
+	 *                   type: object
+	 *                   properties:
+	 *                     authorEmail:
+	 *                       type: string
+	 *                     authorName:
+	 *                       type: string
+	 *                     commitsNumber:
+	 *                       type: integer
+	 *               date:
+	 *                 type: string
+	 *                 format: date-time
 	 *     responses:
 	 *       201:
 	 *         description: Activity log saved successfully
 	 *         content:
 	 *           application/json:
 	 *             schema:
-	 *              $ref: '#/components/schemas/ActivityLog'
+	 *               $ref: '#/components/schemas/ActivityLog'
 	 */
 
 	private async create(
