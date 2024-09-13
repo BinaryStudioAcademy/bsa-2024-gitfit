@@ -16,6 +16,7 @@ type Properties<T extends FieldValues> = {
 	errors: FieldErrors<T>;
 	isDisabled?: boolean;
 	isLabelHidden?: boolean;
+	isReadOnly?: boolean;
 	label: string;
 	leftIcon?: JSX.Element;
 	name: FieldPath<T>;
@@ -31,6 +32,7 @@ const Input = <T extends FieldValues>({
 	errors,
 	isDisabled = false,
 	isLabelHidden = false,
+	isReadOnly = false,
 	label,
 	leftIcon,
 	name,
@@ -82,6 +84,7 @@ const Input = <T extends FieldValues>({
 						name={field.name}
 						onChange={field.onChange}
 						placeholder={placeholder}
+						readOnly={isReadOnly}
 						rows={rowsCount}
 						value={field.value}
 					/>
@@ -93,6 +96,7 @@ const Input = <T extends FieldValues>({
 						name={field.name}
 						onChange={field.onChange}
 						placeholder={placeholder}
+						readOnly={isReadOnly}
 						type={type}
 						value={field.value}
 					/>

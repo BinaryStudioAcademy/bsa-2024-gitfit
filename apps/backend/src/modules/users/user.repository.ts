@@ -1,3 +1,4 @@
+import { SortType } from "~/libs/enums/enums.js";
 import {
 	type PaginationResponseDto,
 	type Repository,
@@ -68,6 +69,7 @@ class UserRepository implements Repository {
 
 		const query = this.userModel
 			.query()
+			.orderBy("createdAt", SortType.DESCENDING)
 			.withGraphFetched("groups.permissions")
 			.whereNull("deletedAt");
 
