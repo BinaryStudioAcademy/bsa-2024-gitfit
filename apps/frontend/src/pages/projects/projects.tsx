@@ -68,6 +68,10 @@ const Projects = (): JSX.Element => {
 	);
 
 	const hasProject = projects.length !== EMPTY_LENGTH;
+	const hasSearch = search.length !== EMPTY_LENGTH;
+	const ProjectStatusMessage = hasSearch
+		? "No projects found matching your search criteria. Please try different keywords."
+		: "No projects created yet. Create the first project now.";
 
 	const {
 		isOpened: isCreateModalOpen,
@@ -166,8 +170,7 @@ const Projects = (): JSX.Element => {
 						))
 					) : (
 						<p className={styles["empty-placeholder"]}>
-							No projects found matching your search criteria. Please try
-							different keywords.
+							{ProjectStatusMessage}
 						</p>
 					)}
 				</div>
