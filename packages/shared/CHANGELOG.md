@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.15.1...shared-v1.16.0) (2024-09-13)
+
+
+### Features
+
+* not return description on get all request gf-259 ([#279](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/279)) ([787244c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/787244c7e163d659aa98289e06fe5204c8bfe25d))
+
 ## [1.15.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.15.0...shared-v1.15.1) (2024-09-11)
 
 
