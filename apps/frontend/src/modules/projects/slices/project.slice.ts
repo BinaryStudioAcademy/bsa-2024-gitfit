@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
+import { actions as projectApiKeyActions } from "~/modules/project-api-keys/project-api-keys.js";
 import {
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetByIdResponseDto,
@@ -18,22 +19,22 @@ import {
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
-	hasMoreProjects: boolean;
 	project: null | ProjectGetByIdResponseDto;
 	projectCreateStatus: ValueOf<typeof DataStatus>;
 	projectPatchStatus: ValueOf<typeof DataStatus>;
 	projects: ProjectGetAllItemResponseDto[];
 	projectStatus: ValueOf<typeof DataStatus>;
+	projectsTotalCount: number;
 };
 
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
-	hasMoreProjects: false,
 	project: null,
 	projectCreateStatus: DataStatus.IDLE,
 	projectPatchStatus: DataStatus.IDLE,
 	projects: [],
 	projectStatus: DataStatus.IDLE,
+	projectsTotalCount: 0,
 };
 
 const { actions, name, reducer } = createSlice({
@@ -55,12 +56,11 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
 			state.projects = action.payload.items;
-			state.hasMoreProjects = action.payload.hasMore;
+			state.projectsTotalCount = action.payload.totalItems;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadAll.rejected, (state) => {
 			state.projects = [];
-			state.hasMoreProjects = false;
 			state.dataStatus = DataStatus.REJECTED;
 		});
 
@@ -69,11 +69,9 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(loadMore.fulfilled, (state, action) => {
 			state.projects = [...state.projects, ...action.payload.items];
-			state.hasMoreProjects = action.payload.hasMore;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadMore.rejected, (state) => {
-			state.hasMoreProjects = false;
 			state.dataStatus = DataStatus.REJECTED;
 		});
 
@@ -108,6 +106,11 @@ const { actions, name, reducer } = createSlice({
 			state.projects = state.projects.filter(
 				(project) => project.id !== deletedProjectId,
 			);
+		});
+		builder.addCase(projectApiKeyActions.create.fulfilled, (state, action) => {
+			if (state.project) {
+				state.project.apiKey = action.payload.apiKey;
+			}
 		});
 	},
 	initialState,

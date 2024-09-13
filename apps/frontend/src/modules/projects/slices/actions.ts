@@ -13,8 +13,8 @@ import {
 } from "~/modules/projects/projects.js";
 
 import {
-	DEFAULT_START,
-	INFINITE_SCROLL_LOAD_COUNT,
+	DEFAULT_PAGE,
+	DEFAULT_PAGE_SIZE,
 } from "../libs/constants/constants.js";
 import { name as sliceName } from "./project.slice.js";
 
@@ -36,9 +36,9 @@ const loadAll = createAsyncThunk<
 	const { projectApi } = extra;
 
 	return await projectApi.getAll({
-		limit: INFINITE_SCROLL_LOAD_COUNT,
 		name: query ?? "",
-		start: DEFAULT_START,
+		page: DEFAULT_PAGE,
+		pageSize: DEFAULT_PAGE_SIZE,
 	});
 });
 

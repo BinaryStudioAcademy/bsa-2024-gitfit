@@ -1,7 +1,7 @@
-import { type InfiniteScrollQueryParameters } from "src/libs/types/types.js";
+import { type PaginationQueryParameters } from "src/libs/types/types.js";
 
 type ProjectGetAllRequestDto = {
 	name: string;
-} & InfiniteScrollQueryParameters;
+} & PaginationQueryParameters;
 
 export { type ProjectGetAllRequestDto };

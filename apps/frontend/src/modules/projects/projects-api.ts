@@ -62,9 +62,9 @@ class ProjectApi extends BaseHTTPApi {
 				hasAuth: true,
 				method: "GET",
 				query: {
-					limit: String(query.limit),
 					name: query.name,
-					start: String(query.start),
+					page: String(query.page),
+					pageSize: String(query.pageSize),
 				},
 			},
 		);

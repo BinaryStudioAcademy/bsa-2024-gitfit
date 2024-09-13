@@ -1,2 +1,2 @@
-export { DEFAULT_START } from "./default-start.constant.js";
-export { INFINITE_SCROLL_LOAD_COUNT } from "./infinite-scroll-load-count.constant.js";
+export { DEFAULT_PAGE } from "./default-page.constant.js";
+export { DEFAULT_PAGE_SIZE } from "./default-page-size.constant.js";

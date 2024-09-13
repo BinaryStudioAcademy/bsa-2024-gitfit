@@ -13,13 +13,14 @@ import {
 	useCallback,
 	useEffect,
 	useIntersectionObserver,
+	useMemo,
 	useModal,
 	useSearch,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import {
-	DEFAULT_START,
-	INFINITE_SCROLL_LOAD_COUNT,
+	DEFAULT_PAGE,
+	DEFAULT_PAGE_SIZE,
 	actions as projectActions,
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
@@ -32,6 +33,7 @@ import {
 	ProjectsSearch,
 	ProjectUpdateForm,
 } from "./libs/components/components.js";
+import { PAGE_INCREMENT } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
@@ -39,48 +41,63 @@ const Projects = (): JSX.Element => {
 
 	const { onSearch, search } = useSearch();
 
-	const [selectedProject, setSelectedProject] =
-		useState<null | ProjectGetAllItemResponseDto>(null);
-
-	const [start, setStart] = useState<number>(DEFAULT_START);
+	const [projectToModifyId, setProjectToModifyId] = useState<null | number>(
+		null,
+	);
 
 	const {
 		dataStatus,
-		hasMoreProjects,
+		project,
 		projectCreateStatus,
 		projectPatchStatus,
 		projects,
+		projectStatus,
+		projectsTotalCount,
 	} = useAppSelector(({ projects }) => projects);
+
+	const [currentPage, setCurrentPage] = useState<number>(DEFAULT_PAGE);
+	const hasMoreProjects = useMemo(
+		() => projects.length < projectsTotalCount,
+		[projects, projectsTotalCount],
+	);
+
+	useEffect(() => {
+		if (projectToModifyId) {
+			void dispatch(projectActions.getById({ id: String(projectToModifyId) }));
+		}
+	}, [dispatch, projectToModifyId]);
 
 	const loadMoreProjects = useCallback(() => {
 		if (dataStatus !== DataStatus.PENDING) {
+			const nextPage = currentPage + PAGE_INCREMENT;
+
 			void dispatch(
 				projectActions.loadMore({
-					limit: INFINITE_SCROLL_LOAD_COUNT,
 					name: search,
-					start: start + INFINITE_SCROLL_LOAD_COUNT,
+					page: nextPage,
+					pageSize: DEFAULT_PAGE_SIZE,
 				}),
 			);
 
-			setStart((previousStart) => previousStart + INFINITE_SCROLL_LOAD_COUNT);
+			setCurrentPage(nextPage);
 		}
-	}, [dispatch, search, start, dataStatus]);
+	}, [dispatch, search, currentPage, dataStatus, setCurrentPage]);
 
 	const sentinelReference = useIntersectionObserver<HTMLDivElement>({
-		isEnabled: hasMoreProjects && dataStatus !== DataStatus.PENDING,
+		isDisabled: !hasMoreProjects || dataStatus === DataStatus.PENDING,
 		onIntersect: loadMoreProjects,
 	});
 
 	useEffect(() => {
 		void dispatch(projectActions.loadAll(search));
-		setStart(DEFAULT_START);
+		setCurrentPage(DEFAULT_PAGE);
 	}, [dispatch, search]);
 
 	const handleSearchChange = useCallback(
 		(value: string) => {
 			void dispatch(projectActions.loadAll(value));
 			onSearch(value);
-			setStart(DEFAULT_START);
+			setCurrentPage(DEFAULT_PAGE);
 		},
 		[dispatch, onSearch],
 	);
@@ -117,7 +134,7 @@ const Projects = (): JSX.Element => {
 
 	const handleEditClick = useCallback(
 		(project: ProjectGetAllItemResponseDto) => {
-			setSelectedProject(project);
+			setProjectToModifyId(project.id);
 			handleEditModalOpen();
 		},
 		[handleEditModalOpen],
@@ -125,7 +142,7 @@ const Projects = (): JSX.Element => {
 
 	const handleDeleteClick = useCallback(
 		(project: ProjectGetAllItemResponseDto) => {
-			setSelectedProject(project);
+			setProjectToModifyId(project.id);
 			handleDeleteConfirmationModalOpen();
 		},
 		[handleDeleteConfirmationModalOpen],
@@ -139,27 +156,28 @@ const Projects = (): JSX.Element => {
 
 	const handleProjectEditSubmit = useCallback(
 		(payload: ProjectPatchRequestDto) => {
-			if (selectedProject) {
-				void dispatch(
-					projectActions.patch({ id: selectedProject.id, payload }),
-				);
+			if (projectToModifyId) {
+				void dispatch(projectActions.patch({ id: projectToModifyId, payload }));
+				setProjectToModifyId(null);
 			}
 		},
-		[dispatch, selectedProject],
+		[dispatch, projectToModifyId],
 	);
 
 	const handleProjectDeleteConfirm = useCallback(() => {
-		if (selectedProject) {
-			void dispatch(projectActions.deleteById(selectedProject.id));
+		if (projectToModifyId) {
+			void dispatch(projectActions.deleteById(projectToModifyId));
 			handleDeleteConfirmationModalClose();
 		}
-	}, [dispatch, selectedProject, handleDeleteConfirmationModalClose]);
+	}, [dispatch, projectToModifyId, handleDeleteConfirmationModalClose]);
 
 	const isLoading =
 		dataStatus === DataStatus.IDLE ||
 		(dataStatus === DataStatus.PENDING && !hasProject);
 
 	const isLoadingMore = hasMoreProjects && dataStatus === DataStatus.PENDING;
+
+	const isUpdateFormShown = project && projectStatus === DataStatus.FULFILLED;
 
 	return (
 		<PageLayout>
@@ -206,10 +224,10 @@ const Projects = (): JSX.Element => {
 				onClose={handleEditModalClose}
 				title="Update project"
 			>
-				{selectedProject && (
+				{isUpdateFormShown && (
 					<ProjectUpdateForm
 						onSubmit={handleProjectEditSubmit}
-						project={selectedProject}
+						project={project}
 					/>
 				)}
 			</Modal>

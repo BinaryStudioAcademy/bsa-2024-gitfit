@@ -1,9 +1,7 @@
 {
-	"name": "@git-fit/shared",
-	"version": "1.16.0",
+	"name": "@git-fit/analytics",
+	"version": "1.0.0",
 	"type": "module",
-	"main": "build/index.js",
-	"types": "src/index.ts",
 	"engines": {
 		"node": "20.x.x",
 		"npm": "10.x.x"
@@ -13,11 +11,5 @@
 		"lint:js": "npx eslint . --max-warnings=0 --no-warn-ignored",
 		"lint": "concurrently \"npm:lint:*\"",
 		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json"
-	},
-	"dependencies": {
-		"change-case": "5.4.4",
-		"date-fns": "3.6.0",
-		"zod": "3.23.8",
-		"debounce": "2.1.0"
 	}
 }

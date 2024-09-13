@@ -1,6 +1,6 @@
 import { SortType } from "~/libs/enums/enums.js";
 import {
-	type InfiniteScrollResponseDto,
+	type PaginationResponseDto,
 	type Repository,
 } from "~/libs/types/types.js";
 
@@ -48,28 +48,24 @@ class ProjectRepository implements Repository {
 		return item ? ProjectEntity.initialize(item) : null;
 	}
 
-	public async findAll(
-		parameters: ProjectGetAllRequestDto,
-	): Promise<InfiniteScrollResponseDto<ProjectEntity>> {
-		const { limit, name, start } = parameters;
-
+	public async findAll({
+		name,
+		page,
+		pageSize,
+	}: ProjectGetAllRequestDto): Promise<PaginationResponseDto<ProjectEntity>> {
 		const query = this.projectModel
 			.query()
-			.orderBy("created_at", SortType.DESCENDING)
-			.limit(limit)
-			.offset(start);
+			.orderBy("created_at", SortType.DESCENDING);
 
 		if (name) {
 			query.whereILike("name", `%${name}%`);
 		}
 
-		const totalItems = await query.resultSize();
-
-		const results = await query.limit(limit).offset(start);
+		const { results, total } = await query.page(page, pageSize);
 
 		return {
 			items: results.map((project) => ProjectEntity.initialize(project)),
-			totalItems,
+			totalItems: total,
 		};
 	}
 

@@ -92,13 +92,16 @@ class ProjectService implements Service {
 	public async findAll(
 		parameters: ProjectGetAllRequestDto,
 	): Promise<ProjectGetAllResponseDto> {
-		const { limit, start } = parameters;
 		const { items, totalItems } =
 			await this.projectRepository.findAll(parameters);
 
 		return {
-			hasMore: start + limit < totalItems,
-			items: items.map((item) => item.toObject()),
+			items: items.map((item) => {
+				const { id, name } = item.toObject();
+
+				return { id, name };
+			}),
+			totalItems,
 		};
 	}
 

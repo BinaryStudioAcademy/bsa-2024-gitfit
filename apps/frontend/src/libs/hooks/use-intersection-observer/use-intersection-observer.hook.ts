@@ -3,7 +3,7 @@ import { useEffect, useRef } from "~/libs/hooks/hooks.js";
 const FIRST_ITEM = 0;
 
 type Properties = {
-	isEnabled?: boolean;
+	isDisabled?: boolean;
 	onIntersect: () => void;
 	root?: Element | null;
 	rootMargin?: string;
@@ -11,13 +11,13 @@ type Properties = {
 };
 
 const useIntersectionObserver = <T extends HTMLElement>({
-	isEnabled = true,
+	isDisabled = false,
 	onIntersect,
 }: Properties): React.MutableRefObject<null | T> => {
 	const sentinelReference = useRef<null | T>(null);
 
 	useEffect(() => {
-		if (!isEnabled || !sentinelReference.current) {
+		if (isDisabled || !sentinelReference.current) {
 			return;
 		}
 
@@ -38,7 +38,7 @@ const useIntersectionObserver = <T extends HTMLElement>({
 		return (): void => {
 			observer.unobserve(sentinel);
 		};
-	}, [isEnabled, onIntersect]);
+	}, [isDisabled, onIntersect]);
 
 	return sentinelReference;
 };

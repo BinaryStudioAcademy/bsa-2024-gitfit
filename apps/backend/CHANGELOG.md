@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.15.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.14.0...backend-v1.15.0) (2024-09-13)
+
+
+### Features
+
+* not return description on get all request gf-259 ([#279](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/279)) ([787244c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/787244c7e163d659aa98289e06fe5204c8bfe25d))
+
+
+### Bug Fixes
+
+* The users are not sorted correctly at the "Users" table in the "Access Managment" page gf-290 ([#294](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/294)) ([3a9e255](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3a9e255cba70a9b21853e7c56bde4e822cb36a36))
+
 ## [1.14.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.13.0...backend-v1.14.0) (2024-09-11)
 
 
