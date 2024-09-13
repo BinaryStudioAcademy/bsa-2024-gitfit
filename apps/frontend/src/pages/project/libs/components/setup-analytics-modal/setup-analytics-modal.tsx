@@ -1,10 +1,16 @@
-import { Button, Input, Modal } from "~/libs/components/components.js";
+import {
+	Button,
+	IconButton,
+	Input,
+	Modal,
+} from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppForm,
 	useAppSelector,
 	useCallback,
+	useEffect,
 } from "~/libs/hooks/hooks.js";
 import { actions as projectApiKeyActions } from "~/modules/project-api-keys/project-api-keys.js";
 import { type ProjectGetByIdResponseDto } from "~/modules/projects/projects.js";
@@ -23,7 +29,7 @@ const SetupAnalyticsModal = ({
 	project,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { control, errors, handleSubmit } = useAppForm({
+	const { control, errors, handleSubmit, handleValueSet } = useAppForm({
 		defaultValues: {
 			apiKey: project.apiKey ?? "",
 			projectId: project.id,
@@ -34,6 +40,8 @@ const SetupAnalyticsModal = ({
 	const hasProjectApiKey = project.apiKey !== null;
 	const isGenerateButtonDisabled =
 		hasProjectApiKey || dataStatus === DataStatus.PENDING;
+	const isCopyButtonDisabled =
+		!hasProjectApiKey || dataStatus === DataStatus.PENDING;
 
 	const handleGenerateSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
@@ -43,6 +51,16 @@ const SetupAnalyticsModal = ({
 		},
 		[handleSubmit, dispatch],
 	);
+
+	const handleCopyToClipboardClick = useCallback(() => {
+		void dispatch(
+			projectApiKeyActions.copyToClipboard(project.apiKey as string),
+		);
+	}, [dispatch, project.apiKey]);
+
+	useEffect(() => {
+		handleValueSet("apiKey", project.apiKey ?? "");
+	}, [handleValueSet, project.apiKey]);
 
 	return (
 		<Modal isOpened={isOpened} onClose={onClose} title="Setup Analytics">
@@ -54,10 +72,18 @@ const SetupAnalyticsModal = ({
 					<Input
 						control={control}
 						errors={errors}
-						isDisabled
+						isReadOnly
 						label="API key"
 						name="apiKey"
 						placeholder="No API key"
+						rightIcon={
+							<IconButton
+								iconName="clipboard"
+								isDisabled={isCopyButtonDisabled}
+								label="Copy API key"
+								onClick={handleCopyToClipboardClick}
+							/>
+						}
 					/>
 					<div className={styles["button-wrapper"]}>
 						<Button
