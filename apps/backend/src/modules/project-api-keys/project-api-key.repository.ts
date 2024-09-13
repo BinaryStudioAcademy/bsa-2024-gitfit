@@ -30,8 +30,13 @@ class ProjectApiKeyRepository implements Repository {
 		return ProjectApiKeyEntity.initialize(projectApiKey);
 	}
 
-	public delete(): ReturnType<Repository["delete"]> {
-		return Promise.resolve(false);
+	public async delete(projectId: number): Promise<boolean> {
+		const deletedRowsCount = await this.projectApiKeyModel
+			.query()
+			.delete()
+			.where("project_id", projectId);
+
+		return Boolean(deletedRowsCount);
 	}
 
 	public find(): ReturnType<Repository["find"]> {
@@ -51,24 +56,6 @@ class ProjectApiKeyRepository implements Repository {
 			.execute();
 
 		return projectApiKey ? ProjectApiKeyEntity.initialize(projectApiKey) : null;
-	}
-
-	public async patch(
-		projectId: number,
-		updatedByUserId: number,
-		encryptedKey: string,
-	): Promise<null | ProjectApiKeyEntity> {
-		const [updatedApiKey] = await this.projectApiKeyModel
-			.query()
-			.patch({
-				encryptedKey,
-				updatedByUserId,
-			})
-			.where({ projectId })
-			.returning("*")
-			.execute();
-
-		return updatedApiKey ? ProjectApiKeyEntity.initialize(updatedApiKey) : null;
 	}
 
 	public update(): ReturnType<Repository["update"]> {

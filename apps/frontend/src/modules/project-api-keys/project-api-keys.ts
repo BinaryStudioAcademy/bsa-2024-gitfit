@@ -14,7 +14,5 @@ export { projectApiKeysApi };
 export {
 	type ProjectApiKeyCreateRequestDto,
 	type ProjectApiKeyCreateResponseDto,
-	type ProjectApiKeyPatchRequestDto,
-	type ProjectApiKeyPatchResponseDto,
 } from "./libs/types/types.js";
 export { actions, reducer } from "./slices/project-api-keys.js";

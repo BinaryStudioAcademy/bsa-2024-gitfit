@@ -38,19 +38,27 @@ const SetupAnalyticsModal = ({
 	const { dataStatus } = useAppSelector(({ projectApiKeys }) => projectApiKeys);
 
 	const hasProjectApiKey = project.apiKey !== null;
-
-	const isGenerateButtonDisabled =
-		hasProjectApiKey || dataStatus === DataStatus.PENDING;
+	const isGenerateButtonDisabled = dataStatus === DataStatus.PENDING;
 	const isCopyButtonDisabled =
 		!hasProjectApiKey || dataStatus === DataStatus.PENDING;
 
 	const handleGenerateSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit(({ projectId }) => {
-				void dispatch(projectApiKeyActions.create({ projectId }));
+			void handleSubmit(async ({ projectId }) => {
+				if (hasProjectApiKey) {
+					const deleteResult = await dispatch(
+						projectApiKeyActions.deleteByProjectId(projectId),
+					);
+
+					if (deleteResult.payload) {
+						await dispatch(projectApiKeyActions.create({ projectId }));
+					}
+				} else {
+					await dispatch(projectApiKeyActions.create({ projectId }));
+				}
 			})(event_);
 		},
-		[handleSubmit, dispatch],
+		[handleSubmit, dispatch, hasProjectApiKey],
 	);
 
 	const handleCopyToClipboardClick = useCallback(() => {

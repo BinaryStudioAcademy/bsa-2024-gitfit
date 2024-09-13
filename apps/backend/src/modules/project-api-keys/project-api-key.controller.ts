@@ -10,13 +10,9 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 import { ProjectApiKeysApiPath } from "./libs/enums/enums.js";
 import {
 	type ProjectApiKeyCreateRequestDto,
-	type ProjectApiKeyPatchRequestDto,
 	type UserAuthResponseDto,
 } from "./libs/types/types.js";
-import {
-	projectApiKeyCreateValidationSchema,
-	projectApiKeyPatchValidationSchema,
-} from "./libs/validation-schemas/validation-schemas.js";
+import { projectApiKeyCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectApiKeyService } from "./project-api-key.service.js";
 
 /**
@@ -76,17 +72,13 @@ class ProjectApiKeyController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
-				this.patch(
+				this.delete(
 					options as APIHandlerOptions<{
-						body: ProjectApiKeyCreateRequestDto;
-						user: UserAuthResponseDto;
+						params: { projectId: string };
 					}>,
 				),
-			method: "PATCH",
-			path: ProjectApiKeysApiPath.ROOT,
-			validation: {
-				body: projectApiKeyPatchValidationSchema,
-			},
+			method: "DELETE",
+			path: ProjectApiKeysApiPath.$ID,
 		});
 	}
 
@@ -138,50 +130,40 @@ class ProjectApiKeyController extends BaseController {
 			status: HTTPCode.CREATED,
 		};
 	}
-
 	/**
 	 * @swagger
-	 * /project-api-keys/regenerate:
-	 *    patch:
-	 *      description: Regenerates the API key for the specified project
-	 *      requestBody:
-	 *        description: Project ID for which to regenerate the API key
-	 *        required: true
-	 *        content:
-	 *          application/json:
-	 *            schema:
-	 *              type: object
-	 *              properties:
-	 *                projectId:
-	 *                  type: number
-	 *                  minimum: 1
-	 *      responses:
-	 *        200:
-	 *          description: Successful operation
-	 *          content:
-	 *            application/json:
-	 *              schema:
-	 *                type: object
-	 *                properties:
-	 *                  message:
-	 *                    type: object
-	 *                    $ref: "#/components/schemas/ProjectApiKey"
-	 *        404:
-	 *          description: Project not found or API key not found
+	 * /project-api-keys/{id}:
+	 *   delete:
+	 *     description: Deletes an API key for a specific project.
+	 *     parameters:
+	 *       - in: path
+	 *         name: id
+	 *         required: true
+	 *         description: ID of the project for which the API key should be deleted
+	 *         schema:
+	 *           type: number
+	 *           minimum: 1
+	 *     responses:
+	 *       200:
+	 *         description: Successfully deleted the API key
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: boolean
+	 *               example: true
+	 *       404:
+	 *         description: Project not found or no API key to delete
+	 *         content:
 	 */
-	private async patch(
+	private async delete(
 		options: APIHandlerOptions<{
-			body: ProjectApiKeyPatchRequestDto;
-			user: UserAuthResponseDto;
+			params: { projectId: string };
 		}>,
 	): Promise<APIHandlerResponse> {
-		const payload = {
-			...options.body,
-			userId: options.user.id,
-		};
-
 		return {
-			payload: await this.projectApiKeyService.patch(payload),
+			payload: await this.projectApiKeyService.delete(
+				Number(options.params.projectId),
+			),
 			status: HTTPCode.OK,
 		};
 	}
