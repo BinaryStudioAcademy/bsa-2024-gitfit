@@ -43,8 +43,8 @@ const SetupAnalyticsModal = ({
 
 	const handleGenerateSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit(({ projectId }: { projectId: number }) => {
-				return dispatch(projectApiKeyActions.create({ projectId }));
+			void handleSubmit(({ projectId }) => {
+				void dispatch(projectApiKeyActions.create({ projectId }));
 			})(event_);
 		},
 		[handleSubmit, dispatch],
