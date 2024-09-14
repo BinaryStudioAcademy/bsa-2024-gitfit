@@ -69,7 +69,7 @@ const Projects = (): JSX.Element => {
 
 	const hasProject = projects.length !== EMPTY_LENGTH;
 	const hasSearch = search.length !== EMPTY_LENGTH;
-	const ProjectStatusMessage = hasSearch
+	const emtyPlaceholderMessage = hasSearch
 		? "No projects found matching your search criteria. Please try different keywords."
 		: "No projects created yet. Create the first project now.";
 
@@ -170,7 +170,7 @@ const Projects = (): JSX.Element => {
 						))
 					) : (
 						<p className={styles["empty-placeholder"]}>
-							{ProjectStatusMessage}
+							{emtyPlaceholderMessage}
 						</p>
 					)}
 				</div>
