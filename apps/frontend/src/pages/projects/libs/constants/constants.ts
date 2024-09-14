@@ -1,1 +1,1 @@
-export { PAGE_INCREMENT } from "./page-increment.constant.js";
+export { PROJECTS_PAGE_SIZE } from "./projects-page-size.constant.js";

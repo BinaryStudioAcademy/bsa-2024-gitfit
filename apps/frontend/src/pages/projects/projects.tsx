@@ -12,15 +12,13 @@ import {
 	useAppSelector,
 	useCallback,
 	useEffect,
+	useInfiniteScroll,
 	useIntersectionObserver,
-	useMemo,
 	useModal,
 	useSearch,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import {
-	DEFAULT_PAGE,
-	DEFAULT_PAGE_SIZE,
 	actions as projectActions,
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
@@ -33,7 +31,7 @@ import {
 	ProjectsSearch,
 	ProjectUpdateForm,
 } from "./libs/components/components.js";
-import { PAGE_INCREMENT } from "./libs/constants/constants.js";
+import { PROJECTS_PAGE_SIZE } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
@@ -55,10 +53,11 @@ const Projects = (): JSX.Element => {
 		projectsTotalCount,
 	} = useAppSelector(({ projects }) => projects);
 
-	const [currentPage, setCurrentPage] = useState<number>(DEFAULT_PAGE);
-	const hasMoreProjects = useMemo(
-		() => projects.length < projectsTotalCount,
-		[projects, projectsTotalCount],
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			onSearch(value);
+		},
+		[onSearch],
 	);
 
 	useEffect(() => {
@@ -67,42 +66,37 @@ const Projects = (): JSX.Element => {
 		}
 	}, [dispatch, projectToModifyId]);
 
-	const loadMoreProjects = useCallback(() => {
-		if (dataStatus !== DataStatus.PENDING) {
-			const nextPage = currentPage + PAGE_INCREMENT;
+	const hasProjects = projects.length !== EMPTY_LENGTH;
 
-			void dispatch(
-				projectActions.loadMore({
-					name: search,
-					page: nextPage,
-					pageSize: DEFAULT_PAGE_SIZE,
-				}),
-			);
-
-			setCurrentPage(nextPage);
-		}
-	}, [dispatch, search, currentPage, dataStatus, setCurrentPage]);
-
-	const sentinelReference = useIntersectionObserver<HTMLDivElement>({
-		isDisabled: !hasMoreProjects || dataStatus === DataStatus.PENDING,
-		onIntersect: loadMoreProjects,
-	});
+	const { hasNextPage, onPageChange, onPageReset, page, pageSize } =
+		useInfiniteScroll({
+			pageSize: PROJECTS_PAGE_SIZE,
+			totalItemsCount: projectsTotalCount,
+		});
 
 	useEffect(() => {
-		void dispatch(projectActions.loadAll(search));
-		setCurrentPage(DEFAULT_PAGE);
-	}, [dispatch, search]);
+		void dispatch(
+			projectActions.loadAll({
+				name: search,
+				page,
+				pageSize,
+			}),
+		);
+	}, [dispatch, search, page, pageSize]);
 
-	const handleSearchChange = useCallback(
-		(value: string) => {
-			void dispatch(projectActions.loadAll(value));
-			onSearch(value);
-			setCurrentPage(DEFAULT_PAGE);
-		},
-		[dispatch, onSearch],
-	);
+	useEffect(() => {
+		onPageReset();
+	}, [onPageReset, search]);
 
-	const hasProject = projects.length !== EMPTY_LENGTH;
+	const loadMoreProjects = useCallback(() => {
+		onPageChange();
+	}, [onPageChange]);
+
+	const { reference: sentinelReference } =
+		useIntersectionObserver<HTMLDivElement>({
+			isDisabled: !hasNextPage || dataStatus === DataStatus.PENDING,
+			onIntersect: loadMoreProjects,
+		});
 
 	const {
 		isOpened: isCreateModalOpen,
@@ -173,9 +167,9 @@ const Projects = (): JSX.Element => {
 
 	const isLoading =
 		dataStatus === DataStatus.IDLE ||
-		(dataStatus === DataStatus.PENDING && !hasProject);
+		(dataStatus === DataStatus.PENDING && !hasProjects);
 
-	const isLoadingMore = hasMoreProjects && dataStatus === DataStatus.PENDING;
+	const isLoadingMore = hasNextPage && dataStatus === DataStatus.PENDING;
 
 	const isUpdateFormShown = project && projectStatus === DataStatus.FULFILLED;
 
@@ -192,7 +186,7 @@ const Projects = (): JSX.Element => {
 				<Loader />
 			) : (
 				<div className={styles["projects-list"]}>
-					{hasProject ? (
+					{hasProjects ? (
 						projects.map((project) => (
 							<ProjectCard
 								key={project.id}

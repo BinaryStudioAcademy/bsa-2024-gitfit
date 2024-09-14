@@ -1,19 +1,16 @@
 import { useEffect, useRef } from "~/libs/hooks/hooks.js";
 
-const FIRST_ITEM = 0;
-
 type Properties = {
 	isDisabled?: boolean;
 	onIntersect: () => void;
-	root?: Element | null;
-	rootMargin?: string;
-	threshold?: number;
 };
 
 const useIntersectionObserver = <T extends HTMLElement>({
 	isDisabled = false,
 	onIntersect,
-}: Properties): React.MutableRefObject<null | T> => {
+}: Properties): {
+	reference: React.MutableRefObject<null | T>;
+} => {
 	const sentinelReference = useRef<null | T>(null);
 
 	useEffect(() => {
@@ -23,8 +20,8 @@ const useIntersectionObserver = <T extends HTMLElement>({
 
 		const observer = new IntersectionObserver(
 			(entries: IntersectionObserverEntry[]): void => {
-				const firstEntry = entries[FIRST_ITEM];
-				const isIntersecting = firstEntry?.isIntersecting;
+				const [entry] = entries;
+				const isIntersecting = entry?.isIntersecting;
 
 				if (isIntersecting) {
 					onIntersect();
@@ -40,7 +37,9 @@ const useIntersectionObserver = <T extends HTMLElement>({
 		};
 	}, [isDisabled, onIntersect]);
 
-	return sentinelReference;
+	return {
+		reference: sentinelReference,
+	};
 };
 
 export { useIntersectionObserver };

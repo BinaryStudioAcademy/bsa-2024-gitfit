@@ -11,7 +11,6 @@ const projectApi = new ProjectApi({
 });
 
 export { projectApi };
-export { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "./libs/constants/constants.js";
 export { ProjectValidationRule } from "./libs/enums/enums.js";
 export {
 	type ProjectCreateRequestDto,

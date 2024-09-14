@@ -12,10 +12,6 @@ import {
 	type ProjectPatchResponseDto,
 } from "~/modules/projects/projects.js";
 
-import {
-	DEFAULT_PAGE,
-	DEFAULT_PAGE_SIZE,
-} from "../libs/constants/constants.js";
 import { name as sliceName } from "./project.slice.js";
 
 const getById = createAsyncThunk<
@@ -29,27 +25,18 @@ const getById = createAsyncThunk<
 });
 
 const loadAll = createAsyncThunk<
-	ProjectGetAllResponseDto,
-	string | undefined,
+	{ page: number } & ProjectGetAllResponseDto,
+	ProjectGetAllRequestDto,
 	AsyncThunkConfig
 >(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { projectApi } = extra;
 
-	return await projectApi.getAll({
-		name: query ?? "",
-		page: DEFAULT_PAGE,
-		pageSize: DEFAULT_PAGE_SIZE,
-	});
-});
+	const result = await projectApi.getAll(query);
 
-const loadMore = createAsyncThunk<
-	ProjectGetAllResponseDto,
-	ProjectGetAllRequestDto,
-	AsyncThunkConfig
->(`${sliceName}/load-more`, async (query, { extra }) => {
-	const { projectApi } = extra;
-
-	return await projectApi.getAll(query);
+	return {
+		...result,
+		page: query.page,
+	};
 });
 
 const create = createAsyncThunk<
@@ -95,4 +82,4 @@ const deleteById = createAsyncThunk<boolean, number, AsyncThunkConfig>(
 	},
 );
 
-export { create, deleteById, getById, loadAll, loadMore, patch };
+export { create, deleteById, getById, loadAll, patch };

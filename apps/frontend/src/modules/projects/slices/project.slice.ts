@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { actions as projectApiKeyActions } from "~/modules/project-api-keys/project-api-keys.js";
@@ -8,14 +9,7 @@ import {
 	type ProjectGetByIdResponseDto,
 } from "~/modules/projects/projects.js";
 
-import {
-	create,
-	deleteById,
-	getById,
-	loadAll,
-	loadMore,
-	patch,
-} from "./actions.js";
+import { create, deleteById, getById, loadAll, patch } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
@@ -55,23 +49,15 @@ const { actions, name, reducer } = createSlice({
 			state.dataStatus = DataStatus.PENDING;
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
-			state.projects = action.payload.items;
-			state.projectsTotalCount = action.payload.totalItems;
+			const { items, page, totalItems } = action.payload;
+
+			state.projects =
+				page === EMPTY_LENGTH ? items : [...state.projects, ...items];
+			state.projectsTotalCount = totalItems;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadAll.rejected, (state) => {
 			state.projects = [];
-			state.dataStatus = DataStatus.REJECTED;
-		});
-
-		builder.addCase(loadMore.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
-		});
-		builder.addCase(loadMore.fulfilled, (state, action) => {
-			state.projects = [...state.projects, ...action.payload.items];
-			state.dataStatus = DataStatus.FULFILLED;
-		});
-		builder.addCase(loadMore.rejected, (state) => {
 			state.dataStatus = DataStatus.REJECTED;
 		});
 
