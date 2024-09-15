@@ -6,11 +6,10 @@ const NoAccess = (): JSX.Element => {
 	return (
 		<PageLayout>
 			<div className={styles["container"]}>
-				<h1 className={styles["title"]}>
-					You do not have permission to access this page.
-				</h1>
+				<h1 className={styles["title"]}>Pending access</h1>
 				<p className={styles["text"]}>
-					Please contact an administrator to request access.
+					You do not have access to any pages for now. Please contact an admin
+					to enable access for you.
 				</p>
 			</div>
 		</PageLayout>
