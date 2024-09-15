@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { actions as projectApiKeyActions } from "~/modules/project-api-keys/project-api-keys.js";
@@ -9,6 +8,7 @@ import {
 	type ProjectGetByIdResponseDto,
 } from "~/modules/projects/projects.js";
 
+import { FIRST_PAGE } from "../libs/constants/constants.js";
 import { create, deleteById, getById, loadAll, patch } from "./actions.js";
 
 type State = {
@@ -53,7 +53,7 @@ const { actions, name, reducer } = createSlice({
 			const { page } = action.meta.arg;
 
 			state.projects =
-				page === EMPTY_LENGTH ? items : [...state.projects, ...items];
+				page === FIRST_PAGE ? items : [...state.projects, ...items];
 			state.projectsTotalCount = totalItems;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
