@@ -16,7 +16,7 @@ const getGroupColumns = (actions: {
 	{
 		accessorFn: (group: GroupRow): string => group.permissions.join(", "),
 		header: "Permissions",
-		size: 300,
+		size: 250,
 	},
 	{
 		accessorKey: "userCount",
@@ -39,7 +39,7 @@ const getGroupColumns = (actions: {
 		),
 		header: "",
 		id: "menu",
-		size: 75,
+		size: 60,
 	},
 ];
 
