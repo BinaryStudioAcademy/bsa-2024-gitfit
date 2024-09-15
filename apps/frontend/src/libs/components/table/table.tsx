@@ -78,7 +78,7 @@ const Table = <T extends object>({
 				<tbody
 					className={getValidClassNames(
 						styles["table-body"],
-						isScrollDisabled && styles["table-body--no-scroll"],
+						isScrollDisabled && styles["table-body-no-scroll"],
 					)}
 				>
 					{hasData ? (

@@ -51,7 +51,7 @@
 	overflow-y: auto;
 }
 
-.table .table-body--no-scroll {
+.table .table-body-no-scroll {
 	overflow-y: hidden;
 }
 
