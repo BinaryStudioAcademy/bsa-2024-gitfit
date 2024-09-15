@@ -41,6 +41,7 @@ export {
 } from "./libs/types/types.js";
 export {
 	type ActivityLogCreateItemRequestDto,
+	type ActivityLogCreateItemResponseDto,
 	type ActivityLogCreateRequestDto,
 	activityLogCreateValidationSchema,
 	ActivityLogError,

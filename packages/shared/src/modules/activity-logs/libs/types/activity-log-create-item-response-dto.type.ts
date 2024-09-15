@@ -1,4 +1,4 @@
-type ActivityLogCreationData = {
+type ActivityLogCreateItemResponseDto = {
 	date: string;
 	logItem: {
 		authorEmail: string;
@@ -9,4 +9,4 @@ type ActivityLogCreationData = {
 	userId: number;
 };
 
-export { type ActivityLogCreationData };
+export { type ActivityLogCreateItemResponseDto };

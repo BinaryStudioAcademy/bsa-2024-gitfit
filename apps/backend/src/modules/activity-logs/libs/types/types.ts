@@ -1,5 +1,5 @@
-export { type ActivityLogCreationData } from "./activity-log-creation-data.type.js";
 export {
+	type ActivityLogCreateItemResponseDto,
 	type ActivityLogCreateRequestDto,
 	type ActivityLogGetAllItemResponseDto,
 	type ActivityLogGetAllResponseDto,

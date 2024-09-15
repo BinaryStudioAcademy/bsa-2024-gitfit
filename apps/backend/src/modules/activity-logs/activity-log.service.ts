@@ -6,8 +6,8 @@ import { type ProjectApiKeyService } from "~/modules/project-api-keys/project-ap
 import { ActivityLogEntity } from "./activity-log.entity.js";
 import { type ActivityLogRepository } from "./activity-log.repository.js";
 import {
+	type ActivityLogCreateItemResponseDto,
 	type ActivityLogCreateRequestDto,
-	type ActivityLogCreationData,
 	type ActivityLogGetAllResponseDto,
 } from "./libs/types/types.js";
 
@@ -41,7 +41,7 @@ class ActivityLogService implements Service {
 		logItem,
 		projectId,
 		userId,
-	}: ActivityLogCreationData): Promise<ActivityLogEntity> {
+	}: ActivityLogCreateItemResponseDto): Promise<ActivityLogEntity> {
 		const { authorEmail, authorName, commitsNumber } = logItem;
 
 		let gitEmail = await this.gitEmailService.findByEmail(authorEmail);
