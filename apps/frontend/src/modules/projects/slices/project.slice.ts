@@ -49,7 +49,8 @@ const { actions, name, reducer } = createSlice({
 			state.dataStatus = DataStatus.PENDING;
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
-			const { items, page, totalItems } = action.payload;
+			const { items, totalItems } = action.payload;
+			const { page } = action.meta.arg;
 
 			state.projects =
 				page === EMPTY_LENGTH ? items : [...state.projects, ...items];

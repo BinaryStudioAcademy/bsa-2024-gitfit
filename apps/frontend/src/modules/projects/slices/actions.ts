@@ -25,18 +25,13 @@ const getById = createAsyncThunk<
 });
 
 const loadAll = createAsyncThunk<
-	{ page: number } & ProjectGetAllResponseDto,
+	ProjectGetAllResponseDto,
 	ProjectGetAllRequestDto,
 	AsyncThunkConfig
 >(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { projectApi } = extra;
 
-	const result = await projectApi.getAll(query);
-
-	return {
-		...result,
-		page: query.page,
-	};
+	return await projectApi.getAll(query);
 });
 
 const create = createAsyncThunk<
