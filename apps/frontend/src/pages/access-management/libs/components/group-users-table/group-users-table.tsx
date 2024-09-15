@@ -94,8 +94,8 @@ const GroupUsersTable = ({
 					<Table<UserRow>
 						columns={userColumns}
 						data={userData}
+						emptyPlaceholder="No users matching your search criteria."
 						getRowId={getRowId}
-						noDataMessage="No users matching your search criteria."
 						onRowSelect={onToggle}
 						selectedRowIds={selectedUserIds}
 					/>
