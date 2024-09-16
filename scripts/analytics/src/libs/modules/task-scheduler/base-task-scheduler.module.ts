@@ -6,24 +6,20 @@ import { type TaskScheduler } from "./libs/types/types.js";
 
 type Constructor = {
 	logger: Logger;
-	schedule: string;
 };
 
 class BaseTaskScheduler implements TaskScheduler {
 	private logger: Logger;
 
-	private schedule: string;
-
-	public constructor({ logger, schedule }: Constructor) {
+	public constructor({ logger }: Constructor) {
 		this.logger = logger;
-		this.schedule = schedule;
 	}
 
-	public start(task: () => void): void {
-		cron.schedule(this.schedule, () => {
+	public start(schedule: string, task: () => void): void {
+		cron.schedule(schedule, () => {
 			task();
 		});
-		this.logger.info(`TaskScheduler started with schedule: ${this.schedule}`);
+		this.logger.info(`TaskScheduler started with schedule: ${schedule}`);
 	}
 }
 

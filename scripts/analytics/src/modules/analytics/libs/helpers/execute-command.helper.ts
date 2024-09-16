@@ -3,11 +3,10 @@ import { promisify } from "node:util";
 
 const execAsync = promisify(exec);
 
-async function executeCommand(
+const executeCommand = async (
 	command: string,
-	options?: { cwd?: string },
-): Promise<{ stderr: Buffer | string; stdout: Buffer | string }> {
-	return await execAsync(command, options);
-}
+): Promise<{ stderr: Buffer | string; stdout: Buffer | string }> => {
+	return await execAsync(command);
+};
 
 export { executeCommand };

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { ActivityLogValidationMessage } from "../enums/enums.js";
-import { EMAIL_REGEX } from "./libs/constants/constants.js";
+import { GIT_EMAIL_REGEX } from "./libs/constants/constants.js";
 
 const activityLogItemCreate = z.object({
 	date: z.string({
@@ -15,7 +15,7 @@ const activityLogItemCreate = z.object({
 						required_error: ActivityLogValidationMessage.AUTHOR_EMAIL_REQUIRED,
 					})
 					.regex(
-						EMAIL_REGEX,
+						GIT_EMAIL_REGEX,
 						ActivityLogValidationMessage.AUTHOR_EMAIL_INVALID,
 					),
 				authorName: z.string({

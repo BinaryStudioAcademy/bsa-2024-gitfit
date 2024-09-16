@@ -1,1 +1,1 @@
-export { EMAIL_REGEX } from "./email-regex.constant.js";
+export { GIT_EMAIL_REGEX } from "./git-email-regex.constant.js";

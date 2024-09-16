@@ -1,7 +1,7 @@
 type TaskFunction = () => void;
 
 type TaskScheduler = {
-	start: (task: TaskFunction) => void;
+	start: (schedule: string, task: TaskFunction) => void;
 };
 
 export { type TaskScheduler };

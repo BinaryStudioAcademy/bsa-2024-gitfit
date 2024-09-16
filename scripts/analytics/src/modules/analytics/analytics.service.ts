@@ -44,10 +44,7 @@ class AnalyticsService {
 	> {
 		const stats: ActivityLogCreateItemRequestDto[] = [];
 		const shortLogResult = await executeCommand(
-			this.gitService.getShortLogCommand("midnight"),
-			{
-				cwd: this.repoPath,
-			},
+			this.gitService.getShortLogCommand(this.repoPath, "midnight"),
 		);
 
 		const commitItems: CommitStatistics[] = [];
