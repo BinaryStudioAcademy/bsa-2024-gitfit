@@ -1,0 +1,3 @@
+const FIRST_OPTION_INDEX = 0;
+
+export { FIRST_OPTION_INDEX };

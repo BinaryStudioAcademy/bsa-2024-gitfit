@@ -93,8 +93,16 @@ export {
 	type ProjectGroupCreateResponseDto,
 	projectGroupCreateValidationSchema,
 	ProjectGroupError,
+	type ProjectGroupGetAllItemResponseDto,
+	type ProjectGroupGetAllRequestDto,
+	type ProjectGroupGetAllResponseDto,
 	ProjectGroupsApiPath,
 } from "./modules/project-groups/project-groups.js";
+export {
+	ProjectPermissionsApiPath,
+	type ProjectPermissionsGetAllItemResponseDto,
+	type ProjectPermissionsGetAllResponseDto,
+} from "./modules/project-permissions/project-permissions.js";
 export {
 	type ProjectCreateRequestDto,
 	projectCreateValidationSchema,

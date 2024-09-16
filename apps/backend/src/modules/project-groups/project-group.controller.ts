@@ -6,9 +6,13 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { ProjectGroupsApiPath } from "./libs/enums/enums.js";
-import { type ProjectGroupCreateRequestDto } from "./libs/types/types.js";
+import {
+	type ProjectGroupCreateRequestDto,
+	type ProjectGroupGetAllRequestDto,
+} from "./libs/types/types.js";
 import { projectGroupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectGroupService } from "./project-group.service.js";
 
@@ -64,6 +68,18 @@ class ProjectGroupController extends BaseController {
 			validation: {
 				body: projectGroupCreateValidationSchema,
 			},
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.findAllByProjectId(
+					options as APIHandlerOptions<{
+						params: ProjectGroupGetAllRequestDto;
+						query: PaginationQueryParameters;
+					}>,
+				),
+			method: "GET",
+			path: ProjectGroupsApiPath.$ID,
 		});
 	}
 
@@ -126,6 +142,23 @@ class ProjectGroupController extends BaseController {
 		return {
 			payload: await this.projectGroupService.create(options.body),
 			status: HTTPCode.CREATED,
+		};
+	}
+
+	private async findAllByProjectId(
+		options: APIHandlerOptions<{
+			params: ProjectGroupGetAllRequestDto;
+			query: PaginationQueryParameters;
+		}>,
+	): Promise<APIHandlerResponse> {
+		const { params, query } = options;
+
+		return {
+			payload: await this.projectGroupService.findAllByProjectId(
+				params.id,
+				query,
+			),
+			status: HTTPCode.OK,
 		};
 	}
 }
