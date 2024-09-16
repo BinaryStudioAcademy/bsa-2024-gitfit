@@ -1,4 +1,4 @@
-import { type PaginationQueryParameters } from "src/libs/types/types.js";
+import { type PaginationQueryParameters } from "../../../../libs/types/types.js";
 
 type ProjectGetAllRequestDto = {
 	name: string;
