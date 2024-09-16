@@ -12,6 +12,8 @@ import {
 	useAppSelector,
 	useCallback,
 	useEffect,
+	useInfiniteScroll,
+	useIntersectionObserver,
 	useModal,
 	useSearch,
 	useState,
@@ -29,6 +31,7 @@ import {
 	ProjectsSearch,
 	ProjectUpdateForm,
 } from "./libs/components/components.js";
+import { PROJECTS_PAGE_SIZE } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
@@ -47,7 +50,15 @@ const Projects = (): JSX.Element => {
 		projectPatchStatus,
 		projects,
 		projectStatus,
+		projectsTotalCount,
 	} = useAppSelector(({ projects }) => projects);
+
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			onSearch(value);
+		},
+		[onSearch],
+	);
 
 	useEffect(() => {
 		if (projectToModifyId) {
@@ -55,23 +66,40 @@ const Projects = (): JSX.Element => {
 		}
 	}, [dispatch, projectToModifyId]);
 
-	useEffect(() => {
-		void dispatch(projectActions.loadAll(search));
-	}, [dispatch, search]);
+	const hasProjects = projects.length !== EMPTY_LENGTH;
 
-	const handleSearchChange = useCallback(
-		(value: string) => {
-			void dispatch(projectActions.loadAll(value));
-			onSearch(value);
+	const handleLoadProjects = useCallback(
+		(page: number, pageSize: number) => {
+			void dispatch(
+				projectActions.loadAll({
+					name: search,
+					page,
+					pageSize,
+				}),
+			);
 		},
-		[dispatch, onSearch],
+		[dispatch, search],
 	);
 
-	const hasProject = projects.length !== EMPTY_LENGTH;
-	const hasSearch = search.length !== EMPTY_LENGTH;
-	const emptyPlaceholderMessage = hasSearch
-		? "No projects found matching your search criteria. Please try different keywords."
-		: "No projects created yet. Create the first project now.";
+	const { hasNextPage, onNextPage, onPageReset } = useInfiniteScroll({
+		onLoading: handleLoadProjects,
+		pageSize: PROJECTS_PAGE_SIZE,
+		totalItemsCount: projectsTotalCount,
+	});
+
+	useEffect(() => {
+		onPageReset();
+	}, [onPageReset, search]);
+
+	const loadMoreProjects = useCallback(() => {
+		onNextPage();
+	}, [onNextPage]);
+
+	const { reference: sentinelReference } =
+		useIntersectionObserver<HTMLDivElement>({
+			isDisabled: !hasNextPage || dataStatus === DataStatus.PENDING,
+			onIntersect: loadMoreProjects,
+		});
 
 	const {
 		isOpened: isCreateModalOpen,
@@ -142,7 +170,9 @@ const Projects = (): JSX.Element => {
 
 	const isLoading =
 		dataStatus === DataStatus.IDLE ||
-		(dataStatus === DataStatus.PENDING && !hasProject);
+		(dataStatus === DataStatus.PENDING && !hasProjects);
+
+	const isLoadingMore = hasNextPage && dataStatus === DataStatus.PENDING;
 
 	const isUpdateFormShown = project && projectStatus === DataStatus.FULFILLED;
 
@@ -159,7 +189,7 @@ const Projects = (): JSX.Element => {
 				<Loader />
 			) : (
 				<div className={styles["projects-list"]}>
-					{hasProject ? (
+					{hasProjects ? (
 						projects.map((project) => (
 							<ProjectCard
 								key={project.id}
@@ -170,9 +200,13 @@ const Projects = (): JSX.Element => {
 						))
 					) : (
 						<p className={styles["empty-placeholder"]}>
-							{emptyPlaceholderMessage}
+							No projects found matching your search criteria. Please try
+							different keywords.
 						</p>
 					)}
+
+					<div ref={sentinelReference} />
+					{isLoadingMore && <Loader />}
 				</div>
 			)}
 			<Modal

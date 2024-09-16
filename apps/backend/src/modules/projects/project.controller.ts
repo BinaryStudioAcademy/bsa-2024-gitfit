@@ -220,10 +220,14 @@ class ProjectController extends BaseController {
 			query: ProjectGetAllRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { name } = options.query;
+		const { name, page, pageSize } = options.query;
 
 		return {
-			payload: await this.projectService.findAll(name),
+			payload: await this.projectService.findAll({
+				name,
+				page: Number(page),
+				pageSize: Number(pageSize),
+			}),
 			status: HTTPCode.OK,
 		};
 	}
