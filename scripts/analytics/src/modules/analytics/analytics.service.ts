@@ -87,13 +87,10 @@ class AnalyticsService {
 			await this.fetchRepository();
 			const stats = await this.collectStatsByRepository();
 
-			await this.analyticsApi.sendAnalytics(
-				{
-					items: stats,
-					userId: Number(this.userId),
-				},
-				this.apiKey,
-			);
+			await this.analyticsApi.sendAnalytics(this.apiKey, {
+				items: stats,
+				userId: Number(this.userId),
+			});
 
 			logger.info("Statistics successfully sent.");
 		} catch (error: unknown) {

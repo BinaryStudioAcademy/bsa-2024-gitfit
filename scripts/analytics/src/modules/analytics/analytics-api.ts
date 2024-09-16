@@ -20,17 +20,16 @@ class AnalyticsApi extends BaseHTTPApi {
 	}
 
 	public async sendAnalytics(
+		authToken: string,
 		payload: ActivityLogCreateRequestDto,
-		token: string,
 	): Promise<ActivityLogGetAllResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(ActivityLogsApiPath.ROOT, {}),
 			{
+				authToken,
 				contentType: ContentType.JSON,
-				hasAuth: true,
 				method: "POST",
 				payload: JSON.stringify(payload),
-				token,
 			},
 		);
 

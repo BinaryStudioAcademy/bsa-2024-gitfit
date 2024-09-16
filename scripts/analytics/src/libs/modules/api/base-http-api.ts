@@ -61,19 +61,15 @@ class BaseHTTPApi implements HTTPApi {
 		return response;
 	}
 
-	private getHeaders({
-		contentType,
-		hasAuth,
-		token,
-	}: GetHeadersOptions): Headers {
+	private getHeaders({ authToken, contentType }: GetHeadersOptions): Headers {
 		const headers = new Headers();
 
 		if (contentType) {
 			headers.append(HTTPHeader.CONTENT_TYPE, contentType);
 		}
 
-		if (hasAuth) {
-			headers.append(HTTPHeader.AUTHORIZATION, `Bearer ${token as string}`);
+		if (authToken) {
+			headers.append(HTTPHeader.AUTHORIZATION, `Bearer ${authToken}`);
 		}
 
 		return headers;
@@ -121,18 +117,16 @@ class BaseHTTPApi implements HTTPApi {
 		options: HTTPApiOptions,
 	): Promise<HTTPApiResponse> {
 		const {
+			authToken = null,
 			contentType = null,
-			hasAuth = false,
 			method,
 			payload = null,
 			query,
-			token,
 		} = options;
 
 		const headers = this.getHeaders({
+			authToken,
 			contentType,
-			hasAuth,
-			token,
 		});
 
 		const url = this.getUrl(path, query);
