@@ -50,7 +50,12 @@ const Table = <T extends object>({
 
 	return (
 		<div className={styles["table-container"]}>
-			<table className={styles["table"]}>
+			<table
+				className={getValidClassNames(
+					styles["table"],
+					isScrollDisabled && styles["table-no-scroll"],
+				)}
+			>
 				<thead className={styles["table-head"]}>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<tr className={styles["table-row"]} key={headerGroup.id}>
@@ -77,12 +82,7 @@ const Table = <T extends object>({
 						</tr>
 					))}
 				</thead>
-				<tbody
-					className={getValidClassNames(
-						styles["table-body"],
-						isScrollDisabled && styles["table-body-no-scroll"],
-					)}
-				>
+				<tbody className={styles["table-body"]}>
 					{hasData ? (
 						table.getRowModel().rows.map((row) => (
 							<tr className={styles["table-row"]} key={row.id}>

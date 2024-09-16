@@ -135,6 +135,10 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 						cursor: "pointer",
 						minHeight: "32px",
 					}),
+					menu: (base) => ({
+						...base,
+						zIndex: 3,
+					}),
 					option: (base) => ({
 						...base,
 						cursor: "pointer",

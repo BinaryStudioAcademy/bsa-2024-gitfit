@@ -74,10 +74,7 @@ class ProjectApiKeyService implements Service {
 			await this.projectApiKeyRepository.findByProjectId(projectId);
 
 		if (existingProjectApiKey) {
-			throw new ProjectApiKeyError({
-				message: ExceptionMessage.PROJECT_API_KEY_ALREADY_EXISTS,
-				status: HTTPCode.CONFLICT,
-			});
+			await this.projectApiKeyRepository.delete(projectId);
 		}
 
 		const apiKey = await this.token.createToken({ projectId });

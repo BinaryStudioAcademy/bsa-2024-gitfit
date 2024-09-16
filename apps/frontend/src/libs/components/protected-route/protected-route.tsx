@@ -1,6 +1,4 @@
-import { Navigate } from "react-router-dom";
-
-import { Loader } from "~/libs/components/components.js";
+import { Loader, Navigate } from "~/libs/components/components.js";
 import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
 import {
 	AppRoute,
@@ -58,7 +56,7 @@ const ProtectedRoute = ({
 			SIDEBAR_ITEMS,
 			userPermissions,
 		);
-		const redirectLink = navigationItem?.href ?? AppRoute.ROOT;
+		const redirectLink = navigationItem?.href ?? AppRoute.NO_ACCESS;
 
 		return <Navigate replace to={redirectLink} />;
 	}

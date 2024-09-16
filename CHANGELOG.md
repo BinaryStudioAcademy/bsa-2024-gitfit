@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.27.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.27.0...v1.27.1) (2024-09-16)
+
+
+### Bug Fixes
+
+* Inappropriate appearance of the Access Managment page for a small screen resolution (1024px) gf-295 ([#323](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/323)) ([0588959](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/058895952437ddff369edc7d14e30066a2f87df6))
+* Upon a click on the Logo element in the header user is redirected to the Homepage gf-285 ([#291](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/291)) ([fc2ba06](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/fc2ba067490675837e6f285aebdf40cff2009320))
+
+## [1.27.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.26.0...v1.27.0) (2024-09-16)
+
+
+### Features
+
+* add an ability to regenerate project api key gf-288 ([#307](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/307)) ([7551326](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75513264ccf452c8bd1c9f9ff99bf90f71b040f7))
+
+
+### Bug Fixes
+
+* add a user permission check gf-324 ([#325](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/325)) ([41d2dff](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/41d2dff3512736cf970f789ccafaa318727f15ab))
+* adjusted project status message based on search state gf-313 ([#319](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/319)) ([0306fa4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0306fa4879cfa077cb53e9dd067e62ed0e8fd08a))
+* The Table should not be able to scroll when the Options Popover is open gf-272 ([#278](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/278)) ([8450514](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8450514f1fcd9f913cf8bd6716c88a975cb34e69))
+
 ## [1.26.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.25.0...v1.26.0) (2024-09-16)
 
 

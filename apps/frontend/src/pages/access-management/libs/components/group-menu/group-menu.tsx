@@ -42,12 +42,7 @@ const GroupMenu = ({
 
 	return (
 		<div className={styles["menu-container"]}>
-			<Menu
-				hasFixedPositioning
-				isOpened={isOpened}
-				onClose={handleClose}
-				onOpen={handleOpen}
-			>
+			<Menu isOpened={isOpened} onClose={handleClose} onOpen={handleOpen}>
 				<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
 				<MenuItem
 					iconName="trashBin"

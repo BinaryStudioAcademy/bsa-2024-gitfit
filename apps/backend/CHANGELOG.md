@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.16.0...backend-v1.17.0) (2024-09-16)
+
+
+### Features
+
+* add an ability to regenerate project api key gf-288 ([#307](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/307)) ([7551326](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75513264ccf452c8bd1c9f9ff99bf90f71b040f7))
+
+
+### Bug Fixes
+
+* add a user permission check gf-324 ([#325](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/325)) ([41d2dff](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/41d2dff3512736cf970f789ccafaa318727f15ab))
+
 ## [1.16.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.15.0...backend-v1.16.0) (2024-09-16)
 
 
