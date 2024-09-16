@@ -7,6 +7,7 @@ import {
 import { GitEmailModel } from "~/modules/git-emails/git-emails.js";
 
 class ContributorModel extends AbstractModel {
+	public gitEmails!: GitEmailModel[];
 	public name!: string;
 
 	public static override get relationMappings(): RelationMappings {

@@ -15,12 +15,10 @@ class ContributorRepository implements Repository {
 
 		const contributor = await this.contributorModel
 			.query()
-			.insert({
-				name,
-			})
+			.insert({ name })
 			.execute();
 
-		return ContributorEntity.initialize(contributor);
+		return ContributorEntity.initialize({ ...contributor, projects: [] });
 	}
 
 	public delete(): ReturnType<Repository["delete"]> {
@@ -28,19 +26,41 @@ class ContributorRepository implements Repository {
 	}
 
 	public async find(id: number): Promise<ContributorEntity | null> {
-		const item = await this.contributorModel.query().findById(id);
+		const contributor = await this.contributorModel
+			.query()
+			.findById(id)
+			.withGraphFetched("gitEmails");
 
-		return item ? ContributorEntity.initialize(item) : null;
+		if (!contributor) {
+			return null;
+		}
+
+		return ContributorEntity.initialize({ ...contributor, projects: [] });
 	}
 
-	public findAll(): ReturnType<Repository["findAll"]> {
-		return Promise.resolve({ items: [] });
+	public async findAll(): Promise<{ items: ContributorEntity[] }> {
+		const contributors = await this.contributorModel
+			.query()
+			.withGraphFetched("gitEmails");
+
+		return {
+			items: contributors.map((contributor) =>
+				ContributorEntity.initialize({ ...contributor, projects: [] }),
+			),
+		};
 	}
 
 	public async findByName(name: string): Promise<ContributorEntity | null> {
-		const item = await this.contributorModel.query().findOne({ name });
+		const contributor = await this.contributorModel
+			.query()
+			.findOne({ name })
+			.withGraphFetched("gitEmails");
 
-		return item ? ContributorEntity.initialize(item) : null;
+		if (!contributor) {
+			return null;
+		}
+
+		return ContributorEntity.initialize({ ...contributor, projects: [] });
 	}
 
 	public update(): ReturnType<Repository["update"]> {
