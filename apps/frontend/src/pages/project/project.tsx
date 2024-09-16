@@ -14,7 +14,10 @@ import {
 import { actions as projectActions } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
-import { SetupAnalyticsModal } from "./libs/components/components.js";
+import {
+	ContributorsList,
+	SetupAnalyticsModal,
+} from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
@@ -46,6 +49,13 @@ const Project = (): JSX.Element => {
 		return <NotFound />;
 	}
 
+	// TODO: replace this mock data with the data from contributors slice
+	const contributors = [
+		{ id: 1, name: "John" },
+		{ id: 2, name: "Will" },
+		{ id: 3, name: "Clara" },
+	];
+
 	return (
 		<PageLayout isLoading={isLoading}>
 			{hasProject && (
@@ -69,11 +79,16 @@ const Project = (): JSX.Element => {
 								{project.description}
 							</p>
 						</div>
+
 						<div>
 							<Button
 								label="Setup Analytics"
 								onClick={onSetupAnalyticsModalOpen}
 							/>
+						</div>
+
+						<div className={styles["contributors-list-wrapper"]}>
+							<ContributorsList contributors={contributors} />
 						</div>
 					</div>
 

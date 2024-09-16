@@ -38,3 +38,8 @@
 .breadcrumb-container {
 	margin-bottom: 32px;
 }
+
+.contributors-list-wrapper {
+	width: 100%;
+	margin-top: 8px;
+}
