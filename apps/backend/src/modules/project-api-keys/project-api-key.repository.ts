@@ -42,6 +42,17 @@ class ProjectApiKeyRepository implements Repository {
 		return Promise.resolve({ items: [] });
 	}
 
+	public async findByApiKey(
+		encryptedKey: string,
+	): Promise<null | ProjectApiKeyEntity> {
+		const projectApiKey = await this.projectApiKeyModel
+			.query()
+			.findOne({ encryptedKey })
+			.execute();
+
+		return projectApiKey ? ProjectApiKeyEntity.initialize(projectApiKey) : null;
+	}
+
 	public async findByProjectId(
 		projectId: number,
 	): Promise<null | ProjectApiKeyEntity> {

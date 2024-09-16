@@ -14,6 +14,7 @@ import styles from "./styles.module.css";
 type BaseProperties<T> = {
 	columns: TableColumn<T>[];
 	data: T[];
+	emptyPlaceholder?: string;
 };
 
 type SelectableProperties<T> = {
@@ -29,6 +30,7 @@ type Properties<T> =
 const Table = <T extends object>({
 	columns,
 	data,
+	emptyPlaceholder = "There is nothing yet.",
 	...selectableProperties
 }: Properties<T>): JSX.Element => {
 	const { getRowId, onRowSelect, selectedRowIds } = selectableProperties as
@@ -112,7 +114,7 @@ const Table = <T extends object>({
 						<tr className={styles["table-row"]}>
 							<td className={styles["table-data"]} colSpan={columns.length}>
 								<p className={styles["empty-placeholder"]}>
-									There is nothing yet.
+									{emptyPlaceholder}
 								</p>
 							</td>
 						</tr>

@@ -70,7 +70,7 @@ class AnalyticsService {
 		}
 
 		stats.push({
-			date: formatDate(new Date(), "yyyy-mm-dd"),
+			date: formatDate(new Date(), "yyyy-MM-dd"),
 			items: commitItems,
 		});
 

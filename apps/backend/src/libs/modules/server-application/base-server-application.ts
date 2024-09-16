@@ -16,6 +16,7 @@ import {
 	type ServerCommonErrorResponse,
 	type ServerValidationErrorResponse,
 	type ValidationSchema,
+	type WhiteRoute,
 } from "~/libs/types/types.js";
 import { type UserService } from "~/modules/users/users.js";
 
@@ -36,7 +37,7 @@ type Constructor = {
 	};
 	title: string;
 	token: Token;
-	whiteRoutes: string[];
+	whiteRoutes: WhiteRoute[];
 };
 
 class BaseServerApplication implements ServerApplication {
@@ -58,7 +59,7 @@ class BaseServerApplication implements ServerApplication {
 
 	private token: Token;
 
-	private whiteRoutes: string[];
+	private whiteRoutes: WhiteRoute[];
 
 	public constructor({
 		apis,
