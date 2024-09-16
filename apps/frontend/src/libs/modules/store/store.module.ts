@@ -10,6 +10,10 @@ import { type Config } from "~/libs/modules/config/config.js";
 import { storage } from "~/libs/modules/storage/storage.js";
 import { toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
 import { authApi, reducer as authReducer } from "~/modules/auth/auth.js";
+import {
+	contributorApi,
+	reducer as contributorsReducer,
+} from "~/modules/contributors/contributors.js";
 import { groupApi, reducer as groupsReducer } from "~/modules/groups/groups.js";
 import {
 	permissionApi,
@@ -45,6 +49,7 @@ class Store {
 			},
 			reducer: {
 				auth: authReducer,
+				contributors: contributorsReducer,
 				groups: groupsReducer,
 				permissions: permissionReducer,
 				projects: projectsReducer,
@@ -56,6 +61,7 @@ class Store {
 	public get extraArguments(): ExtraArguments {
 		return {
 			authApi,
+			contributorApi,
 			groupApi,
 			permissionApi,
 			projectApi,
