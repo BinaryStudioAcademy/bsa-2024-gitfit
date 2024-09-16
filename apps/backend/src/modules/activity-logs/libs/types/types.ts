@@ -1,4 +1,5 @@
 export {
+	type ActivityLogCreateItemResponseDto,
 	type ActivityLogCreateRequestDto,
 	type ActivityLogGetAllItemResponseDto,
 	type ActivityLogGetAllResponseDto,

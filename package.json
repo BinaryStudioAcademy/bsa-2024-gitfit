@@ -1,10 +1,11 @@
 {
 	"name": "git-fit",
-	"version": "1.20.0",
+	"version": "1.27.1",
 	"type": "module",
 	"workspaces": [
 		"apps/*",
-		"packages/*"
+		"packages/*",
+		"scripts/*"
 	],
 	"engines": {
 		"node": "20.x.x",
@@ -17,6 +18,7 @@
 		"build:shared": "npm run build -w packages/shared",
 		"build:frontend": "npm run build -w apps/frontend",
 		"build:backend": "npm run build -w apps/backend",
+		"build:analytics": "npm run build -w scripts/analytics",
 		"build": "npm run build:shared && npm run build:backend && npm run build:frontend && npm run prepare-build",
 		"prepare-build": "sh ./prepare-build.sh",
 		"lint:editor": "editorconfig-checker",

@@ -1,4 +1,5 @@
 import { Table, TablePagination } from "~/libs/components/components.js";
+import { useCallback, useMemo, useState } from "~/libs/hooks/hooks.js";
 import { type GroupGetAllItemResponseDto } from "~/modules/groups/groups.js";
 
 import { getGroupColumns, getGroupRows } from "../../helpers/helpers.js";
@@ -8,6 +9,7 @@ import styles from "./styles.module.css";
 type Properties = {
 	groups: GroupGetAllItemResponseDto[];
 	onDelete: (id: number) => void;
+	onEdit: (group: GroupGetAllItemResponseDto) => void;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
@@ -19,6 +21,7 @@ type Properties = {
 const GroupsTable = ({
 	groups,
 	onDelete,
+	onEdit,
 	onPageChange,
 	onPageSizeChange,
 	page,
@@ -26,12 +29,47 @@ const GroupsTable = ({
 	paginationBackground = "primary",
 	totalItemsCount,
 }: Properties): JSX.Element => {
-	const groupColumns = getGroupColumns(onDelete);
+	const handleEdit = useCallback(
+		(groupId: number): void => {
+			const group = groups.find(({ id }) => id === groupId);
+
+			if (group) {
+				onEdit(group);
+			}
+		},
+		[groups, onEdit],
+	);
+
+	const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
+
+	const handleMenuOpen = useCallback(() => {
+		setIsMenuOpened(true);
+	}, []);
+
+	const handleMenuClose = useCallback(() => {
+		setIsMenuOpened(false);
+	}, []);
+
+	const groupColumns = useMemo(
+		() =>
+			getGroupColumns({
+				onDelete,
+				onEdit: handleEdit,
+				onMenuClose: handleMenuClose,
+				onMenuOpen: handleMenuOpen,
+			}),
+		[handleMenuClose, handleMenuOpen, onDelete, handleEdit],
+	);
+
 	const groupData: GroupRow[] = getGroupRows(groups);
 
 	return (
 		<div className={styles["groups-table"]}>
-			<Table<GroupRow> columns={groupColumns} data={groupData} />
+			<Table<GroupRow>
+				columns={groupColumns}
+				data={groupData}
+				isScrollDisabled={isMenuOpened}
+			/>
 			<TablePagination
 				background={paginationBackground}
 				onPageChange={onPageChange}

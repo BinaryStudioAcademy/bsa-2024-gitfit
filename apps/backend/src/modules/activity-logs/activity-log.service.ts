@@ -1,87 +1,99 @@
-import { ExceptionMessage } from "~/libs/enums/enums.js";
-import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 import { type ContributorService } from "~/modules/contributors/contributors.js";
 import { type GitEmailService } from "~/modules/git-emails/git-emails.js";
+import { type ProjectApiKeyService } from "~/modules/project-api-keys/project-api-keys.js";
 
 import { ActivityLogEntity } from "./activity-log.entity.js";
 import { type ActivityLogRepository } from "./activity-log.repository.js";
-import { ActivityLogError } from "./libs/exceptions/exceptions.js";
 import {
+	type ActivityLogCreateItemResponseDto,
 	type ActivityLogCreateRequestDto,
 	type ActivityLogGetAllResponseDto,
 } from "./libs/types/types.js";
+
+type Constructor = {
+	activityLogRepository: ActivityLogRepository;
+	contributorService: ContributorService;
+	gitEmailService: GitEmailService;
+	projectApiKeyService: ProjectApiKeyService;
+};
 
 class ActivityLogService implements Service {
 	private activityLogRepository: ActivityLogRepository;
 	private contributorService: ContributorService;
 	private gitEmailService: GitEmailService;
+	private projectApiKeyService: ProjectApiKeyService;
 
-	public constructor(
-		activityLogRepository: ActivityLogRepository,
-		contributorService: ContributorService,
-		gitEmailService: GitEmailService,
-	) {
+	public constructor({
+		activityLogRepository,
+		contributorService,
+		gitEmailService,
+		projectApiKeyService,
+	}: Constructor) {
 		this.activityLogRepository = activityLogRepository;
 		this.contributorService = contributorService;
 		this.gitEmailService = gitEmailService;
+		this.projectApiKeyService = projectApiKeyService;
+	}
+
+	private async createActivityLog({
+		date,
+		logItem,
+		projectId,
+		userId,
+	}: ActivityLogCreateItemResponseDto): Promise<ActivityLogEntity> {
+		const { authorEmail, authorName, commitsNumber } = logItem;
+
+		let gitEmail = await this.gitEmailService.findByEmail(authorEmail);
+
+		if (!gitEmail) {
+			const contributor = await this.contributorService.create({
+				name: authorName,
+			});
+
+			gitEmail = await this.gitEmailService.create({
+				contributorId: contributor.id,
+				email: authorEmail,
+			});
+		}
+
+		return await this.activityLogRepository.create(
+			ActivityLogEntity.initializeNew({
+				commitsNumber,
+				createdByUser: { id: userId },
+				date,
+				gitEmail: { contributor: gitEmail.contributor, id: gitEmail.id },
+				project: { id: projectId },
+			}),
+		);
 	}
 
 	public async create(
-		payload: ActivityLogCreateRequestDto,
+		payload: { apiKey: string } & ActivityLogCreateRequestDto,
 	): Promise<ActivityLogGetAllResponseDto> {
-		// TODO: extract projectId and createdByUserId from token
-		//		 and check if there are any in the database
-		//       if there is no verification in decode method
-		const project = { id: 1 };
-		const createdByUser = { id: 1 };
+		const { apiKey, items, userId } = payload;
+
+		const existingProjectApiKey =
+			await this.projectApiKeyService.findByApiKey(apiKey);
+
+		const { projectId } = existingProjectApiKey;
 
 		const createdActivityLogs: ActivityLogGetAllResponseDto = {
 			items: [],
 		};
 
-		for (const record of payload.items) {
+		for (const record of items) {
 			const { date, items } = record;
 
 			for (const logItem of items) {
-				const { authorEmail, authorName, commitsNumber } = logItem;
+				const activityLog = await this.createActivityLog({
+					date,
+					logItem,
+					projectId,
+					userId,
+				});
 
-				let contributor = await this.contributorService.findByName(authorName);
-
-				if (!contributor) {
-					contributor = await this.contributorService.create({
-						name: authorName,
-					});
-				}
-
-				let gitEmail = await this.gitEmailService.findByEmail(authorEmail);
-
-				if (!gitEmail) {
-					gitEmail = await this.gitEmailService.create({
-						contributorId: contributor.id,
-						email: authorEmail,
-					});
-				}
-
-				try {
-					const activityLog = await this.activityLogRepository.create(
-						ActivityLogEntity.initializeNew({
-							commitsNumber,
-							contributor: { id: contributor.id, name: contributor.name },
-							createdByUser,
-							date,
-							gitEmail: { id: gitEmail.id },
-							project,
-						}),
-					);
-
-					createdActivityLogs.items.push(activityLog.toObject());
-				} catch {
-					throw new ActivityLogError({
-						message: ExceptionMessage.CREATE_ACTIVITY_LOG_FAILED,
-						status: HTTPCode.INTERNAL_SERVER_ERROR,
-					});
-				}
+				createdActivityLogs.items.push(activityLog.toObject());
 			}
 		}
 

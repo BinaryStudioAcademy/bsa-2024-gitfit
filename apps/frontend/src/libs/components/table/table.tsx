@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-table";
 
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { SelectRowCell } from "./libs/components/components.js";
@@ -13,6 +14,8 @@ import styles from "./styles.module.css";
 type BaseProperties<T> = {
 	columns: TableColumn<T>[];
 	data: T[];
+	emptyPlaceholder?: string;
+	isScrollDisabled?: boolean;
 };
 
 type SelectableProperties<T> = {
@@ -28,6 +31,8 @@ type Properties<T> =
 const Table = <T extends object>({
 	columns,
 	data,
+	emptyPlaceholder = "There is nothing yet.",
+	isScrollDisabled,
 	...selectableProperties
 }: Properties<T>): JSX.Element => {
 	const { getRowId, onRowSelect, selectedRowIds } = selectableProperties as
@@ -45,18 +50,28 @@ const Table = <T extends object>({
 
 	return (
 		<div className={styles["table-container"]}>
-			<table className={styles["table"]}>
+			<table
+				className={getValidClassNames(
+					styles["table"],
+					isScrollDisabled && styles["table-no-scroll"],
+				)}
+			>
 				<thead className={styles["table-head"]}>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<tr className={styles["table-row"]} key={headerGroup.id}>
-							{isRowSelectable && <th className={styles["table-header"]} />}
+							{isRowSelectable && (
+								<th
+									className={getValidClassNames(
+										styles["table-header"],
+										styles["cell-min-content"],
+									)}
+								/>
+							)}
 							{headerGroup.headers.map((header) => (
 								<th
 									className={styles["table-header"]}
 									key={header.id}
-									style={{
-										width: header.column.columnDef.size,
-									}}
+									style={{ width: header.column.columnDef.size }}
 								>
 									{flexRender(
 										header.column.columnDef.header,
@@ -72,7 +87,12 @@ const Table = <T extends object>({
 						table.getRowModel().rows.map((row) => (
 							<tr className={styles["table-row"]} key={row.id}>
 								{isRowSelectable && (
-									<td className={styles["table-data"]}>
+									<td
+										className={getValidClassNames(
+											styles["table-data"],
+											styles["cell-min-content"],
+										)}
+									>
 										<SelectRowCell
 											id={getRowId(row.original)}
 											isChecked={selectedRowIds.includes(
@@ -86,9 +106,7 @@ const Table = <T extends object>({
 									<td
 										className={styles["table-data"]}
 										key={cell.id}
-										style={{
-											width: cell.column.columnDef.size,
-										}}
+										style={{ width: cell.column.columnDef.size }}
 									>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</td>
@@ -99,7 +117,7 @@ const Table = <T extends object>({
 						<tr className={styles["table-row"]}>
 							<td className={styles["table-data"]} colSpan={columns.length}>
 								<p className={styles["empty-placeholder"]}>
-									There is nothing yet.
+									{emptyPlaceholder}
 								</p>
 							</td>
 						</tr>

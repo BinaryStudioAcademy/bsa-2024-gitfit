@@ -73,7 +73,6 @@ erDiagram
       dateTime updated_at
       varchar name
       varchar description
-      varchar api_key
    }
 
    user_groups_to_projects {
@@ -124,12 +123,20 @@ erDiagram
       int project_id FK
    }
 
+   project_api_keys {
+      int id PK
+      dateTime created_at
+      dateTime updated_at
+      int project_id FK
+      int created_by_user_id FK
+      int updated_by_user_id FK
+   }
+
    contributors {
       int id PK
       dateTime created_at
       dateTime updated_at
       varchar name
-      boolean is_hidden
    }
 
    git_emails {
@@ -189,10 +196,14 @@ erDiagram
    users ||--|{ users_to_project_groups : user_id
    project_groups ||--|{ users_to_project_groups : project_group_id
 
+   project_api_keys }|--|| users : "created_by_user_id, updated_by_user_id"
+   project_api_keys }|--|| projects : project_id
+
    contributors ||--|{ git_emails : contributor_id
 
    git_emails }|--|| activity_logs : git_email_id
    projects }|--|| activity_logs : project_id
+   users }|--|| activity_logs : created_by_user_id
 
    users ||--|{ notifications : receiver_user_id
 ```

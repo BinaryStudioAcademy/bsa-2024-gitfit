@@ -6,11 +6,13 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
-import { type PaginationQueryParameters } from "~/libs/types/types.js";
 import { type UserService } from "~/modules/users/user.service.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
-import { type UserPatchRequestDto } from "./libs/types/types.js";
+import {
+	type UserGetAllQueryParameters,
+	type UserPatchRequestDto,
+} from "./libs/types/types.js";
 import { userPatchValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 
 /**
@@ -44,7 +46,7 @@ class UserController extends BaseController {
 			handler: (options) =>
 				this.findAll(
 					options as APIHandlerOptions<{
-						query: PaginationQueryParameters;
+						query: UserGetAllQueryParameters;
 					}>,
 				),
 			method: "GET",
@@ -146,7 +148,7 @@ class UserController extends BaseController {
 	private async findAll({
 		query,
 	}: APIHandlerOptions<{
-		query: PaginationQueryParameters;
+		query: UserGetAllQueryParameters;
 	}>): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.userService.findAll(query),

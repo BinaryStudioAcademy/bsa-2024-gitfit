@@ -13,11 +13,14 @@ export {
 	ValidationError,
 } from "./libs/exceptions/exceptions.js";
 export {
+	addDays,
 	changeCase,
 	checkHasPermission,
 	configureString,
 	formatDate,
+	getDifferenceInDays,
 	initDebounce,
+	subtractDays,
 } from "./libs/helpers/helpers.js";
 export { type Config } from "./libs/modules/config/config.js";
 export {
@@ -41,6 +44,7 @@ export {
 } from "./libs/types/types.js";
 export {
 	type ActivityLogCreateItemRequestDto,
+	type ActivityLogCreateItemResponseDto,
 	type ActivityLogCreateRequestDto,
 	activityLogCreateValidationSchema,
 	ActivityLogError,
@@ -69,12 +73,22 @@ export {
 	type GroupGetAllItemResponseDto,
 	type GroupGetAllResponseDto,
 	GroupsApiPath,
+	type GroupUpdateRequestDto,
+	type GroupUpdateResponseDto,
+	groupUpdateValidationSchema,
 } from "./modules/groups/groups.js";
 export {
 	type PermissionGetAllItemResponseDto,
 	type PermissionGetAllResponseDto,
 	PermissionsApiPath,
 } from "./modules/permissions/permissions.js";
+export {
+	type ProjectApiKeyCreateRequestDto,
+	type ProjectApiKeyCreateResponseDto,
+	projectApiKeyCreateValidationSchema,
+	ProjectApiKeyError,
+	ProjectApiKeysApiPath,
+} from "./modules/project-api-keys/projects-api-keys.js";
 export {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupCreateResponseDto,
@@ -89,6 +103,7 @@ export {
 	type ProjectGetAllItemResponseDto,
 	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
+	type ProjectGetByIdResponseDto,
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 	projectPatchValidationSchema,
@@ -99,6 +114,7 @@ export {
 	type UserAuthResponseDto,
 	UserError,
 	type UserGetAllItemResponseDto,
+	type UserGetAllQueryParameters,
 	type UserGetAllResponseDto,
 	type UserPatchRequestDto,
 	type UserPatchResponseDto,

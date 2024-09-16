@@ -6,7 +6,10 @@
 }
 
 .table {
+	display: block;
 	width: 100%;
+	max-height: 500px;
+	overflow: auto;
 	font-family: Inter, sans-serif;
 	font-size: 16px;
 	font-style: normal;
@@ -16,6 +19,10 @@
 	background-color: var(--color-background-secondary);
 }
 
+.table-no-scroll {
+	overflow-x: hidden;
+}
+
 .table .table-header,
 .table .table-data {
 	padding: 10px 20px;
@@ -23,10 +30,16 @@
 	border-bottom: 1px solid var(--color-border-primary);
 }
 
+.table .table-header.cell-min-content,
+.table .table-data.cell-min-content {
+	width: 0;
+}
+
 .table .table-data {
 	min-height: 60px;
 	font-weight: 400;
 	line-height: 150%;
+	word-wrap: normal;
 }
 
 .table .table-header {
@@ -38,13 +51,14 @@
 	border-bottom: 1px solid var(--color-border-primary);
 }
 
-.table .table-body {
-	display: block;
-	max-height: 450px;
-	overflow-y: auto;
+.table .table-head {
+	position: sticky;
+	top: 0;
+	z-index: 2;
 }
 
 .table .table-head,
+.table .table-body,
 .table .table-row {
 	display: table;
 	width: 100%;

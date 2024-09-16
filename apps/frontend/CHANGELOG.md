@@ -1,5 +1,103 @@
 # Changelog
 
+## [1.26.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.26.0...frontend-v1.26.1) (2024-09-16)
+
+
+### Bug Fixes
+
+* Inappropriate appearance of the Access Managment page for a small screen resolution (1024px) gf-295 ([#323](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/323)) ([0588959](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/058895952437ddff369edc7d14e30066a2f87df6))
+* Upon a click on the Logo element in the header user is redirected to the Homepage gf-285 ([#291](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/291)) ([fc2ba06](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/fc2ba067490675837e6f285aebdf40cff2009320))
+
+## [1.26.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.25.0...frontend-v1.26.0) (2024-09-16)
+
+
+### Features
+
+* add an ability to regenerate project api key gf-288 ([#307](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/307)) ([7551326](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75513264ccf452c8bd1c9f9ff99bf90f71b040f7))
+
+
+### Bug Fixes
+
+* adjusted project status message based on search state gf-313 ([#319](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/319)) ([0306fa4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0306fa4879cfa077cb53e9dd067e62ed0e8fd08a))
+* The Table should not be able to scroll when the Options Popover is open gf-272 ([#278](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/278)) ([8450514](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8450514f1fcd9f913cf8bd6716c88a975cb34e69))
+
+## [1.25.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.24.0...frontend-v1.25.0) (2024-09-16)
+
+
+### Features
+
+* add date input to analytics page gf-182 ([#237](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/237)) ([9570a5b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9570a5b5b9f34bcd82bc5a4cbcfe365f127b9c8b))
+* add users search in group forms gf-270 ([#303](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/303)) ([985d160](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/985d160827edf30b59c4ea38cf09813015303068))
+
+## [1.24.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.23.0...frontend-v1.24.0) (2024-09-13)
+
+
+### Features
+
+* Add an ability to copy project api key gf-284 ([#292](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/292)) ([1251eb9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1251eb969f3f6dd8f1abe7eb7887605f2931d410))
+
+
+### Bug Fixes
+
+* rename setup analytics button to match the design gf-308 ([#309](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/309)) ([abcbde2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/abcbde2612c4c40215f188b748408db42ecd2835))
+
+## [1.23.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.22.1...frontend-v1.23.0) (2024-09-13)
+
+
+### Features
+
+* Add users column to the groups table gf-301 ([#304](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/304)) ([9210049](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/92100497bf886396fbe8610cef88802717cbbf06))
+* not return description on get all request gf-259 ([#279](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/279)) ([787244c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/787244c7e163d659aa98289e06fe5204c8bfe25d))
+
+
+### Bug Fixes
+
+* refactor table data word break styles gf-299 ([#300](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/300)) ([60cb964](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/60cb964929386b26088abbfbd4a83ecc5fd13f53))
+* The page reloads after generating the API key gf-289 ([#293](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/293)) ([c899e03](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c899e031f848345b7170c684ba94c014751fc8b1))
+
+## [1.22.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.22.0...frontend-v1.22.1) (2024-09-12)
+
+
+### Bug Fixes
+
+* adjusted path for project page breadcrumbs gf-283 ([#286](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/286)) ([384ec02](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/384ec022fe92e04042a8fe89b8b5317061dbff9a))
+
+## [1.22.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.21.1...frontend-v1.22.0) (2024-09-11)
+
+
+### Features
+
+* make buttons 100% width gf-232 ([#239](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/239)) ([9267f43](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9267f43310f7bc77e60ec8cb4120dffe3df98c9c))
+
+## [1.21.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.21.0...frontend-v1.21.1) (2024-09-11)
+
+
+### Bug Fixes
+
+* fix inconsistent layout of the users table gf-267 ([#273](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/273)) ([b5527bb](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b5527bb62d308635970f963b81566df92c28cb42))
+
+## [1.21.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.20.0...frontend-v1.21.0) (2024-09-11)
+
+
+### Features
+
+* add ability to edit group gf-81 ([#170](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/170)) ([2485667](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/24856674205c965821f2765d4b0b4a891f53a684))
+* Add an ability to generate and retrieve project api key gf-180 ([#223](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/223)) ([1b016c7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1b016c7086a35b1060dcb716740a38cffa42f458))
+
+## [1.20.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.19.0...frontend-v1.20.0) (2024-09-11)
+
+
+### Features
+
+* add an ability to delete a group gf-80 ([#128](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/128)) ([53f0f6d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/53f0f6d92fa7f8294af49251b8cae39ef80c6869))
+* add view all projects permission gf-230 ([#253](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/253)) ([60fe403](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/60fe403d6285606bd8a26924dd786fe7166b821c))
+
+
+### Bug Fixes
+
+* fix inconsistent alignment in create group modal gf-265 ([#268](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/268)) ([27f10b7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/27f10b7a9b0454156d2ea936516ec9bf9bd34b2f))
+* update profile success message gf-193 ([#261](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/261)) ([72222f1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/72222f1a7fd510b91a765f614d2910092fbb4ca1))
+
 ## [1.19.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.18.0...frontend-v1.19.0) (2024-09-10)
 
 

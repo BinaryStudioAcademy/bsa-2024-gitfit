@@ -1,5 +1,44 @@
 # Changelog
 
+## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.16.0...shared-v1.17.0) (2024-09-16)
+
+
+### Features
+
+* add an ability to save and retrieve activity logs gf-181 ([#221](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/221)) ([74b5c5b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/74b5c5be204f9a000fc5537f88f556f7241be3e9))
+* add date input to analytics page gf-182 ([#237](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/237)) ([9570a5b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9570a5b5b9f34bcd82bc5a4cbcfe365f127b9c8b))
+* add users search in group forms gf-270 ([#303](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/303)) ([985d160](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/985d160827edf30b59c4ea38cf09813015303068))
+
+## [1.16.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.15.1...shared-v1.16.0) (2024-09-13)
+
+
+### Features
+
+* not return description on get all request gf-259 ([#279](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/279)) ([787244c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/787244c7e163d659aa98289e06fe5204c8bfe25d))
+
+## [1.15.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.15.0...shared-v1.15.1) (2024-09-11)
+
+
+### Bug Fixes
+
+* refactor group validation messages gf-262 ([#275](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/275)) ([1ac5ccc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1ac5ccccd76356099a15a178cd6ab2c347de3b68))
+
+## [1.15.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.14.0...shared-v1.15.0) (2024-09-11)
+
+
+### Features
+
+* add ability to edit group gf-81 ([#170](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/170)) ([2485667](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/24856674205c965821f2765d4b0b4a891f53a684))
+* Add an ability to generate and retrieve project api key gf-180 ([#223](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/223)) ([1b016c7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1b016c7086a35b1060dcb716740a38cffa42f458))
+
+## [1.14.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.13.0...shared-v1.14.0) (2024-09-11)
+
+
+### Features
+
+* add an ability to delete a group gf-80 ([#128](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/128)) ([53f0f6d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/53f0f6d92fa7f8294af49251b8cae39ef80c6869))
+* add view all projects permission gf-230 ([#253](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/253)) ([60fe403](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/60fe403d6285606bd8a26924dd786fe7166b821c))
+
 ## [1.13.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.12.0...shared-v1.13.0) (2024-09-10)
 
 

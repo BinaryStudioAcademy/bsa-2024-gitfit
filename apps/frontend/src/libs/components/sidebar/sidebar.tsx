@@ -1,4 +1,4 @@
-import { checkHasPermission } from "~/libs/helpers/helpers.js";
+import { getPermittedNavigationItems } from "~/libs/helpers/helpers.js";
 import { useMemo } from "~/libs/hooks/hooks.js";
 import {
 	type NavigationItem,
@@ -15,9 +15,7 @@ type Properties = {
 
 const Sidebar = ({ items, userPermissions }: Properties): JSX.Element => {
 	const filteredItems = useMemo(() => {
-		return items.filter(({ pagePermissions = [] }) =>
-			checkHasPermission(pagePermissions, userPermissions),
-		);
+		return getPermittedNavigationItems(items, userPermissions);
 	}, [items, userPermissions]);
 
 	return (

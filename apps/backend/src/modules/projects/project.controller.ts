@@ -1,4 +1,5 @@
-import { APIPath } from "~/libs/enums/enums.js";
+import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import { checkUserPermissions } from "~/libs/hooks/hooks.js";
 import {
 	type APIHandlerOptions,
 	type APIHandlerResponse,
@@ -60,6 +61,7 @@ class ProjectController extends BaseController {
 				),
 			method: "POST",
 			path: ProjectsApiPath.ROOT,
+			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
 			validation: {
 				body: projectCreateValidationSchema,
 			},
@@ -74,6 +76,7 @@ class ProjectController extends BaseController {
 				),
 			method: "DELETE",
 			path: ProjectsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
 		});
 
 		this.addRoute({
@@ -85,6 +88,7 @@ class ProjectController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectsApiPath.ROOT,
+			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
 		});
 
 		this.addRoute({
@@ -96,6 +100,7 @@ class ProjectController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
 		});
 
 		this.addRoute({
@@ -108,6 +113,7 @@ class ProjectController extends BaseController {
 				),
 			method: "PATCH",
 			path: ProjectsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
 			validation: {
 				body: projectPatchValidationSchema,
 			},
@@ -132,8 +138,8 @@ class ProjectController extends BaseController {
 	 *                description:
 	 *                  type: string
 	 *      responses:
-	 *        200:
-	 *          description: Successful operation
+	 *        201:
+	 *          description: Project was successfully created
 	 *          content:
 	 *            application/json:
 	 *              schema:
@@ -150,7 +156,7 @@ class ProjectController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.projectService.create(options.body),
-			status: HTTPCode.OK,
+			status: HTTPCode.CREATED,
 		};
 	}
 

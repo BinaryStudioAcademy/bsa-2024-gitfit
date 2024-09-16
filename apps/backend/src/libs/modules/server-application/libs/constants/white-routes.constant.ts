@@ -1,8 +1,14 @@
-import { APIPath, AuthApiPath } from "@git-fit/shared";
+import { ActivityLogsApiPath, APIPath, AuthApiPath } from "@git-fit/shared";
 
-const WHITE_ROUTES = [
-	`${APIPath.AUTH}${AuthApiPath.SIGN_UP}`,
-	`${APIPath.AUTH}${AuthApiPath.SIGN_IN}`,
+import { type WhiteRoute } from "~/libs/types/types.js";
+
+const WHITE_ROUTES: WhiteRoute[] = [
+	{ methods: ["POST"], path: `${APIPath.AUTH}${AuthApiPath.SIGN_UP}` },
+	{ methods: ["POST"], path: `${APIPath.AUTH}${AuthApiPath.SIGN_IN}` },
+	{
+		methods: ["POST"],
+		path: `${APIPath.ACTIVITY_LOGS}${ActivityLogsApiPath.ROOT}`,
+	},
 ];
 
 export { WHITE_ROUTES };

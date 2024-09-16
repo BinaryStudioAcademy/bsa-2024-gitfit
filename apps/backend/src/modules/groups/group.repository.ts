@@ -1,5 +1,6 @@
 import { transaction } from "objection";
 
+import { SortType } from "~/libs/enums/enums.js";
 import { changeCase } from "~/libs/helpers/helpers.js";
 import {
 	type PaginationQueryParameters,
@@ -50,10 +51,10 @@ class GroupRepository implements Repository {
 		return Boolean(deletedRowsCount);
 	}
 
-	public async find(id: number): Promise<GroupModel | null> {
-		const group = await this.groupModel.query().findById(id).execute();
+	public async find(id: number): Promise<GroupEntity | null> {
+		const group = await this.groupModel.query().findById(id);
 
-		return group ?? null;
+		return group ? GroupEntity.initialize(group) : null;
 	}
 
 	public async findAll({
@@ -62,6 +63,7 @@ class GroupRepository implements Repository {
 	}: PaginationQueryParameters): Promise<PaginationResponseDto<GroupEntity>> {
 		const { results, total } = await this.groupModel
 			.query()
+			.orderBy("createdAt", SortType.DESCENDING)
 			.page(page, pageSize)
 			.withGraphFetched("[permissions, users]");
 
@@ -78,8 +80,32 @@ class GroupRepository implements Repository {
 		return group ?? null;
 	}
 
-	public update(): ReturnType<Repository["update"]> {
-		return Promise.resolve(null);
+	public async update(id: number, entity: GroupEntity): Promise<GroupEntity> {
+		const { name, permissions, users } = entity.toNewObject();
+		const key = changeCase(name, "snakeCase");
+
+		const trx = await transaction.start(this.groupModel.knex());
+
+		const groupData = {
+			id,
+			key,
+			name,
+			permissions,
+			users,
+		};
+
+		const group = await this.groupModel
+			.query(trx)
+			.upsertGraph(groupData, {
+				relate: true,
+				unrelate: true,
+			})
+			.returning("*")
+			.withGraphFetched("[permissions, users]");
+
+		await trx.commit();
+
+		return GroupEntity.initialize(group);
 	}
 }
 

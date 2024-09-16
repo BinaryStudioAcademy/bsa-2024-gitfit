@@ -1,6 +1,7 @@
 import { type Knex } from "knex";
 
 const TABLE_NAME = "git_emails";
+const CONTRIBUTORS_TABLE_NAME = "contributors";
 
 const ColumnName = {
 	CONTRIBUTOR_ID: "contributor_id",
@@ -9,8 +10,6 @@ const ColumnName = {
 	ID: "id",
 	UPDATED_AT: "updated_at",
 } as const;
-
-const CONTRIBUTORS_TABLE = "contributors";
 
 function up(knex: Knex): Promise<void> {
 	return knex.schema.createTable(TABLE_NAME, (table) => {
@@ -21,7 +20,7 @@ function up(knex: Knex): Promise<void> {
 			.unsigned()
 			.notNullable()
 			.references("id")
-			.inTable(CONTRIBUTORS_TABLE)
+			.inTable(CONTRIBUTORS_TABLE_NAME)
 			.onDelete("CASCADE");
 		table
 			.dateTime(ColumnName.CREATED_AT)

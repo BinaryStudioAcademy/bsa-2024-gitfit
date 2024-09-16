@@ -2,13 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
-import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
+import { actions as projectApiKeyActions } from "~/modules/project-api-keys/project-api-keys.js";
+import {
+	type ProjectGetAllItemResponseDto,
+	type ProjectGetByIdResponseDto,
+} from "~/modules/projects/projects.js";
 
 import { create, deleteById, getById, loadAll, patch } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
-	project: null | ProjectGetAllItemResponseDto;
+	project: null | ProjectGetByIdResponseDto;
 	projectCreateStatus: ValueOf<typeof DataStatus>;
 	projectPatchStatus: ValueOf<typeof DataStatus>;
 	projects: ProjectGetAllItemResponseDto[];
@@ -77,6 +81,11 @@ const { actions, name, reducer } = createSlice({
 			state.projects = state.projects.filter(
 				(project) => project.id !== deletedProjectId,
 			);
+		});
+		builder.addCase(projectApiKeyActions.create.fulfilled, (state, action) => {
+			if (state.project) {
+				state.project.apiKey = action.payload.apiKey;
+			}
 		});
 	},
 	initialState,

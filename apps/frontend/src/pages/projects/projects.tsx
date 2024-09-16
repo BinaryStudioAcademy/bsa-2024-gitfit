@@ -36,11 +36,24 @@ const Projects = (): JSX.Element => {
 
 	const { onSearch, search } = useSearch();
 
-	const [selectedProject, setSelectedProject] =
-		useState<null | ProjectGetAllItemResponseDto>(null);
+	const [projectToModifyId, setProjectToModifyId] = useState<null | number>(
+		null,
+	);
 
-	const { dataStatus, projectCreateStatus, projectPatchStatus, projects } =
-		useAppSelector(({ projects }) => projects);
+	const {
+		dataStatus,
+		project,
+		projectCreateStatus,
+		projectPatchStatus,
+		projects,
+		projectStatus,
+	} = useAppSelector(({ projects }) => projects);
+
+	useEffect(() => {
+		if (projectToModifyId) {
+			void dispatch(projectActions.getById({ id: String(projectToModifyId) }));
+		}
+	}, [dispatch, projectToModifyId]);
 
 	useEffect(() => {
 		void dispatch(projectActions.loadAll(search));
@@ -55,6 +68,10 @@ const Projects = (): JSX.Element => {
 	);
 
 	const hasProject = projects.length !== EMPTY_LENGTH;
+	const hasSearch = search.length !== EMPTY_LENGTH;
+	const emptyPlaceholderMessage = hasSearch
+		? "No projects found matching your search criteria. Please try different keywords."
+		: "No projects created yet. Create the first project now.";
 
 	const {
 		isOpened: isCreateModalOpen,
@@ -86,7 +103,7 @@ const Projects = (): JSX.Element => {
 
 	const handleEditClick = useCallback(
 		(project: ProjectGetAllItemResponseDto) => {
-			setSelectedProject(project);
+			setProjectToModifyId(project.id);
 			handleEditModalOpen();
 		},
 		[handleEditModalOpen],
@@ -94,7 +111,7 @@ const Projects = (): JSX.Element => {
 
 	const handleDeleteClick = useCallback(
 		(project: ProjectGetAllItemResponseDto) => {
-			setSelectedProject(project);
+			setProjectToModifyId(project.id);
 			handleDeleteConfirmationModalOpen();
 		},
 		[handleDeleteConfirmationModalOpen],
@@ -108,31 +125,34 @@ const Projects = (): JSX.Element => {
 
 	const handleProjectEditSubmit = useCallback(
 		(payload: ProjectPatchRequestDto) => {
-			if (selectedProject) {
-				void dispatch(
-					projectActions.patch({ id: selectedProject.id, payload }),
-				);
+			if (projectToModifyId) {
+				void dispatch(projectActions.patch({ id: projectToModifyId, payload }));
+				setProjectToModifyId(null);
 			}
 		},
-		[dispatch, selectedProject],
+		[dispatch, projectToModifyId],
 	);
 
 	const handleProjectDeleteConfirm = useCallback(() => {
-		if (selectedProject) {
-			void dispatch(projectActions.deleteById(selectedProject.id));
+		if (projectToModifyId) {
+			void dispatch(projectActions.deleteById(projectToModifyId));
 			handleDeleteConfirmationModalClose();
 		}
-	}, [dispatch, selectedProject, handleDeleteConfirmationModalClose]);
+	}, [dispatch, projectToModifyId, handleDeleteConfirmationModalClose]);
 
 	const isLoading =
 		dataStatus === DataStatus.IDLE ||
 		(dataStatus === DataStatus.PENDING && !hasProject);
 
+	const isUpdateFormShown = project && projectStatus === DataStatus.FULFILLED;
+
 	return (
 		<PageLayout>
 			<header className={styles["projects-header"]}>
 				<h1 className={styles["title"]}>Projects</h1>
-				<Button label="Create New" onClick={handleCreateModalOpen} />
+				<div>
+					<Button label="Create New" onClick={handleCreateModalOpen} />
+				</div>
 			</header>
 			<ProjectsSearch onChange={handleSearchChange} />
 			{isLoading ? (
@@ -150,8 +170,7 @@ const Projects = (): JSX.Element => {
 						))
 					) : (
 						<p className={styles["empty-placeholder"]}>
-							No projects found matching your search criteria. Please try
-							different keywords.
+							{emptyPlaceholderMessage}
 						</p>
 					)}
 				</div>
@@ -168,10 +187,10 @@ const Projects = (): JSX.Element => {
 				onClose={handleEditModalClose}
 				title="Update project"
 			>
-				{selectedProject && (
+				{isUpdateFormShown && (
 					<ProjectUpdateForm
 						onSubmit={handleProjectEditSubmit}
-						project={selectedProject}
+						project={project}
 					/>
 				)}
 			</Modal>

@@ -1,12 +1,14 @@
 type ActivityLogGetAllItemResponseDto = {
 	commitsNumber: number;
-	contributor: {
-		id: number;
-		name: string;
-	};
 	createdByUser: { id: number };
 	date: string;
-	gitEmail: { id: number };
+	gitEmail: {
+		contributor: {
+			id: number;
+			name: string;
+		};
+		id: number;
+	};
 	id: number;
 	project: { id: number };
 };

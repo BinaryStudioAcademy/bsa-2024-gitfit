@@ -19,6 +19,10 @@ class GitEmailRepository implements Repository {
 				contributorId,
 				email,
 			})
+			.withGraphFetched("contributor")
+			.modifyGraph("contributor", (builder) => {
+				builder.select("id", "name");
+			})
 			.execute();
 
 		return GitEmailEntity.initialize(gitEmail);
@@ -37,7 +41,14 @@ class GitEmailRepository implements Repository {
 	}
 
 	public async findByEmail(email: string): Promise<GitEmailEntity | null> {
-		const item = await this.gitEmailModel.query().findOne({ email });
+		const item = await this.gitEmailModel
+			.query()
+			.findOne({ email })
+			.withGraphFetched("contributor")
+			.modifyGraph("contributor", (builder) => {
+				builder.select("id", "name");
+			})
+			.execute();
 
 		return item ? GitEmailEntity.initialize(item) : null;
 	}

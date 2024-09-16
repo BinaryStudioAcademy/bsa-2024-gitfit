@@ -34,7 +34,7 @@ import { activityLogCreateValidationSchema } from "./libs/validation-schemas/val
  *         gitEmailId:
  *           type: number
  *           minimum: 1
- *         ptojectId:
+ *         ptojectId :
  *           type: number
  *           minimum: 1
  *         createdAt:
@@ -58,6 +58,7 @@ class ActivityLogController extends BaseController {
 				this.create(
 					options as APIHandlerOptions<{
 						body: ActivityLogCreateRequestDto;
+						headers: Record<string, string | undefined>;
 					}>,
 				),
 			method: "POST",
@@ -85,41 +86,47 @@ class ActivityLogController extends BaseController {
 	 *       content:
 	 *         application/json:
 	 *           schema:
-	 *       		type: object
-	 *       		properties:
-	 *         			items:
-	 *           			type: array
-	 * 						date:
-	 * 							type: string
-	 * 							format: date-time
-	 *         				items:
-	 *           				type: array
-	 *           			items:
-	 *            				 type: object
-	 *            				 properties:
-	 *              				 authorEmail:
-	 *                 					type: string
-	 *               				 authorName:
-	 *                					type: string
-	 *              				 commitsNumber:
-	 *                					type: number
-	 *                 					format: integer
+	 *             type: object
+	 *             properties:
+	 *               items:
+	 *                 type: array
+	 *                 items:
+	 *                   type: object
+	 *                   properties:
+	 *                     authorEmail:
+	 *                       type: string
+	 *                     authorName:
+	 *                       type: string
+	 *                     commitsNumber:
+	 *                       type: integer
+	 *               date:
+	 *                 type: string
+	 *                 format: date-time
 	 *     responses:
 	 *       201:
 	 *         description: Activity log saved successfully
 	 *         content:
 	 *           application/json:
 	 *             schema:
-	 *              $ref: '#/components/schemas/ActivityLog'
+	 *               $ref: '#/components/schemas/ActivityLog'
 	 */
 
 	private async create(
 		options: APIHandlerOptions<{
 			body: ActivityLogCreateRequestDto;
+			headers: Record<string, string | undefined>;
 		}>,
 	): Promise<APIHandlerResponse> {
+		const authorizationHeader = options.headers["authorization"];
+		const apiKey = authorizationHeader?.replace("Bearer ", "") ?? "";
+
+		const payload = {
+			apiKey,
+			...options.body,
+		};
+
 		return {
-			payload: await this.activityLogService.create(options.body),
+			payload: await this.activityLogService.create(payload),
 			status: HTTPCode.CREATED,
 		};
 	}
