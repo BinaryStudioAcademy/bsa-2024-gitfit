@@ -188,7 +188,7 @@ const AccessManagement = (): JSX.Element => {
 					<h2 className={styles["section-title"]}>Users</h2>
 				</div>
 				<UsersTable
-					isloading={isLoadingUsersData}
+					isLoading={isLoadingUsersData}
 					onPageChange={onUserPageChange}
 					onPageSizeChange={onUserPageSizeChange}
 					page={userPage}
@@ -208,7 +208,7 @@ const AccessManagement = (): JSX.Element => {
 
 				<GroupsTable
 					groups={groups}
-					isloading={isLoadingGroupsData}
+					isLoading={isLoadingGroupsData}
 					onDelete={handleDelete}
 					onEdit={handleEdit}
 					onPageChange={onGroupPageChange}

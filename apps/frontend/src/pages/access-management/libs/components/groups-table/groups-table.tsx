@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	groups: GroupGetAllItemResponseDto[];
-	isloading: boolean;
+	isLoading: boolean;
 	onDelete: (id: number) => void;
 	onEdit: (group: GroupGetAllItemResponseDto) => void;
 	onPageChange: (page: number) => void;
@@ -20,7 +20,7 @@ type Properties = {
 
 const GroupsTable = ({
 	groups,
-	isloading,
+	isLoading,
 	onDelete,
 	onEdit,
 	onPageChange,
@@ -46,7 +46,7 @@ const GroupsTable = ({
 			<Table<GroupRow>
 				columns={groupColumns}
 				data={groupData}
-				isLoading={isloading}
+				isLoading={isLoading}
 			/>
 			<TablePagination
 				background={paginationBackground}
