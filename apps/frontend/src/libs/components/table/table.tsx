@@ -7,7 +7,6 @@ import {
 import { Loader } from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
-import { useEffect, useRef, useState } from "~/libs/hooks/hooks.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { SelectRowCell } from "./libs/components/components.js";
@@ -40,15 +39,6 @@ const Table = <T extends object>({
 	const { getRowId, onRowSelect, selectedRowIds } = selectableProperties as
 		| Record<keyof SelectableProperties<T>, undefined>
 		| SelectableProperties<T>;
-
-	const tbodyReference = useRef<HTMLTableSectionElement>(null);
-	const [tableBodyHeight, setTableBodyHeight] = useState<null | number>(null);
-
-	useEffect(() => {
-		if (!isLoading && tbodyReference.current) {
-			setTableBodyHeight(tbodyReference.current.clientHeight);
-		}
-	}, [isLoading]);
 
 	const table = useReactTable({
 		columns,
@@ -90,14 +80,10 @@ const Table = <T extends object>({
 						</tr>
 					))}
 				</thead>
-				<tbody className={styles["table-body"]} ref={tbodyReference}>
+				<tbody className={styles["table-body"]}>
 					{isLoading && (
 						<tr className={styles["table-row"]}>
-							<td
-								className={styles["table-data"]}
-								colSpan={columns.length}
-								style={{ height: tableBodyHeight || "auto" }}
-							>
+							<td className={styles["table-loader"]} colSpan={columns.length}>
 								<Loader />
 							</td>
 						</tr>
