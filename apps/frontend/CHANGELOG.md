@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.26.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.26.0...frontend-v1.26.1) (2024-09-16)
+
+
+### Bug Fixes
+
+* Inappropriate appearance of the Access Managment page for a small screen resolution (1024px) gf-295 ([#323](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/323)) ([0588959](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/058895952437ddff369edc7d14e30066a2f87df6))
+* Upon a click on the Logo element in the header user is redirected to the Homepage gf-285 ([#291](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/291)) ([fc2ba06](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/fc2ba067490675837e6f285aebdf40cff2009320))
+
 ## [1.26.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.25.0...frontend-v1.26.0) (2024-09-16)
 
 
