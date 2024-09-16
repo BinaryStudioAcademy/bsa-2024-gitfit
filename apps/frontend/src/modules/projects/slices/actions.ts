@@ -5,6 +5,7 @@ import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
+	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
 	type ProjectGetByIdResponseDto,
 	type ProjectPatchRequestDto,
@@ -25,7 +26,7 @@ const getById = createAsyncThunk<
 
 const loadAll = createAsyncThunk<
 	ProjectGetAllResponseDto,
-	string | undefined,
+	ProjectGetAllRequestDto,
 	AsyncThunkConfig
 >(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { projectApi } = extra;
