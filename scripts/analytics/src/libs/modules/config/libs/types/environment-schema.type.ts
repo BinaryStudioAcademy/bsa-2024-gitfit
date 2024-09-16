@@ -1,6 +1,7 @@
 type EnvironmentSchema = {
 	APP: {
-		BACKEND_ROUTE: string;
+		API_ORIGIN_URL: string;
+		SERVER_URL: string;
 	};
 };
 

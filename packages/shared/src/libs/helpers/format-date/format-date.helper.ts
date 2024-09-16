@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 
-type DateFormat = "d MMM yyyy HH:mm";
+type DateFormat = string;
 
 const formatDate = (date: Date, dateFormat: DateFormat): string => {
 	return format(date, dateFormat);

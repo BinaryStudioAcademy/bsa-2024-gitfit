@@ -29,10 +29,16 @@ class BaseConfig implements Config {
 	private get envSchema(): LibraryConfig<EnvironmentSchema> {
 		return convict<EnvironmentSchema>({
 			APP: {
-				BACKEND_ROUTE: {
+				API_ORIGIN_URL: {
 					default: null,
-					doc: "Route for sending statistics",
-					env: "BACKEND_ROUTE",
+					doc: "URL of origin api",
+					env: "APP_API_ORIGIN_URL",
+					format: String,
+				},
+				SERVER_URL: {
+					default: null,
+					doc: "URL of server",
+					env: "APP_SERVER_URL",
 					format: String,
 				},
 			},

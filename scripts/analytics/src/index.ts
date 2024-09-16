@@ -1,14 +1,5 @@
-import { Command } from "commander";
+import { analyticsCli } from "./libs/modules/analytics-cli/analytics-cli.js";
 
-import { setupCommands } from "./modules/cli/cli.js";
+analyticsCli.init();
 
-const program = new Command();
-
-program
-	.name("CLI Analytics")
-	.description("CLI tool to collect repositories data and send analytics")
-	.version("1.0.0");
-
-setupCommands(program);
-
-program.parse(process.argv);
+export { getPackageName } from "./libs/modules/analytics-cli/analytics-cli.js";

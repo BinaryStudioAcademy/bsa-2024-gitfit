@@ -39,6 +39,13 @@ export {
 	type ValidationSchema,
 	type ValueOf,
 } from "./libs/types/types.js";
+export {
+	type ActivityLogCreateItemRequestDto,
+	type ActivityLogCreateRequestDto,
+	type ActivityLogGetAllItemResponseDto,
+	type ActivityLogGetAllResponseDto,
+	ActivityLogsApiPath,
+} from "./modules/activity-logs/activity-logs.js";
 export { AuthApiPath, AuthError } from "./modules/auth/auth.js";
 export {
 	type GroupCreateRequestDto,
