@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.28.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.27.1...v1.28.0) (2024-09-16)
+
+
+### Features
+
+* Add infinite scroll to the projects list gf-276 ([#280](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/280)) ([2f9db4f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2f9db4f976802ab23ee50cb0587a5476fe5397a3))
+* add script for collecting statistics gf-247 ([#315](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/315)) ([4ada7e5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/4ada7e54d759ae3ab865d1bd04b4ed1b7d87ce85))
+
+
+### Bug Fixes
+
+* groups table refresh on deletion of group gf-329 ([#335](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/335)) ([adc543e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/adc543ece15c2774642e6ec5738beb3c28b9aa3b))
+* type imports gf-276 ([#338](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/338)) ([9ee1d7b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9ee1d7b6f07f774b9fe8b5c7fa24addd610a13bc))
+
 ## [1.27.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.27.0...v1.27.1) (2024-09-16)
 
 

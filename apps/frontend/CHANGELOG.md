@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.27.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.26.1...frontend-v1.27.0) (2024-09-16)
+
+
+### Features
+
+* Add infinite scroll to the projects list gf-276 ([#280](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/280)) ([2f9db4f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2f9db4f976802ab23ee50cb0587a5476fe5397a3))
+
+
+### Bug Fixes
+
+* groups table refresh on deletion of group gf-329 ([#335](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/335)) ([adc543e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/adc543ece15c2774642e6ec5738beb3c28b9aa3b))
+
 ## [1.26.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.26.0...frontend-v1.26.1) (2024-09-16)
 
 
