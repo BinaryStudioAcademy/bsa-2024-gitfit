@@ -5,12 +5,15 @@ import {
 	Table,
 	TablePagination,
 } from "~/libs/components/components.js";
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
+	useCallback,
 	useEffect,
 	usePagination,
+	useSearch,
 } from "~/libs/hooks/hooks.js";
 import {
 	actions as groupActions,
@@ -19,6 +22,7 @@ import {
 
 import { getUserRows } from "../../helpers/helpers.js";
 import { type UserRow } from "../../types/types.js";
+import { GroupUsersSearch } from "./libs/components/components.js";
 import { getGroupUsersColumns } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
@@ -39,6 +43,8 @@ const GroupUsersTable = ({
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
+	const { onSearch, search } = useSearch();
+
 	const { users, usersDataStatus, usersTotalCount } = useAppSelector(
 		({ groups }) => groups,
 	);
@@ -48,12 +54,19 @@ const GroupUsersTable = ({
 		totalItemsCount: usersTotalCount,
 	});
 
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			onSearch(value);
+		},
+		[onSearch],
+	);
+
 	const userColumns = getGroupUsersColumns();
 	const userData: UserRow[] = getUserRows(users);
 
 	useEffect(() => {
-		void dispatch(groupActions.loadUsers({ page, pageSize }));
-	}, [dispatch, page, pageSize]);
+		void dispatch(groupActions.loadUsers({ name: search, page, pageSize }));
+	}, [dispatch, page, pageSize, search]);
 
 	useEffect(() => {
 		setValue("userIds", selectedUserIds);
@@ -62,33 +75,40 @@ const GroupUsersTable = ({
 	const error = errors["userIds"]?.message;
 	const hasError = Boolean(error);
 
-	if (
+	const hasUserRows = userData.length !== EMPTY_LENGTH;
+
+	const isLoading =
 		usersDataStatus === DataStatus.IDLE ||
-		usersDataStatus === DataStatus.PENDING
-	) {
-		return <Loader />;
-	}
+		(usersDataStatus === DataStatus.PENDING && !hasUserRows);
 
 	return (
 		<>
-			<span className={styles["table-title"]}>Users</span>
-			<div className={styles["group-users-table"]}>
-				<Table<UserRow>
-					columns={userColumns}
-					data={userData}
-					getRowId={getRowId}
-					onRowSelect={onToggle}
-					selectedRowIds={selectedUserIds}
-				/>
-				<TablePagination
-					background="secondary"
-					onPageChange={onPageChange}
-					onPageSizeChange={onPageSizeChange}
-					page={page}
-					pageSize={pageSize}
-					totalItemsCount={usersTotalCount}
-				/>
+			<div>
+				<span className={styles["table-title"]}>Users</span>
+				<GroupUsersSearch onChange={handleSearchChange} />
 			</div>
+			{isLoading ? (
+				<Loader />
+			) : (
+				<div className={styles["group-users-table"]}>
+					<Table<UserRow>
+						columns={userColumns}
+						data={userData}
+						emptyPlaceholder="No users matching your search criteria."
+						getRowId={getRowId}
+						onRowSelect={onToggle}
+						selectedRowIds={selectedUserIds}
+					/>
+					<TablePagination
+						background="secondary"
+						onPageChange={onPageChange}
+						onPageSizeChange={onPageSizeChange}
+						page={page}
+						pageSize={pageSize}
+						totalItemsCount={usersTotalCount}
+					/>
+				</div>
+			)}
 			{hasError && <span className={styles["error-message"]}>{error}</span>}
 		</>
 	);

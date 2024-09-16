@@ -30,7 +30,7 @@
 	font-weight: 400;
 	line-height: 1.5;
 	color: inherit;
-	text-overflow: ellipsis;
+	text-overflow: clip;
 	background-color: var(--color-background-secondary);
 	border: 1px solid var(--color-border-primary);
 	border-radius: inherit;
@@ -64,18 +64,20 @@
 
 .input-icon-left {
 	left: 10px;
+	display: flex;
 }
 
 .input-icon-right {
 	right: 10px;
+	display: flex;
 }
 
 .input-field.with-left-icon {
-	padding-left: 40px;
+	padding-left: 48px;
 }
 
 .input-field.with-right-icon {
-	padding-right: 40px;
+	padding-right: 48px;
 }
 
 .input-error {

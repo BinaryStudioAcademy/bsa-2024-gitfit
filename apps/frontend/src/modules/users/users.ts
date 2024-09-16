@@ -14,6 +14,7 @@ export { userApi };
 export {
 	type UserAuthResponseDto,
 	type UserGetAllItemResponseDto,
+	type UserGetAllQueryParameters,
 	type UserGetAllResponseDto,
 	type UserPatchRequestDto,
 	type UserPatchResponseDto,

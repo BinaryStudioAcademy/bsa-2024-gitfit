@@ -23,4 +23,16 @@ const create = createAsyncThunk<
 	return response;
 });
 
-export { create };
+const copyToClipboard = createAsyncThunk<string, string, AsyncThunkConfig>(
+	`${sliceName}/copy-to-clipboard`,
+	async (projectApiKey, { extra }) => {
+		const { toastNotifier } = extra;
+
+		await navigator.clipboard.writeText(projectApiKey);
+		toastNotifier.showSuccess(NotificationMessage.PROJECT_API_KEY_COPY_SUCCESS);
+
+		return projectApiKey;
+	},
+);
+
+export { copyToClipboard, create };

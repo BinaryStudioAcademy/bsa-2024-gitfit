@@ -6,8 +6,7 @@ export { useInfiniteScroll } from "./use-infinity-scroll/use-infinity-scroll.hoo
 export { useIntersectionObserver } from "./use-intersection-observer/use-intersection-observer.hook.js";
 export { useModal } from "./use-modal-state/use-modal-state.hook.js";
 export { usePagination } from "./use-pagination/use-pagination.hook.js";
-export { usePopoverPosition } from "./use-popover-position/use-popover-position.hook.js";
-export { usePopover } from "./use-popover-state/use-popover-state.hook.js";
+export { usePopover } from "./use-popover/use-popover.hook.js";
 export { useSearch } from "./use-search/use-search.hook.js";
 export { useSelectedItems } from "./use-selected-items/use-selected-items.hook.js";
 export { useCallback, useEffect, useMemo, useRef, useState } from "react";

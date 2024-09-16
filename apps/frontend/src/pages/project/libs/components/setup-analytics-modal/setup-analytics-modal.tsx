@@ -1,4 +1,9 @@
-import { Button, Input, Modal } from "~/libs/components/components.js";
+import {
+	Button,
+	IconButton,
+	Input,
+	Modal,
+} from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -33,8 +38,9 @@ const SetupAnalyticsModal = ({
 	const { dataStatus } = useAppSelector(({ projectApiKeys }) => projectApiKeys);
 
 	const hasProjectApiKey = project.apiKey !== null;
-	const isGenerateButtonDisabled =
-		hasProjectApiKey || dataStatus === DataStatus.PENDING;
+	const isGenerateButtonDisabled = dataStatus === DataStatus.PENDING;
+	const isCopyButtonDisabled =
+		!hasProjectApiKey || dataStatus === DataStatus.PENDING;
 
 	const handleGenerateSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
@@ -44,6 +50,12 @@ const SetupAnalyticsModal = ({
 		},
 		[handleSubmit, dispatch],
 	);
+
+	const handleCopyToClipboardClick = useCallback(() => {
+		void dispatch(
+			projectApiKeyActions.copyToClipboard(project.apiKey as string),
+		);
+	}, [dispatch, project.apiKey]);
 
 	useEffect(() => {
 		handleValueSet("apiKey", project.apiKey ?? "");
@@ -59,15 +71,23 @@ const SetupAnalyticsModal = ({
 					<Input
 						control={control}
 						errors={errors}
-						isDisabled
+						isReadOnly
 						label="API key"
 						name="apiKey"
 						placeholder="No API key"
+						rightIcon={
+							<IconButton
+								iconName="clipboard"
+								isDisabled={isCopyButtonDisabled}
+								label="Copy API key"
+								onClick={handleCopyToClipboardClick}
+							/>
+						}
 					/>
 					<div className={styles["button-wrapper"]}>
 						<Button
 							isDisabled={isGenerateButtonDisabled}
-							label="Generate"
+							label={hasProjectApiKey ? "Regenerate" : "Generate"}
 							type="submit"
 						/>
 					</div>
