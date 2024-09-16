@@ -64,6 +64,22 @@ class ProjectRepository implements Repository {
 		return item ? ProjectEntity.initialize(item) : null;
 	}
 
+	public async findProjectsByContributorId(
+		contributorId: number,
+	): Promise<{ items: ProjectEntity[] }> {
+		const projects = await this.projectModel
+			.query()
+			.select("projects.*")
+			.join("activity_logs", "activity_logs.project_id", "projects.id")
+			.join("git_emails", "git_emails.id", "activity_logs.git_email_id")
+			.where("git_emails.contributor_id", contributorId)
+			.distinct();
+
+		return {
+			items: projects.map((project) => ProjectEntity.initialize(project)),
+		};
+	}
+
 	public async patch(
 		id: number,
 		projectData: ProjectPatchRequestDto,
