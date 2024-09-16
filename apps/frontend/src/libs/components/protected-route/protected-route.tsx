@@ -1,6 +1,4 @@
-import { Navigate } from "react-router-dom";
-
-import { Loader } from "~/libs/components/components.js";
+import { Loader, Navigate } from "~/libs/components/components.js";
 import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
 import {
 	AppRoute,
