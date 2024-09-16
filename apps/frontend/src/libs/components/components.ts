@@ -9,7 +9,7 @@ export { Header } from "./header/header.js";
 export { Icon } from "./icon/icon.js";
 export { IconButton } from "./icon-button/icon-button.js";
 export { Input } from "./input/input.js";
-export { Link, NavLink } from "./link/link.js";
+export { Link, Navigate, NavLink } from "./link/link.js";
 export { Loader } from "./loader/loader.js";
 export { Menu } from "./menu/menu.js";
 export { MenuItem } from "./menu-item/menu-item.js";
