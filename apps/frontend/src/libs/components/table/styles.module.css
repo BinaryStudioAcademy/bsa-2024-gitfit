@@ -53,7 +53,6 @@
 
 .table .table-body {
 	display: block;
-	min-height: 220px;
 	max-height: 450px;
 	overflow-y: auto;
 }
@@ -77,18 +76,10 @@
 }
 
 .empty-placeholder {
-	padding-top: 90px;
 	margin: 0;
 	font-size: 16px;
 	font-weight: 400;
 	line-height: 150%;
 	color: var(--color-text-secondary);
 	text-align: center;
-}
-
-.table-loader {
-	display: flex;
-	align-items: center;
-	height: 100%;
-	min-height: 300px;
 }
