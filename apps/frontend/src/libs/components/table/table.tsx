@@ -14,6 +14,7 @@ import styles from "./styles.module.css";
 type BaseProperties<T> = {
 	columns: TableColumn<T>[];
 	data: T[];
+	emptyPlaceholder?: string;
 	isScrollDisabled?: boolean;
 };
 
@@ -30,6 +31,7 @@ type Properties<T> =
 const Table = <T extends object>({
 	columns,
 	data,
+	emptyPlaceholder = "There is nothing yet.",
 	isScrollDisabled,
 	...selectableProperties
 }: Properties<T>): JSX.Element => {
@@ -115,7 +117,7 @@ const Table = <T extends object>({
 						<tr className={styles["table-row"]}>
 							<td className={styles["table-data"]} colSpan={columns.length}>
 								<p className={styles["empty-placeholder"]}>
-									There is nothing yet.
+									{emptyPlaceholder}
 								</p>
 							</td>
 						</tr>

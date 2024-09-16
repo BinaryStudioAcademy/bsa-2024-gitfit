@@ -92,7 +92,11 @@ class ProjectService implements Service {
 		const projects = await this.projectRepository.findAll(name);
 
 		return {
-			items: projects.items.map((item) => item.toObject()),
+			items: projects.items.map((item) => {
+				const { id, name } = item.toObject();
+
+				return { id, name };
+			}),
 		};
 	}
 

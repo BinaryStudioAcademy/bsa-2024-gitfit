@@ -13,15 +13,23 @@ const getGroupColumns = (actions: {
 	{
 		accessorKey: "name",
 		header: "Name",
+		size: 100,
 	},
 	{
 		accessorFn: (group: GroupRow): string => group.permissions.join(", "),
 		header: "Permissions",
+		size: 200,
+	},
+	{
+		accessorKey: "userCount",
+		header: "Users",
+		size: 50,
 	},
 	{
 		accessorFn: (group: GroupRow): string =>
 			formatDate(new Date(group.createdAt), "d MMM yyyy HH:mm"),
 		header: "Created At",
+		size: 100,
 	},
 	{
 		cell: ({ row: { original: group } }) => (
