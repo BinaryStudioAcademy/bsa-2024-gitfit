@@ -67,34 +67,33 @@ const Projects = (): JSX.Element => {
 	}, [dispatch, projectToModifyId]);
 
 	const hasProjects = projects.length !== EMPTY_LENGTH;
-	const hasSearch = search.length !== EMPTY_LENGTH;
-	const emptyPlaceholderMessage = hasSearch
-		? "No projects found matching your search criteria. Please try different keywords."
-		: "No projects created yet. Create the first project now.";
 
-	const { hasNextPage, onPageChange, onPageReset, page, pageSize } =
-		useInfiniteScroll({
-			pageSize: PROJECTS_PAGE_SIZE,
-			totalItemsCount: projectsTotalCount,
-		});
+	const handleLoadProjects = useCallback(
+		(page: number, pageSize: number) => {
+			void dispatch(
+				projectActions.loadAll({
+					name: search,
+					page,
+					pageSize,
+				}),
+			);
+		},
+		[dispatch, search],
+	);
 
-	useEffect(() => {
-		void dispatch(
-			projectActions.loadAll({
-				name: search,
-				page,
-				pageSize,
-			}),
-		);
-	}, [dispatch, search, page, pageSize]);
+	const { hasNextPage, onNextPage, onPageReset } = useInfiniteScroll({
+		onLoading: handleLoadProjects,
+		pageSize: PROJECTS_PAGE_SIZE,
+		totalItemsCount: projectsTotalCount,
+	});
 
 	useEffect(() => {
 		onPageReset();
 	}, [onPageReset, search]);
 
 	const loadMoreProjects = useCallback(() => {
-		onPageChange();
-	}, [onPageChange]);
+		onNextPage();
+	}, [onNextPage]);
 
 	const { reference: sentinelReference } =
 		useIntersectionObserver<HTMLDivElement>({
@@ -201,7 +200,8 @@ const Projects = (): JSX.Element => {
 						))
 					) : (
 						<p className={styles["empty-placeholder"]}>
-							{emptyPlaceholderMessage}
+							No projects found matching your search criteria. Please try
+							different keywords.
 						</p>
 					)}
 
