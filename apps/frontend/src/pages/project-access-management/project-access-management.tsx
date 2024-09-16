@@ -19,12 +19,15 @@ import { type ValueOf } from "~/libs/types/types.js";
 import { type ProjectGroupCreateRequestDto } from "~/modules/project-groups/project-groups.js";
 import { actions as projectGroupActions } from "~/modules/project-groups/project-groups.js";
 import { actions as projectActions } from "~/modules/projects/projects.js";
+import { actions as userActions } from "~/modules/users/users.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
-import { ProjectGroupCreateForm } from "./libs/components/components.js";
-import { getUsersFromProjectGroups } from "./libs/components/project-group-create-form/libs/helpers/helpers.js";
-import { ProjectGroupsTable } from "./libs/components/project-groups-table/project-groups-table.js";
-import { UsersTable } from "./libs/components/users-table/users-table.js";
+import {
+	ProjectGroupCreateForm,
+	ProjectGroupsTable,
+	UsersTable,
+} from "./libs/components/components.js";
+import { filterUserProjectGroups } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 const ProjectAccessManagement = (): JSX.Element => {
@@ -42,15 +45,23 @@ const ProjectAccessManagement = (): JSX.Element => {
 		projectGroupsTotalCount,
 	} = useAppSelector(({ projectGroups }) => projectGroups);
 
+	const {
+		dataStatus: usersDataStatus,
+		users,
+		usersTotalCount,
+	} = useAppSelector(({ users }) => users);
+
+	const usersWithCurrentProjectGroups = filterUserProjectGroups(
+		users,
+		projectGroups,
+	);
+
 	const hasProject = project !== null;
 	const projectRoute = hasProject
 		? configureString(AppRoute.PROJECT, {
 				id: project.id.toString(),
 			})
 		: "";
-
-	const users = getUsersFromProjectGroups(projectGroups);
-	const usersTotalCount = users.length;
 
 	const {
 		onPageChange: onUserPageChange,
@@ -84,6 +95,12 @@ const ProjectAccessManagement = (): JSX.Element => {
 		}
 	}, [dispatch, id]);
 
+	const handleLoadUsers = useCallback(() => {
+		void dispatch(
+			userActions.loadAll({ page: userPage, pageSize: userPageSize }),
+		);
+	}, [dispatch, userPage, userPageSize]);
+
 	const handleLoadGroups = useCallback(() => {
 		if (id) {
 			void dispatch(
@@ -94,6 +111,10 @@ const ProjectAccessManagement = (): JSX.Element => {
 			);
 		}
 	}, [dispatch, groupPage, groupPageSize, id]);
+
+	useEffect(() => {
+		handleLoadUsers();
+	}, [handleLoadUsers]);
 
 	useEffect(() => {
 		handleLoadGroups();
@@ -112,6 +133,10 @@ const ProjectAccessManagement = (): JSX.Element => {
 		}
 	}, [projectGroupCreateStatus, onCreateModalClose]);
 
+	const isUsersLoading =
+		usersDataStatus === DataStatus.IDLE ||
+		usersDataStatus === DataStatus.PENDING;
+
 	const isProjectLoading =
 		projectDataStatus === DataStatus.IDLE ||
 		projectDataStatus === DataStatus.PENDING;
@@ -120,7 +145,8 @@ const ProjectAccessManagement = (): JSX.Element => {
 		projectGroupsDataStatus === DataStatus.IDLE ||
 		projectGroupsDataStatus === DataStatus.PENDING;
 
-	const isLoading = isProjectLoading || isProjectGroupsLoading;
+	const isLoading =
+		isUsersLoading || isProjectLoading || isProjectGroupsLoading;
 
 	const isRejected = projectDataStatus === DataStatus.REJECTED;
 
@@ -155,7 +181,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 							page={userPage}
 							pageSize={userPageSize}
 							totalItemsCount={usersTotalCount}
-							users={users}
+							users={usersWithCurrentProjectGroups}
 						/>
 					</section>
 					<section>

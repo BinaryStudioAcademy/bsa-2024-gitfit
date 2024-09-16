@@ -1,3 +1,4 @@
+export { filterUserProjectGroups } from "./filter-user-project-groups.helper.js";
 export { getProjectGroupColumns } from "./get-project-group-columns.helper.js";
 export { getProjectGroupRows } from "./get-project-group-rows.helper.js";
 export { getUserColumns } from "./get-user-columns.helper.js";

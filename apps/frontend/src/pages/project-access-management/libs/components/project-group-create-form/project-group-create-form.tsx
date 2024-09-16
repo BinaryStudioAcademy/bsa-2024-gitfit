@@ -11,9 +11,9 @@ import {
 	actions as projectGroupsActions,
 } from "~/modules/project-groups/project-groups.js";
 
+import { filterUserProjectGroups } from "../../helpers/helpers.js";
 import { ProjectGroupForm } from "../project-group-form/project-group-form.js";
 import { DEFAULT_PROJECT_GROUP_CREATE_PAYLOAD } from "./libs/constants/constants.js";
-import { getUsersFromProjectGroups } from "./libs/helpers/helpers.js";
 
 type Properties = {
 	onSubmit: (payload: ProjectGroupCreateRequestDto) => void;
@@ -29,19 +29,15 @@ const ProjectGroupCreateForm = ({
 	const dispatch = useAppDispatch();
 
 	const { users, usersTotalCount } = useAppSelector(({ projectGroups }) => ({
+		projectGroups,
 		users: projectGroups.users,
 		usersTotalCount: projectGroups.usersTotalCount,
 	}));
 
-	const projectUsers = getUsersFromProjectGroups(projectGroups);
-	const usersWithGroups = users.map((user) => {
-		const { groups = [] } = projectUsers.find(({ id }) => id === user.id) ?? {};
-
-		return {
-			...user,
-			groups,
-		};
-	});
+	const usersWithCurrentProjectGroups = filterUserProjectGroups(
+		users,
+		projectGroups,
+	);
 
 	const { page: userPage, pageSize: userPageSize } = usePagination({
 		queryParameterPrefix: "project-group-user",
@@ -65,7 +61,7 @@ const ProjectGroupCreateForm = ({
 			}}
 			onSubmit={onSubmit}
 			submitLabel="Submit"
-			users={usersWithGroups}
+			users={usersWithCurrentProjectGroups}
 			validationSchema={projectGroupCreateValidationSchema}
 		/>
 	);

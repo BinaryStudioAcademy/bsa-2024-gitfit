@@ -7,7 +7,7 @@ const getUserRows = (users: UserGetAllItemResponseDto[]): UserRow[] =>
 		createdAt: user.createdAt,
 		id: user.id,
 		name: user.name,
-		projectGroups: user.groups.map((projectGroup) => projectGroup.name),
+		projectGroups: user.projectGroups.map((projectGroup) => projectGroup.name),
 	}));
 
 export { getUserRows };
