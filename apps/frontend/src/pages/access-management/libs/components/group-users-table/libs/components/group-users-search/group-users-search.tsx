@@ -6,17 +6,17 @@ type Properties = {
 	onChange: (search: string) => void;
 };
 
-const ProjectsSearch = ({ onChange }: Properties): JSX.Element => {
+const GroupUsersSearch = ({ onChange }: Properties): JSX.Element => {
 	return (
 		<div className={styles["search-container"]}>
 			<Search
 				isLabelHidden
-				label="Projects search"
+				label="Users search"
 				onChange={onChange}
-				placeholder="Enter project name"
+				placeholder="Enter name"
 			/>
 		</div>
 	);
 };
 
-export { ProjectsSearch };
+export { GroupUsersSearch };

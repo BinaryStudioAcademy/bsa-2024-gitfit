@@ -2,14 +2,12 @@ import { PAGE_INDEX_OFFSET } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { type Encryption } from "~/libs/modules/encryption/encryption.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
-import {
-	type PaginationQueryParameters,
-	type Service,
-} from "~/libs/types/types.js";
+import { type Service } from "~/libs/types/types.js";
 
 import { UserError } from "./libs/exceptions/exceptions.js";
 import {
 	type UserAuthResponseDto,
+	type UserGetAllQueryParameters,
 	type UserGetAllResponseDto,
 	type UserPatchRequestDto,
 	type UserPatchResponseDto,
@@ -83,9 +81,10 @@ class UserService implements Service {
 	}
 
 	public async findAll(
-		parameters: PaginationQueryParameters,
+		parameters: UserGetAllQueryParameters,
 	): Promise<UserGetAllResponseDto> {
 		const users = await this.userRepository.findAll({
+			name: parameters.name,
 			page: parameters.page - PAGE_INDEX_OFFSET,
 			pageSize: parameters.pageSize,
 		});

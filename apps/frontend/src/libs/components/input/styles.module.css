@@ -64,10 +64,12 @@
 
 .input-icon-left {
 	left: 10px;
+	display: flex;
 }
 
 .input-icon-right {
 	right: 10px;
+	display: flex;
 }
 
 .input-field.with-left-icon {

@@ -13,12 +13,14 @@ type Properties = {
 	isLabelHidden: boolean;
 	label: string;
 	onChange: (search: string) => void;
+	placeholder: string;
 };
 
 const Search = ({
 	isLabelHidden,
 	label,
 	onChange,
+	placeholder,
 }: Properties): JSX.Element => {
 	const { onSearch, search } = useSearch();
 
@@ -50,7 +52,7 @@ const Search = ({
 			label={label}
 			leftIcon={<Icon height={20} name="search" width={20} />}
 			name="search"
-			placeholder="Enter project name"
+			placeholder={placeholder}
 			type="search"
 		/>
 	);

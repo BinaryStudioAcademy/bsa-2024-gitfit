@@ -113,6 +113,7 @@ export {
 	type UserAuthResponseDto,
 	UserError,
 	type UserGetAllItemResponseDto,
+	type UserGetAllQueryParameters,
 	type UserGetAllResponseDto,
 	type UserPatchRequestDto,
 	type UserPatchResponseDto,
