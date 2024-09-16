@@ -15,6 +15,7 @@ export { ProjectValidationRule } from "./libs/enums/enums.js";
 export {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
+	type ProjectGetAllRequestDto,
 	type ProjectGetAllResponseDto,
 	type ProjectGetByIdResponseDto,
 	type ProjectPatchRequestDto,

@@ -17,6 +17,7 @@ type BaseProperties<T> = {
 	data: T[];
 	emptyPlaceholder?: string;
 	isLoading?: boolean;
+	isScrollDisabled?: boolean;
 };
 
 type SelectableProperties<T> = {
@@ -34,6 +35,7 @@ const Table = <T extends object>({
 	data,
 	emptyPlaceholder = "There is nothing yet.",
 	isLoading,
+	isScrollDisabled,
 	...selectableProperties
 }: Properties<T>): JSX.Element => {
 	const { getRowId, onRowSelect, selectedRowIds } = selectableProperties as
@@ -51,7 +53,12 @@ const Table = <T extends object>({
 
 	return (
 		<div className={styles["table-container"]}>
-			<table className={styles["table"]}>
+			<table
+				className={getValidClassNames(
+					styles["table"],
+					isScrollDisabled && styles["table-no-scroll"],
+				)}
+			>
 				<thead className={styles["table-head"]}>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<tr className={styles["table-row"]} key={headerGroup.id}>
@@ -67,9 +74,7 @@ const Table = <T extends object>({
 								<th
 									className={styles["table-header"]}
 									key={header.id}
-									style={{
-										width: header.column.columnDef.size,
-									}}
+									style={{ width: header.column.columnDef.size }}
 								>
 									{flexRender(
 										header.column.columnDef.header,

@@ -1,4 +1,5 @@
 import { Table, TablePagination } from "~/libs/components/components.js";
+import { useCallback, useMemo, useState } from "~/libs/hooks/hooks.js";
 import { type GroupGetAllItemResponseDto } from "~/modules/groups/groups.js";
 
 import { getGroupColumns, getGroupRows } from "../../helpers/helpers.js";
@@ -30,15 +31,38 @@ const GroupsTable = ({
 	paginationBackground = "primary",
 	totalItemsCount,
 }: Properties): JSX.Element => {
-	const handleEdit = (groupId: number): void => {
-		const group = groups.find(({ id }) => id === groupId);
-		onEdit(group as GroupGetAllItemResponseDto);
-	};
+	const handleEdit = useCallback(
+		(groupId: number): void => {
+			const group = groups.find(({ id }) => id === groupId);
 
-	const groupColumns = getGroupColumns({
-		onDelete,
-		onEdit: handleEdit,
-	});
+			if (group) {
+				onEdit(group);
+			}
+		},
+		[groups, onEdit],
+	);
+
+	const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
+
+	const handleMenuOpen = useCallback(() => {
+		setIsMenuOpened(true);
+	}, []);
+
+	const handleMenuClose = useCallback(() => {
+		setIsMenuOpened(false);
+	}, []);
+
+	const groupColumns = useMemo(
+		() =>
+			getGroupColumns({
+				onDelete,
+				onEdit: handleEdit,
+				onMenuClose: handleMenuClose,
+				onMenuOpen: handleMenuOpen,
+			}),
+		[handleMenuClose, handleMenuOpen, onDelete, handleEdit],
+	);
+
 	const groupData: GroupRow[] = getGroupRows(groups);
 
 	return (
@@ -47,6 +71,7 @@ const GroupsTable = ({
 				columns={groupColumns}
 				data={groupData}
 				isLoading={isLoading}
+				isScrollDisabled={isMenuOpened}
 			/>
 			<TablePagination
 				background={paginationBackground}

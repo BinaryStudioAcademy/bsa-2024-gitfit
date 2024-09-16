@@ -8,6 +8,7 @@ import {
 	type ProjectGetByIdResponseDto,
 } from "~/modules/projects/projects.js";
 
+import { FIRST_PAGE } from "../libs/constants/constants.js";
 import { create, deleteById, getById, loadAll, patch } from "./actions.js";
 
 type State = {
@@ -17,6 +18,7 @@ type State = {
 	projectPatchStatus: ValueOf<typeof DataStatus>;
 	projects: ProjectGetAllItemResponseDto[];
 	projectStatus: ValueOf<typeof DataStatus>;
+	projectsTotalCount: number;
 };
 
 const initialState: State = {
@@ -26,6 +28,7 @@ const initialState: State = {
 	projectPatchStatus: DataStatus.IDLE,
 	projects: [],
 	projectStatus: DataStatus.IDLE,
+	projectsTotalCount: 0,
 };
 
 const { actions, name, reducer } = createSlice({
@@ -41,17 +44,24 @@ const { actions, name, reducer } = createSlice({
 			state.project = null;
 			state.projectStatus = DataStatus.REJECTED;
 		});
+
 		builder.addCase(loadAll.pending, (state) => {
 			state.dataStatus = DataStatus.PENDING;
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
-			state.projects = action.payload.items;
+			const { items, totalItems } = action.payload;
+			const { page } = action.meta.arg;
+
+			state.projects =
+				page === FIRST_PAGE ? items : [...state.projects, ...items];
+			state.projectsTotalCount = totalItems;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadAll.rejected, (state) => {
 			state.projects = [];
 			state.dataStatus = DataStatus.REJECTED;
 		});
+
 		builder.addCase(create.pending, (state) => {
 			state.projectCreateStatus = DataStatus.PENDING;
 		});
@@ -62,6 +72,7 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(create.rejected, (state) => {
 			state.projectCreateStatus = DataStatus.REJECTED;
 		});
+
 		builder.addCase(patch.pending, (state) => {
 			state.projectPatchStatus = DataStatus.PENDING;
 		});
@@ -76,6 +87,7 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(patch.rejected, (state) => {
 			state.projectPatchStatus = DataStatus.REJECTED;
 		});
+
 		builder.addCase(deleteById.fulfilled, (state, action) => {
 			const deletedProjectId = action.meta.arg;
 			state.projects = state.projects.filter(
