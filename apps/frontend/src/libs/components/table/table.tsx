@@ -14,6 +14,8 @@ import styles from "./styles.module.css";
 type BaseProperties<T> = {
 	columns: TableColumn<T>[];
 	data: T[];
+	emptyPlaceholder?: string;
+	isScrollDisabled?: boolean;
 };
 
 type SelectableProperties<T> = {
@@ -29,6 +31,8 @@ type Properties<T> =
 const Table = <T extends object>({
 	columns,
 	data,
+	emptyPlaceholder = "There is nothing yet.",
+	isScrollDisabled,
 	...selectableProperties
 }: Properties<T>): JSX.Element => {
 	const { getRowId, onRowSelect, selectedRowIds } = selectableProperties as
@@ -62,9 +66,7 @@ const Table = <T extends object>({
 								<th
 									className={styles["table-header"]}
 									key={header.id}
-									style={{
-										width: header.column.columnDef.size,
-									}}
+									style={{ width: header.column.columnDef.size }}
 								>
 									{flexRender(
 										header.column.columnDef.header,
@@ -75,7 +77,12 @@ const Table = <T extends object>({
 						</tr>
 					))}
 				</thead>
-				<tbody className={styles["table-body"]}>
+				<tbody
+					className={getValidClassNames(
+						styles["table-body"],
+						isScrollDisabled && styles["table-body-no-scroll"],
+					)}
+				>
 					{hasData ? (
 						table.getRowModel().rows.map((row) => (
 							<tr className={styles["table-row"]} key={row.id}>
@@ -99,9 +106,7 @@ const Table = <T extends object>({
 									<td
 										className={styles["table-data"]}
 										key={cell.id}
-										style={{
-											width: cell.column.columnDef.size,
-										}}
+										style={{ width: cell.column.columnDef.size }}
 									>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</td>
@@ -112,7 +117,7 @@ const Table = <T extends object>({
 						<tr className={styles["table-row"]}>
 							<td className={styles["table-data"]} colSpan={columns.length}>
 								<p className={styles["empty-placeholder"]}>
-									There is nothing yet.
+									{emptyPlaceholder}
 								</p>
 							</td>
 						</tr>

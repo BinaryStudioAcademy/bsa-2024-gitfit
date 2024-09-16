@@ -7,6 +7,8 @@ import { type GroupRow } from "../types/types.js";
 const getGroupColumns = (actions: {
 	onDelete: (groupId: number) => void;
 	onEdit: (groupId: number) => void;
+	onMenuClose: () => void;
+	onMenuOpen: () => void;
 }): TableColumn<GroupRow>[] => [
 	{
 		accessorKey: "name",
@@ -30,11 +32,13 @@ const getGroupColumns = (actions: {
 		size: 200,
 	},
 	{
-		cell: ({ row: { original: group } }): React.ReactNode => (
+		cell: ({ row: { original: group } }) => (
 			<GroupMenu
 				groupId={group.id}
 				onDelete={actions.onDelete}
 				onEdit={actions.onEdit}
+				onMenuClose={actions.onMenuClose}
+				onMenuOpen={actions.onMenuOpen}
 			/>
 		),
 		header: "",

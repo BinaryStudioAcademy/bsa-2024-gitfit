@@ -7,9 +7,17 @@ type Properties = {
 	groupId: number;
 	onDelete: (groupId: number) => void;
 	onEdit: (groupId: number) => void;
+	onMenuClose: () => void;
+	onMenuOpen: () => void;
 };
 
-const GroupMenu = ({ groupId, onDelete, onEdit }: Properties): JSX.Element => {
+const GroupMenu = ({
+	groupId,
+	onDelete,
+	onEdit,
+	onMenuClose,
+	onMenuOpen,
+}: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
 
 	const handleDeleteClick = useCallback(() => {
@@ -22,9 +30,19 @@ const GroupMenu = ({ groupId, onDelete, onEdit }: Properties): JSX.Element => {
 		onClose();
 	}, [groupId, onEdit, onClose]);
 
+	const handleOpen = useCallback(() => {
+		onOpen();
+		onMenuOpen();
+	}, [onOpen, onMenuOpen]);
+
+	const handleClose = useCallback(() => {
+		onClose();
+		onMenuClose();
+	}, [onClose, onMenuClose]);
+
 	return (
 		<div className={styles["menu-container"]}>
-			<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+			<Menu isOpened={isOpened} onClose={handleClose} onOpen={handleOpen}>
 				<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
 				<MenuItem
 					iconName="trashBin"

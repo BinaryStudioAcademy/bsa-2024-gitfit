@@ -1,12 +1,15 @@
 import { SortType } from "~/libs/enums/enums.js";
 import {
-	type PaginationQueryParameters,
 	type PaginationResponseDto,
 	type Repository,
 } from "~/libs/types/types.js";
-import { type UserPatchRequestDto } from "~/modules/users/libs/types/types.js";
 import { UserEntity } from "~/modules/users/user.entity.js";
 import { type UserModel } from "~/modules/users/user.model.js";
+
+import {
+	type UserGetAllQueryParameters,
+	type UserPatchRequestDto,
+} from "./libs/types/types.js";
 
 class UserRepository implements Repository {
 	private userModel: typeof UserModel;
@@ -59,16 +62,22 @@ class UserRepository implements Repository {
 		return user ? UserEntity.initialize(user) : null;
 	}
 
-	public async findAll({
-		page,
-		pageSize,
-	}: PaginationQueryParameters): Promise<PaginationResponseDto<UserEntity>> {
-		const { results, total } = await this.userModel
+	public async findAll(
+		parameters: UserGetAllQueryParameters,
+	): Promise<PaginationResponseDto<UserEntity>> {
+		const { name, page, pageSize } = parameters;
+
+		const query = this.userModel
 			.query()
 			.orderBy("createdAt", SortType.DESCENDING)
 			.withGraphFetched("groups.permissions")
-			.whereNull("deletedAt")
-			.page(page, pageSize);
+			.whereNull("deletedAt");
+
+		if (name) {
+			query.where("name", "ilike", `%${name}%`);
+		}
+
+		const { results, total } = await query.page(page, pageSize).execute();
 
 		return {
 			items: results.map((user) => UserEntity.initialize(user)),

@@ -4,6 +4,7 @@ export { Breadcrumbs } from "./breadcrumbs/breadcrumbs.js";
 export { Button } from "./button/button.js";
 export { Checkbox } from "./checkbox/checkbox.js";
 export { ConfirmationModal } from "./confirmation-modal/confirmation-modal.js";
+export { DateInput } from "./date-input/date-input.js";
 export { Header } from "./header/header.js";
 export { Icon } from "./icon/icon.js";
 export { IconButton } from "./icon-button/icon-button.js";
