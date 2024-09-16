@@ -112,7 +112,7 @@ const Project = (): JSX.Element => {
 
 						<div>
 							<Button
-								label="Setup analytics"
+								label="Setup Analytics"
 								onClick={onSetupAnalyticsModalOpen}
 							/>
 						</div>

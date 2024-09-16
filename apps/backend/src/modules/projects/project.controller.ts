@@ -148,8 +148,8 @@ class ProjectController extends BaseController {
 	 *                description:
 	 *                  type: string
 	 *      responses:
-	 *        200:
-	 *          description: Successful operation
+	 *        201:
+	 *          description: Project was successfully created
 	 *          content:
 	 *            application/json:
 	 *              schema:
@@ -166,7 +166,7 @@ class ProjectController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.projectService.create(options.body),
-			status: HTTPCode.OK,
+			status: HTTPCode.CREATED,
 		};
 	}
 

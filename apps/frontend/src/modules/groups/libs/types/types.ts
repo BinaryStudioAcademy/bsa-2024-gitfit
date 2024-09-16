@@ -5,4 +5,5 @@ export {
 	type GroupGetAllResponseDto,
 	type GroupUpdateRequestDto,
 	type GroupUpdateResponseDto,
+	type UserGetAllQueryParameters,
 } from "@git-fit/shared";

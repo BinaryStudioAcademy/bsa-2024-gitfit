@@ -17,6 +17,11 @@ const SIDEBAR_ITEMS: NavigationItem[] = [
 		label: "Access Management",
 		pagePermissions: [PermissionKey.MANAGE_USER_ACCESS],
 	},
+	{
+		href: AppRoute.ANALYTICS,
+		icon: "analytics",
+		label: "Analytics",
+	},
 ];
 
 export { SIDEBAR_ITEMS };

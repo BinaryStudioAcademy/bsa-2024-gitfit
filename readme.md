@@ -137,7 +137,6 @@ erDiagram
       dateTime created_at
       dateTime updated_at
       varchar name
-      boolean is_hidden
    }
 
    git_emails {
@@ -204,6 +203,7 @@ erDiagram
 
    git_emails }|--|| activity_logs : git_email_id
    projects }|--|| activity_logs : project_id
+   users }|--|| activity_logs : created_by_user_id
 
    users ||--|{ notifications : receiver_user_id
 ```
