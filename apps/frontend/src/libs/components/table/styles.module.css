@@ -19,6 +19,10 @@
 	background-color: var(--color-background-secondary);
 }
 
+.table-no-scroll {
+	overflow-x: hidden;
+}
+
 .table .table-header,
 .table .table-data {
 	padding: 10px 20px;
@@ -51,10 +55,6 @@
 	position: sticky;
 	top: 0;
 	z-index: 2;
-}
-
-.table .table-body-no-scroll {
-	overflow-y: hidden;
 }
 
 .table .table-head,
