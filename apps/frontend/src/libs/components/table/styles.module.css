@@ -50,6 +50,10 @@
 	overflow-y: auto;
 }
 
+.table .table-body-no-scroll {
+	overflow-y: hidden;
+}
+
 .table .table-head,
 .table .table-row {
 	display: table;
