@@ -30,6 +30,7 @@ const Analytics = (): JSX.Element => {
 				<form className={styles["filters-form"]} onSubmit={handleFormSubmit}>
 					<DateInput
 						control={control}
+						maxDate={todayDate}
 						maxRange={ANALYTICS_DATE_MAX_RANGE}
 						name="dateRange"
 					/>

@@ -1,1 +1,1 @@
-export { type DateValue } from "./date-value.js";
+export { type DateInputValue } from "./date-input-value.js";

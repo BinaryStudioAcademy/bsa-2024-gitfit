@@ -14,10 +14,11 @@ import {
 import {
 	useCallback,
 	useFormController,
+	useMemo,
 	usePopover,
 } from "~/libs/hooks/hooks.js";
 
-import { type DateValue } from "./libs/types/types.js";
+import { type DateInputValue } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
 type Properties<T extends FieldValues> = {
@@ -40,7 +41,7 @@ const DateInput = <T extends FieldValues>({
 
 	const { isOpened, onClose, onOpen } = usePopover();
 
-	const getSelectedDateRange = (): string => {
+	const selectedDateRange = useMemo((): string => {
 		const [startDate, endDate] = field.value as Date[];
 
 		if (!startDate || !endDate) {
@@ -48,10 +49,10 @@ const DateInput = <T extends FieldValues>({
 		}
 
 		return `${formatDate(startDate, "MMM d, yyyy")} - ${formatDate(endDate, "MMM d, yyyy")}`;
-	};
+	}, [field.value]);
 
 	const handleDateChange = useCallback(
-		(dates: DateValue): void => {
+		(dates: DateInputValue): void => {
 			const [startDate, endDate] = dates as Date[];
 
 			if (maxRange && startDate && endDate) {
@@ -86,7 +87,7 @@ const DateInput = <T extends FieldValues>({
 						className={styles["calendar"]}
 						formatShortWeekday={handleFormatShortWeekday}
 						locale="en"
-						maxDate={maxDate ?? new Date()}
+						{...(maxDate && { maxDate })}
 						next2Label={null}
 						nextLabel={<Icon height={16} name="rightArrow" width={16} />}
 						onChange={handleDateChange}
@@ -108,7 +109,7 @@ const DateInput = <T extends FieldValues>({
 						className={styles["date-input-text"]}
 						readOnly
 						type="text"
-						value={getSelectedDateRange()}
+						value={selectedDateRange}
 					/>
 				</button>
 			</Popover>
