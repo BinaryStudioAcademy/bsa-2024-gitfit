@@ -107,7 +107,7 @@ class ProjectService implements Service {
 
 	public async findProjectsByContributorId(
 		contributorId: number,
-	): Promise<ProjectGetAllResponseDto> {
+	): Promise<{ items: ProjectGetAllItemResponseDto[] }> {
 		const projects =
 			await this.projectRepository.findProjectsByContributorId(contributorId);
 
