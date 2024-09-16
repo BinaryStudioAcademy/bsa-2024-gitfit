@@ -167,10 +167,16 @@ const AccessManagement = (): JSX.Element => {
 	useEffect(() => {
 		if (groupDeleteStatus === DataStatus.FULFILLED) {
 			handleLoadUsers();
+			handleLoadGroups();
 			onDeleteModalClose();
 			setGroupToDeleteId(null);
 		}
-	}, [groupDeleteStatus, onDeleteModalClose, handleLoadUsers]);
+	}, [
+		groupDeleteStatus,
+		onDeleteModalClose,
+		handleLoadUsers,
+		handleLoadGroups,
+	]);
 
 	const isLoading = [usersDataStatus, groupsDataStatus].some(
 		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,

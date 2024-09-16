@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.17.0...backend-v1.18.0) (2024-09-16)
+
+
+### Features
+
+* Add infinite scroll to the projects list gf-276 ([#280](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/280)) ([2f9db4f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2f9db4f976802ab23ee50cb0587a5476fe5397a3))
+
 ## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.16.0...backend-v1.17.0) (2024-09-16)
 
 
