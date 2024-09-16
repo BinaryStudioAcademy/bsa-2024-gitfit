@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 type Properties = {
 	iconName: IconName;
 	label: string;
-	onClick: () => void;
+	onClick?: () => void;
 	variant?: "danger" | "primary";
 };
 

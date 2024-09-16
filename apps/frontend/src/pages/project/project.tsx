@@ -27,7 +27,6 @@ import {
 import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
-	const handleManageAccess = useCallback(() => {}, []);
 	const dispatch = useAppDispatch();
 	const { id: projectId } = useParams<{ id: string }>();
 
@@ -50,12 +49,14 @@ const Project = (): JSX.Element => {
 	useEffect(() => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
-
-			if (projectPatchStatus === DataStatus.FULFILLED) {
-				handleEditModalClose();
-			}
 		}
-	}, [dispatch, projectId, projectPatchStatus, handleEditModalClose]);
+	}, [dispatch, projectId]);
+
+	useEffect(() => {
+		if (projectPatchStatus === DataStatus.FULFILLED) {
+			handleEditModalClose();
+		}
+	}, [projectPatchStatus, handleEditModalClose]);
 
 	const handleEditProject = useCallback(() => {
 		handleEditModalOpen();
@@ -97,10 +98,7 @@ const Project = (): JSX.Element => {
 						<div className={styles["header-container"]}>
 							<h1 className={styles["title"]}>{project.name}</h1>
 
-							<ProjectMenu
-								onEdit={handleEditProject}
-								onManageAccess={handleManageAccess}
-							/>
+							<ProjectMenu onEdit={handleEditProject} />
 						</div>
 
 						<div className={styles["project-description-layout"]}>

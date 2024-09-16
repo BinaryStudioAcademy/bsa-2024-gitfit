@@ -5,13 +5,9 @@ import { useAppSelector, useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	onEdit: () => void;
-	onManageAccess: () => void;
 };
 
-const ProjectMenu = ({
-	onEdit,
-	onManageAccess,
-}: Properties): JSX.Element | null => {
+const ProjectMenu = ({ onEdit }: Properties): JSX.Element | null => {
 	const { isOpened, onClose, onOpen } = usePopover();
 	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
 
@@ -19,12 +15,6 @@ const ProjectMenu = ({
 		onEdit();
 		onClose();
 	}, [onEdit, onClose]);
-
-	const handleManageAccessClick = useCallback(() => {
-		// No need to check for onManageAccess
-		onManageAccess();
-		onClose();
-	}, [onManageAccess, onClose]);
 
 	if (!authenticatedUser) {
 		return null;
@@ -42,12 +32,8 @@ const ProjectMenu = ({
 	return (
 		<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
 			<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
-			<NavLink className="menu-item" to={AppRoute.ACCESS_MANAGEMENT}>
-				<MenuItem
-					iconName="access"
-					label="Manage Access"
-					onClick={handleManageAccessClick}
-				/>
+			<NavLink to={AppRoute.ACCESS_MANAGEMENT}>
+				<MenuItem iconName="access" label="Manage Access" />
 			</NavLink>
 		</Menu>
 	);
