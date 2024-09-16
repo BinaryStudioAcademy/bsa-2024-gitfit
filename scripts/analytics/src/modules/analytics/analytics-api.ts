@@ -27,7 +27,7 @@ class AnalyticsApi extends BaseHTTPApi {
 			this.getFullEndpoint(ActivityLogsApiPath.ROOT, {}),
 			{
 				contentType: ContentType.JSON,
-				hasAuth: false,
+				hasAuth: true,
 				method: "POST",
 				payload: JSON.stringify(payload),
 				token,
