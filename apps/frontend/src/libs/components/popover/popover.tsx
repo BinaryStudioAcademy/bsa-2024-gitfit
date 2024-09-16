@@ -1,65 +1,58 @@
-import React from "react";
-
 import {
-	useEffect,
 	useHandleClickOutside,
+	usePopoverPosition,
 	useRef,
-	useState,
 } from "~/libs/hooks/hooks.js";
 
-import { Portal } from "../components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
+	content: React.ReactNode;
+	hasFixedPositioning?: boolean;
 	isOpened: boolean;
 	onClose: () => void;
-	targetReference: React.RefObject<HTMLElement>;
-};
-
-type Position = {
-	left?: number;
-	top?: number;
 };
 
 const Popover = ({
 	children,
+	content,
+	hasFixedPositioning,
 	isOpened,
 	onClose,
-	targetReference,
 }: Properties): JSX.Element => {
-	const contentReference = useRef<HTMLDivElement>(null);
-	const [position, setPosition] = useState<Position>({});
+	const popoverReference = useRef<HTMLDivElement>(null);
+	const popoverTargetReference = useRef<HTMLDivElement>(null);
 
-	useHandleClickOutside([contentReference, targetReference], onClose);
+	const position = usePopoverPosition({
+		hasFixedPositioning: hasFixedPositioning ?? false,
+		isOpen: isOpened,
+		reference: popoverTargetReference,
+	});
 
-	useEffect(() => {
-		if (targetReference.current) {
-			const { bottom, right } = targetReference.current.getBoundingClientRect();
-			setPosition({
-				left: right + window.scrollX,
-				top: bottom + window.scrollY,
-			});
-		}
-	}, [targetReference, isOpened]);
-
-	if (!isOpened) {
-		return <></>;
-	}
+	useHandleClickOutside(popoverReference, onClose);
 
 	return (
-		<Portal targetId="#popover-container">
-			<div
-				className={styles["popover-content"]}
-				ref={contentReference}
-				style={{
-					left: position.left,
-					top: position.top,
-				}}
-			>
-				{children}
-			</div>
-		</Portal>
+		<div className={styles["popover-wrapper"]} ref={popoverReference}>
+			{children}
+
+			{isOpened && (
+				<div
+					className={styles["popover-content-wrapper"]}
+					ref={popoverTargetReference}
+				>
+					<div
+						className={styles["popover-content"]}
+						style={{
+							left: position.left,
+							top: position.top,
+						}}
+					>
+						{content}
+					</div>
+				</div>
+			)}
+		</div>
 	);
 };
 

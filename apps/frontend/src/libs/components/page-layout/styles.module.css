@@ -37,8 +37,3 @@
 	flex-direction: column;
 	padding: 32px 80px;
 }
-
-#popover-container {
-	position: absolute;
-	inset: 0;
-}

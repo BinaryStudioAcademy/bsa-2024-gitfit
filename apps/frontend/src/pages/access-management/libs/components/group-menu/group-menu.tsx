@@ -24,7 +24,12 @@ const GroupMenu = ({ groupId, onDelete, onEdit }: Properties): JSX.Element => {
 
 	return (
 		<div className={styles["menu-container"]}>
-			<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+			<Menu
+				hasFixedPositioning
+				isOpened={isOpened}
+				onClose={onClose}
+				onOpen={onOpen}
+			>
 				<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
 				<MenuItem
 					iconName="trashBin"
