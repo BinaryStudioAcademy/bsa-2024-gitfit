@@ -1,10 +1,21 @@
+import { logger } from "~/libs/modules/logger/logger.js";
+
+import { projectService } from "../projects/projects.js";
+import { ContributorController } from "./contributor.controller.js";
 import { ContributorModel } from "./contributor.model.js";
 import { ContributorRepository } from "./contributor.repository.js";
-import { ContributorService } from "./contributors.service.js";
+import { ContributorService } from "./contributor.service.js";
 
 const contributorRepository = new ContributorRepository(ContributorModel);
-const contributorService = new ContributorService(contributorRepository);
+const contributorService = new ContributorService(
+	contributorRepository,
+	projectService,
+);
+const contributorController = new ContributorController(
+	logger,
+	contributorService,
+);
 
 export { ContributorModel } from "./contributor.model.js";
-export { ContributorService } from "./contributors.service.js";
-export { contributorService };
+export { ContributorService } from "./contributor.service.js";
+export { contributorController, contributorService };
