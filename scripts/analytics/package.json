@@ -10,6 +10,7 @@
 		"lint:type": "npx tsc --noEmit",
 		"lint:js": "npx eslint . --max-warnings=0 --no-warn-ignored",
 		"lint": "concurrently \"npm:lint:*\"",
+		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
 		"start:dev": "tsx watch src/index.ts"
 	},
 	"dependencies": {
