@@ -12,6 +12,7 @@ import {
 import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
 import { store } from "~/libs/modules/store/store.js";
 import { AccessManagement } from "~/pages/access-management/access-management.jsx";
+import { Analytics } from "~/pages/analytics/analytics.jsx";
 import { Auth } from "~/pages/auth/auth.jsx";
 import { NoAccess } from "~/pages/no-access/no-access.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
@@ -53,6 +54,14 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 									</ProtectedRoute>
 								),
 								path: AppRoute.PROFILE,
+							},
+							{
+								element: (
+									<ProtectedRoute>
+										<Analytics />
+									</ProtectedRoute>
+								),
+								path: AppRoute.ANALYTICS,
 							},
 							{
 								element: (

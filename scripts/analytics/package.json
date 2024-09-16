@@ -1,0 +1,15 @@
+{
+	"name": "@git-fit/analytics",
+	"version": "1.0.0",
+	"type": "module",
+	"engines": {
+		"node": "20.x.x",
+		"npm": "10.x.x"
+	},
+	"scripts": {
+		"lint:type": "npx tsc --noEmit",
+		"lint:js": "npx eslint . --max-warnings=0 --no-warn-ignored",
+		"lint": "concurrently \"npm:lint:*\"",
+		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json"
+	}
+}

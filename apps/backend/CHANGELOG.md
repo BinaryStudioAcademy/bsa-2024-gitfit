@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.16.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.15.0...backend-v1.16.0) (2024-09-16)
+
+
+### Features
+
+* add an ability to save and retrieve activity logs gf-181 ([#221](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/221)) ([74b5c5b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/74b5c5be204f9a000fc5537f88f556f7241be3e9))
+* add users search in group forms gf-270 ([#303](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/303)) ([985d160](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/985d160827edf30b59c4ea38cf09813015303068))
+
+
+### Bug Fixes
+
+* adjusted httpcode to 201 created gf-312 ([#316](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/316)) ([29ceb20](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/29ceb20c9dd9bbdd7778f6a5581f0a5f84ad50f5))
+
+## [1.15.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.14.0...backend-v1.15.0) (2024-09-13)
+
+
+### Features
+
+* not return description on get all request gf-259 ([#279](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/279)) ([787244c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/787244c7e163d659aa98289e06fe5204c8bfe25d))
+
+
+### Bug Fixes
+
+* The users are not sorted correctly at the "Users" table in the "Access Managment" page gf-290 ([#294](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/294)) ([3a9e255](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3a9e255cba70a9b21853e7c56bde4e822cb36a36))
+
 ## [1.14.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.13.0...backend-v1.14.0) (2024-09-11)
 
 
