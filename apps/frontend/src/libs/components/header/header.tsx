@@ -1,13 +1,26 @@
 import logoSrc from "~/assets/images/logo.svg";
-import { Avatar, NavLink } from "~/libs/components/components.js";
+import { Avatar, Icon, NavLink } from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { useAppSelector, usePopover } from "~/libs/hooks/hooks.js";
 
-import { UserPopover } from "./libs/components/components.js";
+import {
+	NotificationsPopover,
+	UserPopover,
+} from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const Header = (): JSX.Element => {
-	const { isOpened, onClose, onOpen } = usePopover();
+	const {
+		isOpened: isUserOpened,
+		onClose: onUserClose,
+		onOpen: onUserOpen,
+	} = usePopover();
+	const {
+		isOpened: isNotificationsOpened,
+		onClose: onNotificationsClose,
+		onOpen: onNotificationsOpen,
+	} = usePopover();
 
 	const authenticatedUser = useAppSelector(
 		({ auth }) => auth.authenticatedUser,
@@ -24,19 +37,38 @@ const Header = (): JSX.Element => {
 			<NavLink className={styles["logo-link"] as string} to={AppRoute.ROOT}>
 				<img alt="GitFit logo" className={styles["logo-img"]} src={logoSrc} />
 			</NavLink>
-			<UserPopover
-				email={email}
-				isOpened={isOpened}
-				name={name}
-				onClose={onClose}
-			>
-				<button
-					className={styles["user-popover-trigger"]}
-					onClick={isOpened ? onClose : onOpen}
+			<div className={styles["header-popovers"]}>
+				<NotificationsPopover
+					isOpened={isNotificationsOpened}
+					onClose={onNotificationsClose}
 				>
-					<Avatar name={name} />
-				</button>
-			</UserPopover>
+					<button
+						className={getValidClassNames(
+							styles["notifications-popover-trigger"],
+							isNotificationsOpened &&
+								styles["notifications-popover-trigger-opened"],
+						)}
+						onClick={
+							isNotificationsOpened ? onNotificationsClose : onNotificationsOpen
+						}
+					>
+						<Icon height={22} name="notifications" width={22} />
+					</button>
+				</NotificationsPopover>
+				<UserPopover
+					email={email}
+					isOpened={isUserOpened}
+					name={name}
+					onClose={onUserClose}
+				>
+					<button
+						className={styles["user-popover-trigger"]}
+						onClick={isUserOpened ? onUserClose : onUserOpen}
+					>
+						<Avatar name={name} />
+					</button>
+				</UserPopover>
+			</div>
 		</header>
 	);
 };
