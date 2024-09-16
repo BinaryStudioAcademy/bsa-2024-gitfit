@@ -42,7 +42,28 @@ export {
 	type ValidationSchema,
 	type ValueOf,
 } from "./libs/types/types.js";
+export {
+	type ActivityLogCreateItemRequestDto,
+	type ActivityLogCreateItemResponseDto,
+	type ActivityLogCreateRequestDto,
+	activityLogCreateValidationSchema,
+	ActivityLogError,
+	type ActivityLogGetAllItemResponseDto,
+	type ActivityLogGetAllResponseDto,
+	ActivityLogsApiPath,
+} from "./modules/activity-logs/activity-logs.js";
 export { AuthApiPath, AuthError } from "./modules/auth/auth.js";
+export {
+	type ContributorCreateRequestDto,
+	ContributorError,
+	type ContributorGetAllItemResponseDto,
+	type ContributorGetAllResponseDto,
+} from "./modules/contributors/contributors.js";
+export {
+	type GitEmailCreateRequestDto,
+	GitEmailError,
+	type GitEmailGetAllItemResponseDto,
+} from "./modules/git-emails/git-emails.js";
 export {
 	type GroupCreateRequestDto,
 	type GroupCreateResponseDto,
