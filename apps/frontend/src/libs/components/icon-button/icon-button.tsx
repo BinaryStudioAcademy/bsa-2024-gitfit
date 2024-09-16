@@ -10,6 +10,7 @@ type Properties = {
 	isDisabled?: boolean;
 	label: string;
 	onClick: () => void;
+	reference?: React.RefObject<HTMLButtonElement>;
 	variant?: "outlined" | "primary";
 };
 
@@ -18,6 +19,7 @@ const IconButton = ({
 	isDisabled = false,
 	label,
 	onClick,
+	reference,
 	variant = "primary",
 }: Properties): JSX.Element => {
 	const isOutlined = variant === "outlined";
@@ -32,6 +34,7 @@ const IconButton = ({
 			className={buttonClasses}
 			disabled={isDisabled}
 			onClick={onClick}
+			ref={reference}
 			type="button"
 		>
 			<span className="visually-hidden">{label}</span>

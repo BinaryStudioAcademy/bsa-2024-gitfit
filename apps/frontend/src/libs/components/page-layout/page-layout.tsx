@@ -21,6 +21,7 @@ const PageLayout = ({
 
 	return (
 		<div className={styles["page"]}>
+			<div id="popover-container" />
 			<div className={styles["page-header"]}>
 				<Header />
 			</div>

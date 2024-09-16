@@ -8,19 +8,19 @@ import { actions as authActions } from "~/modules/auth/auth.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	children: React.ReactNode;
 	email: string;
 	isOpened: boolean;
 	name: string;
 	onClose: () => void;
+	targetReference: React.RefObject<HTMLButtonElement>;
 };
 
 const UserPopover = ({
-	children,
 	email,
 	isOpened,
 	name,
 	onClose,
+	targetReference,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
@@ -30,29 +30,24 @@ const UserPopover = ({
 
 	return (
 		<Popover
-			content={
-				<div className={styles["user-popover"]}>
-					<div className={styles["user-info"]}>
-						<p className={styles["user-name"]}>{name}</p>
-						<p className={styles["user-email"]}>{email}</p>
-					</div>
-					<div className={styles["buttons"]}>
-						<NavLink
-							className={styles["button"] as string}
-							to={AppRoute.PROFILE}
-						>
-							Profile
-						</NavLink>
-						<button className={styles["button"]} onClick={handleLogout}>
-							Log out
-						</button>
-					</div>
-				</div>
-			}
 			isOpened={isOpened}
 			onClose={onClose}
+			targetReference={targetReference}
 		>
-			{children}
+			<div className={styles["user-popover"]}>
+				<div className={styles["user-info"]}>
+					<p className={styles["user-name"]}>{name}</p>
+					<p className={styles["user-email"]}>{email}</p>
+				</div>
+				<div className={styles["buttons"]}>
+					<NavLink className={styles["button"] as string} to={AppRoute.PROFILE}>
+						Profile
+					</NavLink>
+					<button className={styles["button"]} onClick={handleLogout}>
+						Log out
+					</button>
+				</div>
+			</div>
 		</Popover>
 	);
 };
