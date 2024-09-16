@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.25.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.24.0...frontend-v1.25.0) (2024-09-16)
+
+
+### Features
+
+* add date input to analytics page gf-182 ([#237](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/237)) ([9570a5b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9570a5b5b9f34bcd82bc5a4cbcfe365f127b9c8b))
+* add users search in group forms gf-270 ([#303](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/303)) ([985d160](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/985d160827edf30b59c4ea38cf09813015303068))
+
 ## [1.24.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.23.0...frontend-v1.24.0) (2024-09-13)
 
 

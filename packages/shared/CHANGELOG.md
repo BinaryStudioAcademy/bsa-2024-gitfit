@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.16.0...shared-v1.17.0) (2024-09-16)
+
+
+### Features
+
+* add an ability to save and retrieve activity logs gf-181 ([#221](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/221)) ([74b5c5b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/74b5c5be204f9a000fc5537f88f556f7241be3e9))
+* add date input to analytics page gf-182 ([#237](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/237)) ([9570a5b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9570a5b5b9f34bcd82bc5a4cbcfe365f127b9c8b))
+* add users search in group forms gf-270 ([#303](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/303)) ([985d160](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/985d160827edf30b59c4ea38cf09813015303068))
+
 ## [1.16.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.15.1...shared-v1.16.0) (2024-09-13)
 
 

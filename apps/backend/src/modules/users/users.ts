@@ -24,4 +24,6 @@ export {
 	userSignInValidationSchema,
 	userSignUpValidationSchema,
 } from "./libs/validation-schemas/validation-schemas.js";
+export { UserModel } from "./user.model.js";
+export { UserRepository } from "./user.repository.js";
 export { UserService } from "./user.service.js";
