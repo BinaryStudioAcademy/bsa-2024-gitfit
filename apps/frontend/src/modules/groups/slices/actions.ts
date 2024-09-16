@@ -13,6 +13,7 @@ import {
 	type GroupGetAllResponseDto,
 	type GroupUpdateRequestDto,
 	type GroupUpdateResponseDto,
+	type UserGetAllQueryParameters,
 } from "../libs/types/types.js";
 import { name as sliceName } from "./group.slice.js";
 
@@ -43,7 +44,7 @@ const deleteById = createAsyncThunk<boolean, { id: number }, AsyncThunkConfig>(
 
 const loadUsers = createAsyncThunk<
 	UserGetAllResponseDto,
-	PaginationQueryParameters,
+	UserGetAllQueryParameters,
 	AsyncThunkConfig
 >(`${sliceName}/load-users`, (query, { extra }) => {
 	const { userApi } = extra;

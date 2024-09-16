@@ -2,10 +2,10 @@ import { APIPath, ContentType } from "~/libs/enums/enums.js";
 import { BaseHTTPApi } from "~/libs/modules/api/api.js";
 import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
-import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { UsersApiPath } from "./libs/enums/enums.js";
 import {
+	type UserGetAllQueryParameters,
 	type UserGetAllResponseDto,
 	type UserPatchRequestDto,
 	type UserPatchResponseDto,
@@ -32,17 +32,20 @@ class UserApi extends BaseHTTPApi {
 		);
 	}
 
-	public async getAll(
-		query: PaginationQueryParameters,
-	): Promise<UserGetAllResponseDto> {
+	public async getAll({
+		name = "",
+		page,
+		pageSize,
+	}: UserGetAllQueryParameters): Promise<UserGetAllResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(UsersApiPath.ROOT, {}),
 			{
 				hasAuth: true,
 				method: "GET",
 				query: {
-					page: String(query.page),
-					pageSize: String(query.pageSize),
+					name,
+					page: String(page),
+					pageSize: String(pageSize),
 				},
 			},
 		);
