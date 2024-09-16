@@ -4,6 +4,7 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Token } from "~/libs/modules/token/token.js";
 import { type Service } from "~/libs/types/types.js";
 import { type ProjectRepository } from "~/modules/projects/project.repository.js";
+import { type UserService } from "~/modules/users/users.js";
 
 import { ProjectApiKeyError } from "./libs/exceptions/exceptions.js";
 import {
@@ -18,6 +19,7 @@ type Constructor = {
 	projectApiKeyRepository: ProjectApiKeyRepository;
 	projectRepository: ProjectRepository;
 	token: Token;
+	userService: UserService;
 };
 
 class ProjectApiKeyService implements Service {
@@ -29,16 +31,20 @@ class ProjectApiKeyService implements Service {
 
 	private token: Token;
 
+	private userService: UserService;
+
 	public constructor({
 		encryption,
 		projectApiKeyRepository,
 		projectRepository,
 		token,
+		userService,
 	}: Constructor) {
 		this.projectApiKeyRepository = projectApiKeyRepository;
 		this.token = token;
 		this.projectRepository = projectRepository;
 		this.encryption = encryption;
+		this.userService = userService;
 	}
 
 	public async create(
@@ -55,14 +61,20 @@ class ProjectApiKeyService implements Service {
 			});
 		}
 
+		try {
+			await this.userService.find(userId);
+		} catch {
+			throw new ProjectApiKeyError({
+				message: ExceptionMessage.USER_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
 		const existingProjectApiKey =
 			await this.projectApiKeyRepository.findByProjectId(projectId);
 
 		if (existingProjectApiKey) {
-			throw new ProjectApiKeyError({
-				message: ExceptionMessage.PROJECT_API_KEY_ALREADY_EXISTS,
-				status: HTTPCode.CONFLICT,
-			});
+			await this.projectApiKeyRepository.delete(projectId);
 		}
 
 		const apiKey = await this.token.createToken({ projectId });
@@ -98,6 +110,33 @@ class ProjectApiKeyService implements Service {
 
 	public findAll(): ReturnType<Service["findAll"]> {
 		return Promise.resolve({ items: [] });
+	}
+
+	public async findByApiKey(
+		projectApiKey: string,
+	): Promise<ProjectApiKeyCreateResponseDto> {
+		const encryptedKey = this.encryption.encrypt(projectApiKey);
+
+		const apiKeyEnitity =
+			await this.projectApiKeyRepository.findByApiKey(encryptedKey);
+
+		if (!apiKeyEnitity) {
+			throw new ProjectApiKeyError({
+				message: ExceptionMessage.PROJECT_API_KEY_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		const apiKey = apiKeyEnitity.toObject();
+		const decryptedApiKey = this.encryption.decrypt(apiKey.encryptedKey);
+
+		return {
+			apiKey: decryptedApiKey,
+			createdByUserId: apiKey.createdByUserId,
+			id: apiKey.id,
+			projectId: apiKey.projectId,
+			updatedByUserId: apiKey.updatedByUserId,
+		};
 	}
 
 	public async findByProjectId(

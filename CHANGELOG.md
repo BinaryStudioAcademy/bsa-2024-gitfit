@@ -1,5 +1,41 @@
 # Changelog
 
+## [1.27.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.27.0...v1.27.1) (2024-09-16)
+
+
+### Bug Fixes
+
+* Inappropriate appearance of the Access Managment page for a small screen resolution (1024px) gf-295 ([#323](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/323)) ([0588959](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/058895952437ddff369edc7d14e30066a2f87df6))
+* Upon a click on the Logo element in the header user is redirected to the Homepage gf-285 ([#291](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/291)) ([fc2ba06](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/fc2ba067490675837e6f285aebdf40cff2009320))
+
+## [1.27.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.26.0...v1.27.0) (2024-09-16)
+
+
+### Features
+
+* add an ability to regenerate project api key gf-288 ([#307](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/307)) ([7551326](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75513264ccf452c8bd1c9f9ff99bf90f71b040f7))
+
+
+### Bug Fixes
+
+* add a user permission check gf-324 ([#325](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/325)) ([41d2dff](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/41d2dff3512736cf970f789ccafaa318727f15ab))
+* adjusted project status message based on search state gf-313 ([#319](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/319)) ([0306fa4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0306fa4879cfa077cb53e9dd067e62ed0e8fd08a))
+* The Table should not be able to scroll when the Options Popover is open gf-272 ([#278](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/278)) ([8450514](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8450514f1fcd9f913cf8bd6716c88a975cb34e69))
+
+## [1.26.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.25.0...v1.26.0) (2024-09-16)
+
+
+### Features
+
+* add an ability to save and retrieve activity logs gf-181 ([#221](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/221)) ([74b5c5b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/74b5c5be204f9a000fc5537f88f556f7241be3e9))
+* add date input to analytics page gf-182 ([#237](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/237)) ([9570a5b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9570a5b5b9f34bcd82bc5a4cbcfe365f127b9c8b))
+* add users search in group forms gf-270 ([#303](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/303)) ([985d160](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/985d160827edf30b59c4ea38cf09813015303068))
+
+
+### Bug Fixes
+
+* adjusted httpcode to 201 created gf-312 ([#316](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/316)) ([29ceb20](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/29ceb20c9dd9bbdd7778f6a5581f0a5f84ad50f5))
+
 ## [1.25.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.24.0...v1.25.0) (2024-09-13)
 
 

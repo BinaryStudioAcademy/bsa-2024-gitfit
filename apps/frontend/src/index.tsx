@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 
 import {
 	App,
+	Navigate,
 	ProtectedRoute,
 	RouterProvider,
 	StoreProvider,
@@ -11,8 +12,9 @@ import {
 import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
 import { store } from "~/libs/modules/store/store.js";
 import { AccessManagement } from "~/pages/access-management/access-management.jsx";
+import { Analytics } from "~/pages/analytics/analytics.jsx";
 import { Auth } from "~/pages/auth/auth.jsx";
-import { Home } from "~/pages/home/home.jsx";
+import { NoAccess } from "~/pages/no-access/no-access.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { Profile } from "~/pages/profile/profile.jsx";
 import { Project } from "~/pages/project/project.jsx";
@@ -58,9 +60,21 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: (
 									<ProtectedRoute>
-										<Home />
+										<Analytics />
 									</ProtectedRoute>
 								),
+								path: AppRoute.ANALYTICS,
+							},
+							{
+								element: (
+									<ProtectedRoute>
+										<NoAccess />
+									</ProtectedRoute>
+								),
+								path: AppRoute.NO_ACCESS,
+							},
+							{
+								element: <Navigate to={AppRoute.PROJECTS} />,
 								path: AppRoute.ROOT,
 							},
 							{
