@@ -30,8 +30,14 @@ class ProjectApiKeyRepository implements Repository {
 		return ProjectApiKeyEntity.initialize(projectApiKey);
 	}
 
-	public delete(): ReturnType<Repository["delete"]> {
-		return Promise.resolve(false);
+	public async delete(projectId: number): Promise<boolean> {
+		const deletedRowsCount = await this.projectApiKeyModel
+			.query()
+			.delete()
+			.where("project_id", projectId)
+			.execute();
+
+		return Boolean(deletedRowsCount);
 	}
 
 	public find(): ReturnType<Repository["find"]> {
