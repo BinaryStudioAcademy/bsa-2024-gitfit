@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.27.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.26.0...v1.27.0) (2024-09-16)
+
+
+### Features
+
+* add an ability to regenerate project api key gf-288 ([#307](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/307)) ([7551326](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75513264ccf452c8bd1c9f9ff99bf90f71b040f7))
+
+
+### Bug Fixes
+
+* add a user permission check gf-324 ([#325](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/325)) ([41d2dff](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/41d2dff3512736cf970f789ccafaa318727f15ab))
+* adjusted project status message based on search state gf-313 ([#319](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/319)) ([0306fa4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0306fa4879cfa077cb53e9dd067e62ed0e8fd08a))
+* The Table should not be able to scroll when the Options Popover is open gf-272 ([#278](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/278)) ([8450514](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8450514f1fcd9f913cf8bd6716c88a975cb34e69))
+
 ## [1.26.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.25.0...v1.26.0) (2024-09-16)
 
 
