@@ -2,6 +2,7 @@ const APIPath = {
 	ACTIVITY_LOGS: "/activity-logs",
 	AUTH: "/auth",
 	GROUPS: "/groups",
+	NOTIFICATIONS: "/notifications",
 	PERMISSIONS: "/permissions",
 	PROJECT_API_KEYS: "/project-api-keys",
 	PROJECT_GROUPS: "/project-groups",

@@ -77,6 +77,11 @@ export {
 	groupUpdateValidationSchema,
 } from "./modules/groups/groups.js";
 export {
+	type NotificationGetAllItemResponseDto,
+	type NotificationGetAllResponseDto,
+	NotificationsApiPath,
+} from "./modules/notifications/notifications.js";
+export {
 	type PermissionGetAllItemResponseDto,
 	type PermissionGetAllResponseDto,
 	PermissionsApiPath,

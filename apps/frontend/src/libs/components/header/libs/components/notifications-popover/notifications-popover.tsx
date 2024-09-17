@@ -1,4 +1,6 @@
 import { Popover } from "~/libs/components/components.js";
+import { useAppDispatch, useCallback, useEffect } from "~/libs/hooks/hooks.js";
+import { actions as notificationActions } from "~/modules/notifications/notifications.js";
 
 import { NotificationItem } from "./libs/components/components.js";
 import styles from "./styles.module.css";
@@ -14,6 +16,16 @@ const NotificationsPopover = ({
 	isOpened,
 	onClose,
 }: Properties): JSX.Element => {
+	const dispatch = useAppDispatch();
+
+	const handleLoadNotifications = useCallback(() => {
+		void dispatch(notificationActions.loadAll());
+	}, [dispatch]);
+
+	useEffect(() => {
+		handleLoadNotifications();
+	}, [handleLoadNotifications]);
+
 	return (
 		<Popover
 			content={
