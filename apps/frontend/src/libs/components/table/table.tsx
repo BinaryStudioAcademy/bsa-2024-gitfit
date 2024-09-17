@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "~/libs/hooks/hooks.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { SelectRowCell } from "./libs/components/components.js";
-import { getCellColor } from "./libs/helper/helper.js";
+import { getCellColor } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 type BaseProperties<T> = {
