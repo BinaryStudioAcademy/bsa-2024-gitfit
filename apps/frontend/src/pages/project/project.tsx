@@ -99,7 +99,7 @@ const Project = (): JSX.Element => {
 					</div>
 
 					<div className={styles["project-layout"]}>
-						<div className={styles["header-container"]}>
+						<div className={styles["project-header"]}>
 							<h1 className={styles["title"]}>{project.name}</h1>
 
 							<ProjectDetailsMenu
