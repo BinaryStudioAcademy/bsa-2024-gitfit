@@ -52,7 +52,7 @@ class ContributorService implements Service {
 			});
 		}
 
-		const projects = await this.projectService.findProjectsByContributorId(id);
+		const projects = await this.projectService.findByContributorId(id);
 
 		return { ...item.toObject(), projects: projects.items };
 	}
@@ -64,7 +64,7 @@ class ContributorService implements Service {
 			contributors.items.map(async (item) => {
 				const contributor = item.toObject();
 
-				const projects = await this.projectService.findProjectsByContributorId(
+				const projects = await this.projectService.findByContributorId(
 					contributor.id,
 				);
 
@@ -94,7 +94,7 @@ class ContributorService implements Service {
 			return null;
 		}
 
-		const projects = await this.projectService.findProjectsByContributorId(
+		const projects = await this.projectService.findByContributorId(
 			item.toObject().id,
 		);
 

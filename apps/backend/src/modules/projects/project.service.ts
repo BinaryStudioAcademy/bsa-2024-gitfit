@@ -105,11 +105,11 @@ class ProjectService implements Service {
 		};
 	}
 
-	public async findProjectsByContributorId(
+	public async findByContributorId(
 		contributorId: number,
 	): Promise<{ items: ProjectGetAllItemResponseDto[] }> {
 		const projects =
-			await this.projectRepository.findProjectsByContributorId(contributorId);
+			await this.projectRepository.findByContributorId(contributorId);
 
 		return {
 			items: projects.items.map((item) => item.toObject()),

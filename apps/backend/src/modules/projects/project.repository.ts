@@ -69,13 +69,7 @@ class ProjectRepository implements Repository {
 		};
 	}
 
-	public async findByName(name: string): Promise<null | ProjectEntity> {
-		const item = await this.projectModel.query().findOne({ name });
-
-		return item ? ProjectEntity.initialize(item) : null;
-	}
-
-	public async findProjectsByContributorId(
+	public async findByContributorId(
 		contributorId: number,
 	): Promise<{ items: ProjectEntity[] }> {
 		const projects = await this.projectModel
@@ -89,6 +83,12 @@ class ProjectRepository implements Repository {
 		return {
 			items: projects.map((project) => ProjectEntity.initialize(project)),
 		};
+	}
+
+	public async findByName(name: string): Promise<null | ProjectEntity> {
+		const item = await this.projectModel.query().findOne({ name });
+
+		return item ? ProjectEntity.initialize(item) : null;
 	}
 
 	public async patch(
