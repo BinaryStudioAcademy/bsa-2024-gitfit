@@ -18,8 +18,8 @@ export {
 	checkHasPermission,
 	configureString,
 	formatDate,
-	formatDistance,
 	getDifferenceInDays,
+	getRelativeDate,
 	initDebounce,
 	subtractDays,
 } from "./libs/helpers/helpers.js";

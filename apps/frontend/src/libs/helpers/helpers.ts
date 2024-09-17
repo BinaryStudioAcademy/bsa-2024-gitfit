@@ -5,8 +5,8 @@ export {
 	checkHasPermission,
 	configureString,
 	formatDate,
-	formatDistance,
 	getDifferenceInDays,
+	getRelativeDate,
 	initDebounce,
 	subtractDays,
 } from "@git-fit/shared";

@@ -1,4 +1,4 @@
-import { formatDistance } from "~/libs/helpers/helpers.js";
+import { getRelativeDate } from "~/libs/helpers/helpers.js";
 
 const getRelativeDateLabel = (
 	currentDate: Date,
@@ -8,9 +8,7 @@ const getRelativeDateLabel = (
 		return null;
 	}
 
-	return formatDistance(lastActivityDate, currentDate, {
-		addSuffix: true,
-	});
+	return getRelativeDate(lastActivityDate, currentDate);
 };
 
 export { getRelativeDateLabel };
