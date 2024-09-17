@@ -1,5 +1,5 @@
 const getCellColor = (value: unknown): string => {
-	if (value === "-" && Number.isNaN(Number(value))) {
+	if (value === "-") {
 		return "cell-placeholder-color";
 	}
 
