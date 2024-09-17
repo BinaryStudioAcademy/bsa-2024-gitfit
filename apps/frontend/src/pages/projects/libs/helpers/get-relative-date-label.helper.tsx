@@ -1,38 +1,16 @@
-import { getDifferenceInDays } from "~/libs/helpers/helpers.js";
-
-import { ColorClass, ColorThreshold } from "../enums/enums.js";
-
-type RelativeDateLabel = {
-	colorClass: string;
-	label: string;
-} | null;
+import { formatDistance } from "~/libs/helpers/helpers.js";
 
 const getRelativeDateLabel = (
-	lastActivityDate: null | string,
-): RelativeDateLabel => {
+	currentDate: Date,
+	lastActivityDate: Date | null,
+): null | string => {
 	if (!lastActivityDate) {
 		return null;
 	}
 
-	const currentDate = new Date();
-	const lastActivity = new Date(lastActivityDate);
-	const diffDays = getDifferenceInDays(currentDate, lastActivity);
-
-	if (diffDays < ColorThreshold.GREEN) {
-		return { colorClass: ColorClass.GREEN, label: "Updated today" };
-	}
-
-	if (diffDays < ColorThreshold.YELLOW) {
-		return {
-			colorClass: ColorClass.YELLOW,
-			label: `Updated ${diffDays.toString()} days ago`,
-		};
-	}
-
-	return {
-		colorClass: ColorClass.RED,
-		label: `Updated ${diffDays.toString()} days ago`,
-	};
+	return formatDistance(lastActivityDate, currentDate, {
+		addSuffix: true,
+	});
 };
 
 export { getRelativeDateLabel };

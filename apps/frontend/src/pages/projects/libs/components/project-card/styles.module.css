@@ -25,38 +25,3 @@
 	text-decoration: none;
 	background: transparent;
 }
-
-.last-activity-wrapper {
-	width: 100%;
-	padding: 0 33%;
-}
-
-.last-activity {
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-}
-
-.last-activity::before {
-	position: absolute;
-	left: -20px;
-	display: inline-block;
-	width: 12px;
-	height: 12px;
-	margin-right: 8px;
-	content: "";
-	border-radius: 50%;
-}
-
-.green::before {
-	background-color: var(--color-success);
-}
-
-.yellow::before {
-	background-color: var(--color-warning);
-}
-
-.red::before {
-	background-color: var(--color-danger);
-}
