@@ -1,3 +1,5 @@
+import { raw } from "objection";
+
 import { type Repository } from "~/libs/types/types.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
@@ -15,9 +17,7 @@ class ContributorRepository implements Repository {
 
 		const contributor = await this.contributorModel
 			.query()
-			.insert({
-				name,
-			})
+			.insert({ name })
 			.execute();
 
 		return ContributorEntity.initialize(contributor);
@@ -28,22 +28,51 @@ class ContributorRepository implements Repository {
 	}
 
 	public async find(id: number): Promise<ContributorEntity | null> {
-		const item = await this.contributorModel.query().findById(id).execute();
+		const contributor = await this.contributorModel
+			.query()
+			.findById(id)
+			.withGraphFetched("gitEmails");
 
-		return item ? ContributorEntity.initialize(item) : null;
+		if (!contributor) {
+			return null;
+		}
+
+		return ContributorEntity.initialize(contributor);
 	}
 
-	public findAll(): ReturnType<Repository["findAll"]> {
-		return Promise.resolve({ items: [] });
+	public async findAll(): Promise<{ items: ContributorEntity[] }> {
+		const contributorsWithProjectsAndEmails = await this.contributorModel
+			.query()
+			.select("contributors.*")
+			.select(
+				raw(
+					"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
+				),
+			)
+			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
+			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
+			.leftJoin("projects", "activity_logs.project_id", "projects.id")
+			.groupBy("contributors.id")
+			.withGraphFetched("gitEmails");
+
+		return {
+			items: contributorsWithProjectsAndEmails.map((contributor) => {
+				return ContributorEntity.initialize(contributor);
+			}),
+		};
 	}
 
 	public async findByName(name: string): Promise<ContributorEntity | null> {
-		const item = await this.contributorModel
+		const contributor = await this.contributorModel
 			.query()
 			.findOne({ name })
-			.execute();
+			.withGraphFetched("gitEmails");
 
-		return item ? ContributorEntity.initialize(item) : null;
+		if (!contributor) {
+			return null;
+		}
+
+		return ContributorEntity.initialize(contributor);
 	}
 
 	public update(): ReturnType<Repository["update"]> {

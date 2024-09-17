@@ -16,6 +16,7 @@ import { NotFound } from "~/pages/not-found/not-found.jsx";
 
 import {
 	ContributorsList,
+	ProjectDetailsMenu,
 	SetupAnalyticsModal,
 } from "./libs/components/components.js";
 import styles from "./styles.module.css";
@@ -51,9 +52,9 @@ const Project = (): JSX.Element => {
 
 	// TODO: replace this mock data with the data from contributors slice
 	const contributors = [
-		{ id: 1, name: "John" },
-		{ id: 2, name: "Will" },
-		{ id: 3, name: "Clara" },
+		{ gitEmails: [], id: 1, name: "John", projects: [] },
+		{ gitEmails: [], id: 2, name: "Will", projects: [] },
+		{ gitEmails: [], id: 3, name: "Clara", projects: [] },
 	];
 
 	return (
@@ -70,7 +71,11 @@ const Project = (): JSX.Element => {
 					</div>
 
 					<div className={styles["project-layout"]}>
-						<h1 className={styles["title"]}>{project.name}</h1>
+						<div className={styles["project-header"]}>
+							<h1 className={styles["title"]}>{project.name}</h1>
+							<ProjectDetailsMenu projectId={project.id} />
+						</div>
+
 						<div className={styles["project-description-layout"]}>
 							<h3 className={styles["project-description-title"]}>
 								Description
