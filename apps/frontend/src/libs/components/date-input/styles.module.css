@@ -103,7 +103,7 @@
 .calendar :global(.react-calendar__year-view__months),
 .calendar :global(.react-calendar__decade-view__years),
 .calendar :global(.react-calendar__century-view__decades) {
-	max-width: 128px;
+	min-width: 128px;
 }
 
 .date-input-trigger {
