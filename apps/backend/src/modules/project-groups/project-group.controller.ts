@@ -66,7 +66,6 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "POST",
 			path: ProjectGroupsApiPath.ROOT,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 			validation: {
 				body: projectGroupCreateValidationSchema,
 			},
@@ -89,6 +88,7 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectGroupsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 		});
 	}
 
