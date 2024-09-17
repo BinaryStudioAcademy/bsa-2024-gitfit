@@ -19,13 +19,11 @@ const MenuItem = ({
 	onClick,
 	variant = "primary",
 }: Properties): JSX.Element => {
-	// Defining itemClassName correctly
 	const itemClassName = getValidClassNames(
 		styles["menu-item"],
 		styles[`menu-item-${variant}`],
 	);
 
-	// If href is provided, render NavLink, otherwise render a button
 	if (href) {
 		return (
 			<NavLink className={itemClassName} to={href}>
