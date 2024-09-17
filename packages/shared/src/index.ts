@@ -94,6 +94,9 @@ export {
 	projectGroupCreateValidationSchema,
 	ProjectGroupError,
 	ProjectGroupsApiPath,
+	type ProjectGroupUpdateRequestDto,
+	type ProjectGroupUpdateResponseDto,
+	projectGroupUpdateValidationSchema,
 } from "./modules/project-groups/project-groups.js";
 export {
 	type ProjectCreateRequestDto,

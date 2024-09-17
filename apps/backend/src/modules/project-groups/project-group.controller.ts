@@ -8,8 +8,14 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { ProjectGroupsApiPath } from "./libs/enums/enums.js";
-import { type ProjectGroupCreateRequestDto } from "./libs/types/types.js";
-import { projectGroupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+import {
+	type ProjectGroupCreateRequestDto,
+	type ProjectGroupUpdateRequestDto,
+} from "./libs/types/types.js";
+import {
+	projectGroupCreateValidationSchema,
+	projectGroupUpdateValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectGroupService } from "./project-group.service.js";
 
 /**
@@ -63,6 +69,21 @@ class ProjectGroupController extends BaseController {
 			path: ProjectGroupsApiPath.ROOT,
 			validation: {
 				body: projectGroupCreateValidationSchema,
+			},
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.update(
+					options as APIHandlerOptions<{
+						body: ProjectGroupUpdateRequestDto;
+						params: { id: string };
+					}>,
+				),
+			method: "PUT",
+			path: ProjectGroupsApiPath.$ID,
+			validation: {
+				body: projectGroupUpdateValidationSchema,
 			},
 		});
 	}
@@ -126,6 +147,49 @@ class ProjectGroupController extends BaseController {
 		return {
 			payload: await this.projectGroupService.create(options.body),
 			status: HTTPCode.CREATED,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /groups/{id}:
+	 *    update:
+	 *      tags:
+	 *        - ProjectGroup
+	 *      description: Update project group info
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          description: ID of the project group to update
+	 *          schema:
+	 *            type: string
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 *                properties:
+	 *                  message:
+	 *                    type: object
+	 *                    $ref: "#/components/schemas/ProjectGroup"
+	 */
+
+	private async update(
+		options: APIHandlerOptions<{
+			body: ProjectGroupUpdateRequestDto;
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		const projectGroupId = Number(options.params.id);
+
+		return {
+			payload: await this.projectGroupService.update(
+				projectGroupId,
+				options.body,
+			),
+			status: HTTPCode.OK,
 		};
 	}
 }

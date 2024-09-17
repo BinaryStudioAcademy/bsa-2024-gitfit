@@ -60,22 +60,57 @@ class ProjectGroupRepository implements Repository {
 		return Promise.resolve(true);
 	}
 
-	public find(): ReturnType<Repository["find"]> {
-		return Promise.resolve(null);
+	public async find(id: number): Promise<null | ProjectGroupEntity> {
+		const projectGroup = await this.projectGroupModel.query().findById(id);
+
+		return projectGroup ? ProjectGroupEntity.initialize(projectGroup) : null;
 	}
 
 	public findAll(): ReturnType<Repository["findAll"]> {
 		return Promise.resolve({ items: [] });
 	}
 
-	public async findByName(name: string): Promise<null | ProjectGroupModel> {
+	public async findInProjectByName(
+		projectId: number,
+		name: string,
+	): Promise<null | ProjectGroupModel> {
 		const key = changeCase(name, "snakeCase");
 
-		return (await this.projectGroupModel.query().findOne({ key })) ?? null;
+		return (
+			(await this.projectGroupModel.query().findOne({ key, projectId })) ?? null
+		);
 	}
 
-	public update(): ReturnType<Repository["update"]> {
-		return Promise.resolve(null);
+	public async update(
+		id: number,
+		entity: ProjectGroupEntity,
+	): Promise<ProjectGroupEntity> {
+		const { name, permissions, projectId, users } = entity.toNewObject();
+		const key = changeCase(name, "snakeCase");
+
+		const trx = await transaction.start(this.projectGroupModel.knex());
+
+		const groupData = {
+			id,
+			key,
+			name,
+			permissions,
+			projects: projectId,
+			users,
+		};
+
+		const projectGroup = await this.projectGroupModel
+			.query(trx)
+			.upsertGraph(groupData, {
+				relate: true,
+				unrelate: true,
+			})
+			.returning("*")
+			.withGraphFetched("[permissions, projects, users]");
+
+		await trx.commit();
+
+		return ProjectGroupEntity.initialize(projectGroup);
 	}
 }
 
