@@ -4,13 +4,13 @@ import { ActivityIndicator } from "~/libs/components/components.js";
 import { AppRoute } from "~/libs/enums/enums.js";
 import {
 	configureString,
-	getActivityIndicatorStatus,
 	getDifferenceInDays,
 	getRelativeDate,
 } from "~/libs/helpers/helpers.js";
 import { useCallback } from "~/libs/hooks/hooks.js";
 import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
+import { getActivityIndicatorStatus } from "../../helpers/helpers.js";
 import { ProjectMenu } from "../components.js";
 import styles from "./styles.module.css";
 

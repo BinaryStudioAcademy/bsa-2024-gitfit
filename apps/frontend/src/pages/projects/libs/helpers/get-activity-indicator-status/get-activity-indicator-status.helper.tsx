@@ -1,7 +1,8 @@
 import { type ComponentProps } from "react";
 
 import { type ActivityIndicator } from "~/libs/components/components.js";
-import { ActivityIndicatorThreshold } from "~/libs/enums/enums.js";
+
+import { ActivityIndicatorThreshold } from "../../enums/enums.js";
 
 const getActivityIndicatorStatus = (
 	daysDifference: number,
