@@ -32,12 +32,15 @@
 }
 
 .last-activity {
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
 }
 
 .last-activity::before {
+	position: absolute;
+	left: -20px;
 	display: inline-block;
 	width: 12px;
 	height: 12px;
