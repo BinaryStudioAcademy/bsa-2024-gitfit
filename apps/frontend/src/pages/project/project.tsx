@@ -15,6 +15,7 @@ import { actions as projectActions } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
 import {
+	ContributorsList,
 	ProjectDetailsMenu,
 	SetupAnalyticsModal,
 } from "./libs/components/components.js";
@@ -24,8 +25,12 @@ const Project = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { id: projectId } = useParams<{ id: string }>();
 
-	const { project, projectStatus } = useAppSelector(({ projects }) => projects);
-
+	const {
+		project,
+		projectContributors,
+		projectContributorsStatus,
+		projectStatus,
+	} = useAppSelector(({ projects }) => projects);
 	const {
 		isOpened: isSetupAnalyticsModalOpened,
 		onClose: onSetupAnalyticsModalClose,
@@ -35,11 +40,16 @@ const Project = (): JSX.Element => {
 	useEffect(() => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
+			void dispatch(projectActions.loadAllContributorsByProjectId(projectId));
 		}
 	}, [dispatch, projectId]);
 
 	const isLoading =
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
+
+	const isContributorsDataLoading =
+		projectContributorsStatus === DataStatus.PENDING ||
+		projectContributorsStatus === DataStatus.IDLE;
 
 	const isRejected = projectStatus === DataStatus.REJECTED;
 
@@ -76,10 +86,18 @@ const Project = (): JSX.Element => {
 								{project.description}
 							</p>
 						</div>
+
 						<div>
 							<Button
 								label="Setup Analytics"
 								onClick={onSetupAnalyticsModalOpen}
+							/>
+						</div>
+
+						<div className={styles["contributors-list-wrapper"]}>
+							<ContributorsList
+								contributors={projectContributors}
+								isLoading={isContributorsDataLoading}
 							/>
 						</div>
 					</div>
