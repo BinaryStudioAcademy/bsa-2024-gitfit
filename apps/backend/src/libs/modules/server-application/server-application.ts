@@ -4,6 +4,7 @@ import { logger } from "~/libs/modules/logger/logger.js";
 import { activityLogController } from "~/modules/activity-logs/activity-logs.js";
 import { authController } from "~/modules/auth/auth.js";
 import { groupController } from "~/modules/groups/groups.js";
+import { notificationController } from "~/modules/notifications/notifications.js";
 import { permissionController } from "~/modules/permissions/permissions.js";
 import { projectApiKeyController } from "~/modules/project-api-keys/project-api-keys.js";
 import { projectGroupController } from "~/modules/project-groups/project-groups.js";
@@ -20,6 +21,7 @@ const apiV1 = new BaseServerApplicationApi(
 	config,
 	...activityLogController.routes,
 	...authController.routes,
+	...notificationController.routes,
 	...permissionController.routes,
 	...projectGroupController.routes,
 	...projectController.routes,
