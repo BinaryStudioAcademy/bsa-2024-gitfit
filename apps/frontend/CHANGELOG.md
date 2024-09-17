@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.32.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.31.0...frontend-v1.32.0) (2024-09-17)
+
+
+### Features
+
+* add permission to manage all projects gf-248 ([#282](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/282)) ([0bc48e9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0bc48e980a5aacf3b43cab5aacf2c9583c36a3c2))
+
+## [1.31.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.30.0...frontend-v1.31.0) (2024-09-17)
+
+
+### Features
+
+* add search input to users table on create project group modal gf-355 ([#368](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/368)) ([c5cda1d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c5cda1df9f7aa3cb5a389fd59e05ded2248378fb))
+* Display list of contributors on project details page gf-337 ([#341](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/341)) ([ab2ac0b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ab2ac0bfee3e3ce9ddb7a09f9e6e66afed12bced))
+
+## [1.30.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.29.1...frontend-v1.30.0) (2024-09-17)
+
+
+### Features
+
+* add contributors page gf-250 ([#334](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/334)) ([35c0e09](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/35c0e09e801896068e9c445086ea6d11dae87eb1))
+
+
+### Bug Fixes
+
+* implemented emtyplaceholdermessage to handle statusmessage gf-313 ([#362](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/362)) ([c9cc015](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c9cc015c29cd11858ea6414c274e7ad4487fdbc1))
+
 ## [1.29.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.29.0...frontend-v1.29.1) (2024-09-17)
 
 

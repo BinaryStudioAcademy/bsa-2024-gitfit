@@ -12,19 +12,16 @@ import {
 	actions as projectGroupsActions,
 } from "~/modules/project-groups/project-groups.js";
 
-import { filterUserProjectGroups } from "../../helpers/helpers.js";
 import { ProjectGroupForm } from "../project-group-form/project-group-form.js";
 
 type Properties = {
 	onSubmit: (id: number, payload: ProjectGroupPatchRequestDto) => void;
 	projectGroup: ProjectGroupGetAllItemResponseDto;
-	projectGroups: ProjectGroupGetAllItemResponseDto[];
 };
 
 const ProjectGroupUpdateForm = ({
 	onSubmit,
 	projectGroup,
-	projectGroups,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { id, name, permissions, users: projectGroupUsers } = projectGroup;
@@ -32,16 +29,11 @@ const ProjectGroupUpdateForm = ({
 	const permissionIds = permissions.map((permission) => permission.id);
 	const userIds = projectGroupUsers.map((user) => user.id);
 
-	const { users, usersTotalCount } = useAppSelector(({ projectGroups }) => ({
+	const { usersTotalCount } = useAppSelector(({ projectGroups }) => ({
 		projectGroups,
 		users: projectGroups.users,
 		usersTotalCount: projectGroups.usersTotalCount,
 	}));
-
-	const usersWithCurrentProjectGroups = filterUserProjectGroups(
-		users,
-		projectGroups,
-	);
 
 	const { page: userPage, pageSize: userPageSize } = usePagination({
 		queryParameterPrefix: "project-group-user",
@@ -73,7 +65,6 @@ const ProjectGroupUpdateForm = ({
 			}}
 			onSubmit={handleFormSubmit}
 			submitLabel="Submit"
-			users={usersWithCurrentProjectGroups}
 			validationSchema={projectGroupPatchValidationSchema}
 		/>
 	);

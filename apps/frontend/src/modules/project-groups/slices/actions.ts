@@ -5,7 +5,10 @@ import {
 	type AsyncThunkConfig,
 	type PaginationQueryParameters,
 } from "~/libs/types/types.js";
-import { type UserGetAllResponseDto } from "~/modules/users/users.js";
+import {
+	type UserGetAllQueryParameters,
+	type UserGetAllResponseDto,
+} from "~/modules/users/users.js";
 
 import {
 	type ProjectGroupCreateRequestDto,
@@ -17,7 +20,7 @@ import { name as sliceName } from "./project-group.slice.js";
 
 const loadUsers = createAsyncThunk<
 	UserGetAllResponseDto,
-	PaginationQueryParameters,
+	UserGetAllQueryParameters,
 	AsyncThunkConfig
 >(`${sliceName}/load-users`, (query, { extra }) => {
 	const { userApi } = extra;

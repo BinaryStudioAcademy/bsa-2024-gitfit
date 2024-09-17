@@ -58,6 +58,7 @@ export {
 	ContributorError,
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,
+	ContributorsApiPath,
 } from "./modules/contributors/contributors.js";
 export {
 	type GitEmailCreateRequestDto,

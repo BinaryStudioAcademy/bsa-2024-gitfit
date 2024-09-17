@@ -1,0 +1,15 @@
+.card {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	min-height: 80px;
+	padding: 24px 16px;
+	background-color: var(--color-background-secondary);
+	border: 1px solid var(--color-border-secondary);
+	border-radius: 8px;
+}
+
+.name {
+	font-size: 16px;
+	line-height: 120%;
+}

@@ -5,22 +5,25 @@ import {
 	Table,
 	TablePagination,
 } from "~/libs/components/components.js";
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
+	useCallback,
 	useEffect,
 	usePagination,
+	useSearch,
 } from "~/libs/hooks/hooks.js";
-import { actions as projectGroupActions } from "~/modules/groups/groups.js";
+import { actions as projectGroupActions } from "~/modules/project-groups/project-groups.js";
 import {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupPatchRequestDto,
 } from "~/modules/project-groups/project-groups.js";
-import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
-import { getUserRows } from "../../helpers/helpers.js";
+import { filterUserProjectGroups, getUserRows } from "../../helpers/helpers.js";
 import { type UserRow } from "../../types/types.js";
+import { ProjectGroupUsersSearch } from "./libs/components/components.js";
 import { getGroupUsersColumns } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
@@ -35,7 +38,6 @@ type Properties = {
 	setValue: UseFormSetValue<
 		ProjectGroupCreateRequestDto | ProjectGroupPatchRequestDto
 	>;
-	users: UserGetAllItemResponseDto[];
 };
 
 const ProjectGroupUsersTable = ({
@@ -43,12 +45,16 @@ const ProjectGroupUsersTable = ({
 	onToggle,
 	selectedUserIds,
 	setValue,
-	users,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
+	const { onSearch, search } = useSearch();
 
-	const { usersDataStatus, usersTotalCount } = useAppSelector(
-		({ groups }) => groups,
+	const { projectGroups, users, usersDataStatus, usersTotalCount } =
+		useAppSelector(({ projectGroups }) => projectGroups);
+
+	const usersWithCurrentProjectGroups = filterUserProjectGroups(
+		users,
+		projectGroups,
 	);
 
 	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
@@ -56,12 +62,21 @@ const ProjectGroupUsersTable = ({
 		totalItemsCount: usersTotalCount,
 	});
 
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			onSearch(value);
+		},
+		[onSearch],
+	);
+
 	const userColumns = getGroupUsersColumns();
-	const userData: UserRow[] = getUserRows(users);
+	const userData: UserRow[] = getUserRows(usersWithCurrentProjectGroups);
 
 	useEffect(() => {
-		void dispatch(projectGroupActions.loadUsers({ page, pageSize }));
-	}, [dispatch, page, pageSize]);
+		void dispatch(
+			projectGroupActions.loadUsers({ name: search, page, pageSize }),
+		);
+	}, [dispatch, page, pageSize, search]);
 
 	useEffect(() => {
 		setValue("userIds", selectedUserIds);
@@ -70,33 +85,37 @@ const ProjectGroupUsersTable = ({
 	const error = errors["userIds"]?.message;
 	const hasError = Boolean(error);
 
-	if (
+	const hasUserRows = userData.length !== EMPTY_LENGTH;
+
+	const isLoading =
 		usersDataStatus === DataStatus.IDLE ||
-		usersDataStatus === DataStatus.PENDING
-	) {
-		return <Loader />;
-	}
+		(usersDataStatus === DataStatus.PENDING && !hasUserRows);
 
 	return (
 		<>
 			<span className={styles["table-title"]}>Users</span>
-			<div className={styles["group-users-table"]}>
-				<Table<UserRow>
-					columns={userColumns}
-					data={userData}
-					getRowId={getRowId}
-					onRowSelect={onToggle}
-					selectedRowIds={selectedUserIds}
-				/>
-				<TablePagination
-					background="secondary"
-					onPageChange={onPageChange}
-					onPageSizeChange={onPageSizeChange}
-					page={page}
-					pageSize={pageSize}
-					totalItemsCount={usersTotalCount}
-				/>
-			</div>
+			<ProjectGroupUsersSearch onChange={handleSearchChange} />
+			{isLoading ? (
+				<Loader />
+			) : (
+				<div className={styles["group-users-table"]}>
+					<Table<UserRow>
+						columns={userColumns}
+						data={userData}
+						getRowId={getRowId}
+						onRowSelect={onToggle}
+						selectedRowIds={selectedUserIds}
+					/>
+					<TablePagination
+						background="secondary"
+						onPageChange={onPageChange}
+						onPageSizeChange={onPageSizeChange}
+						page={page}
+						pageSize={pageSize}
+						totalItemsCount={usersTotalCount}
+					/>
+				</div>
+			)}
 			{hasError && <span className={styles["error-message"]}>{error}</span>}
 		</>
 	);

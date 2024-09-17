@@ -16,7 +16,6 @@ import {
 	type ProjectGroupPatchRequestDto,
 } from "~/modules/project-groups/project-groups.js";
 import { actions as projectPermissionActions } from "~/modules/project-permissions/project-permissions.js";
-import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
 import { ProjectGroupUsersTable } from "../project-group-users-table/project-group-users-table.js";
 import { getPermissionOptions } from "./libs/helpers/helpers.js";
@@ -30,7 +29,6 @@ type Properties<T extends ProjectGroupRequest> = {
 	defaultValues: T;
 	onSubmit: (payload: T) => void;
 	submitLabel: string;
-	users: UserGetAllItemResponseDto[];
 	validationSchema: ValidationSchema<T>;
 };
 
@@ -38,7 +36,6 @@ const ProjectGroupForm = <T extends ProjectGroupRequest>({
 	defaultValues,
 	onSubmit,
 	submitLabel,
-	users,
 	validationSchema,
 }: Properties<T>): JSX.Element => {
 	const dispatch = useAppDispatch();
@@ -101,7 +98,6 @@ const ProjectGroupForm = <T extends ProjectGroupRequest>({
 				onToggle={handleUserIdsToggle}
 				selectedUserIds={selectedUserIds}
 				setValue={handleValueSet}
-				users={users}
 			/>
 			<Select
 				control={control}

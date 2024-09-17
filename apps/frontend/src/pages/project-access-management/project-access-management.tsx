@@ -300,7 +300,6 @@ const ProjectAccessManagement = (): JSX.Element => {
 					>
 						<ProjectGroupCreateForm
 							onSubmit={handleProjectGroupCreateSubmit}
-							projectGroups={projectGroups}
 							projectId={project.id}
 						/>
 					</Modal>
@@ -314,7 +313,6 @@ const ProjectAccessManagement = (): JSX.Element => {
 							<ProjectGroupUpdateForm
 								onSubmit={handleGroupUpdateSubmit}
 								projectGroup={projectGroupToEdit}
-								projectGroups={projectGroups}
 							/>
 						</Modal>
 					)}

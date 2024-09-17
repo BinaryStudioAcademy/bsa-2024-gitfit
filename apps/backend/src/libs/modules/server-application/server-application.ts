@@ -3,6 +3,7 @@ import { database } from "~/libs/modules/database/database.js";
 import { logger } from "~/libs/modules/logger/logger.js";
 import { activityLogController } from "~/modules/activity-logs/activity-logs.js";
 import { authController } from "~/modules/auth/auth.js";
+import { contributorController } from "~/modules/contributors/contributors.js";
 import { groupController } from "~/modules/groups/groups.js";
 import { permissionController } from "~/modules/permissions/permissions.js";
 import { projectApiKeyController } from "~/modules/project-api-keys/project-api-keys.js";
@@ -25,6 +26,7 @@ const apiV1 = new BaseServerApplicationApi(
 	...projectGroupController.routes,
 	...projectPermissionsController.routes,
 	...projectController.routes,
+	...contributorController.routes,
 	...userController.routes,
 	...groupController.routes,
 	...projectApiKeyController.routes,
