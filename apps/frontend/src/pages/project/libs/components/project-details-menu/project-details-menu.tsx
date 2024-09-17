@@ -1,4 +1,4 @@
-import { Menu, MenuItem, NavLink } from "~/libs/components/components.js";
+import { Menu, MenuItem } from "~/libs/components/components.js";
 import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
 import { checkHasPermission, configureString } from "~/libs/helpers/helpers.js";
 import { useAppSelector, useCallback, usePopover } from "~/libs/hooks/hooks.js";
@@ -31,21 +31,22 @@ const ProjectDetailsMenu = ({
 		},
 	);
 
-	const hasManageAllProjectsPermission = checkHasPermission(
+	const hasManageAccessPermission = checkHasPermission(
 		[PermissionKey.MANAGE_ALL_PROJECTS],
 		authenticatedUser.groups.flatMap((group) => group.permissions),
 	);
 
-	if (!hasManageAllProjectsPermission) {
-		return null;
-	}
-
 	return (
 		<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
 			<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
-			<NavLink to={projectAccessManagementRoute}>
-				<MenuItem iconName="access" label="Manage Access" />
-			</NavLink>
+
+			{hasManageAccessPermission && (
+				<MenuItem
+					href={projectAccessManagementRoute}
+					iconName="access"
+					label="Manage Access"
+				/>
+			)}
 		</Menu>
 	);
 };
