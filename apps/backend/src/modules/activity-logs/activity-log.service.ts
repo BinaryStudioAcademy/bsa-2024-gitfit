@@ -1,3 +1,5 @@
+import { ExceptionMessage } from "~/libs/enums/enums.js";
+import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 import { type ContributorService } from "~/modules/contributors/contributors.js";
 import { type GitEmailService } from "~/modules/git-emails/git-emails.js";
@@ -6,6 +8,7 @@ import { type ProjectService } from "~/modules/projects/project.service.js";
 
 import { ActivityLogEntity } from "./activity-log.entity.js";
 import { type ActivityLogRepository } from "./activity-log.repository.js";
+import { ActivityLogError } from "./libs/exceptions/exceptions.js";
 import {
 	type ActivityLogCreateItemResponseDto,
 	type ActivityLogCreateRequestDto,
@@ -62,15 +65,22 @@ class ActivityLogService implements Service {
 			});
 		}
 
-		return await this.activityLogRepository.create(
-			ActivityLogEntity.initializeNew({
-				commitsNumber,
-				createdByUser: { id: userId },
-				date,
-				gitEmail: { contributor: gitEmail.contributor, id: gitEmail.id },
-				project: { id: projectId },
-			}),
-		);
+		try {
+			return await this.activityLogRepository.create(
+				ActivityLogEntity.initializeNew({
+					commitsNumber,
+					createdByUser: { id: userId },
+					date,
+					gitEmail: { contributor: gitEmail.contributor, id: gitEmail.id },
+					project: { id: projectId },
+				}),
+			);
+		} catch {
+			throw new ActivityLogError({
+				message: ExceptionMessage.ACTIVITY_LOG_CREATE_FAILED,
+				status: HTTPCode.FORBIDDEN,
+			});
+		}
 	}
 
 	public async create(

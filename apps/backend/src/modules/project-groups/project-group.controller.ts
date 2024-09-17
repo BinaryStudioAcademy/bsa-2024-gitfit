@@ -1,4 +1,5 @@
-import { APIPath } from "~/libs/enums/enums.js";
+import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import { checkUserPermissions } from "~/libs/hooks/hooks.js";
 import {
 	type APIHandlerOptions,
 	type APIHandlerResponse,
@@ -72,6 +73,13 @@ class ProjectGroupController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
+				this.delete(options as APIHandlerOptions<{ params: { id: string } }>),
+			method: "DELETE",
+			path: ProjectGroupsApiPath.$ID,
+		});
+
+		this.addRoute({
+			handler: (options) =>
 				this.findAllByProjectId(
 					options as APIHandlerOptions<{
 						params: ProjectGroupGetAllRequestDto;
@@ -80,6 +88,7 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectGroupsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 		});
 	}
 
@@ -142,6 +151,37 @@ class ProjectGroupController extends BaseController {
 		return {
 			payload: await this.projectGroupService.create(options.body),
 			status: HTTPCode.CREATED,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /project-groups/{id}:
+	 *   delete:
+	 *     description: Delete a project group by ID
+	 *     parameters:
+	 *       - in: path
+	 *         name: id
+	 *         required: true
+	 *         schema:
+	 *           type: number
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: boolean
+	 *       404:
+	 *         description: Project group not found
+	 */
+
+	private async delete(
+		options: APIHandlerOptions<{ params: { id: string } }>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.projectGroupService.delete(Number(options.params.id)),
+			status: HTTPCode.OK,
 		};
 	}
 

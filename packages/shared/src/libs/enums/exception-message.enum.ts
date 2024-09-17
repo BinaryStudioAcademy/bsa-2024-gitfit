@@ -1,4 +1,5 @@
 const ExceptionMessage = {
+	ACTIVITY_LOG_CREATE_FAILED: "Failed to create activity log.",
 	CONTRIBUTOR_NOT_FOUND: "Contributor not found.",
 	EMAIL_USED: "Email address is already in use.",
 	GIT_EMAIL_USED: "Git email is already in use.",
@@ -13,6 +14,7 @@ const ExceptionMessage = {
 	PROJECT_API_KEY_NOT_FOUND: "API key not found.",
 	PROJECT_GROUP_CREATE_FAILED: "Failed to create project group.",
 	PROJECT_GROUP_NAME_USED: "Project group name is already in use.",
+	PROJECT_GROUP_NOT_FOUND: "Project group not found.",
 	PROJECT_NAME_USED: "Project name is already in use.",
 	PROJECT_NOT_FOUND: "Project not found.",
 	TOKEN_EXPIRED: "Token is expired.",
