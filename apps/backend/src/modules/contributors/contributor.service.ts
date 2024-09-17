@@ -2,7 +2,6 @@ import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 
-import { type ProjectService } from "../projects/project.service.js";
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorRepository } from "./contributor.repository.js";
 import { ContributorError } from "./libs/exceptions/exceptions.js";
@@ -14,14 +13,9 @@ import {
 
 class ContributorService implements Service {
 	private contributorRepository: ContributorRepository;
-	private projectService: ProjectService;
 
-	public constructor(
-		contributorRepository: ContributorRepository,
-		projectService: ProjectService,
-	) {
+	public constructor(contributorRepository: ContributorRepository) {
 		this.contributorRepository = contributorRepository;
-		this.projectService = projectService;
 	}
 
 	public async create(

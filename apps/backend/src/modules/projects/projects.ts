@@ -13,5 +13,4 @@ const projectService = new ProjectService(
 );
 const projectController = new ProjectController(logger, projectService);
 
-export { projectController, projectService };
-export { ProjectService } from "./project.service.js";
+export { projectController };
