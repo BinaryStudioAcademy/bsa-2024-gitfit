@@ -62,6 +62,31 @@ class ContributorRepository implements Repository {
 		};
 	}
 
+	public async findAllByProjectId(
+		projectId: number,
+	): Promise<{ items: ContributorEntity[] }> {
+		const contributorsWithProjectsAndEmails = await this.contributorModel
+			.query()
+			.select("contributors.*")
+			.select(
+				raw(
+					"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
+				),
+			)
+			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
+			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
+			.leftJoin("projects", "activity_logs.project_id", "projects.id")
+			.where("projects.id", projectId)
+			.groupBy("contributors.id")
+			.withGraphFetched("gitEmails");
+
+		return {
+			items: contributorsWithProjectsAndEmails.map((contributor) => {
+				return ContributorEntity.initialize(contributor);
+			}),
+		};
+	}
+
 	public async findByName(name: string): Promise<ContributorEntity | null> {
 		const contributor = await this.contributorModel
 			.query()

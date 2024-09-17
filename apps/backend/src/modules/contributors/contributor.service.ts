@@ -70,12 +70,21 @@ class ContributorService implements Service {
 	public async findAllByProjectId(
 		projectId: number,
 	): Promise<ContributorGetAllResponseDto> {
-		const allContibutors = await this.findAll();
+		const contributors =
+			await this.contributorRepository.findAllByProjectId(projectId);
 
 		return {
-			items: allContibutors.items.filter((item) =>
-				item.projects.some((project) => project.id === projectId),
-			),
+			items: contributors.items.map((item) => {
+				const contributor = item.toObject();
+
+				return {
+					...contributor,
+					gitEmails: contributor.gitEmails.map((gitEmail) => ({
+						email: gitEmail.email,
+						id: gitEmail.id,
+					})),
+				};
+			}),
 		};
 	}
 
