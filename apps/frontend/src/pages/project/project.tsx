@@ -21,7 +21,7 @@ import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { ProjectUpdateForm } from "~/pages/projects/libs/components/components.js";
 
 import {
-	ProjectMenu,
+	ProjectDetailsMenu,
 	SetupAnalyticsModal,
 } from "./libs/components/components.js";
 import styles from "./styles.module.css";
@@ -55,8 +55,12 @@ const Project = (): JSX.Element => {
 	useEffect(() => {
 		if (projectPatchStatus === DataStatus.FULFILLED) {
 			handleEditModalClose();
+
+			if (projectId) {
+				void dispatch(projectActions.getById({ id: projectId }));
+			}
 		}
-	}, [projectPatchStatus, handleEditModalClose]);
+	}, [projectPatchStatus, handleEditModalClose, dispatch, projectId]);
 
 	const handleEditProject = useCallback(() => {
 		handleEditModalOpen();
@@ -98,7 +102,10 @@ const Project = (): JSX.Element => {
 						<div className={styles["header-container"]}>
 							<h1 className={styles["title"]}>{project.name}</h1>
 
-							<ProjectMenu onEdit={handleEditProject} />
+							<ProjectDetailsMenu
+								onEdit={handleEditProject}
+								projectId={project.id}
+							/>
 						</div>
 
 						<div className={styles["project-description-layout"]}>

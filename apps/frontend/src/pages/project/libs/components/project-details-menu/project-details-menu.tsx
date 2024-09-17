@@ -1,13 +1,17 @@
 import { Menu, MenuItem, NavLink } from "~/libs/components/components.js";
 import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
-import { checkHasPermission } from "~/libs/helpers/helpers.js";
+import { checkHasPermission, configureString } from "~/libs/helpers/helpers.js";
 import { useAppSelector, useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	onEdit: () => void;
+	projectId: number;
 };
 
-const ProjectMenu = ({ onEdit }: Properties): JSX.Element | null => {
+const ProjectDetailsMenu = ({
+	onEdit,
+	projectId,
+}: Properties): JSX.Element | null => {
 	const { isOpened, onClose, onOpen } = usePopover();
 	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
 
@@ -19,6 +23,13 @@ const ProjectMenu = ({ onEdit }: Properties): JSX.Element | null => {
 	if (!authenticatedUser) {
 		return null;
 	}
+
+	const projectAccessManagementRoute = configureString(
+		AppRoute.PROJECT_ACCESS_MANAGEMENT,
+		{
+			id: projectId.toString(),
+		},
+	);
 
 	const hasManageAllProjectsPermission = checkHasPermission(
 		[PermissionKey.MANAGE_ALL_PROJECTS],
@@ -32,11 +43,11 @@ const ProjectMenu = ({ onEdit }: Properties): JSX.Element | null => {
 	return (
 		<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
 			<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
-			<NavLink to={AppRoute.ACCESS_MANAGEMENT}>
+			<NavLink to={projectAccessManagementRoute}>
 				<MenuItem iconName="access" label="Manage Access" />
 			</NavLink>
 		</Menu>
 	);
 };
 
-export { ProjectMenu };
+export { ProjectDetailsMenu };
