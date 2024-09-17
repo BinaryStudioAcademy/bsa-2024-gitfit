@@ -11,6 +11,7 @@ import {
 	useModal,
 	useParams,
 } from "~/libs/hooks/hooks.js";
+import { actions as contributorActions } from "~/modules/contributors/contributors.js";
 import { actions as projectActions } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
@@ -26,6 +27,9 @@ const Project = (): JSX.Element => {
 	const { id: projectId } = useParams<{ id: string }>();
 
 	const { project, projectStatus } = useAppSelector(({ projects }) => projects);
+	const { contributors, dataStatus: contributorsDataStatus } = useAppSelector(
+		({ contributors }) => contributors,
+	);
 
 	const {
 		isOpened: isSetupAnalyticsModalOpened,
@@ -36,11 +40,16 @@ const Project = (): JSX.Element => {
 	useEffect(() => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
+			void dispatch(contributorActions.loadAll());
 		}
 	}, [dispatch, projectId]);
 
 	const isLoading =
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
+
+	const isContributorsDataLoading =
+		contributorsDataStatus === DataStatus.PENDING ||
+		contributorsDataStatus === DataStatus.IDLE;
 
 	const isRejected = projectStatus === DataStatus.REJECTED;
 
@@ -49,13 +58,6 @@ const Project = (): JSX.Element => {
 	if (isRejected) {
 		return <NotFound />;
 	}
-
-	// TODO: replace this mock data with the data from contributors slice
-	const contributors = [
-		{ gitEmails: [], id: 1, name: "John", projects: [] },
-		{ gitEmails: [], id: 2, name: "Will", projects: [] },
-		{ gitEmails: [], id: 3, name: "Clara", projects: [] },
-	];
 
 	return (
 		<PageLayout isLoading={isLoading}>
@@ -93,7 +95,10 @@ const Project = (): JSX.Element => {
 						</div>
 
 						<div className={styles["contributors-list-wrapper"]}>
-							<ContributorsList contributors={contributors} />
+							<ContributorsList
+								contributors={contributors}
+								isLoading={isContributorsDataLoading}
+							/>
 						</div>
 					</div>
 
