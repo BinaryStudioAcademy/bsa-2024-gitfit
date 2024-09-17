@@ -1,11 +1,10 @@
 import { formatDate } from "~/libs/helpers/helpers.js";
 
+const DAYS_TO_ADVANCE = 1;
+
 const getDateRange = (startDay: Date, endDay: Date): string[] => {
 	const dates: Date[] = [];
-
 	const currentDate = new Date(startDay);
-
-	const DAYS_TO_ADVANCE = 1;
 
 	while (currentDate <= endDay) {
 		dates.push(new Date(currentDate));
