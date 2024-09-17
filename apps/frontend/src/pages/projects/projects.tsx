@@ -86,6 +86,7 @@ const Projects = (): JSX.Element => {
 	);
 
 	const { hasNextPage, onNextPage, onPageReset } = useInfiniteScroll({
+		currentItemsCount: projects.length,
 		onLoading: handleLoadProjects,
 		pageSize: PROJECTS_PAGE_SIZE,
 		totalItemsCount: projectsTotalCount,
