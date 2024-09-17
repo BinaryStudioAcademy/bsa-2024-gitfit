@@ -13,7 +13,10 @@ import {
 	usePagination,
 } from "~/libs/hooks/hooks.js";
 import { actions as projectGroupActions } from "~/modules/groups/groups.js";
-import { type ProjectGroupCreateRequestDto } from "~/modules/project-groups/project-groups.js";
+import {
+	type ProjectGroupCreateRequestDto,
+	type ProjectGroupPatchRequestDto,
+} from "~/modules/project-groups/project-groups.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
 import { getUserRows } from "../../helpers/helpers.js";
@@ -24,10 +27,14 @@ import styles from "./styles.module.css";
 const getRowId = (row: UserRow): number => row.id;
 
 type Properties = {
-	errors: FieldErrors<ProjectGroupCreateRequestDto>;
+	errors: FieldErrors<
+		ProjectGroupCreateRequestDto | ProjectGroupPatchRequestDto
+	>;
 	onToggle: (id: number) => void;
 	selectedUserIds: number[];
-	setValue: UseFormSetValue<ProjectGroupCreateRequestDto>;
+	setValue: UseFormSetValue<
+		ProjectGroupCreateRequestDto | ProjectGroupPatchRequestDto
+	>;
 	users: UserGetAllItemResponseDto[];
 };
 
