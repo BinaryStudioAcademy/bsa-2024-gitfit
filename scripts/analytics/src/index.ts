@@ -1,3 +1,5 @@
-const getPackageName = (): string => "CLI Analytics";
+import { analyticsCli } from "./libs/modules/analytics-cli/analytics-cli.js";
 
-export { getPackageName };
+analyticsCli.init();
+
+export { getPackageName } from "./libs/modules/analytics-cli/analytics-cli.js";

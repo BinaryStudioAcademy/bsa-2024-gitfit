@@ -1,5 +1,46 @@
 # Changelog
 
+## [1.28.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.27.0...frontend-v1.28.0) (2024-09-16)
+
+
+### Features
+
+* Add an ability to create and view project groups gf-139 ([#257](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/257)) ([37c2a01](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/37c2a01eb1f6f94c40fe6b8e0abfc232a6ecbe31))
+* improve table navigation add a loader to tables gf-311 ([#320](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/320)) ([8310823](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/831082319041f4f06fbc8b54aa0cb5580e5210f9))
+
+## [1.27.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.26.1...frontend-v1.27.0) (2024-09-16)
+
+
+### Features
+
+* Add infinite scroll to the projects list gf-276 ([#280](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/280)) ([2f9db4f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2f9db4f976802ab23ee50cb0587a5476fe5397a3))
+
+
+### Bug Fixes
+
+* groups table refresh on deletion of group gf-329 ([#335](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/335)) ([adc543e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/adc543ece15c2774642e6ec5738beb3c28b9aa3b))
+
+## [1.26.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.26.0...frontend-v1.26.1) (2024-09-16)
+
+
+### Bug Fixes
+
+* Inappropriate appearance of the Access Managment page for a small screen resolution (1024px) gf-295 ([#323](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/323)) ([0588959](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/058895952437ddff369edc7d14e30066a2f87df6))
+* Upon a click on the Logo element in the header user is redirected to the Homepage gf-285 ([#291](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/291)) ([fc2ba06](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/fc2ba067490675837e6f285aebdf40cff2009320))
+
+## [1.26.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.25.0...frontend-v1.26.0) (2024-09-16)
+
+
+### Features
+
+* add an ability to regenerate project api key gf-288 ([#307](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/307)) ([7551326](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75513264ccf452c8bd1c9f9ff99bf90f71b040f7))
+
+
+### Bug Fixes
+
+* adjusted project status message based on search state gf-313 ([#319](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/319)) ([0306fa4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0306fa4879cfa077cb53e9dd067e62ed0e8fd08a))
+* The Table should not be able to scroll when the Options Popover is open gf-272 ([#278](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/278)) ([8450514](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8450514f1fcd9f913cf8bd6716c88a975cb34e69))
+
 ## [1.25.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.24.0...frontend-v1.25.0) (2024-09-16)
 
 

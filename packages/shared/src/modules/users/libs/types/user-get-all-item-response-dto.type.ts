@@ -7,6 +7,10 @@ type UserGetAllItemResponseDto = {
 	}[];
 	id: number;
 	name: string;
+	projectGroups: {
+		id: number;
+		name: string;
+	}[];
 };
 
 export { type UserGetAllItemResponseDto };

@@ -38,8 +38,7 @@ const SetupAnalyticsModal = ({
 	const { dataStatus } = useAppSelector(({ projectApiKeys }) => projectApiKeys);
 
 	const hasProjectApiKey = project.apiKey !== null;
-	const isGenerateButtonDisabled =
-		hasProjectApiKey || dataStatus === DataStatus.PENDING;
+	const isGenerateButtonDisabled = dataStatus === DataStatus.PENDING;
 	const isCopyButtonDisabled =
 		!hasProjectApiKey || dataStatus === DataStatus.PENDING;
 
@@ -88,7 +87,7 @@ const SetupAnalyticsModal = ({
 					<div className={styles["button-wrapper"]}>
 						<Button
 							isDisabled={isGenerateButtonDisabled}
-							label="Generate"
+							label={hasProjectApiKey ? "Regenerate" : "Generate"}
 							type="submit"
 						/>
 					</div>

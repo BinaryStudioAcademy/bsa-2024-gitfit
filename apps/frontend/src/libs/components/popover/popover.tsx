@@ -1,15 +1,10 @@
-import {
-	useHandleClickOutside,
-	usePopoverPosition,
-	useRef,
-} from "~/libs/hooks/hooks.js";
+import { useHandleClickOutside, useRef } from "~/libs/hooks/hooks.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
 	content: React.ReactNode;
-	hasFixedPositioning?: boolean;
 	isOpened: boolean;
 	onClose: () => void;
 };
@@ -17,18 +12,11 @@ type Properties = {
 const Popover = ({
 	children,
 	content,
-	hasFixedPositioning,
 	isOpened,
 	onClose,
 }: Properties): JSX.Element => {
 	const popoverReference = useRef<HTMLDivElement>(null);
 	const popoverTargetReference = useRef<HTMLDivElement>(null);
-
-	const position = usePopoverPosition({
-		hasFixedPositioning: hasFixedPositioning ?? false,
-		isOpen: isOpened,
-		reference: popoverTargetReference,
-	});
 
 	useHandleClickOutside(popoverReference, onClose);
 
@@ -41,15 +29,7 @@ const Popover = ({
 					className={styles["popover-content-wrapper"]}
 					ref={popoverTargetReference}
 				>
-					<div
-						className={styles["popover-content"]}
-						style={{
-							left: position.left,
-							top: position.top,
-						}}
-					>
-						{content}
-					</div>
+					<div className={styles["popover-content"]}>{content}</div>
 				</div>
 			)}
 		</div>

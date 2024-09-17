@@ -7,6 +7,7 @@ import { groupController } from "~/modules/groups/groups.js";
 import { permissionController } from "~/modules/permissions/permissions.js";
 import { projectApiKeyController } from "~/modules/project-api-keys/project-api-keys.js";
 import { projectGroupController } from "~/modules/project-groups/project-groups.js";
+import { projectPermissionsController } from "~/modules/project-permissions/project-permissions.js";
 import { projectController } from "~/modules/projects/projects.js";
 import { userController, userService } from "~/modules/users/users.js";
 
@@ -22,6 +23,7 @@ const apiV1 = new BaseServerApplicationApi(
 	...authController.routes,
 	...permissionController.routes,
 	...projectGroupController.routes,
+	...projectPermissionsController.routes,
 	...projectController.routes,
 	...userController.routes,
 	...groupController.routes,

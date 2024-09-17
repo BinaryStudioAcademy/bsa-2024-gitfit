@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.19.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.18.0...backend-v1.19.0) (2024-09-16)
+
+
+### Features
+
+* Add an ability to create and view project groups gf-139 ([#257](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/257)) ([37c2a01](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/37c2a01eb1f6f94c40fe6b8e0abfc232a6ecbe31))
+
+## [1.18.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.17.0...backend-v1.18.0) (2024-09-16)
+
+
+### Features
+
+* Add infinite scroll to the projects list gf-276 ([#280](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/280)) ([2f9db4f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2f9db4f976802ab23ee50cb0587a5476fe5397a3))
+
+## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.16.0...backend-v1.17.0) (2024-09-16)
+
+
+### Features
+
+* add an ability to regenerate project api key gf-288 ([#307](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/307)) ([7551326](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75513264ccf452c8bd1c9f9ff99bf90f71b040f7))
+
+
+### Bug Fixes
+
+* add a user permission check gf-324 ([#325](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/325)) ([41d2dff](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/41d2dff3512736cf970f789ccafaa318727f15ab))
+
 ## [1.16.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.15.0...backend-v1.16.0) (2024-09-16)
 
 

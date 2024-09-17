@@ -61,6 +61,7 @@ class ProjectController extends BaseController {
 				),
 			method: "POST",
 			path: ProjectsApiPath.ROOT,
+			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
 			validation: {
 				body: projectCreateValidationSchema,
 			},
@@ -75,6 +76,7 @@ class ProjectController extends BaseController {
 				),
 			method: "DELETE",
 			path: ProjectsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
 		});
 
 		this.addRoute({
@@ -111,6 +113,7 @@ class ProjectController extends BaseController {
 				),
 			method: "PATCH",
 			path: ProjectsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
 			validation: {
 				body: projectPatchValidationSchema,
 			},
@@ -217,10 +220,14 @@ class ProjectController extends BaseController {
 			query: ProjectGetAllRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { name } = options.query;
+		const { name, page, pageSize } = options.query;
 
 		return {
-			payload: await this.projectService.findAll(name),
+			payload: await this.projectService.findAll({
+				name,
+				page: Number(page),
+				pageSize: Number(pageSize),
+			}),
 			status: HTTPCode.OK,
 		};
 	}

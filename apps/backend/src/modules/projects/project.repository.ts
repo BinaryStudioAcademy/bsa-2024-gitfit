@@ -1,7 +1,13 @@
 import { SortType } from "~/libs/enums/enums.js";
-import { type Repository } from "~/libs/types/types.js";
+import {
+	type PaginationResponseDto,
+	type Repository,
+} from "~/libs/types/types.js";
 
-import { type ProjectPatchRequestDto } from "./libs/types/types.js";
+import {
+	type ProjectGetAllRequestDto,
+	type ProjectPatchRequestDto,
+} from "./libs/types/types.js";
 import { ProjectEntity } from "./project.entity.js";
 import { type ProjectModel } from "./project.model.js";
 
@@ -42,7 +48,11 @@ class ProjectRepository implements Repository {
 		return item ? ProjectEntity.initialize(item) : null;
 	}
 
-	public async findAll(name?: string): Promise<{ items: ProjectEntity[] }> {
+	public async findAll({
+		name,
+		page,
+		pageSize,
+	}: ProjectGetAllRequestDto): Promise<PaginationResponseDto<ProjectEntity>> {
 		const query = this.projectModel
 			.query()
 			.orderBy("created_at", SortType.DESCENDING);
@@ -51,10 +61,11 @@ class ProjectRepository implements Repository {
 			query.whereILike("name", `%${name}%`);
 		}
 
-		const projects = await query.execute();
+		const { results, total } = await query.page(page, pageSize);
 
 		return {
-			items: projects.map((project) => ProjectEntity.initialize(project)),
+			items: results.map((project) => ProjectEntity.initialize(project)),
+			totalItems: total,
 		};
 	}
 
