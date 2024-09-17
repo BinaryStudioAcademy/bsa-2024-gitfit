@@ -58,8 +58,13 @@ class ProjectGroupRepository implements Repository {
 		}
 	}
 
-	public delete(): ReturnType<Repository["delete"]> {
-		return Promise.resolve(true);
+	public async delete(id: number): Promise<boolean> {
+		const deletedRowsCount = await this.projectGroupModel
+			.query()
+			.deleteById(id)
+			.execute();
+
+		return Boolean(deletedRowsCount);
 	}
 
 	public find(): ReturnType<Repository["find"]> {
