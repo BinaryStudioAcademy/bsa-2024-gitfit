@@ -51,7 +51,9 @@ const ProjectCard = ({
 		: null;
 
 	const colorStatus =
-		daysDifference === null ? null : getActivityIndicatorStatus(daysDifference);
+		typeof daysDifference === "number"
+			? getActivityIndicatorStatus(daysDifference)
+			: null;
 
 	const hasActivityIndicator = lastUpdateLabel && colorStatus;
 
