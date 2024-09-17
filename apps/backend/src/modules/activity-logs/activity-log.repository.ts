@@ -42,7 +42,10 @@ class ActivityLogRepository implements Repository {
 	public async findAll(): Promise<{ items: ActivityLogEntity[] }> {
 		const activityLogs = await this.activityLogModel
 			.query()
-			.withGraphFetched("[gitEmail, project, createdByUser]")
+			.withGraphFetched("[gitEmail.contributor, project, createdByUser]")
+			.modifyGraph("gitEmail.contributor", (builder) => {
+				builder.select("id", "name");
+			})
 			.execute();
 
 		return {
