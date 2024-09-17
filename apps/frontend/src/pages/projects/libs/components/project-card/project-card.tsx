@@ -42,9 +42,8 @@ const ProjectCard = ({
 
 	return (
 		<div className={styles["project-container"]}>
-			<NavLink className={styles["project"] as string} to={projectRoute}>
-				{project.name}
-			</NavLink>
+			<NavLink className={styles["project"] as string} to={projectRoute} />
+			<span className={styles["project-name"]}>{project.name}</span>
 			{lastUpdateLabel && colorStatus && (
 				<ActivityIndicator label={lastUpdateLabel} status={colorStatus} />
 			)}
