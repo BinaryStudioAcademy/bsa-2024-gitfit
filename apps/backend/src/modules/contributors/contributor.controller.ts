@@ -1,5 +1,6 @@
 import { APIPath } from "~/libs/enums/enums.js";
 import {
+	type APIHandlerOptions,
 	type APIHandlerResponse,
 	BaseController,
 } from "~/libs/modules/controller/controller.js";
@@ -51,7 +52,12 @@ class ContributorController extends BaseController {
 		this.contributorService = contributorService;
 
 		this.addRoute({
-			handler: () => this.findAll(),
+			handler: (options) =>
+				this.findAll(
+					options as APIHandlerOptions<{
+						query: { projectId: string };
+					}>,
+				),
 			method: "GET",
 			path: ContributorsApiPath.ROOT,
 		});
@@ -62,6 +68,14 @@ class ContributorController extends BaseController {
 	 * /contributors:
 	 *   get:
 	 *     description: Returns an array of contributors
+	 *     parameters:
+	 *       - name: projectId
+	 *         in: query
+	 *         description: Id of a project contributor should belong to
+	 *         required: false
+	 *         schema:
+	 *           type: number
+	 *           minimum: 1
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
@@ -75,7 +89,20 @@ class ContributorController extends BaseController {
 	 *                   items:
 	 *                     $ref: "#/components/schemas/Contributor"
 	 */
-	private async findAll(): Promise<APIHandlerResponse> {
+	private async findAll(
+		options: APIHandlerOptions<{
+			query: { projectId?: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		if (options.query.projectId) {
+			const projectId = Number(options.query.projectId);
+
+			return {
+				payload: await this.contributorService.findAllByProjectId(projectId),
+				status: HTTPCode.OK,
+			};
+		}
+
 		return {
 			payload: await this.contributorService.findAll(),
 			status: HTTPCode.OK,
