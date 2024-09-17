@@ -15,6 +15,11 @@ const SIDEBAR_ITEMS: NavigationItem[] = [
 		pagePermissions: [PermissionKey.MANAGE_USER_ACCESS],
 	},
 	{
+		href: AppRoute.CONTRIBUTORS,
+		icon: "contributors",
+		label: "Contributors",
+	},
+	{
 		href: AppRoute.ANALYTICS,
 		icon: "analytics",
 		label: "Analytics",

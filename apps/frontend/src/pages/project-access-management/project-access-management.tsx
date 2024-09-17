@@ -1,6 +1,7 @@
 import {
 	Breadcrumbs,
 	Button,
+	ConfirmationModal,
 	Modal,
 	PageLayout,
 } from "~/libs/components/components.js";
@@ -14,6 +15,7 @@ import {
 	useModal,
 	usePagination,
 	useParams,
+	useState,
 } from "~/libs/hooks/hooks.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type ProjectGroupCreateRequestDto } from "~/modules/project-groups/project-groups.js";
@@ -41,6 +43,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 	const {
 		dataStatus: projectGroupsDataStatus,
 		projectGroupCreateStatus,
+		projectGroupDeleteStatus,
 		projectGroups,
 		projectGroupsTotalCount,
 	} = useAppSelector(({ projectGroups }) => projectGroups);
@@ -89,6 +92,12 @@ const ProjectAccessManagement = (): JSX.Element => {
 		onOpen: onCreateModalOpen,
 	} = useModal();
 
+	const {
+		isOpened: isDeleteModalOpen,
+		onClose: onDeleteModalClose,
+		onOpen: onDeleteModalOpen,
+	} = useModal();
+
 	useEffect(() => {
 		if (id) {
 			void dispatch(projectActions.getById({ id }));
@@ -120,6 +129,11 @@ const ProjectAccessManagement = (): JSX.Element => {
 		handleLoadGroups();
 	}, [handleLoadGroups]);
 
+	const [projectGroupToDeleteId, setProjectGroupToDeleteId] = useState<
+		null | number
+	>(null);
+	const hasProjectGroupToDelete = Boolean(projectGroupToDeleteId);
+
 	const handleProjectGroupCreateSubmit = useCallback(
 		(payload: ProjectGroupCreateRequestDto) => {
 			void dispatch(projectGroupActions.create(payload));
@@ -127,11 +141,43 @@ const ProjectAccessManagement = (): JSX.Element => {
 		[dispatch],
 	);
 
+	const handleGroupDeleteSubmit = useCallback((): void => {
+		if (hasProjectGroupToDelete) {
+			void dispatch(
+				projectGroupActions.deleteById({
+					id: projectGroupToDeleteId as number,
+				}),
+			);
+		}
+	}, [hasProjectGroupToDelete, dispatch, projectGroupToDeleteId]);
+
+	const handleDelete = useCallback(
+		(id: number): void => {
+			setProjectGroupToDeleteId(id);
+			onDeleteModalOpen();
+		},
+		[onDeleteModalOpen],
+	);
+
 	useEffect(() => {
 		if (projectGroupCreateStatus === DataStatus.FULFILLED) {
 			onCreateModalClose();
 		}
 	}, [projectGroupCreateStatus, onCreateModalClose]);
+
+	useEffect(() => {
+		if (projectGroupDeleteStatus === DataStatus.FULFILLED) {
+			handleLoadUsers();
+			handleLoadGroups();
+			onDeleteModalClose();
+			setProjectGroupToDeleteId(null);
+		}
+	}, [
+		projectGroupDeleteStatus,
+		onDeleteModalClose,
+		handleLoadUsers,
+		handleLoadGroups,
+	]);
 
 	const isUsersLoading =
 		usersDataStatus === DataStatus.IDLE ||
@@ -192,6 +238,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 							</div>
 						</div>
 						<ProjectGroupsTable
+							onDelete={handleDelete}
 							onPageChange={onGroupPageChange}
 							onPageSizeChange={onGroupPageSizeChange}
 							page={groupPage}
@@ -210,6 +257,14 @@ const ProjectAccessManagement = (): JSX.Element => {
 							projectId={project.id}
 						/>
 					</Modal>
+					{hasProjectGroupToDelete && (
+						<ConfirmationModal
+							content="The group will be deleted. This action cannot be undone. Do you want to continue?"
+							isOpened={isDeleteModalOpen}
+							onClose={onDeleteModalClose}
+							onConfirm={handleGroupDeleteSubmit}
+						/>
+					)}
 				</>
 			)}
 		</PageLayout>

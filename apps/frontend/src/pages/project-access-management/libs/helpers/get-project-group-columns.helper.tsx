@@ -1,9 +1,14 @@
 import { formatDate } from "~/libs/helpers/helpers.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
+import { ProjectGroupMenu } from "../components/components.js";
 import { type ProjectGroupRow } from "../types/types.js";
 
-const getProjectGroupColumns = (): TableColumn<ProjectGroupRow>[] => [
+const getProjectGroupColumns = (actions: {
+	onDelete: (projectGroupId: number) => void;
+	onMenuClose: () => void;
+	onMenuOpen: () => void;
+}): TableColumn<ProjectGroupRow>[] => [
 	{
 		accessorKey: "name",
 		header: "Name",
@@ -17,6 +22,19 @@ const getProjectGroupColumns = (): TableColumn<ProjectGroupRow>[] => [
 		accessorFn: (projectGroup: ProjectGroupRow): string =>
 			formatDate(new Date(projectGroup.createdAt), "d MMM yyyy HH:mm"),
 		header: "Created At",
+	},
+	{
+		cell: ({ row: { original: projectGroup } }) => (
+			<ProjectGroupMenu
+				onDelete={actions.onDelete}
+				onMenuClose={actions.onMenuClose}
+				onMenuOpen={actions.onMenuOpen}
+				projectGroupId={projectGroup.id}
+			/>
+		),
+		header: "",
+		id: "menu",
+		size: 60,
 	},
 ];
 
