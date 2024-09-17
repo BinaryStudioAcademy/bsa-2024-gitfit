@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.21.1...backend-v1.22.0) (2024-09-17)
+
+
+### Features
+
+* Display list of contributors on project details page gf-337 ([#341](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/341)) ([ab2ac0b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ab2ac0bfee3e3ce9ddb7a09f9e6e66afed12bced))
+
 ## [1.21.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.21.0...backend-v1.21.1) (2024-09-17)
 
 
