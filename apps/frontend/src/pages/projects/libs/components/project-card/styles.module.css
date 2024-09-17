@@ -27,5 +27,6 @@
 }
 
 .project-name {
-	flex: 0 0 33%;
+	flex-basis: 300px;
+	min-width: 150px;
 }

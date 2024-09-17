@@ -1,11 +1,15 @@
 .activity-indicator {
+	position: relative;
 	display: flex;
 	flex-grow: 1;
 	align-items: center;
 	justify-content: flex-start;
+	min-width: 120px;
 }
 
 .activity-indicator::before {
+	position: absolute;
+	left: -24px;
 	display: inline-block;
 	width: 12px;
 	height: 12px;
