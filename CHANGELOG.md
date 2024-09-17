@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.33.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.32.0...v1.33.0) (2024-09-17)
+
+
+### Features
+
+* add permission to manage all projects gf-248 ([#282](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/282)) ([0bc48e9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0bc48e980a5aacf3b43cab5aacf2c9583c36a3c2))
+
 ## [1.32.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.31.1...v1.32.0) (2024-09-17)
 
 
