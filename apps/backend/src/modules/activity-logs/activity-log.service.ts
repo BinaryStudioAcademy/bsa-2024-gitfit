@@ -73,7 +73,7 @@ class ActivityLogService implements Service {
 		} catch {
 			throw new ActivityLogError({
 				message: ExceptionMessage.ACTIVITY_LOG_CREATE_FAILED,
-				status: HTTPCode.INTERNAL_SERVER_ERROR,
+				status: HTTPCode.FORBIDDEN,
 			});
 		}
 	}
