@@ -27,9 +27,8 @@ const Project = (): JSX.Element => {
 	const { id: projectId } = useParams<{ id: string }>();
 
 	const { project, projectStatus } = useAppSelector(({ projects }) => projects);
-	const { contributors, dataStatus: contributorsDataStatus } = useAppSelector(
-		({ contributors }) => contributors,
-	);
+	const { dataStatus: contributorsDataStatus, projectContributors } =
+		useAppSelector(({ contributors }) => contributors);
 
 	const {
 		isOpened: isSetupAnalyticsModalOpened,
@@ -40,7 +39,7 @@ const Project = (): JSX.Element => {
 	useEffect(() => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
-			void dispatch(contributorActions.loadAll());
+			void dispatch(contributorActions.loadAllByProjectId(projectId));
 		}
 	}, [dispatch, projectId]);
 
@@ -96,7 +95,7 @@ const Project = (): JSX.Element => {
 
 						<div className={styles["contributors-list-wrapper"]}>
 							<ContributorsList
-								contributors={contributors}
+								contributors={projectContributors}
 								isLoading={isContributorsDataLoading}
 							/>
 						</div>

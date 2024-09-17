@@ -67,6 +67,18 @@ class ContributorService implements Service {
 		};
 	}
 
+	public async findAllByProjectId(
+		projectId: number,
+	): Promise<ContributorGetAllResponseDto> {
+		const allContibutors = await this.findAll();
+
+		return {
+			items: allContibutors.items.filter((item) =>
+				item.projects.some((project) => project.id === projectId),
+			),
+		};
+	}
+
 	public async findByName(
 		name: string,
 	): Promise<ContributorGetAllItemResponseDto | null> {
