@@ -72,9 +72,7 @@ class ProjectGroupController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
-				this.deleteProjectGroup(
-					options as APIHandlerOptions<{ params: { id: string } }>,
-				),
+				this.delete(options as APIHandlerOptions<{ params: { id: string } }>),
 			method: "DELETE",
 			path: ProjectGroupsApiPath.$ID,
 		});
@@ -176,7 +174,7 @@ class ProjectGroupController extends BaseController {
 	 *         description: Project group not found
 	 */
 
-	private async deleteProjectGroup(
+	private async delete(
 		options: APIHandlerOptions<{ params: { id: string } }>,
 	): Promise<APIHandlerResponse> {
 		return {
