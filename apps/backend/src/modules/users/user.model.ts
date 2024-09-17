@@ -5,6 +5,7 @@ import {
 	DatabaseTableName,
 } from "~/libs/modules/database/database.js";
 import { GroupModel } from "~/modules/groups/group.model.js";
+import { ProjectGroupModel } from "~/modules/project-groups/project-group.model.js";
 
 class UserModel extends AbstractModel {
 	public deletedAt!: null | string;
@@ -29,6 +30,18 @@ class UserModel extends AbstractModel {
 					to: `${DatabaseTableName.USER_GROUPS}.id`,
 				},
 				modelClass: GroupModel,
+				relation: AbstractModel.ManyToManyRelation,
+			},
+			projectGroups: {
+				join: {
+					from: `${DatabaseTableName.USERS}.id`,
+					through: {
+						from: `${DatabaseTableName.USERS_TO_PROJECT_GROUPS}.userId`,
+						to: `${DatabaseTableName.USERS_TO_PROJECT_GROUPS}.projectGroupId`,
+					},
+					to: `${DatabaseTableName.PROJECT_GROUPS}.id`,
+				},
+				modelClass: ProjectGroupModel,
 				relation: AbstractModel.ManyToManyRelation,
 			},
 		};

@@ -6,6 +6,7 @@ import { type UserRow } from "../../types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	isLoading: boolean;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
@@ -16,6 +17,7 @@ type Properties = {
 };
 
 const UsersTable = ({
+	isLoading,
 	onPageChange,
 	onPageSizeChange,
 	page,
@@ -29,7 +31,11 @@ const UsersTable = ({
 
 	return (
 		<div className={styles["users-table"]}>
-			<Table<UserRow> columns={userColumns} data={userData} />
+			<Table<UserRow>
+				columns={userColumns}
+				data={userData}
+				isLoading={isLoading}
+			/>
 			<TablePagination
 				background={paginationBackground}
 				onPageChange={onPageChange}

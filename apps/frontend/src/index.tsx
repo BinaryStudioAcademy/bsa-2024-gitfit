@@ -21,6 +21,8 @@ import { Profile } from "~/pages/profile/profile.jsx";
 import { Project } from "~/pages/project/project.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
 
+import { ProjectAccessManagement } from "./pages/project-access-management/project-access-management.js";
+
 createRoot(document.querySelector("#root") as HTMLElement).render(
 	<StrictMode>
 		<StoreProvider store={store.instance}>
@@ -95,6 +97,10 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: <Project />,
 								path: AppRoute.PROJECT,
+							},
+							{
+								element: <ProjectAccessManagement />,
+								path: AppRoute.PROJECT_ACCESS_MANAGEMENT,
 							},
 						],
 						element: <App />,

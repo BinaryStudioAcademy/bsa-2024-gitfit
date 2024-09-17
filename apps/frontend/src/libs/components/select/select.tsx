@@ -11,6 +11,7 @@ import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { useCallback, useFormController, useMemo } from "~/libs/hooks/hooks.js";
 import { type SelectOption } from "~/libs/types/types.js";
 
+import { FIRST_OPTION_INDEX } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties<TFieldValues extends FieldValues, TOptionValue> = {
@@ -50,39 +51,38 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		isLabelHidden && "visually-hidden",
 	);
 
+	const value = useMemo(() => {
+		const fieldValue = Array.isArray(field.value) ? field.value : [field.value];
+
+		const matchedOptions = fieldValue
+			.map((value) => options.find((option) => option.value === value))
+			.filter(Boolean);
+
+		return isMulti
+			? matchedOptions
+			: matchedOptions[FIRST_OPTION_INDEX] || null;
+	}, [field.value, options, isMulti]);
+
 	const handleChange = useCallback(
 		(
 			selectedOptions:
 				| MultiValue<SelectOption<TOptionValue> | undefined>
 				| SingleValue<SelectOption<TOptionValue> | undefined>,
-		): void => {
-			const selectedValues = isMulti
-				? (selectedOptions as MultiValue<SelectOption<TOptionValue>>).map(
-						({ value }) => value,
-					)
-				: (selectedOptions as SingleValue<SelectOption<TOptionValue>>)?.value;
-
-			field.onChange(selectedValues);
+		) => {
+			if (isMulti) {
+				const multiValues = (
+					selectedOptions as MultiValue<SelectOption<TOptionValue>>
+				).map(({ value }) => value);
+				field.onChange(multiValues);
+			} else {
+				const singleValue = (
+					selectedOptions as SingleValue<SelectOption<TOptionValue>>
+				)?.value;
+				field.onChange(singleValue ?? null);
+			}
 		},
-		[field, isMulti],
+		[isMulti, field],
 	);
-
-	const handleFindOptionByValue = useCallback(
-		(value: TOptionValue): SelectOption<TOptionValue> | undefined => {
-			return options.find((option) => option.value === value);
-		},
-		[options],
-	);
-
-	const handleSelectedValue = useMemo(() => {
-		if (isMulti) {
-			return (field.value as TOptionValue[])
-				.map((element) => handleFindOptionByValue(element))
-				.filter(Boolean);
-		}
-
-		return handleFindOptionByValue(field.value as TOptionValue);
-	}, [field.value, handleFindOptionByValue, isMulti]);
 
 	return (
 		<label className={styles["label"]}>
@@ -145,7 +145,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 					}),
 				}}
 				unstyled
-				value={handleSelectedValue}
+				value={value}
 			/>
 		</label>
 	);
