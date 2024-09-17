@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { NotificationMessage } from "~/libs/enums/enums.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
+import { type ContributorGetAllResponseDto } from "~/modules/contributors/contributors.js";
 import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
@@ -77,4 +78,24 @@ const deleteById = createAsyncThunk<boolean, number, AsyncThunkConfig>(
 	},
 );
 
-export { create, deleteById, getById, loadAll, patch };
+const loadAllContributorsByProjectId = createAsyncThunk<
+	ContributorGetAllResponseDto,
+	string,
+	AsyncThunkConfig
+>(
+	`${sliceName}/load-all-contributors-by-project-id`,
+	async (projectId, { extra }) => {
+		const { contributorApi } = extra;
+
+		return await contributorApi.getAllByProjectId(projectId);
+	},
+);
+
+export {
+	create,
+	deleteById,
+	getById,
+	loadAll,
+	loadAllContributorsByProjectId,
+	patch,
+};

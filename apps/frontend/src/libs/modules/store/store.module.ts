@@ -10,6 +10,10 @@ import { type Config } from "~/libs/modules/config/config.js";
 import { storage } from "~/libs/modules/storage/storage.js";
 import { toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
 import { authApi, reducer as authReducer } from "~/modules/auth/auth.js";
+import {
+	contributorApi,
+	reducer as contributorsReducer,
+} from "~/modules/contributors/contributors.js";
 import { groupApi, reducer as groupsReducer } from "~/modules/groups/groups.js";
 import {
 	permissionApi,
@@ -19,6 +23,14 @@ import {
 	projectApiKeysApi,
 	reducer as projectApiKeysReducer,
 } from "~/modules/project-api-keys/project-api-keys.js";
+import {
+	projectGroupApi,
+	reducer as projectGroupsReducer,
+} from "~/modules/project-groups/project-groups.js";
+import {
+	projectPermissionsApi,
+	reducer as projectPermissionsReducer,
+} from "~/modules/project-permissions/project-permissions.js";
 import {
 	projectApi,
 	reducer as projectsReducer,
@@ -49,9 +61,12 @@ class Store {
 			},
 			reducer: {
 				auth: authReducer,
+				contributors: contributorsReducer,
 				groups: groupsReducer,
 				permissions: permissionReducer,
 				projectApiKeys: projectApiKeysReducer,
+				projectGroups: projectGroupsReducer,
+				projectPermissions: projectPermissionsReducer,
 				projects: projectsReducer,
 				users: usersReducer,
 			},
@@ -61,10 +76,13 @@ class Store {
 	public get extraArguments(): ExtraArguments {
 		return {
 			authApi,
+			contributorApi,
 			groupApi,
 			permissionApi,
 			projectApi,
 			projectApiKeysApi,
+			projectGroupApi,
+			projectPermissionsApi,
 			storage,
 			toastNotifier,
 			userApi,

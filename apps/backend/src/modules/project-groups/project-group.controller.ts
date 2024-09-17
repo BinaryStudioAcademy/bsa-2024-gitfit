@@ -1,4 +1,5 @@
-import { APIPath } from "~/libs/enums/enums.js";
+import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import { checkUserPermissions } from "~/libs/hooks/hooks.js";
 import {
 	type APIHandlerOptions,
 	type APIHandlerResponse,
@@ -6,9 +7,13 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { ProjectGroupsApiPath } from "./libs/enums/enums.js";
-import { type ProjectGroupCreateRequestDto } from "./libs/types/types.js";
+import {
+	type ProjectGroupCreateRequestDto,
+	type ProjectGroupGetAllRequestDto,
+} from "./libs/types/types.js";
 import { projectGroupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectGroupService } from "./project-group.service.js";
 
@@ -64,6 +69,26 @@ class ProjectGroupController extends BaseController {
 			validation: {
 				body: projectGroupCreateValidationSchema,
 			},
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.delete(options as APIHandlerOptions<{ params: { id: string } }>),
+			method: "DELETE",
+			path: ProjectGroupsApiPath.$ID,
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.findAllByProjectId(
+					options as APIHandlerOptions<{
+						params: ProjectGroupGetAllRequestDto;
+						query: PaginationQueryParameters;
+					}>,
+				),
+			method: "GET",
+			path: ProjectGroupsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 		});
 	}
 
@@ -126,6 +151,54 @@ class ProjectGroupController extends BaseController {
 		return {
 			payload: await this.projectGroupService.create(options.body),
 			status: HTTPCode.CREATED,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /project-groups/{id}:
+	 *   delete:
+	 *     description: Delete a project group by ID
+	 *     parameters:
+	 *       - in: path
+	 *         name: id
+	 *         required: true
+	 *         schema:
+	 *           type: number
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: boolean
+	 *       404:
+	 *         description: Project group not found
+	 */
+
+	private async delete(
+		options: APIHandlerOptions<{ params: { id: string } }>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.projectGroupService.delete(Number(options.params.id)),
+			status: HTTPCode.OK,
+		};
+	}
+
+	private async findAllByProjectId(
+		options: APIHandlerOptions<{
+			params: ProjectGroupGetAllRequestDto;
+			query: PaginationQueryParameters;
+		}>,
+	): Promise<APIHandlerResponse> {
+		const { params, query } = options;
+
+		return {
+			payload: await this.projectGroupService.findAllByProjectId(
+				params.id,
+				query,
+			),
+			status: HTTPCode.OK,
 		};
 	}
 }

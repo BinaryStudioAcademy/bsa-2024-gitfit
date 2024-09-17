@@ -5,6 +5,7 @@ const ActivityLogValidationMessage = {
 	COMMITS_NUMBER_REQUIRED: "Commits number is required.",
 	DATE_REQUIRED: "Date is required.",
 	ITEMS_REQUIRED: "Activity log items cannot be empty.",
+	USER_ID_REQUIRED: "User id is required.",
 } as const;
 
 export { ActivityLogValidationMessage };

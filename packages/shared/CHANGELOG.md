@@ -1,5 +1,53 @@
 # Changelog
 
+## [1.22.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.21.1...shared-v1.22.0) (2024-09-17)
+
+
+### Features
+
+* add permission to manage all projects gf-248 ([#282](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/282)) ([0bc48e9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0bc48e980a5aacf3b43cab5aacf2c9583c36a3c2))
+
+## [1.21.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.21.0...shared-v1.21.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* improve error handling in creating activity logs gf-332 ([#365](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/365)) ([9a4bb43](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9a4bb4315be768c6e5b278f546ba60736ad9b30b))
+
+## [1.21.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.20.0...shared-v1.21.0) (2024-09-17)
+
+
+### Features
+
+* add contributors page gf-250 ([#334](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/334)) ([35c0e09](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/35c0e09e801896068e9c445086ea6d11dae87eb1))
+
+## [1.20.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.19.0...shared-v1.20.0) (2024-09-17)
+
+
+### Features
+
+* Add an ability to delete project group gf-353 ([#356](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/356)) ([d6eddd9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d6eddd944d14c1bd19ee7cb5a804bf293e2a53dc))
+
+## [1.19.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.18.0...shared-v1.19.0) (2024-09-16)
+
+
+### Features
+
+* Add an ability to create and view project groups gf-139 ([#257](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/257)) ([37c2a01](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/37c2a01eb1f6f94c40fe6b8e0abfc232a6ecbe31))
+
+## [1.18.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.17.0...shared-v1.18.0) (2024-09-16)
+
+
+### Features
+
+* Add infinite scroll to the projects list gf-276 ([#280](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/280)) ([2f9db4f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2f9db4f976802ab23ee50cb0587a5476fe5397a3))
+* add script for collecting statistics gf-247 ([#315](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/315)) ([4ada7e5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/4ada7e54d759ae3ab865d1bd04b4ed1b7d87ce85))
+
+
+### Bug Fixes
+
+* type imports gf-276 ([#338](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/338)) ([9ee1d7b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9ee1d7b6f07f774b9fe8b5c7fa24addd610a13bc))
+
 ## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.16.0...shared-v1.17.0) (2024-09-16)
 
 

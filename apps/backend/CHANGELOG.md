@@ -1,5 +1,54 @@
 # Changelog
 
+## [1.23.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.22.0...backend-v1.23.0) (2024-09-17)
+
+
+### Features
+
+* add permission to manage all projects gf-248 ([#282](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/282)) ([0bc48e9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0bc48e980a5aacf3b43cab5aacf2c9583c36a3c2))
+
+## [1.22.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.21.1...backend-v1.22.0) (2024-09-17)
+
+
+### Features
+
+* Display list of contributors on project details page gf-337 ([#341](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/341)) ([ab2ac0b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ab2ac0bfee3e3ce9ddb7a09f9e6e66afed12bced))
+
+## [1.21.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.21.0...backend-v1.21.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* improve error handling in creating activity logs gf-332 ([#365](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/365)) ([9a4bb43](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9a4bb4315be768c6e5b278f546ba60736ad9b30b))
+
+## [1.21.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.20.0...backend-v1.21.0) (2024-09-17)
+
+
+### Features
+
+* add contributors page gf-250 ([#334](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/334)) ([35c0e09](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/35c0e09e801896068e9c445086ea6d11dae87eb1))
+
+## [1.20.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.19.0...backend-v1.20.0) (2024-09-17)
+
+
+### Features
+
+* Add an ability to delete project group gf-353 ([#356](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/356)) ([d6eddd9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d6eddd944d14c1bd19ee7cb5a804bf293e2a53dc))
+
+## [1.19.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.18.0...backend-v1.19.0) (2024-09-16)
+
+
+### Features
+
+* Add an ability to create and view project groups gf-139 ([#257](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/257)) ([37c2a01](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/37c2a01eb1f6f94c40fe6b8e0abfc232a6ecbe31))
+
+## [1.18.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.17.0...backend-v1.18.0) (2024-09-16)
+
+
+### Features
+
+* Add infinite scroll to the projects list gf-276 ([#280](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/280)) ([2f9db4f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2f9db4f976802ab23ee50cb0587a5476fe5397a3))
+
 ## [1.17.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.16.0...backend-v1.17.0) (2024-09-16)
 
 
