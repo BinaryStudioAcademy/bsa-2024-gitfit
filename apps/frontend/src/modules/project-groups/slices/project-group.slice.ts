@@ -6,11 +6,17 @@ import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
 import { type ProjectGroupGetAllItemResponseDto } from "../libs/types/types.js";
-import { create, loadAllByProjectId, loadUsers } from "./actions.js";
+import {
+	create,
+	deleteById,
+	loadAllByProjectId,
+	loadUsers,
+} from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
 	projectGroupCreateStatus: ValueOf<typeof DataStatus>;
+	projectGroupDeleteStatus: ValueOf<typeof DataStatus>;
 	projectGroups: ProjectGroupGetAllItemResponseDto[];
 	projectGroupsTotalCount: number;
 	users: UserGetAllItemResponseDto[];
@@ -21,6 +27,7 @@ type State = {
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	projectGroupCreateStatus: DataStatus.IDLE,
+	projectGroupDeleteStatus: DataStatus.IDLE,
 	projectGroups: [],
 	projectGroupsTotalCount: 0,
 	users: [],
@@ -54,9 +61,25 @@ const { actions, name, reducer } = createSlice({
 			state.projectGroups = [];
 			state.dataStatus = DataStatus.REJECTED;
 		});
+
+		builder.addCase(deleteById.pending, (state) => {
+			state.projectGroupDeleteStatus = DataStatus.PENDING;
+		});
+		builder.addCase(deleteById.fulfilled, (state, action) => {
+			const { id } = action.meta.arg;
+			state.projectGroups = state.projectGroups.filter(
+				(projectGroup) => projectGroup.id !== id,
+			);
+			state.projectGroupsTotalCount -= ITEMS_CHANGED_COUNT;
+			state.projectGroupDeleteStatus = DataStatus.FULFILLED;
+		});
+		builder.addCase(deleteById.rejected, (state) => {
+			state.projectGroupDeleteStatus = DataStatus.REJECTED;
+		});
 		builder.addCase(create.pending, (state) => {
 			state.projectGroupCreateStatus = DataStatus.PENDING;
 		});
+
 		builder.addCase(create.fulfilled, (state, action) => {
 			state.projectGroups = [action.payload, ...state.projectGroups];
 			state.projectGroupsTotalCount += ITEMS_CHANGED_COUNT;

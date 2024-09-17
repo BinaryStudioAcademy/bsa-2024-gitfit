@@ -76,6 +76,13 @@ class ProjectGroupController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
+				this.delete(options as APIHandlerOptions<{ params: { id: string } }>),
+			method: "DELETE",
+			path: ProjectGroupsApiPath.$ID,
+		});
+
+		this.addRoute({
+			handler: (options) =>
 				this.findAllByProjectId(
 					options as APIHandlerOptions<{
 						params: ProjectGroupGetAllRequestDto;
@@ -161,6 +168,37 @@ class ProjectGroupController extends BaseController {
 		return {
 			payload: await this.projectGroupService.create(options.body),
 			status: HTTPCode.CREATED,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /project-groups/{id}:
+	 *   delete:
+	 *     description: Delete a project group by ID
+	 *     parameters:
+	 *       - in: path
+	 *         name: id
+	 *         required: true
+	 *         schema:
+	 *           type: number
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: boolean
+	 *       404:
+	 *         description: Project group not found
+	 */
+
+	private async delete(
+		options: APIHandlerOptions<{ params: { id: string } }>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.projectGroupService.delete(Number(options.params.id)),
+			status: HTTPCode.OK,
 		};
 	}
 
