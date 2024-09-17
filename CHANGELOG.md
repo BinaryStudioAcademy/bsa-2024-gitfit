@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.32.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.31.1...v1.32.0) (2024-09-17)
+
+
+### Features
+
+* add search input to users table on create project group modal gf-355 ([#368](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/368)) ([c5cda1d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c5cda1df9f7aa3cb5a389fd59e05ded2248378fb))
+* Display list of contributors on project details page gf-337 ([#341](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/341)) ([ab2ac0b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ab2ac0bfee3e3ce9ddb7a09f9e6e66afed12bced))
+
 ## [1.31.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.31.0...v1.31.1) (2024-09-17)
 
 
