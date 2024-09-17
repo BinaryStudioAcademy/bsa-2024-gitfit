@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.30.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.29.0...v1.30.0) (2024-09-17)
+
+
+### Features
+
+* Add an ability to delete project group gf-353 ([#356](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/356)) ([d6eddd9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d6eddd944d14c1bd19ee7cb5a804bf293e2a53dc))
+
 ## [1.29.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.28.0...v1.29.0) (2024-09-16)
 
 
