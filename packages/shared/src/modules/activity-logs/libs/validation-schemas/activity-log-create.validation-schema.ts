@@ -37,5 +37,11 @@ const activityLogCreate = z.object({
 	items: z
 		.array(activityLogItemCreate)
 		.nonempty(ActivityLogValidationMessage.ITEMS_REQUIRED),
+	userId: z
+		.number({
+			required_error: ActivityLogValidationMessage.USER_ID_REQUIRED,
+		})
+		.int()
+		.positive(),
 });
 export { activityLogCreate };

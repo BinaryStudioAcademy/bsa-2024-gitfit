@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.21.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.21.0...shared-v1.21.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* improve error handling in creating activity logs gf-332 ([#365](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/365)) ([9a4bb43](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9a4bb4315be768c6e5b278f546ba60736ad9b30b))
+
+## [1.21.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.20.0...shared-v1.21.0) (2024-09-17)
+
+
+### Features
+
+* add contributors page gf-250 ([#334](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/334)) ([35c0e09](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/35c0e09e801896068e9c445086ea6d11dae87eb1))
+
 ## [1.20.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.19.0...shared-v1.20.0) (2024-09-17)
 
 
