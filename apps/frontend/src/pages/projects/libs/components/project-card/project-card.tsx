@@ -5,7 +5,10 @@ import { configureString } from "~/libs/helpers/helpers.js";
 import { useCallback } from "~/libs/hooks/hooks.js";
 import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
-import { getColor, getRelativeDateLabel } from "../../helpers/helpers.js";
+import {
+	getActivityIndicatorStatus,
+	getRelativeDateLabel,
+} from "../../helpers/helpers.js";
 import { ActivityIndicator, ProjectMenu } from "../components.js";
 import styles from "./styles.module.css";
 
@@ -38,7 +41,7 @@ const ProjectCard = ({
 		: null;
 
 	const lastUpdateLabel = getRelativeDateLabel(currentDate, lastActivityDate);
-	const colorStatus = getColor(currentDate, lastActivityDate);
+	const colorStatus = getActivityIndicatorStatus(currentDate, lastActivityDate);
 
 	return (
 		<div className={styles["project-container"]}>

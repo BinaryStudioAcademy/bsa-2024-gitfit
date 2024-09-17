@@ -1,2 +1,2 @@
-export { getColor } from "./get-color.helper.js";
+export { getActivityIndicatorStatus } from "./get-activity-indicator-status.helper.js";
 export { getRelativeDateLabel } from "./get-relative-date-label.helper.js";

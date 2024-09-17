@@ -2,7 +2,7 @@ import { getDifferenceInDays } from "~/libs/helpers/helpers.js";
 
 import { ColorThreshold } from "../enums/enums.js";
 
-const getColor = (
+const getActivityIndicatorStatus = (
 	currentDate: Date,
 	lastActivityDate: Date | null,
 ): "green" | "red" | "yellow" | null => {
@@ -23,4 +23,4 @@ const getColor = (
 	return "red";
 };
 
-export { getColor };
+export { getActivityIndicatorStatus };
