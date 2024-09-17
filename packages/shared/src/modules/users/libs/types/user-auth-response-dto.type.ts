@@ -12,6 +12,10 @@ type UserAuthResponseDto = {
 	}[];
 	id: number;
 	name: string;
+	projectGroups: {
+		id: number;
+		name: string;
+	}[];
 };
 
 export { type UserAuthResponseDto };

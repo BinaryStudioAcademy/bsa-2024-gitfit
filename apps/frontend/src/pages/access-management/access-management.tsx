@@ -167,17 +167,26 @@ const AccessManagement = (): JSX.Element => {
 	useEffect(() => {
 		if (groupDeleteStatus === DataStatus.FULFILLED) {
 			handleLoadUsers();
+			handleLoadGroups();
 			onDeleteModalClose();
 			setGroupToDeleteId(null);
 		}
-	}, [groupDeleteStatus, onDeleteModalClose, handleLoadUsers]);
+	}, [
+		groupDeleteStatus,
+		onDeleteModalClose,
+		handleLoadUsers,
+		handleLoadGroups,
+	]);
 
-	const isLoading = [usersDataStatus, groupsDataStatus].some(
-		(status) => status === DataStatus.IDLE || status === DataStatus.PENDING,
-	);
+	const isLoadingUsersData =
+		usersDataStatus === DataStatus.IDLE ||
+		usersDataStatus === DataStatus.PENDING;
+	const isLoadingGroupsData =
+		groupsDataStatus === DataStatus.IDLE ||
+		groupsDataStatus === DataStatus.PENDING;
 
 	return (
-		<PageLayout isLoading={isLoading}>
+		<PageLayout>
 			<h1 className={styles["title"]}>Access Management</h1>
 
 			<section>
@@ -185,6 +194,7 @@ const AccessManagement = (): JSX.Element => {
 					<h2 className={styles["section-title"]}>Users</h2>
 				</div>
 				<UsersTable
+					isLoading={isLoadingUsersData}
 					onPageChange={onUserPageChange}
 					onPageSizeChange={onUserPageSizeChange}
 					page={userPage}
@@ -204,6 +214,7 @@ const AccessManagement = (): JSX.Element => {
 
 				<GroupsTable
 					groups={groups}
+					isLoading={isLoadingGroupsData}
 					onDelete={handleDelete}
 					onEdit={handleEdit}
 					onPageChange={onGroupPageChange}

@@ -1,11 +1,16 @@
+import { PAGE_INDEX_OFFSET } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
-import { type Service } from "~/libs/types/types.js";
+import {
+	type PaginationQueryParameters,
+	type Service,
+} from "~/libs/types/types.js";
 
 import { ProjectGroupError } from "./libs/exceptions/exceptions.js";
 import {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupCreateResponseDto,
+	type ProjectGroupGetAllResponseDto,
 	type ProjectGroupUpdateRequestDto,
 	type ProjectGroupUpdateResponseDto,
 } from "./libs/types/types.js";
@@ -18,14 +23,13 @@ class ProjectGroupService implements Service {
 	public constructor(projectGroupRepository: ProjectGroupRepository) {
 		this.projectGroupRepository = projectGroupRepository;
 	}
-
 	public async create(
 		payload: ProjectGroupCreateRequestDto,
 	): Promise<ProjectGroupCreateResponseDto> {
 		const { name, permissionIds = [], projectId, userIds } = payload;
 
 		const existingProjectGroup =
-			await this.projectGroupRepository.findInProjectByName(projectId, name);
+			await this.projectGroupRepository.findByProjectIdAndName(projectId, name);
 
 		if (existingProjectGroup) {
 			throw new ProjectGroupError({
@@ -61,6 +65,24 @@ class ProjectGroupService implements Service {
 		return Promise.resolve({ items: [] });
 	}
 
+	public async findAllByProjectId(
+		id: number,
+		parameters: PaginationQueryParameters,
+	): Promise<ProjectGroupGetAllResponseDto> {
+		const projectGroups = await this.projectGroupRepository.findAllByProjectId(
+			id,
+			{
+				page: parameters.page - PAGE_INDEX_OFFSET,
+				pageSize: parameters.pageSize,
+			},
+		);
+
+		return {
+			items: projectGroups.items.map((item) => item.toObject()),
+			totalItems: projectGroups.totalItems,
+		};
+	}
+
 	public async update(
 		id: number,
 		payload: ProjectGroupUpdateRequestDto,
@@ -77,7 +99,7 @@ class ProjectGroupService implements Service {
 		const { name, permissionIds = [], projectId, userIds } = payload;
 
 		const existingProjectGroup =
-			await this.projectGroupRepository.findInProjectByName(projectId, name);
+			await this.projectGroupRepository.findByProjectIdAndName(projectId, name);
 
 		if (existingProjectGroup && existingProjectGroup.id !== id) {
 			throw new ProjectGroupError({

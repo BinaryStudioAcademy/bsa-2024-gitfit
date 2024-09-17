@@ -1,8 +1,14 @@
 import { transaction } from "objection";
 
+import { SortType } from "~/libs/enums/enums.js";
 import { changeCase } from "~/libs/helpers/helpers.js";
 import { HTTPCode } from "~/libs/modules/http/libs/enums/enums.js";
-import { type Repository } from "~/libs/types/types.js";
+import {
+	type PaginationQueryParameters,
+	type PaginationResponseDto,
+	type Repository,
+} from "~/libs/types/types.js";
+import { type ProjectModel } from "~/modules/projects/project.model.js";
 
 import { ExceptionMessage } from "./libs/enums/enums.js";
 import { ProjectGroupError } from "./libs/exceptions/exceptions.js";
@@ -27,7 +33,7 @@ class ProjectGroupRepository implements Repository {
 				key,
 				name,
 				permissions,
-				projects: projectId,
+				projects: [projectId],
 				users,
 			};
 
@@ -35,16 +41,13 @@ class ProjectGroupRepository implements Repository {
 				.query(trx)
 				.insertGraph(projectGroupData, { relate: true })
 				.returning("*")
-				.withGraphJoined("[permissions, projects, users]");
+				.withGraphFetched("[permissions, projects, users]");
 
 			await trx.commit();
 
 			return ProjectGroupEntity.initialize({
-				id: createdProjectGroup.id,
-				name: createdProjectGroup.name,
-				permissions,
+				...createdProjectGroup,
 				projectId,
-				users,
 			});
 		} catch {
 			await trx.rollback();
@@ -63,14 +66,46 @@ class ProjectGroupRepository implements Repository {
 	public async find(id: number): Promise<null | ProjectGroupEntity> {
 		const projectGroup = await this.projectGroupModel.query().findById(id);
 
-		return projectGroup ? ProjectGroupEntity.initialize(projectGroup) : null;
+		if (projectGroup) {
+			const [projectId] = projectGroup.projects;
+
+			return ProjectGroupEntity.initialize({
+				...projectGroup,
+				projectId: projectId as Pick<ProjectModel, "id">,
+			});
+		}
+
+		return null;
 	}
 
 	public findAll(): ReturnType<Repository["findAll"]> {
 		return Promise.resolve({ items: [] });
 	}
 
-	public async findInProjectByName(
+	public async findAllByProjectId(
+		id: number,
+		{ page, pageSize }: PaginationQueryParameters,
+	): Promise<PaginationResponseDto<ProjectGroupEntity>> {
+		const { results, total } = await this.projectGroupModel
+			.query()
+			.orderBy("createdAt", SortType.DESCENDING)
+			.page(page, pageSize)
+			.joinRelated("projects")
+			.where("projects.id", id)
+			.withGraphFetched("[permissions, users, projects]");
+
+		return {
+			items: results.map((projectGroup) =>
+				ProjectGroupEntity.initialize({
+					...projectGroup,
+					projectId: { id },
+				}),
+			),
+			totalItems: total,
+		};
+	}
+
+	public async findByProjectIdAndName(
 		projectId: number,
 		name: string,
 	): Promise<null | ProjectGroupModel> {
@@ -90,18 +125,17 @@ class ProjectGroupRepository implements Repository {
 
 		const trx = await transaction.start(this.projectGroupModel.knex());
 
-		const groupData = {
-			id,
+		const projectGroupData = {
 			key,
 			name,
 			permissions,
-			projects: projectId,
+			projects: [projectId],
 			users,
 		};
 
-		const projectGroup = await this.projectGroupModel
+		const updatedProjectGroup = await this.projectGroupModel
 			.query(trx)
-			.upsertGraph(groupData, {
+			.upsertGraph(projectGroupData, {
 				relate: true,
 				unrelate: true,
 			})
@@ -110,7 +144,10 @@ class ProjectGroupRepository implements Repository {
 
 		await trx.commit();
 
-		return ProjectGroupEntity.initialize(projectGroup);
+		return ProjectGroupEntity.initialize({
+			...updatedProjectGroup,
+			projectId,
+		});
 	}
 }
 

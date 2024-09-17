@@ -8,6 +8,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	groups: GroupGetAllItemResponseDto[];
+	isLoading: boolean;
 	onDelete: (id: number) => void;
 	onEdit: (group: GroupGetAllItemResponseDto) => void;
 	onPageChange: (page: number) => void;
@@ -20,6 +21,7 @@ type Properties = {
 
 const GroupsTable = ({
 	groups,
+	isLoading,
 	onDelete,
 	onEdit,
 	onPageChange,
@@ -68,6 +70,7 @@ const GroupsTable = ({
 			<Table<GroupRow>
 				columns={groupColumns}
 				data={groupData}
+				isLoading={isLoading}
 				isScrollDisabled={isMenuOpened}
 			/>
 			<TablePagination

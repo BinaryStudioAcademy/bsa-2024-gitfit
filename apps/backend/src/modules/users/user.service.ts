@@ -48,6 +48,7 @@ class UserService implements Service {
 				name,
 				passwordHash,
 				passwordSalt,
+				projectGroups: [],
 			}),
 		);
 

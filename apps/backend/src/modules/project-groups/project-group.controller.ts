@@ -6,10 +6,12 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { ProjectGroupsApiPath } from "./libs/enums/enums.js";
 import {
 	type ProjectGroupCreateRequestDto,
+	type ProjectGroupGetAllRequestDto,
 	type ProjectGroupUpdateRequestDto,
 } from "./libs/types/types.js";
 import {
@@ -70,6 +72,18 @@ class ProjectGroupController extends BaseController {
 			validation: {
 				body: projectGroupCreateValidationSchema,
 			},
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.findAllByProjectId(
+					options as APIHandlerOptions<{
+						params: ProjectGroupGetAllRequestDto;
+						query: PaginationQueryParameters;
+					}>,
+				),
+			method: "GET",
+			path: ProjectGroupsApiPath.$ID,
 		});
 
 		this.addRoute({
@@ -147,6 +161,23 @@ class ProjectGroupController extends BaseController {
 		return {
 			payload: await this.projectGroupService.create(options.body),
 			status: HTTPCode.CREATED,
+		};
+	}
+
+	private async findAllByProjectId(
+		options: APIHandlerOptions<{
+			params: ProjectGroupGetAllRequestDto;
+			query: PaginationQueryParameters;
+		}>,
+	): Promise<APIHandlerResponse> {
+		const { params, query } = options;
+
+		return {
+			payload: await this.projectGroupService.findAllByProjectId(
+				params.id,
+				query,
+			),
+			status: HTTPCode.OK,
 		};
 	}
 
