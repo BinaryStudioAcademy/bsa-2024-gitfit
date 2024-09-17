@@ -93,9 +93,9 @@ class ProjectService implements Service {
 
 		return {
 			items: projects.items.map((item) => {
-				const { id, name } = item.toObject();
+				const { id, lastActivityDate, name } = item.toObject();
 
-				return { id, name };
+				return { id, lastActivityDate, name };
 			}),
 		};
 	}
@@ -142,6 +142,16 @@ class ProjectService implements Service {
 
 	public update(): ReturnType<Service["update"]> {
 		return Promise.resolve(null);
+	}
+
+	public async updateLastActivityDate(
+		projectId: number,
+		lastActivityDate: string,
+	): Promise<void> {
+		await this.projectRepository.updateLastActivityDate(
+			projectId,
+			lastActivityDate,
+		);
 	}
 }
 

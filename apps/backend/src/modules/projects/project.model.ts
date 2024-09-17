@@ -6,6 +6,8 @@ import {
 class ProjectModel extends AbstractModel {
 	public description!: string;
 
+	public lastActivityDate!: string;
+
 	public name!: string;
 
 	public static override get tableName(): string {
