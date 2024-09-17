@@ -1,6 +1,6 @@
 import { getDifferenceInDays } from "~/libs/helpers/helpers.js";
 
-import { ColorThreshold } from "../enums/enums.js";
+import { ActivityIndicatorThreshold } from "../enums/enums.js";
 
 const getActivityIndicatorStatus = (
 	currentDate: Date,
@@ -12,11 +12,11 @@ const getActivityIndicatorStatus = (
 
 	const diffDays = getDifferenceInDays(currentDate, lastActivityDate);
 
-	if (diffDays < ColorThreshold.GREEN) {
+	if (diffDays < ActivityIndicatorThreshold.GREEN) {
 		return "green";
 	}
 
-	if (diffDays < ColorThreshold.YELLOW) {
+	if (diffDays < ActivityIndicatorThreshold.YELLOW) {
 		return "yellow";
 	}
 
