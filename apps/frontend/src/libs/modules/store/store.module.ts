@@ -14,6 +14,10 @@ import {
 	reducer as activityLogReducer,
 } from "~/modules/activity-logs/activity-logs.js";
 import { authApi, reducer as authReducer } from "~/modules/auth/auth.js";
+import {
+	contributorApi,
+	reducer as contributorsReducer,
+} from "~/modules/contributors/contributors.js";
 import { groupApi, reducer as groupsReducer } from "~/modules/groups/groups.js";
 import {
 	permissionApi,
@@ -62,6 +66,7 @@ class Store {
 			reducer: {
 				activityLogs: activityLogReducer,
 				auth: authReducer,
+				contributors: contributorsReducer,
 				groups: groupsReducer,
 				permissions: permissionReducer,
 				projectApiKeys: projectApiKeysReducer,
@@ -77,6 +82,7 @@ class Store {
 		return {
 			activityLogApi,
 			authApi,
+			contributorApi,
 			groupApi,
 			permissionApi,
 			projectApi,

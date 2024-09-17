@@ -1,5 +1,6 @@
 import { type reducer as activityLogReducer } from "~/modules/activity-logs/activity-logs.js";
 import { type reducer as authReducer } from "~/modules/auth/auth.js";
+import { type reducer as contributorsReducer } from "~/modules/contributors/contributors.js";
 import { type reducer as groupsReducer } from "~/modules/groups/groups.js";
 import { type reducer as permissionsReducer } from "~/modules/permissions/permissions.js";
 import { type reducer as projectApiKeysReducer } from "~/modules/project-api-keys/project-api-keys.js";
@@ -11,6 +12,7 @@ import { type reducer as usersReducer } from "~/modules/users/users.js";
 type RootReducer = {
 	activityLogs: ReturnType<typeof activityLogReducer>;
 	auth: ReturnType<typeof authReducer>;
+	contributors: ReturnType<typeof contributorsReducer>;
 	groups: ReturnType<typeof groupsReducer>;
 	permissions: ReturnType<typeof permissionsReducer>;
 	projectApiKeys: ReturnType<typeof projectApiKeysReducer>;

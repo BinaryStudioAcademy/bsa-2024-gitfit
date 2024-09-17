@@ -2,6 +2,7 @@ const AppRoute = {
 	ACCESS_MANAGEMENT: "/access-management",
 	ANALYTICS: "/analytics",
 	ANY: "*",
+	CONTRIBUTORS: "/contributors",
 	NO_ACCESS: "/no-access",
 	PROFILE: "/profile",
 	PROJECT: "/projects/:id",
