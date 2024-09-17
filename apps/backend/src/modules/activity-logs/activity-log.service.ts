@@ -62,8 +62,6 @@ class ActivityLogService implements Service {
 			});
 		}
 
-		await this.projectService.updateLastActivityDate(projectId, date);
-
 		return await this.activityLogRepository.create(
 			ActivityLogEntity.initializeNew({
 				commitsNumber,
@@ -101,6 +99,8 @@ class ActivityLogService implements Service {
 				});
 
 				createdActivityLogs.items.push(activityLog.toObject());
+
+				await this.projectService.updateLastActivityDate(projectId, date);
 			}
 		}
 
