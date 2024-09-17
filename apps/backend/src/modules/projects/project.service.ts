@@ -105,17 +105,6 @@ class ProjectService implements Service {
 		};
 	}
 
-	public async findByContributorId(
-		contributorId: number,
-	): Promise<{ items: ProjectGetAllItemResponseDto[] }> {
-		const projects =
-			await this.projectRepository.findByContributorId(contributorId);
-
-		return {
-			items: projects.items.map((item) => item.toObject()),
-		};
-	}
-
 	public async patch(
 		id: number,
 		projectData: ProjectPatchRequestDto,

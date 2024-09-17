@@ -6,9 +6,12 @@ import {
 } from "~/libs/modules/database/database.js";
 import { GitEmailModel } from "~/modules/git-emails/git-emails.js";
 
+import { type ProjectModel } from "../projects/project.model.js";
+
 class ContributorModel extends AbstractModel {
 	public gitEmails!: GitEmailModel[];
 	public name!: string;
+	public projects!: ProjectModel[];
 
 	public static override get relationMappings(): RelationMappings {
 		return {

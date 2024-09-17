@@ -52,37 +52,13 @@ class ContributorService implements Service {
 			});
 		}
 
-		const projects = await this.projectService.findByContributorId(id);
-
-		return { ...item.toObject(), projects: projects.items };
+		return item.toObject();
 	}
 
 	public async findAll(): Promise<ContributorGetAllResponseDto> {
 		const contributors = await this.contributorRepository.findAll();
 
-		const contributorsWithProjects = await Promise.all(
-			contributors.items.map(async (item) => {
-				const contributor = item.toObject();
-
-				const projects = await this.projectService.findByContributorId(
-					contributor.id,
-				);
-
-				return {
-					...contributor,
-					gitEmails: contributor.gitEmails.map((gitEmail) => ({
-						email: gitEmail.email,
-						id: gitEmail.id,
-					})),
-					projects: projects.items.map((project) => ({
-						id: project.id,
-						name: project.name,
-					})),
-				};
-			}),
-		);
-
-		return { items: contributorsWithProjects };
+		return { items: contributors.items.map((item) => item.toObject()) };
 	}
 
 	public async findByName(
@@ -94,11 +70,7 @@ class ContributorService implements Service {
 			return null;
 		}
 
-		const projects = await this.projectService.findByContributorId(
-			item.toObject().id,
-		);
-
-		return { ...item.toObject(), projects: projects.items };
+		return item.toObject();
 	}
 
 	public update(): ReturnType<Service["update"]> {
