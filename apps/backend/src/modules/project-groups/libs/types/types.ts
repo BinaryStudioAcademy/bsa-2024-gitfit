@@ -3,6 +3,6 @@ export {
 	type ProjectGroupCreateResponseDto,
 	type ProjectGroupGetAllRequestDto,
 	type ProjectGroupGetAllResponseDto,
-	type ProjectGroupUpdateRequestDto,
-	type ProjectGroupUpdateResponseDto,
+	type ProjectGroupPatchRequestDto,
+	type ProjectGroupPatchResponseDto,
 } from "@git-fit/shared";

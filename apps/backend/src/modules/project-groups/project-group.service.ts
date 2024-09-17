@@ -11,8 +11,8 @@ import {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupCreateResponseDto,
 	type ProjectGroupGetAllResponseDto,
-	type ProjectGroupUpdateRequestDto,
-	type ProjectGroupUpdateResponseDto,
+	type ProjectGroupPatchRequestDto,
+	type ProjectGroupPatchResponseDto,
 } from "./libs/types/types.js";
 import { ProjectGroupEntity } from "./project-group.entity.js";
 import { type ProjectGroupRepository } from "./project-group.repository.js";
@@ -29,7 +29,7 @@ class ProjectGroupService implements Service {
 		const { name, permissionIds = [], projectId, userIds } = payload;
 
 		const existingProjectGroup =
-			await this.projectGroupRepository.findByProjectIdAndName(projectId, name);
+			await this.projectGroupRepository.findByName(name);
 
 		if (existingProjectGroup) {
 			throw new ProjectGroupError({
@@ -83,10 +83,10 @@ class ProjectGroupService implements Service {
 		};
 	}
 
-	public async update(
+	public async patch(
 		id: number,
-		payload: ProjectGroupUpdateRequestDto,
-	): Promise<ProjectGroupUpdateResponseDto> {
+		payload: ProjectGroupPatchRequestDto,
+	): Promise<ProjectGroupPatchResponseDto> {
 		const projectGroup = await this.projectGroupRepository.find(id);
 
 		if (!projectGroup) {
@@ -96,10 +96,14 @@ class ProjectGroupService implements Service {
 			});
 		}
 
-		const { name, permissionIds = [], projectId, userIds } = payload;
+		const {
+			projectId: { id: projectId },
+		} = projectGroup.toObject();
+
+		const { name, permissionIds = [], userIds } = payload;
 
 		const existingProjectGroup =
-			await this.projectGroupRepository.findByProjectIdAndName(projectId, name);
+			await this.projectGroupRepository.findByName(name);
 
 		if (existingProjectGroup && existingProjectGroup.id !== id) {
 			throw new ProjectGroupError({
@@ -122,6 +126,10 @@ class ProjectGroupService implements Service {
 		);
 
 		return updatedProjectGroup.toObject();
+	}
+
+	public update(): ReturnType<Service["update"]> {
+		return Promise.resolve(null);
 	}
 }
 

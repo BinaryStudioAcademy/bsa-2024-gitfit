@@ -4,9 +4,9 @@ import {
 	ProjectGroupValidationMessage,
 	ProjectGroupValidationRule,
 } from "../enums/enums.js";
-import { type ProjectGroupCreateRequestDto } from "../types/types.js";
+import { type ProjectGroupPatchRequestDto } from "../types/types.js";
 
-const projectGroupUpdate: z.ZodType<ProjectGroupCreateRequestDto> = z
+const projectGroupPatch: z.ZodType<ProjectGroupPatchRequestDto> = z
 	.object({
 		name: z
 			.string()
@@ -18,12 +18,6 @@ const projectGroupUpdate: z.ZodType<ProjectGroupCreateRequestDto> = z
 				message: ProjectGroupValidationMessage.NAME_TOO_LONG,
 			}),
 		permissionIds: z.array(z.number().int().positive()),
-		projectId: z
-			.number({
-				required_error: ProjectGroupValidationMessage.PROJECT_ID_REQUIRED,
-			})
-			.int()
-			.positive(),
 		userIds: z
 			.array(z.number().int().positive())
 			.min(ProjectGroupValidationRule.USER_IDS_MINIMUM_LENGTH, {
@@ -32,4 +26,4 @@ const projectGroupUpdate: z.ZodType<ProjectGroupCreateRequestDto> = z
 	})
 	.required();
 
-export { projectGroupUpdate };
+export { projectGroupPatch };

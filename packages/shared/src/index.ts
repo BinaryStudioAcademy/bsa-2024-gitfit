@@ -96,10 +96,10 @@ export {
 	type ProjectGroupGetAllItemResponseDto,
 	type ProjectGroupGetAllRequestDto,
 	type ProjectGroupGetAllResponseDto,
+	type ProjectGroupPatchRequestDto,
+	type ProjectGroupPatchResponseDto,
+	projectGroupPatchValidationSchema,
 	ProjectGroupsApiPath,
-	type ProjectGroupUpdateRequestDto,
-	type ProjectGroupUpdateResponseDto,
-	projectGroupUpdateValidationSchema,
 } from "./modules/project-groups/project-groups.js";
 export {
 	ProjectPermissionsApiPath,

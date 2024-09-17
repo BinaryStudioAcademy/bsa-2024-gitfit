@@ -12,11 +12,11 @@ import { ProjectGroupsApiPath } from "./libs/enums/enums.js";
 import {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupGetAllRequestDto,
-	type ProjectGroupUpdateRequestDto,
+	type ProjectGroupPatchRequestDto,
 } from "./libs/types/types.js";
 import {
 	projectGroupCreateValidationSchema,
-	projectGroupUpdateValidationSchema,
+	projectGroupPatchValidationSchema,
 } from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectGroupService } from "./project-group.service.js";
 
@@ -88,16 +88,16 @@ class ProjectGroupController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
-				this.update(
+				this.patch(
 					options as APIHandlerOptions<{
-						body: ProjectGroupUpdateRequestDto;
+						body: ProjectGroupPatchRequestDto;
 						params: { id: string };
 					}>,
 				),
-			method: "PUT",
+			method: "PATCH",
 			path: ProjectGroupsApiPath.$ID,
 			validation: {
-				body: projectGroupUpdateValidationSchema,
+				body: projectGroupPatchValidationSchema,
 			},
 		});
 	}
@@ -184,14 +184,14 @@ class ProjectGroupController extends BaseController {
 	/**
 	 * @swagger
 	 * /groups/{id}:
-	 *    update:
+	 *    patch:
 	 *      tags:
 	 *        - ProjectGroup
-	 *      description: Update project group info
+	 *      description: Patch project group info
 	 *      parameters:
 	 *        - in: path
 	 *          name: id
-	 *          description: ID of the project group to update
+	 *          description: ID of the project group to patch
 	 *          schema:
 	 *            type: string
 	 *      responses:
@@ -207,16 +207,16 @@ class ProjectGroupController extends BaseController {
 	 *                    $ref: "#/components/schemas/ProjectGroup"
 	 */
 
-	private async update(
+	private async patch(
 		options: APIHandlerOptions<{
-			body: ProjectGroupUpdateRequestDto;
+			body: ProjectGroupPatchRequestDto;
 			params: { id: string };
 		}>,
 	): Promise<APIHandlerResponse> {
 		const projectGroupId = Number(options.params.id);
 
 		return {
-			payload: await this.projectGroupService.update(
+			payload: await this.projectGroupService.patch(
 				projectGroupId,
 				options.body,
 			),

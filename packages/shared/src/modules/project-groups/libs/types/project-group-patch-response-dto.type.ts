@@ -1,4 +1,4 @@
-type ProjectGroupUpdateResponseDto = {
+type ProjectGroupPatchResponseDto = {
 	id: number;
 	name: string;
 	permissions: { id: number }[];
@@ -6,4 +6,4 @@ type ProjectGroupUpdateResponseDto = {
 	users: { id: number }[];
 };
 
-export { type ProjectGroupUpdateResponseDto };
+export { type ProjectGroupPatchResponseDto };

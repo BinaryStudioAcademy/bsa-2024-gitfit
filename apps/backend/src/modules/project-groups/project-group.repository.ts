@@ -64,14 +64,17 @@ class ProjectGroupRepository implements Repository {
 	}
 
 	public async find(id: number): Promise<null | ProjectGroupEntity> {
-		const projectGroup = await this.projectGroupModel.query().findById(id);
+		const projectGroup = await this.projectGroupModel
+			.query()
+			.findById(id)
+			.withGraphFetched("[permissions, projects, users]");
 
 		if (projectGroup) {
-			const [projectId] = projectGroup.projects;
+			const [project] = projectGroup.projects as [ProjectModel];
 
 			return ProjectGroupEntity.initialize({
 				...projectGroup,
-				projectId: projectId as Pick<ProjectModel, "id">,
+				projectId: project,
 			});
 		}
 
@@ -105,15 +108,10 @@ class ProjectGroupRepository implements Repository {
 		};
 	}
 
-	public async findByProjectIdAndName(
-		projectId: number,
-		name: string,
-	): Promise<null | ProjectGroupModel> {
+	public async findByName(name: string): Promise<null | ProjectGroupModel> {
 		const key = changeCase(name, "snakeCase");
 
-		return (
-			(await this.projectGroupModel.query().findOne({ key, projectId })) ?? null
-		);
+		return (await this.projectGroupModel.query().findOne({ key })) ?? null;
 	}
 
 	public async update(
@@ -126,6 +124,7 @@ class ProjectGroupRepository implements Repository {
 		const trx = await transaction.start(this.projectGroupModel.knex());
 
 		const projectGroupData = {
+			id,
 			key,
 			name,
 			permissions,

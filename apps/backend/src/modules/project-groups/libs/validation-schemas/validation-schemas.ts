@@ -1,4 +1,4 @@
 export {
 	projectGroupCreateValidationSchema,
-	projectGroupUpdateValidationSchema,
+	projectGroupPatchValidationSchema,
 } from "@git-fit/shared";
