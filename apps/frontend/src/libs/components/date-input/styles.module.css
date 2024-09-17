@@ -45,16 +45,12 @@
 	border: none;
 }
 
-.calendar :global(.react-calendar__tile:disabled) {
-	color: transparent;
-	background-color: transparent;
-}
-
 .calendar :global(.react-calendar__tile:enabled:hover) {
 	background-color: var(--color-background-hover);
 }
 
-.calendar :global(.react-calendar__month-view__days__day--neighboringMonth) {
+.calendar :global(.react-calendar__month-view__days__day--neighboringMonth),
+.calendar :global(.react-calendar__tile:disabled) {
 	opacity: 0.5;
 }
 
@@ -107,7 +103,7 @@
 .calendar :global(.react-calendar__year-view__months),
 .calendar :global(.react-calendar__decade-view__years),
 .calendar :global(.react-calendar__century-view__decades) {
-	max-width: 128px;
+	min-width: 128px;
 }
 
 .date-input-trigger {
