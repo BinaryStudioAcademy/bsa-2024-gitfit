@@ -3,5 +3,8 @@ export { ProjectGroupError } from "./libs/exceptions/exceptions.js";
 export {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupCreateResponseDto,
+	type ProjectGroupGetAllItemResponseDto,
+	type ProjectGroupGetAllRequestDto,
+	type ProjectGroupGetAllResponseDto,
 } from "./libs/types/types.js";
 export { projectGroupCreate as projectGroupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";

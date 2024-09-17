@@ -14,7 +14,10 @@ import {
 import { actions as projectActions } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
-import { SetupAnalyticsModal } from "./libs/components/components.js";
+import {
+	ProjectDetailsMenu,
+	SetupAnalyticsModal,
+} from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
@@ -60,7 +63,11 @@ const Project = (): JSX.Element => {
 					</div>
 
 					<div className={styles["project-layout"]}>
-						<h1 className={styles["title"]}>{project.name}</h1>
+						<div className={styles["project-header"]}>
+							<h1 className={styles["title"]}>{project.name}</h1>
+							<ProjectDetailsMenu projectId={project.id} />
+						</div>
+
 						<div className={styles["project-description-layout"]}>
 							<h3 className={styles["project-description-title"]}>
 								Description

@@ -57,6 +57,9 @@ class UserRepository implements Repository {
 			.modifyGraph("groups.permissions", (builder) => {
 				builder.select("permissions.id", "name", "key");
 			})
+			.modifyGraph("projectGroups", (builder) => {
+				builder.select("project_groups.id", "name");
+			})
 			.execute();
 
 		return user ? UserEntity.initialize(user) : null;
@@ -70,7 +73,7 @@ class UserRepository implements Repository {
 		const query = this.userModel
 			.query()
 			.orderBy("createdAt", SortType.DESCENDING)
-			.withGraphFetched("groups.permissions")
+			.withGraphFetched("[groups.permissions, projectGroups]")
 			.whereNull("deletedAt");
 
 		if (name) {
@@ -98,6 +101,9 @@ class UserRepository implements Repository {
 			})
 			.modifyGraph("groups.permissions", (builder) => {
 				builder.select("permissions.id", "name", "key");
+			})
+			.modifyGraph("projectGroups", (builder) => {
+				builder.select("project_groups.id", "name");
 			});
 
 		if (!hasDeleted) {

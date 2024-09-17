@@ -1,6 +1,7 @@
 import { type Entity } from "~/libs/types/types.js";
 import { type GroupModel } from "~/modules/groups/group.model.js";
 import { type PermissionModel } from "~/modules/permissions/permission.model.js";
+import { type ProjectGroupModel } from "~/modules/project-groups/project-group.model.js";
 
 import { type UserAuthResponseDto } from "./libs/types/types.js";
 
@@ -17,6 +18,7 @@ class UserEntity implements Entity {
 	private name: string;
 	private passwordHash: string;
 	private passwordSalt: string;
+	private projectGroups: Array<Pick<ProjectGroupModel, "id" | "name">>;
 
 	private constructor({
 		createdAt,
@@ -27,6 +29,7 @@ class UserEntity implements Entity {
 		name,
 		passwordHash,
 		passwordSalt,
+		projectGroups = [],
 	}: {
 		createdAt: null | string;
 		deletedAt: null | string;
@@ -40,6 +43,7 @@ class UserEntity implements Entity {
 		name: string;
 		passwordHash: string;
 		passwordSalt: string;
+		projectGroups?: Array<Pick<ProjectGroupModel, "id" | "name">>;
 	}) {
 		this.id = id;
 		this.email = email;
@@ -47,6 +51,7 @@ class UserEntity implements Entity {
 		this.name = name;
 		this.passwordHash = passwordHash;
 		this.passwordSalt = passwordSalt;
+		this.projectGroups = projectGroups;
 		this.createdAt = createdAt;
 		this.deletedAt = deletedAt;
 	}
@@ -60,6 +65,7 @@ class UserEntity implements Entity {
 		name,
 		passwordHash,
 		passwordSalt,
+		projectGroups = [],
 	}: {
 		createdAt: string;
 		deletedAt: null | string;
@@ -73,6 +79,7 @@ class UserEntity implements Entity {
 		name: string;
 		passwordHash: string;
 		passwordSalt: string;
+		projectGroups?: Array<Pick<ProjectGroupModel, "id" | "name">>;
 	}): UserEntity {
 		return new UserEntity({
 			createdAt,
@@ -83,6 +90,7 @@ class UserEntity implements Entity {
 			name,
 			passwordHash,
 			passwordSalt,
+			projectGroups,
 		});
 	}
 
@@ -101,6 +109,7 @@ class UserEntity implements Entity {
 		name: string;
 		passwordHash: string;
 		passwordSalt: string;
+		projectGroups: Array<Pick<ProjectGroupModel, "id" | "name">>;
 	}): UserEntity {
 		return new UserEntity({
 			createdAt: null,
@@ -111,15 +120,17 @@ class UserEntity implements Entity {
 			name,
 			passwordHash,
 			passwordSalt,
+			projectGroups: [],
 		});
 	}
 
 	public toNewObject(): {
 		email: string;
-		groups: Pick<GroupModel, "id" | "name">[];
+		groups: Array<Pick<GroupModel, "id" | "name">>;
 		name: string;
 		passwordHash: string;
 		passwordSalt: string;
+		projectGroups: Array<Pick<ProjectGroupModel, "id" | "name">>;
 	} {
 		return {
 			email: this.email,
@@ -127,6 +138,7 @@ class UserEntity implements Entity {
 			name: this.name,
 			passwordHash: this.passwordHash,
 			passwordSalt: this.passwordSalt,
+			projectGroups: this.projectGroups,
 		};
 	}
 
@@ -145,6 +157,10 @@ class UserEntity implements Entity {
 			})),
 			id: this.id as number,
 			name: this.name,
+			projectGroups: this.projectGroups.map((projectGroup) => ({
+				id: projectGroup.id,
+				name: projectGroup.name,
+			})),
 		};
 	}
 }

@@ -1,5 +1,46 @@
 # Changelog
 
+## [1.30.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.30.0...v1.30.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* the last month in the calendar component on the analytics page is shown with empty data gf-357 ([#359](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/359)) ([d1a0305](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d1a0305adf87bfb345387f6828622fa5e4ab510e))
+
+## [1.30.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.29.0...v1.30.0) (2024-09-17)
+
+
+### Features
+
+* Add an ability to delete project group gf-353 ([#356](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/356)) ([d6eddd9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d6eddd944d14c1bd19ee7cb5a804bf293e2a53dc))
+
+## [1.29.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.28.0...v1.29.0) (2024-09-16)
+
+
+### Features
+
+* Add an ability to create and view project groups gf-139 ([#257](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/257)) ([37c2a01](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/37c2a01eb1f6f94c40fe6b8e0abfc232a6ecbe31))
+* improve table navigation add a loader to tables gf-311 ([#320](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/320)) ([8310823](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/831082319041f4f06fbc8b54aa0cb5580e5210f9))
+
+
+### Bug Fixes
+
+* replace workspaces with appropriate ones in linter commands gf-296 ([#339](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/339)) ([d986718](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d986718d6ce8a1e7fce270924a4672ba379fd9b6))
+
+## [1.28.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.27.1...v1.28.0) (2024-09-16)
+
+
+### Features
+
+* Add infinite scroll to the projects list gf-276 ([#280](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/280)) ([2f9db4f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2f9db4f976802ab23ee50cb0587a5476fe5397a3))
+* add script for collecting statistics gf-247 ([#315](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/315)) ([4ada7e5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/4ada7e54d759ae3ab865d1bd04b4ed1b7d87ce85))
+
+
+### Bug Fixes
+
+* groups table refresh on deletion of group gf-329 ([#335](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/335)) ([adc543e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/adc543ece15c2774642e6ec5738beb3c28b9aa3b))
+* type imports gf-276 ([#338](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/338)) ([9ee1d7b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9ee1d7b6f07f774b9fe8b5c7fa24addd610a13bc))
+
 ## [1.27.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.27.0...v1.27.1) (2024-09-16)
 
 
