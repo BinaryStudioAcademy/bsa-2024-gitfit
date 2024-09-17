@@ -1,22 +1,16 @@
-import { getDifferenceInDays } from "~/libs/helpers/helpers.js";
+import { type ComponentProps } from "react";
 
+import { type ActivityIndicator } from "../components/components.js";
 import { ActivityIndicatorThreshold } from "../enums/enums.js";
 
 const getActivityIndicatorStatus = (
-	currentDate: Date,
-	lastActivityDate: Date | null,
-): "green" | "red" | "yellow" | null => {
-	if (!lastActivityDate) {
-		return null;
-	}
-
-	const diffDays = getDifferenceInDays(currentDate, lastActivityDate);
-
-	if (diffDays < ActivityIndicatorThreshold.GREEN) {
+	daysDifference: number,
+): ComponentProps<typeof ActivityIndicator>["status"] => {
+	if (daysDifference < ActivityIndicatorThreshold.GREEN) {
 		return "green";
 	}
 
-	if (diffDays < ActivityIndicatorThreshold.YELLOW) {
+	if (daysDifference < ActivityIndicatorThreshold.YELLOW) {
 		return "yellow";
 	}
 

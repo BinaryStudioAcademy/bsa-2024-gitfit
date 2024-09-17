@@ -1,14 +1,15 @@
 import { NavLink } from "react-router-dom";
 
 import { AppRoute } from "~/libs/enums/enums.js";
-import { configureString } from "~/libs/helpers/helpers.js";
+import {
+	configureString,
+	getDifferenceInDays,
+	getRelativeDate,
+} from "~/libs/helpers/helpers.js";
 import { useCallback } from "~/libs/hooks/hooks.js";
 import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
-import {
-	getActivityIndicatorStatus,
-	getRelativeDateLabel,
-} from "../../helpers/helpers.js";
+import { getActivityIndicatorStatus } from "../../helpers/helpers.js";
 import { ActivityIndicator, ProjectMenu } from "../components.js";
 import styles from "./styles.module.css";
 
@@ -40,14 +41,24 @@ const ProjectCard = ({
 		? new Date(project.lastActivityDate)
 		: null;
 
-	const lastUpdateLabel = getRelativeDateLabel(currentDate, lastActivityDate);
-	const colorStatus = getActivityIndicatorStatus(currentDate, lastActivityDate);
+	const daysDifference = lastActivityDate
+		? getDifferenceInDays(currentDate, lastActivityDate)
+		: null;
+
+	const lastUpdateLabel = lastActivityDate
+		? getRelativeDate(lastActivityDate, currentDate)
+		: null;
+
+	const colorStatus =
+		daysDifference === null ? null : getActivityIndicatorStatus(daysDifference);
+
+	const hasActivityIndicator = lastUpdateLabel && colorStatus;
 
 	return (
 		<div className={styles["project-container"]}>
 			<NavLink className={styles["project"] as string} to={projectRoute} />
 			<span className={styles["project-name"]}>{project.name}</span>
-			{lastUpdateLabel && colorStatus && (
+			{hasActivityIndicator && (
 				<ActivityIndicator label={lastUpdateLabel} status={colorStatus} />
 			)}
 			<ProjectMenu onDelete={handleDeleteClick} onEdit={handleEditClick} />
