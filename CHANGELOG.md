@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.30.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.30.0...v1.30.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* the last month in the calendar component on the analytics page is shown with empty data gf-357 ([#359](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/359)) ([d1a0305](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d1a0305adf87bfb345387f6828622fa5e4ab510e))
+
+## [1.30.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.29.0...v1.30.0) (2024-09-17)
+
+
+### Features
+
+* Add an ability to delete project group gf-353 ([#356](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/356)) ([d6eddd9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d6eddd944d14c1bd19ee7cb5a804bf293e2a53dc))
+
 ## [1.29.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.28.0...v1.29.0) (2024-09-16)
 
 
