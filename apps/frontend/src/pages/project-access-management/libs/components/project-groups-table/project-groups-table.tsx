@@ -1,4 +1,5 @@
 import { Table, TablePagination } from "~/libs/components/components.js";
+import { useCallback, useMemo, useState } from "~/libs/hooks/hooks.js";
 import { type ProjectGroupGetAllItemResponseDto } from "~/modules/project-groups/project-groups.js";
 
 import {
@@ -9,6 +10,7 @@ import { type ProjectGroupRow } from "../../types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	onDelete: (id: number) => void;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
@@ -19,6 +21,7 @@ type Properties = {
 };
 
 const ProjectGroupsTable = ({
+	onDelete,
 	onPageChange,
 	onPageSizeChange,
 	page,
@@ -27,7 +30,24 @@ const ProjectGroupsTable = ({
 	projectGroups,
 	totalItemsCount,
 }: Properties): JSX.Element => {
-	const projectGroupColumns = getProjectGroupColumns();
+	const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
+
+	const handleMenuOpen = useCallback(() => {
+		setIsMenuOpened(true);
+	}, []);
+
+	const handleMenuClose = useCallback(() => {
+		setIsMenuOpened(false);
+	}, []);
+	const projectGroupColumns = useMemo(
+		() =>
+			getProjectGroupColumns({
+				onDelete,
+				onMenuClose: handleMenuClose,
+				onMenuOpen: handleMenuOpen,
+			}),
+		[onDelete, handleMenuClose, handleMenuOpen],
+	);
 	const projectGroupData: ProjectGroupRow[] =
 		getProjectGroupRows(projectGroups);
 
@@ -36,6 +56,7 @@ const ProjectGroupsTable = ({
 			<Table<ProjectGroupRow>
 				columns={projectGroupColumns}
 				data={projectGroupData}
+				isScrollDisabled={isMenuOpened}
 			/>
 			<TablePagination
 				background={paginationBackground}
