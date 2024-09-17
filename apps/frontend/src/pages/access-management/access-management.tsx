@@ -12,6 +12,7 @@ import {
 	useEffect,
 	useModal,
 	usePagination,
+	useSearch,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import {
@@ -112,6 +113,12 @@ const AccessManagement = (): JSX.Element => {
 		},
 		[dispatch],
 	);
+	const { resetSearch } = useSearch();
+
+	const handleCreateModalClose = useCallback((): void => {
+		resetSearch();
+		onCreateModalClose();
+	}, [onCreateModalClose, resetSearch]);
 
 	const [groupToEdit, setGroupToEdit] =
 		useState<GroupGetAllItemResponseDto | null>(null);
@@ -227,7 +234,7 @@ const AccessManagement = (): JSX.Element => {
 
 			<Modal
 				isOpened={isCreateModalOpened}
-				onClose={onCreateModalClose}
+				onClose={handleCreateModalClose}
 				title="Create new group"
 			>
 				<GroupCreateForm onSubmit={handleGroupCreateSubmit} />
