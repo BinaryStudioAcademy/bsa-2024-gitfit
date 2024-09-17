@@ -23,7 +23,7 @@ class ProjectGroupRepository implements Repository {
 
 	public async create(entity: ProjectGroupEntity): Promise<ProjectGroupEntity> {
 		const { name, permissions, projectId, users } = entity.toNewObject();
-		const key = changeCase(name, "snakeCase");
+		const key = changeCase([String(projectId.id), name], "snakeCase");
 
 		const trx = await transaction.start(this.projectGroupModel.knex());
 
@@ -98,10 +98,22 @@ class ProjectGroupRepository implements Repository {
 		};
 	}
 
-	public async findByName(name: string): Promise<null | ProjectGroupModel> {
-		const key = changeCase(name, "snakeCase");
+	public async findByProjectIdAndName({
+		name,
+		projectId,
+	}: {
+		name: string;
+		projectId: number;
+	}): Promise<null | ProjectGroupModel> {
+		const key = changeCase([String(projectId), name], "snakeCase");
 
-		return (await this.projectGroupModel.query().findOne({ key })) ?? null;
+		return (
+			(await this.projectGroupModel
+				.query()
+				.findOne({ key })
+				.withGraphJoined("projects")
+				.where("projects.id", projectId)) ?? null
+		);
 	}
 
 	public update(): ReturnType<Repository["update"]> {

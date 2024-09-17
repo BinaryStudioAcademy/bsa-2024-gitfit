@@ -27,7 +27,10 @@ class ProjectGroupService implements Service {
 		const { name, permissionIds = [], projectId, userIds } = payload;
 
 		const existingProjectGroup =
-			await this.projectGroupRepository.findByName(name);
+			await this.projectGroupRepository.findByProjectIdAndName({
+				name,
+				projectId,
+			});
 
 		if (existingProjectGroup) {
 			throw new ProjectGroupError({
