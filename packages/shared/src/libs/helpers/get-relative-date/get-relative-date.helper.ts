@@ -1,15 +1,21 @@
-import { differenceInDays, formatDistance } from "date-fns";
+import { formatRelative } from "date-fns";
+import { enUS } from "date-fns/locale";
+
+const formatRelativeLocale = {
+	lastWeek: "'Updated last' eeee",
+	other: "'Updated on' P",
+	today: "'Updated today'",
+	yesterday: "'Updated yesterday'",
+};
+
+const locale = {
+	...enUS,
+	formatRelative: (token: string): string =>
+		formatRelativeLocale[token as keyof typeof formatRelativeLocale],
+};
 
 const getRelativeDate = (date: Date, baseDate: Date): string => {
-	const LESS_THAN_DAY = 0;
-
-	const daysDifference = differenceInDays(baseDate, date);
-
-	if (daysDifference === LESS_THAN_DAY) {
-		return "Updated today";
-	}
-
-	return formatDistance(date, baseDate);
+	return formatRelative(date, baseDate, { locale });
 };
 
 export { getRelativeDate };
