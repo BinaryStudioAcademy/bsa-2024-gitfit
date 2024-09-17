@@ -1,10 +1,6 @@
 import { differenceInDays, formatDistance } from "date-fns";
 
-const getRelativeDate = (
-	date: Date,
-	baseDate: Date,
-	options?: { addSuffix?: boolean },
-): string => {
+const getRelativeDate = (date: Date, baseDate: Date): string => {
 	const LESS_THAN_DAY = 0;
 
 	const daysDifference = differenceInDays(baseDate, date);
@@ -13,7 +9,7 @@ const getRelativeDate = (
 		return "Updated today";
 	}
 
-	return formatDistance(date, baseDate, { ...options });
+	return formatDistance(date, baseDate);
 };
 
 export { getRelativeDate };
