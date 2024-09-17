@@ -1,4 +1,3 @@
-export { ActivityIndicator } from "./activity-indicator/activity-indicator.js";
 export { ProjectCard } from "./project-card/project-card.js";
 export { ProjectCreateForm } from "./project-create-form/project-create-form.js";
 export { ProjectMenu } from "./project-menu/project-menu.js";
