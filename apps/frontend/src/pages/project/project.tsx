@@ -11,7 +11,6 @@ import {
 	useModal,
 	useParams,
 } from "~/libs/hooks/hooks.js";
-import { actions as contributorActions } from "~/modules/contributors/contributors.js";
 import { actions as projectActions } from "~/modules/projects/projects.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 
@@ -26,10 +25,12 @@ const Project = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { id: projectId } = useParams<{ id: string }>();
 
-	const { project, projectStatus } = useAppSelector(({ projects }) => projects);
-	const { dataStatus: contributorsDataStatus, projectContributors } =
-		useAppSelector(({ contributors }) => contributors);
-
+	const {
+		project,
+		projectContributors,
+		projectContributorsStatus,
+		projectStatus,
+	} = useAppSelector(({ projects }) => projects);
 	const {
 		isOpened: isSetupAnalyticsModalOpened,
 		onClose: onSetupAnalyticsModalClose,
@@ -39,7 +40,7 @@ const Project = (): JSX.Element => {
 	useEffect(() => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
-			void dispatch(contributorActions.loadAllByProjectId(projectId));
+			void dispatch(projectActions.loadAllContributorsByProjectId(projectId));
 		}
 	}, [dispatch, projectId]);
 
@@ -47,8 +48,8 @@ const Project = (): JSX.Element => {
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
 
 	const isContributorsDataLoading =
-		contributorsDataStatus === DataStatus.PENDING ||
-		contributorsDataStatus === DataStatus.IDLE;
+		projectContributorsStatus === DataStatus.PENDING ||
+		projectContributorsStatus === DataStatus.IDLE;
 
 	const isRejected = projectStatus === DataStatus.REJECTED;
 

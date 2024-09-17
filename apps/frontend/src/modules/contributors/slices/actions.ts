@@ -15,14 +15,4 @@ const loadAll = createAsyncThunk<
 	return await contributorApi.getAll();
 });
 
-const loadAllByProjectId = createAsyncThunk<
-	ContributorGetAllResponseDto,
-	string,
-	AsyncThunkConfig
->(`${sliceName}/load-all-by-project-id`, async (projectId, { extra }) => {
-	const { contributorApi } = extra;
-
-	return await contributorApi.getAllByProjectId(projectId);
-});
-
-export { loadAll, loadAllByProjectId };
+export { loadAll };
