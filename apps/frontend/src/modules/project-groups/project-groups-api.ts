@@ -37,6 +37,18 @@ class ProjectGroupApi extends BaseHTTPApi {
 		return await response.json<ProjectGroupGetAllItemResponseDto>();
 	}
 
+	public async deleteById(id: number): Promise<boolean> {
+		const response = await this.load(
+			this.getFullEndpoint(ProjectGroupsApiPath.$ID, { id: String(id) }),
+			{
+				hasAuth: true,
+				method: "DELETE",
+			},
+		);
+
+		return await response.json<boolean>();
+	}
+
 	public async getAllByProjectId(
 		projectId: string,
 		query: PaginationQueryParameters,

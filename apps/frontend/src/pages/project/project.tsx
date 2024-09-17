@@ -21,6 +21,7 @@ import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { ProjectUpdateForm } from "~/pages/projects/libs/components/components.js";
 
 import {
+	ContributorsList,
 	ProjectDetailsMenu,
 	SetupAnalyticsModal,
 } from "./libs/components/components.js";
@@ -30,10 +31,13 @@ const Project = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { id: projectId } = useParams<{ id: string }>();
 
-	const { project, projectPatchStatus, projectStatus } = useAppSelector(
-		({ projects }) => projects,
-	);
-
+	const {
+		project,
+		projectContributors,
+		projectContributorsStatus,
+		projectPatchStatus,
+		projectStatus,
+	} = useAppSelector(({ projects }) => projects);
 	const {
 		isOpened: isSetupAnalyticsModalOpened,
 		onClose: onSetupAnalyticsModalClose,
@@ -49,6 +53,7 @@ const Project = (): JSX.Element => {
 	useEffect(() => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
+			void dispatch(projectActions.loadAllContributorsByProjectId(projectId));
 		}
 	}, [dispatch, projectId]);
 
@@ -77,6 +82,11 @@ const Project = (): JSX.Element => {
 
 	const isLoading =
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
+
+	const isContributorsDataLoading =
+		projectContributorsStatus === DataStatus.PENDING ||
+		projectContributorsStatus === DataStatus.IDLE;
+
 	const isRejected = projectStatus === DataStatus.REJECTED;
 
 	const hasProject = project !== null;
@@ -121,6 +131,13 @@ const Project = (): JSX.Element => {
 							<Button
 								label="Setup Analytics"
 								onClick={onSetupAnalyticsModalOpen}
+							/>
+						</div>
+
+						<div className={styles["contributors-list-wrapper"]}>
+							<ContributorsList
+								contributors={projectContributors}
+								isLoading={isContributorsDataLoading}
 							/>
 						</div>
 					</div>
