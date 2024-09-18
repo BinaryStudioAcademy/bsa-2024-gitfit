@@ -11,21 +11,28 @@ import {
 	useSelectedItems,
 } from "~/libs/hooks/hooks.js";
 import { type ValidationSchema } from "~/libs/types/types.js";
-import { type ProjectGroupCreateRequestDto } from "~/modules/project-groups/project-groups.js";
+import {
+	type ProjectGroupCreateRequestDto,
+	type ProjectGroupPatchRequestDto,
+} from "~/modules/project-groups/project-groups.js";
 import { actions as projectPermissionActions } from "~/modules/project-permissions/project-permissions.js";
 
 import { ProjectGroupUsersTable } from "../project-group-users-table/project-group-users-table.js";
 import { getPermissionOptions } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
-type Properties<T extends ProjectGroupCreateRequestDto> = {
+type ProjectGroupRequest =
+	| ProjectGroupCreateRequestDto
+	| ProjectGroupPatchRequestDto;
+
+type Properties<T extends ProjectGroupRequest> = {
 	defaultValues: T;
 	onSubmit: (payload: T) => void;
 	submitLabel: string;
 	validationSchema: ValidationSchema<T>;
 };
 
-const ProjectGroupForm = <T extends ProjectGroupCreateRequestDto>({
+const ProjectGroupForm = <T extends ProjectGroupRequest>({
 	defaultValues,
 	onSubmit,
 	submitLabel,
@@ -34,7 +41,7 @@ const ProjectGroupForm = <T extends ProjectGroupCreateRequestDto>({
 	const dispatch = useAppDispatch();
 
 	const { control, errors, handleErrorsClear, handleSubmit, handleValueSet } =
-		useAppForm<ProjectGroupCreateRequestDto>({
+		useAppForm<ProjectGroupRequest>({
 			defaultValues,
 			validationSchema,
 		});
@@ -57,7 +64,7 @@ const ProjectGroupForm = <T extends ProjectGroupCreateRequestDto>({
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit((formData: ProjectGroupCreateRequestDto) => {
+			void handleSubmit((formData: ProjectGroupRequest) => {
 				onSubmit(formData as T);
 			})(event_);
 		},

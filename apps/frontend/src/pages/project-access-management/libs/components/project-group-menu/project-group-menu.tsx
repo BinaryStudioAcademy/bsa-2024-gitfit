@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	onDelete: (projectGroupId: number) => void;
+	onEdit: (projectGroupId: number) => void;
 	onMenuClose: () => void;
 	onMenuOpen: () => void;
 	projectGroupId: number;
@@ -12,11 +13,17 @@ type Properties = {
 
 const ProjectGroupMenu = ({
 	onDelete,
+	onEdit,
 	onMenuClose,
 	onMenuOpen,
 	projectGroupId,
 }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
+
+	const handleEditClick = useCallback(() => {
+		onEdit(projectGroupId);
+		onClose();
+	}, [projectGroupId, onEdit, onClose]);
 
 	const handleDeleteClick = useCallback(() => {
 		onDelete(projectGroupId);
@@ -36,6 +43,7 @@ const ProjectGroupMenu = ({
 	return (
 		<div className={styles["menu-container"]}>
 			<Menu isOpened={isOpened} onClose={handleClose} onOpen={handleOpen}>
+				<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
 				<MenuItem
 					iconName="trashBin"
 					label="Delete"

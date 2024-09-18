@@ -11,6 +11,8 @@ import {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupCreateResponseDto,
 	type ProjectGroupGetAllResponseDto,
+	type ProjectGroupPatchRequestDto,
+	type ProjectGroupPatchResponseDto,
 } from "./libs/types/types.js";
 import { ProjectGroupEntity } from "./project-group.entity.js";
 import { type ProjectGroupRepository } from "./project-group.repository.js";
@@ -87,6 +89,51 @@ class ProjectGroupService implements Service {
 			items: projectGroups.items.map((item) => item.toObject()),
 			totalItems: projectGroups.totalItems,
 		};
+	}
+
+	public async patch(
+		id: number,
+		payload: ProjectGroupPatchRequestDto,
+	): Promise<ProjectGroupPatchResponseDto> {
+		const projectGroup = await this.projectGroupRepository.find(id);
+
+		if (!projectGroup) {
+			throw new ProjectGroupError({
+				message: ExceptionMessage.PROJECT_GROUP_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		const {
+			projectId: { id: projectId },
+		} = projectGroup.toObject();
+
+		const { name, permissionIds = [], userIds } = payload;
+
+		const existingProjectGroup =
+			await this.projectGroupRepository.findByName(name);
+
+		if (existingProjectGroup && existingProjectGroup.id !== id) {
+			throw new ProjectGroupError({
+				message: ExceptionMessage.PROJECT_GROUP_NAME_USED,
+				status: HTTPCode.CONFLICT,
+			});
+		}
+
+		const permissions = permissionIds.map((id) => ({ id }));
+		const users = userIds.map((id) => ({ id }));
+
+		const updatedProjectGroup = await this.projectGroupRepository.update(
+			id,
+			ProjectGroupEntity.initializeNew({
+				name,
+				permissions,
+				projectId: { id: projectId },
+				users,
+			}),
+		);
+
+		return updatedProjectGroup.toObject();
 	}
 
 	public update(): ReturnType<Service["update"]> {
