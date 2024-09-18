@@ -101,6 +101,8 @@ class ActivityLogService implements Service {
 			const { date, items } = record;
 
 			for (const logItem of items) {
+				let hasCommits = Boolean(logItem.commitsNumber);
+
 				const activityLog = await this.createActivityLog({
 					date,
 					logItem,
@@ -110,7 +112,9 @@ class ActivityLogService implements Service {
 
 				createdActivityLogs.items.push(activityLog.toObject());
 
-				await this.projectService.updateLastActivityDate(projectId, date);
+				if (hasCommits) {
+					await this.projectService.updateLastActivityDate(projectId, date);
+				}
 			}
 		}
 
