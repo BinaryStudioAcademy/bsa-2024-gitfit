@@ -142,7 +142,10 @@ class ProjectGroupRepository implements Repository {
 		entity: ProjectGroupEntity,
 	): Promise<ProjectGroupEntity> {
 		const { name, permissions, projectId, users } = entity.toNewObject();
-		const key = changeCase(name, "snakeCase");
+		const key = generateProjectGroupKey({
+			name,
+			projectId: projectId.id,
+		});
 
 		const trx = await transaction.start(this.projectGroupModel.knex());
 
