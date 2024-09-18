@@ -11,7 +11,6 @@ import { useEffect, useRef, useState } from "~/libs/hooks/hooks.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { SelectRowCell } from "./libs/components/components.js";
-import { getCellColor } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 type BaseProperties<T> = {
@@ -130,10 +129,7 @@ const Table = <T extends object>({
 								)}
 								{row.getVisibleCells().map((cell) => (
 									<td
-										className={getValidClassNames(
-											styles["table-data"],
-											styles[getCellColor(cell.getValue())],
-										)}
+										className={styles["table-data"]}
 										key={cell.id}
 										style={{ width: cell.column.columnDef.size }}
 									>

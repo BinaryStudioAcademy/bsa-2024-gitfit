@@ -77,11 +77,3 @@
 	color: var(--color-text-secondary);
 	text-align: center;
 }
-
-.cell-placeholder-color {
-	color: var(--color-danger);
-}
-
-.cell-text-color {
-	color: relative;
-}
