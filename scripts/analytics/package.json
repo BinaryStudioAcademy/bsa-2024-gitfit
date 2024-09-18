@@ -2,6 +2,10 @@
 	"name": "@git-fit/analytics",
 	"version": "0.0.1",
 	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/BinaryStudioAcademy/bsa-2024-gitfit.git"
+	},
 	"engines": {
 		"node": "20.x.x",
 		"npm": "10.x.x"
