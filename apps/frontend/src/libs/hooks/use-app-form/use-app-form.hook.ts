@@ -10,6 +10,7 @@ import {
 	type UseFormProps,
 	type UseFormSetValue,
 	type UseFormTrigger,
+	type UseFormWatch,
 	type ValidationMode,
 } from "react-hook-form";
 
@@ -29,6 +30,7 @@ type ReturnValue<T extends FieldValues = FieldValues> = {
 	handleTrigger: UseFormTrigger<T>;
 	handleValueSet: UseFormSetValue<T>;
 	isDirty: boolean;
+	watch: UseFormWatch<T>;
 };
 
 const useAppForm = <T extends FieldValues = FieldValues>({
@@ -52,6 +54,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
 		handleSubmit,
 		setValue,
 		trigger,
+		watch,
 	} = useForm<T>(parameters);
 
 	return {
@@ -62,6 +65,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
 		handleTrigger: trigger,
 		handleValueSet: setValue,
 		isDirty,
+		watch,
 	};
 };
 

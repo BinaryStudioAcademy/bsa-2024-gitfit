@@ -26,7 +26,6 @@ type Properties<T extends FieldValues> = {
 	maxDate?: Date;
 	maxRange?: number;
 	name: FieldPath<T>;
-	onPopoverClose?: (selectedDateRange: [Date, Date]) => void;
 };
 
 const DateInput = <T extends FieldValues>({
@@ -34,7 +33,6 @@ const DateInput = <T extends FieldValues>({
 	maxDate,
 	maxRange,
 	name,
-	onPopoverClose,
 }: Properties<T>): JSX.Element => {
 	const { field } = useFormController({
 		control,
@@ -42,14 +40,6 @@ const DateInput = <T extends FieldValues>({
 	});
 
 	const { isOpened, onClose, onOpen } = usePopover();
-
-	const handleClose = useCallback(() => {
-		if (onPopoverClose) {
-			onPopoverClose(field.value as [Date, Date]);
-		}
-
-		onClose();
-	}, [field.value, onClose, onPopoverClose]);
 
 	const selectedDateRange = useMemo((): string => {
 		const [startDate, endDate] = field.value as Date[];
@@ -109,7 +99,7 @@ const DateInput = <T extends FieldValues>({
 					/>
 				}
 				isOpened={isOpened}
-				onClose={handleClose}
+				onClose={onClose}
 			>
 				<button className={styles["date-input-trigger"]} onClick={onOpen}>
 					<span className={styles["calendar-icon-wrapper"]}>

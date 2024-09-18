@@ -31,7 +31,7 @@ const Analytics = (): JSX.Element => {
 
 	const [dateRange, setDateRange] = useState<[Date, Date]>(initialDateRange);
 
-	const { control, handleSubmit } = useAppForm({
+	const { control, handleSubmit, isDirty, watch } = useAppForm({
 		defaultValues: {
 			dateRange: initialDateRange,
 		},
@@ -45,21 +45,22 @@ const Analytics = (): JSX.Element => {
 		handleLoadActivityLogs();
 	}, [handleLoadActivityLogs]);
 
-	const handlePopoverClose = useCallback(
-		(selectedDateRange: [Date, Date]): void => {
-			setDateRange(selectedDateRange);
-		},
-		[setDateRange],
-	);
-
 	const handleFormSubmit = useCallback(
-		(event_: React.BaseSyntheticEvent): void => {
+		(event_?: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData) => {
 				setDateRange(formData.dateRange);
 			})(event_);
 		},
 		[handleSubmit],
 	);
+
+	const dateRangeValue = watch("dateRange");
+
+	useEffect(() => {
+		if (isDirty) {
+			handleFormSubmit();
+		}
+	}, [dateRangeValue, isDirty, handleFormSubmit]);
 
 	const hasActivityLog = activityLogs.length !== EMPTY_LENGTH;
 
@@ -77,7 +78,6 @@ const Analytics = (): JSX.Element => {
 						maxDate={todayDate}
 						maxRange={ANALYTICS_DATE_MAX_RANGE}
 						name="dateRange"
-						onPopoverClose={handlePopoverClose}
 					/>
 				</form>
 				{isLoading ? (
