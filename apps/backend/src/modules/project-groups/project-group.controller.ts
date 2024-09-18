@@ -90,7 +90,7 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectGroupsApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
 		});
 	}
 
