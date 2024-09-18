@@ -65,7 +65,7 @@
 	table-layout: fixed;
 }
 
-.table .table-row:last-child .table-data {
+.table-row:last-child .table-data {
 	border-bottom: none;
 }
 
