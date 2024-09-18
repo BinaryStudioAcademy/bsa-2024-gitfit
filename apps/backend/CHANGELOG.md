@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.26.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.25.0...backend-v1.26.0) (2024-09-18)
+
+
+### Features
+
+* Adjust root permissions gf-350 ([#386](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/386)) ([188d94a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/188d94a43267cb822940842c43a297cd73c7e826))
+
 ## [1.25.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.24.1...backend-v1.25.0) (2024-09-18)
 
 
