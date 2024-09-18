@@ -1,9 +1,11 @@
-import { PageLayout, Table } from "~/libs/components/components.js";
+import { Modal, PageLayout, Table } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
+	useCallback,
 	useEffect,
+	useModal,
 } from "~/libs/hooks/hooks.js";
 import { actions as contributorActions } from "~/modules/contributors/contributors.js";
 
@@ -21,11 +23,30 @@ const Contributors = (): JSX.Element => {
 
 	const dispatch = useAppDispatch();
 
+	const {
+		isOpened: isMergeModalOpen,
+		onClose: onMergeModalClose,
+		onOpen: onMergeModalOpen,
+	} = useModal();
+
 	useEffect(() => {
 		void dispatch(contributorActions.loadAll());
 	}, [dispatch]);
 
-	const contributorsColumns = getContributorColumns();
+	const handleMerge = useCallback(
+		(contributorId: number): void => {
+			const contributor = contributors.find(({ id }) => id === contributorId);
+
+			if (contributor) {
+				onMergeModalOpen();
+			}
+		},
+		[contributors, onMergeModalOpen],
+	);
+
+	const contributorsColumns = getContributorColumns({
+		onMerge: handleMerge,
+	});
 	const contributorsData = getContributorRows(contributors);
 
 	const isLoading =
@@ -40,6 +61,13 @@ const Contributors = (): JSX.Element => {
 					data={contributorsData}
 				/>
 			</section>
+			<Modal
+				isOpened={isMergeModalOpen}
+				onClose={onMergeModalClose}
+				title="Merge contributors"
+			>
+				<h1>Hi</h1>
+			</Modal>
 		</PageLayout>
 	);
 };
