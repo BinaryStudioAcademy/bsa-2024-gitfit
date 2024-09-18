@@ -1,4 +1,4 @@
-import { DataStatus, type PermissionKey } from "~/libs/enums/enums.js";
+import { type PermissionKey } from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
 import { type ValueOf } from "~/libs/types/types.js";
@@ -12,18 +12,7 @@ const ProtectedComponent = ({
 	children,
 	requiredPermissions,
 }: Properties): JSX.Element => {
-	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
-
-	const isLoading =
-		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
-
-	if (isLoading || !authenticatedUser) {
-		return <></>;
-	}
-
-	const userPermissions = authenticatedUser.groups.flatMap(
-		(group) => group.permissions,
-	);
+	const { userPermissions } = useAppSelector(({ auth }) => auth);
 
 	const hasRequiredPermission = checkHasPermission(
 		requiredPermissions,

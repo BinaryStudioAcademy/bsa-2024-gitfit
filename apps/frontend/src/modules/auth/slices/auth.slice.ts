@@ -3,17 +3,22 @@ import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
-import { type UserAuthResponseDto } from "../libs/types/types.js";
+import {
+	type PermissionGetAllItemResponseDto,
+	type UserAuthResponseDto,
+} from "../libs/types/types.js";
 import { getAuthenticatedUser, logout, signIn, signUp } from "./actions.js";
 
 type State = {
 	authenticatedUser: null | UserAuthResponseDto;
 	dataStatus: ValueOf<typeof DataStatus>;
+	userPermissions: PermissionGetAllItemResponseDto[];
 };
 
 const initialState: State = {
 	authenticatedUser: null,
 	dataStatus: DataStatus.IDLE,
+	userPermissions: [],
 };
 
 const { actions, name, reducer } = createSlice({
@@ -68,6 +73,8 @@ const { actions, name, reducer } = createSlice({
 			),
 			(state, action) => {
 				state.authenticatedUser = action.payload;
+				state.userPermissions =
+					action.payload?.groups.flatMap((group) => group.permissions) ?? [];
 			},
 		);
 	},
