@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.25.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.24.1...backend-v1.25.0) (2024-09-18)
+
+
+### Features
+
+* add project last activity label to project list gf-274 ([#354](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/354)) ([a4e7fab](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a4e7fab02b74f6d9fdbe44bd8c37b0fa22ccc5ef))
+* fix quality criteria issues gf-382 ([#391](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/391)) ([c0fddb2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c0fddb20684439e5f1ad32beea0c6fccde521e2f))
+
 ## [1.24.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.24.0...backend-v1.24.1) (2024-09-18)
 
 
