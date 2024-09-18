@@ -102,8 +102,13 @@ class UserRepository implements Repository {
 				this.userModel
 					.relatedQuery("projectGroups")
 					.joinRelated("permissions")
+					.join(
+						"projects_to_project_groups",
+						"project_groups.id",
+						"projects_to_project_groups.project_group_id",
+					)
 					.whereIn("permissions.key", permissionKeys)
-					.where("project_groups.projectId", projectId),
+					.where("projects_to_project_groups.project_id", projectId),
 			)
 			.whereNull("deletedAt")
 			.execute();

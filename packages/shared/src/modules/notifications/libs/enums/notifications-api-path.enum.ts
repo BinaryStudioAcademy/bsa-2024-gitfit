@@ -1,5 +1,4 @@
 const NotificationsApiPath = {
-	BULK: "/bulk",
 	ROOT: "/",
 } as const;
 

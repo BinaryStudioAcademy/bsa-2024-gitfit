@@ -1,7 +1,7 @@
-import { type NotificationCreateResponseDto } from "./notification-create-response-dto.type.js";
+import { type NotificationGetAllItemResponseDto } from "./notification-get-all-item-response-dto.type.js";
 
 type NotificationBulkCreateResponseDto = {
-	items: NotificationCreateResponseDto[];
+	items: NotificationGetAllItemResponseDto[];
 };
 
 export { type NotificationBulkCreateResponseDto };

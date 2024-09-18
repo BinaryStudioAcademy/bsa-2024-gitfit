@@ -12,5 +12,4 @@ const notificationController = new NotificationController(
 	notificationService,
 );
 
-export { notificationController };
-export { notificationCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+export { notificationController, notificationService };

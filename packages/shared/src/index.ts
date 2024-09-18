@@ -81,10 +81,7 @@ export {
 export {
 	type NotificationBulkCreateRequestDto,
 	type NotificationBulkCreateResponseDto,
-	notificationBulkCreateValidationSchema,
 	type NotificationCreateRequestDto,
-	type NotificationCreateResponseDto,
-	notificationCreateValidationSchema,
 	type NotificationGetAllItemResponseDto,
 	type NotificationGetAllResponseDto,
 	NotificationsApiPath,

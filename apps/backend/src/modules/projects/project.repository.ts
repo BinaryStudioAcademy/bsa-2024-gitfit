@@ -75,6 +75,20 @@ class ProjectRepository implements Repository {
 		return item ? ProjectEntity.initialize(item) : null;
 	}
 
+	public async findInactiveProjects(
+		thresholdInDays: number,
+	): Promise<ProjectEntity[]> {
+		const currentDate = new Date();
+		currentDate.setDate(currentDate.getDate() - thresholdInDays);
+
+		const projects = await this.projectModel
+			.query()
+			.where("lastActivityDate", "<", currentDate.toISOString())
+			.execute();
+
+		return projects.map((project) => ProjectEntity.initialize(project));
+	}
+
 	public async patch(
 		id: number,
 		projectData: ProjectPatchRequestDto,

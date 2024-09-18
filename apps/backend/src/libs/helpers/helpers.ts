@@ -1,1 +1,5 @@
-export { changeCase, checkHasPermission } from "@git-fit/shared";
+export {
+	changeCase,
+	checkHasPermission,
+	getDifferenceInDays,
+} from "@git-fit/shared";
