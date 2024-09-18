@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.36.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.35.0...frontend-v1.36.0) (2024-09-18)
+
+
+### Features
+
+* Add instructions on how to setup analytics gf-343 ([#392](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/392)) ([a4880d8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a4880d8e579321ba6403fdf0edc63251ecf15b74))
+
 ## [1.35.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.34.0...frontend-v1.35.0) (2024-09-18)
 
 
