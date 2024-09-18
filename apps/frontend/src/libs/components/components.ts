@@ -16,7 +16,6 @@ export { MenuItem } from "./menu-item/menu-item.js";
 export { Modal } from "./modal/modal.js";
 export { PageLayout } from "./page-layout/page-layout.js";
 export { Popover } from "./popover/popover.js";
-export { ProtectedComponent } from "./protected-component/protected-component.js";
 export { ProtectedRoute } from "./protected-route/protected-route.js";
 export { RouterProvider } from "./router-provider/router-provider.js";
 export { Search } from "./search/search.js";

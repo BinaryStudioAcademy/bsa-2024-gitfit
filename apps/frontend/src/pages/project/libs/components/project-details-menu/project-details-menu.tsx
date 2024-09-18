@@ -1,10 +1,6 @@
-import {
-	Menu,
-	MenuItem,
-	ProtectedComponent,
-} from "~/libs/components/components.js";
+import { Menu, MenuItem } from "~/libs/components/components.js";
 import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
-import { configureString } from "~/libs/helpers/helpers.js";
+import { checkHasPermission, configureString } from "~/libs/helpers/helpers.js";
 import { useAppSelector, useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
 type Properties = {
@@ -12,21 +8,14 @@ type Properties = {
 	projectId: number;
 };
 
-const ProjectDetailsMenu = ({
-	onEdit,
-	projectId,
-}: Properties): JSX.Element | null => {
+const ProjectDetailsMenu = ({ onEdit, projectId }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
-	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
+	const { userPermissions } = useAppSelector(({ auth }) => auth);
 
 	const handleEditClick = useCallback(() => {
 		onEdit();
 		onClose();
 	}, [onEdit, onClose]);
-
-	if (!authenticatedUser) {
-		return null;
-	}
 
 	const projectAccessManagementRoute = configureString(
 		AppRoute.PROJECT_ACCESS_MANAGEMENT,
@@ -35,31 +24,39 @@ const ProjectDetailsMenu = ({
 		},
 	);
 
-	return (
-		<ProtectedComponent
-			requiredPermissions={[
-				PermissionKey.MANAGE_ALL_PROJECTS,
-				PermissionKey.MANAGE_USER_ACCESS,
-			]}
-		>
-			<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-				<ProtectedComponent
-					requiredPermissions={[PermissionKey.MANAGE_ALL_PROJECTS]}
-				>
-					<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
-				</ProtectedComponent>
+	const hasManageUserAccessPermission = checkHasPermission(
+		[PermissionKey.MANAGE_USER_ACCESS],
+		userPermissions,
+	);
+	const hasManageAllProjectsPermission = checkHasPermission(
+		[PermissionKey.MANAGE_ALL_PROJECTS],
+		userPermissions,
+	);
+	const isMenuAvailable =
+		hasManageUserAccessPermission || hasManageAllProjectsPermission;
 
-				<ProtectedComponent
-					requiredPermissions={[PermissionKey.MANAGE_USER_ACCESS]}
-				>
-					<MenuItem
-						href={projectAccessManagementRoute}
-						iconName="access"
-						label="Manage Access"
-					/>
-				</ProtectedComponent>
-			</Menu>
-		</ProtectedComponent>
+	return (
+		<>
+			{isMenuAvailable && (
+				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+					{hasManageAllProjectsPermission && (
+						<MenuItem
+							iconName="pencil"
+							label="Edit"
+							onClick={handleEditClick}
+						/>
+					)}
+
+					{hasManageUserAccessPermission && (
+						<MenuItem
+							href={projectAccessManagementRoute}
+							iconName="access"
+							label="Manage Access"
+						/>
+					)}
+				</Menu>
+			)}
+		</>
 	);
 };
 

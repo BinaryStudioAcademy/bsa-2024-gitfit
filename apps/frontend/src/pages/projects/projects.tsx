@@ -4,10 +4,10 @@ import {
 	Loader,
 	Modal,
 	PageLayout,
-	ProtectedComponent,
 } from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus, PermissionKey } from "~/libs/enums/enums.js";
+import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -37,6 +37,8 @@ import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
+
+	const { userPermissions } = useAppSelector(({ auth }) => auth);
 
 	const { onSearch, search } = useSearch();
 
@@ -182,17 +184,20 @@ const Projects = (): JSX.Element => {
 
 	const isUpdateFormShown = project && projectStatus === DataStatus.FULFILLED;
 
+	const hasManageAllProjectsPermissions = checkHasPermission(
+		[PermissionKey.MANAGE_ALL_PROJECTS],
+		userPermissions,
+	);
+
 	return (
 		<PageLayout>
 			<header className={styles["projects-header"]}>
 				<h1 className={styles["title"]}>Projects</h1>
-				<div>
-					<ProtectedComponent
-						requiredPermissions={[PermissionKey.MANAGE_ALL_PROJECTS]}
-					>
+				{hasManageAllProjectsPermissions && (
+					<div>
 						<Button label="Create New" onClick={handleCreateModalOpen} />
-					</ProtectedComponent>
-				</div>
+					</div>
+				)}
 			</header>
 			<ProjectsSearch onChange={handleSearchChange} />
 			{isLoading ? (

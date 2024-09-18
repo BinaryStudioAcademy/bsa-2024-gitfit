@@ -1,11 +1,8 @@
 import { PermissionKey } from "@git-fit/shared";
 
-import {
-	Menu,
-	MenuItem,
-	ProtectedComponent,
-} from "~/libs/components/components.js";
-import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
+import { Menu, MenuItem } from "~/libs/components/components.js";
+import { checkHasPermission } from "~/libs/helpers/helpers.js";
+import { useAppSelector, useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	onDelete: () => void;
@@ -14,6 +11,7 @@ type Properties = {
 
 const ProjectMenu = ({ onDelete, onEdit }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
+	const { userPermissions } = useAppSelector(({ auth }) => auth);
 
 	const handleEditClick = useCallback(() => {
 		onEdit();
@@ -25,20 +23,26 @@ const ProjectMenu = ({ onDelete, onEdit }: Properties): JSX.Element => {
 		onClose();
 	}, [onDelete, onClose]);
 
+	const hasManageAllProjectsPermission = checkHasPermission(
+		[PermissionKey.MANAGE_ALL_PROJECTS],
+		userPermissions,
+	);
+	const isMenuAvailable = hasManageAllProjectsPermission;
+
 	return (
-		<ProtectedComponent
-			requiredPermissions={[PermissionKey.MANAGE_ALL_PROJECTS]}
-		>
-			<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-				<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
-				<MenuItem
-					iconName="trashBin"
-					label="Delete"
-					onClick={handleDeleteClick}
-					variant="danger"
-				/>
-			</Menu>
-		</ProtectedComponent>
+		<>
+			{isMenuAvailable && (
+				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+					<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
+					<MenuItem
+						iconName="trashBin"
+						label="Delete"
+						onClick={handleDeleteClick}
+						variant="danger"
+					/>
+				</Menu>
+			)}
+		</>
 	);
 };
 
