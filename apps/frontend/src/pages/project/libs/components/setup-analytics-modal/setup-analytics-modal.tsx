@@ -41,13 +41,16 @@ const SetupAnalyticsModal = ({
 	const isCopyButtonDisabled =
 		!hasProjectApiKey || dataStatus === DataStatus.PENDING;
 
-	const script = useMemo<string>(
-		() =>
-			hasProjectApiKey && hasAuthenticatedUser
-				? `npx @git-fit/analytics@latest track ${project.apiKey as string} ${String(authenticatedUser.id)} <project-path>`
-				: "",
-		[hasProjectApiKey, hasAuthenticatedUser, project, authenticatedUser],
-	);
+	const script = useMemo<string>(() => {
+		if (!hasProjectApiKey || !hasAuthenticatedUser) {
+			return "";
+		}
+
+		const apiKey = project.apiKey as string;
+		const userId = String(authenticatedUser.id);
+
+		return `npx @git-fit/analytics@latest track ${apiKey} ${userId} <project-path>`;
+	}, [hasProjectApiKey, hasAuthenticatedUser, project, authenticatedUser]);
 
 	const { control, errors, handleSubmit, handleValueSet } = useAppForm({
 		defaultValues: {
