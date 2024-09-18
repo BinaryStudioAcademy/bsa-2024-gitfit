@@ -1,9 +1,11 @@
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 import { type ContributorService } from "~/modules/contributors/contributors.js";
 import { type GitEmailService } from "~/modules/git-emails/git-emails.js";
 import { type ProjectApiKeyService } from "~/modules/project-api-keys/project-api-keys.js";
+import { type ProjectService } from "~/modules/projects/project.service.js";
 
 import { ActivityLogEntity } from "./activity-log.entity.js";
 import { type ActivityLogRepository } from "./activity-log.repository.js";
@@ -19,6 +21,7 @@ type Constructor = {
 	contributorService: ContributorService;
 	gitEmailService: GitEmailService;
 	projectApiKeyService: ProjectApiKeyService;
+	projectService: ProjectService;
 };
 
 class ActivityLogService implements Service {
@@ -26,17 +29,20 @@ class ActivityLogService implements Service {
 	private contributorService: ContributorService;
 	private gitEmailService: GitEmailService;
 	private projectApiKeyService: ProjectApiKeyService;
+	private projectService: ProjectService;
 
 	public constructor({
 		activityLogRepository,
 		contributorService,
 		gitEmailService,
 		projectApiKeyService,
+		projectService,
 	}: Constructor) {
 		this.activityLogRepository = activityLogRepository;
 		this.contributorService = contributorService;
 		this.gitEmailService = gitEmailService;
 		this.projectApiKeyService = projectApiKeyService;
+		this.projectService = projectService;
 	}
 
 	private async createActivityLog({
@@ -104,6 +110,10 @@ class ActivityLogService implements Service {
 				});
 
 				createdActivityLogs.items.push(activityLog.toObject());
+			}
+
+			if (items.length > EMPTY_LENGTH) {
+				await this.projectService.updateLastActivityDate(projectId, date);
 			}
 		}
 

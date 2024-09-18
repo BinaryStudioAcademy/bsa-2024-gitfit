@@ -19,6 +19,7 @@ export {
 	configureString,
 	formatDate,
 	getDifferenceInDays,
+	getRelativeDate,
 	initDebounce,
 	subtractDays,
 } from "./libs/helpers/helpers.js";
@@ -108,6 +109,9 @@ export {
 	type ProjectGroupGetAllItemResponseDto,
 	type ProjectGroupGetAllRequestDto,
 	type ProjectGroupGetAllResponseDto,
+	type ProjectGroupPatchRequestDto,
+	type ProjectGroupPatchResponseDto,
+	projectGroupPatchValidationSchema,
 	ProjectGroupsApiPath,
 } from "./modules/project-groups/project-groups.js";
 export {

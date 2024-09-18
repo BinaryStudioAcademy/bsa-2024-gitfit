@@ -13,8 +13,12 @@ import { ProjectGroupsApiPath } from "./libs/enums/enums.js";
 import {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupGetAllRequestDto,
+	type ProjectGroupPatchRequestDto,
 } from "./libs/types/types.js";
-import { projectGroupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+import {
+	projectGroupCreateValidationSchema,
+	projectGroupPatchValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
 import { type ProjectGroupService } from "./project-group.service.js";
 
 /**
@@ -66,6 +70,7 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "POST",
 			path: ProjectGroupsApiPath.ROOT,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
 			validation: {
 				body: projectGroupCreateValidationSchema,
 			},
@@ -76,6 +81,7 @@ class ProjectGroupController extends BaseController {
 				this.delete(options as APIHandlerOptions<{ params: { id: string } }>),
 			method: "DELETE",
 			path: ProjectGroupsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
 		});
 
 		this.addRoute({
@@ -88,7 +94,22 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectGroupsApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.patch(
+					options as APIHandlerOptions<{
+						body: ProjectGroupPatchRequestDto;
+						params: { id: string };
+					}>,
+				),
+			method: "PATCH",
+			path: ProjectGroupsApiPath.$ID,
+			validation: {
+				body: projectGroupPatchValidationSchema,
+			},
 		});
 	}
 
@@ -197,6 +218,49 @@ class ProjectGroupController extends BaseController {
 			payload: await this.projectGroupService.findAllByProjectId(
 				params.id,
 				query,
+			),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /groups/{id}:
+	 *    patch:
+	 *      tags:
+	 *        - ProjectGroup
+	 *      description: Patch project group info
+	 *      parameters:
+	 *        - in: path
+	 *          name: id
+	 *          description: ID of the project group to patch
+	 *          schema:
+	 *            type: string
+	 *      responses:
+	 *        200:
+	 *          description: Successful operation
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 *                properties:
+	 *                  message:
+	 *                    type: object
+	 *                    $ref: "#/components/schemas/ProjectGroup"
+	 */
+
+	private async patch(
+		options: APIHandlerOptions<{
+			body: ProjectGroupPatchRequestDto;
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		const projectGroupId = Number(options.params.id);
+
+		return {
+			payload: await this.projectGroupService.patch(
+				projectGroupId,
+				options.body,
 			),
 			status: HTTPCode.OK,
 		};

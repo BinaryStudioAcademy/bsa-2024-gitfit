@@ -23,26 +23,26 @@
 	overflow-x: hidden;
 }
 
-.table .table-header,
-.table .table-data {
+.table-header,
+.table-data {
 	padding: 10px 20px;
 	text-align: left;
 	border-bottom: 1px solid var(--color-border-primary);
 }
 
-.table .table-header.cell-min-content,
-.table .table-data.cell-min-content {
+.table-header.cell-min-content,
+.table-data.cell-min-content {
 	width: 0;
 }
 
-.table .table-data {
+.table-data {
 	min-height: 60px;
 	font-weight: 400;
 	line-height: 150%;
 	word-wrap: normal;
 }
 
-.table .table-header {
+.table-header {
 	min-height: 45px;
 	font-weight: 500;
 	line-height: 120%;
@@ -51,21 +51,21 @@
 	border-bottom: 1px solid var(--color-border-primary);
 }
 
-.table .table-head {
+.table-head {
 	position: sticky;
 	top: 0;
 	z-index: 2;
 }
 
-.table .table-head,
-.table .table-body,
-.table .table-row {
+.table-head,
+.table-body,
+.table-row {
 	display: table;
 	width: 100%;
 	table-layout: fixed;
 }
 
-.table .table-row:last-child .table-data {
+.table-row:last-child .table-data {
 	border-bottom: none;
 }
 
