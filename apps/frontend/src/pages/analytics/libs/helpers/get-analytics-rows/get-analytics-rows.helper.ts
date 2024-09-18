@@ -1,5 +1,5 @@
 import { formatDate } from "~/libs/helpers/helpers.js";
-import { type ActivityLogGetAllItemResponseDto } from "~/modules/activity-logs/activity-logs.js";
+import { type ActivityLogGetAllItemResponseDto } from "~/modules/activity/activity.js";
 
 import { type AnalyticsRow } from "../../types/types.js";
 

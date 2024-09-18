@@ -10,7 +10,7 @@ import {
 	useEffect,
 	useState,
 } from "~/libs/hooks/hooks.js";
-import { actions as activityLogActions } from "~/modules/activity-logs/activity-logs.js";
+import { actions as activityLogActions } from "~/modules/activity/activity.js";
 
 import { AnalyticsTable } from "./libs/components/components.js";
 import { ANALYTICS_DATE_MAX_RANGE } from "./libs/constants/constants.js";

@@ -1,6 +1,6 @@
 import { type Storage } from "~/libs/modules/storage/storage.js";
 import { type ToastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
-import { type activityLogApi } from "~/modules/activity-logs/activity-logs.js";
+import { type activityLogApi } from "~/modules/activity/activity.js";
 import { type authApi } from "~/modules/auth/auth.js";
 import { type contributorApi } from "~/modules/contributors/contributors.js";
 import { type groupApi } from "~/modules/groups/groups.js";

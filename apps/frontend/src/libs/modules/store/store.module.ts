@@ -12,7 +12,7 @@ import { toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
 import {
 	activityLogApi,
 	reducer as activityLogReducer,
-} from "~/modules/activity-logs/activity-logs.js";
+} from "~/modules/activity/activity.js";
 import { authApi, reducer as authReducer } from "~/modules/auth/auth.js";
 import {
 	contributorApi,

@@ -15,4 +15,4 @@ export {
 	type ActivityLogGetAllItemResponseDto,
 	type ActivityLogGetAllResponseDto,
 } from "./libs/types/types.js";
-export { actions, reducer } from "./slices/activity-logs.js";
+export { actions, reducer } from "./slices/activity.js";

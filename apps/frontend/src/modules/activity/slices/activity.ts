@@ -1,5 +1,5 @@
 import { loadAll } from "./actions.js";
-import { actions } from "./activity-log.slice.js";
+import { actions } from "./activity.slice.js";
 
 const allActions = {
 	...actions,
@@ -7,4 +7,4 @@ const allActions = {
 };
 
 export { allActions as actions };
-export { reducer } from "./activity-log.slice.js";
+export { reducer } from "./activity.slice.js";

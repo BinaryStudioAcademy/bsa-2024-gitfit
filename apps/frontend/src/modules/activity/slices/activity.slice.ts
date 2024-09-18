@@ -31,7 +31,7 @@ const { actions, name, reducer } = createSlice({
 		});
 	},
 	initialState,
-	name: "activity-logs",
+	name: "activity",
 	reducers: {},
 });
 

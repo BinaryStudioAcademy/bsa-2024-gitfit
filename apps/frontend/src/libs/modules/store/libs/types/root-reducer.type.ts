@@ -1,4 +1,4 @@
-import { type reducer as activityLogReducer } from "~/modules/activity-logs/activity-logs.js";
+import { type reducer as activityLogReducer } from "~/modules/activity/activity.js";
 import { type reducer as authReducer } from "~/modules/auth/auth.js";
 import { type reducer as contributorsReducer } from "~/modules/contributors/contributors.js";
 import { type reducer as groupsReducer } from "~/modules/groups/groups.js";

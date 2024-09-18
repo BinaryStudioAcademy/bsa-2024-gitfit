@@ -1,5 +1,5 @@
 import { Table } from "~/libs/components/components.js";
-import { type ActivityLogGetAllItemResponseDto } from "~/modules/activity-logs/activity-logs.js";
+import { type ActivityLogGetAllItemResponseDto } from "~/modules/activity/activity.js";
 
 import {
 	getAnalyticsColumns,
