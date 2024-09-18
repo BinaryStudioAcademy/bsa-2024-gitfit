@@ -1,25 +1,26 @@
 import { Menu, MenuItem } from "~/libs/components/components.js";
 import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
 import { checkHasPermission, configureString } from "~/libs/helpers/helpers.js";
-import { useAppSelector, useCallback, usePopover } from "~/libs/hooks/hooks.js";
+import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
+import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/permissions.js";
 
 type Properties = {
 	onEdit: () => void;
 	projectId: number;
+	userPermissions: PermissionGetAllItemResponseDto[];
 };
 
-const ProjectDetailsMenu = ({ onEdit, projectId }: Properties): JSX.Element => {
+const ProjectDetailsMenu = ({
+	onEdit,
+	projectId,
+	userPermissions,
+}: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
-	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
 
 	const handleEditClick = useCallback(() => {
 		onEdit();
 		onClose();
 	}, [onEdit, onClose]);
-
-	if (!authenticatedUser) {
-		return <></>;
-	}
 
 	const projectAccessManagementRoute = configureString(
 		AppRoute.PROJECT_ACCESS_MANAGEMENT,
@@ -28,23 +29,39 @@ const ProjectDetailsMenu = ({ onEdit, projectId }: Properties): JSX.Element => {
 		},
 	);
 
-	const hasManageAccessPermission = checkHasPermission(
-		[PermissionKey.MANAGE_ALL_PROJECTS],
-		authenticatedUser.groups.flatMap((group) => group.permissions),
+	const hasManageProjectAccessPermission = checkHasPermission(
+		[PermissionKey.MANAGE_USER_ACCESS],
+		userPermissions,
 	);
+	const hasEditProjectPermission = checkHasPermission(
+		[PermissionKey.MANAGE_ALL_PROJECTS],
+		userPermissions,
+	);
+	const isMenuShown =
+		hasManageProjectAccessPermission || hasEditProjectPermission;
 
 	return (
-		<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-			<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
+		<>
+			{isMenuShown && (
+				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+					{hasEditProjectPermission && (
+						<MenuItem
+							iconName="pencil"
+							label="Edit"
+							onClick={handleEditClick}
+						/>
+					)}
 
-			{hasManageAccessPermission && (
-				<MenuItem
-					href={projectAccessManagementRoute}
-					iconName="access"
-					label="Manage Access"
-				/>
+					{hasManageProjectAccessPermission && (
+						<MenuItem
+							href={projectAccessManagementRoute}
+							iconName="access"
+							label="Manage Access"
+						/>
+					)}
+				</Menu>
 			)}
-		</Menu>
+		</>
 	);
 };
 
