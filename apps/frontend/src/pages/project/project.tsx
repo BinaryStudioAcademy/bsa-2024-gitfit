@@ -94,7 +94,7 @@ const Project = (): JSX.Element => {
 
 	const hasProject = project !== null;
 
-	const hasManageAllProjectsPermission = checkHasPermission(
+	const hasSetupAnalyticsPermission = checkHasPermission(
 		[PermissionKey.MANAGE_ALL_PROJECTS],
 		userPermissions,
 	);
@@ -123,6 +123,7 @@ const Project = (): JSX.Element => {
 							<ProjectDetailsMenu
 								onEdit={handleEditProject}
 								projectId={project.id}
+								userPermissions={userPermissions}
 							/>
 						</div>
 
@@ -135,7 +136,7 @@ const Project = (): JSX.Element => {
 							</p>
 						</div>
 
-						{hasManageAllProjectsPermission && (
+						{hasSetupAnalyticsPermission && (
 							<div>
 								<Button
 									label="Setup Analytics"

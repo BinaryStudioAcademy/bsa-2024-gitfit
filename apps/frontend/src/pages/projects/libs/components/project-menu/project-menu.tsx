@@ -1,17 +1,21 @@
-import { PermissionKey } from "@git-fit/shared";
-
 import { Menu, MenuItem } from "~/libs/components/components.js";
+import { PermissionKey } from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
-import { useAppSelector, useCallback, usePopover } from "~/libs/hooks/hooks.js";
+import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
+import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/permissions.js";
 
 type Properties = {
 	onDelete: () => void;
 	onEdit: () => void;
+	userPermissions?: PermissionGetAllItemResponseDto[];
 };
 
-const ProjectMenu = ({ onDelete, onEdit }: Properties): JSX.Element => {
+const ProjectMenu = ({
+	onDelete,
+	onEdit,
+	userPermissions = [],
+}: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
-	const { userPermissions } = useAppSelector(({ auth }) => auth);
 
 	const handleEditClick = useCallback(() => {
 		onEdit();
@@ -23,15 +27,15 @@ const ProjectMenu = ({ onDelete, onEdit }: Properties): JSX.Element => {
 		onClose();
 	}, [onDelete, onClose]);
 
-	const hasManageAllProjectsPermission = checkHasPermission(
+	const hasEditOrDeleteProjectPermission = checkHasPermission(
 		[PermissionKey.MANAGE_ALL_PROJECTS],
 		userPermissions,
 	);
-	const isMenuAvailable = hasManageAllProjectsPermission;
+	const isMenuShown = hasEditOrDeleteProjectPermission;
 
 	return (
 		<>
-			{isMenuAvailable && (
+			{isMenuShown && (
 				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
 					<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
 					<MenuItem

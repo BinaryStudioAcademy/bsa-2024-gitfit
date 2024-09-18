@@ -184,7 +184,7 @@ const Projects = (): JSX.Element => {
 
 	const isUpdateFormShown = project && projectStatus === DataStatus.FULFILLED;
 
-	const hasManageAllProjectsPermissions = checkHasPermission(
+	const hasCreateProjectPermission = checkHasPermission(
 		[PermissionKey.MANAGE_ALL_PROJECTS],
 		userPermissions,
 	);
@@ -193,7 +193,7 @@ const Projects = (): JSX.Element => {
 		<PageLayout>
 			<header className={styles["projects-header"]}>
 				<h1 className={styles["title"]}>Projects</h1>
-				{hasManageAllProjectsPermissions && (
+				{hasCreateProjectPermission && (
 					<div>
 						<Button label="Create New" onClick={handleCreateModalOpen} />
 					</div>
@@ -211,6 +211,7 @@ const Projects = (): JSX.Element => {
 								onDelete={handleDeleteClick}
 								onEdit={handleEditClick}
 								project={project}
+								userPermissions={userPermissions}
 							/>
 						))
 					) : (
