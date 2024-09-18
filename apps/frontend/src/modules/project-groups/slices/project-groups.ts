@@ -3,6 +3,7 @@ import {
 	deleteById,
 	loadAllByProjectId,
 	loadUsers,
+	patch,
 } from "./actions.js";
 import { actions } from "./project-group.slice.js";
 
@@ -12,6 +13,7 @@ const allActions = {
 	deleteById,
 	loadAllByProjectId,
 	loadUsers,
+	patch,
 };
 
 export { allActions as actions };

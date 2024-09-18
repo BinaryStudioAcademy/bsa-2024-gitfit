@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.24.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.24.0...backend-v1.24.1) (2024-09-18)
+
+
+### Bug Fixes
+
+* Make project group name unique only within the scope of a project gf-361 ([#380](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/380)) ([92fd89a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/92fd89a0d3150056e5d63c0de6a640dccad5c98b))
+
+## [1.24.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.23.0...backend-v1.24.0) (2024-09-18)
+
+
+### Features
+
+* Add an ability to edit project group gf-342 ([#371](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/371)) ([8c97374](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8c97374279cb535488bd9a197a35791e97fb7665))
+
 ## [1.23.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.22.0...backend-v1.23.0) (2024-09-17)
 
 
