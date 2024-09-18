@@ -1,7 +1,6 @@
 import { transaction } from "objection";
 
 import { SortType } from "~/libs/enums/enums.js";
-import { changeCase } from "~/libs/helpers/helpers.js";
 import { HTTPCode } from "~/libs/modules/http/libs/enums/enums.js";
 import {
 	type PaginationQueryParameters,
@@ -11,6 +10,7 @@ import {
 
 import { ExceptionMessage } from "./libs/enums/enums.js";
 import { ProjectGroupError } from "./libs/exceptions/exceptions.js";
+import { generateProjectGroupKey } from "./libs/helpers/helpers.js";
 import { ProjectGroupEntity } from "./project-group.entity.js";
 import { type ProjectGroupModel } from "./project-group.model.js";
 
@@ -23,7 +23,10 @@ class ProjectGroupRepository implements Repository {
 
 	public async create(entity: ProjectGroupEntity): Promise<ProjectGroupEntity> {
 		const { name, permissions, projectId, users } = entity.toNewObject();
-		const key = changeCase([String(projectId.id), name], "snakeCase");
+		const key = generateProjectGroupKey({
+			name,
+			projectId: projectId.id,
+		});
 
 		const trx = await transaction.start(this.projectGroupModel.knex());
 
@@ -105,7 +108,10 @@ class ProjectGroupRepository implements Repository {
 		name: string;
 		projectId: number;
 	}): Promise<null | ProjectGroupModel> {
-		const key = changeCase([String(projectId), name], "snakeCase");
+		const key = generateProjectGroupKey({
+			name,
+			projectId,
+		});
 
 		return (
 			(await this.projectGroupModel
