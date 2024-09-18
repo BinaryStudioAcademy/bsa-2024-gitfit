@@ -88,6 +88,50 @@ class UserRepository implements Repository {
 		};
 	}
 
+	public async findAllWithProjectPermissions(
+		permissionKeys: string[],
+		projectId: number,
+	): Promise<UserEntity[]> {
+		const users = await this.userModel
+			.query()
+			.withGraphFetched("projectGroups.[permissions]")
+			.modifyGraph("projectGroups.permissions", (builder) => {
+				builder.whereIn("key", permissionKeys);
+			})
+			.whereExists(
+				this.userModel
+					.relatedQuery("projectGroups")
+					.joinRelated("permissions")
+					.whereIn("permissions.key", permissionKeys)
+					.where("project_groups.projectId", projectId),
+			)
+			.whereNull("deletedAt")
+			.execute();
+
+		return users.map((user) => UserEntity.initialize(user));
+	}
+
+	public async findAllWithRootPermissions(
+		permissionKeys: string[],
+	): Promise<UserEntity[]> {
+		const users = await this.userModel
+			.query()
+			.withGraphFetched("groups.[permissions]")
+			.modifyGraph("groups.permissions", (builder) => {
+				builder.whereIn("key", permissionKeys);
+			})
+			.whereExists(
+				this.userModel
+					.relatedQuery("groups")
+					.joinRelated("permissions")
+					.whereIn("permissions.key", permissionKeys),
+			)
+			.whereNull("deletedAt")
+			.execute();
+
+		return users.map((user) => UserEntity.initialize(user));
+	}
+
 	public async findByEmail(
 		email: string,
 		hasDeleted = false,

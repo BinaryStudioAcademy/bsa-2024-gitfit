@@ -96,6 +96,27 @@ class UserService implements Service {
 		};
 	}
 
+	public async findAllWithProjectPermissions(
+		permissionKeys: string[],
+		projectId: number,
+	): Promise<UserAuthResponseDto[]> {
+		const users = await this.userRepository.findAllWithProjectPermissions(
+			permissionKeys,
+			projectId,
+		);
+
+		return users.map((user) => user.toObject());
+	}
+
+	public async findAllWithRootPermissions(
+		permissionKeys: string[],
+	): Promise<UserAuthResponseDto[]> {
+		const users =
+			await this.userRepository.findAllWithRootPermissions(permissionKeys);
+
+		return users.map((user) => user.toObject());
+	}
+
 	public async getByEmail(email: string): Promise<UserEntity> {
 		const item = await this.userRepository.findByEmail(email);
 

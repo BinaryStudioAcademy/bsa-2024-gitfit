@@ -87,7 +87,7 @@ class NotificationController extends BaseController {
 
 	/**
 	 * @swagger
-	 * /notifications:
+	 * /notifications/bulk:
 	 *   post:
 	 *     description: Create notifications for provided receiver user ids
 	 *     requestBody:
@@ -102,8 +102,8 @@ class NotificationController extends BaseController {
 	 *                 type: string
 	 *               receiverUserId:
 	 *                 type: array
-	 * 				   items:
-	 * 				     type: number
+	 *                 items:
+	 *                   type: number
 	 *     responses:
 	 *       201:
 	 *         description: Notification created successfully
