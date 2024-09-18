@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.33.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.32.1...frontend-v1.33.0) (2024-09-18)
+
+
+### Features
+
+* Add an ability to edit project group gf-342 ([#371](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/371)) ([8c97374](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8c97374279cb535488bd9a197a35791e97fb7665))
+
 ## [1.32.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.32.0...frontend-v1.32.1) (2024-09-18)
 
 
