@@ -14,6 +14,7 @@ import {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupGetAllItemResponseDto,
 	type ProjectGroupGetAllResponseDto,
+	type ProjectGroupPatchRequestDto,
 } from "../libs/types/types.js";
 import { name as sliceName } from "./project-group.slice.js";
 
@@ -68,4 +69,18 @@ const create = createAsyncThunk<
 	return response;
 });
 
-export { create, deleteById, loadAllByProjectId, loadUsers };
+const patch = createAsyncThunk<
+	ProjectGroupGetAllItemResponseDto,
+	{ id: number; payload: ProjectGroupPatchRequestDto },
+	AsyncThunkConfig
+>(`${sliceName}/update`, async ({ id, payload }, { extra }) => {
+	const { projectGroupApi, toastNotifier } = extra;
+
+	const response = await projectGroupApi.patch(id, payload);
+
+	toastNotifier.showSuccess(NotificationMessage.PROJECT_GROUP_UPDATE_SUCCESS);
+
+	return response;
+});
+
+export { create, deleteById, loadAllByProjectId, loadUsers, patch };

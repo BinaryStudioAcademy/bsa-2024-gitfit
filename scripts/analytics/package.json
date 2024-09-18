@@ -1,23 +1,31 @@
 {
 	"name": "@git-fit/analytics",
-	"version": "1.1.1",
+	"version": "0.0.1",
 	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/BinaryStudioAcademy/bsa-2024-gitfit.git"
+	},
 	"engines": {
 		"node": "20.x.x",
 		"npm": "10.x.x"
+	},
+	"main": "./index.js",
+	"bin": {
+		"@git-fit/analytics": "./index.js"
 	},
 	"scripts": {
 		"lint:type": "npx tsc --noEmit",
 		"lint:js": "npx eslint . --max-warnings=0 --no-warn-ignored",
 		"lint": "concurrently \"npm:lint:*\"",
-		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+		"build:cp": "cp -r package.json build",
+		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json & npm run build:cp",
 		"start:dev": "tsx watch src/index.ts"
 	},
 	"dependencies": {
 		"@git-fit/shared": "*",
 		"commander": "12.1.0",
 		"convict": "6.2.4",
-		"dotenv": "16.4.5",
 		"forever": "4.0.3",
 		"node-cron": "3.0.3",
 		"pino": "9.4.0",

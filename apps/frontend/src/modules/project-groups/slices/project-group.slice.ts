@@ -11,6 +11,7 @@ import {
 	deleteById,
 	loadAllByProjectId,
 	loadUsers,
+	patch,
 } from "./actions.js";
 
 type State = {
@@ -19,6 +20,7 @@ type State = {
 	projectGroupDeleteStatus: ValueOf<typeof DataStatus>;
 	projectGroups: ProjectGroupGetAllItemResponseDto[];
 	projectGroupsTotalCount: number;
+	projectGroupUpdateStatus: ValueOf<typeof DataStatus>;
 	users: UserGetAllItemResponseDto[];
 	usersDataStatus: ValueOf<typeof DataStatus>;
 	usersTotalCount: number;
@@ -30,6 +32,7 @@ const initialState: State = {
 	projectGroupDeleteStatus: DataStatus.IDLE,
 	projectGroups: [],
 	projectGroupsTotalCount: 0,
+	projectGroupUpdateStatus: DataStatus.IDLE,
 	users: [],
 	usersDataStatus: DataStatus.IDLE,
 	usersTotalCount: 0,
@@ -87,6 +90,23 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(create.rejected, (state) => {
 			state.projectGroupCreateStatus = DataStatus.REJECTED;
+		});
+
+		builder.addCase(patch.pending, (state) => {
+			state.projectGroupUpdateStatus = DataStatus.PENDING;
+		});
+		builder.addCase(patch.fulfilled, (state, action) => {
+			const updatedProjectGroup = action.payload;
+			state.projectGroups = state.projectGroups.map((projectGroup) =>
+				projectGroup.id === updatedProjectGroup.id
+					? updatedProjectGroup
+					: projectGroup,
+			);
+
+			state.projectGroupUpdateStatus = DataStatus.FULFILLED;
+		});
+		builder.addCase(patch.rejected, (state) => {
+			state.projectGroupUpdateStatus = DataStatus.REJECTED;
 		});
 	},
 	initialState,

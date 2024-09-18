@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.32.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.32.0...frontend-v1.32.1) (2024-09-18)
+
+
+### Bug Fixes
+
+* reloading the same page and loader component gf-276 ([#373](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/373)) ([5a38776](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5a38776734e768bd6f28089c9fd81bd122da5091))
+
+## [1.32.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.31.0...frontend-v1.32.0) (2024-09-17)
+
+
+### Features
+
+* add permission to manage all projects gf-248 ([#282](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/282)) ([0bc48e9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0bc48e980a5aacf3b43cab5aacf2c9583c36a3c2))
+
 ## [1.31.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.30.0...frontend-v1.31.0) (2024-09-17)
 
 

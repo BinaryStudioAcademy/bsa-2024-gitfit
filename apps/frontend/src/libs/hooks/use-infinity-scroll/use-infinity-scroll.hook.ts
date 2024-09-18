@@ -3,6 +3,7 @@ import { useCallback, useMemo, useState } from "~/libs/hooks/hooks.js";
 import { FIRST_PAGE, PAGE_INCREMENT } from "./libs/constants/constants.js";
 
 type UseInfiniteScroll = (parameters: {
+	currentItemsCount: number;
 	onLoading: (page: number, pageSize: number) => void;
 	pageSize: number;
 	totalItemsCount: number;
@@ -13,6 +14,7 @@ type UseInfiniteScroll = (parameters: {
 };
 
 const useInfiniteScroll: UseInfiniteScroll = ({
+	currentItemsCount,
 	onLoading,
 	pageSize,
 	totalItemsCount,
@@ -20,8 +22,8 @@ const useInfiniteScroll: UseInfiniteScroll = ({
 	const [page, setPage] = useState<number>(FIRST_PAGE);
 
 	const hasNextPage = useMemo(
-		() => (page + PAGE_INCREMENT) * pageSize < totalItemsCount,
-		[totalItemsCount, pageSize, page],
+		() => currentItemsCount < totalItemsCount,
+		[totalItemsCount, currentItemsCount],
 	);
 
 	const onPageChange = useCallback(
@@ -36,7 +38,7 @@ const useInfiniteScroll: UseInfiniteScroll = ({
 		if (hasNextPage) {
 			onPageChange(page + PAGE_INCREMENT);
 		}
-	}, [onPageChange, hasNextPage]);
+	}, [onPageChange, hasNextPage, page]);
 
 	const onPageReset = useCallback(() => {
 		onPageChange(FIRST_PAGE);
