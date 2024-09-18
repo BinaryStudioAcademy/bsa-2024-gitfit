@@ -55,7 +55,7 @@ const ProjectCard = ({
 			? getActivityIndicatorStatus(daysDifference)
 			: null;
 
-	const hasActivityIndicator = lastUpdateLabel && colorStatus;
+	const hasActivityIndicator = lastUpdateLabel !== null && colorStatus !== null;
 
 	return (
 		<div className={styles["project-container"]}>
