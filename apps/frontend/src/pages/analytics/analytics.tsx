@@ -37,13 +37,9 @@ const Analytics = (): JSX.Element => {
 		},
 	});
 
-	const handleLoadActivityLogs = useCallback(() => {
+	useEffect(() => {
 		void dispatch(activityLogActions.loadAll());
 	}, [dispatch]);
-
-	useEffect(() => {
-		handleLoadActivityLogs();
-	}, [handleLoadActivityLogs]);
 
 	const handleFormSubmit = useCallback(
 		(event_?: React.BaseSyntheticEvent): void => {
