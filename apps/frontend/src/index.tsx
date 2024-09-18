@@ -63,7 +63,9 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							},
 							{
 								element: (
-									<ProtectedRoute>
+									<ProtectedRoute
+										routePermissions={[PermissionKey.MANAGE_ALL_PROJECTS]}
+									>
 										<Contributors />
 									</ProtectedRoute>
 								),
@@ -71,7 +73,12 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							},
 							{
 								element: (
-									<ProtectedRoute>
+									<ProtectedRoute
+										routePermissions={[
+											PermissionKey.VIEW_ALL_PROJECTS,
+											PermissionKey.MANAGE_ALL_PROJECTS,
+										]}
+									>
 										<Analytics />
 									</ProtectedRoute>
 								),
