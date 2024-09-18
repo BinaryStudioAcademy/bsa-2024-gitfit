@@ -47,7 +47,7 @@ const ProjectCard = ({
 		: null;
 
 	const lastUpdateLabel = lastActivityDate
-		? getRelativeDate(lastActivityDate, currentDate)
+		? `Updated ${getRelativeDate(lastActivityDate, currentDate)}`
 		: null;
 
 	const colorStatus =
