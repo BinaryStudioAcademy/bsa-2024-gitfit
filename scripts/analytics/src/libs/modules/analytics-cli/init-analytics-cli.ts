@@ -28,7 +28,3 @@ taskScheduler.start(
 	CRON_SCHEDULE,
 	() => void analyticsService.collectAndSendStats(),
 );
-
-const getPackageName = (): string => "CLI Analytics";
-
-export { getPackageName };
