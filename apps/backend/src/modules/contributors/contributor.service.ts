@@ -8,6 +8,7 @@ import { ContributorError } from "./libs/exceptions/exceptions.js";
 import {
 	type ContributorCreateRequestDto,
 	type ContributorGetAllItemResponseDto,
+	type ContributorGetAllResponseDto,
 } from "./libs/types/types.js";
 
 class ContributorService implements Service {
@@ -48,8 +49,43 @@ class ContributorService implements Service {
 		return item.toObject();
 	}
 
-	public findAll(): ReturnType<Service["findAll"]> {
-		return Promise.resolve({ items: [] });
+	public async findAll(): Promise<ContributorGetAllResponseDto> {
+		const contributors = await this.contributorRepository.findAll();
+
+		return {
+			items: contributors.items.map((item) => {
+				const contributor = item.toObject();
+
+				return {
+					...contributor,
+					gitEmails: contributor.gitEmails.map((gitEmail) => ({
+						email: gitEmail.email,
+						id: gitEmail.id,
+					})),
+				};
+			}),
+		};
+	}
+
+	public async findAllByProjectId(
+		projectId: number,
+	): Promise<ContributorGetAllResponseDto> {
+		const contributors =
+			await this.contributorRepository.findAllByProjectId(projectId);
+
+		return {
+			items: contributors.items.map((item) => {
+				const contributor = item.toObject();
+
+				return {
+					...contributor,
+					gitEmails: contributor.gitEmails.map((gitEmail) => ({
+						email: gitEmail.email,
+						id: gitEmail.id,
+					})),
+				};
+			}),
+		};
 	}
 
 	public async findByName(
@@ -57,7 +93,11 @@ class ContributorService implements Service {
 	): Promise<ContributorGetAllItemResponseDto | null> {
 		const item = await this.contributorRepository.findByName(name);
 
-		return item ? item.toObject() : null;
+		if (!item) {
+			return null;
+		}
+
+		return item.toObject();
 	}
 
 	public update(): ReturnType<Service["update"]> {

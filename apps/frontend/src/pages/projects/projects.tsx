@@ -67,6 +67,10 @@ const Projects = (): JSX.Element => {
 	}, [dispatch, projectToModifyId]);
 
 	const hasProjects = projects.length !== EMPTY_LENGTH;
+	const hasSearch = search.length !== EMPTY_LENGTH;
+	const emptyPlaceholderMessage = hasSearch
+		? "No projects found matching your search criteria. Please try different keywords."
+		: "No projects created yet. Create the first project now.";
 
 	const handleLoadProjects = useCallback(
 		(page: number, pageSize: number) => {
@@ -82,6 +86,7 @@ const Projects = (): JSX.Element => {
 	);
 
 	const { hasNextPage, onNextPage, onPageReset } = useInfiniteScroll({
+		currentItemsCount: projects.length,
 		onLoading: handleLoadProjects,
 		pageSize: PROJECTS_PAGE_SIZE,
 		totalItemsCount: projectsTotalCount,
@@ -200,8 +205,7 @@ const Projects = (): JSX.Element => {
 						))
 					) : (
 						<p className={styles["empty-placeholder"]}>
-							No projects found matching your search criteria. Please try
-							different keywords.
+							{emptyPlaceholderMessage}
 						</p>
 					)}
 

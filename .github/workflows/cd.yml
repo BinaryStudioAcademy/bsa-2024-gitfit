@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.ref_name }}
+  group: cd-${{ github.ref_name }}
   cancel-in-progress: false
 
 jobs:
@@ -22,6 +22,7 @@ jobs:
       pull-requests: write
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
+      scripts_analytics_release_created: ${{ steps.release.outputs['scripts/analytics--release_created'] }}
     steps:
       - name: Code Checkout
         uses: actions/checkout@v4
@@ -60,3 +61,9 @@ jobs:
           environment_name: ${{ env.EBS_ENVIRONMENT_NAME }}
           version_label: ${{ github.sha }}
           deployment_package: ./build.zip
+
+  deploy-analytics:
+    name: Deploy Analytics Script
+    needs: release
+    if: ${{ needs.release.outputs.scripts_analytics_release_created }}
+    uses: ./.github/workflows/cd-analytics.yml

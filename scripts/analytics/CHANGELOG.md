@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.1.0...analytics-v1.1.1) (2024-09-16)
+
+
+### Bug Fixes
+
+* replace workspaces with appropriate ones in linter commands gf-296 ([#339](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/339)) ([d986718](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d986718d6ce8a1e7fce270924a4672ba379fd9b6))
+
 ## [1.1.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.0.0...analytics-v1.1.0) (2024-09-16)
 
 
