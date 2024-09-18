@@ -1,12 +1,6 @@
 {
 	"extends": "../../tsconfig.json",
-	"include": [
-		"**/*.ts",
-		"**/*.js",
-		"**/*.tsx",
-		"vite.config.ts",
-		"src/libs/hooks/use-search-reset"
-	],
+	"include": ["**/*.ts", "**/*.js", "**/*.tsx", "vite.config.ts"],
 	"exclude": ["node_modules", "build"],
 	"compilerOptions": {
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
