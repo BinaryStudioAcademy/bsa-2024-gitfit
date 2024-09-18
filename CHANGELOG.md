@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.35.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.34.0...v1.35.0) (2024-09-18)
+
+
+### Features
+
+* added placeholder to contributors list on project page gf-377 ([#384](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/384)) ([0308e61](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0308e61e921d790664c6740c92e53c63f966ea67))
+
+
+### Bug Fixes
+
+* Make project group name unique only within the scope of a project gf-361 ([#380](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/380)) ([92fd89a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/92fd89a0d3150056e5d63c0de6a640dccad5c98b))
+
 ## [1.34.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.33.1...v1.34.0) (2024-09-18)
 
 
