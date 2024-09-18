@@ -1,0 +1,28 @@
+.activity-indicator {
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
+	justify-content: flex-start;
+	min-width: 120px;
+}
+
+.activity-indicator::before {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin-right: 8px;
+	content: "";
+	border-radius: 50%;
+}
+
+.status-green::before {
+	background-color: var(--color-success);
+}
+
+.status-yellow::before {
+	background-color: var(--color-warning);
+}
+
+.status-red::before {
+	background-color: var(--color-danger);
+}
