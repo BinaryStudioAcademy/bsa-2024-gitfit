@@ -8,10 +8,7 @@ type Properties = {
 	projectId: number;
 };
 
-const ProjectDetailsMenu = ({
-	onEdit,
-	projectId,
-}: Properties): JSX.Element | null => {
+const ProjectDetailsMenu = ({ onEdit, projectId }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
 	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
 
@@ -21,7 +18,7 @@ const ProjectDetailsMenu = ({
 	}, [onEdit, onClose]);
 
 	if (!authenticatedUser) {
-		return null;
+		return <></>;
 	}
 
 	const projectAccessManagementRoute = configureString(
