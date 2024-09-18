@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.33.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.33.0...v1.33.1) (2024-09-18)
+
+
+### Bug Fixes
+
+* fix check has permission helper gf-248 ([#378](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/378)) ([ffc88da](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ffc88da2ec88eb24b7e6e0dabe5f0b4ddd96a3ab))
+* reloading the same page and loader component gf-276 ([#373](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/373)) ([5a38776](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5a38776734e768bd6f28089c9fd81bd122da5091))
+
 ## [1.33.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.32.0...v1.33.0) (2024-09-17)
 
 
