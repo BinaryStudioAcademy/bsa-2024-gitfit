@@ -113,12 +113,12 @@ const AccessManagement = (): JSX.Element => {
 		},
 		[dispatch],
 	);
-	const { resetSearch } = useSearch();
+	const { onSearchReset } = useSearch();
 
 	const handleCreateModalClose = useCallback((): void => {
-		resetSearch();
+		onSearchReset();
 		onCreateModalClose();
-	}, [onCreateModalClose, resetSearch]);
+	}, [onCreateModalClose, onSearchReset]);
 
 	const [groupToEdit, setGroupToEdit] =
 		useState<GroupGetAllItemResponseDto | null>(null);
