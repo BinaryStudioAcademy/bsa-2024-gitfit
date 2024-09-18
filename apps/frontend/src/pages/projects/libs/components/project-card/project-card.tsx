@@ -19,14 +19,14 @@ type Properties = {
 	onDelete: (project: ProjectGetAllItemResponseDto) => void;
 	onEdit: (project: ProjectGetAllItemResponseDto) => void;
 	project: ProjectGetAllItemResponseDto;
-	userPermissions?: PermissionGetAllItemResponseDto[];
+	userPermissions: PermissionGetAllItemResponseDto[];
 };
 
 const ProjectCard = ({
 	onDelete,
 	onEdit,
 	project,
-	userPermissions = [],
+	userPermissions,
 }: Properties): JSX.Element => {
 	const projectRoute = configureString(AppRoute.PROJECT, {
 		id: project.id.toString(),

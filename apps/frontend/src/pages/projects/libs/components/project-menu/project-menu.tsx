@@ -7,13 +7,13 @@ import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/perm
 type Properties = {
 	onDelete: () => void;
 	onEdit: () => void;
-	userPermissions?: PermissionGetAllItemResponseDto[];
+	userPermissions: PermissionGetAllItemResponseDto[];
 };
 
 const ProjectMenu = ({
 	onDelete,
 	onEdit,
-	userPermissions = [],
+	userPermissions,
 }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
 
