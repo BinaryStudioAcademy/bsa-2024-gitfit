@@ -1,3 +1,4 @@
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
@@ -101,8 +102,6 @@ class ActivityLogService implements Service {
 			const { date, items } = record;
 
 			for (const logItem of items) {
-				let hasCommits = Boolean(logItem.commitsNumber);
-
 				const activityLog = await this.createActivityLog({
 					date,
 					logItem,
@@ -111,10 +110,10 @@ class ActivityLogService implements Service {
 				});
 
 				createdActivityLogs.items.push(activityLog.toObject());
+			}
 
-				if (hasCommits) {
-					await this.projectService.updateLastActivityDate(projectId, date);
-				}
+			if (items.length > EMPTY_LENGTH) {
+				await this.projectService.updateLastActivityDate(projectId, date);
 			}
 		}
 
