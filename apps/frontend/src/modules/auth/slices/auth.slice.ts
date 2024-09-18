@@ -41,6 +41,7 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(getAuthenticatedUser.rejected, (state) => {
 			state.authenticatedUser = null;
+			state.userPermissions = [];
 			state.dataStatus = DataStatus.REJECTED;
 		});
 
@@ -56,6 +57,7 @@ const { actions, name, reducer } = createSlice({
 
 		builder.addCase(logout.fulfilled, (state) => {
 			state.authenticatedUser = null;
+			state.userPermissions = [];
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(logout.pending, (state) => {
