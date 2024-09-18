@@ -1,3 +1,4 @@
+export { ActivityIndicator } from "./activity-indicator/activity-indicator.js";
 export { App } from "./app/app.js";
 export { Avatar } from "./avatar/avatar.js";
 export { Breadcrumbs } from "./breadcrumbs/breadcrumbs.js";
