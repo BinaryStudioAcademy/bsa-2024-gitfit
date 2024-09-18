@@ -8,11 +8,13 @@ import styles from "./styles.module.css";
 type Properties = {
 	contributors: ContributorGetAllItemResponseDto[];
 	isLoading: boolean;
+	onMerge: () => void;
 };
 
 const ContributorsList = ({
 	contributors,
 	isLoading,
+	onMerge,
 }: Properties): JSX.Element => {
 	const hasContributors = contributors.length > EMPTY_LENGTH;
 	const isListShown = !isLoading && hasContributors;
@@ -26,7 +28,7 @@ const ContributorsList = ({
 				<ul className={styles["list"]}>
 					{contributors.map((contributor) => (
 						<li key={contributor.id}>
-							<ContributorCard contributor={contributor} />
+							<ContributorCard contributor={contributor} onMerge={onMerge} />
 						</li>
 					))}
 				</ul>

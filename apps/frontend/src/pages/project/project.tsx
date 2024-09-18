@@ -50,6 +50,12 @@ const Project = (): JSX.Element => {
 		onOpen: handleEditModalOpen,
 	} = useModal();
 
+	const {
+		isOpened: isMergeModalOpen,
+		onClose: onMergeModalClose,
+		onOpen: onMergeModalOpen,
+	} = useModal();
+
 	useEffect(() => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
@@ -79,6 +85,10 @@ const Project = (): JSX.Element => {
 		},
 		[dispatch, project],
 	);
+
+	const handleMergeContributors = useCallback(() => {
+		onMergeModalOpen();
+	}, [onMergeModalOpen]);
 
 	const isLoading =
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
@@ -138,6 +148,7 @@ const Project = (): JSX.Element => {
 							<ContributorsList
 								contributors={projectContributors}
 								isLoading={isContributorsDataLoading}
+								onMerge={handleMergeContributors}
 							/>
 						</div>
 					</div>
@@ -151,6 +162,13 @@ const Project = (): JSX.Element => {
 							onSubmit={handleProjectEditSubmit}
 							project={project}
 						/>
+					</Modal>
+					<Modal
+						isOpened={isMergeModalOpen}
+						onClose={onMergeModalClose}
+						title="Merge contributors"
+					>
+						<h1>Hi</h1>
 					</Modal>
 
 					<SetupAnalyticsModal
