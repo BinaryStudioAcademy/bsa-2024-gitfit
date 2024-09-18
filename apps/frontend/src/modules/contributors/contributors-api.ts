@@ -28,6 +28,23 @@ class ContributorApi extends BaseHTTPApi {
 
 		return await response.json<ContributorGetAllResponseDto>();
 	}
+
+	public async getAllByProjectId(
+		projectId: string,
+	): Promise<ContributorGetAllResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(ContributorsApiPath.ROOT, {}),
+			{
+				hasAuth: true,
+				method: "GET",
+				query: {
+					projectId,
+				},
+			},
+		);
+
+		return await response.json<ContributorGetAllResponseDto>();
+	}
 }
 
 export { ContributorApi };

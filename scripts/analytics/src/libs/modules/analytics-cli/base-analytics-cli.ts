@@ -20,7 +20,7 @@ class BaseAnalyticsCli {
 
 	private setupCommands(): void {
 		this.program
-			.command("run-forever <repoPath> <apiKey> <userId>")
+			.command("track <apiKey> <userId> <repoPath>")
 			.description("Start the background job for collecting statistics")
 			.action((repoPath: string, apiKey: string, userId: string) => {
 				if (!repoPath || !apiKey || !userId) {
@@ -44,7 +44,7 @@ class BaseAnalyticsCli {
 					silent: false,
 				});
 
-				this.logger.info("Started background job for collecting stats.");
+				this.logger.info("Started background job for collecting analytics.");
 			});
 	}
 
@@ -53,7 +53,7 @@ class BaseAnalyticsCli {
 
 		this.program
 			.name("CLI Analytics")
-			.description("CLI tool to collect repositories data and send analytics")
+			.description("CLI tool to collect repositories data and send analytics.")
 			.version("1.0.0");
 
 		this.setupCommands();

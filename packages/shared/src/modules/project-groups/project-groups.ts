@@ -6,5 +6,10 @@ export {
 	type ProjectGroupGetAllItemResponseDto,
 	type ProjectGroupGetAllRequestDto,
 	type ProjectGroupGetAllResponseDto,
+	type ProjectGroupPatchRequestDto,
+	type ProjectGroupPatchResponseDto,
 } from "./libs/types/types.js";
-export { projectGroupCreate as projectGroupCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+export {
+	projectGroupCreate as projectGroupCreateValidationSchema,
+	projectGroupPatch as projectGroupPatchValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";

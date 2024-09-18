@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
+import { type ContributorGetAllItemResponseDto } from "~/modules/contributors/contributors.js";
 import { actions as projectApiKeyActions } from "~/modules/project-api-keys/project-api-keys.js";
 import {
 	type ProjectGetAllItemResponseDto,
@@ -9,11 +10,20 @@ import {
 } from "~/modules/projects/projects.js";
 
 import { FIRST_PAGE } from "../libs/constants/constants.js";
-import { create, deleteById, getById, loadAll, patch } from "./actions.js";
+import {
+	create,
+	deleteById,
+	getById,
+	loadAll,
+	loadAllContributorsByProjectId,
+	patch,
+} from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
 	project: null | ProjectGetByIdResponseDto;
+	projectContributors: ContributorGetAllItemResponseDto[];
+	projectContributorsStatus: ValueOf<typeof DataStatus>;
 	projectCreateStatus: ValueOf<typeof DataStatus>;
 	projectPatchStatus: ValueOf<typeof DataStatus>;
 	projects: ProjectGetAllItemResponseDto[];
@@ -24,6 +34,8 @@ type State = {
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	project: null,
+	projectContributors: [],
+	projectContributorsStatus: DataStatus.IDLE,
 	projectCreateStatus: DataStatus.IDLE,
 	projectPatchStatus: DataStatus.IDLE,
 	projects: [],
@@ -98,6 +110,20 @@ const { actions, name, reducer } = createSlice({
 			if (state.project) {
 				state.project.apiKey = action.payload.apiKey;
 			}
+		});
+		builder.addCase(loadAllContributorsByProjectId.pending, (state) => {
+			state.projectContributorsStatus = DataStatus.PENDING;
+		});
+		builder.addCase(
+			loadAllContributorsByProjectId.fulfilled,
+			(state, action) => {
+				state.projectContributors = action.payload.items;
+				state.projectContributorsStatus = DataStatus.FULFILLED;
+			},
+		);
+		builder.addCase(loadAllContributorsByProjectId.rejected, (state) => {
+			state.projectContributors = [];
+			state.projectContributorsStatus = DataStatus.REJECTED;
 		});
 	},
 	initialState,

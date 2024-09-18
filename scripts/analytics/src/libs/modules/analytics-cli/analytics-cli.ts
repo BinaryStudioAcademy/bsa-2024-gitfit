@@ -6,4 +6,3 @@ const analyticsCli = new BaseAnalyticsCli({
 });
 
 export { analyticsCli };
-export { getPackageName } from "./init-analytics-cli.js";

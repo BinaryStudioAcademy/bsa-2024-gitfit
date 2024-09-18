@@ -33,7 +33,10 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: (
 									<ProtectedRoute
-										routePermissions={[PermissionKey.VIEW_ALL_PROJECTS]}
+										routePermissions={[
+											PermissionKey.VIEW_ALL_PROJECTS,
+											PermissionKey.MANAGE_ALL_PROJECTS,
+										]}
 									>
 										<Projects />
 									</ProtectedRoute>
@@ -95,11 +98,26 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 								path: AppRoute.SIGN_UP,
 							},
 							{
-								element: <Project />,
+								element: (
+									<ProtectedRoute
+										routePermissions={[
+											PermissionKey.VIEW_ALL_PROJECTS,
+											PermissionKey.MANAGE_ALL_PROJECTS,
+										]}
+									>
+										<Project />
+									</ProtectedRoute>
+								),
 								path: AppRoute.PROJECT,
 							},
 							{
-								element: <ProjectAccessManagement />,
+								element: (
+									<ProtectedRoute
+										routePermissions={[PermissionKey.MANAGE_ALL_PROJECTS]}
+									>
+										<ProjectAccessManagement />
+									</ProtectedRoute>
+								),
 								path: AppRoute.PROJECT_ACCESS_MANAGEMENT,
 							},
 						],
