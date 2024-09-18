@@ -1,10 +1,9 @@
-import { formatDate } from "~/libs/helpers/helpers.js";
+import { executeCommand, formatDate } from "~/libs/helpers/helpers.js";
 import { type GITService } from "~/libs/modules/git-service/git-service.js";
 import { logger } from "~/libs/modules/logger/logger.js";
 
 import { type analyticsApi } from "./analytics.js";
 import { COMMIT_REGEX } from "./libs/constants/constants.js";
-import { executeCommand } from "./libs/helpers/helpers.js";
 import {
 	type ActivityLogCreateItemRequestDto,
 	type CommitStatistics,

@@ -2,6 +2,7 @@ import { Command } from "commander";
 import path from "node:path";
 import pm2 from "pm2";
 
+import { executeCommand } from "~/libs/helpers/helpers.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 
 type Constructor = {
@@ -16,6 +17,26 @@ class BaseAnalyticsCli {
 	public constructor({ logger }: Constructor) {
 		this.program = new Command();
 		this.logger = logger;
+	}
+
+	private async setupAutoStart(): Promise<void> {
+		try {
+			const { stderr: saveError, stdout: saveOut } =
+				await executeCommand("pm2 save");
+
+			if (saveError) {
+				this.logger.error(`PM2 save error: ${saveError as string}`);
+
+				return;
+			}
+
+			this.logger.info(`PM2 save successful: ${saveOut as string}`);
+		} catch (error) {
+			this.logger.error("Error setting up auto-start:", {
+				message: (error as Error).message,
+				stack: (error as Error).stack,
+			});
+		}
 	}
 
 	private setupCommands(): void {
@@ -58,6 +79,8 @@ class BaseAnalyticsCli {
 									stack: startError.stack,
 								});
 							}
+
+							void this.setupAutoStart();
 
 							pm2.disconnect();
 						},
