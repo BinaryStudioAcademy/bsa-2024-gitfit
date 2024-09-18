@@ -1,6 +1,10 @@
-import { Menu, MenuItem } from "~/libs/components/components.js";
+import {
+	Menu,
+	MenuItem,
+	ProtectedComponent,
+} from "~/libs/components/components.js";
 import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
-import { checkHasPermission, configureString } from "~/libs/helpers/helpers.js";
+import { configureString } from "~/libs/helpers/helpers.js";
 import { useAppSelector, useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
 type Properties = {
@@ -31,22 +35,19 @@ const ProjectDetailsMenu = ({
 		},
 	);
 
-	const hasManageAccessPermission = checkHasPermission(
-		[PermissionKey.MANAGE_ALL_PROJECTS],
-		authenticatedUser.groups.flatMap((group) => group.permissions),
-	);
-
 	return (
 		<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
 			<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
 
-			{hasManageAccessPermission && (
+			<ProtectedComponent
+				requiredPermissions={[PermissionKey.MANAGE_ALL_PROJECTS]}
+			>
 				<MenuItem
 					href={projectAccessManagementRoute}
 					iconName="access"
 					label="Manage Access"
 				/>
-			)}
+			</ProtectedComponent>
 		</Menu>
 	);
 };
