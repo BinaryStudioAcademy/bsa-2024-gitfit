@@ -7,6 +7,7 @@ import {
 	type PaginationResponseDto,
 	type Repository,
 } from "~/libs/types/types.js";
+import { type ProjectModel } from "~/modules/projects/project.model.js";
 
 import { ExceptionMessage } from "./libs/enums/enums.js";
 import { ProjectGroupError } from "./libs/exceptions/exceptions.js";
@@ -70,8 +71,22 @@ class ProjectGroupRepository implements Repository {
 		return Boolean(deletedRowsCount);
 	}
 
-	public find(): ReturnType<Repository["find"]> {
-		return Promise.resolve(null);
+	public async find(id: number): Promise<null | ProjectGroupEntity> {
+		const projectGroup = await this.projectGroupModel
+			.query()
+			.findById(id)
+			.withGraphFetched("[permissions, projects, users]");
+
+		if (projectGroup) {
+			const [project] = projectGroup.projects as [ProjectModel];
+
+			return ProjectGroupEntity.initialize({
+				...projectGroup,
+				projectId: project,
+			});
+		}
+
+		return null;
 	}
 
 	public findAll(): ReturnType<Repository["findAll"]> {
@@ -122,8 +137,39 @@ class ProjectGroupRepository implements Repository {
 		);
 	}
 
-	public update(): ReturnType<Repository["update"]> {
-		return Promise.resolve(null);
+	public async update(
+		id: number,
+		entity: ProjectGroupEntity,
+	): Promise<ProjectGroupEntity> {
+		const { name, permissions, projectId, users } = entity.toNewObject();
+		const key = changeCase(name, "snakeCase");
+
+		const trx = await transaction.start(this.projectGroupModel.knex());
+
+		const projectGroupData = {
+			id,
+			key,
+			name,
+			permissions,
+			projects: [projectId],
+			users,
+		};
+
+		const updatedProjectGroup = await this.projectGroupModel
+			.query(trx)
+			.upsertGraph(projectGroupData, {
+				relate: true,
+				unrelate: true,
+			})
+			.returning("*")
+			.withGraphFetched("[permissions, projects, users]");
+
+		await trx.commit();
+
+		return ProjectGroupEntity.initialize({
+			...updatedProjectGroup,
+			projectId,
+		});
 	}
 }
 
