@@ -36,19 +36,30 @@ const ProjectDetailsMenu = ({
 	);
 
 	return (
-		<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-			<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
+		<ProtectedComponent
+			requiredPermissions={[
+				PermissionKey.MANAGE_ALL_PROJECTS,
+				PermissionKey.MANAGE_USER_ACCESS,
+			]}
+		>
+			<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+				<ProtectedComponent
+					requiredPermissions={[PermissionKey.MANAGE_ALL_PROJECTS]}
+				>
+					<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
+				</ProtectedComponent>
 
-			<ProtectedComponent
-				requiredPermissions={[PermissionKey.MANAGE_ALL_PROJECTS]}
-			>
-				<MenuItem
-					href={projectAccessManagementRoute}
-					iconName="access"
-					label="Manage Access"
-				/>
-			</ProtectedComponent>
-		</Menu>
+				<ProtectedComponent
+					requiredPermissions={[PermissionKey.MANAGE_USER_ACCESS]}
+				>
+					<MenuItem
+						href={projectAccessManagementRoute}
+						iconName="access"
+						label="Manage Access"
+					/>
+				</ProtectedComponent>
+			</Menu>
+		</ProtectedComponent>
 	);
 };
 

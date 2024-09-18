@@ -3,8 +3,9 @@ import {
 	Button,
 	Modal,
 	PageLayout,
+	ProtectedComponent,
 } from "~/libs/components/components.js";
-import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
+import { AppRoute, DataStatus, PermissionKey } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -128,10 +129,14 @@ const Project = (): JSX.Element => {
 						</div>
 
 						<div>
-							<Button
-								label="Setup Analytics"
-								onClick={onSetupAnalyticsModalOpen}
-							/>
+							<ProtectedComponent
+								requiredPermissions={[PermissionKey.MANAGE_ALL_PROJECTS]}
+							>
+								<Button
+									label="Setup Analytics"
+									onClick={onSetupAnalyticsModalOpen}
+								/>
+							</ProtectedComponent>
 						</div>
 
 						<div className={styles["contributors-list-wrapper"]}>

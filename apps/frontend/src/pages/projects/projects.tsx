@@ -4,9 +4,10 @@ import {
 	Loader,
 	Modal,
 	PageLayout,
+	ProtectedComponent,
 } from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
-import { DataStatus } from "~/libs/enums/enums.js";
+import { DataStatus, PermissionKey } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -186,7 +187,11 @@ const Projects = (): JSX.Element => {
 			<header className={styles["projects-header"]}>
 				<h1 className={styles["title"]}>Projects</h1>
 				<div>
-					<Button label="Create New" onClick={handleCreateModalOpen} />
+					<ProtectedComponent
+						requiredPermissions={[PermissionKey.MANAGE_ALL_PROJECTS]}
+					>
+						<Button label="Create New" onClick={handleCreateModalOpen} />
+					</ProtectedComponent>
 				</div>
 			</header>
 			<ProjectsSearch onChange={handleSearchChange} />
