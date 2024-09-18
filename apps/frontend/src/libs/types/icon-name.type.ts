@@ -9,6 +9,7 @@ type IconName =
 	| "eye"
 	| "leftArrow"
 	| "leftDoubleArrow"
+	| "merge"
 	| "pencil"
 	| "project"
 	| "rightArrow"
