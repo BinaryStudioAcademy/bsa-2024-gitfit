@@ -1,7 +1,6 @@
 import { transaction } from "objection";
 
 import { SortType } from "~/libs/enums/enums.js";
-import { changeCase } from "~/libs/helpers/helpers.js";
 import { HTTPCode } from "~/libs/modules/http/libs/enums/enums.js";
 import {
 	type PaginationQueryParameters,
@@ -12,6 +11,7 @@ import { type ProjectModel } from "~/modules/projects/project.model.js";
 
 import { ExceptionMessage } from "./libs/enums/enums.js";
 import { ProjectGroupError } from "./libs/exceptions/exceptions.js";
+import { generateProjectGroupKey } from "./libs/helpers/helpers.js";
 import { ProjectGroupEntity } from "./project-group.entity.js";
 import { type ProjectGroupModel } from "./project-group.model.js";
 
@@ -24,7 +24,10 @@ class ProjectGroupRepository implements Repository {
 
 	public async create(entity: ProjectGroupEntity): Promise<ProjectGroupEntity> {
 		const { name, permissions, projectId, users } = entity.toNewObject();
-		const key = changeCase(name, "snakeCase");
+		const key = generateProjectGroupKey({
+			name,
+			projectId: projectId.id,
+		});
 
 		const trx = await transaction.start(this.projectGroupModel.knex());
 
@@ -113,10 +116,25 @@ class ProjectGroupRepository implements Repository {
 		};
 	}
 
-	public async findByName(name: string): Promise<null | ProjectGroupModel> {
-		const key = changeCase(name, "snakeCase");
+	public async findByProjectIdAndName({
+		name,
+		projectId,
+	}: {
+		name: string;
+		projectId: number;
+	}): Promise<null | ProjectGroupModel> {
+		const key = generateProjectGroupKey({
+			name,
+			projectId,
+		});
 
-		return (await this.projectGroupModel.query().findOne({ key })) ?? null;
+		return (
+			(await this.projectGroupModel
+				.query()
+				.findOne({ key })
+				.withGraphJoined("projects")
+				.where("projects.id", projectId)) ?? null
+		);
 	}
 
 	public async update(
@@ -124,7 +142,10 @@ class ProjectGroupRepository implements Repository {
 		entity: ProjectGroupEntity,
 	): Promise<ProjectGroupEntity> {
 		const { name, permissions, projectId, users } = entity.toNewObject();
-		const key = changeCase(name, "snakeCase");
+		const key = generateProjectGroupKey({
+			name,
+			projectId: projectId.id,
+		});
 
 		const trx = await transaction.start(this.projectGroupModel.knex());
 

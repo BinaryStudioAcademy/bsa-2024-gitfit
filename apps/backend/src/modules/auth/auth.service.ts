@@ -37,10 +37,10 @@ class AuthService {
 	public async signIn(
 		userRequestDto: UserSignInRequestDto,
 	): Promise<UserSignInResponseDto> {
-		const user = await this.userService.getByEmail(userRequestDto.email);
-		const userObject = user.toObject();
+		const userEntity = await this.userService.getByEmail(userRequestDto.email);
+		const user = userEntity.toObject();
 
-		const { passwordHash } = user.toNewObject();
+		const { passwordHash } = userEntity.toNewObject();
 
 		const isPasswordCorrect = await this.encryptionService.compare(
 			userRequestDto.password,
@@ -55,12 +55,12 @@ class AuthService {
 		}
 
 		const token = await this.tokenService.createToken({
-			userId: userObject.id,
+			userId: user.id,
 		});
 
 		return {
 			token,
-			user: userObject,
+			user,
 		};
 	}
 
