@@ -2,26 +2,26 @@ import {
 	type Control,
 	type FieldErrors,
 	type FieldPath,
+	type FieldValues,
 } from "react-hook-form";
 
 import { Search } from "~/libs/components/components.js";
-import { type SearchForm } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
 
-type Properties = {
-	control: Control<SearchForm>;
-	errors: FieldErrors<SearchForm>;
-	name: FieldPath<SearchForm>;
+type Properties<T extends FieldValues> = {
+	control: Control<T, null>;
+	errors: FieldErrors<T>;
+	name: FieldPath<T>;
 	onChange: (search: string) => void;
 };
 
-const ProjectGroupUsersSearch = ({
+const ProjectGroupUsersSearch = <T extends FieldValues>({
 	control,
 	errors,
 	name,
 	onChange,
-}: Properties): JSX.Element => {
+}: Properties<T>): JSX.Element => {
 	return (
 		<div className={styles["search-container"]}>
 			<Search
