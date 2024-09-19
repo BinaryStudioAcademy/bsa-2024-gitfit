@@ -14,5 +14,8 @@ export { contributorApi };
 export {
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,
+	type ContributorPatchRequestDto,
+	type ContributorPatchResponseDto,
 } from "./libs/types/types.js";
+export { ContributorPatchValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 export { actions, reducer } from "./slices/contributors.js";
