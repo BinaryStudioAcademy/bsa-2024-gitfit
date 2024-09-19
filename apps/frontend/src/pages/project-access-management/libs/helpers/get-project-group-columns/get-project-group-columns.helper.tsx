@@ -13,16 +13,24 @@ const getProjectGroupColumns = (actions: {
 	{
 		accessorKey: "name",
 		header: "Name",
+		size: 200,
 	},
 	{
 		accessorFn: (projectGroup: ProjectGroupRow): string =>
 			projectGroup.permissions.join(", "),
 		header: "Permissions",
+		size: 250,
+	},
+	{
+		accessorKey: "userCount",
+		header: "Users",
+		size: 100,
 	},
 	{
 		accessorFn: (projectGroup: ProjectGroupRow): string =>
 			formatDate(new Date(projectGroup.createdAt), "d MMM yyyy HH:mm"),
 		header: "Created At",
+		size: 200,
 	},
 	{
 		cell: ({ row: { original: projectGroup } }) => (

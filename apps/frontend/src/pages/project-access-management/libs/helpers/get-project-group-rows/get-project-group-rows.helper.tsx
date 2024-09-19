@@ -10,6 +10,7 @@ const getProjectGroupRows = (
 		id: projectGroup.id,
 		name: projectGroup.name,
 		permissions: projectGroup.permissions.map((permission) => permission.name),
+		userCount: projectGroup.users.length,
 	}));
 
 export { getProjectGroupRows };
