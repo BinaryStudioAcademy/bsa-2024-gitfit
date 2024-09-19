@@ -91,6 +91,10 @@ const Project = (): JSX.Element => {
 
 	const hasProject = project !== null;
 
+	const visibleContributors = projectContributors.filter(
+		(contributor) => !contributor.isHidden,
+	);
+
 	if (isRejected) {
 		return <NotFound />;
 	}
@@ -136,7 +140,7 @@ const Project = (): JSX.Element => {
 
 						<div className={styles["contributors-list-wrapper"]}>
 							<ContributorsList
-								contributors={projectContributors}
+								contributors={visibleContributors}
 								isLoading={isContributorsDataLoading}
 							/>
 						</div>
