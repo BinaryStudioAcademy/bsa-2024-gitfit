@@ -116,16 +116,14 @@ const Project = (): JSX.Element => {
 
 	const handleContributorUpdateSubmit = useCallback(
 		(payload: ContributorPatchRequestDto) => {
-			if (contributorToEdit) {
+			if (contributorToEdit && projectId) {
 				void dispatch(
-					contributorActions.patch({ id: contributorToEdit.id, payload }),
-				).then(() => {
-					if (projectId) {
-						void dispatch(
-							projectActions.loadAllContributorsByProjectId(projectId),
-						);
-					}
-				});
+					contributorActions.patch({
+						id: contributorToEdit.id,
+						payload,
+						projectId,
+					}),
+				);
 				setContributorToEdit(null);
 				handleContributorUpdateModalClose();
 			}

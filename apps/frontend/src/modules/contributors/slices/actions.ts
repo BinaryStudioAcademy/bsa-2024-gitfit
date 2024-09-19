@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { NotificationMessage } from "~/libs/enums/enums.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
+import { actions as projectActions } from "~/modules/projects/projects.js";
 
 import {
 	type ContributorGetAllResponseDto,
@@ -22,16 +23,22 @@ const loadAll = createAsyncThunk<
 
 const patch = createAsyncThunk<
 	ContributorPatchResponseDto,
-	{ id: number; payload: ContributorPatchRequestDto },
+	{ id: number; payload: ContributorPatchRequestDto; projectId?: string },
 	AsyncThunkConfig
->(`${sliceName}/update`, async ({ id, payload }, { extra }) => {
-	const { contributorApi, toastNotifier } = extra;
+>(
+	`${sliceName}/update`,
+	async ({ id, payload, projectId }, { dispatch, extra }) => {
+		const { contributorApi, toastNotifier } = extra;
 
-	const response = await contributorApi.patch(id, payload);
+		const response = await contributorApi.patch(id, payload);
+		toastNotifier.showSuccess(NotificationMessage.CONTRIBUTOR_UPDATE_SUCCESS);
 
-	toastNotifier.showSuccess(NotificationMessage.CONTRIBUTOR_UPDATE_SUCCESS);
+		if (projectId) {
+			void dispatch(projectActions.loadAllContributorsByProjectId(projectId));
+		}
 
-	return response;
-});
+		return response;
+	},
+);
 
 export { loadAll, patch };
