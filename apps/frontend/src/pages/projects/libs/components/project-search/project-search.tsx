@@ -1,17 +1,29 @@
+import { type Control, type FieldErrors } from "react-hook-form";
+
 import { Search } from "~/libs/components/components.js";
 
-import styles from "./styles.module.css";
+type ProjectSearchForm = {
+	search: string;
+};
 
 type Properties = {
+	control: Control<ProjectSearchForm>;
+	errors: FieldErrors<ProjectSearchForm>;
 	onChange: (search: string) => void;
 };
 
-const ProjectsSearch = ({ onChange }: Properties): JSX.Element => {
+const ProjectsSearch = ({
+	control,
+	errors,
+	onChange,
+}: Properties): JSX.Element => {
 	return (
-		<div className={styles["search-container"]}>
+		<div>
 			<Search
+				control={control}
+				errors={errors}
 				isLabelHidden
-				label="Projects search"
+				label="Search Projects"
 				onChange={onChange}
 				placeholder="Enter project name"
 			/>

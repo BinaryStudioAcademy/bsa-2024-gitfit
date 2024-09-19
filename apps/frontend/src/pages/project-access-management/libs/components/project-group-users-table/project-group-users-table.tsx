@@ -9,6 +9,7 @@ import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useCallback,
 	useEffect,
@@ -47,6 +48,11 @@ const ProjectGroupUsersTable = ({
 	setValue,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
+	const { control, errors: searchErrors } = useAppForm({
+		defaultValues: { search: "" },
+		mode: "onChange",
+	});
+
 	const { onSearch, search } = useSearch();
 
 	const { projectGroups, users, usersDataStatus, usersTotalCount } =
@@ -94,7 +100,11 @@ const ProjectGroupUsersTable = ({
 	return (
 		<>
 			<span className={styles["table-title"]}>Users</span>
-			<ProjectGroupUsersSearch onChange={handleSearchChange} />
+			<ProjectGroupUsersSearch
+				control={control}
+				errors={searchErrors}
+				onChange={handleSearchChange}
+			/>
 			{isLoading ? (
 				<Loader />
 			) : (
