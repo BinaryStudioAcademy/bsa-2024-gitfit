@@ -6,6 +6,7 @@ import { type ProjectGroupRow } from "../types/types.js";
 
 const getProjectGroupColumns = (actions: {
 	onDelete: (projectGroupId: number) => void;
+	onEdit: (projectGroupId: number) => void;
 	onMenuClose: () => void;
 	onMenuOpen: () => void;
 }): TableColumn<ProjectGroupRow>[] => [
@@ -27,6 +28,7 @@ const getProjectGroupColumns = (actions: {
 		cell: ({ row: { original: projectGroup } }) => (
 			<ProjectGroupMenu
 				onDelete={actions.onDelete}
+				onEdit={actions.onEdit}
 				onMenuClose={actions.onMenuClose}
 				onMenuOpen={actions.onMenuOpen}
 				projectGroupId={projectGroup.id}

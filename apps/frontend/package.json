@@ -1,7 +1,7 @@
 {
 	"name": "@git-fit/frontend",
 	"private": true,
-	"version": "1.32.1",
+	"version": "1.37.0",
 	"type": "module",
 	"engines": {
 		"node": "20.x.x",

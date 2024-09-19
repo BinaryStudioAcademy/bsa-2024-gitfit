@@ -91,6 +91,17 @@ class ProjectRepository implements Repository {
 	public update(): ReturnType<Repository["update"]> {
 		return Promise.resolve(null);
 	}
+
+	public async updateLastActivityDate(
+		projectId: number,
+		lastActivityDate: string,
+	): Promise<void> {
+		await this.projectModel
+			.query()
+			.patch({ lastActivityDate })
+			.where({ id: projectId })
+			.execute();
+	}
 }
 
 export { ProjectRepository };

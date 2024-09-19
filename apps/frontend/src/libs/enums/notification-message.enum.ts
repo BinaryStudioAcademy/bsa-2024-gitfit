@@ -9,6 +9,7 @@ const NotificationMessage = {
 	PROJECT_DELETE_SUCCESS: "Project was successfully deleted.",
 	PROJECT_GROUP_CREATE_SUCCESS: "Project group was successfully created.",
 	PROJECT_GROUP_DELETE_SUCCESS: "Project group was successfully deleted.",
+	PROJECT_GROUP_UPDATE_SUCCESS: "Project group was successfully updated.",
 	PROJECT_UPDATE_SUCCESS: "Project was successfully updated.",
 	USER_DELETE_SUCCESS: "User deleted successfully.",
 } as const;

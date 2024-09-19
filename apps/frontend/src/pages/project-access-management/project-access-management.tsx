@@ -18,7 +18,11 @@ import {
 	useState,
 } from "~/libs/hooks/hooks.js";
 import { type ValueOf } from "~/libs/types/types.js";
-import { type ProjectGroupCreateRequestDto } from "~/modules/project-groups/project-groups.js";
+import {
+	type ProjectGroupCreateRequestDto,
+	type ProjectGroupGetAllItemResponseDto,
+	type ProjectGroupPatchRequestDto,
+} from "~/modules/project-groups/project-groups.js";
 import { actions as projectGroupActions } from "~/modules/project-groups/project-groups.js";
 import { actions as projectActions } from "~/modules/projects/projects.js";
 import { actions as userActions } from "~/modules/users/users.js";
@@ -27,6 +31,7 @@ import { NotFound } from "~/pages/not-found/not-found.jsx";
 import {
 	ProjectGroupCreateForm,
 	ProjectGroupsTable,
+	ProjectGroupUpdateForm,
 	UsersTable,
 } from "./libs/components/components.js";
 import { filterUserProjectGroups } from "./libs/helpers/helpers.js";
@@ -46,6 +51,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 		projectGroupDeleteStatus,
 		projectGroups,
 		projectGroupsTotalCount,
+		projectGroupUpdateStatus,
 	} = useAppSelector(({ projectGroups }) => projectGroups);
 
 	const {
@@ -93,6 +99,12 @@ const ProjectAccessManagement = (): JSX.Element => {
 	} = useModal();
 
 	const {
+		isOpened: isUpdateModalOpened,
+		onClose: onUpdateModalClose,
+		onOpen: onUpdateModalOpen,
+	} = useModal();
+
+	const {
 		isOpened: isDeleteModalOpen,
 		onClose: onDeleteModalClose,
 		onOpen: onDeleteModalOpen,
@@ -129,6 +141,10 @@ const ProjectAccessManagement = (): JSX.Element => {
 		handleLoadGroups();
 	}, [handleLoadGroups]);
 
+	const [projectGroupToEdit, setProjectGroupToEdit] =
+		useState<null | ProjectGroupGetAllItemResponseDto>(null);
+	const hasProjectGroupToEdit = projectGroupToEdit !== null;
+
 	const [projectGroupToDeleteId, setProjectGroupToDeleteId] = useState<
 		null | number
 	>(null);
@@ -137,6 +153,13 @@ const ProjectAccessManagement = (): JSX.Element => {
 	const handleProjectGroupCreateSubmit = useCallback(
 		(payload: ProjectGroupCreateRequestDto) => {
 			void dispatch(projectGroupActions.create(payload));
+		},
+		[dispatch],
+	);
+
+	const handleGroupUpdateSubmit = useCallback(
+		(id: number, payload: ProjectGroupPatchRequestDto) => {
+			void dispatch(projectGroupActions.patch({ id, payload }));
 		},
 		[dispatch],
 	);
@@ -151,6 +174,14 @@ const ProjectAccessManagement = (): JSX.Element => {
 		}
 	}, [hasProjectGroupToDelete, dispatch, projectGroupToDeleteId]);
 
+	const handleEdit = useCallback(
+		(payload: ProjectGroupGetAllItemResponseDto): void => {
+			setProjectGroupToEdit(payload);
+			onUpdateModalOpen();
+		},
+		[onUpdateModalOpen],
+	);
+
 	const handleDelete = useCallback(
 		(id: number): void => {
 			setProjectGroupToDeleteId(id);
@@ -164,6 +195,19 @@ const ProjectAccessManagement = (): JSX.Element => {
 			onCreateModalClose();
 		}
 	}, [projectGroupCreateStatus, onCreateModalClose]);
+
+	useEffect(() => {
+		if (projectGroupUpdateStatus === DataStatus.FULFILLED) {
+			handleLoadUsers();
+			onUpdateModalClose();
+			setProjectGroupToEdit(null);
+		}
+	}, [
+		projectGroupUpdateStatus,
+		onUpdateModalClose,
+		handleLoadUsers,
+		setProjectGroupToEdit,
+	]);
 
 	useEffect(() => {
 		if (projectGroupDeleteStatus === DataStatus.FULFILLED) {
@@ -239,6 +283,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 						</div>
 						<ProjectGroupsTable
 							onDelete={handleDelete}
+							onEdit={handleEdit}
 							onPageChange={onGroupPageChange}
 							onPageSizeChange={onGroupPageSizeChange}
 							page={groupPage}
@@ -247,6 +292,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 							totalItemsCount={projectGroupsTotalCount}
 						/>
 					</section>
+
 					<Modal
 						isOpened={isCreateModalOpened}
 						onClose={onCreateModalClose}
@@ -257,6 +303,20 @@ const ProjectAccessManagement = (): JSX.Element => {
 							projectId={project.id}
 						/>
 					</Modal>
+
+					{hasProjectGroupToEdit && (
+						<Modal
+							isOpened={isUpdateModalOpened}
+							onClose={onUpdateModalClose}
+							title="Update group"
+						>
+							<ProjectGroupUpdateForm
+								onSubmit={handleGroupUpdateSubmit}
+								projectGroup={projectGroupToEdit}
+							/>
+						</Modal>
+					)}
+
 					{hasProjectGroupToDelete && (
 						<ConfirmationModal
 							content="The group will be deleted. This action cannot be undone. Do you want to continue?"

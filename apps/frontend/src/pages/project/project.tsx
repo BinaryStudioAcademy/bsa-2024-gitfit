@@ -4,7 +4,8 @@ import {
 	Modal,
 	PageLayout,
 } from "~/libs/components/components.js";
-import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
+import { AppRoute, DataStatus, PermissionKey } from "~/libs/enums/enums.js";
+import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -30,6 +31,8 @@ import styles from "./styles.module.css";
 const Project = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { id: projectId } = useParams<{ id: string }>();
+
+	const { userPermissions } = useAppSelector(({ auth }) => auth);
 
 	const {
 		project,
@@ -91,6 +94,11 @@ const Project = (): JSX.Element => {
 
 	const hasProject = project !== null;
 
+	const hasSetupAnalyticsPermission = checkHasPermission(
+		[PermissionKey.MANAGE_ALL_PROJECTS],
+		userPermissions,
+	);
+
 	if (isRejected) {
 		return <NotFound />;
 	}
@@ -115,6 +123,7 @@ const Project = (): JSX.Element => {
 							<ProjectDetailsMenu
 								onEdit={handleEditProject}
 								projectId={project.id}
+								userPermissions={userPermissions}
 							/>
 						</div>
 
@@ -127,12 +136,14 @@ const Project = (): JSX.Element => {
 							</p>
 						</div>
 
-						<div>
-							<Button
-								label="Setup Analytics"
-								onClick={onSetupAnalyticsModalOpen}
-							/>
-						</div>
+						{hasSetupAnalyticsPermission && (
+							<div>
+								<Button
+									label="Setup Analytics"
+									onClick={onSetupAnalyticsModalOpen}
+								/>
+							</div>
+						)}
 
 						<div className={styles["contributors-list-wrapper"]}>
 							<ContributorsList

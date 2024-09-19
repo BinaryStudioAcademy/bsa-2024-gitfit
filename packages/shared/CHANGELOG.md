@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.24.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.23.0...shared-v1.24.0) (2024-09-18)
+
+
+### Features
+
+* add project last activity label to project list gf-274 ([#354](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/354)) ([a4e7fab](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a4e7fab02b74f6d9fdbe44bd8c37b0fa22ccc5ef))
+
+## [1.23.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.22.1...shared-v1.23.0) (2024-09-18)
+
+
+### Features
+
+* Add an ability to edit project group gf-342 ([#371](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/371)) ([8c97374](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8c97374279cb535488bd9a197a35791e97fb7665))
+
 ## [1.22.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.22.0...shared-v1.22.1) (2024-09-18)
 
 
