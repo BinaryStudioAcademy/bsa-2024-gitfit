@@ -1,7 +1,8 @@
 import { Command } from "commander";
-import forever from "forever";
 import path from "node:path";
+import pm2 from "pm2";
 
+import { executeCommand } from "~/libs/helpers/helpers.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 
 type Constructor = {
@@ -18,30 +19,72 @@ class BaseAnalyticsCli {
 		this.logger = logger;
 	}
 
+	private async setupAutoStart(): Promise<void> {
+		try {
+			const { stderr: saveError, stdout: saveOut } =
+				await executeCommand("pm2 save");
+
+			if (saveError) {
+				this.logger.error(`PM2 save error: ${saveError as string}`);
+
+				return;
+			}
+
+			this.logger.info(`PM2 save successful: ${saveOut as string}`);
+		} catch (error) {
+			this.logger.error("Error setting up auto-start:", {
+				message: (error as Error).message,
+				stack: (error as Error).stack,
+			});
+		}
+	}
+
 	private setupCommands(): void {
 		this.program
 			.command("track <apiKey> <userId> <repoPath>")
 			.description("Start the background job for collecting statistics")
-			.action((repoPath: string, apiKey: string, userId: string) => {
-				if (!repoPath || !apiKey || !userId) {
+			.action((apiKey: string, userId: string, repoPath: string) => {
+				if (!apiKey || !userId || !repoPath) {
 					this.logger.error("Not all command arguments were provided.");
 
 					return;
 				}
 
 				const scriptPath = path.resolve(
-					process.cwd(),
-					"src",
-					"libs",
-					"modules",
-					"analytics-cli",
+					import.meta.dirname,
 					"init-analytics-cli.js",
 				);
-				forever.startDaemon(scriptPath, {
-					args: [repoPath, apiKey, userId],
-					errFile: "analytics-errors.log",
-					outFile: "analytics-output.log",
-					silent: false,
+				pm2.connect((error: Error | null) => {
+					if (error !== null) {
+						this.logger.error("PM2 connection error:", {
+							message: error.message,
+							stack: error.stack,
+						});
+
+						return;
+					}
+
+					pm2.start(
+						{
+							args: [apiKey, userId, repoPath],
+							error: "analytics-errors.log",
+							name: "analytics-cli",
+							output: "analytics-output.log",
+							script: scriptPath,
+						},
+						(startError: Error | null) => {
+							if (startError !== null) {
+								this.logger.error("PM2 start error:", {
+									message: startError.message,
+									stack: startError.stack,
+								});
+							}
+
+							void this.setupAutoStart();
+
+							pm2.disconnect();
+						},
+					);
 				});
 
 				this.logger.info("Started background job for collecting analytics.");
