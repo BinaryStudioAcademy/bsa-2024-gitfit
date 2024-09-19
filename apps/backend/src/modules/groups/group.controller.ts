@@ -64,7 +64,11 @@ class GroupController extends BaseController {
 				),
 			method: "POST",
 			path: GroupsApiPath.ROOT,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
+			preHandlers: [
+				checkUserPermissions({
+					required: [PermissionKey.MANAGE_USER_ACCESS],
+				}),
+			],
 			validation: {
 				body: groupCreateValidationSchema,
 			},
@@ -77,7 +81,11 @@ class GroupController extends BaseController {
 				),
 			method: "DELETE",
 			path: GroupsApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
+			preHandlers: [
+				checkUserPermissions({
+					required: [PermissionKey.MANAGE_USER_ACCESS],
+				}),
+			],
 		});
 
 		this.addRoute({
@@ -89,7 +97,11 @@ class GroupController extends BaseController {
 				),
 			method: "GET",
 			path: GroupsApiPath.ROOT,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
+			preHandlers: [
+				checkUserPermissions({
+					required: [PermissionKey.MANAGE_USER_ACCESS],
+				}),
+			],
 		});
 
 		this.addRoute({
@@ -102,7 +114,11 @@ class GroupController extends BaseController {
 				),
 			method: "PUT",
 			path: GroupsApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
+			preHandlers: [
+				checkUserPermissions({
+					required: [PermissionKey.MANAGE_USER_ACCESS],
+				}),
+			],
 			validation: {
 				body: groupUpdateValidationSchema,
 			},

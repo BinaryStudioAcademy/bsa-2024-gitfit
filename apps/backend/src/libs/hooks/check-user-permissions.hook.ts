@@ -4,11 +4,9 @@ import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import { type APIPreHandler } from "~/libs/modules/controller/controller.js";
 import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
-import { type RequiredPermission } from "~/libs/types/types.js";
+import { type Permissions } from "~/libs/types/types.js";
 
-const checkUserPermissions = (
-	routePermissions: RequiredPermission[],
-): APIPreHandler => {
+const checkUserPermissions = (routePermissions: Permissions): APIPreHandler => {
 	return (request: FastifyRequest, _, done): void => {
 		const { user } = request;
 

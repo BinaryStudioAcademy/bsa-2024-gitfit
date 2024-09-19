@@ -28,7 +28,7 @@ const ProjectMenu = ({
 	}, [onDelete, onClose]);
 
 	const hasEditOrDeleteProjectPermission = checkHasPermission(
-		[PermissionKey.MANAGE_ALL_PROJECTS],
+		{ required: [PermissionKey.MANAGE_ALL_PROJECTS] },
 		userPermissions,
 	);
 	const isMenuShown = hasEditOrDeleteProjectPermission;

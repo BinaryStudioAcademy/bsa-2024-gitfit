@@ -36,7 +36,7 @@ export { type Storage } from "./libs/modules/storage/storage.js";
 export {
 	type PaginationQueryParameters,
 	type PaginationResponseDto,
-	type RequiredPermission,
+	type Permissions,
 	type ServerCommonErrorResponse,
 	type ServerErrorDetail,
 	type ServerErrorResponse,

@@ -30,11 +30,11 @@ const ProjectDetailsMenu = ({
 	);
 
 	const hasManageProjectAccessPermission = checkHasPermission(
-		[PermissionKey.MANAGE_USER_ACCESS],
+		{ required: [PermissionKey.MANAGE_USER_ACCESS] },
 		userPermissions,
 	);
 	const hasEditProjectPermission = checkHasPermission(
-		[PermissionKey.MANAGE_ALL_PROJECTS],
+		{ required: [PermissionKey.MANAGE_ALL_PROJECTS] },
 		userPermissions,
 	);
 	const isMenuShown =

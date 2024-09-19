@@ -6,18 +6,18 @@ import {
 	getPermittedNavigationItems,
 } from "~/libs/helpers/helpers.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
-import { type RequiredPermission } from "~/libs/types/types.js";
+import { type Permissions } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
-	routePermissions?: RequiredPermission[];
+	routePermissions?: Permissions;
 };
 
 const ProtectedRoute = ({
 	children,
-	routePermissions = [],
+	routePermissions = {},
 }: Properties): JSX.Element => {
 	const { authenticatedUser, dataStatus, userPermissions } = useAppSelector(
 		({ auth }) => auth,

@@ -62,9 +62,12 @@ class ContributorController extends BaseController {
 			method: "GET",
 			path: ContributorsApiPath.ROOT,
 			preHandlers: [
-				checkUserPermissions([
-					[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
-				]),
+				checkUserPermissions({
+					alternative: [
+						PermissionKey.VIEW_ALL_PROJECTS,
+						PermissionKey.MANAGE_ALL_PROJECTS,
+					],
+				}),
 			],
 		});
 	}

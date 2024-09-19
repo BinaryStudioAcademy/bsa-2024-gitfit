@@ -95,7 +95,7 @@ const Project = (): JSX.Element => {
 	const hasProject = project !== null;
 
 	const hasSetupAnalyticsPermission = checkHasPermission(
-		[PermissionKey.MANAGE_ALL_PROJECTS],
+		{ required: [PermissionKey.MANAGE_ALL_PROJECTS] },
 		userPermissions,
 	);
 
