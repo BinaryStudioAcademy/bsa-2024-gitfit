@@ -10,6 +10,7 @@ import { type ProjectModel } from "../projects/project.model.js";
 
 class ContributorModel extends AbstractModel {
 	public gitEmails!: GitEmailModel[];
+	public lastActivityDate!: null | string;
 	public name!: string;
 	public projects!: ProjectModel[];
 

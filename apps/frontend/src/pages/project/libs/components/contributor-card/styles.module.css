@@ -11,6 +11,8 @@
 }
 
 .name {
+	flex-basis: 300px;
+	min-width: 150px;
 	font-size: 16px;
 	line-height: 120%;
 }

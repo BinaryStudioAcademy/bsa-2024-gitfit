@@ -2,7 +2,7 @@ name: Continuous Delivery Analytics
 
 env:
   ARTIFACT_NAME: build
-  ARTIFACT_PATH: ./scripts/analytics/build
+  ARTIFACT_PATH: ./
 
 on:
   workflow_call:
@@ -94,6 +94,6 @@ jobs:
 
       - name: Publish
         working-directory: ${{ env.ARTIFACT_PATH }}
-        run: npm publish --provenance --access public
+        run: npm publish --provenance --access public --workspace scripts/analytics
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

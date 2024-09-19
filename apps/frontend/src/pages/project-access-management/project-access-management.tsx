@@ -200,9 +200,10 @@ const ProjectAccessManagement = (): JSX.Element => {
 
 	useEffect(() => {
 		if (projectGroupCreateStatus === DataStatus.FULFILLED) {
+			handleLoadUsers();
 			onCreateModalClose();
 		}
-	}, [projectGroupCreateStatus, onCreateModalClose]);
+	}, [projectGroupCreateStatus, onCreateModalClose, handleLoadUsers]);
 
 	useEffect(() => {
 		if (projectGroupUpdateStatus === DataStatus.FULFILLED) {
