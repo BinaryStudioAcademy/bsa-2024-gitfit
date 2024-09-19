@@ -1,14 +1,11 @@
 import { type Control, type FieldErrors } from "react-hook-form";
 
 import { Search } from "~/libs/components/components.js";
-
-type ProjectSearchForm = {
-	search: string;
-};
+import { type SearchForm } from "~/libs/types/types.js";
 
 type Properties = {
-	control: Control<ProjectSearchForm>;
-	errors: FieldErrors<ProjectSearchForm>;
+	control: Control<SearchForm>;
+	errors: FieldErrors<SearchForm>;
 	onChange: (search: string) => void;
 };
 
