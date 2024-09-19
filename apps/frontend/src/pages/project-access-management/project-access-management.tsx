@@ -10,6 +10,7 @@ import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
 import { configureString } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useCallback,
 	useEffect,
@@ -63,6 +64,9 @@ const ProjectAccessManagement = (): JSX.Element => {
 	} = useAppSelector(({ users }) => users);
 
 	const { onSearch: onUserSearch, search: userSearch } = useSearch();
+	const { control, errors } = useAppForm({
+		defaultValues: { userSearch },
+	});
 
 	const usersWithCurrentProjectGroups = filterUserProjectGroups(
 		users,
@@ -275,8 +279,11 @@ const ProjectAccessManagement = (): JSX.Element => {
 						</div>
 						<div className={styles["search-container"]}>
 							<Search
+								control={control}
+								errors={errors}
 								isLabelHidden
 								label="Users search"
+								name="userSearch"
 								onChange={onUserSearch}
 								placeholder="Enter name"
 							/>

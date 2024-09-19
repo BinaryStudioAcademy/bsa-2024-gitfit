@@ -8,6 +8,7 @@ import {
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useCallback,
 	useEffect,
@@ -51,6 +52,9 @@ const AccessManagement = (): JSX.Element => {
 	} = useAppSelector(({ groups }) => groups);
 
 	const { onSearch: onUserSearch, search: userSearch } = useSearch();
+	const { control, errors } = useAppForm({
+		defaultValues: { userSearch },
+	});
 
 	const {
 		onPageChange: onUserPageChange,
@@ -203,8 +207,11 @@ const AccessManagement = (): JSX.Element => {
 				</div>
 				<div className={styles["search-container"]}>
 					<Search
+						control={control}
+						errors={errors}
 						isLabelHidden
 						label="Users search"
+						name="userSearch"
 						onChange={onUserSearch}
 						placeholder="Enter name"
 					/>
