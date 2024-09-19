@@ -37,7 +37,7 @@ jobs:
 
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install
+        run: npm install --include=dev
 
   build:
     name: Code Building
