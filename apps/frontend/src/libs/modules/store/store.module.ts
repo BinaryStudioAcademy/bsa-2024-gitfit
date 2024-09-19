@@ -35,9 +35,7 @@ import {
 	projectApi,
 	reducer as projectsReducer,
 } from "~/modules/projects/projects.js";
-import {
-	reducer as scriptsReducer,
-} from "~/modules/scripts/scripts.js";
+import { reducer as scriptsReducer } from "~/modules/scripts/scripts.js";
 import { userApi, reducer as usersReducer } from "~/modules/users/users.js";
 
 import { handleErrorMiddleware } from "./libs/middlewares/middlewares.js";
