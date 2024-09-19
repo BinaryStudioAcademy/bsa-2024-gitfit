@@ -66,7 +66,13 @@ class ProjectApiKeyController extends BaseController {
 				),
 			method: "POST",
 			path: ProjectApiKeysApiPath.ROOT,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
+			preHandlers: [
+				checkUserPermissions([
+					PermissionKey.MANAGE_ALL_PROJECTS,
+					PermissionKey.EDIT_PROJECT,
+					PermissionKey.MANAGE_PROJECT,
+				]),
+			],
 			validation: {
 				body: projectApiKeyCreateValidationSchema,
 			},
