@@ -3,7 +3,8 @@ import {
 	Button,
 	PageLayout,
 } from "~/libs/components/components.js";
-import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
+import { AppRoute, DataStatus, PermissionKey } from "~/libs/enums/enums.js";
+import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -25,6 +26,40 @@ const Project = (): JSX.Element => {
 	const { id: projectId } = useParams<{ id: string }>();
 
 	const { project, projectStatus } = useAppSelector(({ projects }) => projects);
+	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
+
+	const mainPermission = authenticatedUser
+		? authenticatedUser.groups.flatMap((group) => group.permissions)
+		: [];
+
+	const projectPermission = authenticatedUser
+		? authenticatedUser.projectGroups.flatMap(
+				(projectGroup) => projectGroup.permissions,
+			)
+		: [];
+	const userPermissions = [...projectPermission, ...mainPermission];
+
+	const hasManagePermission =
+		checkHasPermission(
+			[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_PROJECT],
+			userPermissions,
+		) &&
+		authenticatedUser?.projectGroups.map((project) =>
+			project.projectId.map((id) => id === project.id),
+		);
+
+	const hasEditPermission =
+		checkHasPermission(
+			[
+				PermissionKey.VIEW_ALL_PROJECTS,
+				PermissionKey.MANAGE_PROJECT,
+				PermissionKey.EDIT_PROJECT,
+			],
+			userPermissions,
+		) &&
+		authenticatedUser?.projectGroups.map((project) =>
+			project.projectId.map((id) => id === project.id),
+		);
 
 	const {
 		isOpened: isSetupAnalyticsModalOpened,
@@ -65,7 +100,10 @@ const Project = (): JSX.Element => {
 					<div className={styles["project-layout"]}>
 						<div className={styles["project-header"]}>
 							<h1 className={styles["title"]}>{project.name}</h1>
-							<ProjectDetailsMenu projectId={project.id} />
+							<ProjectDetailsMenu
+								hasPermission={hasManagePermission}
+								projectId={project.id}
+							/>
 						</div>
 
 						<div className={styles["project-description-layout"]}>
@@ -76,12 +114,14 @@ const Project = (): JSX.Element => {
 								{project.description}
 							</p>
 						</div>
-						<div>
-							<Button
-								label="Setup Analytics"
-								onClick={onSetupAnalyticsModalOpen}
-							/>
-						</div>
+						{hasEditPermission && (
+							<div>
+								<Button
+									label="Setup Analytics"
+									onClick={onSetupAnalyticsModalOpen}
+								/>
+							</div>
+						)}
 					</div>
 
 					<SetupAnalyticsModal

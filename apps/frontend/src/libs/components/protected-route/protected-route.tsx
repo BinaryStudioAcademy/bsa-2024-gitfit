@@ -26,9 +26,14 @@ const ProtectedRoute = ({
 	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
 
 	const userPermissions = useMemo(() => {
-		return (
-			authenticatedUser?.groups.flatMap((group) => group.permissions) ?? []
-		);
+		const mainPermission =
+			authenticatedUser?.groups.flatMap((group) => group.permissions) || [];
+		const projectPermission =
+			authenticatedUser?.projectGroups.flatMap(
+				(projectGroup) => projectGroup.permissions,
+			) || [];
+
+		return [...projectPermission, ...mainPermission];
 	}, [authenticatedUser]);
 
 	const isLoading =
@@ -56,6 +61,7 @@ const ProtectedRoute = ({
 			SIDEBAR_ITEMS,
 			userPermissions,
 		);
+
 		const redirectLink = navigationItem?.href ?? AppRoute.NO_ACCESS;
 
 		return <Navigate replace to={redirectLink} />;

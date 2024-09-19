@@ -6,7 +6,8 @@ import {
 	PageLayout,
 } from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
-import { DataStatus } from "~/libs/enums/enums.js";
+import { DataStatus, PermissionKey } from "~/libs/enums/enums.js";
+import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -36,6 +37,16 @@ import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
+	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
+
+	const userPermissions = authenticatedUser
+		? authenticatedUser.groups.flatMap((group) => group.permissions)
+		: [];
+
+	const hasRootPermission = checkHasPermission(
+		[PermissionKey.VIEW_ALL_PROJECTS],
+		userPermissions,
+	);
 
 	const { onSearch, search } = useSearch();
 
@@ -66,7 +77,22 @@ const Projects = (): JSX.Element => {
 		}
 	}, [dispatch, projectToModifyId]);
 
+	const filteredProjects = hasRootPermission
+		? projects
+		: projects.filter((project) =>
+				authenticatedUser?.projectGroups.some((group) =>
+					group.permissions.some(
+						(permission) =>
+							(permission.key === PermissionKey.MANAGE_PROJECT ||
+								permission.key === PermissionKey.VIEW_PROJECT ||
+								permission.key === PermissionKey.EDIT_PROJECT) &&
+							group.projectId.includes(project.id),
+					),
+				),
+			);
+
 	const hasProjects = projects.length !== EMPTY_LENGTH;
+	const hasPermissionedProjects = filteredProjects.length > EMPTY_LENGTH;
 	const hasSearch = search.length !== EMPTY_LENGTH;
 	const emptyPlaceholderMessage = hasSearch
 		? "No projects found matching your search criteria. Please try different keywords."
@@ -193,8 +219,8 @@ const Projects = (): JSX.Element => {
 				<Loader />
 			) : (
 				<div className={styles["projects-list"]}>
-					{hasProjects ? (
-						projects.map((project) => (
+					{hasPermissionedProjects ? (
+						filteredProjects.map((project) => (
 							<ProjectCard
 								key={project.id}
 								onDelete={handleDeleteClick}
