@@ -6,6 +6,7 @@ import {
 	configureString,
 	getDifferenceInDays,
 	getRelativeDate,
+	getStartOfDay,
 } from "~/libs/helpers/helpers.js";
 import { useCallback } from "~/libs/hooks/hooks.js";
 import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/permissions.js";
@@ -40,9 +41,9 @@ const ProjectCard = ({
 		onDelete(project);
 	}, [onDelete, project]);
 
-	const currentDate = new Date();
+	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = project.lastActivityDate
-		? new Date(project.lastActivityDate)
+		? getStartOfDay(new Date(project.lastActivityDate))
 		: null;
 
 	const daysDifference = lastActivityDate
