@@ -3,6 +3,7 @@ const DatabaseTableName = {
 	CONTRIBUTORS: "contributors",
 	GIT_EMAILS: "git_emails",
 	MIGRATIONS: "migrations",
+	NOTIFICATIONS: "notifications",
 	PERMISSIONS: "permissions",
 	PROJECT_API_KEYS: "project_api_keys",
 	PROJECT_GROUPS: "project_groups",
