@@ -11,6 +11,7 @@ type IconName =
 	| "eye"
 	| "leftArrow"
 	| "leftDoubleArrow"
+	| "notifications"
 	| "pencil"
 	| "project"
 	| "rightArrow"
