@@ -20,6 +20,10 @@ const getProjectGroupColumns = (actions: {
 		header: "Permissions",
 	},
 	{
+		accessorKey: "userCount",
+		header: "Users",
+	},
+	{
 		accessorFn: (projectGroup: ProjectGroupRow): string =>
 			formatDate(new Date(projectGroup.createdAt), "d MMM yyyy HH:mm"),
 		header: "Created At",
