@@ -9,7 +9,7 @@ import {
 	checkHasPermission,
 	getPermittedNavigationItems,
 } from "~/libs/helpers/helpers.js";
-import { useAppSelector, useMemo } from "~/libs/hooks/hooks.js";
+import { useAppSelector } from "~/libs/hooks/hooks.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -23,18 +23,14 @@ const ProtectedRoute = ({
 	children,
 	routePermissions = [],
 }: Properties): JSX.Element => {
-	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
+	const {
+		authenticatedUser,
+		dataStatus,
+		projectUserPermissions,
+		userPermissions,
+	} = useAppSelector(({ auth }) => auth);
 
-	const userPermissions = useMemo(() => {
-		const mainPermission =
-			authenticatedUser?.groups.flatMap((group) => group.permissions) || [];
-		const projectPermission =
-			authenticatedUser?.projectGroups.flatMap(
-				(projectGroup) => projectGroup.permissions,
-			) || [];
-
-		return [...projectPermission, ...mainPermission];
-	}, [authenticatedUser]);
+	const allPermissions = [...projectUserPermissions, ...userPermissions];
 
 	const isLoading =
 		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
@@ -53,13 +49,13 @@ const ProtectedRoute = ({
 
 	const hasRequiredPermission = checkHasPermission(
 		routePermissions,
-		userPermissions,
+		allPermissions,
 	);
 
 	if (!hasRequiredPermission) {
 		const [navigationItem] = getPermittedNavigationItems(
 			SIDEBAR_ITEMS,
-			userPermissions,
+			allPermissions,
 		);
 
 		const redirectLink = navigationItem?.href ?? AppRoute.NO_ACCESS;

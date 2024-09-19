@@ -1,40 +1,28 @@
-import { useNavigate } from "react-router-dom";
-
 import { Menu, MenuItem } from "~/libs/components/components.js";
-import { AppRoute } from "~/libs/enums/enums.js";
-import { configureString } from "~/libs/helpers/helpers.js";
+import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
+import { checkHasPermission, configureString } from "~/libs/helpers/helpers.js";
 import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
+import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/permissions.js";
 
 type Properties = {
-	hasPermission: boolean[][] | false | undefined;
+	hasManagePermission: boolean;
+	onEdit: () => void;
 	projectId: number;
+	userPermissions: PermissionGetAllItemResponseDto[];
 };
 
 const ProjectDetailsMenu = ({
-	hasPermission,
+	hasManagePermission,
+	onEdit,
 	projectId,
+	userPermissions,
 }: Properties): JSX.Element => {
-	// const { authenticatedUser } = useAppSelector(({ auth }) => auth);
+	const { isOpened, onClose, onOpen } = usePopover();
 
-	// const mainPermission = authenticatedUser
-	// 	? authenticatedUser.groups.flatMap((group) => group.permissions)
-	// 	: [];
-
-	// const projectPermission = authenticatedUser
-	// 	? authenticatedUser.projectGroups.flatMap(
-	// 			(projectGroup) => projectGroup.permissions,
-	// 		)
-	// 	: [];
-	// const userPermissions = [...projectPermission, ...mainPermission];
-
-	// const hasRootPermission =
-	// 	checkHasPermission(
-	// 		[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_PROJECT],
-	// 		userPermissions,
-	// 	) &&
-	// 	authenticatedUser?.projectGroups.map((project) =>
-	// 		project.projectId.map((id) => id === projectId),
-	// 	);
+	const handleEditClick = useCallback(() => {
+		onEdit();
+		onClose();
+	}, [onEdit, onClose]);
 
 	const projectAccessManagementRoute = configureString(
 		AppRoute.PROJECT_ACCESS_MANAGEMENT,
@@ -43,23 +31,39 @@ const ProjectDetailsMenu = ({
 		},
 	);
 
-	const { isOpened, onClose, onOpen } = usePopover();
-	const navigate = useNavigate();
+	const hasManageProjectAccessPermission =
+		checkHasPermission([PermissionKey.MANAGE_USER_ACCESS], userPermissions) ||
+		hasManagePermission;
 
-	const handleManagementClick = useCallback(() => {
-		navigate(projectAccessManagementRoute);
-	}, [navigate, projectAccessManagementRoute]);
+	const hasEditProjectPermission =
+		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||
+		hasManagePermission;
+
+	const isMenuShown =
+		hasManageProjectAccessPermission || hasEditProjectPermission;
 
 	return (
-		<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-			{hasPermission && (
-				<MenuItem
-					iconName="access"
-					label="Manage Access"
-					onClick={handleManagementClick}
-				/>
+		<>
+			{isMenuShown && (
+				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+					{hasEditProjectPermission && (
+						<MenuItem
+							iconName="pencil"
+							label="Edit"
+							onClick={handleEditClick}
+						/>
+					)}
+
+					{hasManageProjectAccessPermission && (
+						<MenuItem
+							href={projectAccessManagementRoute}
+							iconName="access"
+							label="Manage Access"
+						/>
+					)}
+				</Menu>
 			)}
-		</Menu>
+		</>
 	);
 };
 

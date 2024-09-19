@@ -37,14 +37,11 @@ import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
-
-	const userPermissions = authenticatedUser
-		? authenticatedUser.groups.flatMap((group) => group.permissions)
-		: [];
+	const { permissionedProjectsId, projectUserPermissions, userPermissions } =
+		useAppSelector(({ auth }) => auth);
 
 	const hasRootPermission = checkHasPermission(
-		[PermissionKey.VIEW_ALL_PROJECTS],
+		[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
 		userPermissions,
 	);
 
@@ -80,14 +77,12 @@ const Projects = (): JSX.Element => {
 	const filteredProjects = hasRootPermission
 		? projects
 		: projects.filter((project) =>
-				authenticatedUser?.projectGroups.some((group) =>
-					group.permissions.some(
-						(permission) =>
-							(permission.key === PermissionKey.MANAGE_PROJECT ||
-								permission.key === PermissionKey.VIEW_PROJECT ||
-								permission.key === PermissionKey.EDIT_PROJECT) &&
-							group.projectId.includes(project.id),
-					),
+				projectUserPermissions.some(
+					(permission) =>
+						(permission.key === PermissionKey.MANAGE_PROJECT ||
+							permission.key === PermissionKey.VIEW_PROJECT ||
+							permission.key === PermissionKey.EDIT_PROJECT) &&
+						permissionedProjectsId.includes(project.id),
 				),
 			);
 
@@ -112,6 +107,7 @@ const Projects = (): JSX.Element => {
 	);
 
 	const { hasNextPage, onNextPage, onPageReset } = useInfiniteScroll({
+		currentItemsCount: projects.length,
 		onLoading: handleLoadProjects,
 		pageSize: PROJECTS_PAGE_SIZE,
 		totalItemsCount: projectsTotalCount,
@@ -206,13 +202,20 @@ const Projects = (): JSX.Element => {
 
 	const isUpdateFormShown = project && projectStatus === DataStatus.FULFILLED;
 
+	const hasCreateProjectPermission = checkHasPermission(
+		[PermissionKey.MANAGE_ALL_PROJECTS],
+		userPermissions,
+	);
+
 	return (
 		<PageLayout>
 			<header className={styles["projects-header"]}>
 				<h1 className={styles["title"]}>Projects</h1>
-				<div>
-					<Button label="Create New" onClick={handleCreateModalOpen} />
-				</div>
+				{hasCreateProjectPermission && (
+					<div>
+						<Button label="Create New" onClick={handleCreateModalOpen} />
+					</div>
+				)}
 			</header>
 			<ProjectsSearch onChange={handleSearchChange} />
 			{isLoading ? (
@@ -226,6 +229,7 @@ const Projects = (): JSX.Element => {
 								onDelete={handleDeleteClick}
 								onEdit={handleEditClick}
 								project={project}
+								userPermissions={userPermissions}
 							/>
 						))
 					) : (

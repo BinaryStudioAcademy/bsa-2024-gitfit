@@ -13,18 +13,11 @@ const PageLayout = ({
 	children,
 	isLoading = false,
 }: Properties): JSX.Element => {
-	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
+	const { projectUserPermissions, userPermissions } = useAppSelector(
+		({ auth }) => auth,
+	);
 
-	const mainPermission = authenticatedUser
-		? authenticatedUser.groups.flatMap((group) => group.permissions)
-		: [];
-
-	const projectPermission = authenticatedUser
-		? authenticatedUser.projectGroups.flatMap(
-				(projectGroup) => projectGroup.permissions,
-			)
-		: [];
-	const userPermissions = [...projectPermission, ...mainPermission];
+	const allPermissions = [...projectUserPermissions, ...userPermissions];
 
 	return (
 		<div className={styles["page"]}>
@@ -33,7 +26,7 @@ const PageLayout = ({
 			</div>
 			<div className={styles["page-body"]}>
 				<aside className={styles["page-sidebar"]}>
-					<Sidebar items={SIDEBAR_ITEMS} userPermissions={userPermissions} />
+					<Sidebar items={SIDEBAR_ITEMS} userPermissions={allPermissions} />
 				</aside>
 				<main className={styles["page-content"]}>
 					{isLoading ? <Loader /> : <>{children}</>}
