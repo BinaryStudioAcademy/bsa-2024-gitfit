@@ -6,6 +6,7 @@ class ContributorEntity implements Entity {
 	private gitEmails: { email: string; id: number }[];
 	private id: null | number;
 	private isHidden: boolean;
+	private lastActivityDate: null | string;
 	private name: string;
 	private projects: { id: number; name: string }[];
 
@@ -13,18 +14,21 @@ class ContributorEntity implements Entity {
 		gitEmails,
 		id,
 		isHidden,
+		lastActivityDate,
 		name,
 		projects,
 	}: {
 		gitEmails: { email: string; id: number }[];
 		id: null | number;
 		isHidden: boolean;
+		lastActivityDate: null | string;
 		name: string;
 		projects: { id: number; name: string }[];
 	}) {
 		this.gitEmails = gitEmails;
 		this.id = id;
 		this.isHidden = isHidden;
+		this.lastActivityDate = lastActivityDate;
 		this.name = name;
 		this.projects = projects;
 	}
@@ -33,12 +37,14 @@ class ContributorEntity implements Entity {
 		gitEmails,
 		id,
 		isHidden,
+		lastActivityDate,
 		name,
 		projects,
 	}: {
 		gitEmails: { email: string; id: number }[];
 		id: number;
 		isHidden: boolean;
+		lastActivityDate: null | string;
 		name: string;
 		projects: { id: number; name: string }[];
 	}): ContributorEntity {
@@ -46,6 +52,7 @@ class ContributorEntity implements Entity {
 			gitEmails,
 			id,
 			isHidden,
+			lastActivityDate,
 			name,
 			projects,
 		});
@@ -66,6 +73,7 @@ class ContributorEntity implements Entity {
 			gitEmails,
 			id: null,
 			isHidden,
+			lastActivityDate: null,
 			name,
 			projects,
 		});
@@ -74,12 +82,14 @@ class ContributorEntity implements Entity {
 	public toNewObject(): {
 		gitEmails: { email: string; id: number }[];
 		isHidden: boolean;
+		lastActivityDate: null | string;
 		name: string;
 		projects: { id: number; name: string }[];
 	} {
 		return {
 			gitEmails: this.gitEmails,
 			isHidden: this.isHidden,
+			lastActivityDate: this.lastActivityDate,
 			name: this.name,
 			projects: this.projects,
 		};
@@ -90,6 +100,7 @@ class ContributorEntity implements Entity {
 			gitEmails: this.gitEmails,
 			id: this.id as number,
 			isHidden: this.isHidden,
+			lastActivityDate: this.lastActivityDate,
 			name: this.name,
 			projects: this.projects,
 		};

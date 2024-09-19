@@ -13,6 +13,8 @@ class ContributorModel extends AbstractModel {
 
 	public isHidden!: boolean;
 
+	public lastActivityDate!: null | string;
+
 	public name!: string;
 
 	public projects!: ProjectModel[];
