@@ -1,7 +1,7 @@
 .content {
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
+	gap: 12px;
 }
 
 .subtitle {
@@ -12,6 +12,7 @@
 }
 
 .text {
+	margin: 8px 0;
 	font-family: Inter, sans-serif;
 	font-size: 16px;
 	font-weight: 400;
@@ -20,7 +21,7 @@
 
 .api-key-container {
 	display: flex;
-	gap: 8px;
+	gap: 10px;
 	align-items: flex-end;
 }
 
