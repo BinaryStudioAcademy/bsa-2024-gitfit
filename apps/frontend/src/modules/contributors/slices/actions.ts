@@ -1,8 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+import { NotificationMessage } from "~/libs/enums/enums.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 
-import { type ContributorGetAllResponseDto } from "../libs/types/types.js";
+import {
+	type ContributorGetAllResponseDto,
+	type ContributorPatchRequestDto,
+	type ContributorPatchResponseDto,
+} from "../libs/types/types.js";
 import { name as sliceName } from "./contributor.slice.js";
 
 const loadAll = createAsyncThunk<
@@ -15,4 +20,18 @@ const loadAll = createAsyncThunk<
 	return await contributorApi.getAll();
 });
 
-export { loadAll };
+const patch = createAsyncThunk<
+	ContributorPatchResponseDto,
+	{ id: number; payload: ContributorPatchRequestDto },
+	AsyncThunkConfig
+>(`${sliceName}/update`, async ({ id, payload }, { extra }) => {
+	const { contributorApi, toastNotifier } = extra;
+
+	const response = await contributorApi.patch(id, payload);
+
+	toastNotifier.showSuccess(NotificationMessage.CONTRIBUTOR_UPDATE_SUCCESS);
+
+	return response;
+});
+
+export { loadAll, patch };
