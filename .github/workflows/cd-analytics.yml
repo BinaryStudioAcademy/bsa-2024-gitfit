@@ -6,6 +6,9 @@ env:
 
 on:
   workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
   workflow_dispatch:
 
 concurrency:
@@ -37,7 +40,7 @@ jobs:
 
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install --include=dev
+        run: npm install
 
   build:
     name: Code Building
@@ -94,6 +97,8 @@ jobs:
 
       - name: Publish
         working-directory: ${{ env.ARTIFACT_PATH }}
-        run: npm publish --provenance --access public --workspace scripts/analytics
+        run: |
+          npm publish --provenance --access public --workspace packages/shared
+          npm publish --provenance --access public --workspace scripts/analytics
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
