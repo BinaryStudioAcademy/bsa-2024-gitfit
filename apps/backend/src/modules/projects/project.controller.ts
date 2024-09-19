@@ -88,7 +88,14 @@ class ProjectController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectsApiPath.ROOT,
-			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
+			preHandlers: [
+				checkUserPermissions([
+					PermissionKey.VIEW_ALL_PROJECTS,
+					PermissionKey.VIEW_PROJECT,
+					PermissionKey.EDIT_PROJECT,
+					PermissionKey.MANAGE_PROJECT,
+				]),
+			],
 		});
 
 		this.addRoute({
@@ -100,7 +107,14 @@ class ProjectController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectsApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
+			preHandlers: [
+				checkUserPermissions([
+					PermissionKey.VIEW_ALL_PROJECTS,
+					PermissionKey.VIEW_PROJECT,
+					PermissionKey.EDIT_PROJECT,
+					PermissionKey.MANAGE_PROJECT,
+				]),
+			],
 		});
 
 		this.addRoute({
@@ -113,7 +127,14 @@ class ProjectController extends BaseController {
 				),
 			method: "PATCH",
 			path: ProjectsApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
+			preHandlers: [
+				checkUserPermissions([
+					PermissionKey.EDIT_PROJECT,
+					PermissionKey.VIEW_ALL_PROJECTS,
+					PermissionKey.VIEW_PROJECT,
+					PermissionKey.MANAGE_PROJECT,
+				]),
+			],
 			validation: {
 				body: projectPatchValidationSchema,
 			},

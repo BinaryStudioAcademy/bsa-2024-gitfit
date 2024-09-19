@@ -50,7 +50,9 @@ class UserRepository implements Repository {
 			.query()
 			.findById(id)
 			.whereNull("deletedAt")
-			.withGraphFetched("groups.permissions")
+			.withGraphFetched(
+				"[groups.permissions, projectGroups.[permissions, projects]]",
+			)
 			.modifyGraph("groups", (builder) => {
 				builder.select("user_groups.id", "name");
 			})
@@ -59,6 +61,12 @@ class UserRepository implements Repository {
 			})
 			.modifyGraph("projectGroups", (builder) => {
 				builder.select("project_groups.id", "name");
+			})
+			.modifyGraph("projectGroups.projects", (builder) => {
+				builder.select("projects.id");
+			})
+			.modifyGraph("projectGroups.permissions", (builder) => {
+				builder.select("project_permissions.id", "name", "key");
 			})
 			.execute();
 

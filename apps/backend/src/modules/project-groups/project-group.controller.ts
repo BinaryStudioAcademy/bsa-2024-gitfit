@@ -1,4 +1,5 @@
-import { APIPath } from "~/libs/enums/enums.js";
+import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import { checkUserPermissions } from "~/libs/hooks/hooks.js";
 import {
 	type APIHandlerOptions,
 	type APIHandlerResponse,
@@ -65,6 +66,12 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "POST",
 			path: ProjectGroupsApiPath.ROOT,
+			preHandlers: [
+				checkUserPermissions([
+					PermissionKey.MANAGE_PROJECT,
+					PermissionKey.VIEW_ALL_PROJECTS,
+				]),
+			],
 			validation: {
 				body: projectGroupCreateValidationSchema,
 			},
@@ -75,6 +82,12 @@ class ProjectGroupController extends BaseController {
 				this.delete(options as APIHandlerOptions<{ params: { id: string } }>),
 			method: "DELETE",
 			path: ProjectGroupsApiPath.$ID,
+			preHandlers: [
+				checkUserPermissions([
+					PermissionKey.MANAGE_PROJECT,
+					PermissionKey.VIEW_ALL_PROJECTS,
+				]),
+			],
 		});
 
 		this.addRoute({
