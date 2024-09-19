@@ -16,6 +16,7 @@ type Properties<T extends FieldValues> = {
 	errors: FieldErrors<T>;
 	isLabelHidden: boolean;
 	label: string;
+	name: FieldPath<T>;
 	onChange: (search: string) => void;
 	placeholder: string;
 };
@@ -25,19 +26,18 @@ const Search = <T extends FieldValues>({
 	errors,
 	isLabelHidden,
 	label,
+	name,
 	onChange,
 	placeholder,
 }: Properties<T>): JSX.Element => {
 	const value = useFormWatch({
 		control,
-		name: "search" as FieldPath<T>,
+		name,
 	});
 
 	useEffect(() => {
 		const debouncedOnChange = initDebounce(() => {
-			if (typeof value === "string") {
-				onChange(value);
-			}
+			onChange(value ?? "");
 		}, SEARCH_TIMEOUT);
 
 		debouncedOnChange(value);
@@ -54,7 +54,7 @@ const Search = <T extends FieldValues>({
 			isLabelHidden={isLabelHidden}
 			label={label}
 			leftIcon={<Icon height={20} name="search" width={20} />}
-			name={"search" as FieldPath<T>}
+			name={name}
 			placeholder={placeholder}
 			type="search"
 		/>

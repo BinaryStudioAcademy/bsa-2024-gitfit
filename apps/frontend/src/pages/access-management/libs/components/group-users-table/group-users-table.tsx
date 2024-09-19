@@ -91,8 +91,9 @@ const GroupUsersTable = ({
 				<GroupUsersSearch
 					control={control}
 					errors={formErrors}
+					name="search"
 					onChange={handleSearchChange}
-				/>{" "}
+				/>
 			</div>
 			{isLoading ? (
 				<Loader />

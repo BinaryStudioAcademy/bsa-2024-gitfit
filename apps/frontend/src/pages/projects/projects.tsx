@@ -209,8 +209,10 @@ const Projects = (): JSX.Element => {
 			<ProjectsSearch
 				control={control}
 				errors={errors}
+				name="search"
 				onChange={handleSearchChange}
 			/>
+
 			{isLoading ? (
 				<Loader />
 			) : (

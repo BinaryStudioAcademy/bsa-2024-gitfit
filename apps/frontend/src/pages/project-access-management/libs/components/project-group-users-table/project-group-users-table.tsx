@@ -103,6 +103,7 @@ const ProjectGroupUsersTable = ({
 			<ProjectGroupUsersSearch
 				control={control}
 				errors={searchErrors}
+				name="search"
 				onChange={handleSearchChange}
 			/>
 			{isLoading ? (
