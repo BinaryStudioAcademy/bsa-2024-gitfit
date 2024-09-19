@@ -10,7 +10,7 @@ import {
 	CRON_SCHEDULE,
 } from "./libs/constants/constants.js";
 
-const [repoPath, apiKey, userId] = process.argv.slice(ARGUMENT_START_INDEX) as [
+const [apiKey, userId, repoPath] = process.argv.slice(ARGUMENT_START_INDEX) as [
 	string,
 	string,
 	string,
