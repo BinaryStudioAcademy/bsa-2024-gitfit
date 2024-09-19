@@ -1,4 +1,5 @@
 import { SortType } from "~/libs/enums/enums.js";
+import { subtractDays } from "~/libs/helpers/helpers.js";
 import {
 	type PaginationResponseDto,
 	type Repository,
@@ -78,12 +79,13 @@ class ProjectRepository implements Repository {
 	public async findInactiveProjects(
 		thresholdInDays: number,
 	): Promise<ProjectEntity[]> {
-		const currentDate = new Date();
-		currentDate.setDate(currentDate.getDate() - thresholdInDays);
-
 		const projects = await this.projectModel
 			.query()
-			.where("lastActivityDate", "<", currentDate.toISOString())
+			.where(
+				"lastActivityDate",
+				"<",
+				subtractDays(new Date(), thresholdInDays).toISOString(),
+			)
 			.execute();
 
 		return projects.map((project) => ProjectEntity.initialize(project));

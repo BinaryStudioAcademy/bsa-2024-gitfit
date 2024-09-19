@@ -3,25 +3,20 @@ import { projectApiKeyService } from "~/modules/project-api-keys/project-api-key
 
 import { notificationService } from "../notifications/notifications.js";
 import { userService } from "../users/users.js";
-import { InactiveProjectsNotifier } from "./inactive-projects-notifier.js";
 import { ProjectController } from "./project.controller.js";
 import { ProjectModel } from "./project.model.js";
 import { ProjectRepository } from "./project.repository.js";
 import { ProjectService } from "./project.service.js";
 
 const projectRepository = new ProjectRepository(ProjectModel);
-const projectService = new ProjectService(
-	projectRepository,
-	projectApiKeyService,
-);
-const projectController = new ProjectController(logger, projectService);
-
-const inactiveProjectsNotifier = new InactiveProjectsNotifier({
+const projectService = new ProjectService({
 	logger,
 	notificationService,
-	projectService,
+	projectApiKeyService,
+	projectRepository,
 	userService,
 });
+const projectController = new ProjectController(logger, projectService);
 
-export { inactiveProjectsNotifier, projectController, projectService };
-export { type InactiveProjectsNotifier } from "./inactive-projects-notifier.js";
+export { projectController, projectService };
+export { type ProjectService } from "./project.service.js";

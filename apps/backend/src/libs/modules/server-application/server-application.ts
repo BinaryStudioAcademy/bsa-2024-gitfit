@@ -11,8 +11,8 @@ import { projectApiKeyController } from "~/modules/project-api-keys/project-api-
 import { projectGroupController } from "~/modules/project-groups/project-groups.js";
 import { projectPermissionsController } from "~/modules/project-permissions/project-permissions.js";
 import {
-	inactiveProjectsNotifier,
 	projectController,
+	projectService,
 } from "~/modules/projects/projects.js";
 import { userController, userService } from "~/modules/users/users.js";
 
@@ -41,9 +41,8 @@ const serverApplication = new BaseServerApplication({
 	apis: [apiV1],
 	config,
 	database,
-	jobs: { inactiveProjectsNotifier },
 	logger,
-	services: { userService },
+	services: { projectService, userService },
 	taskScheduler,
 	title: "GitFit",
 	token,

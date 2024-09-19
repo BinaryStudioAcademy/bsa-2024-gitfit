@@ -5,6 +5,7 @@ export {
 	ContentType,
 	ExceptionMessage,
 	PermissionKey,
+	ProjectPermissionKey,
 	ServerErrorType,
 	SortType,
 } from "./libs/enums/enums.js";

@@ -18,7 +18,7 @@ import {
 	type ValidationSchema,
 	type WhiteRoute,
 } from "~/libs/types/types.js";
-import { type InactiveProjectsNotifier } from "~/modules/projects/projects.js";
+import { type ProjectService } from "~/modules/projects/projects.js";
 import { type UserService } from "~/modules/users/users.js";
 
 import { type TaskScheduler } from "../task-scheduler/task-scheduler.js";
@@ -34,11 +34,9 @@ type Constructor = {
 	apis: ServerApplicationApi[];
 	config: Config;
 	database: Database;
-	jobs: {
-		inactiveProjectsNotifier: InactiveProjectsNotifier;
-	};
 	logger: Logger;
 	services: {
+		projectService: ProjectService;
 		userService: UserService;
 	};
 	taskScheduler: TaskScheduler;
@@ -56,13 +54,10 @@ class BaseServerApplication implements ServerApplication {
 
 	private database: Database;
 
-	private jobs: {
-		inactiveProjectsNotifier: InactiveProjectsNotifier;
-	};
-
 	private logger: Logger;
 
 	private services: {
+		projectService: ProjectService;
 		userService: UserService;
 	};
 
@@ -78,7 +73,6 @@ class BaseServerApplication implements ServerApplication {
 		apis,
 		config,
 		database,
-		jobs,
 		logger,
 		services,
 		taskScheduler,
@@ -89,7 +83,6 @@ class BaseServerApplication implements ServerApplication {
 		this.apis = apis;
 		this.config = config;
 		this.database = database;
-		this.jobs = jobs;
 		this.logger = logger;
 		this.services = services;
 		this.taskScheduler = taskScheduler;
@@ -150,11 +143,10 @@ class BaseServerApplication implements ServerApplication {
 	}
 
 	private initJobs(): void {
-		const { inactiveProjectsNotifier } = this.jobs;
-
+		const { projectService } = this.services;
 		this.taskScheduler.start(
 			INACTIVE_PROJECTS_NOTIFIER_CRON_SCHEDULE,
-			() => void inactiveProjectsNotifier.processInactiveProjects(),
+			() => void projectService.processInactiveProjects(),
 		);
 	}
 
