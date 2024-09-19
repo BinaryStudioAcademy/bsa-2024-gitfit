@@ -6,6 +6,7 @@ import { type UserRow } from "../../types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	isLoading: boolean;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
@@ -16,6 +17,7 @@ type Properties = {
 };
 
 const UsersTable = ({
+	isLoading,
 	onPageChange,
 	onPageSizeChange,
 	page,
@@ -33,6 +35,7 @@ const UsersTable = ({
 				columns={userColumns}
 				data={userData}
 				emptyPlaceholder="No users matching your search criteria."
+				isLoading={isLoading}
 			/>
 			<TablePagination
 				background={paginationBackground}

@@ -243,8 +243,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 		projectGroupsDataStatus === DataStatus.IDLE ||
 		projectGroupsDataStatus === DataStatus.PENDING;
 
-	const isLoading =
-		isUsersLoading || isProjectLoading || isProjectGroupsLoading;
+	const isLoading = isProjectLoading;
 
 	const isRejected = projectDataStatus === DataStatus.REJECTED;
 
@@ -282,6 +281,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 							/>
 						</div>
 						<UsersTable
+							isLoading={isUsersLoading}
 							onPageChange={onUserPageChange}
 							onPageSizeChange={onUserPageSizeChange}
 							page={userPage}
@@ -298,6 +298,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 							</div>
 						</div>
 						<ProjectGroupsTable
+							isLoading={isProjectGroupsLoading}
 							onDelete={handleDelete}
 							onEdit={handleEdit}
 							onPageChange={onGroupPageChange}
