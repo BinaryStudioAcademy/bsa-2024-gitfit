@@ -18,9 +18,12 @@ import {
 	type ValidationSchema,
 	type WhiteRoute,
 } from "~/libs/types/types.js";
+import { type InactiveProjectsNotifier } from "~/modules/projects/projects.js";
 import { type UserService } from "~/modules/users/users.js";
 
+import { type TaskScheduler } from "../task-scheduler/task-scheduler.js";
 import { type Token } from "../token/token.js";
+import { INACTIVE_PROJECTS_NOTIFIER_CRON_SCHEDULE } from "./libs/constants/constants.js";
 import {
 	type ServerApplication,
 	type ServerApplicationApi,
@@ -31,10 +34,14 @@ type Constructor = {
 	apis: ServerApplicationApi[];
 	config: Config;
 	database: Database;
+	jobs: {
+		inactiveProjectsNotifier: InactiveProjectsNotifier;
+	};
 	logger: Logger;
 	services: {
 		userService: UserService;
 	};
+	taskScheduler: TaskScheduler;
 	title: string;
 	token: Token;
 	whiteRoutes: WhiteRoute[];
@@ -49,11 +56,17 @@ class BaseServerApplication implements ServerApplication {
 
 	private database: Database;
 
+	private jobs: {
+		inactiveProjectsNotifier: InactiveProjectsNotifier;
+	};
+
 	private logger: Logger;
 
 	private services: {
 		userService: UserService;
 	};
+
+	private taskScheduler: TaskScheduler;
 
 	private title: string;
 
@@ -65,8 +78,10 @@ class BaseServerApplication implements ServerApplication {
 		apis,
 		config,
 		database,
+		jobs,
 		logger,
 		services,
+		taskScheduler,
 		title,
 		token,
 		whiteRoutes,
@@ -74,8 +89,10 @@ class BaseServerApplication implements ServerApplication {
 		this.apis = apis;
 		this.config = config;
 		this.database = database;
+		this.jobs = jobs;
 		this.logger = logger;
 		this.services = services;
+		this.taskScheduler = taskScheduler;
 		this.title = title;
 		this.token = token;
 		this.whiteRoutes = whiteRoutes;
@@ -129,6 +146,15 @@ class BaseServerApplication implements ServerApplication {
 
 				return reply.status(HTTPCode.INTERNAL_SERVER_ERROR).send(response);
 			},
+		);
+	}
+
+	private initJobs(): void {
+		const { inactiveProjectsNotifier } = this.jobs;
+
+		this.taskScheduler.start(
+			INACTIVE_PROJECTS_NOTIFIER_CRON_SCHEDULE,
+			() => void inactiveProjectsNotifier.processInactiveProjects(),
 		);
 	}
 
@@ -196,6 +222,8 @@ class BaseServerApplication implements ServerApplication {
 		await this.initServe();
 
 		await this.initMiddlewares();
+
+		this.initJobs();
 
 		this.initPlugins();
 

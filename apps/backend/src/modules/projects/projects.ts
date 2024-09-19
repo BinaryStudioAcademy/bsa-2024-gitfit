@@ -1,11 +1,9 @@
 import { logger } from "~/libs/modules/logger/logger.js";
-import { taskScheduler } from "~/libs/modules/task-scheduler/task-scheduler.js";
 import { projectApiKeyService } from "~/modules/project-api-keys/project-api-keys.js";
 
 import { notificationService } from "../notifications/notifications.js";
 import { userService } from "../users/users.js";
-import { InactiveProjectsNotifier } from "./inactive-project-notifier.js";
-import { NOTIFICATION_CRON_SCHEDULE } from "./libs/constants/constants.js";
+import { InactiveProjectsNotifier } from "./inactive-projects-notifier.js";
 import { ProjectController } from "./project.controller.js";
 import { ProjectModel } from "./project.model.js";
 import { ProjectRepository } from "./project.repository.js";
@@ -25,9 +23,5 @@ const inactiveProjectsNotifier = new InactiveProjectsNotifier({
 	userService,
 });
 
-taskScheduler.start(
-	NOTIFICATION_CRON_SCHEDULE,
-	() => void inactiveProjectsNotifier.processInactiveProjects(),
-);
-
-export { projectController, projectService };
+export { inactiveProjectsNotifier, projectController, projectService };
+export { type InactiveProjectsNotifier } from "./inactive-projects-notifier.js";

@@ -10,9 +10,13 @@ import { permissionController } from "~/modules/permissions/permissions.js";
 import { projectApiKeyController } from "~/modules/project-api-keys/project-api-keys.js";
 import { projectGroupController } from "~/modules/project-groups/project-groups.js";
 import { projectPermissionsController } from "~/modules/project-permissions/project-permissions.js";
-import { projectController } from "~/modules/projects/projects.js";
+import {
+	inactiveProjectsNotifier,
+	projectController,
+} from "~/modules/projects/projects.js";
 import { userController, userService } from "~/modules/users/users.js";
 
+import { taskScheduler } from "../task-scheduler/task-scheduler.js";
 import { token } from "../token/token.js";
 import { BaseServerApplication } from "./base-server-application.js";
 import { BaseServerApplicationApi } from "./base-server-application-api.js";
@@ -37,8 +41,10 @@ const serverApplication = new BaseServerApplication({
 	apis: [apiV1],
 	config,
 	database,
+	jobs: { inactiveProjectsNotifier },
 	logger,
 	services: { userService },
+	taskScheduler,
 	title: "GitFit",
 	token,
 	whiteRoutes: WHITE_ROUTES,
