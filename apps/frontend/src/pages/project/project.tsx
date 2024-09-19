@@ -91,7 +91,7 @@ const Project = (): JSX.Element => {
 
 	const hasProject = project !== null;
 
-	const visibleContributors = projectContributors.filter(
+	const visibleProjectContributors = projectContributors.filter(
 		(contributor) => !contributor.isHidden,
 	);
 
@@ -140,7 +140,7 @@ const Project = (): JSX.Element => {
 
 						<div className={styles["contributors-list-wrapper"]}>
 							<ContributorsList
-								contributors={visibleContributors}
+								contributors={visibleProjectContributors}
 								isLoading={isContributorsDataLoading}
 							/>
 						</div>
