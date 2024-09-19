@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.37.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.37.0...frontend-v1.37.1) (2024-09-19)
+
+
+### Bug Fixes
+
+* The Check in the checkbox appears in the choosen row for each page in the Create Group modal (for both Create Progect Group and Create Group) gf-390 ([#396](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/396)) ([435553e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/435553e825c153ba92ced567d0c9a31f6bcf11ea))
+
 ## [1.37.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.36.0...frontend-v1.37.0) (2024-09-18)
 
 

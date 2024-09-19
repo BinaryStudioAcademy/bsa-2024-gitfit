@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.2.0...analytics-v1.3.0) (2024-09-19)
+
+
+### Features
+
+* replace forever with pm2 for analytics script gf-385 ([#397](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/397)) ([168db21](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/168db2101a3cac49339c5a10bd847db40a8c406d))
+
 ## [1.2.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.1.1...analytics-v1.2.0) (2024-09-18)
 
 

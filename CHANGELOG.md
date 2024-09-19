@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.39.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.38.0...v1.39.0) (2024-09-19)
+
+
+### Features
+
+* replace forever with pm2 for analytics script gf-385 ([#397](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/397)) ([168db21](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/168db2101a3cac49339c5a10bd847db40a8c406d))
+
+
+### Bug Fixes
+
+* The Check in the checkbox appears in the choosen row for each page in the Create Group modal (for both Create Progect Group and Create Group) gf-390 ([#396](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/396)) ([435553e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/435553e825c153ba92ced567d0c9a31f6bcf11ea))
+
 ## [1.38.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.37.0...v1.38.0) (2024-09-18)
 
 
