@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.44.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.43.0...v1.44.0) (2024-09-19)
+
+
+### Features
+
+* split cd actions for analytics and shared gf-375 ([#433](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/433)) ([bc730a5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/bc730a557f169877536d5421a1ab12c3d0cc8221))
+
 ## [1.43.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.42.0...v1.43.0) (2024-09-19)
 
 
