@@ -24,10 +24,9 @@ const ProjectGroupCreateForm = ({
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { usersTotalCount } = useAppSelector(({ projectGroups }) => ({
-		projectGroups,
-		usersTotalCount: projectGroups.usersTotalCount,
-	}));
+	const { usersTotalCount } = useAppSelector(
+		({ projectGroups }) => projectGroups,
+	);
 
 	const { page: userPage, pageSize: userPageSize } = usePagination({
 		queryParameterPrefix: "project-group-user",
