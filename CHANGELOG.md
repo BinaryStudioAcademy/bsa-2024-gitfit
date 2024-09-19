@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.40.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.39.0...v1.40.0) (2024-09-19)
+
+
+### Features
+
+* add an ability to edit contributor name gf-345 ([#404](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/404)) ([7056194](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/70561948965d2f06dbc5e99cc7491e5e6f806e9d))
+* add last activity time to contributors gf-347 ([#410](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/410)) ([3128298](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/312829860a693a1f075a7f2d031026a7eb0edb5c))
+* add users column to groups table on project access management page gf-403 ([#412](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/412)) ([c8d80b9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c8d80b9c04dc49784da2f243e4648540df298ef9))
+* handle dates that cross into the next day but are less than 24 hours apart gf-274 ([#399](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/399)) ([80f526d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/80f526deb2232bf1a48eac039cc05f90631caed1))
+
+
+### Bug Fixes
+
+* update columns width gf-389 ([#421](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/421)) ([bf69331](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/bf69331b5294f283bbba095579bbc8f705344ea8))
+
 ## [1.39.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.38.0...v1.39.0) (2024-09-19)
 
 
