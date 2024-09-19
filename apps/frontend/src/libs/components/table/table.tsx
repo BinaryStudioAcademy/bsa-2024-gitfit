@@ -110,7 +110,10 @@ const Table = <T extends object>({
 					{!isLoading &&
 						hasData &&
 						table.getRowModel().rows.map((row) => (
-							<tr className={styles["table-row"]} key={row.id}>
+							<tr
+								className={styles["table-row"]}
+								key={isRowSelectable ? getRowId(row.original) : row.id}
+							>
 								{isRowSelectable && (
 									<td
 										className={getValidClassNames(

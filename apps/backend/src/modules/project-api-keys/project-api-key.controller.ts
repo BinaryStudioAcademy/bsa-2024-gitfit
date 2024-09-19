@@ -1,4 +1,5 @@
-import { APIPath } from "~/libs/enums/enums.js";
+import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import { checkUserPermissions } from "~/libs/hooks/hooks.js";
 import {
 	type APIHandlerOptions,
 	type APIHandlerResponse,
@@ -65,6 +66,7 @@ class ProjectApiKeyController extends BaseController {
 				),
 			method: "POST",
 			path: ProjectApiKeysApiPath.ROOT,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 			validation: {
 				body: projectApiKeyCreateValidationSchema,
 			},

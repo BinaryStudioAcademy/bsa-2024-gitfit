@@ -2,6 +2,7 @@ type ProjectGetByIdResponseDto = {
 	apiKey: null | string;
 	description: string;
 	id: number;
+	lastActivityDate: null | string;
 	name: string;
 };
 
