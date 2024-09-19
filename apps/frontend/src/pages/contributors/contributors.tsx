@@ -137,6 +137,7 @@ const Contributors = (): JSX.Element => {
 				<Table<ContributorRow>
 					columns={contributorsColumns}
 					data={contributorsData}
+					isFullHeight
 				/>
 			</section>
 			{contributorToEdit && (
