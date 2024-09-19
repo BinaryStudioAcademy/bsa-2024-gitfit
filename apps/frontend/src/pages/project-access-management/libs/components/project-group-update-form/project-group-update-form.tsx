@@ -29,11 +29,9 @@ const ProjectGroupUpdateForm = ({
 	const permissionIds = permissions.map((permission) => permission.id);
 	const userIds = projectGroupUsers.map((user) => user.id);
 
-	const { usersTotalCount } = useAppSelector(({ projectGroups }) => ({
-		projectGroups,
-		users: projectGroups.users,
-		usersTotalCount: projectGroups.usersTotalCount,
-	}));
+	const { usersTotalCount } = useAppSelector(
+		({ projectGroups }) => projectGroups,
+	);
 
 	const { page: userPage, pageSize: userPageSize } = usePagination({
 		queryParameterPrefix: "project-group-user",

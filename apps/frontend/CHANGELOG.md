@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.37.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.37.0...frontend-v1.37.1) (2024-09-19)
+
+
+### Bug Fixes
+
+* The Check in the checkbox appears in the choosen row for each page in the Create Group modal (for both Create Progect Group and Create Group) gf-390 ([#396](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/396)) ([435553e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/435553e825c153ba92ced567d0c9a31f6bcf11ea))
+
+## [1.37.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.36.0...frontend-v1.37.0) (2024-09-18)
+
+
+### Features
+
+* Adjust root permissions gf-350 ([#386](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/386)) ([188d94a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/188d94a43267cb822940842c43a297cd73c7e826))
+
+## [1.36.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.35.0...frontend-v1.36.0) (2024-09-18)
+
+
+### Features
+
+* Add instructions on how to setup analytics gf-343 ([#392](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/392)) ([a4880d8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a4880d8e579321ba6403fdf0edc63251ecf15b74))
+
 ## [1.35.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.34.0...frontend-v1.35.0) (2024-09-18)
 
 

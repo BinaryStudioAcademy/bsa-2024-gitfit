@@ -13,11 +13,7 @@ const PageLayout = ({
 	children,
 	isLoading = false,
 }: Properties): JSX.Element => {
-	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
-
-	const userPermissions = authenticatedUser
-		? authenticatedUser.groups.flatMap((group) => group.permissions)
-		: [];
+	const { userPermissions } = useAppSelector(({ auth }) => auth);
 
 	return (
 		<div className={styles["page"]}>

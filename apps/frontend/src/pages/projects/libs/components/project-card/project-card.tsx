@@ -6,8 +6,10 @@ import {
 	configureString,
 	getDifferenceInDays,
 	getRelativeDate,
+	getStartOfDay,
 } from "~/libs/helpers/helpers.js";
 import { useCallback } from "~/libs/hooks/hooks.js";
+import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/permissions.js";
 import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
 import { getActivityIndicatorStatus } from "../../helpers/helpers.js";
@@ -18,12 +20,14 @@ type Properties = {
 	onDelete: (project: ProjectGetAllItemResponseDto) => void;
 	onEdit: (project: ProjectGetAllItemResponseDto) => void;
 	project: ProjectGetAllItemResponseDto;
+	userPermissions: PermissionGetAllItemResponseDto[];
 };
 
 const ProjectCard = ({
 	onDelete,
 	onEdit,
 	project,
+	userPermissions,
 }: Properties): JSX.Element => {
 	const projectRoute = configureString(AppRoute.PROJECT, {
 		id: project.id.toString(),
@@ -37,9 +41,9 @@ const ProjectCard = ({
 		onDelete(project);
 	}, [onDelete, project]);
 
-	const currentDate = new Date();
+	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = project.lastActivityDate
-		? new Date(project.lastActivityDate)
+		? getStartOfDay(new Date(project.lastActivityDate))
 		: null;
 
 	const daysDifference = lastActivityDate
@@ -64,7 +68,11 @@ const ProjectCard = ({
 			{hasActivityIndicator && (
 				<ActivityIndicator label={lastUpdateLabel} status={colorStatus} />
 			)}
-			<ProjectMenu onDelete={handleDeleteClick} onEdit={handleEditClick} />
+			<ProjectMenu
+				onDelete={handleDeleteClick}
+				onEdit={handleEditClick}
+				userPermissions={userPermissions}
+			/>
 		</div>
 	);
 };

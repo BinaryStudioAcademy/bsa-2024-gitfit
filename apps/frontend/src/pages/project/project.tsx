@@ -4,7 +4,8 @@ import {
 	Modal,
 	PageLayout,
 } from "~/libs/components/components.js";
-import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
+import { AppRoute, DataStatus, PermissionKey } from "~/libs/enums/enums.js";
+import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -12,11 +13,18 @@ import {
 	useEffect,
 	useModal,
 	useParams,
+	useState,
 } from "~/libs/hooks/hooks.js";
+import {
+	actions as contributorActions,
+	type ContributorGetAllItemResponseDto,
+	type ContributorPatchRequestDto,
+} from "~/modules/contributors/contributors.js";
 import {
 	actions as projectActions,
 	type ProjectPatchRequestDto,
 } from "~/modules/projects/projects.js";
+import { ContributorUpdateForm } from "~/pages/contributors/libs/components/components.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { ProjectUpdateForm } from "~/pages/projects/libs/components/components.js";
 
@@ -31,6 +39,8 @@ const Project = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { id: projectId } = useParams<{ id: string }>();
 
+	const { userPermissions } = useAppSelector(({ auth }) => auth);
+
 	const {
 		project,
 		projectContributors,
@@ -38,6 +48,7 @@ const Project = (): JSX.Element => {
 		projectPatchStatus,
 		projectStatus,
 	} = useAppSelector(({ projects }) => projects);
+
 	const {
 		isOpened: isSetupAnalyticsModalOpened,
 		onClose: onSetupAnalyticsModalClose,
@@ -49,6 +60,15 @@ const Project = (): JSX.Element => {
 		onClose: handleEditModalClose,
 		onOpen: handleEditModalOpen,
 	} = useModal();
+
+	const {
+		isOpened: isContributorUpdateModalOpen,
+		onClose: handleContributorUpdateModalClose,
+		onOpen: handleContributorUpdateModalOpen,
+	} = useModal();
+
+	const [contributorToEdit, setContributorToEdit] =
+		useState<ContributorGetAllItemResponseDto | null>(null);
 
 	useEffect(() => {
 		if (projectId) {
@@ -80,6 +100,37 @@ const Project = (): JSX.Element => {
 		[dispatch, project],
 	);
 
+	const handleEditContributor = useCallback(
+		(contributorId: number) => {
+			const contributor = projectContributors.find(
+				(contributor) => contributor.id === contributorId,
+			);
+
+			if (contributor) {
+				setContributorToEdit(contributor);
+				handleContributorUpdateModalOpen();
+			}
+		},
+		[handleContributorUpdateModalOpen, projectContributors],
+	);
+
+	const handleContributorUpdateSubmit = useCallback(
+		(payload: ContributorPatchRequestDto) => {
+			if (contributorToEdit && projectId) {
+				void dispatch(
+					contributorActions.patch({
+						id: contributorToEdit.id,
+						payload,
+						projectId,
+					}),
+				);
+				setContributorToEdit(null);
+				handleContributorUpdateModalClose();
+			}
+		},
+		[dispatch, contributorToEdit, handleContributorUpdateModalClose, projectId],
+	);
+
 	const isLoading =
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
 
@@ -90,6 +141,11 @@ const Project = (): JSX.Element => {
 	const isRejected = projectStatus === DataStatus.REJECTED;
 
 	const hasProject = project !== null;
+
+	const hasSetupAnalyticsPermission = checkHasPermission(
+		[PermissionKey.MANAGE_ALL_PROJECTS],
+		userPermissions,
+	);
 
 	const visibleProjectContributors = projectContributors.filter(
 		(contributor) => !contributor.isHidden,
@@ -119,6 +175,7 @@ const Project = (): JSX.Element => {
 							<ProjectDetailsMenu
 								onEdit={handleEditProject}
 								projectId={project.id}
+								userPermissions={userPermissions}
 							/>
 						</div>
 
@@ -131,17 +188,20 @@ const Project = (): JSX.Element => {
 							</p>
 						</div>
 
-						<div>
-							<Button
-								label="Setup Analytics"
-								onClick={onSetupAnalyticsModalOpen}
-							/>
-						</div>
+						{hasSetupAnalyticsPermission && (
+							<div>
+								<Button
+									label="Setup Analytics"
+									onClick={onSetupAnalyticsModalOpen}
+								/>
+							</div>
+						)}
 
 						<div className={styles["contributors-list-wrapper"]}>
 							<ContributorsList
 								contributors={visibleProjectContributors}
 								isLoading={isContributorsDataLoading}
+								onEditContributor={handleEditContributor}
 							/>
 						</div>
 					</div>
@@ -155,6 +215,19 @@ const Project = (): JSX.Element => {
 							onSubmit={handleProjectEditSubmit}
 							project={project}
 						/>
+					</Modal>
+
+					<Modal
+						isOpened={isContributorUpdateModalOpen}
+						onClose={handleContributorUpdateModalClose}
+						title="Update Contributor"
+					>
+						{contributorToEdit && (
+							<ContributorUpdateForm
+								contributor={contributorToEdit}
+								onSubmit={handleContributorUpdateSubmit}
+							/>
+						)}
 					</Modal>
 
 					<SetupAnalyticsModal
