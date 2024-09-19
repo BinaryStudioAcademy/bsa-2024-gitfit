@@ -7,6 +7,8 @@ import {
 
 import { Search } from "~/libs/components/components.js";
 
+import styles from "./styles.module.css";
+
 type Properties<T extends FieldValues> = {
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
@@ -21,15 +23,17 @@ const ProjectsSearch = <T extends FieldValues>({
 	onChange,
 }: Properties<T>): JSX.Element => {
 	return (
-		<Search
-			control={control}
-			errors={errors}
-			isLabelHidden
-			label="Project search"
-			name={name}
-			onChange={onChange}
-			placeholder="Enter project name"
-		/>
+		<div className={styles["search-container"]}>
+			<Search
+				control={control}
+				errors={errors}
+				isLabelHidden
+				label="Project search"
+				name={name}
+				onChange={onChange}
+				placeholder="Enter project name"
+			/>
+		</div>
 	);
 };
 
