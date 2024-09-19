@@ -9,6 +9,8 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { type ContributorService } from "./contributor.service.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
+import { type ContributorMergeRequestDto } from "./libs/types/types.js";
+import { contributorMergeValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 
 /**
  * @swagger
@@ -61,6 +63,20 @@ class ContributorController extends BaseController {
 			method: "GET",
 			path: ContributorsApiPath.ROOT,
 		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.merge(
+					options as APIHandlerOptions<{
+						body: ContributorMergeRequestDto;
+					}>,
+				),
+			method: "PATCH",
+			path: ContributorsApiPath.MERGE,
+			validation: {
+				body: contributorMergeValidationSchema,
+			},
+		});
 	}
 
 	/**
@@ -105,6 +121,46 @@ class ContributorController extends BaseController {
 
 		return {
 			payload: await this.contributorService.findAll(),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /contributors/merge:
+	 *   patch:
+	 *     description: Merge contributors
+	 *     requestBody:
+	 *       description: Payload for merging contributors
+	 *       required: true
+	 *       content:
+	 *         application/json:
+	 *           schema:
+	 *             type: object
+	 *             properties:
+	 *               currentContributorId:
+	 *                 type: number
+	 *               selectedContributorId:
+	 *                 type: number
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: object
+	 *               properties:
+	 *                 items:
+	 *                   type: object
+	 *                   $ref: "#/components/schemas/Contributor"
+	 */
+	private async merge(
+		options: APIHandlerOptions<{
+			body: ContributorMergeRequestDto;
+		}>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.contributorService.merge(options.body),
 			status: HTTPCode.OK,
 		};
 	}

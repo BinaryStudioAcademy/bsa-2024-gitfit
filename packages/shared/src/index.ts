@@ -58,6 +58,8 @@ export {
 	ContributorError,
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,
+	type ContributorMergeRequestDto,
+	contributorMergeValidationSchema,
 	ContributorsApiPath,
 } from "./modules/contributors/contributors.js";
 export {

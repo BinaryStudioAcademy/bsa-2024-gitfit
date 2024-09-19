@@ -9,6 +9,7 @@ import {
 	type ContributorCreateRequestDto,
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,
+	type ContributorMergeRequestDto,
 } from "./libs/types/types.js";
 
 class ContributorService implements Service {
@@ -98,6 +99,49 @@ class ContributorService implements Service {
 		}
 
 		return item.toObject();
+	}
+
+	public async merge({
+		currentContributorId,
+		selectedContributorId,
+	}: ContributorMergeRequestDto): Promise<ContributorGetAllItemResponseDto | null> {
+		if (currentContributorId === selectedContributorId) {
+			throw new ContributorError({
+				message: ExceptionMessage.CONTRIBUTOR_SELF_MERGE,
+				status: HTTPCode.CONFLICT,
+			});
+		}
+
+		const currentContributor =
+			await this.contributorRepository.find(currentContributorId);
+		const selectedContributor = await this.contributorRepository.find(
+			selectedContributorId,
+		);
+
+		if (!currentContributor || !selectedContributor) {
+			throw new ContributorError({
+				message: ExceptionMessage.CONTRIBUTOR_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		try {
+			const mergedContributor = await this.contributorRepository.merge({
+				currentContributorId,
+				selectedContributorId,
+			});
+
+			if (!mergedContributor) {
+				return null;
+			}
+
+			return mergedContributor.toObject();
+		} catch {
+			throw new ContributorError({
+				message: ExceptionMessage.CONTRIBUTOR_MERGE_FAILED,
+				status: HTTPCode.CONFLICT,
+			});
+		}
 	}
 
 	public update(): ReturnType<Service["update"]> {

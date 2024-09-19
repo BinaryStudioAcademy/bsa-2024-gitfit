@@ -1,4 +1,5 @@
 const ContributorsApiPath = {
+	MERGE: "/merge",
 	ROOT: "/",
 } as const;
 

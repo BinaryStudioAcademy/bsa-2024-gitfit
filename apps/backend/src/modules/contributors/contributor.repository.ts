@@ -1,15 +1,22 @@
 import { raw } from "objection";
 
 import { type Repository } from "~/libs/types/types.js";
+import { type GitEmailModel } from "~/modules/git-emails/git-email.model.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorModel } from "./contributor.model.js";
+import { type ContributorMergeRequestDto } from "./libs/types/types.js";
 
 class ContributorRepository implements Repository {
 	private contributorModel: typeof ContributorModel;
+	private gitEmailModel: typeof GitEmailModel;
 
-	public constructor(contributorModel: typeof ContributorModel) {
+	public constructor(
+		contributorModel: typeof ContributorModel,
+		gitEmailModel: typeof GitEmailModel,
+	) {
 		this.contributorModel = contributorModel;
+		this.gitEmailModel = gitEmailModel;
 	}
 
 	public async create(entity: ContributorEntity): Promise<ContributorEntity> {
@@ -98,6 +105,58 @@ class ContributorRepository implements Repository {
 		}
 
 		return ContributorEntity.initialize(contributor);
+	}
+
+	public async merge({
+		currentContributorId,
+		selectedContributorId,
+	}: ContributorMergeRequestDto): Promise<ContributorEntity | null> {
+		const result = await this.contributorModel.transaction(async (trx) => {
+			const selectedContributor = await this.contributorModel
+				.query(trx)
+				.findById(selectedContributorId)
+				.withGraphFetched("gitEmails");
+
+			const gitEmails = selectedContributor?.gitEmails ?? [];
+
+			await this.gitEmailModel
+				.query(trx)
+				.patch({ contributorId: currentContributorId })
+				.whereIn(
+					"id",
+					gitEmails.map((email) => email.id),
+				);
+
+			await this.contributorModel.query(trx).deleteById(selectedContributorId);
+
+			return await this.contributorModel
+				.query(trx)
+				.select("contributors.*")
+				.select(
+					raw(
+						"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
+					),
+				)
+				.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
+				.leftJoin(
+					"activity_logs",
+					"git_emails.id",
+					"activity_logs.git_email_id",
+				)
+				.leftJoin("projects", "activity_logs.project_id", "projects.id")
+				.groupBy("contributors.id")
+				.withGraphFetched("gitEmails")
+				.modifyGraph("gitEmails", (builder) => {
+					builder.select("id", "email");
+				})
+				.findById(currentContributorId);
+		});
+
+		if (!result) {
+			return null;
+		}
+
+		return ContributorEntity.initialize(result);
 	}
 
 	public update(): ReturnType<Repository["update"]> {
