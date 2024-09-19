@@ -1,0 +1,51 @@
+.notifications-popover {
+	min-width: 380px;
+}
+
+.notifications-title {
+	padding: 14px 16px;
+	margin: 0;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 1.2;
+	color: var(--color-text-primary);
+	text-align: left;
+	border-bottom: 1px solid var(--color-border-secondary);
+}
+
+.notifications {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 4px;
+}
+
+.button {
+	width: 100%;
+	padding: 8px 12px;
+	font-family: inherit;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 1.2;
+	color: var(--color-text-primary);
+	text-align: left;
+	text-decoration: none;
+	cursor: pointer;
+	background-color: transparent;
+	border: none;
+	border-radius: 4px;
+}
+
+.button:hover {
+	background-color: var(--color-background-hover);
+}
+
+.empty-placeholder {
+	padding: 12px;
+	margin: 0;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.2;
+	color: var(--color-text-secondary);
+	text-align: center;
+}

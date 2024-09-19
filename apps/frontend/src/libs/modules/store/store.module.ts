@@ -16,6 +16,10 @@ import {
 } from "~/modules/contributors/contributors.js";
 import { groupApi, reducer as groupsReducer } from "~/modules/groups/groups.js";
 import {
+	notificationApi,
+	reducer as notificationsReducer,
+} from "~/modules/notifications/notifications.js";
+import {
 	permissionApi,
 	reducer as permissionReducer,
 } from "~/modules/permissions/permissions.js";
@@ -63,6 +67,7 @@ class Store {
 				auth: authReducer,
 				contributors: contributorsReducer,
 				groups: groupsReducer,
+				notifications: notificationsReducer,
 				permissions: permissionReducer,
 				projectApiKeys: projectApiKeysReducer,
 				projectGroups: projectGroupsReducer,
@@ -78,6 +83,7 @@ class Store {
 			authApi,
 			contributorApi,
 			groupApi,
+			notificationApi,
 			permissionApi,
 			projectApi,
 			projectApiKeysApi,

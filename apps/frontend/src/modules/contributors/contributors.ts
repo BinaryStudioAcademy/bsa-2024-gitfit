@@ -14,5 +14,12 @@ export { contributorApi };
 export {
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,
+	type ContributorMergeRequestDto,
+	type ContributorPatchRequestDto,
+	type ContributorPatchResponseDto,
 } from "./libs/types/types.js";
+export {
+	contributorMergeValidationSchema,
+	contributorPatchValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
 export { actions, reducer } from "./slices/contributors.js";

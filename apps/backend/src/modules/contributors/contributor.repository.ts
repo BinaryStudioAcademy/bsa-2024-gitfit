@@ -5,7 +5,10 @@ import { type GitEmailModel } from "~/modules/git-emails/git-email.model.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorModel } from "./contributor.model.js";
-import { type ContributorMergeRequestDto } from "./libs/types/types.js";
+import {
+	type ContributorMergeRequestDto,
+	type ContributorPatchRequestDto,
+} from "./libs/types/types.js";
 
 class ContributorRepository implements Repository {
 	private contributorModel: typeof ContributorModel;
@@ -80,6 +83,11 @@ class ContributorRepository implements Repository {
 					"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
 				),
 			)
+			.select(
+				raw(
+					"MAX(CASE WHEN activity_logs.commits_number > 0 THEN activity_logs.date ELSE NULL END) AS last_activity_date",
+				),
+			)
 			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
 			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
 			.leftJoin("projects", "activity_logs.project_id", "projects.id")
@@ -107,10 +115,10 @@ class ContributorRepository implements Repository {
 		return ContributorEntity.initialize(contributor);
 	}
 
-	public async merge({
-		currentContributorId,
-		selectedContributorId,
-	}: ContributorMergeRequestDto): Promise<ContributorEntity | null> {
+	public async merge(
+		currentContributorId: number,
+		{ selectedContributorId }: ContributorMergeRequestDto,
+	): Promise<ContributorEntity | null> {
 		const result = await this.contributorModel.transaction(async (trx) => {
 			const selectedContributor = await this.contributorModel
 				.query(trx)
@@ -157,6 +165,17 @@ class ContributorRepository implements Repository {
 		}
 
 		return ContributorEntity.initialize(result);
+	}
+
+	public async patch(
+		contributorId: number,
+		data: ContributorPatchRequestDto,
+	): Promise<ContributorEntity | null> {
+		const contributor = await this.contributorModel
+			.query()
+			.patchAndFetchById(contributorId, { name: data.name });
+
+		return ContributorEntity.initialize(contributor);
 	}
 
 	public update(): ReturnType<Repository["update"]> {

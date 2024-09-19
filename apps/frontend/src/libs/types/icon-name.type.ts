@@ -10,12 +10,14 @@ type IconName =
 	| "leftArrow"
 	| "leftDoubleArrow"
 	| "merge"
+	| "notifications"
 	| "pencil"
 	| "project"
 	| "rightArrow"
 	| "rightDoubleArrow"
 	| "search"
 	| "strikedEye"
-	| "trashBin";
+	| "trashBin"
+	| "warning";
 
 export { type IconName };

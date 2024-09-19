@@ -9,7 +9,7 @@ import {
 	checkHasPermission,
 	getPermittedNavigationItems,
 } from "~/libs/helpers/helpers.js";
-import { useAppSelector, useMemo } from "~/libs/hooks/hooks.js";
+import { useAppSelector } from "~/libs/hooks/hooks.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
@@ -23,13 +23,9 @@ const ProtectedRoute = ({
 	children,
 	routePermissions = [],
 }: Properties): JSX.Element => {
-	const { authenticatedUser, dataStatus } = useAppSelector(({ auth }) => auth);
-
-	const userPermissions = useMemo(() => {
-		return (
-			authenticatedUser?.groups.flatMap((group) => group.permissions) ?? []
-		);
-	}, [authenticatedUser]);
+	const { authenticatedUser, dataStatus, userPermissions } = useAppSelector(
+		({ auth }) => auth,
+	);
 
 	const isLoading =
 		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;

@@ -10,6 +10,8 @@ import {
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,
 	type ContributorMergeRequestDto,
+	type ContributorPatchRequestDto,
+	type ContributorPatchResponseDto,
 } from "./libs/types/types.js";
 
 class ContributorService implements Service {
@@ -101,10 +103,10 @@ class ContributorService implements Service {
 		return item.toObject();
 	}
 
-	public async merge({
-		currentContributorId,
-		selectedContributorId,
-	}: ContributorMergeRequestDto): Promise<ContributorGetAllItemResponseDto | null> {
+	public async merge(
+		currentContributorId: number,
+		{ selectedContributorId }: ContributorMergeRequestDto,
+	): Promise<ContributorGetAllItemResponseDto | null> {
 		if (currentContributorId === selectedContributorId) {
 			throw new ContributorError({
 				message: ExceptionMessage.CONTRIBUTOR_SELF_MERGE,
@@ -126,10 +128,12 @@ class ContributorService implements Service {
 		}
 
 		try {
-			const mergedContributor = await this.contributorRepository.merge({
+			const mergedContributor = await this.contributorRepository.merge(
 				currentContributorId,
-				selectedContributorId,
-			});
+				{
+					selectedContributorId,
+				},
+			);
 
 			if (!mergedContributor) {
 				return null;
@@ -142,6 +146,22 @@ class ContributorService implements Service {
 				status: HTTPCode.CONFLICT,
 			});
 		}
+	}
+
+	public async patch(
+		contributorId: number,
+		data: ContributorPatchRequestDto,
+	): Promise<ContributorPatchResponseDto | null> {
+		const item = await this.contributorRepository.patch(contributorId, data);
+
+		if (!item) {
+			throw new ContributorError({
+				message: ExceptionMessage.CONTRIBUTOR_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		return item.toObject();
 	}
 
 	public update(): ReturnType<Service["update"]> {

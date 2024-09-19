@@ -15,13 +15,13 @@ const Modal = ({
 	isOpened,
 	onClose,
 	title,
-}: Properties): JSX.Element | null => {
+}: Properties): JSX.Element => {
 	const dialogReference = useRef<HTMLDialogElement>(null);
 
 	useHandleClickOutside(dialogReference, onClose);
 
 	if (!isOpened) {
-		return null;
+		return <></>;
 	}
 
 	return (

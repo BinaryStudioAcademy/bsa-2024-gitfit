@@ -1,5 +1,4 @@
 type ContributorMergeRequestDto = {
-	currentContributorId: number;
 	selectedContributorId: number;
 };
 
