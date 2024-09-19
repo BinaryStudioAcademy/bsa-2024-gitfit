@@ -19,7 +19,7 @@
 		"lint:js": "npx eslint . --max-warnings=0 --no-warn-ignored",
 		"lint": "concurrently \"npm:lint:*\"",
 		"build:cp": "cp -r package.json build",
-		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json & npm run build:cp",
+		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json && npm run build:cp",
 		"start:dev": "tsx watch src/index.ts"
 	},
 	"dependencies": {
