@@ -23,7 +23,7 @@ const ProjectsSearch = ({
 				control={control}
 				errors={errors}
 				isLabelHidden
-				label="Search Projects"
+				label="Projects search"
 				onChange={onChange}
 				placeholder="Enter project name"
 			/>
