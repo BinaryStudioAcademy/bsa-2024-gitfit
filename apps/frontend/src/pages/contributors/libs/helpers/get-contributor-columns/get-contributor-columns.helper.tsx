@@ -1,7 +1,7 @@
 import { type TableColumn } from "~/libs/types/types.js";
 
-import { ContributorMenu } from "../components/components.js";
-import { type ContributorRow } from "../types/types.js";
+import { ContributorMenu } from "../../components/components.js";
+import { type ContributorRow } from "../../types/types.js";
 
 const getContributorColumns = (actions: {
 	onEdit: (contributorId: number) => void;

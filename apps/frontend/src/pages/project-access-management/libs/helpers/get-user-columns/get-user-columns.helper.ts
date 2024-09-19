@@ -1,7 +1,7 @@
 import { formatDate } from "~/libs/helpers/helpers.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
-import { type UserRow } from "../types/types.js";
+import { type UserRow } from "../../types/types.js";
 
 const getUserColumns = (): TableColumn<UserRow>[] => {
 	return [
