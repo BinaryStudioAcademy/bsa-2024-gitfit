@@ -21,6 +21,7 @@ export {
 	formatRelativeTime,
 	getDifferenceInDays,
 	getRelativeDate,
+	getStartOfDay,
 	initDebounce,
 	subtractDays,
 } from "./libs/helpers/helpers.js";
@@ -60,6 +61,9 @@ export {
 	ContributorError,
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,
+	type ContributorPatchRequestDto,
+	type ContributorPatchResponseDto,
+	ContributorPatchValidationSchema,
 	ContributorsApiPath,
 } from "./modules/contributors/contributors.js";
 export {

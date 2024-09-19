@@ -13,11 +13,18 @@ import {
 	useEffect,
 	useModal,
 	useParams,
+	useState,
 } from "~/libs/hooks/hooks.js";
+import {
+	actions as contributorActions,
+	type ContributorGetAllItemResponseDto,
+	type ContributorPatchRequestDto,
+} from "~/modules/contributors/contributors.js";
 import {
 	actions as projectActions,
 	type ProjectPatchRequestDto,
 } from "~/modules/projects/projects.js";
+import { ContributorUpdateForm } from "~/pages/contributors/libs/components/components.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { ProjectUpdateForm } from "~/pages/projects/libs/components/components.js";
 
@@ -41,6 +48,7 @@ const Project = (): JSX.Element => {
 		projectPatchStatus,
 		projectStatus,
 	} = useAppSelector(({ projects }) => projects);
+
 	const {
 		isOpened: isSetupAnalyticsModalOpened,
 		onClose: onSetupAnalyticsModalClose,
@@ -52,6 +60,15 @@ const Project = (): JSX.Element => {
 		onClose: handleEditModalClose,
 		onOpen: handleEditModalOpen,
 	} = useModal();
+
+	const {
+		isOpened: isContributorUpdateModalOpen,
+		onClose: handleContributorUpdateModalClose,
+		onOpen: handleContributorUpdateModalOpen,
+	} = useModal();
+
+	const [contributorToEdit, setContributorToEdit] =
+		useState<ContributorGetAllItemResponseDto | null>(null);
 
 	useEffect(() => {
 		if (projectId) {
@@ -81,6 +98,37 @@ const Project = (): JSX.Element => {
 			}
 		},
 		[dispatch, project],
+	);
+
+	const handleEditContributor = useCallback(
+		(contributorId: number) => {
+			const contributor = projectContributors.find(
+				(contributor) => contributor.id === contributorId,
+			);
+
+			if (contributor) {
+				setContributorToEdit(contributor);
+				handleContributorUpdateModalOpen();
+			}
+		},
+		[handleContributorUpdateModalOpen, projectContributors],
+	);
+
+	const handleContributorUpdateSubmit = useCallback(
+		(payload: ContributorPatchRequestDto) => {
+			if (contributorToEdit && projectId) {
+				void dispatch(
+					contributorActions.patch({
+						id: contributorToEdit.id,
+						payload,
+						projectId,
+					}),
+				);
+				setContributorToEdit(null);
+				handleContributorUpdateModalClose();
+			}
+		},
+		[dispatch, contributorToEdit, handleContributorUpdateModalClose, projectId],
 	);
 
 	const isLoading =
@@ -149,6 +197,7 @@ const Project = (): JSX.Element => {
 							<ContributorsList
 								contributors={projectContributors}
 								isLoading={isContributorsDataLoading}
+								onEditContributor={handleEditContributor}
 							/>
 						</div>
 					</div>
@@ -162,6 +211,19 @@ const Project = (): JSX.Element => {
 							onSubmit={handleProjectEditSubmit}
 							project={project}
 						/>
+					</Modal>
+
+					<Modal
+						isOpened={isContributorUpdateModalOpen}
+						onClose={handleContributorUpdateModalClose}
+						title="Update Contributor"
+					>
+						{contributorToEdit && (
+							<ContributorUpdateForm
+								contributor={contributorToEdit}
+								onSubmit={handleContributorUpdateSubmit}
+							/>
+						)}
 					</Modal>
 
 					<SetupAnalyticsModal

@@ -8,6 +8,7 @@ export {
 	formatRelativeTime,
 	getDifferenceInDays,
 	getRelativeDate,
+	getStartOfDay,
 	initDebounce,
 	subtractDays,
 } from "@git-fit/shared";

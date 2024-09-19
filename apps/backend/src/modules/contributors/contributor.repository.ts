@@ -4,6 +4,7 @@ import { type Repository } from "~/libs/types/types.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorModel } from "./contributor.model.js";
+import { type ContributorPatchRequestDto } from "./libs/types/types.js";
 
 class ContributorRepository implements Repository {
 	private contributorModel: typeof ContributorModel;
@@ -96,6 +97,17 @@ class ContributorRepository implements Repository {
 		if (!contributor) {
 			return null;
 		}
+
+		return ContributorEntity.initialize(contributor);
+	}
+
+	public async patch(
+		contributorId: number,
+		data: ContributorPatchRequestDto,
+	): Promise<ContributorEntity | null> {
+		const contributor = await this.contributorModel
+			.query()
+			.patchAndFetchById(contributorId, { name: data.name });
 
 		return ContributorEntity.initialize(contributor);
 	}

@@ -9,6 +9,8 @@ import {
 	type ContributorCreateRequestDto,
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,
+	type ContributorPatchRequestDto,
+	type ContributorPatchResponseDto,
 } from "./libs/types/types.js";
 
 class ContributorService implements Service {
@@ -95,6 +97,22 @@ class ContributorService implements Service {
 
 		if (!item) {
 			return null;
+		}
+
+		return item.toObject();
+	}
+
+	public async patch(
+		contributorId: number,
+		data: ContributorPatchRequestDto,
+	): Promise<ContributorPatchResponseDto | null> {
+		const item = await this.contributorRepository.patch(contributorId, data);
+
+		if (!item) {
+			throw new ContributorError({
+				message: ExceptionMessage.CONTRIBUTOR_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
 		}
 
 		return item.toObject();
