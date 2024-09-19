@@ -29,7 +29,11 @@ const UsersTable = ({
 
 	return (
 		<div className={styles["users-table"]}>
-			<Table<UserRow> columns={userColumns} data={userData} />
+			<Table<UserRow>
+				columns={userColumns}
+				data={userData}
+				emptyPlaceholder="No users matching your search criteria."
+			/>
 			<TablePagination
 				background={paginationBackground}
 				onPageChange={onPageChange}
