@@ -31,6 +31,7 @@ const getContributorColumns = (actions: {
 			) : null,
 		header: IsHiddenHeader,
 		id: "isHidden",
+		size: 130,
 	},
 	{
 		cell: ({ row: { original: contributor } }) => (

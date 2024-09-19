@@ -107,7 +107,10 @@ class ContributorRepository implements Repository {
 	): Promise<ContributorEntity | null> {
 		const contributor = await this.contributorModel
 			.query()
-			.patchAndFetchById(contributorId, { name: data.name });
+			.patchAndFetchById(contributorId, {
+				isHidden: data.isHidden,
+				name: data.name,
+			});
 
 		return ContributorEntity.initialize(contributor);
 	}

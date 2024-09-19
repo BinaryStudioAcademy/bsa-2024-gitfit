@@ -1,5 +1,6 @@
 type ContributorPatchResponseDto = {
 	id: number;
+	isHidden: boolean;
 	name: string;
 };
 
