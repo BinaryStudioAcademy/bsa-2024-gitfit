@@ -20,6 +20,35 @@
 	cursor: pointer;
 }
 
+.header-popovers {
+	display: flex;
+	gap: 16px;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.notifications-popover-trigger {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	background-color: var(--color-background-primary);
+	border: none;
+	border-radius: 6px;
+}
+
+.notifications-popover-trigger:hover,
+.notifications-popover-trigger-opened {
+	background-color: var(--color-background-hover);
+}
+
+.notifications-icon-wrapper {
+	display: flex;
+	color: var(--color-text-primary);
+}
+
 .user-popover-trigger {
 	padding: 0;
 	margin: 0;

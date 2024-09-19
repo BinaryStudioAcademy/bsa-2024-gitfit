@@ -1,5 +1,6 @@
 type ProjectGetAllItemResponseDto = {
 	id: number;
+	lastActivityDate: null | string;
 	name: string;
 };
 

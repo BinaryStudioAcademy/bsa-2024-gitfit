@@ -9,6 +9,7 @@ import {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupGetAllItemResponseDto,
 	type ProjectGroupGetAllResponseDto,
+	type ProjectGroupPatchRequestDto,
 } from "./libs/types/types.js";
 
 type Constructor = {
@@ -69,6 +70,23 @@ class ProjectGroupApi extends BaseHTTPApi {
 		);
 
 		return await response.json<ProjectGroupGetAllResponseDto>();
+	}
+
+	public async patch(
+		id: number,
+		payload: ProjectGroupPatchRequestDto,
+	): Promise<ProjectGroupGetAllItemResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(ProjectGroupsApiPath.$ID, { id: String(id) }),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "PATCH",
+				payload: JSON.stringify(payload),
+			},
+		);
+
+		return await response.json<ProjectGroupGetAllItemResponseDto>();
 	}
 }
 
