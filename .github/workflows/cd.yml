@@ -67,3 +67,5 @@ jobs:
     needs: release
     if: ${{ needs.release.outputs.scripts_analytics_release_created }}
     uses: ./.github/workflows/cd-analytics.yml
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
