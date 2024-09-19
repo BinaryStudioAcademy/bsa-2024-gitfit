@@ -1,3 +1,4 @@
+import { SortType } from "~/libs/enums/enums.js";
 import { type Repository } from "~/libs/types/types.js";
 
 import { NotificationEntity } from "./notification.entity.js";
@@ -61,6 +62,7 @@ class NotificationRepository implements Repository {
 		const notifications = await this.notificationModel
 			.query()
 			.where("receiverUserId", userId)
+			.orderBy("created_at", SortType.DESCENDING)
 			.execute();
 
 		return {

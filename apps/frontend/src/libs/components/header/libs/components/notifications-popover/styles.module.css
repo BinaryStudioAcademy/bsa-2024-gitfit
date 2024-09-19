@@ -39,3 +39,13 @@
 .button:hover {
 	background-color: var(--color-background-hover);
 }
+
+.empty-placeholder {
+	padding: 12px;
+	margin: 0;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.2;
+	color: var(--color-text-secondary);
+	text-align: center;
+}

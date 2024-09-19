@@ -39,8 +39,14 @@
 	border-radius: 6px;
 }
 
+.notifications-popover-trigger:hover,
 .notifications-popover-trigger-opened {
 	background-color: var(--color-background-hover);
+}
+
+.notifications-icon-wrapper {
+	display: flex;
+	color: var(--color-text-primary);
 }
 
 .user-popover-trigger {

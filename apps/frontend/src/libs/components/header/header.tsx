@@ -52,7 +52,9 @@ const Header = (): JSX.Element => {
 							isNotificationsOpened ? onNotificationsClose : onNotificationsOpen
 						}
 					>
-						<Icon height={22} name="notifications" width={22} />
+						<span className={styles["notifications-icon-wrapper"]}>
+							<Icon height={22} name="notifications" width={22} />
+						</span>
 					</button>
 				</NotificationsPopover>
 				<UserPopover

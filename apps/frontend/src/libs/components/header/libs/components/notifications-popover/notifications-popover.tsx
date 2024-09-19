@@ -1,5 +1,12 @@
 import { Popover } from "~/libs/components/components.js";
-import { useAppDispatch, useCallback, useEffect } from "~/libs/hooks/hooks.js";
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
+import { formatRelativeTime } from "~/libs/helpers/helpers.js";
+import {
+	useAppDispatch,
+	useAppSelector,
+	useCallback,
+	useEffect,
+} from "~/libs/hooks/hooks.js";
 import { actions as notificationActions } from "~/modules/notifications/notifications.js";
 
 import { NotificationItem } from "./libs/components/components.js";
@@ -18,6 +25,10 @@ const NotificationsPopover = ({
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
+	const { notifications } = useAppSelector(
+		({ notifications }) => notifications,
+	);
+
 	const handleLoadNotifications = useCallback(() => {
 		void dispatch(notificationActions.loadAll());
 	}, [dispatch]);
@@ -26,16 +37,27 @@ const NotificationsPopover = ({
 		handleLoadNotifications();
 	}, [handleLoadNotifications]);
 
+	const hasNotifications = notifications.length !== EMPTY_LENGTH;
+
 	return (
 		<Popover
 			content={
 				<div className={styles["notifications-popover"]}>
 					<h3 className={styles["notifications-title"]}>Notifications</h3>
 					<div className={styles["notifications"]}>
-						<NotificationItem
-							message="Statistics for Project 1 is not uploaded for N days."
-							timestamp="5 minutes ago"
-						/>
+						{hasNotifications ? (
+							notifications.map((notification) => (
+								<NotificationItem
+									key={notification.id}
+									message={notification.payload}
+									timestamp={formatRelativeTime(notification.createdAt)}
+								/>
+							))
+						) : (
+							<p className={styles["empty-placeholder"]}>
+								There is nothing yet.
+							</p>
+						)}
 					</div>
 				</div>
 			}
