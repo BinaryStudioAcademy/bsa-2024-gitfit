@@ -1,21 +1,43 @@
 .content {
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
+	gap: 12px;
+}
+
+.subtitle {
+	font-family: Inter, sans-serif;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 1.2;
 }
 
 .text {
+	margin: 8px 0;
 	font-family: Inter, sans-serif;
 	font-size: 16px;
 	font-weight: 400;
+	text-align: justify;
 }
 
 .api-key-container {
 	display: flex;
-	gap: 8px;
+	gap: 10px;
 	align-items: flex-end;
 }
 
 .button-wrapper {
 	min-width: 120px;
+}
+
+.list-item {
+	margin-bottom: 16px;
+}
+
+.list-item-title {
+	margin-bottom: 0;
+	font-weight: 700;
+}
+
+.list-item-text {
+	margin: 0;
 }

@@ -6,9 +6,11 @@ import {
 	PageLayout,
 } from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
-import { DataStatus } from "~/libs/enums/enums.js";
+import { DataStatus, PermissionKey } from "~/libs/enums/enums.js";
+import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useCallback,
 	useEffect,
@@ -37,6 +39,8 @@ import styles from "./styles.module.css";
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
+	const { userPermissions } = useAppSelector(({ auth }) => auth);
+
 	const { onSearch, search } = useSearch();
 
 	const [projectToModifyId, setProjectToModifyId] = useState<null | number>(
@@ -52,6 +56,11 @@ const Projects = (): JSX.Element => {
 		projectStatus,
 		projectsTotalCount,
 	} = useAppSelector(({ projects }) => projects);
+
+	const { control, errors } = useAppForm({
+		defaultValues: { search },
+		mode: "onChange",
+	});
 
 	const handleSearchChange = useCallback(
 		(value: string) => {
@@ -149,6 +158,7 @@ const Projects = (): JSX.Element => {
 		},
 		[handleDeleteConfirmationModalOpen],
 	);
+
 	const handleProjectCreateSubmit = useCallback(
 		(payload: ProjectCreateRequestDto) => {
 			void dispatch(projectActions.create(payload));
@@ -181,15 +191,28 @@ const Projects = (): JSX.Element => {
 
 	const isUpdateFormShown = project && projectStatus === DataStatus.FULFILLED;
 
+	const hasCreateProjectPermission = checkHasPermission(
+		[PermissionKey.MANAGE_ALL_PROJECTS],
+		userPermissions,
+	);
+
 	return (
 		<PageLayout>
 			<header className={styles["projects-header"]}>
 				<h1 className={styles["title"]}>Projects</h1>
-				<div>
-					<Button label="Create New" onClick={handleCreateModalOpen} />
-				</div>
+				{hasCreateProjectPermission && (
+					<div>
+						<Button label="Create New" onClick={handleCreateModalOpen} />
+					</div>
+				)}
 			</header>
-			<ProjectsSearch onChange={handleSearchChange} />
+			<ProjectsSearch
+				control={control}
+				errors={errors}
+				name="search"
+				onChange={handleSearchChange}
+			/>
+
 			{isLoading ? (
 				<Loader />
 			) : (
@@ -201,6 +224,7 @@ const Projects = (): JSX.Element => {
 								onDelete={handleDeleteClick}
 								onEdit={handleEditClick}
 								project={project}
+								userPermissions={userPermissions}
 							/>
 						))
 					) : (

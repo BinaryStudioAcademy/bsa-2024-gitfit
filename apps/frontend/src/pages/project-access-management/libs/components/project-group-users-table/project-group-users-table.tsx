@@ -9,6 +9,7 @@ import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useCallback,
 	useEffect,
@@ -16,7 +17,10 @@ import {
 	useSearch,
 } from "~/libs/hooks/hooks.js";
 import { actions as projectGroupActions } from "~/modules/project-groups/project-groups.js";
-import { type ProjectGroupCreateRequestDto } from "~/modules/project-groups/project-groups.js";
+import {
+	type ProjectGroupCreateRequestDto,
+	type ProjectGroupPatchRequestDto,
+} from "~/modules/project-groups/project-groups.js";
 
 import { filterUserProjectGroups, getUserRows } from "../../helpers/helpers.js";
 import { type UserRow } from "../../types/types.js";
@@ -27,10 +31,14 @@ import styles from "./styles.module.css";
 const getRowId = (row: UserRow): number => row.id;
 
 type Properties = {
-	errors: FieldErrors<ProjectGroupCreateRequestDto>;
+	errors: FieldErrors<
+		ProjectGroupCreateRequestDto | ProjectGroupPatchRequestDto
+	>;
 	onToggle: (id: number) => void;
 	selectedUserIds: number[];
-	setValue: UseFormSetValue<ProjectGroupCreateRequestDto>;
+	setValue: UseFormSetValue<
+		ProjectGroupCreateRequestDto | ProjectGroupPatchRequestDto
+	>;
 };
 
 const ProjectGroupUsersTable = ({
@@ -40,6 +48,11 @@ const ProjectGroupUsersTable = ({
 	setValue,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
+	const { control, errors: searchErrors } = useAppForm({
+		defaultValues: { search: "" },
+		mode: "onChange",
+	});
+
 	const { onSearch, search } = useSearch();
 
 	const { projectGroups, users, usersDataStatus, usersTotalCount } =
@@ -87,7 +100,12 @@ const ProjectGroupUsersTable = ({
 	return (
 		<>
 			<span className={styles["table-title"]}>Users</span>
-			<ProjectGroupUsersSearch onChange={handleSearchChange} />
+			<ProjectGroupUsersSearch
+				control={control}
+				errors={searchErrors}
+				name="search"
+				onChange={handleSearchChange}
+			/>
 			{isLoading ? (
 				<Loader />
 			) : (

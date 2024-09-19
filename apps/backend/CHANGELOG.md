@@ -1,5 +1,49 @@
 # Changelog
 
+## [1.28.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.27.0...backend-v1.28.0) (2024-09-19)
+
+
+### Features
+
+* add notification for failed project activity update gf-336 ([#379](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/379)) ([ce69dd9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ce69dd9f5e26504dd80c4b2793a987b692aa7a62))
+
+## [1.27.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.26.0...backend-v1.27.0) (2024-09-19)
+
+
+### Features
+
+* add an ability to edit contributor name gf-345 ([#404](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/404)) ([7056194](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/70561948965d2f06dbc5e99cc7491e5e6f806e9d))
+* add last activity time to contributors gf-347 ([#410](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/410)) ([3128298](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/312829860a693a1f075a7f2d031026a7eb0edb5c))
+
+## [1.26.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.25.0...backend-v1.26.0) (2024-09-18)
+
+
+### Features
+
+* Adjust root permissions gf-350 ([#386](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/386)) ([188d94a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/188d94a43267cb822940842c43a297cd73c7e826))
+
+## [1.25.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.24.1...backend-v1.25.0) (2024-09-18)
+
+
+### Features
+
+* add project last activity label to project list gf-274 ([#354](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/354)) ([a4e7fab](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a4e7fab02b74f6d9fdbe44bd8c37b0fa22ccc5ef))
+* fix quality criteria issues gf-382 ([#391](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/391)) ([c0fddb2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c0fddb20684439e5f1ad32beea0c6fccde521e2f))
+
+## [1.24.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.24.0...backend-v1.24.1) (2024-09-18)
+
+
+### Bug Fixes
+
+* Make project group name unique only within the scope of a project gf-361 ([#380](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/380)) ([92fd89a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/92fd89a0d3150056e5d63c0de6a640dccad5c98b))
+
+## [1.24.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.23.0...backend-v1.24.0) (2024-09-18)
+
+
+### Features
+
+* Add an ability to edit project group gf-342 ([#371](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/371)) ([8c97374](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8c97374279cb535488bd9a197a35791e97fb7665))
+
 ## [1.23.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.22.0...backend-v1.23.0) (2024-09-17)
 
 

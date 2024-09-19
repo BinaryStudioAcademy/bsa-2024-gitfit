@@ -4,6 +4,7 @@ type ContributorGetAllItemResponseDto = {
 		id: number;
 	}[];
 	id: number;
+	lastActivityDate: null | string;
 	name: string;
 	projects: {
 		id: number;

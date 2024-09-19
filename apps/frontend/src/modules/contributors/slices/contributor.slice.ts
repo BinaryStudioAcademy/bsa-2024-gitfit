@@ -4,7 +4,7 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
 import { type ContributorGetAllItemResponseDto } from "../libs/types/types.js";
-import { loadAll } from "./actions.js";
+import { loadAll, patch } from "./actions.js";
 
 type State = {
 	contributors: ContributorGetAllItemResponseDto[];
@@ -27,6 +27,21 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(loadAll.rejected, (state) => {
 			state.contributors = [];
+			state.dataStatus = DataStatus.REJECTED;
+		});
+
+		builder.addCase(patch.pending, (state) => {
+			state.dataStatus = DataStatus.PENDING;
+		});
+		builder.addCase(patch.fulfilled, (state, action) => {
+			state.contributors = state.contributors.map((contributor) =>
+				contributor.id === action.payload.id
+					? { ...contributor, ...action.payload }
+					: contributor,
+			);
+			state.dataStatus = DataStatus.FULFILLED;
+		});
+		builder.addCase(patch.rejected, (state) => {
 			state.dataStatus = DataStatus.REJECTED;
 		});
 	},
