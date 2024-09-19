@@ -16,7 +16,7 @@ type Properties = {
 	onEdit: (contributorId: number) => void;
 };
 
-const ContributorCard = ({ contributor }: Properties): JSX.Element => {
+const ContributorCard = ({ contributor, onEdit }: Properties): JSX.Element => {
 	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = contributor.lastActivityDate
 		? new Date(contributor.lastActivityDate)
@@ -36,7 +36,7 @@ const ContributorCard = ({ contributor }: Properties): JSX.Element => {
 			: null;
 
 	const hasActivityIndicator = lastUpdateLabel !== null && colorStatus !== null;
-      
+
 	const handleEditClick = useCallback(() => {
 		onEdit(contributor.id);
 	}, [onEdit, contributor.id]);
