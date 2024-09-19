@@ -23,7 +23,7 @@ import { type UserService } from "~/modules/users/users.js";
 
 import { type TaskScheduler } from "../task-scheduler/task-scheduler.js";
 import { type Token } from "../token/token.js";
-import { INACTIVE_PROJECTS_NOTIFIER_CRON_SCHEDULE } from "./libs/constants/constants.js";
+import { JobCronPattern } from "./libs/enums/enums.js";
 import {
 	type ServerApplication,
 	type ServerApplicationApi,
@@ -145,7 +145,7 @@ class BaseServerApplication implements ServerApplication {
 	private initJobs(): void {
 		const { projectService } = this.services;
 		this.taskScheduler.start(
-			INACTIVE_PROJECTS_NOTIFIER_CRON_SCHEDULE,
+			JobCronPattern.INACTIVE_PROJECT_NOTIFICATION,
 			() => void projectService.processInactiveProjects(),
 		);
 	}
