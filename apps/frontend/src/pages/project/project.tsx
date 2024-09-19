@@ -123,8 +123,6 @@ const Project = (): JSX.Element => {
 		hasProject &&
 		permissionedProjectsId.includes(project.id);
 
-	const hasPermission = hasManagePermission || hasEditPermission;
-
 	if (isRejected) {
 		return <NotFound />;
 	}
@@ -147,7 +145,8 @@ const Project = (): JSX.Element => {
 							<h1 className={styles["title"]}>{project.name}</h1>
 
 							<ProjectDetailsMenu
-								hasManagePermission={hasPermission}
+								hasEditPermission={hasEditPermission}
+								hasManagePermission={hasManagePermission}
 								onEdit={handleEditProject}
 								projectId={project.id}
 								userPermissions={userPermissions}

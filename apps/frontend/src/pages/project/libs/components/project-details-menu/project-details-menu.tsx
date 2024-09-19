@@ -5,6 +5,7 @@ import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
 import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/permissions.js";
 
 type Properties = {
+	hasEditPermission: boolean;
 	hasManagePermission: boolean;
 	onEdit: () => void;
 	projectId: number;
@@ -12,6 +13,7 @@ type Properties = {
 };
 
 const ProjectDetailsMenu = ({
+	hasEditPermission,
 	hasManagePermission,
 	onEdit,
 	projectId,
@@ -37,6 +39,7 @@ const ProjectDetailsMenu = ({
 
 	const hasEditProjectPermission =
 		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||
+		hasEditPermission ||
 		hasManagePermission;
 
 	const isMenuShown =

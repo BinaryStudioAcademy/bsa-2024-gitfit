@@ -52,7 +52,12 @@ class UserController extends BaseController {
 				),
 			method: "GET",
 			path: UsersApiPath.ROOT,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
+			preHandlers: [
+				checkUserPermissions([
+					PermissionKey.MANAGE_USER_ACCESS,
+					PermissionKey.MANAGE_PROJECT,
+				]),
+			],
 		});
 
 		this.addRoute({
