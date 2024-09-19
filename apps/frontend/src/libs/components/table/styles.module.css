@@ -23,6 +23,10 @@
 	overflow-x: hidden;
 }
 
+.table-full-height {
+	max-height: 100%;
+}
+
 .table-header,
 .table-data {
 	padding: 10px 20px;
