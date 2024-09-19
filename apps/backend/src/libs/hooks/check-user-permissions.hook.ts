@@ -16,10 +16,10 @@ const checkUserPermissions = (routePermissions: string[]): APIPreHandler => {
 			});
 		}
 
-		const hasPermission = checkHasPermission(
-			routePermissions,
-			user.groups.flatMap((group) => group.permissions),
-		);
+		const hasPermission = checkHasPermission(routePermissions, [
+			...user.groups.flatMap((group) => group.permissions),
+			...user.projectGroups.flatMap((projectGroup) => projectGroup.permissions),
+		]);
 
 		if (!hasPermission) {
 			throw new HTTPError({
