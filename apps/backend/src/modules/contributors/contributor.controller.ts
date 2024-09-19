@@ -9,6 +9,8 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { type ContributorService } from "./contributor.service.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
+import { type ContributorPatchRequestDto } from "./libs/types/types.js";
+import { ContributorPatchValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 
 /**
  * @swagger
@@ -61,6 +63,21 @@ class ContributorController extends BaseController {
 			method: "GET",
 			path: ContributorsApiPath.ROOT,
 		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.patch(
+					options as APIHandlerOptions<{
+						body: ContributorPatchRequestDto;
+						params: { id: string };
+					}>,
+				),
+			method: "PATCH",
+			path: ContributorsApiPath.$ID,
+			validation: {
+				body: ContributorPatchValidationSchema,
+			},
+		});
 	}
 
 	/**
@@ -105,6 +122,52 @@ class ContributorController extends BaseController {
 
 		return {
 			payload: await this.contributorService.findAll(),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /contributors/{contributorId}:
+	 *   patch:
+	 *     description: Updates contributor information
+	 *     parameters:
+	 *       - name: contributorId
+	 *         in: path
+	 *         description: Id of the contributor to update
+	 *         required: true
+	 *         schema:
+	 *           type: number
+	 *           minimum: 1
+	 *     requestBody:
+	 *       required: true
+	 *       content:
+	 *         application/json:
+	 *           schema:
+	 *             type: object
+	 *             properties:
+	 *               name:
+	 *                 type: string
+	 *     responses:
+	 *       200:
+	 *         description: Contributor updated successfully
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               $ref: "#/components/schemas/Contributor"
+	 *       404:
+	 *         description: Contributor not found
+	 */
+	private async patch(
+		options: APIHandlerOptions<{
+			body: ContributorPatchRequestDto;
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		const contributorId = Number(options.params.id);
+
+		return {
+			payload: await this.contributorService.patch(contributorId, options.body),
 			status: HTTPCode.OK,
 		};
 	}
