@@ -45,7 +45,7 @@ class BaseAnalyticsCli {
 			.description("Start the background job for collecting statistics")
 			.action((apiKey: string, userId: string, repoPath: string) => {
 				if (!apiKey || !userId || !repoPath) {
-					this.logger.error("Not all command arguments were provided.");
+					this.logger.error("Not all command arguments are provided.");
 
 					return;
 				}
