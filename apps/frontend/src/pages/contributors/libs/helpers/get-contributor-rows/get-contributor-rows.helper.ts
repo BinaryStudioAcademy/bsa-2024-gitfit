@@ -1,6 +1,6 @@
 import { type ContributorGetAllItemResponseDto } from "~/modules/contributors/contributors.js";
 
-import { type ContributorRow } from "../types/types.js";
+import { type ContributorRow } from "../../types/types.js";
 
 const getContributorRows = (
 	contributors: ContributorGetAllItemResponseDto[],
