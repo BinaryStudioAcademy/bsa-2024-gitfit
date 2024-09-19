@@ -6,6 +6,8 @@ export {
 	configureString,
 	formatDate,
 	getDifferenceInDays,
+	getRelativeDate,
+	getStartOfDay,
 	initDebounce,
 	subtractDays,
 } from "@git-fit/shared";

@@ -1,5 +1,39 @@
 # Changelog
 
+## [1.39.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.38.0...v1.39.0) (2024-09-19)
+
+
+### Features
+
+* replace forever with pm2 for analytics script gf-385 ([#397](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/397)) ([168db21](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/168db2101a3cac49339c5a10bd847db40a8c406d))
+
+
+### Bug Fixes
+
+* The Check in the checkbox appears in the choosen row for each page in the Create Group modal (for both Create Progect Group and Create Group) gf-390 ([#396](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/396)) ([435553e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/435553e825c153ba92ced567d0c9a31f6bcf11ea))
+
+## [1.38.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.37.0...v1.38.0) (2024-09-18)
+
+
+### Features
+
+* Adjust root permissions gf-350 ([#386](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/386)) ([188d94a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/188d94a43267cb822940842c43a297cd73c7e826))
+
+## [1.37.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.36.0...v1.37.0) (2024-09-18)
+
+
+### Features
+
+* Add instructions on how to setup analytics gf-343 ([#392](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/392)) ([a4880d8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a4880d8e579321ba6403fdf0edc63251ecf15b74))
+
+## [1.36.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.35.0...v1.36.0) (2024-09-18)
+
+
+### Features
+
+* add project last activity label to project list gf-274 ([#354](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/354)) ([a4e7fab](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a4e7fab02b74f6d9fdbe44bd8c37b0fa22ccc5ef))
+* fix quality criteria issues gf-382 ([#391](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/391)) ([c0fddb2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c0fddb20684439e5f1ad32beea0c6fccde521e2f))
+
 ## [1.35.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.34.0...v1.35.0) (2024-09-18)
 
 
