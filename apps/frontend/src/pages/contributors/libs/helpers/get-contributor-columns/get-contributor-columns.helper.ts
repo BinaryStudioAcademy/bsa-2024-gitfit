@@ -1,6 +1,6 @@
 import { type TableColumn } from "~/libs/types/types.js";
 
-import { type ContributorRow } from "../types/types.js";
+import { type ContributorRow } from "../../types/types.js";
 
 const getContributorColumns = (): TableColumn<ContributorRow>[] => [
 	{

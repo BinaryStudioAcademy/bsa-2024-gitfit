@@ -1,6 +1,6 @@
 import { type GroupGetAllItemResponseDto } from "~/modules/groups/groups.js";
 
-import { type GroupRow } from "../types/types.js";
+import { type GroupRow } from "../../types/types.js";
 
 const getGroupRows = (groups: GroupGetAllItemResponseDto[]): GroupRow[] =>
 	groups.map((group) => ({
