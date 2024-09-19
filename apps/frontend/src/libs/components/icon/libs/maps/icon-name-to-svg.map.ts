@@ -3,6 +3,8 @@ import { type FC } from "react";
 import Access from "~/assets/images/icons/access.svg?react";
 import Analytics from "~/assets/images/icons/analytics.svg?react";
 import Calendar from "~/assets/images/icons/calendar.svg?react";
+import Check from "~/assets/images/icons/check.svg?react";
+import CircleQuestion from "~/assets/images/icons/circle-question.svg?react";
 import Clipboard from "~/assets/images/icons/clipboard.svg?react";
 import Contributors from "~/assets/images/icons/contributors.svg?react";
 import Cross from "~/assets/images/icons/cross.svg?react";
@@ -23,6 +25,8 @@ const iconNameToSvg: Record<IconName, FC<React.SVGProps<SVGSVGElement>>> = {
 	access: Access,
 	analytics: Analytics,
 	calendar: Calendar,
+	check: Check,
+	circleQuestion: CircleQuestion,
 	clipboard: Clipboard,
 	contributors: Contributors,
 	cross: Cross,
