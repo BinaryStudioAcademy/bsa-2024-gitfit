@@ -10,9 +10,9 @@
 		"node": "20.x.x",
 		"npm": "10.x.x"
 	},
-	"main": "./index.js",
+	"main": "./build/index.js",
 	"bin": {
-		"@git-fit/analytics": "./index.js"
+		"@git-fit/analytics": "./build/index.js"
 	},
 	"scripts": {
 		"lint:type": "npx tsc --noEmit",
