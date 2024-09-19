@@ -98,11 +98,6 @@ const Project = (): JSX.Element => {
 
 	const hasProject = project !== null;
 
-	const hasSetupAnalyticsPermission = checkHasPermission(
-		[PermissionKey.MANAGE_ALL_PROJECTS],
-		userPermissions,
-	);
-
 	const hasManagePermission =
 		checkHasPermission(
 			[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_PROJECT],
@@ -122,6 +117,11 @@ const Project = (): JSX.Element => {
 		) &&
 		hasProject &&
 		permissionedProjectsId.includes(project.id);
+
+	const hasSetupAnalyticsPermission =
+		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||
+		hasManagePermission ||
+		hasEditPermission;
 
 	if (isRejected) {
 		return <NotFound />;
