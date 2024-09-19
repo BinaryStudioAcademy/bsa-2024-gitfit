@@ -1,6 +1,7 @@
 .card {
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	width: 100%;
 	min-height: 80px;
 	padding: 24px 16px;
@@ -10,6 +11,8 @@
 }
 
 .name {
+	flex-basis: 300px;
+	min-width: 150px;
 	font-size: 16px;
 	line-height: 120%;
 }
