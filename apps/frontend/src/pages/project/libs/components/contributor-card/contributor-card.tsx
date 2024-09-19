@@ -1,10 +1,11 @@
 import { ActivityIndicator } from "~/libs/components/components.js";
 import {
+	getActivityIndicatorStatus,
 	getDifferenceInDays,
 	getRelativeDate,
+	getStartOfDay,
 } from "~/libs/helpers/helpers.js";
 import { type ContributorGetAllItemResponseDto } from "~/pages/project/libs/types/types.js";
-import { getActivityIndicatorStatus } from "~/pages/projects/libs/helpers/helpers.js";
 
 import styles from "./styles.module.css";
 
@@ -13,8 +14,7 @@ type Properties = {
 };
 
 const ContributorCard = ({ contributor }: Properties): JSX.Element => {
-	//TODO: start of the day
-	const currentDate = new Date();
+	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = contributor.lastActivityDate
 		? new Date(contributor.lastActivityDate)
 		: null;
