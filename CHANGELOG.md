@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.41.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.40.0...v1.41.0) (2024-09-19)
+
+
+### Features
+
+* add notification for failed project activity update gf-336 ([#379](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/379)) ([ce69dd9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ce69dd9f5e26504dd80c4b2793a987b692aa7a62))
+
 ## [1.40.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.39.0...v1.40.0) (2024-09-19)
 
 
