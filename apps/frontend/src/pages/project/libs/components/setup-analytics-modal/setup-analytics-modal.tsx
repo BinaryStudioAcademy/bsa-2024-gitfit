@@ -162,6 +162,13 @@ const SetupAnalyticsModal = ({
 							<span className={styles["list-item-title"]}>PM2 5.4</span>: The
 							script requires PM2 5.4 to be installed on your machine.
 						</li>
+						<li>
+							<span className={styles["list-item-title"]}>
+								Unix-based system
+							</span>
+							: The script requires a Unix-based operating system (e.g., Linux
+							or macOS) to run properly.
+						</li>
 					</ul>
 				</div>
 
@@ -212,8 +219,8 @@ const SetupAnalyticsModal = ({
 								Prepare the script.
 							</span>
 							<p className={styles["list-item-text"]}>
-								Copy the command below and modify with your local
-								repository&apos;s path:
+								Copy the command below and replace &lt;project-path&gt;
+								placeholder with your local repository&apos;s path:
 							</p>
 							<Input
 								control={control}
