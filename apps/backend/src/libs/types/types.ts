@@ -6,6 +6,7 @@ export {
 	type HTTPMethod,
 	type PaginationQueryParameters,
 	type PaginationResponseDto,
+	type RequiredPermission,
 	type ServerCommonErrorResponse,
 	type ServerValidationErrorResponse,
 	type ValidationSchema,

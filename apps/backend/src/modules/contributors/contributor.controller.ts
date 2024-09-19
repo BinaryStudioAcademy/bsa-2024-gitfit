@@ -63,8 +63,7 @@ class ContributorController extends BaseController {
 			path: ContributorsApiPath.ROOT,
 			preHandlers: [
 				checkUserPermissions([
-					PermissionKey.VIEW_ALL_PROJECTS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
+					[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
 				]),
 			],
 		});

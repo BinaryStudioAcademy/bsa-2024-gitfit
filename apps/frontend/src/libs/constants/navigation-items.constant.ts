@@ -7,8 +7,7 @@ const SIDEBAR_ITEMS: NavigationItem[] = [
 		icon: "project",
 		label: "Projects",
 		pagePermissions: [
-			PermissionKey.VIEW_ALL_PROJECTS,
-			PermissionKey.MANAGE_ALL_PROJECTS,
+			[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
 		],
 	},
 	{
@@ -28,8 +27,7 @@ const SIDEBAR_ITEMS: NavigationItem[] = [
 		icon: "analytics",
 		label: "Analytics",
 		pagePermissions: [
-			PermissionKey.VIEW_ALL_PROJECTS,
-			PermissionKey.MANAGE_ALL_PROJECTS,
+			[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
 		],
 	},
 ];
