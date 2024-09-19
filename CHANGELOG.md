@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.43.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.42.0...v1.43.0) (2024-09-19)
+
+
+### Features
+
+* trigger analytics release gf-375 ([#430](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/430)) ([a8e06e5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a8e06e58119001bf9b4e379116af84d0b87c85fe))
+
 ## [1.42.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.41.0...v1.42.0) (2024-09-19)
 
 
