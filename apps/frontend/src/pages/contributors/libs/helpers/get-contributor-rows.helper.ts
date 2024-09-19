@@ -7,6 +7,7 @@ const getContributorRows = (
 ): ContributorRow[] =>
 	contributors.map((contributor) => ({
 		gitEmails: contributor.gitEmails.map((email) => email.email),
+		isHidden: contributor.isHidden,
 		name: contributor.name,
 		projects: contributor.projects.map((project) => project.name),
 	}));

@@ -4,6 +4,7 @@ type ContributorGetAllItemResponseDto = {
 		id: number;
 	}[];
 	id: number;
+	isHidden: boolean;
 	name: string;
 	projects: {
 		id: number;
