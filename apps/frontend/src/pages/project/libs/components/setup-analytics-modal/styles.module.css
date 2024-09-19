@@ -4,10 +4,18 @@
 	gap: 24px;
 }
 
+.subtitle {
+	font-family: Inter, sans-serif;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 1.2;
+}
+
 .text {
 	font-family: Inter, sans-serif;
 	font-size: 16px;
 	font-weight: 400;
+	text-align: justify;
 }
 
 .api-key-container {
@@ -18,4 +26,17 @@
 
 .button-wrapper {
 	min-width: 120px;
+}
+
+.list-item {
+	margin-bottom: 16px;
+}
+
+.list-item-title {
+	margin-bottom: 0;
+	font-weight: 700;
+}
+
+.list-item-text {
+	margin: 0;
 }

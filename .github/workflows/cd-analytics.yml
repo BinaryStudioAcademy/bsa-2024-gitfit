@@ -1,0 +1,99 @@
+name: Continuous Delivery Analytics
+
+env:
+  ARTIFACT_NAME: build
+  ARTIFACT_PATH: ./scripts/analytics/build
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+concurrency:
+  group: cd-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  dependencies:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Cache Dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+          key: cd-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            cd-
+
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+  build:
+    name: Code Building
+    needs: dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Restore Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+          key: cd-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Code Building
+        run: |
+          npm run build:shared & npm run build:analytics
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.ARTIFACT_PATH }}
+
+  npm-publish:
+    name: Publish to NPM
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          registry-url: https://registry.npmjs.org
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.ARTIFACT_PATH }}
+
+      - name: Publish
+        working-directory: ${{ env.ARTIFACT_PATH }}
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

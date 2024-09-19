@@ -61,7 +61,7 @@ class ProjectController extends BaseController {
 				),
 			method: "POST",
 			path: ProjectsApiPath.ROOT,
-			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 			validation: {
 				body: projectCreateValidationSchema,
 			},
@@ -76,7 +76,7 @@ class ProjectController extends BaseController {
 				),
 			method: "DELETE",
 			path: ProjectsApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.VIEW_ALL_PROJECTS])],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 		});
 
 		this.addRoute({
@@ -94,6 +94,7 @@ class ProjectController extends BaseController {
 					PermissionKey.VIEW_PROJECT,
 					PermissionKey.EDIT_PROJECT,
 					PermissionKey.MANAGE_PROJECT,
+					PermissionKey.MANAGE_ALL_PROJECTS,
 				]),
 			],
 		});
@@ -113,6 +114,7 @@ class ProjectController extends BaseController {
 					PermissionKey.VIEW_PROJECT,
 					PermissionKey.EDIT_PROJECT,
 					PermissionKey.MANAGE_PROJECT,
+					PermissionKey.MANAGE_ALL_PROJECTS,
 				]),
 			],
 		});
@@ -130,9 +132,9 @@ class ProjectController extends BaseController {
 			preHandlers: [
 				checkUserPermissions([
 					PermissionKey.EDIT_PROJECT,
-					PermissionKey.VIEW_ALL_PROJECTS,
 					PermissionKey.VIEW_PROJECT,
 					PermissionKey.MANAGE_PROJECT,
+					PermissionKey.MANAGE_ALL_PROJECTS,
 				]),
 			],
 			validation: {

@@ -1,5 +1,76 @@
 # Changelog
 
+## [1.38.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.37.0...v1.38.0) (2024-09-18)
+
+
+### Features
+
+* Adjust root permissions gf-350 ([#386](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/386)) ([188d94a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/188d94a43267cb822940842c43a297cd73c7e826))
+
+## [1.37.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.36.0...v1.37.0) (2024-09-18)
+
+
+### Features
+
+* Add instructions on how to setup analytics gf-343 ([#392](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/392)) ([a4880d8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a4880d8e579321ba6403fdf0edc63251ecf15b74))
+
+## [1.36.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.35.0...v1.36.0) (2024-09-18)
+
+
+### Features
+
+* add project last activity label to project list gf-274 ([#354](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/354)) ([a4e7fab](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a4e7fab02b74f6d9fdbe44bd8c37b0fa22ccc5ef))
+* fix quality criteria issues gf-382 ([#391](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/391)) ([c0fddb2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c0fddb20684439e5f1ad32beea0c6fccde521e2f))
+
+## [1.35.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.34.0...v1.35.0) (2024-09-18)
+
+
+### Features
+
+* added placeholder to contributors list on project page gf-377 ([#384](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/384)) ([0308e61](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0308e61e921d790664c6740c92e53c63f966ea67))
+
+
+### Bug Fixes
+
+* Make project group name unique only within the scope of a project gf-361 ([#380](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/380)) ([92fd89a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/92fd89a0d3150056e5d63c0de6a640dccad5c98b))
+
+## [1.34.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.33.1...v1.34.0) (2024-09-18)
+
+
+### Features
+
+* Add an ability to edit project group gf-342 ([#371](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/371)) ([8c97374](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8c97374279cb535488bd9a197a35791e97fb7665))
+
+## [1.33.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.33.0...v1.33.1) (2024-09-18)
+
+
+### Bug Fixes
+
+* fix check has permission helper gf-248 ([#378](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/378)) ([ffc88da](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ffc88da2ec88eb24b7e6e0dabe5f0b4ddd96a3ab))
+* reloading the same page and loader component gf-276 ([#373](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/373)) ([5a38776](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5a38776734e768bd6f28089c9fd81bd122da5091))
+
+## [1.33.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.32.0...v1.33.0) (2024-09-17)
+
+
+### Features
+
+* add permission to manage all projects gf-248 ([#282](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/282)) ([0bc48e9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0bc48e980a5aacf3b43cab5aacf2c9583c36a3c2))
+
+## [1.32.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.31.1...v1.32.0) (2024-09-17)
+
+
+### Features
+
+* add search input to users table on create project group modal gf-355 ([#368](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/368)) ([c5cda1d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c5cda1df9f7aa3cb5a389fd59e05ded2248378fb))
+* Display list of contributors on project details page gf-337 ([#341](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/341)) ([ab2ac0b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ab2ac0bfee3e3ce9ddb7a09f9e6e66afed12bced))
+
+## [1.31.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.31.0...v1.31.1) (2024-09-17)
+
+
+### Bug Fixes
+
+* improve error handling in creating activity logs gf-332 ([#365](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/365)) ([9a4bb43](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9a4bb4315be768c6e5b278f546ba60736ad9b30b))
+
 ## [1.31.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.30.1...v1.31.0) (2024-09-17)
 
 

@@ -11,6 +11,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	onDelete: (id: number) => void;
+	onEdit: (group: ProjectGroupGetAllItemResponseDto) => void;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
@@ -22,6 +23,7 @@ type Properties = {
 
 const ProjectGroupsTable = ({
 	onDelete,
+	onEdit,
 	onPageChange,
 	onPageSizeChange,
 	page,
@@ -30,6 +32,19 @@ const ProjectGroupsTable = ({
 	projectGroups,
 	totalItemsCount,
 }: Properties): JSX.Element => {
+	const handleEdit = useCallback(
+		(projectGroupId: number): void => {
+			const projectGroup = projectGroups.find(
+				({ id }) => id === projectGroupId,
+			);
+
+			if (projectGroup) {
+				onEdit(projectGroup);
+			}
+		},
+		[projectGroups, onEdit],
+	);
+
 	const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
 
 	const handleMenuOpen = useCallback(() => {
@@ -43,10 +58,11 @@ const ProjectGroupsTable = ({
 		() =>
 			getProjectGroupColumns({
 				onDelete,
+				onEdit: handleEdit,
 				onMenuClose: handleMenuClose,
 				onMenuOpen: handleMenuOpen,
 			}),
-		[onDelete, handleMenuClose, handleMenuOpen],
+		[onDelete, handleMenuClose, handleMenuOpen, handleEdit],
 	);
 	const projectGroupData: ProjectGroupRow[] =
 		getProjectGroupRows(projectGroups);

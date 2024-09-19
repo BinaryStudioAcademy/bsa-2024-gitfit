@@ -5,18 +5,22 @@ import {
 	type AsyncThunkConfig,
 	type PaginationQueryParameters,
 } from "~/libs/types/types.js";
-import { type UserGetAllResponseDto } from "~/modules/users/users.js";
+import {
+	type UserGetAllQueryParameters,
+	type UserGetAllResponseDto,
+} from "~/modules/users/users.js";
 
 import {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupGetAllItemResponseDto,
 	type ProjectGroupGetAllResponseDto,
+	type ProjectGroupPatchRequestDto,
 } from "../libs/types/types.js";
 import { name as sliceName } from "./project-group.slice.js";
 
 const loadUsers = createAsyncThunk<
 	UserGetAllResponseDto,
-	PaginationQueryParameters,
+	UserGetAllQueryParameters,
 	AsyncThunkConfig
 >(`${sliceName}/load-users`, (query, { extra }) => {
 	const { userApi } = extra;
@@ -65,4 +69,18 @@ const create = createAsyncThunk<
 	return response;
 });
 
-export { create, deleteById, loadAllByProjectId, loadUsers };
+const patch = createAsyncThunk<
+	ProjectGroupGetAllItemResponseDto,
+	{ id: number; payload: ProjectGroupPatchRequestDto },
+	AsyncThunkConfig
+>(`${sliceName}/update`, async ({ id, payload }, { extra }) => {
+	const { projectGroupApi, toastNotifier } = extra;
+
+	const response = await projectGroupApi.patch(id, payload);
+
+	toastNotifier.showSuccess(NotificationMessage.PROJECT_GROUP_UPDATE_SUCCESS);
+
+	return response;
+});
+
+export { create, deleteById, loadAllByProjectId, loadUsers, patch };

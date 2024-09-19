@@ -20,7 +20,10 @@ const config: KnipConfig = {
 			includeEntryExports: true,
 		},
 		"scripts/analytics": {
-			entry: ["src/index.ts"],
+			entry: [
+				"src/index.ts",
+				"src/libs/modules/analytics-cli/init-analytics-cli.ts",
+			],
 		},
 	},
 };

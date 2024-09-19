@@ -1,4 +1,11 @@
-import { create, deleteById, getById, loadAll, patch } from "./actions.js";
+import {
+	create,
+	deleteById,
+	getById,
+	loadAll,
+	loadAllContributorsByProjectId,
+	patch,
+} from "./actions.js";
 import { actions } from "./project.slice.js";
 
 const allActions = {
@@ -7,6 +14,7 @@ const allActions = {
 	deleteById,
 	getById,
 	loadAll,
+	loadAllContributorsByProjectId,
 	patch,
 };
 
