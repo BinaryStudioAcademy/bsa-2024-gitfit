@@ -20,6 +20,7 @@ export {
 	configureString,
 	formatDate,
 	formatRelativeTime,
+	getDateRange,
 	getDifferenceInDays,
 	getRelativeDate,
 	getStartOfDay,
@@ -52,8 +53,12 @@ export {
 	type ActivityLogCreateRequestDto,
 	activityLogCreateValidationSchema,
 	ActivityLogError,
+	type ActivityLogGetAllAnalyticsResponseDto,
+	type ActivityLogGetAllItemAnalyticsResponseDto,
 	type ActivityLogGetAllItemResponseDto,
 	type ActivityLogGetAllResponseDto,
+	activityLogGetValidationSchema,
+	type ActivityLogQueryParameters,
 	ActivityLogsApiPath,
 } from "./modules/activity-logs/activity-logs.js";
 export { AuthApiPath, AuthError } from "./modules/auth/auth.js";

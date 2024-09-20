@@ -4,4 +4,8 @@ import { Store } from "./store.module.js";
 
 const store = new Store(config);
 
-export { store };
+type RootState = ReturnType<typeof store.instance.getState>;
+
+type AppDispatch = typeof store.instance.dispatch;
+
+export { type AppDispatch, type RootState, store };

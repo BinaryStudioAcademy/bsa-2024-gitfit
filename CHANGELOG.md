@@ -1,5 +1,53 @@
 # Changelog
 
+## [1.47.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.46.0...v1.47.0) (2024-09-20)
+
+
+### Features
+
+* Log out user when 401 error occurs gf-343 ([#413](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/413)) ([61922a3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/61922a3e13ea33b23090adcd798ad49ab95cb08c))
+
+
+### Bug Fixes
+
+* fixed last activity to start from the beginning of the day gf-446 ([#451](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/451)) ([06017bf](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/06017bf4587cda9715e44ab84f0539adfb67dda7))
+
+## [1.46.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.45.2...v1.46.0) (2024-09-20)
+
+
+### Features
+
+* add ability to delete project on project page gf-407 ([#452](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/452)) ([dacd7b2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/dacd7b2a9ae12801f1f9746ffb9fa13644d01f7b))
+* add analytics table gf-327 ([#364](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/364)) ([dd7084a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/dd7084abd8cf65b930897043a2ca837b1468745a))
+
+
+### Bug Fixes
+
+* Block access to project access management page when user hasn't either View or Manage All Projects permission gf-350 ([#414](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/414)) ([168101c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/168101c05c7e20a38ff28bdca615db04dafaa4a8))
+
+## [1.45.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.45.1...v1.45.2) (2024-09-20)
+
+
+### Bug Fixes
+
+* manage all projects permissions, edit, view, delete, create gf-411 ([#424](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/424)) ([3599a79](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3599a79205f88979a958c150b73d287e54f0bfce))
+
+## [1.45.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.45.0...v1.45.1) (2024-09-20)
+
+
+### Bug Fixes
+
+* double dots shown nearby user checkboxes in the create/edit group/project group modal window gf-382 ([#441](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/441)) ([319f18e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/319f18e3bb4e481d9b5f86f4e460f727c9bec54a))
+
+## [1.45.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.44.0...v1.45.0) (2024-09-20)
+
+
+### Features
+
+* add an ability for admins to delete a user gf-419 ([#426](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/426)) ([724b812](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/724b81206451537a3666e1ab54645914281ef2e8))
+* Add search input to users table on access management pages gf-402 ([#422](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/422)) ([171d387](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/171d3879dde731db092ddcd00bb14a2e251043e4))
+* update analytics cd config gf-375 ([#438](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/438)) ([6f99875](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6f99875eda4711dbb733e5ddbd6bbc7ea25ec88e))
+
 ## [1.44.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.43.0...v1.44.0) (2024-09-19)
 
 

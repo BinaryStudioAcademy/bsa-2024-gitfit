@@ -1,1 +1,4 @@
-export { activityLogCreateValidationSchema } from "@git-fit/shared";
+export {
+	activityLogCreateValidationSchema,
+	activityLogGetValidationSchema,
+} from "@git-fit/shared";

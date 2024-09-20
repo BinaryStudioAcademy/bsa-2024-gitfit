@@ -22,3 +22,9 @@
 .breadcrumb-container {
 	margin-bottom: 32px;
 }
+
+.search-container {
+	width: 30%;
+	min-width: 300px;
+	margin-bottom: 16px;
+}

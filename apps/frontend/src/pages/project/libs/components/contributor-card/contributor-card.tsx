@@ -24,7 +24,7 @@ const ContributorCard = ({
 }: Properties): JSX.Element => {
 	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = contributor.lastActivityDate
-		? new Date(contributor.lastActivityDate)
+		? getStartOfDay(new Date(contributor.lastActivityDate))
 		: null;
 
 	const daysDifference = lastActivityDate

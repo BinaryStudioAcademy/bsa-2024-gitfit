@@ -7,6 +7,7 @@ export {
 	configureString,
 	formatDate,
 	formatRelativeTime,
+	getDateRange,
 	getDifferenceInDays,
 	getRelativeDate,
 	getStartOfDay,
