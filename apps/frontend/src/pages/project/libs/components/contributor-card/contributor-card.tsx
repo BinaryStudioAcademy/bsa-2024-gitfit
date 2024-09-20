@@ -1,4 +1,7 @@
-import { ActivityIndicator } from "~/libs/components/components.js";
+import {
+	ActivityChart,
+	ActivityIndicator,
+} from "~/libs/components/components.js";
 import {
 	getActivityIndicatorStatus,
 	getDifferenceInDays,
@@ -37,6 +40,13 @@ const ContributorCard = ({ contributor, onEdit }: Properties): JSX.Element => {
 
 	const hasActivityIndicator = lastUpdateLabel !== null && colorStatus !== null;
 
+	// TODO: replace this mock data with actual activity data
+	const ONE = 1;
+	const FIVE = 5;
+	const activityData = [...Array.from({ length: 30 }).keys()].map(() => ({
+		commitsNumber: Math.floor((Math.random() + ONE) * FIVE),
+	}));
+
 	const handleEditClick = useCallback(() => {
 		onEdit(contributor.id);
 	}, [onEdit, contributor.id]);
@@ -47,6 +57,7 @@ const ContributorCard = ({ contributor, onEdit }: Properties): JSX.Element => {
 			{hasActivityIndicator && (
 				<ActivityIndicator label={lastUpdateLabel} status={colorStatus} />
 			)}
+			<ActivityChart data={activityData} />
 			<ContributorMenu
 				contributorId={contributor.id}
 				onEdit={handleEditClick}

@@ -1,3 +1,4 @@
+export { ActivityChart } from "./activity-chart/activity-chart.js";
 export { ActivityIndicator } from "./activity-indicator/activity-indicator.js";
 export { App } from "./app/app.js";
 export { Avatar } from "./avatar/avatar.js";
