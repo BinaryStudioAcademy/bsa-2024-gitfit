@@ -96,6 +96,55 @@ class UserRepository implements Repository {
 		};
 	}
 
+	public async findAllWithProjectPermissions(
+		permissionKeys: string[],
+		projectId: number,
+	): Promise<UserEntity[]> {
+		const users = await this.userModel
+			.query()
+			.withGraphFetched("projectGroups.[permissions]")
+			.modifyGraph("projectGroups.permissions", (builder) => {
+				builder.whereIn("key", permissionKeys);
+			})
+			.whereExists(
+				this.userModel
+					.relatedQuery("projectGroups")
+					.joinRelated("permissions")
+					.join(
+						"projects_to_project_groups",
+						"project_groups.id",
+						"projects_to_project_groups.project_group_id",
+					)
+					.whereIn("permissions.key", permissionKeys)
+					.where("projects_to_project_groups.project_id", projectId),
+			)
+			.whereNull("deletedAt")
+			.execute();
+
+		return users.map((user) => UserEntity.initialize(user));
+	}
+
+	public async findAllWithRootPermissions(
+		permissionKeys: string[],
+	): Promise<UserEntity[]> {
+		const users = await this.userModel
+			.query()
+			.withGraphFetched("groups.[permissions]")
+			.modifyGraph("groups.permissions", (builder) => {
+				builder.whereIn("key", permissionKeys);
+			})
+			.whereExists(
+				this.userModel
+					.relatedQuery("groups")
+					.joinRelated("permissions")
+					.whereIn("permissions.key", permissionKeys),
+			)
+			.whereNull("deletedAt")
+			.execute();
+
+		return users.map((user) => UserEntity.initialize(user));
+	}
+
 	public async findByEmail(
 		email: string,
 		hasDeleted = false,

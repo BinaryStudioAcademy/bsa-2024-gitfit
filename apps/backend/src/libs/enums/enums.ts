@@ -4,5 +4,6 @@ export {
 	AppEnvironment,
 	ExceptionMessage,
 	PermissionKey,
+	ProjectPermissionKey,
 	ServerErrorType,
 } from "@git-fit/shared";
