@@ -1,5 +1,37 @@
 # Changelog
 
+## [1.47.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.46.0...v1.47.0) (2024-09-20)
+
+
+### Features
+
+* Log out user when 401 error occurs gf-343 ([#413](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/413)) ([61922a3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/61922a3e13ea33b23090adcd798ad49ab95cb08c))
+
+
+### Bug Fixes
+
+* fixed last activity to start from the beginning of the day gf-446 ([#451](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/451)) ([06017bf](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/06017bf4587cda9715e44ab84f0539adfb67dda7))
+
+## [1.46.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.45.2...v1.46.0) (2024-09-20)
+
+
+### Features
+
+* add ability to delete project on project page gf-407 ([#452](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/452)) ([dacd7b2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/dacd7b2a9ae12801f1f9746ffb9fa13644d01f7b))
+* add analytics table gf-327 ([#364](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/364)) ([dd7084a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/dd7084abd8cf65b930897043a2ca837b1468745a))
+
+
+### Bug Fixes
+
+* Block access to project access management page when user hasn't either View or Manage All Projects permission gf-350 ([#414](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/414)) ([168101c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/168101c05c7e20a38ff28bdca615db04dafaa4a8))
+
+## [1.45.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.45.1...v1.45.2) (2024-09-20)
+
+
+### Bug Fixes
+
+* manage all projects permissions, edit, view, delete, create gf-411 ([#424](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/424)) ([3599a79](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3599a79205f88979a958c150b73d287e54f0bfce))
+
 ## [1.45.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.45.0...v1.45.1) (2024-09-20)
 
 

@@ -1,63 +1,124 @@
-import { DateInput, PageLayout, Search } from "~/libs/components/components.js";
+import {
+	DateInput,
+	Loader,
+	PageLayout,
+	Search,
+} from "~/libs/components/components.js";
+import { DataStatus } from "~/libs/enums/enums.js";
 import { subtractDays } from "~/libs/helpers/helpers.js";
-import { useAppForm, useCallback, useSearch } from "~/libs/hooks/hooks.js";
+import {
+	useAppDispatch,
+	useAppForm,
+	useAppSelector,
+	useCallback,
+	useEffect,
+	useFormWatch,
+	useSearch,
+} from "~/libs/hooks/hooks.js";
+import { actions as activityLogActions } from "~/modules/activity/activity.js";
 
 import { AnalyticsTable } from "./libs/components/components.js";
 import { ANALYTICS_DATE_MAX_RANGE } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 const Analytics = (): JSX.Element => {
+	const dispatch = useAppDispatch();
 	const todayDate = new Date();
 
-	const { control, errors, handleSubmit } = useAppForm({
+	const { activityLogs, dataStatus } = useAppSelector(
+		({ activityLogs }) => activityLogs,
+	);
+
+	const { control, errors, handleSubmit, isDirty } = useAppForm({
 		defaultValues: {
-			dateRange: [subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE), todayDate],
+			dateRange: [
+				subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE),
+				todayDate,
+			] as [Date, Date],
 			search: "",
 		},
 	});
 
+	const dateRangeValue = useFormWatch({ control, name: "dateRange" });
 	const { onSearch, search } = useSearch();
 
-	const handleFormSubmit = useCallback(
-		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit(() => {
-				// TODO: implement the data submission logic here
-			})(event_);
+	const handleLoadLogs = useCallback(
+		([startDate, endDate]: [Date, Date]) => {
+			const formattedStartDate = startDate.toISOString();
+			const formattedEndDate = endDate.toISOString();
+
+			void dispatch(
+				activityLogActions.loadAll({
+					endDate: formattedEndDate,
+					search,
+					startDate: formattedStartDate,
+				}),
+			);
 		},
-		[handleSubmit],
+		[dispatch, search],
 	);
 
-	const handleContributorsSearchChange = useCallback(
+	useEffect(() => {
+		handleLoadLogs(dateRangeValue);
+	}, [dateRangeValue, handleLoadLogs]);
+
+	const handleFormSubmit = useCallback(
+		(event_?: React.BaseSyntheticEvent): void => {
+			void handleSubmit((formData) => {
+				handleLoadLogs(formData.dateRange);
+			})(event_);
+		},
+		[handleLoadLogs, handleSubmit],
+	);
+
+	const handleSearchChange = useCallback(
 		(value: string) => {
 			onSearch(value);
 		},
 		[onSearch],
 	);
 
+	useEffect(() => {
+		if (isDirty) {
+			handleFormSubmit();
+		}
+	}, [dateRangeValue, isDirty, handleFormSubmit]);
+
+	const isLoading =
+		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
+
 	return (
 		<PageLayout>
 			<h1 className={styles["title"]}>Analytics</h1>
-			<form className={styles["filters-form"]} onSubmit={handleFormSubmit}>
-				<div className={styles["search-container"]}>
-					<Search
-						control={control}
-						errors={errors}
-						isLabelHidden
-						label="Contributors search"
-						name="search"
-						onChange={handleContributorsSearchChange}
-						placeholder="Enter name"
-					/>
-				</div>
-				<DateInput
-					control={control}
-					maxDate={todayDate}
-					maxRange={ANALYTICS_DATE_MAX_RANGE}
-					name="dateRange"
-				/>
-			</form>
 			<section>
-				<AnalyticsTable search={search} />
+				<form className={styles["filters-form"]} onSubmit={handleFormSubmit}>
+					<div className={styles["search-container"]}>
+						<Search
+							control={control}
+							errors={errors}
+							isLabelHidden
+							label="Contributors search"
+							name="search"
+							onChange={handleSearchChange}
+							placeholder="Enter name"
+						/>
+					</div>
+					<DateInput
+						control={control}
+						maxDate={todayDate}
+						maxRange={ANALYTICS_DATE_MAX_RANGE}
+						name="dateRange"
+					/>
+				</form>
+				{isLoading ? (
+					<Loader />
+				) : (
+					<AnalyticsTable
+						activityLogs={activityLogs}
+						dateRange={dateRangeValue}
+						search={search}
+					/>
+				)}
 			</section>
 		</PageLayout>
 	);

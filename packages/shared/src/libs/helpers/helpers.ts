@@ -4,6 +4,7 @@ export { checkHasPermission } from "./check-has-permission/check-has-permission.
 export { configureString } from "./configure-string/configure-string.helper.js";
 export { formatDate } from "./format-date/format-date.helper.js";
 export { formatRelativeTime } from "./format-relative-time/format-relative-time.helper.js";
+export { getDateRange } from "./get-date-range/get-date-range.helper.js";
 export { getDifferenceInDays } from "./get-difference-in-days/get-difference-in-days.helper.js";
 export { getRelativeDate } from "./get-relative-date/get-relative-date.helper.js";
 export { getStartOfDay } from "./get-start-of-day/get-start-of-day.helper.js";
