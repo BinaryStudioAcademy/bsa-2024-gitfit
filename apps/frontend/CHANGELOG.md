@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.41.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.41.0...frontend-v1.41.1) (2024-09-20)
+
+
+### Bug Fixes
+
+* double dots shown nearby user checkboxes in the create/edit group/project group modal window gf-382 ([#441](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/441)) ([319f18e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/319f18e3bb4e481d9b5f86f4e460f727c9bec54a))
+
 ## [1.41.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.40.0...frontend-v1.41.0) (2024-09-20)
 
 
