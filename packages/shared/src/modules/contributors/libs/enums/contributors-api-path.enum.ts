@@ -1,6 +1,6 @@
 const ContributorsApiPath = {
 	$ID: "/:id",
-	MERGE: "/merge/:id",
+	MERGE_$ID: "/merge/:id",
 	ROOT: "/",
 } as const;
 

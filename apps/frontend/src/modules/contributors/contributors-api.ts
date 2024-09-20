@@ -57,7 +57,7 @@ class ContributorApi extends BaseHTTPApi {
 		payload: ContributorMergeRequestDto,
 	): Promise<ContributorGetAllItemResponseDto> {
 		const response = await this.load(
-			this.getFullEndpoint(ContributorsApiPath.MERGE, { id: String(id) }),
+			this.getFullEndpoint(ContributorsApiPath.MERGE_$ID, { id: String(id) }),
 			{
 				contentType: ContentType.JSON,
 				hasAuth: true,

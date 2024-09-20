@@ -81,7 +81,7 @@ const Contributors = (): JSX.Element => {
 	const handleEdit = useCallback(
 		(contributorId: number) => {
 			const contributor = contributors.find(({ id }) => id === contributorId);
-			openEditModal(contributor || null);
+			openEditModal(contributor ?? null);
 		},
 		[contributors, openEditModal],
 	);
@@ -89,7 +89,7 @@ const Contributors = (): JSX.Element => {
 	const handleMerge = useCallback(
 		(contributorId: number): void => {
 			const contributor = contributors.find(({ id }) => id === contributorId);
-			openMergeModal(contributor || null);
+			openMergeModal(contributor ?? null);
 		},
 		[contributors, openMergeModal],
 	);

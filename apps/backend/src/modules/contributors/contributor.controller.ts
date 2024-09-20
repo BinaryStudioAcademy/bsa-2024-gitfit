@@ -86,7 +86,7 @@ class ContributorController extends BaseController {
 					}>,
 				),
 			method: "PATCH",
-			path: ContributorsApiPath.MERGE,
+			path: ContributorsApiPath.MERGE_$ID,
 			validation: {
 				body: contributorMergeValidationSchema,
 			},
