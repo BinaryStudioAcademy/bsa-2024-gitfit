@@ -5,6 +5,7 @@ import {
 	HTTPCode,
 	HTTPError,
 	HTTPHeader,
+	UnauthorizedError,
 } from "~/libs/modules/http/http.js";
 import { type Storage, StorageKey } from "~/libs/modules/storage/storage.js";
 import { type ServerErrorResponse, type ValueOf } from "~/libs/types/types.js";
@@ -109,7 +110,10 @@ class BaseHTTPApi implements HTTPApi {
 		const isCustomException = Boolean(parsedException.errorType);
 
 		if (response.status === HTTPCode.UNAUTHORIZED) {
-			void this.storage.drop(StorageKey.TOKEN);
+			throw new UnauthorizedError({
+				details: "details" in parsedException ? parsedException.details : [],
+				message: parsedException.message,
+			});
 		}
 
 		throw new HTTPError({

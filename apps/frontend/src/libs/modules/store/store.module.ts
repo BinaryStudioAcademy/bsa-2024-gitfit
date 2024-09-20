@@ -37,7 +37,10 @@ import {
 } from "~/modules/projects/projects.js";
 import { userApi, reducer as usersReducer } from "~/modules/users/users.js";
 
-import { handleErrorMiddleware } from "./libs/middlewares/middlewares.js";
+import {
+	handleErrorMiddleware,
+	handleUnauthorizedErrorMiddleware,
+} from "./libs/middlewares/middlewares.js";
 import { type ExtraArguments, type RootReducer } from "./libs/types/types.js";
 
 class Store {
@@ -57,7 +60,10 @@ class Store {
 					thunk: {
 						extraArgument: this.extraArguments,
 					},
-				}).prepend(handleErrorMiddleware(this.extraArguments));
+				}).prepend(
+					handleUnauthorizedErrorMiddleware(),
+					handleErrorMiddleware(this.extraArguments),
+				);
 			},
 			reducer: {
 				auth: authReducer,
