@@ -12,6 +12,8 @@ const activityLogApi = new ActivityLogApi({
 
 export { activityLogApi };
 export {
+	type ActivityLogGetAllAnalyticsResponseDto,
+	type ActivityLogGetAllItemAnalyticsResponseDto,
 	type ActivityLogGetAllItemResponseDto,
 	type ActivityLogGetAllResponseDto,
 } from "./libs/types/types.js";

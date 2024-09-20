@@ -1,16 +1,16 @@
 import { Table } from "~/libs/components/components.js";
-import { type ActivityLogGetAllItemResponseDto } from "~/modules/activity/activity.js";
+import { getDateRange } from "~/libs/helpers/helpers.js";
+import { type ActivityLogGetAllItemAnalyticsResponseDto } from "~/modules/activity/activity.js";
 
 import {
 	getAnalyticsColumns,
 	getAnalyticsRows,
-	getDateRange,
 } from "../../helpers/helpers.js";
 import { type AnalyticsRow } from "../../types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	activityLogs: ActivityLogGetAllItemResponseDto[];
+	activityLogs: ActivityLogGetAllItemAnalyticsResponseDto[];
 	dateRange: [Date, Date];
 };
 
@@ -22,10 +22,7 @@ const AnalyticsTable = ({
 	const dateRangeFormatted = getDateRange(startDate, endDate);
 
 	const analyticsColumns = getAnalyticsColumns(dateRangeFormatted);
-	const analyticsData: AnalyticsRow[] = getAnalyticsRows(
-		activityLogs,
-		dateRangeFormatted,
-	);
+	const analyticsData: AnalyticsRow[] = getAnalyticsRows(activityLogs);
 
 	return (
 		<div className={styles["analytics-table"]}>

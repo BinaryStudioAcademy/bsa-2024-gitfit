@@ -13,21 +13,24 @@ const getAnalyticsColumns = (
 		},
 	];
 
-	const dateColumns: TableColumn<AnalyticsRow>[] = dateRange.map((date) => ({
-		accessorKey: `commitsNumber_${date}.commitsNumber`,
-		cell: ({ getValue }): JSX.Element => {
-			const value = getValue() as string;
-			const isEmpty = value === "-";
+	const dateColumns: TableColumn<AnalyticsRow>[] = dateRange.map(
+		(date, index) => ({
+			accessorKey: `commitsNumber.${String(index)}`,
+			cell: ({ getValue }): JSX.Element => {
+				const NO_COMIITS = 0;
+				const value = getValue() as string;
+				const isEmpty = Number(value) === NO_COMIITS;
 
-			return (
-				<span style={{ color: isEmpty ? "var(--color-danger)" : "inherit" }}>
-					{value}
-				</span>
-			);
-		},
-		header: date,
-		size: 95,
-	}));
+				return (
+					<span style={{ color: isEmpty ? "var(--color-danger)" : "inherit" }}>
+						{isEmpty ? "-" : value}
+					</span>
+				);
+			},
+			header: date,
+			size: 95,
+		}),
+	);
 
 	return [...columns, ...dateColumns];
 };

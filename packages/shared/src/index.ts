@@ -18,6 +18,7 @@ export {
 	checkHasPermission,
 	configureString,
 	formatDate,
+	getDateRange,
 	getDifferenceInDays,
 	initDebounce,
 	subtractDays,
@@ -48,8 +49,11 @@ export {
 	type ActivityLogCreateRequestDto,
 	activityLogCreateValidationSchema,
 	ActivityLogError,
+	type ActivityLogGetAllAnalyticsResponseDto,
+	type ActivityLogGetAllItemAnalyticsResponseDto,
 	type ActivityLogGetAllItemResponseDto,
 	type ActivityLogGetAllResponseDto,
+	type ActivityLogQueryParameters,
 	ActivityLogsApiPath,
 } from "./modules/activity-logs/activity-logs.js";
 export { AuthApiPath, AuthError } from "./modules/auth/auth.js";

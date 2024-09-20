@@ -37,17 +37,33 @@ const Analytics = (): JSX.Element => {
 		},
 	});
 
+	const handleLoadLogs = useCallback(
+		([startDate, endDate]: [Date, Date]) => {
+			const formattedStartDate = startDate.toISOString();
+			const formattedEndDate = endDate.toISOString();
+
+			void dispatch(
+				activityLogActions.loadAll({
+					endDate: formattedEndDate,
+					startDate: formattedStartDate,
+				}),
+			);
+		},
+		[dispatch],
+	);
+
 	useEffect(() => {
-		void dispatch(activityLogActions.loadAll());
-	}, [dispatch]);
+		handleLoadLogs(dateRange);
+	}, [dateRange, handleLoadLogs]);
 
 	const handleFormSubmit = useCallback(
 		(event_?: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData) => {
+				handleLoadLogs(formData.dateRange);
 				setDateRange(formData.dateRange);
 			})(event_);
 		},
-		[handleSubmit],
+		[handleLoadLogs, handleSubmit],
 	);
 
 	const dateRangeValue = watch("dateRange");

@@ -1,7 +1,7 @@
 type AnalyticsRow = {
-	[key: string]: number | string;
+	commitsNumber: (number | string)[];
+	contributorId: string;
 	contributorName: string;
-	id: string;
 };
 
 export { type AnalyticsRow };

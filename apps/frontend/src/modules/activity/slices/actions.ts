@@ -2,17 +2,20 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 
-import { type ActivityLogGetAllResponseDto } from "../libs/types/types.js";
+import {
+	type ActivityLogGetAllAnalyticsResponseDto,
+	type ActivityLogQueryParameters,
+} from "../libs/types/types.js";
 import { name as sliceName } from "./activity.slice.js";
 
 const loadAll = createAsyncThunk<
-	ActivityLogGetAllResponseDto,
-	undefined,
+	ActivityLogGetAllAnalyticsResponseDto,
+	ActivityLogQueryParameters,
 	AsyncThunkConfig
->(`${sliceName}/load-all`, async (_, { extra }) => {
+>(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { activityLogApi } = extra;
 
-	return await activityLogApi.getAll();
+	return await activityLogApi.getAll(query);
 });
 
 export { loadAll };

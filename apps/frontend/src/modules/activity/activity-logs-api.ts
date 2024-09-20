@@ -4,7 +4,10 @@ import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
 
 import { ActivityLogsApiPath } from "./libs/enums/enums.js";
-import { type ActivityLogGetAllResponseDto } from "./libs/types/types.js";
+import {
+	type ActivityLogGetAllAnalyticsResponseDto,
+	type ActivityLogQueryParameters,
+} from "./libs/types/types.js";
 
 type Constructor = {
 	baseUrl: string;
@@ -17,17 +20,22 @@ class ActivityLogApi extends BaseHTTPApi {
 		super({ baseUrl, http, path: APIPath.ACTIVITY_LOGS, storage });
 	}
 
-	public async getAll(): Promise<ActivityLogGetAllResponseDto> {
+	public async getAll(
+		query: ActivityLogQueryParameters,
+	): Promise<ActivityLogGetAllAnalyticsResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(ActivityLogsApiPath.ROOT, {}),
 			{
 				hasAuth: true,
 				method: "GET",
+				query: {
+					endDate: String(query.endDate),
+					startDate: String(query.startDate),
+				},
 			},
 		);
 
-		return await response.json<ActivityLogGetAllResponseDto>();
+		return await response.json<ActivityLogGetAllAnalyticsResponseDto>();
 	}
 }
-
 export { ActivityLogApi };

@@ -1,12 +1,15 @@
-import { addDays, formatDate } from "~/libs/helpers/helpers.js";
+import { addDays, formatDate } from "../helpers.js";
 
 const DAYS_TO_ADVANCE = 1;
 
-const getDateRange = (startDay: Date, endDay: Date): string[] => {
+const getDateRange = (
+	startDay: Date | string,
+	endDay: Date | string,
+): string[] => {
 	const dates: Date[] = [];
 	let currentDate = new Date(startDay);
 
-	while (currentDate <= endDay) {
+	while (currentDate <= new Date(endDay)) {
 		dates.push(new Date(currentDate));
 		currentDate = addDays(currentDate, DAYS_TO_ADVANCE);
 	}

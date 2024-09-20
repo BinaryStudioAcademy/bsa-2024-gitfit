@@ -5,6 +5,7 @@ export {
 	checkHasPermission,
 	configureString,
 	formatDate,
+	getDateRange,
 	getDifferenceInDays,
 	initDebounce,
 	subtractDays,
