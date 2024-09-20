@@ -34,6 +34,7 @@ const UsersTable = ({
 			<Table<UserRow>
 				columns={userColumns}
 				data={userData}
+				emptyPlaceholder="No users matching your search criteria."
 				isLoading={isLoading}
 			/>
 			<TablePagination
