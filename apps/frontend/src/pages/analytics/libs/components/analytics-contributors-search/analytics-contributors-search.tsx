@@ -6,7 +6,7 @@ type Properties = {
 	onChange: (search: string) => void;
 };
 
-const ContributorsSearch = ({ onChange }: Properties): JSX.Element => {
+const AnalyticsContributorsSearch = ({ onChange }: Properties): JSX.Element => {
 	return (
 		<div className={styles["search-container"]}>
 			<Search
@@ -19,4 +19,4 @@ const ContributorsSearch = ({ onChange }: Properties): JSX.Element => {
 	);
 };
 
-export { ContributorsSearch };
+export { AnalyticsContributorsSearch };
