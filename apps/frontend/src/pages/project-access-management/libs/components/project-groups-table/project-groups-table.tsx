@@ -10,6 +10,7 @@ import { type ProjectGroupRow } from "../../types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	isLoading: boolean;
 	onDelete: (id: number) => void;
 	onEdit: (group: ProjectGroupGetAllItemResponseDto) => void;
 	onPageChange: (page: number) => void;
@@ -22,6 +23,7 @@ type Properties = {
 };
 
 const ProjectGroupsTable = ({
+	isLoading,
 	onDelete,
 	onEdit,
 	onPageChange,
@@ -72,6 +74,7 @@ const ProjectGroupsTable = ({
 			<Table<ProjectGroupRow>
 				columns={projectGroupColumns}
 				data={projectGroupData}
+				isLoading={isLoading}
 				isScrollDisabled={isMenuOpened}
 			/>
 			<TablePagination

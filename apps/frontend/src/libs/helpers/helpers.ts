@@ -6,6 +6,7 @@ export {
 	checkHasPermission,
 	configureString,
 	formatDate,
+	formatRelativeTime,
 	getDifferenceInDays,
 	getRelativeDate,
 	getStartOfDay,

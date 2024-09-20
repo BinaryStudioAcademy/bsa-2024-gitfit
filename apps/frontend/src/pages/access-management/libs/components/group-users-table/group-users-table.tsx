@@ -9,6 +9,7 @@ import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useCallback,
 	useEffect,
@@ -42,12 +43,14 @@ const GroupUsersTable = ({
 	setValue,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-
 	const { onSearch, search } = useSearch();
-
 	const { users, usersDataStatus, usersTotalCount } = useAppSelector(
 		({ groups }) => groups,
 	);
+
+	const { control, errors: formErrors } = useAppForm({
+		defaultValues: { search: "" },
+	});
 
 	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
 		queryParameterPrefix: "group-user",
@@ -85,7 +88,12 @@ const GroupUsersTable = ({
 		<>
 			<div>
 				<span className={styles["table-title"]}>Users</span>
-				<GroupUsersSearch onChange={handleSearchChange} />
+				<GroupUsersSearch
+					control={control}
+					errors={formErrors}
+					name="search"
+					onChange={handleSearchChange}
+				/>
 			</div>
 			{isLoading ? (
 				<Loader />

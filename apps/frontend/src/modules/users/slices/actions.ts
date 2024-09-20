@@ -12,15 +12,19 @@ import {
 
 import { name as sliceName } from "./users.slice.js";
 
-const deleteById = createAsyncThunk<number, number, AsyncThunkConfig>(
-	`${sliceName}/delete`,
-	async (userId, { extra }) => {
+const deleteById = createAsyncThunk<boolean, { id: number }, AsyncThunkConfig>(
+	`${sliceName}/delete-by-id`,
+	async ({ id }, { dispatch, extra }) => {
 		const { toastNotifier, userApi } = extra;
 
-		await userApi.delete(userId);
-		toastNotifier.showSuccess(NotificationMessage.USER_DELETE_SUCCESS);
+		const isDeleted = await userApi.deleteById(id);
 
-		return userId;
+		if (isDeleted) {
+			toastNotifier.showSuccess(NotificationMessage.USER_DELETE_SUCCESS);
+			void dispatch(authActions.getAuthenticatedUser());
+		}
+
+		return isDeleted;
 	},
 );
 

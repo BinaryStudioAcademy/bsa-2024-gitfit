@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.6.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.5.0...analytics-v1.6.0) (2024-09-20)
+
+
+### Features
+
+* update analytics cd config gf-375 ([#438](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/438)) ([6f99875](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6f99875eda4711dbb733e5ddbd6bbc7ea25ec88e))
+
+## [1.5.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.4.0...analytics-v1.5.0) (2024-09-19)
+
+
+### Features
+
+* split cd actions for analytics and shared gf-375 ([#433](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/433)) ([bc730a5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/bc730a557f169877536d5421a1ab12c3d0cc8221))
+
+## [1.4.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.3.0...analytics-v1.4.0) (2024-09-19)
+
+
+### Features
+
+* trigger analytics release gf-375 ([#430](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/430)) ([a8e06e5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a8e06e58119001bf9b4e379116af84d0b87c85fe))
+
 ## [1.3.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.2.0...analytics-v1.3.0) (2024-09-19)
 
 

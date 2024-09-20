@@ -18,9 +18,12 @@ import {
 	type ValidationSchema,
 	type WhiteRoute,
 } from "~/libs/types/types.js";
+import { type ProjectService } from "~/modules/projects/projects.js";
 import { type UserService } from "~/modules/users/users.js";
 
+import { type TaskScheduler } from "../task-scheduler/task-scheduler.js";
 import { type Token } from "../token/token.js";
+import { JobCronPattern } from "./libs/enums/enums.js";
 import {
 	type ServerApplication,
 	type ServerApplicationApi,
@@ -33,8 +36,10 @@ type Constructor = {
 	database: Database;
 	logger: Logger;
 	services: {
+		projectService: ProjectService;
 		userService: UserService;
 	};
+	taskScheduler: TaskScheduler;
 	title: string;
 	token: Token;
 	whiteRoutes: WhiteRoute[];
@@ -52,8 +57,11 @@ class BaseServerApplication implements ServerApplication {
 	private logger: Logger;
 
 	private services: {
+		projectService: ProjectService;
 		userService: UserService;
 	};
+
+	private taskScheduler: TaskScheduler;
 
 	private title: string;
 
@@ -67,6 +75,7 @@ class BaseServerApplication implements ServerApplication {
 		database,
 		logger,
 		services,
+		taskScheduler,
 		title,
 		token,
 		whiteRoutes,
@@ -76,6 +85,7 @@ class BaseServerApplication implements ServerApplication {
 		this.database = database;
 		this.logger = logger;
 		this.services = services;
+		this.taskScheduler = taskScheduler;
 		this.title = title;
 		this.token = token;
 		this.whiteRoutes = whiteRoutes;
@@ -129,6 +139,14 @@ class BaseServerApplication implements ServerApplication {
 
 				return reply.status(HTTPCode.INTERNAL_SERVER_ERROR).send(response);
 			},
+		);
+	}
+
+	private initJobs(): void {
+		const { projectService } = this.services;
+		this.taskScheduler.start(
+			JobCronPattern.INACTIVE_PROJECT_NOTIFICATION,
+			() => void projectService.processInactiveProjects(),
 		);
 	}
 
@@ -196,6 +214,8 @@ class BaseServerApplication implements ServerApplication {
 		await this.initServe();
 
 		await this.initMiddlewares();
+
+		this.initJobs();
 
 		this.initPlugins();
 
