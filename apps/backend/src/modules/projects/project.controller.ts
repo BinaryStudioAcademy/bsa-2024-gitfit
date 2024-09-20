@@ -132,7 +132,6 @@ class ProjectController extends BaseController {
 			preHandlers: [
 				checkUserPermissions([
 					PermissionKey.EDIT_PROJECT,
-					PermissionKey.VIEW_PROJECT,
 					PermissionKey.MANAGE_PROJECT,
 					PermissionKey.MANAGE_ALL_PROJECTS,
 				]),

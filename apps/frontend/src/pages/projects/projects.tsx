@@ -76,18 +76,19 @@ const Projects = (): JSX.Element => {
 
 	const filteredProjects = hasRootPermission
 		? projects
-		: projects.filter((project) =>
-				projectUserPermissions.some(
-					(permission) =>
-						(permission.key === PermissionKey.MANAGE_PROJECT ||
+		: projects.filter(
+				(project) =>
+					permissionedProjectsId.includes(project.id) &&
+					projectUserPermissions.some(
+						(permission) =>
+							permission.key === PermissionKey.MANAGE_PROJECT ||
 							permission.key === PermissionKey.VIEW_PROJECT ||
-							permission.key === PermissionKey.EDIT_PROJECT) &&
-						permissionedProjectsId.includes(project.id),
-				),
+							permission.key === PermissionKey.EDIT_PROJECT,
+					),
 			);
 
 	const hasProjects = projects.length !== EMPTY_LENGTH;
-	const hasPermissionedProjects = filteredProjects.length > EMPTY_LENGTH;
+	const hasPermissionedProjects = filteredProjects.length !== EMPTY_LENGTH;
 	const hasSearch = search.length !== EMPTY_LENGTH;
 	const emptyPlaceholderMessage = hasSearch
 		? "No projects found matching your search criteria. Please try different keywords."

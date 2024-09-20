@@ -73,7 +73,6 @@ class ProjectGroupController extends BaseController {
 			preHandlers: [
 				checkUserPermissions([
 					PermissionKey.MANAGE_PROJECT,
-					PermissionKey.VIEW_ALL_PROJECTS,
 					PermissionKey.MANAGE_USER_ACCESS,
 				]),
 			],
@@ -90,7 +89,6 @@ class ProjectGroupController extends BaseController {
 			preHandlers: [
 				checkUserPermissions([
 					PermissionKey.MANAGE_PROJECT,
-					PermissionKey.VIEW_ALL_PROJECTS,
 					PermissionKey.MANAGE_USER_ACCESS,
 				]),
 			],
