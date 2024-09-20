@@ -1,4 +1,5 @@
 import { Table, TablePagination } from "~/libs/components/components.js";
+import { useMemo } from "~/libs/hooks/hooks.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
 import { getUserColumns, getUserRows } from "../../helpers/helpers.js";
@@ -7,6 +8,7 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	isLoading: boolean;
+	onDelete: (id: number) => void;
 	onPageChange: (page: number) => void;
 	onPageSizeChange: (pageSize: number) => void;
 	page: number;
@@ -18,6 +20,7 @@ type Properties = {
 
 const UsersTable = ({
 	isLoading,
+	onDelete,
 	onPageChange,
 	onPageSizeChange,
 	page,
@@ -26,7 +29,7 @@ const UsersTable = ({
 	totalItemsCount,
 	users,
 }: Properties): JSX.Element => {
-	const userColumns = getUserColumns();
+	const userColumns = useMemo(() => getUserColumns({ onDelete }), [onDelete]);
 	const userData: UserRow[] = getUserRows(users);
 
 	return (

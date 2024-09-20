@@ -38,6 +38,7 @@ const AccessManagement = (): JSX.Element => {
 
 	const {
 		dataStatus: usersDataStatus,
+		deleteStatus: userDeleteStatus,
 		users,
 		usersTotalCount,
 	} = useAppSelector(({ users }) => users);
@@ -77,21 +78,27 @@ const AccessManagement = (): JSX.Element => {
 	});
 
 	const {
-		isOpened: isCreateModalOpened,
-		onClose: onCreateModalClose,
-		onOpen: onCreateModalOpen,
+		isOpened: isUserDeleteModalOpen,
+		onClose: onUserDeleteModalClose,
+		onOpen: onUserDeleteModalOpen,
 	} = useModal();
 
 	const {
-		isOpened: isUpdateModalOpened,
-		onClose: onUpdateModalClose,
-		onOpen: onUpdateModalOpen,
+		isOpened: isGroupCreateModalOpened,
+		onClose: onGroupCreateModalClose,
+		onOpen: onGroupCreateModalOpen,
 	} = useModal();
 
 	const {
-		isOpened: isDeleteModalOpen,
-		onClose: onDeleteModalClose,
-		onOpen: onDeleteModalOpen,
+		isOpened: isGroupUpdateModalOpened,
+		onClose: onGroupUpdateModalClose,
+		onOpen: onGroupUpdateModalOpen,
+	} = useModal();
+
+	const {
+		isOpened: isGroupDeleteModalOpen,
+		onClose: onGroupDeleteModalClose,
+		onOpen: onGroupDeleteModalOpen,
 	} = useModal();
 
 	const handleLoadUsers = useCallback(() => {
@@ -129,6 +136,23 @@ const AccessManagement = (): JSX.Element => {
 		useState<GroupGetAllItemResponseDto | null>(null);
 	const hasGroupToEdit = groupToEdit !== null;
 
+	const [userToDeleteId, setUserToDeleteId] = useState<null | number>(null);
+	const hasUserToDelete = Boolean(userToDeleteId);
+
+	const handleUserDelete = useCallback(
+		(id: number): void => {
+			setUserToDeleteId(id);
+			onUserDeleteModalOpen();
+		},
+		[onUserDeleteModalOpen],
+	);
+
+	const handleUserDeleteSubmit = useCallback((): void => {
+		if (hasUserToDelete) {
+			void dispatch(userActions.deleteById({ id: userToDeleteId as number }));
+		}
+	}, [hasUserToDelete, dispatch, userToDeleteId]);
+
 	const [groupToDeleteId, setGroupToDeleteId] = useState<null | number>(null);
 	const hasGroupToDelete = Boolean(groupToDeleteId);
 
@@ -145,47 +169,55 @@ const AccessManagement = (): JSX.Element => {
 		}
 	}, [hasGroupToDelete, dispatch, groupToDeleteId]);
 
-	const handleEdit = useCallback(
+	const handleGroupEdit = useCallback(
 		(group: GroupGetAllItemResponseDto): void => {
 			setGroupToEdit(group);
-			onUpdateModalOpen();
+			onGroupUpdateModalOpen();
 		},
-		[onUpdateModalOpen],
+		[onGroupUpdateModalOpen],
 	);
 
-	const handleDelete = useCallback(
+	const handleGroupDelete = useCallback(
 		(id: number): void => {
 			setGroupToDeleteId(id);
-			onDeleteModalOpen();
+			onGroupDeleteModalOpen();
 		},
-		[onDeleteModalOpen],
+		[onGroupDeleteModalOpen],
 	);
+
+	useEffect(() => {
+		if (userDeleteStatus === DataStatus.FULFILLED) {
+			handleLoadUsers();
+			onUserDeleteModalClose();
+			setUserToDeleteId(null);
+		}
+	}, [userDeleteStatus, onUserDeleteModalClose, handleLoadUsers]);
 
 	useEffect(() => {
 		if (groupCreateStatus === DataStatus.FULFILLED) {
 			handleLoadUsers();
-			onCreateModalClose();
+			onGroupCreateModalClose();
 		}
-	}, [groupCreateStatus, onCreateModalClose, handleLoadUsers]);
+	}, [groupCreateStatus, onGroupCreateModalClose, handleLoadUsers]);
 
 	useEffect(() => {
 		if (groupUpdateStatus === DataStatus.FULFILLED) {
 			handleLoadUsers();
-			onUpdateModalClose();
+			onGroupUpdateModalClose();
 			setGroupToEdit(null);
 		}
-	}, [groupUpdateStatus, onUpdateModalClose, handleLoadUsers]);
+	}, [groupUpdateStatus, onGroupUpdateModalClose, handleLoadUsers]);
 
 	useEffect(() => {
 		if (groupDeleteStatus === DataStatus.FULFILLED) {
 			handleLoadUsers();
 			handleLoadGroups();
-			onDeleteModalClose();
+			onGroupDeleteModalClose();
 			setGroupToDeleteId(null);
 		}
 	}, [
 		groupDeleteStatus,
-		onDeleteModalClose,
+		onGroupDeleteModalClose,
 		handleLoadUsers,
 		handleLoadGroups,
 	]);
@@ -218,6 +250,7 @@ const AccessManagement = (): JSX.Element => {
 				</div>
 				<UsersTable
 					isLoading={isLoadingUsersData}
+					onDelete={handleUserDelete}
 					onPageChange={onUserPageChange}
 					onPageSizeChange={onUserPageSizeChange}
 					page={userPage}
@@ -231,15 +264,15 @@ const AccessManagement = (): JSX.Element => {
 				<div className={styles["section-header"]}>
 					<h2 className={styles["section-title"]}>Groups</h2>
 					<div>
-						<Button label="Create New" onClick={onCreateModalOpen} />
+						<Button label="Create New" onClick={onGroupCreateModalOpen} />
 					</div>
 				</div>
 
 				<GroupsTable
 					groups={groups}
 					isLoading={isLoadingGroupsData}
-					onDelete={handleDelete}
-					onEdit={handleEdit}
+					onDelete={handleGroupDelete}
+					onEdit={handleGroupEdit}
 					onPageChange={onGroupPageChange}
 					onPageSizeChange={onGroupPageSizeChange}
 					page={groupPage}
@@ -249,8 +282,8 @@ const AccessManagement = (): JSX.Element => {
 			</section>
 
 			<Modal
-				isOpened={isCreateModalOpened}
-				onClose={onCreateModalClose}
+				isOpened={isGroupCreateModalOpened}
+				onClose={onGroupCreateModalClose}
 				title="Create new group"
 			>
 				<GroupCreateForm onSubmit={handleGroupCreateSubmit} />
@@ -258,8 +291,8 @@ const AccessManagement = (): JSX.Element => {
 
 			{hasGroupToEdit && (
 				<Modal
-					isOpened={isUpdateModalOpened}
-					onClose={onUpdateModalClose}
+					isOpened={isGroupUpdateModalOpened}
+					onClose={onGroupUpdateModalClose}
 					title="Update group"
 				>
 					<GroupUpdateForm
@@ -272,9 +305,18 @@ const AccessManagement = (): JSX.Element => {
 			{hasGroupToDelete && (
 				<ConfirmationModal
 					content="The group will be deleted. This action cannot be undone. Do you want to continue?"
-					isOpened={isDeleteModalOpen}
-					onClose={onDeleteModalClose}
+					isOpened={isGroupDeleteModalOpen}
+					onClose={onGroupDeleteModalClose}
 					onConfirm={handleGroupDeleteSubmit}
+				/>
+			)}
+
+			{hasUserToDelete && (
+				<ConfirmationModal
+					content="The user will be deleted. This action cannot be undone. Do you want to continue?"
+					isOpened={isUserDeleteModalOpen}
+					onClose={onUserDeleteModalClose}
+					onConfirm={handleUserDeleteSubmit}
 				/>
 			)}
 		</PageLayout>
