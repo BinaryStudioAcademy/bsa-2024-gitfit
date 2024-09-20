@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.43.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.42.0...frontend-v1.43.0) (2024-09-20)
+
+
+### Features
+
+* Log out user when 401 error occurs gf-343 ([#413](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/413)) ([61922a3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/61922a3e13ea33b23090adcd798ad49ab95cb08c))
+
+
+### Bug Fixes
+
+* fixed last activity to start from the beginning of the day gf-446 ([#451](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/451)) ([06017bf](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/06017bf4587cda9715e44ab84f0539adfb67dda7))
+
 ## [1.42.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.41.2...frontend-v1.42.0) (2024-09-20)
 
 
