@@ -5,6 +5,11 @@
 	line-height: 120%;
 }
 
+.filters {
+	display: flex;
+	gap: 12px;
+}
+
 .filters-form {
 	display: flex;
 	margin-top: 24px;
