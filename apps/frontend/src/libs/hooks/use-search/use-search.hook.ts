@@ -1,24 +1,24 @@
 import { QueryParameterName } from "~/libs/enums/enums.js";
 import { useEffect, useSearchParams, useState } from "~/libs/hooks/hooks.js";
 
-type SearchOptions = {
-	shouldUseQuery?: boolean;
+type Parameters = {
+	isSavedToUrl?: boolean;
 };
 
-const useSearch = ({ shouldUseQuery = true }: SearchOptions = {}): {
+const useSearch = ({ isSavedToUrl = true }: Parameters = {}): {
 	onSearch: (search: string) => void;
 	search: string;
 } => {
 	const [searchParameters, setSearchParameters] = useSearchParams();
 	const searchParameterName = QueryParameterName.SEARCH;
 
-	const searchParameter = shouldUseQuery
+	const searchParameter = isSavedToUrl
 		? (searchParameters.get(searchParameterName) ?? "")
 		: "";
 	const [search, setSearch] = useState<string>(searchParameter);
 
 	useEffect(() => {
-		if (shouldUseQuery) {
+		if (isSavedToUrl) {
 			const updatedSearchParameters = new URLSearchParams(searchParameters);
 			updatedSearchParameters.set(searchParameterName, search);
 			setSearchParameters(updatedSearchParameters);
@@ -28,7 +28,7 @@ const useSearch = ({ shouldUseQuery = true }: SearchOptions = {}): {
 		searchParameters,
 		searchParameterName,
 		setSearchParameters,
-		shouldUseQuery,
+		isSavedToUrl,
 	]);
 
 	return {
