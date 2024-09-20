@@ -55,6 +55,7 @@ class UserController extends BaseController {
 			preHandlers: [
 				checkUserPermissions([
 					PermissionKey.MANAGE_USER_ACCESS,
+					PermissionKey.MANAGE_ALL_PROJECTS,
 					PermissionKey.MANAGE_PROJECT,
 				]),
 			],

@@ -74,6 +74,7 @@ class ProjectGroupController extends BaseController {
 				checkUserPermissions([
 					PermissionKey.MANAGE_PROJECT,
 					PermissionKey.MANAGE_USER_ACCESS,
+					PermissionKey.MANAGE_ALL_PROJECTS,
 				]),
 			],
 			validation: {
@@ -90,6 +91,7 @@ class ProjectGroupController extends BaseController {
 				checkUserPermissions([
 					PermissionKey.MANAGE_PROJECT,
 					PermissionKey.MANAGE_USER_ACCESS,
+					PermissionKey.MANAGE_ALL_PROJECTS,
 				]),
 			],
 		});
@@ -108,6 +110,7 @@ class ProjectGroupController extends BaseController {
 				checkUserPermissions([
 					PermissionKey.MANAGE_USER_ACCESS,
 					PermissionKey.MANAGE_PROJECT,
+					PermissionKey.MANAGE_ALL_PROJECTS,
 				]),
 			],
 		});
@@ -122,6 +125,7 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "PATCH",
 			path: ProjectGroupsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 			validation: {
 				body: projectGroupPatchValidationSchema,
 			},
