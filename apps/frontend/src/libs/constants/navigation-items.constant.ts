@@ -6,41 +6,29 @@ const SIDEBAR_ITEMS: NavigationItem[] = [
 		href: AppRoute.PROJECTS,
 		icon: "project",
 		label: "Projects",
-		pagePermissions: {
-			alternative: [
-				PermissionKey.VIEW_ALL_PROJECTS,
-				PermissionKey.MANAGE_ALL_PROJECTS,
-			],
-			required: [],
-		},
+		pagePermissions: [
+			[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
+		],
 	},
 	{
 		href: AppRoute.ACCESS_MANAGEMENT,
 		icon: "access",
 		label: "Access Management",
-		pagePermissions: {
-			required: [PermissionKey.MANAGE_USER_ACCESS],
-		},
+		pagePermissions: [PermissionKey.MANAGE_USER_ACCESS],
 	},
 	{
 		href: AppRoute.CONTRIBUTORS,
 		icon: "contributors",
 		label: "Contributors",
-		pagePermissions: {
-			required: [PermissionKey.MANAGE_ALL_PROJECTS],
-		},
+		pagePermissions: [PermissionKey.MANAGE_ALL_PROJECTS],
 	},
 	{
 		href: AppRoute.ANALYTICS,
 		icon: "analytics",
 		label: "Analytics",
-		pagePermissions: {
-			alternative: [
-				PermissionKey.VIEW_ALL_PROJECTS,
-				PermissionKey.MANAGE_ALL_PROJECTS,
-			],
-			required: [],
-		},
+		pagePermissions: [
+			[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
+		],
 	},
 ];
 

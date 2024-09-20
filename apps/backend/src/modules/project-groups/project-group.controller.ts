@@ -70,11 +70,7 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "POST",
 			path: ProjectGroupsApiPath.ROOT,
-			preHandlers: [
-				checkUserPermissions({
-					required: [PermissionKey.MANAGE_USER_ACCESS],
-				}),
-			],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
 			validation: {
 				body: projectGroupCreateValidationSchema,
 			},
@@ -85,11 +81,7 @@ class ProjectGroupController extends BaseController {
 				this.delete(options as APIHandlerOptions<{ params: { id: string } }>),
 			method: "DELETE",
 			path: ProjectGroupsApiPath.$ID,
-			preHandlers: [
-				checkUserPermissions({
-					required: [PermissionKey.MANAGE_USER_ACCESS],
-				}),
-			],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
 		});
 
 		this.addRoute({
@@ -102,11 +94,7 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectGroupsApiPath.$ID,
-			preHandlers: [
-				checkUserPermissions({
-					required: [PermissionKey.MANAGE_USER_ACCESS],
-				}),
-			],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
 		});
 
 		this.addRoute({
@@ -119,11 +107,7 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "PATCH",
 			path: ProjectGroupsApiPath.$ID,
-			preHandlers: [
-				checkUserPermissions({
-					required: [PermissionKey.MANAGE_USER_ACCESS],
-				}),
-			],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
 			validation: {
 				body: projectGroupPatchValidationSchema,
 			},

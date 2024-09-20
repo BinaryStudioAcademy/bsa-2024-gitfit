@@ -1,24 +1,21 @@
 import { type PermissionGetAllItemResponseDto } from "../../../modules/permissions/permissions.js";
-import { type Permissions } from "../../types/types.js";
+import { type RequiredPermission } from "../../types/required-permission.js";
 
 const checkHasPermission = (
-	expectedPermissions: Permissions,
-	actualPermissions: PermissionGetAllItemResponseDto[],
+	requiredPermissions: RequiredPermission[],
+	permissions: PermissionGetAllItemResponseDto[],
 ): boolean => {
-	const actuals = new Set(actualPermissions.map((actual) => actual.key));
-	const { alternative, required } = expectedPermissions;
-
-	const hasRequiredPermissions = required
-		? required.every((requiredPermission) => actuals.has(requiredPermission))
-		: true;
-
-	const hasAlternativePermission = alternative
-		? alternative.some((alternativePermission) =>
-				actuals.has(alternativePermission),
-			)
-		: true;
-
-	return hasRequiredPermissions && hasAlternativePermission;
+	return requiredPermissions.every((requiredPermission) =>
+		typeof requiredPermission === "string"
+			? permissions.some(
+					(userPermission) => userPermission.key === requiredPermission,
+				)
+			: requiredPermission.some((permission) =>
+					permissions.some(
+						(userPermission) => userPermission.key === permission,
+					),
+				),
+	);
 };
 
 export { checkHasPermission };

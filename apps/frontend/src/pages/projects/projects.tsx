@@ -185,7 +185,7 @@ const Projects = (): JSX.Element => {
 	const isUpdateFormShown = project && projectStatus === DataStatus.FULFILLED;
 
 	const hasCreateProjectPermission = checkHasPermission(
-		{ required: [PermissionKey.MANAGE_ALL_PROJECTS] },
+		[PermissionKey.MANAGE_ALL_PROJECTS],
 		userPermissions,
 	);
 

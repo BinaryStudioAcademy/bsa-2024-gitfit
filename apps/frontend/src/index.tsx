@@ -33,12 +33,12 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: (
 									<ProtectedRoute
-										routePermissions={{
-											alternative: [
+										routePermissions={[
+											[
 												PermissionKey.VIEW_ALL_PROJECTS,
 												PermissionKey.MANAGE_ALL_PROJECTS,
 											],
-										}}
+										]}
 									>
 										<Projects />
 									</ProtectedRoute>
@@ -48,9 +48,7 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: (
 									<ProtectedRoute
-										routePermissions={{
-											required: [PermissionKey.MANAGE_USER_ACCESS],
-										}}
+										routePermissions={[PermissionKey.MANAGE_USER_ACCESS]}
 									>
 										<AccessManagement />
 									</ProtectedRoute>
@@ -68,9 +66,7 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: (
 									<ProtectedRoute
-										routePermissions={{
-											required: [PermissionKey.MANAGE_ALL_PROJECTS],
-										}}
+										routePermissions={[PermissionKey.MANAGE_ALL_PROJECTS]}
 									>
 										<Contributors />
 									</ProtectedRoute>
@@ -80,12 +76,12 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: (
 									<ProtectedRoute
-										routePermissions={{
-											alternative: [
+										routePermissions={[
+											[
 												PermissionKey.VIEW_ALL_PROJECTS,
 												PermissionKey.MANAGE_ALL_PROJECTS,
 											],
-										}}
+										]}
 									>
 										<Analytics />
 									</ProtectedRoute>
@@ -115,12 +111,12 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: (
 									<ProtectedRoute
-										routePermissions={{
-											alternative: [
+										routePermissions={[
+											[
 												PermissionKey.VIEW_ALL_PROJECTS,
 												PermissionKey.MANAGE_ALL_PROJECTS,
 											],
-										}}
+										]}
 									>
 										<Project />
 									</ProtectedRoute>
@@ -130,13 +126,13 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: (
 									<ProtectedRoute
-										routePermissions={{
-											alternative: [
+										routePermissions={[
+											PermissionKey.MANAGE_USER_ACCESS,
+											[
 												PermissionKey.VIEW_ALL_PROJECTS,
 												PermissionKey.MANAGE_ALL_PROJECTS,
 											],
-											required: [PermissionKey.MANAGE_USER_ACCESS],
-										}}
+										]}
 									>
 										<ProjectAccessManagement />
 									</ProtectedRoute>

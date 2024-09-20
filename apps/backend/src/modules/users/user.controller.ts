@@ -52,11 +52,7 @@ class UserController extends BaseController {
 				),
 			method: "GET",
 			path: UsersApiPath.ROOT,
-			preHandlers: [
-				checkUserPermissions({
-					required: [PermissionKey.MANAGE_USER_ACCESS],
-				}),
-			],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
 		});
 
 		this.addRoute({
@@ -69,11 +65,7 @@ class UserController extends BaseController {
 				),
 			method: "PATCH",
 			path: UsersApiPath.$ID,
-			preHandlers: [
-				checkUserPermissions({
-					required: [PermissionKey.MANAGE_USER_ACCESS],
-				}),
-			],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
 			validation: {
 				body: userPatchValidationSchema,
 			},
@@ -88,11 +80,7 @@ class UserController extends BaseController {
 				),
 			method: "DELETE",
 			path: UsersApiPath.$ID,
-			preHandlers: [
-				checkUserPermissions({
-					required: [PermissionKey.MANAGE_USER_ACCESS],
-				}),
-			],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
 		});
 	}
 
