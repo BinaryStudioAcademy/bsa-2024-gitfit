@@ -43,7 +43,7 @@ const GroupUsersTable = ({
 	setValue,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { onSearch, search } = useSearch(false);
+	const { onSearch, search } = useSearch({ shouldUseQuery: false });
 	const { users, usersDataStatus, usersTotalCount } = useAppSelector(
 		({ groups }) => groups,
 	);
