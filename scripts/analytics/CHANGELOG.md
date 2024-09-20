@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.5.0...analytics-v1.6.0) (2024-09-20)
+
+
+### Features
+
+* update analytics cd config gf-375 ([#438](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/438)) ([6f99875](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6f99875eda4711dbb733e5ddbd6bbc7ea25ec88e))
+
 ## [1.5.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.4.0...analytics-v1.5.0) (2024-09-19)
 
 
