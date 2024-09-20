@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.41.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.40.0...frontend-v1.41.0) (2024-09-20)
+
+
+### Features
+
+* add an ability for admins to delete a user gf-419 ([#426](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/426)) ([724b812](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/724b81206451537a3666e1ab54645914281ef2e8))
+* Add search input to users table on access management pages gf-402 ([#422](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/422)) ([171d387](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/171d3879dde731db092ddcd00bb14a2e251043e4))
+
 ## [1.40.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.39.0...frontend-v1.40.0) (2024-09-19)
 
 
