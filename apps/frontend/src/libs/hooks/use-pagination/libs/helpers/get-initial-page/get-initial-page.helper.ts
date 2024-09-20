@@ -1,4 +1,4 @@
-import { FIRST_PAGE } from "../constants/constants.js";
+import { FIRST_PAGE } from "../../constants/constants.js";
 
 const getInitialPage = (
 	pageQueryParameter: null | string,
