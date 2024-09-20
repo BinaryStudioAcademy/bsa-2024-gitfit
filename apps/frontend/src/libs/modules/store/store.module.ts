@@ -16,6 +16,10 @@ import {
 } from "~/modules/contributors/contributors.js";
 import { groupApi, reducer as groupsReducer } from "~/modules/groups/groups.js";
 import {
+	notificationApi,
+	reducer as notificationsReducer,
+} from "~/modules/notifications/notifications.js";
+import {
 	permissionApi,
 	reducer as permissionReducer,
 } from "~/modules/permissions/permissions.js";
@@ -35,6 +39,7 @@ import {
 	projectApi,
 	reducer as projectsReducer,
 } from "~/modules/projects/projects.js";
+import { reducer as scriptsReducer } from "~/modules/scripts/scripts.js";
 import { userApi, reducer as usersReducer } from "~/modules/users/users.js";
 
 import { handleErrorMiddleware } from "./libs/middlewares/middlewares.js";
@@ -63,11 +68,13 @@ class Store {
 				auth: authReducer,
 				contributors: contributorsReducer,
 				groups: groupsReducer,
+				notifications: notificationsReducer,
 				permissions: permissionReducer,
 				projectApiKeys: projectApiKeysReducer,
 				projectGroups: projectGroupsReducer,
 				projectPermissions: projectPermissionsReducer,
 				projects: projectsReducer,
+				scripts: scriptsReducer,
 				users: usersReducer,
 			},
 		});
@@ -78,6 +85,7 @@ class Store {
 			authApi,
 			contributorApi,
 			groupApi,
+			notificationApi,
 			permissionApi,
 			projectApi,
 			projectApiKeysApi,

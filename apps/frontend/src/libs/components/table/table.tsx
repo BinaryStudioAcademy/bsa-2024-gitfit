@@ -17,6 +17,7 @@ type BaseProperties<T> = {
 	columns: TableColumn<T>[];
 	data: T[];
 	emptyPlaceholder?: string;
+	isFullHeight?: boolean;
 	isLoading?: boolean;
 	isScrollDisabled?: boolean;
 };
@@ -35,6 +36,7 @@ const Table = <T extends object>({
 	columns,
 	data,
 	emptyPlaceholder = "There is nothing yet.",
+	isFullHeight = false,
 	isLoading,
 	isScrollDisabled,
 	...selectableProperties
@@ -67,6 +69,7 @@ const Table = <T extends object>({
 				className={getValidClassNames(
 					styles["table"],
 					isScrollDisabled && styles["table-no-scroll"],
+					isFullHeight && styles["table-full-height"],
 				)}
 			>
 				<thead className={styles["table-head"]}>

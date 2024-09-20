@@ -4,17 +4,20 @@ import {
 	ConfirmationModal,
 	Modal,
 	PageLayout,
+	Search,
 } from "~/libs/components/components.js";
 import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
 import { configureString } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useCallback,
 	useEffect,
 	useModal,
 	usePagination,
 	useParams,
+	useSearch,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import { type ValueOf } from "~/libs/types/types.js";
@@ -59,6 +62,11 @@ const ProjectAccessManagement = (): JSX.Element => {
 		users,
 		usersTotalCount,
 	} = useAppSelector(({ users }) => users);
+
+	const { onSearch: onUserSearch, search: userSearch } = useSearch();
+	const { control, errors } = useAppForm({
+		defaultValues: { userSearch },
+	});
 
 	const usersWithCurrentProjectGroups = filterUserProjectGroups(
 		users,
@@ -118,9 +126,13 @@ const ProjectAccessManagement = (): JSX.Element => {
 
 	const handleLoadUsers = useCallback(() => {
 		void dispatch(
-			userActions.loadAll({ page: userPage, pageSize: userPageSize }),
+			userActions.loadAll({
+				name: userSearch,
+				page: userPage,
+				pageSize: userPageSize,
+			}),
 		);
-	}, [dispatch, userPage, userPageSize]);
+	}, [dispatch, userPage, userPageSize, userSearch]);
 
 	const handleLoadGroups = useCallback(() => {
 		if (id) {
@@ -192,9 +204,10 @@ const ProjectAccessManagement = (): JSX.Element => {
 
 	useEffect(() => {
 		if (projectGroupCreateStatus === DataStatus.FULFILLED) {
+			handleLoadUsers();
 			onCreateModalClose();
 		}
-	}, [projectGroupCreateStatus, onCreateModalClose]);
+	}, [projectGroupCreateStatus, onCreateModalClose, handleLoadUsers]);
 
 	useEffect(() => {
 		if (projectGroupUpdateStatus === DataStatus.FULFILLED) {
@@ -235,8 +248,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 		projectGroupsDataStatus === DataStatus.IDLE ||
 		projectGroupsDataStatus === DataStatus.PENDING;
 
-	const isLoading =
-		isUsersLoading || isProjectLoading || isProjectGroupsLoading;
+	const isLoading = isProjectLoading;
 
 	const isRejected = projectDataStatus === DataStatus.REJECTED;
 
@@ -265,7 +277,19 @@ const ProjectAccessManagement = (): JSX.Element => {
 						<div className={styles["section-header"]}>
 							<h2 className={styles["section-title"]}>Users</h2>
 						</div>
+						<div className={styles["search-container"]}>
+							<Search
+								control={control}
+								errors={errors}
+								isLabelHidden
+								label="Users search"
+								name="userSearch"
+								onChange={onUserSearch}
+								placeholder="Enter name"
+							/>
+						</div>
 						<UsersTable
+							isLoading={isUsersLoading}
 							onPageChange={onUserPageChange}
 							onPageSizeChange={onUserPageSizeChange}
 							page={userPage}
@@ -282,6 +306,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 							</div>
 						</div>
 						<ProjectGroupsTable
+							isLoading={isProjectGroupsLoading}
 							onDelete={handleDelete}
 							onEdit={handleEdit}
 							onPageChange={onGroupPageChange}

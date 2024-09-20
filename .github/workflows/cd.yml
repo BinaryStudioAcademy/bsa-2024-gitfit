@@ -22,6 +22,7 @@ jobs:
       pull-requests: write
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
+      packages_shared_release_created: ${{ steps.release.outputs['packages/shared--release_created'] }}
       scripts_analytics_release_created: ${{ steps.release.outputs['scripts/analytics--release_created'] }}
     steps:
       - name: Code Checkout
@@ -62,8 +63,18 @@ jobs:
           version_label: ${{ github.sha }}
           deployment_package: ./build.zip
 
-  deploy-analytics:
-    name: Deploy Analytics Script
+  publish-shared:
+    name: Publish Shared Package
+    needs: release
+    if: ${{ needs.release.outputs.packages_shared_release_created }}
+    uses: ./.github/workflows/cd-shared.yml
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-analytics:
+    name: Publish Analytics Script
     needs: release
     if: ${{ needs.release.outputs.scripts_analytics_release_created }}
     uses: ./.github/workflows/cd-analytics.yml
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
