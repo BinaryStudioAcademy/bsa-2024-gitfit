@@ -90,7 +90,8 @@ class ProjectController extends BaseController {
 			path: ProjectsApiPath.ROOT,
 			preHandlers: [
 				checkUserPermissions([
-					[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
+					PermissionKey.VIEW_ALL_PROJECTS,
+					PermissionKey.MANAGE_ALL_PROJECTS,
 				]),
 			],
 		});
@@ -106,7 +107,8 @@ class ProjectController extends BaseController {
 			path: ProjectsApiPath.$ID,
 			preHandlers: [
 				checkUserPermissions([
-					[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
+					PermissionKey.VIEW_ALL_PROJECTS,
+					PermissionKey.MANAGE_ALL_PROJECTS,
 				]),
 			],
 		});

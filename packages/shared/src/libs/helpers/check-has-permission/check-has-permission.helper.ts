@@ -1,20 +1,16 @@
+import { EMPTY_LENGTH } from "../../../libs/constants/empty-length.constant.js";
 import { type PermissionGetAllItemResponseDto } from "../../../modules/permissions/permissions.js";
-import { type RequiredPermission } from "../../types/required-permission.js";
 
 const checkHasPermission = (
-	requiredPermissions: RequiredPermission[],
+	requiredPermissions: string[],
 	permissions: PermissionGetAllItemResponseDto[],
 ): boolean => {
-	return requiredPermissions.every((requiredPermission) =>
-		typeof requiredPermission === "string"
-			? permissions.some(
-					(userPermission) => userPermission.key === requiredPermission,
-				)
-			: requiredPermission.some((permission) =>
-					permissions.some(
-						(userPermission) => userPermission.key === permission,
-					),
-				),
+	if (requiredPermissions.length === EMPTY_LENGTH) {
+		return true;
+	}
+
+	return requiredPermissions.some((permission) =>
+		permissions.some((userPermission) => userPermission.key === permission),
 	);
 };
 

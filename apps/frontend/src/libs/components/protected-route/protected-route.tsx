@@ -1,18 +1,22 @@
 import { Loader, Navigate } from "~/libs/components/components.js";
 import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
-import { AppRoute, DataStatus } from "~/libs/enums/enums.js";
+import {
+	AppRoute,
+	DataStatus,
+	type PermissionKey,
+} from "~/libs/enums/enums.js";
 import {
 	checkHasPermission,
 	getPermittedNavigationItems,
 } from "~/libs/helpers/helpers.js";
 import { useAppSelector } from "~/libs/hooks/hooks.js";
-import { type RequiredPermission } from "~/libs/types/types.js";
+import { type ValueOf } from "~/libs/types/types.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
-	routePermissions?: RequiredPermission[];
+	routePermissions?: ValueOf<typeof PermissionKey>[];
 };
 
 const ProtectedRoute = ({

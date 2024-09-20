@@ -34,10 +34,8 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 								element: (
 									<ProtectedRoute
 										routePermissions={[
-											[
-												PermissionKey.VIEW_ALL_PROJECTS,
-												PermissionKey.MANAGE_ALL_PROJECTS,
-											],
+											PermissionKey.VIEW_ALL_PROJECTS,
+											PermissionKey.MANAGE_ALL_PROJECTS,
 										]}
 									>
 										<Projects />
@@ -77,10 +75,8 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 								element: (
 									<ProtectedRoute
 										routePermissions={[
-											[
-												PermissionKey.VIEW_ALL_PROJECTS,
-												PermissionKey.MANAGE_ALL_PROJECTS,
-											],
+											PermissionKey.VIEW_ALL_PROJECTS,
+											PermissionKey.MANAGE_ALL_PROJECTS,
 										]}
 									>
 										<Analytics />
@@ -112,10 +108,8 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 								element: (
 									<ProtectedRoute
 										routePermissions={[
-											[
-												PermissionKey.VIEW_ALL_PROJECTS,
-												PermissionKey.MANAGE_ALL_PROJECTS,
-											],
+											PermissionKey.VIEW_ALL_PROJECTS,
+											PermissionKey.MANAGE_ALL_PROJECTS,
 										]}
 									>
 										<Project />
@@ -126,13 +120,7 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 							{
 								element: (
 									<ProtectedRoute
-										routePermissions={[
-											PermissionKey.MANAGE_USER_ACCESS,
-											[
-												PermissionKey.VIEW_ALL_PROJECTS,
-												PermissionKey.MANAGE_ALL_PROJECTS,
-											],
-										]}
+										routePermissions={[PermissionKey.MANAGE_USER_ACCESS]}
 									>
 										<ProjectAccessManagement />
 									</ProtectedRoute>
