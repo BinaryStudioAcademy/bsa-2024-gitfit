@@ -1,4 +1,4 @@
-import { DEFAULT_PAGE_SIZE, FIRST_PAGE } from "../constants/constants.js";
+import { DEFAULT_PAGE_SIZE, FIRST_PAGE } from "../../constants/constants.js";
 
 const getInitialPageSize = (pageSizeQueryParameter: null | string): number => {
 	const pageSize = Number(pageSizeQueryParameter);
