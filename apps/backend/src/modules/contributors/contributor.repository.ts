@@ -1,7 +1,7 @@
 import { raw } from "objection";
 
 import { type Repository } from "~/libs/types/types.js";
-import { type GitEmailModel } from "~/modules/git-emails/git-email.model.js";
+import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorModel } from "./contributor.model.js";

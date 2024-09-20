@@ -192,10 +192,8 @@ class ContributorController extends BaseController {
 	 *                   $ref: "#/components/schemas/Contributor"
 	 *       404:
 	 *         description: Contributor not found
-	 *       403:
-	 *         description: Attept to self-merge
 	 *       409:
-	 *         description: Merging failed
+	 *         description: Attept to self-merge or merging failed
 	 */
 	private async merge(
 		options: APIHandlerOptions<{
