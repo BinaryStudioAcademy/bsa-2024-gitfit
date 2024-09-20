@@ -139,7 +139,16 @@ const Table = <T extends object>({
 										key={cell.id}
 										style={{ width: cell.column.columnDef.size }}
 									>
-										{flexRender(cell.column.columnDef.cell, cell.getContext())}
+										{typeof cell.getContext().getValue() === "string" ? (
+											<div className={styles["text-data-wrapper"]}>
+												{flexRender(
+													cell.column.columnDef.cell,
+													cell.getContext(),
+												)}
+											</div>
+										) : (
+											flexRender(cell.column.columnDef.cell, cell.getContext())
+										)}
 									</td>
 								))}
 							</tr>
