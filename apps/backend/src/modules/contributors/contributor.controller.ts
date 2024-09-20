@@ -81,6 +81,7 @@ class ContributorController extends BaseController {
 				),
 			method: "PATCH",
 			path: ContributorsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 			validation: {
 				body: ContributorPatchValidationSchema,
 			},

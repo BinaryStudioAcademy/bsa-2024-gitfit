@@ -8,12 +8,14 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	contributors: ContributorGetAllItemResponseDto[];
+	hasEditPermission: boolean;
 	isLoading: boolean;
 	onEditContributor: (contributorId: number) => void;
 };
 
 const ContributorsList = ({
 	contributors,
+	hasEditPermission,
 	isLoading,
 	onEditContributor,
 }: Properties): JSX.Element => {
@@ -38,6 +40,7 @@ const ContributorsList = ({
 						<li key={contributor.id}>
 							<ContributorCard
 								contributor={contributor}
+								hasEditPermission={hasEditPermission}
 								onEdit={handleEditContributor}
 							/>
 						</li>

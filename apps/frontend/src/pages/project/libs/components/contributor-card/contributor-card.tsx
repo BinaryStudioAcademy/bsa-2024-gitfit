@@ -13,10 +13,15 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	contributor: ContributorGetAllItemResponseDto;
+	hasEditPermission: boolean;
 	onEdit: (contributorId: number) => void;
 };
 
-const ContributorCard = ({ contributor, onEdit }: Properties): JSX.Element => {
+const ContributorCard = ({
+	contributor,
+	hasEditPermission,
+	onEdit,
+}: Properties): JSX.Element => {
 	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = contributor.lastActivityDate
 		? getStartOfDay(new Date(contributor.lastActivityDate))
@@ -49,6 +54,7 @@ const ContributorCard = ({ contributor, onEdit }: Properties): JSX.Element => {
 			)}
 			<ContributorMenu
 				contributorId={contributor.id}
+				hasEditPermission={hasEditPermission}
 				onEdit={handleEditClick}
 			/>
 		</div>
