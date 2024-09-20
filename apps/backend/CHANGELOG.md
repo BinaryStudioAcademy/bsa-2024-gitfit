@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.28.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.28.0...backend-v1.28.1) (2024-09-20)
+
+
+### Bug Fixes
+
+* manage all projects permissions, edit, view, delete, create gf-411 ([#424](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/424)) ([3599a79](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3599a79205f88979a958c150b73d287e54f0bfce))
+
+## [1.28.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.27.0...backend-v1.28.0) (2024-09-19)
+
+
+### Features
+
+* add notification for failed project activity update gf-336 ([#379](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/379)) ([ce69dd9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ce69dd9f5e26504dd80c4b2793a987b692aa7a62))
+
+## [1.27.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.26.0...backend-v1.27.0) (2024-09-19)
+
+
+### Features
+
+* add an ability to edit contributor name gf-345 ([#404](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/404)) ([7056194](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/70561948965d2f06dbc5e99cc7491e5e6f806e9d))
+* add last activity time to contributors gf-347 ([#410](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/410)) ([3128298](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/312829860a693a1f075a7f2d031026a7eb0edb5c))
+
 ## [1.26.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.25.0...backend-v1.26.0) (2024-09-18)
 
 

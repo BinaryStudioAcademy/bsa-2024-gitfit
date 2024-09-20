@@ -10,6 +10,7 @@ import { DataStatus, PermissionKey } from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useCallback,
 	useEffect,
@@ -56,6 +57,11 @@ const Projects = (): JSX.Element => {
 		projectStatus,
 		projectsTotalCount,
 	} = useAppSelector(({ projects }) => projects);
+
+	const { control, errors } = useAppForm({
+		defaultValues: { search },
+		mode: "onChange",
+	});
 
 	const handleSearchChange = useCallback(
 		(value: string) => {
@@ -159,6 +165,7 @@ const Projects = (): JSX.Element => {
 		},
 		[handleDeleteConfirmationModalOpen],
 	);
+
 	const handleProjectCreateSubmit = useCallback(
 		(payload: ProjectCreateRequestDto) => {
 			void dispatch(projectActions.create(payload));
@@ -205,7 +212,13 @@ const Projects = (): JSX.Element => {
 					</div>
 				)}
 			</header>
-			<ProjectsSearch onChange={handleSearchChange} />
+			<ProjectsSearch
+				control={control}
+				errors={errors}
+				name="search"
+				onChange={handleSearchChange}
+			/>
+
 			{isLoading ? (
 				<Loader />
 			) : (

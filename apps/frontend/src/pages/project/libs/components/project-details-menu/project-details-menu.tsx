@@ -37,7 +37,7 @@ const ProjectDetailsMenu = ({
 	);
 
 	const hasManageProjectAccessPermission = checkHasPermission(
-		[PermissionKey.MANAGE_USER_ACCESS],
+		[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
 		userPermissions,
 	);
 	const hasManageProjectPermission = checkHasPermission(

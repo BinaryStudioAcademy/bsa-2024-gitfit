@@ -19,7 +19,7 @@ const DeleteAccount = ({ userId }: Properties): JSX.Element => {
 	}, [onOpen]);
 
 	const handleDeleteConfirm = useCallback(() => {
-		void dispatch(userActions.deleteById(userId));
+		void dispatch(userActions.deleteById({ id: userId }));
 		void dispatch(authActions.logout());
 	}, [dispatch, userId]);
 

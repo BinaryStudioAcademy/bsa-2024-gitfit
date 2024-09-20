@@ -1,5 +1,77 @@
 # Changelog
 
+## [1.45.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.45.1...v1.45.2) (2024-09-20)
+
+
+### Bug Fixes
+
+* manage all projects permissions, edit, view, delete, create gf-411 ([#424](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/424)) ([3599a79](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3599a79205f88979a958c150b73d287e54f0bfce))
+
+## [1.45.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.45.0...v1.45.1) (2024-09-20)
+
+
+### Bug Fixes
+
+* double dots shown nearby user checkboxes in the create/edit group/project group modal window gf-382 ([#441](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/441)) ([319f18e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/319f18e3bb4e481d9b5f86f4e460f727c9bec54a))
+
+## [1.45.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.44.0...v1.45.0) (2024-09-20)
+
+
+### Features
+
+* add an ability for admins to delete a user gf-419 ([#426](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/426)) ([724b812](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/724b81206451537a3666e1ab54645914281ef2e8))
+* Add search input to users table on access management pages gf-402 ([#422](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/422)) ([171d387](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/171d3879dde731db092ddcd00bb14a2e251043e4))
+* update analytics cd config gf-375 ([#438](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/438)) ([6f99875](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6f99875eda4711dbb733e5ddbd6bbc7ea25ec88e))
+
+## [1.44.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.43.0...v1.44.0) (2024-09-19)
+
+
+### Features
+
+* split cd actions for analytics and shared gf-375 ([#433](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/433)) ([bc730a5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/bc730a557f169877536d5421a1ab12c3d0cc8221))
+
+## [1.43.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.42.0...v1.43.0) (2024-09-19)
+
+
+### Features
+
+* trigger analytics release gf-375 ([#430](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/430)) ([a8e06e5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a8e06e58119001bf9b4e379116af84d0b87c85fe))
+
+## [1.42.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.41.0...v1.42.0) (2024-09-19)
+
+
+### Features
+
+* Update analytics instructions with the new flow gf-406 ([#415](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/415)) ([e7c26d3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/e7c26d3a428335356066bf2c24815ee99e91b8ca))
+
+
+### Bug Fixes
+
+* inconsistent page content layout on the contributors page with different screen resolutions gf-387 ([#416](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/416)) ([9a9735d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9a9735db5058ab30510a4a0659e66379e56e057a))
+* refactored search handling in search component gf-331 ([#372](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/372)) ([5aea374](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5aea374ffbb96ea388e77456f866534086284e9d))
+
+## [1.41.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.40.0...v1.41.0) (2024-09-19)
+
+
+### Features
+
+* add notification for failed project activity update gf-336 ([#379](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/379)) ([ce69dd9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ce69dd9f5e26504dd80c4b2793a987b692aa7a62))
+
+## [1.40.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.39.0...v1.40.0) (2024-09-19)
+
+
+### Features
+
+* add an ability to edit contributor name gf-345 ([#404](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/404)) ([7056194](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/70561948965d2f06dbc5e99cc7491e5e6f806e9d))
+* add last activity time to contributors gf-347 ([#410](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/410)) ([3128298](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/312829860a693a1f075a7f2d031026a7eb0edb5c))
+* add users column to groups table on project access management page gf-403 ([#412](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/412)) ([c8d80b9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c8d80b9c04dc49784da2f243e4648540df298ef9))
+* handle dates that cross into the next day but are less than 24 hours apart gf-274 ([#399](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/399)) ([80f526d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/80f526deb2232bf1a48eac039cc05f90631caed1))
+
+
+### Bug Fixes
+
+* update columns width gf-389 ([#421](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/421)) ([bf69331](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/bf69331b5294f283bbba095579bbc8f705344ea8))
+
 ## [1.39.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.38.0...v1.39.0) (2024-09-19)
 
 

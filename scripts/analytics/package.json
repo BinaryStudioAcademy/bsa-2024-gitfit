@@ -1,6 +1,6 @@
 {
 	"name": "@git-fit/analytics",
-	"version": "1.3.0",
+	"version": "1.6.0",
 	"type": "module",
 	"repository": {
 		"type": "git",
@@ -10,16 +10,16 @@
 		"node": "20.x.x",
 		"npm": "10.x.x"
 	},
-	"main": "./index.js",
+	"main": "./build/index.js",
 	"bin": {
-		"@git-fit/analytics": "./index.js"
+		"@git-fit/analytics": "./build/index.js"
 	},
 	"scripts": {
 		"lint:type": "npx tsc --noEmit",
 		"lint:js": "npx eslint . --max-warnings=0 --no-warn-ignored",
 		"lint": "concurrently \"npm:lint:*\"",
 		"build:cp": "cp -r package.json build",
-		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json & npm run build:cp",
+		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json && npm run build:cp",
 		"start:dev": "tsx watch src/index.ts"
 	},
 	"dependencies": {
