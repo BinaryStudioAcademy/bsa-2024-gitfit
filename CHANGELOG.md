@@ -1,5 +1,41 @@
 # Changelog
 
+## [1.45.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.44.0...v1.45.0) (2024-09-20)
+
+
+### Features
+
+* add an ability for admins to delete a user gf-419 ([#426](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/426)) ([724b812](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/724b81206451537a3666e1ab54645914281ef2e8))
+* Add search input to users table on access management pages gf-402 ([#422](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/422)) ([171d387](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/171d3879dde731db092ddcd00bb14a2e251043e4))
+* update analytics cd config gf-375 ([#438](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/438)) ([6f99875](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6f99875eda4711dbb733e5ddbd6bbc7ea25ec88e))
+
+## [1.44.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.43.0...v1.44.0) (2024-09-19)
+
+
+### Features
+
+* split cd actions for analytics and shared gf-375 ([#433](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/433)) ([bc730a5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/bc730a557f169877536d5421a1ab12c3d0cc8221))
+
+## [1.43.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.42.0...v1.43.0) (2024-09-19)
+
+
+### Features
+
+* trigger analytics release gf-375 ([#430](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/430)) ([a8e06e5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a8e06e58119001bf9b4e379116af84d0b87c85fe))
+
+## [1.42.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.41.0...v1.42.0) (2024-09-19)
+
+
+### Features
+
+* Update analytics instructions with the new flow gf-406 ([#415](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/415)) ([e7c26d3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/e7c26d3a428335356066bf2c24815ee99e91b8ca))
+
+
+### Bug Fixes
+
+* inconsistent page content layout on the contributors page with different screen resolutions gf-387 ([#416](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/416)) ([9a9735d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9a9735db5058ab30510a4a0659e66379e56e057a))
+* refactored search handling in search component gf-331 ([#372](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/372)) ([5aea374](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5aea374ffbb96ea388e77456f866534086284e9d))
+
 ## [1.41.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.40.0...v1.41.0) (2024-09-19)
 
 

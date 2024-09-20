@@ -8,14 +8,11 @@ const useSearch = (): {
 	const [searchParameters, setSearchParameters] = useSearchParams();
 	const searchParameterName = QueryParameterName.SEARCH;
 	const searchParameter = searchParameters.get(searchParameterName) ?? "";
-
 	const [search, setSearch] = useState<string>(searchParameter);
 
 	useEffect(() => {
 		const updatedSearchParameters = new URLSearchParams(searchParameters);
-
 		updatedSearchParameters.set(searchParameterName, search);
-
 		setSearchParameters(updatedSearchParameters);
 	}, [search, searchParameters, searchParameterName, setSearchParameters]);
 

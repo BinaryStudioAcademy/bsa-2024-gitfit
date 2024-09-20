@@ -1,4 +1,4 @@
-name: Continuous Delivery Analytics
+name: Continuous Delivery Shared
 
 env:
   ARTIFACT_NAME: build
@@ -64,7 +64,7 @@ jobs:
 
       - name: Code Building
         run: |
-          npm run build:shared & npm run build:analytics
+          npm run build:shared
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
@@ -98,6 +98,6 @@ jobs:
       - name: Publish
         working-directory: ${{ env.ARTIFACT_PATH }}
         run: |
-          npm publish --provenance --access public --workspace scripts/analytics
+          npm publish --provenance --access public --workspace packages/shared
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
