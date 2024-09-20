@@ -125,7 +125,12 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "PATCH",
 			path: ProjectGroupsApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
+			preHandlers: [
+				checkUserPermissions([
+					PermissionKey.MANAGE_USER_ACCESS,
+					PermissionKey.MANAGE_ALL_PROJECTS,
+				]),
+			],
 			validation: {
 				body: projectGroupPatchValidationSchema,
 			},

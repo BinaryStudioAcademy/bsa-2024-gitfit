@@ -16,11 +16,13 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	children: React.ReactNode;
+	routeExtraPermissions?: ValueOf<typeof PermissionKey>[];
 	routePermissions?: ValueOf<typeof PermissionKey>[];
 };
 
 const ProtectedRoute = ({
 	children,
+	routeExtraPermissions = [],
 	routePermissions = [],
 }: Properties): JSX.Element => {
 	const {
@@ -47,12 +49,19 @@ const ProtectedRoute = ({
 		return <Navigate replace to={AppRoute.SIGN_IN} />;
 	}
 
-	const hasRequiredPermission = checkHasPermission(
+	const hasBasePermission = checkHasPermission(
 		routePermissions,
 		allPermissions,
 	);
 
-	if (!hasRequiredPermission) {
+	const hasExtraPermission = checkHasPermission(
+		routeExtraPermissions,
+		userPermissions,
+	);
+
+	const hasRequiredPermissions = hasBasePermission && hasExtraPermission;
+
+	if (!hasRequiredPermissions) {
 		const [navigationItem] = getPermittedNavigationItems(
 			SIDEBAR_ITEMS,
 			allPermissions,

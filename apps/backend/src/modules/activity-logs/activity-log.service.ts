@@ -1,5 +1,6 @@
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
+import { formatDate, getDateRange } from "~/libs/helpers/helpers.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 import { type ContributorService } from "~/modules/contributors/contributors.js";
@@ -13,7 +14,9 @@ import { ActivityLogError } from "./libs/exceptions/exceptions.js";
 import {
 	type ActivityLogCreateItemResponseDto,
 	type ActivityLogCreateRequestDto,
+	type ActivityLogGetAllAnalyticsResponseDto,
 	type ActivityLogGetAllResponseDto,
+	type ActivityLogQueryParameters,
 } from "./libs/types/types.js";
 
 type Constructor = {
@@ -128,8 +131,63 @@ class ActivityLogService implements Service {
 		return Promise.resolve(null);
 	}
 
-	public async findAll(): Promise<ActivityLogGetAllResponseDto> {
-		const activityLogs = await this.activityLogRepository.findAll();
+	public async findAll({
+		endDate,
+		startDate,
+	}: ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
+		const activityLogsEntities = await this.activityLogRepository.findAll({
+			endDate,
+			startDate,
+		});
+
+		const activityLogs = activityLogsEntities.items.map((item) =>
+			item.toObject(),
+		);
+		const allContributors = await this.contributorService.findAll();
+		const dateRange = getDateRange(startDate, endDate);
+
+		const INITIAL_COMMITS_NUMBER = 0;
+		const contributorMap: Record<string, number[]> = {};
+
+		for (const contributor of allContributors.items) {
+			const uniqueKey = `${contributor.name}_${String(contributor.id)}`;
+			contributorMap[uniqueKey] = Array.from(
+				{ length: dateRange.length },
+				() => INITIAL_COMMITS_NUMBER,
+			);
+		}
+
+		for (const log of activityLogs) {
+			const { commitsNumber, date, gitEmail } = log;
+			const { id, name } = gitEmail.contributor;
+
+			const uniqueKey = `${name}_${String(id)}`;
+			const formattedDate = formatDate(new Date(date), "MMM d");
+			const dateIndex = dateRange.indexOf(formattedDate);
+
+			if (contributorMap[uniqueKey]) {
+				const currentValue =
+					contributorMap[uniqueKey][dateIndex] ?? INITIAL_COMMITS_NUMBER;
+				contributorMap[uniqueKey][dateIndex] = currentValue + commitsNumber;
+			}
+		}
+
+		return {
+			items: Object.entries(contributorMap).map(([uniqueKey, commitsArray]) => {
+				const [contributorName, contributorId] = uniqueKey.split("_");
+
+				return {
+					commitsNumber: commitsArray,
+					contributorId: contributorId ?? "",
+					contributorName: contributorName ?? "",
+				};
+			}),
+		};
+	}
+
+	public async findAllWithoutFilter(): Promise<ActivityLogGetAllResponseDto> {
+		const activityLogs =
+			await this.activityLogRepository.findAllWithoutFilter();
 
 		return {
 			items: activityLogs.items.map((item) => item.toObject()),

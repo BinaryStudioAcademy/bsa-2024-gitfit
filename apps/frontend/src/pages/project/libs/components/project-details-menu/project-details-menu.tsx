@@ -7,6 +7,7 @@ import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/perm
 type Properties = {
 	hasEditPermission: boolean;
 	hasManagePermission: boolean;
+	onDelete: () => void;
 	onEdit: () => void;
 	projectId: number;
 	userPermissions: PermissionGetAllItemResponseDto[];
@@ -15,6 +16,7 @@ type Properties = {
 const ProjectDetailsMenu = ({
 	hasEditPermission,
 	hasManagePermission,
+	onDelete,
 	onEdit,
 	projectId,
 	userPermissions,
@@ -25,6 +27,11 @@ const ProjectDetailsMenu = ({
 		onEdit();
 		onClose();
 	}, [onEdit, onClose]);
+
+	const handleDeleteClick = useCallback(() => {
+		onDelete();
+		onClose();
+	}, [onDelete, onClose]);
 
 	const projectAccessManagementRoute = configureString(
 		AppRoute.PROJECT_ACCESS_MANAGEMENT,
@@ -64,6 +71,15 @@ const ProjectDetailsMenu = ({
 							href={projectAccessManagementRoute}
 							iconName="access"
 							label="Manage Access"
+						/>
+					)}
+
+					{hasManageProjectAccessPermission && (
+						<MenuItem
+							iconName="trashBin"
+							label="Delete"
+							onClick={handleDeleteClick}
+							variant="danger"
 						/>
 					)}
 				</Menu>
