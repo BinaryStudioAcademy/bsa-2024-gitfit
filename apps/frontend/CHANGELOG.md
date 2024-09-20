@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.42.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.41.2...frontend-v1.42.0) (2024-09-20)
+
+
+### Features
+
+* add ability to delete project on project page gf-407 ([#452](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/452)) ([dacd7b2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/dacd7b2a9ae12801f1f9746ffb9fa13644d01f7b))
+* add analytics table gf-327 ([#364](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/364)) ([dd7084a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/dd7084abd8cf65b930897043a2ca837b1468745a))
+
+
+### Bug Fixes
+
+* Block access to project access management page when user hasn't either View or Manage All Projects permission gf-350 ([#414](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/414)) ([168101c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/168101c05c7e20a38ff28bdca615db04dafaa4a8))
+
 ## [1.41.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.41.1...frontend-v1.41.2) (2024-09-20)
 
 
