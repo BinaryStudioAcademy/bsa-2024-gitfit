@@ -71,7 +71,7 @@ jobs:
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  deploy-analytics:
+  publish-analytics:
     name: Publish Analytics Script
     needs: release
     if: ${{ needs.release.outputs.scripts_analytics_release_created }}
