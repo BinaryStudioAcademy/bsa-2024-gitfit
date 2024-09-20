@@ -6,15 +6,16 @@ import {
 	AnalyticsContributorsSearch,
 	AnalyticsTable,
 } from "./libs/components/components.js";
-import { ANALYTICS_DATE_MAX_RANGE } from "./libs/constants/constants.js"; // Import the mock AnalyticsTable
+import { ANALYTICS_DATE_MAX_RANGE } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 const Analytics = (): JSX.Element => {
 	const todayDate = new Date();
 
-	const { control, handleSubmit } = useAppForm({
+	const { control, errors, handleSubmit } = useAppForm({
 		defaultValues: {
 			dateRange: [subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE), todayDate],
+			search: "",
 		},
 	});
 
@@ -41,6 +42,9 @@ const Analytics = (): JSX.Element => {
 			<h1 className={styles["title"]}>Analytics</h1>
 			<section className={styles["filters"]}>
 				<AnalyticsContributorsSearch
+					control={control}
+					errors={errors}
+					name="search"
 					onChange={handleContributorsSearchChange}
 				/>
 				<form className={styles["filters-form"]} onSubmit={handleFormSubmit}>
