@@ -36,7 +36,11 @@ const AnalyticsTable = ({
 
 	return (
 		<div className={styles["analytics-table"]}>
-			<Table<AnalyticsRow> columns={analyticsColumns} data={analyticsData} />
+			<Table<AnalyticsRow>
+				columns={analyticsColumns}
+				data={analyticsData}
+				emptyPlaceholder="No contributors matching your search criteria."
+			/>
 		</div>
 	);
 };
