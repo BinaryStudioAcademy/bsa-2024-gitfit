@@ -3,15 +3,18 @@ import {
 	ConfirmationModal,
 	Modal,
 	PageLayout,
+	Search,
 } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useCallback,
 	useEffect,
 	useModal,
 	usePagination,
+	useSearch,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import {
@@ -47,6 +50,11 @@ const AccessManagement = (): JSX.Element => {
 		groupsTotalCount,
 		groupUpdateStatus,
 	} = useAppSelector(({ groups }) => groups);
+
+	const { onSearch: onUserSearch, search: userSearch } = useSearch();
+	const { control, errors } = useAppForm({
+		defaultValues: { userSearch },
+	});
 
 	const {
 		onPageChange: onUserPageChange,
@@ -88,9 +96,13 @@ const AccessManagement = (): JSX.Element => {
 
 	const handleLoadUsers = useCallback(() => {
 		void dispatch(
-			userActions.loadAll({ page: userPage, pageSize: userPageSize }),
+			userActions.loadAll({
+				name: userSearch,
+				page: userPage,
+				pageSize: userPageSize,
+			}),
 		);
-	}, [dispatch, userPage, userPageSize]);
+	}, [dispatch, userPage, userPageSize, userSearch]);
 
 	const handleLoadGroups = useCallback(() => {
 		void dispatch(
@@ -192,6 +204,17 @@ const AccessManagement = (): JSX.Element => {
 			<section>
 				<div className={styles["section-header"]}>
 					<h2 className={styles["section-title"]}>Users</h2>
+				</div>
+				<div className={styles["search-container"]}>
+					<Search
+						control={control}
+						errors={errors}
+						isLabelHidden
+						label="Users search"
+						name="userSearch"
+						onChange={onUserSearch}
+						placeholder="Enter name"
+					/>
 				</div>
 				<UsersTable
 					isLoading={isLoadingUsersData}
