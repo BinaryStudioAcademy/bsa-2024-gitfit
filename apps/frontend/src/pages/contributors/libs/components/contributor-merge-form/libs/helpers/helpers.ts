@@ -1,1 +1,1 @@
-export { getContributorOptions } from "./get-contributor-options.helper.js";
+export { getContributorOptions } from "./get-contributor-options/get-contributor-options.helper.js";

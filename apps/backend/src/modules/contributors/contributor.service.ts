@@ -110,7 +110,7 @@ class ContributorService implements Service {
 		if (currentContributorId === selectedContributorId) {
 			throw new ContributorError({
 				message: ExceptionMessage.CONTRIBUTOR_SELF_MERGE,
-				status: HTTPCode.CONFLICT,
+				status: HTTPCode.FORBIDDEN,
 			});
 		}
 

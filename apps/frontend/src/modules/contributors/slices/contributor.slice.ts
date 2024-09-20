@@ -34,14 +34,24 @@ const { actions, name, reducer } = createSlice({
 			state.dataStatus = DataStatus.PENDING;
 		});
 		builder.addCase(merge.fulfilled, (state, action) => {
+			const { gitEmails: updatedGitEmails, id } = action.payload;
+
+			const isSameContributor = (contributorId: number): boolean =>
+				contributorId === id;
+
+			const hasMatchingGitEmail = (
+				contributorEmails: { email: string }[],
+			): boolean =>
+				contributorEmails.some((email) =>
+					updatedGitEmails.some(
+						(updatedEmail) => updatedEmail.email === email.email,
+					),
+				);
+
 			const removedContributorId = state.contributors.find(
 				(contributor) =>
-					contributor.id !== action.payload.id &&
-					contributor.gitEmails.some((email) =>
-						action.payload.gitEmails.some(
-							(updatedEmail) => updatedEmail.email === email.email,
-						),
-					),
+					!isSameContributor(contributor.id) &&
+					hasMatchingGitEmail(contributor.gitEmails),
 			)?.id;
 
 			if (removedContributorId) {
@@ -51,7 +61,7 @@ const { actions, name, reducer } = createSlice({
 			}
 
 			state.contributors = state.contributors.map((contributor) =>
-				contributor.id === action.payload.id
+				isSameContributor(contributor.id)
 					? { ...contributor, ...action.payload }
 					: contributor,
 			);
