@@ -9,6 +9,10 @@ import { AppEnvironment } from "~/libs/enums/enums.js";
 import { type Config } from "~/libs/modules/config/config.js";
 import { storage } from "~/libs/modules/storage/storage.js";
 import { toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
+import {
+	activityLogApi,
+	reducer as activityLogReducer,
+} from "~/modules/activity/activity.js";
 import { authApi, reducer as authReducer } from "~/modules/auth/auth.js";
 import {
 	contributorApi,
@@ -39,9 +43,13 @@ import {
 	projectApi,
 	reducer as projectsReducer,
 } from "~/modules/projects/projects.js";
+import { reducer as scriptsReducer } from "~/modules/scripts/scripts.js";
 import { userApi, reducer as usersReducer } from "~/modules/users/users.js";
 
-import { handleErrorMiddleware } from "./libs/middlewares/middlewares.js";
+import {
+	handleErrorMiddleware,
+	handleUnauthorizedErrorMiddleware,
+} from "./libs/middlewares/middlewares.js";
 import { type ExtraArguments, type RootReducer } from "./libs/types/types.js";
 
 class Store {
@@ -61,9 +69,13 @@ class Store {
 					thunk: {
 						extraArgument: this.extraArguments,
 					},
-				}).prepend(handleErrorMiddleware(this.extraArguments));
+				}).prepend(
+					handleUnauthorizedErrorMiddleware(),
+					handleErrorMiddleware(this.extraArguments),
+				);
 			},
 			reducer: {
+				activityLogs: activityLogReducer,
 				auth: authReducer,
 				contributors: contributorsReducer,
 				groups: groupsReducer,
@@ -73,6 +85,7 @@ class Store {
 				projectGroups: projectGroupsReducer,
 				projectPermissions: projectPermissionsReducer,
 				projects: projectsReducer,
+				scripts: scriptsReducer,
 				users: usersReducer,
 			},
 		});
@@ -80,6 +93,7 @@ class Store {
 
 	public get extraArguments(): ExtraArguments {
 		return {
+			activityLogApi,
 			authApi,
 			contributorApi,
 			groupApi,

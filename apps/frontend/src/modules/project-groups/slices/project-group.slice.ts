@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { ITEMS_CHANGED_COUNT } from "~/libs/components/table-pagination/libs/constants/constants.js";
+import { ITEMS_CHANGED_COUNT } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";

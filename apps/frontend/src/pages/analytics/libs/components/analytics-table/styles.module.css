@@ -1,0 +1,10 @@
+.analytics-table {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	margin-top: 16px;
+}
+
+.analytics-empty-cell {
+	color: var(--color-danger);
+}

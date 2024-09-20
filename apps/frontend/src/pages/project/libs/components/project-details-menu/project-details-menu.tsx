@@ -5,12 +5,14 @@ import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
 import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/permissions.js";
 
 type Properties = {
+	onDelete: () => void;
 	onEdit: () => void;
 	projectId: number;
 	userPermissions: PermissionGetAllItemResponseDto[];
 };
 
 const ProjectDetailsMenu = ({
+	onDelete,
 	onEdit,
 	projectId,
 	userPermissions,
@@ -22,6 +24,11 @@ const ProjectDetailsMenu = ({
 		onClose();
 	}, [onEdit, onClose]);
 
+	const handleDeleteClick = useCallback(() => {
+		onDelete();
+		onClose();
+	}, [onDelete, onClose]);
+
 	const projectAccessManagementRoute = configureString(
 		AppRoute.PROJECT_ACCESS_MANAGEMENT,
 		{
@@ -30,21 +37,21 @@ const ProjectDetailsMenu = ({
 	);
 
 	const hasManageProjectAccessPermission = checkHasPermission(
-		[PermissionKey.MANAGE_USER_ACCESS],
+		[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
 		userPermissions,
 	);
-	const hasEditProjectPermission = checkHasPermission(
+	const hasManageProjectPermission = checkHasPermission(
 		[PermissionKey.MANAGE_ALL_PROJECTS],
 		userPermissions,
 	);
 	const isMenuShown =
-		hasManageProjectAccessPermission || hasEditProjectPermission;
+		hasManageProjectAccessPermission || hasManageProjectPermission;
 
 	return (
 		<>
 			{isMenuShown && (
 				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-					{hasEditProjectPermission && (
+					{hasManageProjectPermission && (
 						<MenuItem
 							iconName="pencil"
 							label="Edit"
@@ -57,6 +64,15 @@ const ProjectDetailsMenu = ({
 							href={projectAccessManagementRoute}
 							iconName="access"
 							label="Manage Access"
+						/>
+					)}
+
+					{hasManageProjectPermission && (
+						<MenuItem
+							iconName="trashBin"
+							label="Delete"
+							onClick={handleDeleteClick}
+							variant="danger"
 						/>
 					)}
 				</Menu>

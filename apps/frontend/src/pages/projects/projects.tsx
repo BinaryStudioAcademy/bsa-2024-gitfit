@@ -10,6 +10,7 @@ import { DataStatus, PermissionKey } from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useCallback,
 	useEffect,
@@ -50,11 +51,17 @@ const Projects = (): JSX.Element => {
 		dataStatus,
 		project,
 		projectCreateStatus,
+		projectDeleteStatus,
 		projectPatchStatus,
 		projects,
 		projectStatus,
 		projectsTotalCount,
 	} = useAppSelector(({ projects }) => projects);
+
+	const { control, errors } = useAppForm({
+		defaultValues: { search },
+		mode: "onChange",
+	});
 
 	const handleSearchChange = useCallback(
 		(value: string) => {
@@ -137,6 +144,12 @@ const Projects = (): JSX.Element => {
 		}
 	}, [projectPatchStatus, handleEditModalClose]);
 
+	useEffect(() => {
+		if (projectDeleteStatus === DataStatus.FULFILLED) {
+			handleDeleteConfirmationModalClose();
+		}
+	}, [projectDeleteStatus, handleDeleteConfirmationModalClose]);
+
 	const handleEditClick = useCallback(
 		(project: ProjectGetAllItemResponseDto) => {
 			setProjectToModifyId(project.id);
@@ -152,6 +165,7 @@ const Projects = (): JSX.Element => {
 		},
 		[handleDeleteConfirmationModalOpen],
 	);
+
 	const handleProjectCreateSubmit = useCallback(
 		(payload: ProjectCreateRequestDto) => {
 			void dispatch(projectActions.create(payload));
@@ -172,9 +186,8 @@ const Projects = (): JSX.Element => {
 	const handleProjectDeleteConfirm = useCallback(() => {
 		if (projectToModifyId) {
 			void dispatch(projectActions.deleteById(projectToModifyId));
-			handleDeleteConfirmationModalClose();
 		}
-	}, [dispatch, projectToModifyId, handleDeleteConfirmationModalClose]);
+	}, [dispatch, projectToModifyId]);
 
 	const isLoading =
 		dataStatus === DataStatus.IDLE ||
@@ -199,7 +212,13 @@ const Projects = (): JSX.Element => {
 					</div>
 				)}
 			</header>
-			<ProjectsSearch onChange={handleSearchChange} />
+			<ProjectsSearch
+				control={control}
+				errors={errors}
+				name="search"
+				onChange={handleSearchChange}
+			/>
+
 			{isLoading ? (
 				<Loader />
 			) : (
