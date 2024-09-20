@@ -73,7 +73,7 @@ jobs:
 
   deploy-analytics:
     name: Publish Analytics Script
-    needs: publish-shared
+    needs: release
     if: ${{ needs.release.outputs.scripts_analytics_release_created }}
     uses: ./.github/workflows/cd-analytics.yml
     secrets:
