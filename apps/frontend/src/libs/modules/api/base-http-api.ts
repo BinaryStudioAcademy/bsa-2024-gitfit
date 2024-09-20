@@ -2,9 +2,10 @@ import { ServerErrorType } from "~/libs/enums/enums.js";
 import { configureString } from "~/libs/helpers/helpers.js";
 import {
 	type HTTP,
-	type HTTPCode,
+	HTTPCode,
 	HTTPError,
 	HTTPHeader,
+	UnauthorizedError,
 } from "~/libs/modules/http/http.js";
 import { type Storage, StorageKey } from "~/libs/modules/storage/storage.js";
 import { type ServerErrorResponse, type ValueOf } from "~/libs/types/types.js";
@@ -107,6 +108,13 @@ class BaseHTTPApi implements HTTPApi {
 		}
 
 		const isCustomException = Boolean(parsedException.errorType);
+
+		if (response.status === HTTPCode.UNAUTHORIZED) {
+			throw new UnauthorizedError({
+				details: "details" in parsedException ? parsedException.details : [],
+				message: parsedException.message,
+			});
+		}
 
 		throw new HTTPError({
 			details: "details" in parsedException ? parsedException.details : [],
