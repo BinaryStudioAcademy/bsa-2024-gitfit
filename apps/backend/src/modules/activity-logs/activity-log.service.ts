@@ -176,9 +176,14 @@ class ActivityLogService implements Service {
 			items: Object.entries(contributorMap).map(([uniqueKey, commitsArray]) => {
 				const [contributorName, contributorId] = uniqueKey.split("_");
 
+				const contributor = allContributors.items.find(
+					(contributor) => contributor.id === Number(contributorId),
+				);
+
 				return {
 					commitsNumber: commitsArray,
 					contributorId: contributorId ?? "",
+					contributorIsHidden: contributor ? contributor.isHidden : false,
 					contributorName: contributorName ?? "",
 				};
 			}),
