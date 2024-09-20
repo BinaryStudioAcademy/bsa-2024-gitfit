@@ -157,15 +157,6 @@ class ActivityLogController extends BaseController {
 	 *                   items:
 	 *                     $ref: "#/components/schemas/ActivityLog"
 	 */
-	// private async findAll(): Promise<APIHandlerResponse> {
-	// 	const activityLogs = await this.activityLogService.findAll();
-
-	// 	return {
-	// 		payload: activityLogs,
-	// 		status: HTTPCode.OK,
-	// 	};
-	// }
-
 	private async findAll(
 		options: APIHandlerOptions<{
 			query: ActivityLogQueryParameters;

@@ -8,6 +8,7 @@ import {
 	type UseFormClearErrors,
 	type UseFormHandleSubmit,
 	type UseFormProps,
+	type UseFormReset,
 	type UseFormSetValue,
 	type UseFormTrigger,
 	type UseFormWatch,
@@ -26,9 +27,11 @@ type ReturnValue<T extends FieldValues = FieldValues> = {
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
 	handleErrorsClear: UseFormClearErrors<T>;
+	handleReset: UseFormReset<T>;
 	handleSubmit: UseFormHandleSubmit<T>;
 	handleTrigger: UseFormTrigger<T>;
 	handleValueSet: UseFormSetValue<T>;
+
 	isDirty: boolean;
 	watch: UseFormWatch<T>;
 };
@@ -52,6 +55,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
 		control,
 		formState: { errors, isDirty },
 		handleSubmit,
+		reset,
 		setValue,
 		trigger,
 		watch,
@@ -61,6 +65,7 @@ const useAppForm = <T extends FieldValues = FieldValues>({
 		control,
 		errors,
 		handleErrorsClear: clearErrors,
+		handleReset: reset,
 		handleSubmit,
 		handleTrigger: trigger,
 		handleValueSet: setValue,

@@ -3,4 +3,6 @@ export {
 	checkHasPermission,
 	formatDate,
 	getDateRange,
+	getDifferenceInDays,
+	subtractDays,
 } from "@git-fit/shared";
