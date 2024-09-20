@@ -9,8 +9,14 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { type ActivityLogService } from "./activity-log.service.js";
 import { ActivityLogsApiPath } from "./libs/enums/enums.js";
-import { type ActivityLogCreateRequestDto } from "./libs/types/types.js";
-import { activityLogCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+import {
+	type ActivityLogCreateRequestDto,
+	type ActivityLogQueryParameters,
+} from "./libs/types/types.js";
+import {
+	activityLogCreateValidationSchema,
+	activityLogGetValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
 
 /**
  * @swagger
@@ -69,9 +75,17 @@ class ActivityLogController extends BaseController {
 		});
 
 		this.addRoute({
-			handler: () => this.findAll(),
+			handler: (options) =>
+				this.findAll(
+					options as APIHandlerOptions<{
+						query: ActivityLogQueryParameters;
+					}>,
+				),
 			method: "GET",
 			path: ActivityLogsApiPath.ROOT,
+			validation: {
+				query: activityLogGetValidationSchema,
+			},
 		});
 	}
 
@@ -149,11 +163,18 @@ class ActivityLogController extends BaseController {
 	 *                   items:
 	 *                     $ref: "#/components/schemas/ActivityLog"
 	 */
-	private async findAll(): Promise<APIHandlerResponse> {
-		const activityLogs = await this.activityLogService.findAll();
+	private async findAll(
+		options: APIHandlerOptions<{
+			query: ActivityLogQueryParameters;
+		}>,
+	): Promise<APIHandlerResponse> {
+		const { endDate, startDate } = options.query;
 
 		return {
-			payload: activityLogs,
+			payload: await this.activityLogService.findAll({
+				endDate,
+				startDate,
+			}),
 			status: HTTPCode.OK,
 		};
 	}

@@ -14,6 +14,7 @@ type ServerApplicationRouteParameters = {
 	preHandlers?: APIPreHandler[];
 	validation?: {
 		body?: ValidationSchema;
+		query?: ValidationSchema;
 	};
 };
 

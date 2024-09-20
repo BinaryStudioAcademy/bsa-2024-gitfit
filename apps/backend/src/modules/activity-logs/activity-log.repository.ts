@@ -2,6 +2,7 @@ import { type Repository } from "~/libs/types/types.js";
 
 import { ActivityLogEntity } from "./activity-log.entity.js";
 import { type ActivityLogModel } from "./activity-log.model.js";
+import { type ActivityLogQueryParameters } from "./libs/types/types.js";
 
 class ActivityLogRepository implements Repository {
 	private activityLogModel: typeof ActivityLogModel;
@@ -39,10 +40,33 @@ class ActivityLogRepository implements Repository {
 		return Promise.resolve(null);
 	}
 
-	public async findAll(): Promise<{ items: ActivityLogEntity[] }> {
+	public async findAll({
+		endDate,
+		startDate,
+	}: ActivityLogQueryParameters): Promise<{ items: ActivityLogEntity[] }> {
 		const activityLogs = await this.activityLogModel
 			.query()
-			.withGraphFetched("[gitEmail, project, createdByUser]")
+			.withGraphFetched("[gitEmail.contributor, project, createdByUser]")
+			.modifyGraph("gitEmail.contributor", (builder) => {
+				builder.select("id", "name");
+			})
+			.whereBetween("activity_logs.date", [startDate, endDate])
+			.orderBy("date");
+
+		return {
+			items: activityLogs.map((activityLog) =>
+				ActivityLogEntity.initialize(activityLog),
+			),
+		};
+	}
+
+	public async findAllWithoutFilter(): Promise<{ items: ActivityLogEntity[] }> {
+		const activityLogs = await this.activityLogModel
+			.query()
+			.withGraphFetched("[gitEmail.contributor, project, createdByUser]")
+			.modifyGraph("gitEmail.contributor", (builder) => {
+				builder.select("id", "name");
+			})
 			.execute();
 
 		return {
