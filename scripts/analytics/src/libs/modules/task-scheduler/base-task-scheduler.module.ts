@@ -20,7 +20,7 @@ class BaseTaskScheduler implements TaskScheduler {
 			task();
 		});
 		this.logger.info(
-			`Task is scheduled to run started according to the pattern: ${schedule}.`,
+			`Task is scheduled to run according to the pattern: ${schedule}.`,
 		);
 	}
 }
