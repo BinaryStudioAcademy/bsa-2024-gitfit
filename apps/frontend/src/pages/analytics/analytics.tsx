@@ -1,11 +1,8 @@
-import { DateInput, PageLayout } from "~/libs/components/components.js";
+import { DateInput, PageLayout, Search } from "~/libs/components/components.js";
 import { subtractDays } from "~/libs/helpers/helpers.js";
 import { useAppForm, useCallback, useSearch } from "~/libs/hooks/hooks.js";
 
-import {
-	AnalyticsContributorsSearch,
-	AnalyticsTable,
-} from "./libs/components/components.js";
+import { AnalyticsTable } from "./libs/components/components.js";
 import { ANALYTICS_DATE_MAX_RANGE } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
@@ -24,7 +21,7 @@ const Analytics = (): JSX.Element => {
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit(() => {
-				// TODO: implement this function
+				// TODO: implement the data submission logic here
 			})(event_);
 		},
 		[handleSubmit],
@@ -40,22 +37,25 @@ const Analytics = (): JSX.Element => {
 	return (
 		<PageLayout>
 			<h1 className={styles["title"]}>Analytics</h1>
-			<section className={styles["filters"]}>
-				<AnalyticsContributorsSearch
-					control={control}
-					errors={errors}
-					name="search"
-					onChange={handleContributorsSearchChange}
-				/>
-				<form className={styles["filters-form"]} onSubmit={handleFormSubmit}>
-					<DateInput
+			<form className={styles["filters-form"]} onSubmit={handleFormSubmit}>
+				<div className={styles["search-container"]}>
+					<Search
 						control={control}
-						maxDate={todayDate}
-						maxRange={ANALYTICS_DATE_MAX_RANGE}
-						name="dateRange"
+						errors={errors}
+						isLabelHidden
+						label="Contributors search"
+						name="search"
+						onChange={handleContributorsSearchChange}
+						placeholder="Enter name"
 					/>
-				</form>
-			</section>
+				</div>
+				<DateInput
+					control={control}
+					maxDate={todayDate}
+					maxRange={ANALYTICS_DATE_MAX_RANGE}
+					name="dateRange"
+				/>
+			</form>
 			<section>
 				<AnalyticsTable search={search} />
 			</section>
