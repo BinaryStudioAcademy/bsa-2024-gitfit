@@ -51,6 +51,7 @@ const Projects = (): JSX.Element => {
 		dataStatus,
 		project,
 		projectCreateStatus,
+		projectDeleteStatus,
 		projectPatchStatus,
 		projects,
 		projectStatus,
@@ -143,6 +144,12 @@ const Projects = (): JSX.Element => {
 		}
 	}, [projectPatchStatus, handleEditModalClose]);
 
+	useEffect(() => {
+		if (projectDeleteStatus === DataStatus.FULFILLED) {
+			handleDeleteConfirmationModalClose();
+		}
+	}, [projectDeleteStatus, handleDeleteConfirmationModalClose]);
+
 	const handleEditClick = useCallback(
 		(project: ProjectGetAllItemResponseDto) => {
 			setProjectToModifyId(project.id);
@@ -179,9 +186,8 @@ const Projects = (): JSX.Element => {
 	const handleProjectDeleteConfirm = useCallback(() => {
 		if (projectToModifyId) {
 			void dispatch(projectActions.deleteById(projectToModifyId));
-			handleDeleteConfirmationModalClose();
 		}
-	}, [dispatch, projectToModifyId, handleDeleteConfirmationModalClose]);
+	}, [dispatch, projectToModifyId]);
 
 	const isLoading =
 		dataStatus === DataStatus.IDLE ||
