@@ -11,6 +11,7 @@ type ControllerRouteParameters = {
 	preHandlers?: APIPreHandler[];
 	validation?: {
 		body?: ValidationSchema;
+		query?: ValidationSchema;
 	};
 };
 

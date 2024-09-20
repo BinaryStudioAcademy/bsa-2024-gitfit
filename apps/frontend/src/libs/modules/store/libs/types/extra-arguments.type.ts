@@ -1,5 +1,6 @@
 import { type Storage } from "~/libs/modules/storage/storage.js";
 import { type ToastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
+import { type activityLogApi } from "~/modules/activity/activity.js";
 import { type authApi } from "~/modules/auth/auth.js";
 import { type contributorApi } from "~/modules/contributors/contributors.js";
 import { type groupApi } from "~/modules/groups/groups.js";
@@ -12,6 +13,7 @@ import { type projectApi } from "~/modules/projects/projects.js";
 import { type userApi } from "~/modules/users/users.js";
 
 type ExtraArguments = {
+	activityLogApi: typeof activityLogApi;
 	authApi: typeof authApi;
 	contributorApi: typeof contributorApi;
 	groupApi: typeof groupApi;
