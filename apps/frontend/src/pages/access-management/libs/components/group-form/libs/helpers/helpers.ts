@@ -1,1 +1,1 @@
-export { getPermissionOptions } from "./get-permission-options.helper.js";
+export { getPermissionOptions } from "./get-permission-options/get-permission-options.helper.js";
