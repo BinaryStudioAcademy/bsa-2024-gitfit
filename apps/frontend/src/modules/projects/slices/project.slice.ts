@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { ITEMS_CHANGED_COUNT } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type ContributorGetAllItemResponseDto } from "~/modules/contributors/contributors.js";
@@ -25,6 +26,7 @@ type State = {
 	projectContributors: ContributorGetAllItemResponseDto[];
 	projectContributorsStatus: ValueOf<typeof DataStatus>;
 	projectCreateStatus: ValueOf<typeof DataStatus>;
+	projectDeleteStatus: ValueOf<typeof DataStatus>;
 	projectPatchStatus: ValueOf<typeof DataStatus>;
 	projects: ProjectGetAllItemResponseDto[];
 	projectStatus: ValueOf<typeof DataStatus>;
@@ -37,6 +39,7 @@ const initialState: State = {
 	projectContributors: [],
 	projectContributorsStatus: DataStatus.IDLE,
 	projectCreateStatus: DataStatus.IDLE,
+	projectDeleteStatus: DataStatus.IDLE,
 	projectPatchStatus: DataStatus.IDLE,
 	projects: [],
 	projectStatus: DataStatus.IDLE,
@@ -47,6 +50,7 @@ const { actions, name, reducer } = createSlice({
 	extraReducers(builder) {
 		builder.addCase(getById.pending, (state) => {
 			state.projectStatus = DataStatus.PENDING;
+			state.projectDeleteStatus = DataStatus.IDLE;
 		});
 		builder.addCase(getById.fulfilled, (state, action) => {
 			state.project = action.payload;
@@ -80,6 +84,7 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(create.fulfilled, (state, action) => {
 			state.projects = [action.payload, ...state.projects];
 			state.projectCreateStatus = DataStatus.FULFILLED;
+			state.projectsTotalCount += ITEMS_CHANGED_COUNT;
 		});
 		builder.addCase(create.rejected, (state) => {
 			state.projectCreateStatus = DataStatus.REJECTED;
@@ -105,6 +110,8 @@ const { actions, name, reducer } = createSlice({
 			state.projects = state.projects.filter(
 				(project) => project.id !== deletedProjectId,
 			);
+			state.projectsTotalCount -= ITEMS_CHANGED_COUNT;
+			state.projectDeleteStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(projectApiKeyActions.create.fulfilled, (state, action) => {
 			if (state.project) {

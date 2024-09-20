@@ -1,7 +1,9 @@
 import {
 	Breadcrumbs,
 	Button,
+	ConfirmationModal,
 	Modal,
+	Navigate,
 	PageLayout,
 } from "~/libs/components/components.js";
 import { AppRoute, DataStatus, PermissionKey } from "~/libs/enums/enums.js";
@@ -45,6 +47,7 @@ const Project = (): JSX.Element => {
 		project,
 		projectContributors,
 		projectContributorsStatus,
+		projectDeleteStatus,
 		projectPatchStatus,
 		projectStatus,
 	} = useAppSelector(({ projects }) => projects);
@@ -59,6 +62,12 @@ const Project = (): JSX.Element => {
 		isOpened: isEditModalOpen,
 		onClose: handleEditModalClose,
 		onOpen: handleEditModalOpen,
+	} = useModal();
+
+	const {
+		isOpened: isDeleteModalOpen,
+		onClose: handleDeleteModalClose,
+		onOpen: handleDeleteModalOpen,
 	} = useModal();
 
 	const {
@@ -91,6 +100,10 @@ const Project = (): JSX.Element => {
 		handleEditModalOpen();
 	}, [handleEditModalOpen]);
 
+	const handleDeleteProject = useCallback(() => {
+		handleDeleteModalOpen();
+	}, [handleDeleteModalOpen]);
+
 	const handleProjectEditSubmit = useCallback(
 		(payload: ProjectPatchRequestDto) => {
 			if (project) {
@@ -99,6 +112,12 @@ const Project = (): JSX.Element => {
 		},
 		[dispatch, project],
 	);
+
+	const handleProjectDeleteConfirm = useCallback(() => {
+		if (project) {
+			void dispatch(projectActions.deleteById(project.id));
+		}
+	}, [project, dispatch]);
 
 	const handleEditContributor = useCallback(
 		(contributorId: number) => {
@@ -151,6 +170,15 @@ const Project = (): JSX.Element => {
 		return <NotFound />;
 	}
 
+	const isProjectDeleted =
+		hasProject &&
+		project.id === Number(projectId) &&
+		projectDeleteStatus === DataStatus.FULFILLED;
+
+	if (isProjectDeleted) {
+		return <Navigate to={AppRoute.PROJECTS} />;
+	}
+
 	return (
 		<PageLayout isLoading={isLoading}>
 			{hasProject && (
@@ -169,6 +197,7 @@ const Project = (): JSX.Element => {
 							<h1 className={styles["title"]}>{project.name}</h1>
 
 							<ProjectDetailsMenu
+								onDelete={handleDeleteProject}
 								onEdit={handleEditProject}
 								projectId={project.id}
 								userPermissions={userPermissions}
@@ -230,6 +259,13 @@ const Project = (): JSX.Element => {
 						isOpened={isSetupAnalyticsModalOpened}
 						onClose={onSetupAnalyticsModalClose}
 						project={project}
+					/>
+
+					<ConfirmationModal
+						content="The project will be deleted. This action cannot be undone. Click 'Confirm' to proceed."
+						isOpened={isDeleteModalOpen}
+						onClose={handleDeleteModalClose}
+						onConfirm={handleProjectDeleteConfirm}
 					/>
 				</>
 			)}
