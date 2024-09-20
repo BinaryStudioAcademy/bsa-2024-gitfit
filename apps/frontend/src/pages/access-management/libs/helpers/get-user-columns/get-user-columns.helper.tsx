@@ -16,7 +16,7 @@ const getUserColumns = (actions: {
 		{
 			accessorFn: (user: UserRow): string => user.groups.join(", "),
 			header: "Groups",
-			size: 460,
+			size: 400,
 		},
 		{
 			accessorFn: (user: UserRow): string =>
