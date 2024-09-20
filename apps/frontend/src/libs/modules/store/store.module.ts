@@ -9,6 +9,10 @@ import { AppEnvironment } from "~/libs/enums/enums.js";
 import { type Config } from "~/libs/modules/config/config.js";
 import { storage } from "~/libs/modules/storage/storage.js";
 import { toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
+import {
+	activityLogApi,
+	reducer as activityLogReducer,
+} from "~/modules/activity/activity.js";
 import { authApi, reducer as authReducer } from "~/modules/auth/auth.js";
 import {
 	contributorApi,
@@ -65,6 +69,7 @@ class Store {
 				}).prepend(handleErrorMiddleware(this.extraArguments));
 			},
 			reducer: {
+				activityLogs: activityLogReducer,
 				auth: authReducer,
 				contributors: contributorsReducer,
 				groups: groupsReducer,
@@ -82,6 +87,7 @@ class Store {
 
 	public get extraArguments(): ExtraArguments {
 		return {
+			activityLogApi,
 			authApi,
 			contributorApi,
 			groupApi,

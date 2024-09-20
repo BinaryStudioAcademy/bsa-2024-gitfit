@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.27.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.26.0...shared-v1.27.0) (2024-09-20)
+
+
+### Features
+
+* add analytics table gf-327 ([#364](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/364)) ([dd7084a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/dd7084abd8cf65b930897043a2ca837b1468745a))
+
 ## [1.26.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.25.0...shared-v1.26.0) (2024-09-19)
 
 
