@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.40.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.39.0...frontend-v1.40.0) (2024-09-19)
+
+
+### Features
+
+* Update analytics instructions with the new flow gf-406 ([#415](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/415)) ([e7c26d3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/e7c26d3a428335356066bf2c24815ee99e91b8ca))
+
+
+### Bug Fixes
+
+* inconsistent page content layout on the contributors page with different screen resolutions gf-387 ([#416](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/416)) ([9a9735d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9a9735db5058ab30510a4a0659e66379e56e057a))
+* refactored search handling in search component gf-331 ([#372](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/372)) ([5aea374](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5aea374ffbb96ea388e77456f866534086284e9d))
+
 ## [1.39.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.38.0...frontend-v1.39.0) (2024-09-19)
 
 

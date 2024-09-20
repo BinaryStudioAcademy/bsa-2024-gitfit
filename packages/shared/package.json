@@ -4,6 +4,10 @@
 	"type": "module",
 	"main": "build/index.js",
 	"types": "src/index.ts",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/BinaryStudioAcademy/bsa-2024-gitfit.git"
+	},
 	"engines": {
 		"node": "20.x.x",
 		"npm": "10.x.x"
