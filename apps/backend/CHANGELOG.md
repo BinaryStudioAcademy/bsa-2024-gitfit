@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.28.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.28.0...backend-v1.28.1) (2024-09-20)
+
+
+### Bug Fixes
+
+* manage all projects permissions, edit, view, delete, create gf-411 ([#424](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/424)) ([3599a79](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3599a79205f88979a958c150b73d287e54f0bfce))
+
 ## [1.28.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.27.0...backend-v1.28.0) (2024-09-19)
 
 

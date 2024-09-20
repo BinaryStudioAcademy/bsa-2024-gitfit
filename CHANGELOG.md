@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.45.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.45.1...v1.45.2) (2024-09-20)
+
+
+### Bug Fixes
+
+* manage all projects permissions, edit, view, delete, create gf-411 ([#424](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/424)) ([3599a79](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3599a79205f88979a958c150b73d287e54f0bfce))
+
 ## [1.45.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.45.0...v1.45.1) (2024-09-20)
 
 
