@@ -131,23 +131,14 @@ class ActivityLogService implements Service {
 		return Promise.resolve(null);
 	}
 
-	public async findAll(): Promise<ActivityLogGetAllResponseDto> {
-		const activityLogs = await this.activityLogRepository.findAll();
-
-		return {
-			items: activityLogs.items.map((item) => item.toObject()),
-		};
-	}
-
-	public async findAllWithParameters({
+	public async findAll({
 		endDate,
 		startDate,
 	}: ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
-		const activityLogsEntities =
-			await this.activityLogRepository.findAllWithParameters({
-				endDate,
-				startDate,
-			});
+		const activityLogsEntities = await this.activityLogRepository.findAll({
+			endDate,
+			startDate,
+		});
 
 		const activityLogs = activityLogsEntities.items.map((item) =>
 			item.toObject(),
@@ -155,14 +146,14 @@ class ActivityLogService implements Service {
 		const allContributors = await this.contributorService.findAll();
 		const dateRange = getDateRange(startDate, endDate);
 
-		const NO_COMMITS = 0;
+		const INITIAL_COMMITS_NUMBER = 0;
 		const contributorMap: Record<string, number[]> = {};
 
 		for (const contributor of allContributors.items) {
 			const uniqueKey = `${contributor.name}_${String(contributor.id)}`;
 			contributorMap[uniqueKey] = Array.from(
 				{ length: dateRange.length },
-				() => NO_COMMITS,
+				() => INITIAL_COMMITS_NUMBER,
 			);
 		}
 
@@ -175,7 +166,8 @@ class ActivityLogService implements Service {
 			const dateIndex = dateRange.indexOf(formattedDate);
 
 			if (contributorMap[uniqueKey]) {
-				const currentValue = contributorMap[uniqueKey][dateIndex] ?? NO_COMMITS;
+				const currentValue =
+					contributorMap[uniqueKey][dateIndex] ?? INITIAL_COMMITS_NUMBER;
 				contributorMap[uniqueKey][dateIndex] = currentValue + commitsNumber;
 			}
 		}
@@ -186,10 +178,19 @@ class ActivityLogService implements Service {
 
 				return {
 					commitsNumber: commitsArray,
-					contributorId: contributorId || "",
-					contributorName: contributorName || "",
+					contributorId: contributorId ?? "",
+					contributorName: contributorName ?? "",
 				};
 			}),
+		};
+	}
+
+	public async findAllWithoutFilter(): Promise<ActivityLogGetAllResponseDto> {
+		const activityLogs =
+			await this.activityLogRepository.findAllWithoutFilter();
+
+		return {
+			items: activityLogs.items.map((item) => item.toObject()),
 		};
 	}
 

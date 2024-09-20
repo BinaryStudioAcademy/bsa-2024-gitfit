@@ -57,6 +57,7 @@ export {
 	type ActivityLogGetAllItemAnalyticsResponseDto,
 	type ActivityLogGetAllItemResponseDto,
 	type ActivityLogGetAllResponseDto,
+	activityLogGetValidationSchema,
 	type ActivityLogQueryParameters,
 	ActivityLogsApiPath,
 } from "./modules/activity-logs/activity-logs.js";

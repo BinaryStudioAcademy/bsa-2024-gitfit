@@ -4,6 +4,7 @@ import { type AnalyticsRow } from "../../types/types.js";
 
 const getAnalyticsColumns = (
 	dateRange: string[],
+	emptyCellClassName?: string,
 ): TableColumn<AnalyticsRow>[] => {
 	const columns: TableColumn<AnalyticsRow>[] = [
 		{
@@ -17,12 +18,11 @@ const getAnalyticsColumns = (
 		(date, index) => ({
 			accessorKey: `commitsNumber.${String(index)}`,
 			cell: ({ getValue }): JSX.Element => {
-				const NO_COMIITS = 0;
 				const value = getValue() as string;
-				const isEmpty = Number(value) === NO_COMIITS;
+				const isEmpty = !Number(value);
 
 				return (
-					<span style={{ color: isEmpty ? "var(--color-danger)" : "inherit" }}>
+					<span className={isEmpty ? emptyCellClassName : ""}>
 						{isEmpty ? "-" : value}
 					</span>
 				);

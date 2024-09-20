@@ -21,7 +21,10 @@ const AnalyticsTable = ({
 	const [startDate, endDate] = dateRange;
 	const dateRangeFormatted = getDateRange(startDate, endDate);
 
-	const analyticsColumns = getAnalyticsColumns(dateRangeFormatted);
+	const analyticsColumns = getAnalyticsColumns(
+		dateRangeFormatted,
+		styles["analytics-empty-cell"],
+	);
 	const analyticsData: AnalyticsRow[] = getAnalyticsRows(activityLogs);
 
 	return (

@@ -40,23 +40,7 @@ class ActivityLogRepository implements Repository {
 		return Promise.resolve(null);
 	}
 
-	public async findAll(): Promise<{ items: ActivityLogEntity[] }> {
-		const activityLogs = await this.activityLogModel
-			.query()
-			.withGraphFetched("[gitEmail.contributor, project, createdByUser]")
-			.modifyGraph("gitEmail.contributor", (builder) => {
-				builder.select("id", "name");
-			})
-			.execute();
-
-		return {
-			items: activityLogs.map((activityLog) =>
-				ActivityLogEntity.initialize(activityLog),
-			),
-		};
-	}
-
-	public async findAllWithParameters({
+	public async findAll({
 		endDate,
 		startDate,
 	}: ActivityLogQueryParameters): Promise<{ items: ActivityLogEntity[] }> {
@@ -68,6 +52,22 @@ class ActivityLogRepository implements Repository {
 			})
 			.whereBetween("activity_logs.date", [startDate, endDate])
 			.orderBy("date");
+
+		return {
+			items: activityLogs.map((activityLog) =>
+				ActivityLogEntity.initialize(activityLog),
+			),
+		};
+	}
+
+	public async findAllWithoutFilter(): Promise<{ items: ActivityLogEntity[] }> {
+		const activityLogs = await this.activityLogModel
+			.query()
+			.withGraphFetched("[gitEmail.contributor, project, createdByUser]")
+			.modifyGraph("gitEmail.contributor", (builder) => {
+				builder.select("id", "name");
+			})
+			.execute();
 
 		return {
 			items: activityLogs.map((activityLog) =>

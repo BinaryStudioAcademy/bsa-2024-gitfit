@@ -13,7 +13,10 @@ import {
 	type ActivityLogCreateRequestDto,
 	type ActivityLogQueryParameters,
 } from "./libs/types/types.js";
-import { activityLogCreateValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+import {
+	activityLogCreateValidationSchema,
+	activityLogGetValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
 
 /**
  * @swagger
@@ -80,6 +83,9 @@ class ActivityLogController extends BaseController {
 				),
 			method: "GET",
 			path: ActivityLogsApiPath.ROOT,
+			validation: {
+				query: activityLogGetValidationSchema,
+			},
 		});
 	}
 
@@ -165,8 +171,8 @@ class ActivityLogController extends BaseController {
 		const { endDate, startDate } = options.query;
 
 		return {
-			payload: await this.activityLogService.findAllWithParameters({
-				endDate: endDate || new Date().toDateString(),
+			payload: await this.activityLogService.findAll({
+				endDate,
 				startDate,
 			}),
 			status: HTTPCode.OK,

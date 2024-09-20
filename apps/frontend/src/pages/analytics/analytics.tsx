@@ -1,5 +1,4 @@
 import { DateInput, Loader, PageLayout } from "~/libs/components/components.js";
-import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { subtractDays } from "~/libs/helpers/helpers.js";
 import {
@@ -8,7 +7,7 @@ import {
 	useAppSelector,
 	useCallback,
 	useEffect,
-	useState,
+	useFormWatch,
 } from "~/libs/hooks/hooks.js";
 import { actions as activityLogActions } from "~/modules/activity/activity.js";
 
@@ -20,22 +19,20 @@ const Analytics = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const todayDate = new Date();
 
-	const initialDateRange: [Date, Date] = [
-		subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE),
-		todayDate,
-	];
-
 	const { activityLogs, dataStatus } = useAppSelector(
 		({ activityLogs }) => activityLogs,
 	);
 
-	const [dateRange, setDateRange] = useState<[Date, Date]>(initialDateRange);
-
-	const { control, handleSubmit, isDirty, watch } = useAppForm({
+	const { control, handleSubmit, isDirty } = useAppForm({
 		defaultValues: {
-			dateRange: initialDateRange,
+			dateRange: [
+				subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE),
+				todayDate,
+			] as [Date, Date],
 		},
 	});
+
+	const dateRangeValue = useFormWatch({ control, name: "dateRange" });
 
 	const handleLoadLogs = useCallback(
 		([startDate, endDate]: [Date, Date]) => {
@@ -53,20 +50,17 @@ const Analytics = (): JSX.Element => {
 	);
 
 	useEffect(() => {
-		handleLoadLogs(dateRange);
-	}, [dateRange, handleLoadLogs]);
+		handleLoadLogs(dateRangeValue);
+	}, [dateRangeValue, handleLoadLogs]);
 
 	const handleFormSubmit = useCallback(
 		(event_?: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData) => {
 				handleLoadLogs(formData.dateRange);
-				setDateRange(formData.dateRange);
 			})(event_);
 		},
 		[handleLoadLogs, handleSubmit],
 	);
-
-	const dateRangeValue = watch("dateRange");
 
 	useEffect(() => {
 		if (isDirty) {
@@ -74,11 +68,8 @@ const Analytics = (): JSX.Element => {
 		}
 	}, [dateRangeValue, isDirty, handleFormSubmit]);
 
-	const hasActivityLog = activityLogs.length !== EMPTY_LENGTH;
-
 	const isLoading =
-		dataStatus === DataStatus.IDLE ||
-		(dataStatus === DataStatus.PENDING && !hasActivityLog);
+		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
 	return (
 		<PageLayout>
@@ -95,7 +86,10 @@ const Analytics = (): JSX.Element => {
 				{isLoading ? (
 					<Loader />
 				) : (
-					<AnalyticsTable activityLogs={activityLogs} dateRange={dateRange} />
+					<AnalyticsTable
+						activityLogs={activityLogs}
+						dateRange={dateRangeValue}
+					/>
 				)}
 			</section>
 		</PageLayout>
