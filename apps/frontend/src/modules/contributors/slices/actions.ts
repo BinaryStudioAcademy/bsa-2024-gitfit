@@ -5,7 +5,9 @@ import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import { actions as projectActions } from "~/modules/projects/projects.js";
 
 import {
+	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,
+	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 	type ContributorPatchResponseDto,
 } from "../libs/types/types.js";
@@ -19,6 +21,18 @@ const loadAll = createAsyncThunk<
 	const { contributorApi } = extra;
 
 	return await contributorApi.getAll();
+});
+
+const merge = createAsyncThunk<
+	ContributorGetAllItemResponseDto,
+	{ id: number; payload: ContributorMergeRequestDto },
+	AsyncThunkConfig
+>(`${sliceName}/merge`, async ({ id, payload }, { extra }) => {
+	const { contributorApi, toastNotifier } = extra;
+	const response = await contributorApi.merge(id, payload);
+	toastNotifier.showSuccess(NotificationMessage.CONTRIBUTOR_MERGE_SUCCESS);
+
+	return response;
 });
 
 const patch = createAsyncThunk<
@@ -41,4 +55,4 @@ const patch = createAsyncThunk<
 	},
 );
 
-export { loadAll, patch };
+export { loadAll, merge, patch };

@@ -67,9 +67,11 @@ export {
 	ContributorError,
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,
+	type ContributorMergeRequestDto,
+	contributorMergeValidationSchema,
 	type ContributorPatchRequestDto,
 	type ContributorPatchResponseDto,
-	ContributorPatchValidationSchema,
+	contributorPatchValidationSchema,
 	ContributorsApiPath,
 } from "./modules/contributors/contributors.js";
 export {
