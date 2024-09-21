@@ -1,7 +1,7 @@
 const APIPath = {
 	ACTIVITY_LOGS: "/activity-logs",
 	AUTH: "/auth",
-	AUTH_ANALYTICS: "/auth-analytics",
+	AUTH_ANALYTICS: "/auth/analytics",
 	CONTRIBUTORS: "/contributors",
 	GROUPS: "/groups",
 	NOTIFICATIONS: "/notifications",
