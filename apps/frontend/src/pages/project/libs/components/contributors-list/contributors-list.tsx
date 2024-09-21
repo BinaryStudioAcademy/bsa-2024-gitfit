@@ -1,18 +1,21 @@
 import { Loader } from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { useCallback } from "~/libs/hooks/hooks.js";
+import { type ActivityLogGetAllItemAnalyticsResponseDto } from "~/modules/activity/activity.js";
 import { type ContributorGetAllItemResponseDto } from "~/pages/project/libs/types/types.js";
 
 import { ContributorCard } from "../components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	activityLogs: ActivityLogGetAllItemAnalyticsResponseDto[];
 	contributors: ContributorGetAllItemResponseDto[];
 	isLoading: boolean;
 	onEditContributor: (contributorId: number) => void;
 };
 
 const ContributorsList = ({
+	activityLogs,
 	contributors,
 	isLoading,
 	onEditContributor,
@@ -37,6 +40,12 @@ const ContributorsList = ({
 					{contributors.map((contributor) => (
 						<li key={contributor.id}>
 							<ContributorCard
+								activityLog={
+									activityLogs.find(
+										(activityLog) =>
+											Number(activityLog.contributorId) === contributor.id,
+									)?.commitsNumber
+								}
 								contributor={contributor}
 								onEdit={handleEditContributor}
 							/>

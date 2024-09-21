@@ -9,17 +9,25 @@ import {
 	getStartOfDay,
 } from "~/libs/helpers/helpers.js";
 import { useCallback } from "~/libs/hooks/hooks.js";
+import { type ActivityLogGetAllItemAnalyticsResponseDto } from "~/modules/activity/activity.js";
 import { type ContributorGetAllItemResponseDto } from "~/pages/project/libs/types/types.js";
 
 import { ContributorMenu } from "../components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	activityLog?:
+		| ActivityLogGetAllItemAnalyticsResponseDto["commitsNumber"]
+		| undefined;
 	contributor: ContributorGetAllItemResponseDto;
 	onEdit: (contributorId: number) => void;
 };
 
-const ContributorCard = ({ contributor, onEdit }: Properties): JSX.Element => {
+const ContributorCard = ({
+	activityLog,
+	contributor,
+	onEdit,
+}: Properties): JSX.Element => {
 	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = contributor.lastActivityDate
 		? getStartOfDay(new Date(contributor.lastActivityDate))
@@ -40,12 +48,11 @@ const ContributorCard = ({ contributor, onEdit }: Properties): JSX.Element => {
 
 	const hasActivityIndicator = lastUpdateLabel !== null && colorStatus !== null;
 
-	// TODO: replace this mock data with actual activity data
-	const ONE = 1;
-	const FIVE = 5;
-	const activityData = [...Array.from({ length: 30 }).keys()].map(() => ({
-		commitsNumber: Math.floor((Math.random() + ONE) * FIVE),
-	}));
+	const hasActivityData = Boolean(activityLog);
+	const activityData =
+		activityLog?.map((commitsNumber) => ({
+			commitsNumber,
+		})) ?? [];
 
 	const handleEditClick = useCallback(() => {
 		onEdit(contributor.id);
@@ -57,7 +64,7 @@ const ContributorCard = ({ contributor, onEdit }: Properties): JSX.Element => {
 			{hasActivityIndicator && (
 				<ActivityIndicator label={lastUpdateLabel} status={colorStatus} />
 			)}
-			<ActivityChart data={activityData} />
+			{hasActivityData && <ActivityChart data={activityData} />}
 			<ContributorMenu
 				contributorId={contributor.id}
 				onEdit={handleEditClick}

@@ -2,6 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { NotificationMessage } from "~/libs/enums/enums.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
+import {
+	type ActivityLogGetAllAnalyticsResponseDto,
+	type ActivityLogQueryParameters,
+} from "~/modules/activity/activity.js";
 import { type ContributorGetAllResponseDto } from "~/modules/contributors/contributors.js";
 import {
 	type ProjectCreateRequestDto,
@@ -91,11 +95,25 @@ const loadAllContributorsByProjectId = createAsyncThunk<
 	},
 );
 
+const loadAllContributorsActivityByProjectId = createAsyncThunk<
+	ActivityLogGetAllAnalyticsResponseDto,
+	ActivityLogQueryParameters,
+	AsyncThunkConfig
+>(
+	`${sliceName}/load-all-contributors-activity-by-project-id`,
+	async (query, { extra }) => {
+		const { activityLogApi } = extra;
+
+		return await activityLogApi.getAll(query);
+	},
+);
+
 export {
 	create,
 	deleteById,
 	getById,
 	loadAll,
+	loadAllContributorsActivityByProjectId,
 	loadAllContributorsByProjectId,
 	patch,
 };

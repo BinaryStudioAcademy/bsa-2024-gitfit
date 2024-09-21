@@ -7,7 +7,7 @@ import {
 	PageLayout,
 } from "~/libs/components/components.js";
 import { AppRoute, DataStatus, PermissionKey } from "~/libs/enums/enums.js";
-import { checkHasPermission } from "~/libs/helpers/helpers.js";
+import { checkHasPermission, subtractDays } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -26,6 +26,7 @@ import {
 	actions as projectActions,
 	type ProjectPatchRequestDto,
 } from "~/modules/projects/projects.js";
+import { ANALYTICS_DATE_MAX_RANGE } from "~/pages/analytics/libs/constants/analytics-date-max-range.constant.js";
 import { ContributorUpdateForm } from "~/pages/contributors/libs/components/components.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { ProjectUpdateForm } from "~/pages/projects/libs/components/components.js";
@@ -46,6 +47,7 @@ const Project = (): JSX.Element => {
 	const {
 		project,
 		projectContributors,
+		projectContributorsActivity,
 		projectContributorsStatus,
 		projectDeleteStatus,
 		projectPatchStatus,
@@ -83,6 +85,20 @@ const Project = (): JSX.Element => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
 			void dispatch(projectActions.loadAllContributorsByProjectId(projectId));
+
+			const todayDate = new Date();
+			const endDate = todayDate.toISOString();
+			const startDate = subtractDays(
+				todayDate,
+				ANALYTICS_DATE_MAX_RANGE,
+			).toISOString();
+			void dispatch(
+				projectActions.loadAllContributorsActivityByProjectId({
+					endDate,
+					projectId,
+					startDate,
+				}),
+			);
 		}
 	}, [dispatch, projectId]);
 
@@ -224,6 +240,7 @@ const Project = (): JSX.Element => {
 
 						<div className={styles["contributors-list-wrapper"]}>
 							<ContributorsList
+								activityLogs={projectContributorsActivity}
 								contributors={projectContributors}
 								isLoading={isContributorsDataLoading}
 								onEditContributor={handleEditContributor}
