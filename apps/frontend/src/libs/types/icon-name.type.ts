@@ -9,6 +9,7 @@ type IconName =
 	| "eye"
 	| "leftArrow"
 	| "leftDoubleArrow"
+	| "merge"
 	| "notifications"
 	| "pencil"
 	| "project"
@@ -16,6 +17,7 @@ type IconName =
 	| "rightDoubleArrow"
 	| "search"
 	| "strikedEye"
-	| "trashBin";
+	| "trashBin"
+	| "warning";
 
 export { type IconName };
