@@ -81,7 +81,10 @@ class BaseAnalyticsCli {
 					pm2.start(
 						{
 							args: [apiKey, userId, repoPath],
+							autorestart: false,
+							error: `${project.projectName}-err.log`,
 							name: project.projectName,
+							output: `${project.projectName}-out.log`,
 							script: scriptPath,
 						},
 						(startError: Error | null) => {
