@@ -33,7 +33,7 @@ const Analytics = (): JSX.Element => {
 
 	useEffect(() => {
 		void dispatch(projectActions.loadAll());
-	}, [dispatch, projects]);
+	}, [dispatch]);
 
 	const { control, handleSubmit, isDirty } = useAppForm({
 		defaultValues: {
