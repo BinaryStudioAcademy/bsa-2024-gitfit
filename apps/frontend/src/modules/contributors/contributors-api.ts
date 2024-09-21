@@ -4,11 +4,13 @@ import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
 
 import {
+	type ContributorGetAllItemResponseDto,
+	type ContributorGetAllResponseDto,
+	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 	type ContributorPatchResponseDto,
 } from "./contributors.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
-import { type ContributorGetAllResponseDto } from "./libs/types/types.js";
 
 type Constructor = {
 	baseUrl: string;
@@ -48,6 +50,23 @@ class ContributorApi extends BaseHTTPApi {
 		);
 
 		return await response.json<ContributorGetAllResponseDto>();
+	}
+
+	public async merge(
+		id: number,
+		payload: ContributorMergeRequestDto,
+	): Promise<ContributorGetAllItemResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(ContributorsApiPath.MERGE_$ID, { id: String(id) }),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "PATCH",
+				payload: JSON.stringify(payload),
+			},
+		);
+
+		return await response.json<ContributorGetAllItemResponseDto>();
 	}
 
 	public async patch(
