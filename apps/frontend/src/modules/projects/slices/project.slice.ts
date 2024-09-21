@@ -66,10 +66,10 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
 			const { items, totalItems } = action.payload;
-			const { page } = action.meta.arg;
-
-			state.projects =
+			const page = action.meta.arg?.page;
+			const projectsItems =
 				page === FIRST_PAGE ? items : [...state.projects, ...items];
+			state.projects = page ? projectsItems : items;
 			state.projectsTotalCount = totalItems;
 			state.dataStatus = DataStatus.FULFILLED;
 		});

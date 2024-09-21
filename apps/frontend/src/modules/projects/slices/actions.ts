@@ -27,7 +27,7 @@ const getById = createAsyncThunk<
 
 const loadAll = createAsyncThunk<
 	ProjectGetAllResponseDto,
-	ProjectGetAllRequestDto,
+	ProjectGetAllRequestDto | undefined,
 	AsyncThunkConfig
 >(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { projectApi } = extra;

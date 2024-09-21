@@ -31,6 +31,7 @@ class ActivityLogApi extends BaseHTTPApi {
 				query: {
 					endDate: String(query.endDate),
 					startDate: String(query.startDate),
+					...(query.projectId && { projectId: String(query.projectId) }),
 				},
 			},
 		);
