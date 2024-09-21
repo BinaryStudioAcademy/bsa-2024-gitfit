@@ -4,17 +4,22 @@ import pm2 from "pm2";
 
 import { executeCommand } from "~/libs/helpers/helpers.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { type AuthAnalyticsService } from "~/modules/auth-analytics/auth-analytics.js";
 
 type Constructor = {
+	authAnalyticsService: AuthAnalyticsService;
 	logger: Logger;
 };
 
 class BaseAnalyticsCli {
+	private authAnalyticsService: AuthAnalyticsService;
+
 	private logger: Logger;
 
 	private program: Command;
 
-	public constructor({ logger }: Constructor) {
+	public constructor({ authAnalyticsService, logger }: Constructor) {
+		this.authAnalyticsService = authAnalyticsService;
 		this.program = new Command();
 		this.logger = logger;
 	}
@@ -43,10 +48,19 @@ class BaseAnalyticsCli {
 		this.program
 			.command("track <apiKey> <userId> <repoPath>")
 			.description("Start the background job for collecting statistics")
-			.action((apiKey: string, userId: string, repoPath: string) => {
+			.action(async (apiKey: string, userId: string, repoPath: string) => {
 				if (!apiKey || !userId || !repoPath) {
 					this.logger.error("Not all command arguments are provided.");
 
+					return;
+				}
+
+				const project = await this.authAnalyticsService.validateCredentials(
+					apiKey,
+					Number(userId),
+				);
+
+				if (!project) {
 					return;
 				}
 
@@ -67,9 +81,7 @@ class BaseAnalyticsCli {
 					pm2.start(
 						{
 							args: [apiKey, userId, repoPath],
-							error: "analytics-errors.log",
-							name: "analytics-cli",
-							output: "analytics-output.log",
+							name: project.projectName,
 							script: scriptPath,
 						},
 						(startError: Error | null) => {
@@ -78,6 +90,9 @@ class BaseAnalyticsCli {
 									message: startError.message,
 									stack: startError.stack,
 								});
+								pm2.disconnect();
+
+								return;
 							}
 
 							void this.setupAutoStart();
@@ -87,7 +102,9 @@ class BaseAnalyticsCli {
 					);
 				});
 
-				this.logger.info("Started background job for collecting analytics.");
+				this.logger.info(
+					`Started background job for collecting analytics for ${project.projectName}.`,
+				);
 			});
 	}
 

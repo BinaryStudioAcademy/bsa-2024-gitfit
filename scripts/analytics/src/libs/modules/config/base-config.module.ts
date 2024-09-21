@@ -33,7 +33,7 @@ class BaseConfig implements Config {
 					format: String,
 				},
 				SERVER_URL: {
-					default: "https://git-fit.net",
+					default: "http://localhost:3001",
 					doc: "URL of server",
 					format: String,
 				},
