@@ -4,6 +4,7 @@ import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
 type Properties = {
 	contributorId: number;
 	hasEditPermission: boolean;
+	hasMergePermission: boolean;
 	onEdit: (contributorId: number) => void;
 	onMerge: (contributorId: number) => void;
 };
@@ -11,6 +12,7 @@ type Properties = {
 const ContributorMenu = ({
 	contributorId,
 	hasEditPermission,
+	hasMergePermission,
 	onEdit,
 	onMerge,
 }: Properties): JSX.Element => {
@@ -26,14 +28,18 @@ const ContributorMenu = ({
 		onClose();
 	}, [onMerge, contributorId, onClose]);
 
-	const isMenuShown = hasEditPermission;
+	const isMenuShown = hasEditPermission || hasMergePermission;
 
 	return (
 		<>
 			{isMenuShown && (
 				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-					<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
-					<MenuItem iconName="merge" label="Merge" onClick={handleMerge} />
+					{hasEditPermission && (
+						<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
+					)}
+					{hasMergePermission && (
+						<MenuItem iconName="merge" label="Merge" onClick={handleMerge} />
+					)}
 				</Menu>
 			)}
 		</>

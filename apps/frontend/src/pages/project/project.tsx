@@ -208,6 +208,7 @@ const Project = (): JSX.Element => {
 
 	const hasSetupAnalyticsPermission = hasManageAllProjectsPermission;
 	const hasEditContributorPermission = hasManageAllProjectsPermission;
+	const hasMergeContributorPermission = hasManageAllProjectsPermission;
 
 	if (isRejected) {
 		return <NotFound />;
@@ -269,6 +270,7 @@ const Project = (): JSX.Element => {
 							<ContributorsList
 								contributors={projectContributors}
 								hasEditPermission={hasEditContributorPermission}
+								hasMergePermission={hasMergeContributorPermission}
 								isLoading={isContributorsDataLoading}
 								onEditContributor={handleEditContributor}
 								onMergeContributor={handleMergeContributor}
