@@ -15,12 +15,14 @@ type Properties = {
 	contributor: ContributorGetAllItemResponseDto;
 	hasEditPermission: boolean;
 	onEdit: (contributorId: number) => void;
+	onMerge: (contributorId: number) => void;
 };
 
 const ContributorCard = ({
 	contributor,
 	hasEditPermission,
 	onEdit,
+	onMerge,
 }: Properties): JSX.Element => {
 	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = contributor.lastActivityDate
@@ -46,6 +48,10 @@ const ContributorCard = ({
 		onEdit(contributor.id);
 	}, [onEdit, contributor.id]);
 
+	const handleMergeClick = useCallback(() => {
+		onMerge(contributor.id);
+	}, [onMerge, contributor.id]);
+
 	return (
 		<div className={styles["card"]}>
 			<span className={styles["name"]}>{contributor.name}</span>
@@ -56,6 +62,7 @@ const ContributorCard = ({
 				contributorId={contributor.id}
 				hasEditPermission={hasEditPermission}
 				onEdit={handleEditClick}
+				onMerge={handleMergeClick}
 			/>
 		</div>
 	);

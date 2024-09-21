@@ -1,1 +1,4 @@
-export { ContributorPatchValidationSchema } from "@git-fit/shared";
+export {
+	contributorMergeValidationSchema,
+	contributorPatchValidationSchema,
+} from "@git-fit/shared";

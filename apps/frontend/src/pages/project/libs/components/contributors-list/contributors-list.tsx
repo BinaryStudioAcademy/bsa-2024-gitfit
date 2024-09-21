@@ -11,6 +11,7 @@ type Properties = {
 	hasEditPermission: boolean;
 	isLoading: boolean;
 	onEditContributor: (contributorId: number) => void;
+	onMergeContributor: (contributorId: number) => void;
 };
 
 const ContributorsList = ({
@@ -18,6 +19,7 @@ const ContributorsList = ({
 	hasEditPermission,
 	isLoading,
 	onEditContributor,
+	onMergeContributor,
 }: Properties): JSX.Element => {
 	const hasContributors = contributors.length > EMPTY_LENGTH;
 	const isListShown = !isLoading && hasContributors;
@@ -28,6 +30,13 @@ const ContributorsList = ({
 			onEditContributor(contributorId);
 		},
 		[onEditContributor],
+	);
+
+	const handleMergeContributor = useCallback(
+		(contributorId: number) => {
+			onMergeContributor(contributorId);
+		},
+		[onMergeContributor],
 	);
 
 	return (
@@ -42,6 +51,7 @@ const ContributorsList = ({
 								contributor={contributor}
 								hasEditPermission={hasEditPermission}
 								onEdit={handleEditContributor}
+								onMerge={handleMergeContributor}
 							/>
 						</li>
 					))}

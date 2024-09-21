@@ -1,9 +1,10 @@
-import { loadAll, patch } from "./actions.js";
+import { loadAll, merge, patch } from "./actions.js";
 import { actions } from "./contributor.slice.js";
 
 const allActions = {
 	...actions,
 	loadAll,
+	merge,
 	patch,
 };
 
