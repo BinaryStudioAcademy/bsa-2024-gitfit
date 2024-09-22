@@ -68,10 +68,6 @@ const Analytics = (): JSX.Element => {
 		}
 	}, [dateRangeValue, isDirty, handleFormSubmit]);
 
-	const visibleActivityLogs = activityLogs.filter(
-		(log) => !log.contributorIsHidden,
-	);
-
 	const isLoading =
 		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
@@ -91,7 +87,7 @@ const Analytics = (): JSX.Element => {
 					<Loader />
 				) : (
 					<AnalyticsTable
-						activityLogs={visibleActivityLogs}
+						activityLogs={activityLogs}
 						dateRange={dateRangeValue}
 					/>
 				)}

@@ -150,11 +150,13 @@ class ActivityLogService implements Service {
 		const contributorMap: Record<string, number[]> = {};
 
 		for (const contributor of allContributors.items) {
-			const uniqueKey = `${contributor.name}_${String(contributor.id)}`;
-			contributorMap[uniqueKey] = Array.from(
-				{ length: dateRange.length },
-				() => INITIAL_COMMITS_NUMBER,
-			);
+			if (!contributor.isHidden) {
+				const uniqueKey = `${contributor.name}_${String(contributor.id)}`;
+				contributorMap[uniqueKey] = Array.from(
+					{ length: dateRange.length },
+					() => INITIAL_COMMITS_NUMBER,
+				);
+			}
 		}
 
 		for (const log of activityLogs) {
@@ -176,14 +178,10 @@ class ActivityLogService implements Service {
 			items: Object.entries(contributorMap).map(([uniqueKey, commitsArray]) => {
 				const [contributorName, contributorId] = uniqueKey.split("_");
 
-				const contributor = allContributors.items.find(
-					(contributor) => contributor.id === Number(contributorId),
-				);
-
 				return {
 					commitsNumber: commitsArray,
 					contributorId: contributorId ?? "",
-					contributorIsHidden: contributor ? contributor.isHidden : false,
+					contributorIsHidden: false,
 					contributorName: contributorName ?? "",
 				};
 			}),
