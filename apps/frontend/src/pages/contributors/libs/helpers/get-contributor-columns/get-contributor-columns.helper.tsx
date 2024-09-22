@@ -6,6 +6,7 @@ import { type ContributorRow } from "../../types/types.js";
 
 const getContributorColumns = (actions: {
 	onEdit: (contributorId: number) => void;
+	onMerge: (contributorId: number) => void;
 }): TableColumn<ContributorRow>[] => [
 	{
 		accessorKey: "name",
@@ -36,7 +37,11 @@ const getContributorColumns = (actions: {
 
 	{
 		cell: ({ row: { original: contributor } }) => (
-			<ContributorMenu contributorId={contributor.id} onEdit={actions.onEdit} />
+			<ContributorMenu
+				contributorId={contributor.id}
+				onEdit={actions.onEdit}
+				onMerge={actions.onMerge}
+			/>
 		),
 		header: "",
 		id: "menu",

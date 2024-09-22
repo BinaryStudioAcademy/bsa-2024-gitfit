@@ -6,7 +6,7 @@ import {
 } from "../enums/enums.js";
 import { type ContributorPatchRequestDto } from "../types/types.js";
 
-const ContributorPatch: z.ZodType<ContributorPatchRequestDto> = z
+const contributorPatch: z.ZodType<ContributorPatchRequestDto> = z
 	.object({
 		isHidden: z.boolean(),
 		name: z
@@ -21,4 +21,4 @@ const ContributorPatch: z.ZodType<ContributorPatchRequestDto> = z
 	})
 	.required();
 
-export { ContributorPatch };
+export { contributorPatch };

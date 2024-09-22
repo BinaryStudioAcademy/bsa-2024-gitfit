@@ -3,7 +3,7 @@ import { useAppForm, useCallback } from "~/libs/hooks/hooks.js";
 import {
 	type ContributorGetAllItemResponseDto,
 	type ContributorPatchRequestDto,
-	ContributorPatchValidationSchema,
+	contributorPatchValidationSchema,
 } from "~/modules/contributors/contributors.js";
 
 import styles from "./styles.module.css";
@@ -34,7 +34,7 @@ const ContributorUpdateForm = ({
 			name,
 			projects: projectsString,
 		},
-		validationSchema: ContributorPatchValidationSchema,
+		validationSchema: contributorPatchValidationSchema,
 	});
 
 	const handleFormSubmit = useCallback(

@@ -13,7 +13,7 @@ const getUserColumns = (): TableColumn<UserRow>[] => {
 		{
 			accessorFn: (user: UserRow): string => user.projectGroups.join(", "),
 			header: "Groups",
-			size: 500,
+			size: 400,
 		},
 		{
 			accessorFn: (user: UserRow): string =>
