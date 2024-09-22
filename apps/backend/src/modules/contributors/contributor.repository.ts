@@ -83,6 +83,7 @@ class ContributorRepository implements Repository {
 			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
 			.leftJoin("projects", "activity_logs.project_id", "projects.id")
 			.where("projects.id", projectId)
+			.andWhere("contributors.isHidden", false)
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
 
