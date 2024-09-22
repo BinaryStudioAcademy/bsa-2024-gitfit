@@ -10,8 +10,14 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { type ContributorService } from "./contributor.service.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
-import { type ContributorPatchRequestDto } from "./libs/types/types.js";
-import { ContributorPatchValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+import {
+	type ContributorMergeRequestDto,
+	type ContributorPatchRequestDto,
+} from "./libs/types/types.js";
+import {
+	contributorMergeValidationSchema,
+	contributorPatchValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";
 
 /**
  * @swagger
@@ -73,6 +79,21 @@ class ContributorController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
+				this.merge(
+					options as APIHandlerOptions<{
+						body: ContributorMergeRequestDto;
+						params: { id: string };
+					}>,
+				),
+			method: "PATCH",
+			path: ContributorsApiPath.MERGE_$ID,
+			validation: {
+				body: contributorMergeValidationSchema,
+			},
+		});
+
+		this.addRoute({
+			handler: (options) =>
 				this.patch(
 					options as APIHandlerOptions<{
 						body: ContributorPatchRequestDto;
@@ -82,7 +103,7 @@ class ContributorController extends BaseController {
 			method: "PATCH",
 			path: ContributorsApiPath.$ID,
 			validation: {
-				body: ContributorPatchValidationSchema,
+				body: contributorPatchValidationSchema,
 			},
 		});
 	}
@@ -129,6 +150,61 @@ class ContributorController extends BaseController {
 
 		return {
 			payload: await this.contributorService.findAll(),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /contributors/merge/{contributorId}:
+	 *   patch:
+	 *     description: Merge contributors
+	 *     parameters:
+	 *       - name: contributorId
+	 *         in: path
+	 *         description: Id of the current contributor
+	 *         required: true
+	 *         schema:
+	 *           type: number
+	 *           minimum: 1
+	 *     requestBody:
+	 *       description: Payload for merging contributors
+	 *       required: true
+	 *       content:
+	 *         application/json:
+	 *           schema:
+	 *             type: object
+	 *             properties:
+	 *               currentContributorId:
+	 *                 type: number
+	 *               selectedContributorId:
+	 *                 type: number
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: object
+	 *               properties:
+	 *                 items:
+	 *                   type: object
+	 *                   $ref: "#/components/schemas/Contributor"
+	 *       404:
+	 *         description: Contributor not found
+	 *       409:
+	 *         description: Attept to self-merge or merging failed
+	 */
+	private async merge(
+		options: APIHandlerOptions<{
+			body: ContributorMergeRequestDto;
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		const contributorId = Number(options.params.id);
+
+		return {
+			payload: await this.contributorService.merge(contributorId, options.body),
 			status: HTTPCode.OK,
 		};
 	}
