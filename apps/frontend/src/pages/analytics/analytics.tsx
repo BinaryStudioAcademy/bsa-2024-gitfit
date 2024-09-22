@@ -1,9 +1,4 @@
-import {
-	DateInput,
-	Loader,
-	PageLayout,
-	Search,
-} from "~/libs/components/components.js";
+import { DateInput, Loader, PageLayout } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { subtractDays } from "~/libs/helpers/helpers.js";
 import {
@@ -17,7 +12,10 @@ import {
 } from "~/libs/hooks/hooks.js";
 import { actions as activityLogActions } from "~/modules/activity/activity.js";
 
-import { AnalyticsTable } from "./libs/components/components.js";
+import {
+	AnalyticsContributorsSearch,
+	AnalyticsTable,
+} from "./libs/components/components.js";
 import { ANALYTICS_DATE_MAX_RANGE } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
@@ -71,7 +69,7 @@ const Analytics = (): JSX.Element => {
 		[handleLoadLogs, handleSubmit],
 	);
 
-	const handleSearchChange = useCallback(
+	const handleContributorsSearchChange = useCallback(
 		(value: string) => {
 			onSearch(value);
 		},
@@ -92,17 +90,12 @@ const Analytics = (): JSX.Element => {
 			<h1 className={styles["title"]}>Analytics</h1>
 			<section>
 				<form className={styles["filters-form"]} onSubmit={handleFormSubmit}>
-					<div className={styles["search-container"]}>
-						<Search
-							control={control}
-							errors={errors}
-							isLabelHidden
-							label="Contributors search"
-							name="search"
-							onChange={handleSearchChange}
-							placeholder="Enter name"
-						/>
-					</div>
+					<AnalyticsContributorsSearch
+						control={control}
+						errors={errors}
+						name="search"
+						onChange={handleContributorsSearchChange}
+					/>
 					<DateInput
 						control={control}
 						maxDate={todayDate}
