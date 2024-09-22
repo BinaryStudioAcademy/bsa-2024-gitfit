@@ -1,10 +1,7 @@
 import { Icon } from "~/libs/components/components.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
-import {
-	ContributorMenu,
-	IsHiddenHeader,
-} from "../../components/components.js";
+import { ContributorMenu } from "../../components/components.js";
 import { type ContributorRow } from "../../types/types.js";
 
 const getContributorColumns = (actions: {
@@ -32,7 +29,7 @@ const getContributorColumns = (actions: {
 			contributor.isHidden ? (
 				<Icon height={18} name="check" width={18} />
 			) : null,
-		header: IsHiddenHeader,
+		header: "Do Not Track",
 		id: "isHidden",
 		size: 130,
 	},

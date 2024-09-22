@@ -81,7 +81,7 @@ const ContributorUpdateForm = ({
 						id="isHidden"
 						name="isHidden"
 					/>
-					<span>Is hidden</span>
+					<span>Do Not Track</span>
 				</label>
 				<p className={styles["checkbox-description"]}>
 					If this option is checked, the contributor will be hidden from the
