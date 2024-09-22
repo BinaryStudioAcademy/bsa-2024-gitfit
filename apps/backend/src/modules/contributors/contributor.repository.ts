@@ -178,6 +178,46 @@ class ContributorRepository implements Repository {
 		return ContributorEntity.initialize(contributor);
 	}
 
+	public async split(
+		emailId: number,
+		newContributorName: string,
+	): Promise<ContributorEntity> {
+		const result = await this.contributorModel.transaction(async (trx) => {
+			const newContributor = await this.contributorModel
+				.query(trx)
+				.insert({ name: newContributorName })
+				.execute();
+
+			await this.gitEmailModel
+				.query(trx)
+				.patchAndFetchById(emailId, { contributorId: newContributor.id });
+
+			return await this.contributorModel
+				.query(trx)
+				.select("contributors.*")
+				.select(
+					raw(
+						"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
+					),
+				)
+				.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
+				.leftJoin(
+					"activity_logs",
+					"git_emails.id",
+					"activity_logs.git_email_id",
+				)
+				.leftJoin("projects", "activity_logs.project_id", "projects.id")
+				.groupBy("contributors.id")
+				.withGraphFetched("gitEmails")
+				.modifyGraph("gitEmails", (builder) => {
+					builder.select("id", "email");
+				})
+				.findById(newContributor.id);
+		});
+
+		return ContributorEntity.initialize(result as ContributorModel);
+	}
+
 	public update(): ReturnType<Repository["update"]> {
 		return Promise.resolve(null);
 	}

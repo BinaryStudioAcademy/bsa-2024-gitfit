@@ -1,3 +1,4 @@
+import { SINGLE_ITEM } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
@@ -12,6 +13,7 @@ import {
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 	type ContributorPatchResponseDto,
+	type ContributorSplitRequestDto,
 } from "./libs/types/types.js";
 
 class ContributorService implements Service {
@@ -162,6 +164,57 @@ class ContributorService implements Service {
 		}
 
 		return item.toObject();
+	}
+
+	public async split(
+		contributorId: number,
+		payload: ContributorSplitRequestDto,
+	): Promise<ContributorGetAllItemResponseDto | null> {
+		const currentContributorEntity =
+			await this.contributorRepository.find(contributorId);
+		const hasContributor = currentContributorEntity !== null;
+
+		if (!hasContributor) {
+			throw new ContributorError({
+				message: ExceptionMessage.CONTRIBUTOR_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		const currentContributor = currentContributorEntity.toObject();
+
+		if (currentContributor.gitEmails.length <= SINGLE_ITEM) {
+			throw new ContributorError({
+				message: ExceptionMessage.CONTRIBUTOR_SPLIT_SINGLE_EMAIL,
+				status: HTTPCode.CONFLICT,
+			});
+		}
+
+		const splittedEmail = currentContributor.gitEmails.find(
+			({ id }) => id === payload.emailId,
+		);
+		const hasSplittedEmail = splittedEmail !== undefined;
+
+		if (!hasSplittedEmail) {
+			throw new ContributorError({
+				message: ExceptionMessage.CONTRIBUTOR_SPLIT_FAILED,
+				status: HTTPCode.CONFLICT,
+			});
+		}
+
+		try {
+			const splittedContributor = await this.contributorRepository.split(
+				payload.emailId,
+				payload.newContributorName,
+			);
+
+			return splittedContributor.toObject();
+		} catch {
+			throw new ContributorError({
+				message: ExceptionMessage.CONTRIBUTOR_SPLIT_FAILED,
+				status: HTTPCode.CONFLICT,
+			});
+		}
 	}
 
 	public update(): ReturnType<Service["update"]> {

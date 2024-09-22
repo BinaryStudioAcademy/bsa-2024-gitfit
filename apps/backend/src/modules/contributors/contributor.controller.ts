@@ -13,10 +13,12 @@ import { ContributorsApiPath } from "./libs/enums/enums.js";
 import {
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
+	type ContributorSplitRequestDto,
 } from "./libs/types/types.js";
 import {
 	contributorMergeValidationSchema,
 	contributorPatchValidationSchema,
+	contributorSplitValidationSchema,
 } from "./libs/validation-schemas/validation-schemas.js";
 
 /**
@@ -104,6 +106,21 @@ class ContributorController extends BaseController {
 			path: ContributorsApiPath.$ID,
 			validation: {
 				body: contributorPatchValidationSchema,
+			},
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.split(
+					options as APIHandlerOptions<{
+						body: ContributorSplitRequestDto;
+						params: { id: string };
+					}>,
+				),
+			method: "PATCH",
+			path: ContributorsApiPath.SPLIT_$ID,
+			validation: {
+				body: contributorSplitValidationSchema,
 			},
 		});
 	}
@@ -251,6 +268,61 @@ class ContributorController extends BaseController {
 
 		return {
 			payload: await this.contributorService.patch(contributorId, options.body),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /contributors/split/{contributorId}:
+	 *   patch:
+	 *     description: Split contributors
+	 *     parameters:
+	 *       - name: contributorId
+	 *         in: path
+	 *         description: Id of the current contributor
+	 *         required: true
+	 *         schema:
+	 *           type: number
+	 *           minimum: 1
+	 *     requestBody:
+	 *       description: Payload for splitting contributors
+	 *       required: true
+	 *       content:
+	 *         application/json:
+	 *           schema:
+	 *             type: object
+	 *             properties:
+	 *               emailId:
+	 *                 type: number
+	 *               newContributorName:
+	 *                 type: number
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: object
+	 *               properties:
+	 *                 items:
+	 *                   type: object
+	 *                   $ref: "#/components/schemas/Contributor"
+	 *       404:
+	 *         description: Contributor not found
+	 *       409:
+	 *         description: Attempt to split single email or merging failed
+	 */
+	private async split(
+		options: APIHandlerOptions<{
+			body: ContributorSplitRequestDto;
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		const contributorId = Number(options.params.id);
+
+		return {
+			payload: await this.contributorService.split(contributorId, options.body),
 			status: HTTPCode.OK,
 		};
 	}

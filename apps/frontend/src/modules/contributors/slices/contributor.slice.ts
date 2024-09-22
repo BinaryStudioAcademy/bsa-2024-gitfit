@@ -96,11 +96,11 @@ const { actions, name, reducer } = createSlice({
 			state.splitContributorsStatus = DataStatus.PENDING;
 		});
 		builder.addCase(split.fulfilled, (state, action) => {
-			const { id: splittedContributorId } = action.meta.arg;
+			const { id: splittingContributorId } = action.meta.arg;
 			const { payload: newContributor } = action;
 
 			state.contributors = state.contributors.map((contributor) => {
-				if (contributor.id !== splittedContributorId) {
+				if (contributor.id !== splittingContributorId) {
 					return contributor;
 				}
 

@@ -3,6 +3,8 @@ const ExceptionMessage = {
 	CONTRIBUTOR_MERGE_FAILED: "Failed to merge contributor.",
 	CONTRIBUTOR_NOT_FOUND: "Contributor not found.",
 	CONTRIBUTOR_SELF_MERGE: "You can not merge the same contributor.",
+	CONTRIBUTOR_SPLIT_FAILED: "Failed to split contributor.",
+	CONTRIBUTOR_SPLIT_SINGLE_EMAIL: "You can not split single email.",
 	EMAIL_USED: "Email address is already in use.",
 	GIT_EMAIL_USED: "Git email is already in use.",
 	GROUP_NAME_USED: "Group name is already in use.",
