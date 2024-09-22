@@ -1,3 +1,4 @@
+import { SINGLE_ITEM } from "~/libs/constants/constants.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { ContributorMenu } from "../../components/components.js";
@@ -6,6 +7,7 @@ import { type ContributorRow } from "../../types/types.js";
 const getContributorColumns = (actions: {
 	onEdit: (contributorId: number) => void;
 	onMerge: (contributorId: number) => void;
+	onSplit: (contributorId: number) => void;
 }): TableColumn<ContributorRow>[] => [
 	{
 		accessorKey: "name",
@@ -28,8 +30,10 @@ const getContributorColumns = (actions: {
 		cell: ({ row: { original: contributor } }) => (
 			<ContributorMenu
 				contributorId={contributor.id}
+				isSplitEnabled={contributor.gitEmails.length > SINGLE_ITEM}
 				onEdit={actions.onEdit}
 				onMerge={actions.onMerge}
+				onSplit={actions.onSplit}
 			/>
 		),
 		header: "",

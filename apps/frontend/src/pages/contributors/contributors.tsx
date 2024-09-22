@@ -94,6 +94,8 @@ const Contributors = (): JSX.Element => {
 		[contributors, openMergeModal],
 	);
 
+	const handleSplit = useCallback((): void => {}, []);
+
 	const handleContributorUpdateSubmit = useCallback(
 		(payload: ContributorPatchRequestDto) => {
 			if (contributorToEdit) {
@@ -121,8 +123,13 @@ const Contributors = (): JSX.Element => {
 	);
 
 	const contributorsColumns = useMemo(
-		() => getContributorColumns({ onEdit: handleEdit, onMerge: handleMerge }),
-		[handleEdit, handleMerge],
+		() =>
+			getContributorColumns({
+				onEdit: handleEdit,
+				onMerge: handleMerge,
+				onSplit: handleSplit,
+			}),
+		[handleEdit, handleMerge, handleSplit],
 	);
 
 	const contributorsData: ContributorRow[] = getContributorRows(contributors);
