@@ -73,6 +73,8 @@ export {
 	type ContributorPatchResponseDto,
 	contributorPatchValidationSchema,
 	ContributorsApiPath,
+	type ContributorSplitRequestDto,
+	contributorSplitValidationSchema,
 } from "./modules/contributors/contributors.js";
 export {
 	type GitEmailCreateRequestDto,

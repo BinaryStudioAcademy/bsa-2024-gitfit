@@ -133,3 +133,10 @@
 .input {
 	color: var(--color-text-primary);
 }
+
+.select-error {
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1.3;
+	color: var(--color-danger);
+}

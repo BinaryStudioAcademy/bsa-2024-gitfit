@@ -7,8 +7,10 @@ export {
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 	type ContributorPatchResponseDto,
+	type ContributorSplitRequestDto,
 } from "./libs/types/types.js";
 export {
 	contributorMerge as contributorMergeValidationSchema,
 	contributorPatch as contributorPatchValidationSchema,
+	contributorSplit as contributorSplitValidationSchema,
 } from "./libs/validation-schemas/validation-schemas.js";

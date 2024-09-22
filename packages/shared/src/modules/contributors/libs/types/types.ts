@@ -4,3 +4,4 @@ export { type ContributorGetAllResponseDto } from "./contributor-get-all-respons
 export { type ContributorMergeRequestDto } from "./contributor-merge-request-dto.type.js";
 export { type ContributorPatchRequestDto } from "./contributor-patch-request-dto.type.js";
 export { type ContributorPatchResponseDto } from "./contributor-patch-response-dto.type.js";
+export { type ContributorSplitRequestDto } from "./contributor-split-request-dto.type.js";

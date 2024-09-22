@@ -14,10 +14,12 @@ import {
 	type ContributorGetAllItemResponseDto,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
+	type ContributorSplitRequestDto,
 } from "~/modules/contributors/contributors.js";
 
 import {
 	ContributorMergeForm,
+	ContributorSplitForm,
 	ContributorUpdateForm,
 } from "./libs/components/components.js";
 import {
@@ -30,9 +32,13 @@ import styles from "./styles.module.css";
 const Contributors = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { contributors, dataStatus } = useAppSelector(
-		({ contributors }) => contributors,
-	);
+	const {
+		contributors,
+		dataStatus,
+		mergeContributorsStatus,
+		splitContributorsStatus,
+		updateContributorsStatus,
+	} = useAppSelector(({ contributors }) => contributors);
 
 	useEffect(() => {
 		void dispatch(contributorActions.loadAll());
@@ -50,38 +56,52 @@ const Contributors = (): JSX.Element => {
 		onOpen: onMergeModalOpen,
 	} = useModal();
 
+	const {
+		isOpened: isSplitModalOpen,
+		onClose: onSplitModalClose,
+		onOpen: onSplitModalOpen,
+	} = useModal();
+
 	const [contributorToEdit, setContributorToEdit] =
 		useState<ContributorGetAllItemResponseDto | null>(null);
 
 	const [contributorToMerge, setContributorToMerge] =
 		useState<ContributorGetAllItemResponseDto | null>(null);
 
+	const [contributorToSplit, setContributorToSplit] =
+		useState<ContributorGetAllItemResponseDto | null>(null);
+
 	const openEditModal = useCallback(
 		(contributor: ContributorGetAllItemResponseDto | null) => {
 			setContributorToEdit(contributor);
-
-			if (contributor) {
-				onUpdateModalOpen();
-			}
+			onUpdateModalOpen();
 		},
-		[onUpdateModalOpen],
+		[setContributorToEdit, onUpdateModalOpen],
 	);
 
 	const openMergeModal = useCallback(
 		(contributor: ContributorGetAllItemResponseDto | null) => {
 			setContributorToMerge(contributor);
-
-			if (contributor) {
-				onMergeModalOpen();
-			}
+			onMergeModalOpen();
 		},
-		[onMergeModalOpen],
+		[setContributorToMerge, onMergeModalOpen],
+	);
+
+	const openSplitModal = useCallback(
+		(contributor: ContributorGetAllItemResponseDto | null) => {
+			setContributorToSplit(contributor);
+			onSplitModalOpen();
+		},
+		[setContributorToSplit, onSplitModalOpen],
 	);
 
 	const handleEdit = useCallback(
 		(contributorId: number) => {
 			const contributor = contributors.find(({ id }) => id === contributorId);
-			openEditModal(contributor ?? null);
+
+			if (contributor) {
+				openEditModal(contributor);
+			}
 		},
 		[contributors, openEditModal],
 	);
@@ -89,12 +109,24 @@ const Contributors = (): JSX.Element => {
 	const handleMerge = useCallback(
 		(contributorId: number): void => {
 			const contributor = contributors.find(({ id }) => id === contributorId);
-			openMergeModal(contributor ?? null);
+
+			if (contributor) {
+				openMergeModal(contributor);
+			}
 		},
 		[contributors, openMergeModal],
 	);
 
-	const handleSplit = useCallback((): void => {}, []);
+	const handleSplit = useCallback(
+		(contributorId: number): void => {
+			const contributor = contributors.find(({ id }) => id === contributorId);
+
+			if (contributor) {
+				openSplitModal(contributor);
+			}
+		},
+		[contributors, openSplitModal],
+	);
 
 	const handleContributorUpdateSubmit = useCallback(
 		(payload: ContributorPatchRequestDto) => {
@@ -102,11 +134,9 @@ const Contributors = (): JSX.Element => {
 				void dispatch(
 					contributorActions.patch({ id: contributorToEdit.id, payload }),
 				);
-				openEditModal(null);
-				onUpdateModalClose();
 			}
 		},
-		[dispatch, contributorToEdit, openEditModal, onUpdateModalClose],
+		[contributorToEdit, dispatch],
 	);
 
 	const handleContributorMergeSubmit = useCallback(
@@ -115,12 +145,42 @@ const Contributors = (): JSX.Element => {
 				void dispatch(
 					contributorActions.merge({ id: contributorToMerge.id, payload }),
 				);
-				openMergeModal(null);
-				onMergeModalClose();
 			}
 		},
-		[contributorToMerge, dispatch, openMergeModal, onMergeModalClose],
+		[contributorToMerge, dispatch],
 	);
+
+	const handleContributorSplitSubmit = useCallback(
+		(payload: ContributorSplitRequestDto) => {
+			if (contributorToSplit) {
+				void dispatch(
+					contributorActions.split({ id: contributorToSplit.id, payload }),
+				);
+			}
+		},
+		[contributorToSplit, dispatch],
+	);
+
+	useEffect(() => {
+		if (updateContributorsStatus === DataStatus.FULFILLED) {
+			onUpdateModalClose();
+			setContributorToEdit(null);
+		}
+	}, [updateContributorsStatus, onUpdateModalClose, setContributorToEdit]);
+
+	useEffect(() => {
+		if (mergeContributorsStatus === DataStatus.FULFILLED) {
+			onMergeModalClose();
+			setContributorToMerge(null);
+		}
+	}, [mergeContributorsStatus, onMergeModalClose, setContributorToMerge]);
+
+	useEffect(() => {
+		if (splitContributorsStatus === DataStatus.FULFILLED) {
+			onSplitModalClose();
+			setContributorToSplit(null);
+		}
+	}, [splitContributorsStatus, onSplitModalClose, setContributorToSplit]);
 
 	const contributorsColumns = useMemo(
 		() =>
@@ -169,6 +229,18 @@ const Contributors = (): JSX.Element => {
 						allContributors={contributors}
 						currentContributor={contributorToMerge}
 						onSubmit={handleContributorMergeSubmit}
+					/>
+				</Modal>
+			)}
+			{contributorToSplit && (
+				<Modal
+					isOpened={isSplitModalOpen}
+					onClose={onSplitModalClose}
+					title="Split contributors"
+				>
+					<ContributorSplitForm
+						currentContributor={contributorToSplit}
+						onSubmit={handleContributorSplitSubmit}
 					/>
 				</Modal>
 			)}
