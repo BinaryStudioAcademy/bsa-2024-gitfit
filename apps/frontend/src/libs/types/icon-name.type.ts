@@ -3,7 +3,6 @@ type IconName =
 	| "analytics"
 	| "calendar"
 	| "check"
-	| "circleQuestion"
 	| "clipboard"
 	| "contributors"
 	| "cross"
