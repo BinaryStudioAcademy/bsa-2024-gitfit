@@ -6,7 +6,6 @@ import {
 	contributorSplitValidationSchema,
 } from "~/modules/contributors/contributors.js";
 
-import { DEFAULT_CONTRIBUTOR_SPLIT_PAYLOAD } from "./libs/constants/constants.js";
 import { getGitEmailOptions } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
@@ -24,6 +23,8 @@ const ContributorSplitForm = ({
 	const gitEmailsString = gitEmails.map((email) => email.email).join(", ");
 	const currentContributorInfo = `${name} (${gitEmailsString})`;
 
+	const [firstEmail] = gitEmails;
+
 	const { control, errors, handleSubmit } = useAppForm<{
 		currentContributor: string;
 		emailId: number;
@@ -31,7 +32,8 @@ const ContributorSplitForm = ({
 	}>({
 		defaultValues: {
 			currentContributor: currentContributorInfo,
-			newContributorName: DEFAULT_CONTRIBUTOR_SPLIT_PAYLOAD.newContributorName,
+			emailId: firstEmail?.id as number,
+			newContributorName: currentContributor.name,
 		},
 		validationSchema: contributorSplitValidationSchema,
 	});
@@ -66,7 +68,6 @@ const ContributorSplitForm = ({
 			/>
 			<Select
 				control={control}
-				errors={errors}
 				label="Email to detach"
 				name="emailId"
 				options={gitEmailOptions}
@@ -81,7 +82,7 @@ const ContributorSplitForm = ({
 			/>
 
 			<div className={styles["button-wrapper"]}>
-				<Button label="Merge" type="submit" />
+				<Button label="Split" type="submit" />
 			</div>
 		</form>
 	);

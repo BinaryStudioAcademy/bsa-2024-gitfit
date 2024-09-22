@@ -37,7 +37,6 @@ const { actions, name, reducer } = createSlice({
 		});
 
 		builder.addCase(merge.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
 			state.mergeContributorsStatus = DataStatus.PENDING;
 		});
 		builder.addCase(merge.fulfilled, (state, action) => {
@@ -72,16 +71,13 @@ const { actions, name, reducer } = createSlice({
 					? { ...contributor, ...action.payload }
 					: contributor,
 			);
-			state.dataStatus = DataStatus.FULFILLED;
 			state.mergeContributorsStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(merge.rejected, (state) => {
-			state.dataStatus = DataStatus.REJECTED;
 			state.mergeContributorsStatus = DataStatus.REJECTED;
 		});
 
 		builder.addCase(patch.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
 			state.updateContributorsStatus = DataStatus.PENDING;
 		});
 		builder.addCase(patch.fulfilled, (state, action) => {
@@ -90,16 +86,13 @@ const { actions, name, reducer } = createSlice({
 					? { ...contributor, ...action.payload }
 					: contributor,
 			);
-			state.dataStatus = DataStatus.FULFILLED;
 			state.updateContributorsStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(patch.rejected, (state) => {
-			state.dataStatus = DataStatus.REJECTED;
 			state.updateContributorsStatus = DataStatus.REJECTED;
 		});
 
 		builder.addCase(split.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
 			state.splitContributorsStatus = DataStatus.PENDING;
 		});
 		builder.addCase(split.fulfilled, (state, action) => {
@@ -123,11 +116,9 @@ const { actions, name, reducer } = createSlice({
 
 			state.contributors = [newContributor, ...state.contributors];
 
-			state.dataStatus = DataStatus.FULFILLED;
 			state.splitContributorsStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(split.rejected, (state) => {
-			state.dataStatus = DataStatus.REJECTED;
 			state.splitContributorsStatus = DataStatus.REJECTED;
 		});
 	},

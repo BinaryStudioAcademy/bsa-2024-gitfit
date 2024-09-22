@@ -1,6 +1,5 @@
 import {
 	type Control,
-	type FieldErrors,
 	type FieldPath,
 	type FieldValues,
 	type Path,
@@ -18,7 +17,6 @@ import styles from "./styles.module.css";
 type Properties<TFieldValues extends FieldValues, TOptionValue> = {
 	background?: "primary" | "secondary";
 	control: Control<TFieldValues, null>;
-	errors?: FieldErrors<TFieldValues>;
 	isLabelHidden?: boolean;
 	isMulti?: boolean;
 	isSearchable?: boolean;
@@ -32,7 +30,6 @@ type Properties<TFieldValues extends FieldValues, TOptionValue> = {
 const Select = <TFieldValues extends FieldValues, TOptionValue>({
 	background = "secondary",
 	control,
-	errors,
 	isLabelHidden = false,
 	isMulti = false,
 	isSearchable = false,
@@ -47,8 +44,6 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 		name,
 	});
 
-	const error = errors?.[name]?.message;
-	const hasError = Boolean(error);
 	const isBackgroundPrimary = background === "primary";
 	const isSmall = size === "small";
 	const labelClassName = getValidClassNames(
@@ -152,9 +147,6 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 				unstyled
 				value={value}
 			/>
-			{hasError && (
-				<span className={styles["select-error"]}>{error as string}</span>
-			)}
 		</label>
 	);
 };
