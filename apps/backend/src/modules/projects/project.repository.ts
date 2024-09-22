@@ -49,20 +49,33 @@ class ProjectRepository implements Repository {
 		return item ? ProjectEntity.initialize(item) : null;
 	}
 
-	public async findAll({
-		name,
-		page,
-		pageSize,
-	}: ProjectGetAllRequestDto): Promise<PaginationResponseDto<ProjectEntity>> {
+	public async findAll(
+		parameters: object | ProjectGetAllRequestDto,
+	): Promise<PaginationResponseDto<ProjectEntity>> {
 		const query = this.projectModel
 			.query()
 			.orderBy("created_at", SortType.DESCENDING);
+
+		const { name, page, pageSize } = parameters as ProjectGetAllRequestDto;
 
 		if (name) {
 			query.whereILike("name", `%${name}%`);
 		}
 
-		const { results, total } = await query.page(page, pageSize);
+		let results;
+		let total;
+
+		if (page && pageSize) {
+			const { results: pageResults, total: pageTotal } = await query.page(
+				page,
+				pageSize,
+			);
+			results = pageResults;
+			total = pageTotal;
+		} else {
+			results = await query;
+			total = results.length;
+		}
 
 		return {
 			items: results.map((project) => ProjectEntity.initialize(project)),

@@ -120,7 +120,7 @@ class ProjectService implements Service {
 	}
 
 	public async findAll(
-		parameters: ProjectGetAllRequestDto,
+		parameters: object | ProjectGetAllRequestDto,
 	): Promise<ProjectGetAllResponseDto> {
 		const { items, totalItems } =
 			await this.projectRepository.findAll(parameters);

@@ -227,17 +227,11 @@ class ProjectController extends BaseController {
 	 */
 	private async findAll(
 		options: APIHandlerOptions<{
-			query: ProjectGetAllRequestDto;
+			query: object | ProjectGetAllRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { name, page, pageSize } = options.query;
-
 		return {
-			payload: await this.projectService.findAll({
-				name,
-				page: Number(page),
-				pageSize: Number(pageSize),
-			}),
+			payload: await this.projectService.findAll(options.query),
 			status: HTTPCode.OK,
 		};
 	}
