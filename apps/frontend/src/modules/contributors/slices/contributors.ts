@@ -1,4 +1,4 @@
-import { loadAll, merge, patch } from "./actions.js";
+import { loadAll, merge, patch, split } from "./actions.js";
 import { actions } from "./contributor.slice.js";
 
 const allActions = {
@@ -6,6 +6,7 @@ const allActions = {
 	loadAll,
 	merge,
 	patch,
+	split,
 };
 
 export { allActions as actions };
