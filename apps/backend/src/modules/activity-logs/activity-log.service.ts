@@ -180,9 +180,11 @@ class ActivityLogService implements Service {
 
 				return {
 					commitsNumber: commitsArray,
-					contributorId: contributorId ?? "",
-					contributorIsHidden: false,
-					contributorName: contributorName ?? "",
+					contributor: {
+						id: contributorId ?? "",
+						isHidden: false,
+						name: contributorName ?? "",
+					},
 				};
 			}),
 		};
