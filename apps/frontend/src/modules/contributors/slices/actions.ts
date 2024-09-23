@@ -1,7 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { NotificationMessage } from "~/libs/enums/enums.js";
-import { type AsyncThunkConfig } from "~/libs/types/types.js";
+import {
+	type AsyncThunkConfig,
+	type PaginationQueryParameters,
+} from "~/libs/types/types.js";
 import { actions as projectActions } from "~/modules/projects/projects.js";
 
 import {
@@ -15,12 +18,12 @@ import { name as sliceName } from "./contributor.slice.js";
 
 const loadAll = createAsyncThunk<
 	ContributorGetAllResponseDto,
-	undefined,
+	PaginationQueryParameters,
 	AsyncThunkConfig
->(`${sliceName}/load-all`, async (_, { extra }) => {
+>(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { contributorApi } = extra;
 
-	return await contributorApi.getAll();
+	return await contributorApi.getAll(query);
 });
 
 const merge = createAsyncThunk<
