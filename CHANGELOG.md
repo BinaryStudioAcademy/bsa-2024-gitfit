@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.49.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.48.1...v1.49.0) (2024-09-23)
+
+
+### Features
+
+* Add an activity chart to contributor items on project details page gf-420 ([#468](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/468)) ([38cf6eb](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/38cf6ebc535a40e117b68f18c53cbecb58ae356f))
+* add pagination to the contributors page gf-484 ([#491](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/491)) ([75e0b48](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75e0b483381fc8704feddbe3a6bf20b01331b98d))
+
+
+### Bug Fixes
+
+* date input component gf-472 ([#487](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/487)) ([b607eb3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b607eb3c2914717c60791f8185c29fb43376b891))
+* submit button labels in project create and update forms gf-474 ([#486](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/486)) ([00d9ade](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/00d9adec9421c90be57bc5f9a0b80e2c91c63eff))
+
 ## [1.48.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.48.0...v1.48.1) (2024-09-23)
 
 
