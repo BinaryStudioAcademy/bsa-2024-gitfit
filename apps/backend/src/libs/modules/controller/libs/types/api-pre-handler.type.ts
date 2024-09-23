@@ -1,9 +1,5 @@
-import { type FastifyReply, type FastifyRequest } from "fastify";
+import { type APIHandlerOptions } from "./api-handler-options.type.js";
 
-type APIPreHandler = (
-	request: FastifyRequest,
-	reply: FastifyReply,
-	done: () => void,
-) => void;
+type APIPreHandler = (options: APIHandlerOptions, done: () => void) => void;
 
 export { type APIPreHandler };
