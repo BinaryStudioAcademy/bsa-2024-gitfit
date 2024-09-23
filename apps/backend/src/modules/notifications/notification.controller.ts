@@ -65,15 +65,11 @@ class NotificationController extends BaseController {
 	 *         name: page
 	 *         schema:
 	 *           type: integer
-	 *           minimum: 1
-	 *           default: 1
 	 *         description: The page number to retrieve
 	 *       - in: query
 	 *         name: pageSize
 	 *         schema:
 	 *           type: integer
-	 *           minimum: 1
-	 *           default: 10
 	 *         description: The number of items per page
 	 *     responses:
 	 *       200:
