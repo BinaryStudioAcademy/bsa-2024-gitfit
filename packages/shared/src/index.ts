@@ -101,6 +101,7 @@ export {
 	type NotificationBulkCreateRequestDto,
 	type NotificationBulkCreateResponseDto,
 	type NotificationCreateRequestDto,
+	NotificationError,
 	type NotificationGetAllItemResponseDto,
 	type NotificationGetAllResponseDto,
 	NotificationsApiPath,
