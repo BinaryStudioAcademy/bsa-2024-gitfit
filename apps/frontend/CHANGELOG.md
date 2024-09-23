@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.44.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.43.0...frontend-v1.44.0) (2024-09-23)
+
+
+### Features
+
+* add ability to merge contributors gf-344 ([#435](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/435)) ([a52d648](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a52d6486d6753a73d228b3149eb5984ba32f4e81))
+
+
+### Bug Fixes
+
+* adjust column sizes so table fits 1440 screen resolution gf-448 ([#461](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/461)) ([bf7e7a6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/bf7e7a6596dc55a8d910bb48ed82f92040731227))
+* adjust root permissions gf-350 ([#466](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/466)) ([6e42ada](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6e42ada9f78adcd84fd348a76f7518f0d1b03819))
+* useSearch change to handle modal search gf-455 ([#459](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/459)) ([7b99a6d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7b99a6d573eb67aa6d5517daff0c06ebb1fda8a4))
+
 ## [1.43.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.42.0...frontend-v1.43.0) (2024-09-20)
 
 

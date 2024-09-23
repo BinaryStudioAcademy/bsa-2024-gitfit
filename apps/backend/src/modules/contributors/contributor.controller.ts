@@ -87,6 +87,7 @@ class ContributorController extends BaseController {
 				),
 			method: "PATCH",
 			path: ContributorsApiPath.MERGE_$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 			validation: {
 				body: contributorMergeValidationSchema,
 			},
@@ -102,6 +103,7 @@ class ContributorController extends BaseController {
 				),
 			method: "PATCH",
 			path: ContributorsApiPath.$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 			validation: {
 				body: contributorPatchValidationSchema,
 			},

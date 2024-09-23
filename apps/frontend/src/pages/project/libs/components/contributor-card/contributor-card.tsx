@@ -13,12 +13,16 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	contributor: ContributorGetAllItemResponseDto;
+	hasEditPermission: boolean;
+	hasMergePermission: boolean;
 	onEdit: (contributorId: number) => void;
 	onMerge: (contributorId: number) => void;
 };
 
 const ContributorCard = ({
 	contributor,
+	hasEditPermission,
+	hasMergePermission,
 	onEdit,
 	onMerge,
 }: Properties): JSX.Element => {
@@ -58,6 +62,8 @@ const ContributorCard = ({
 			)}
 			<ContributorMenu
 				contributorId={contributor.id}
+				hasEditPermission={hasEditPermission}
+				hasMergePermission={hasMergePermission}
 				onEdit={handleEditClick}
 				onMerge={handleMergeClick}
 			/>
