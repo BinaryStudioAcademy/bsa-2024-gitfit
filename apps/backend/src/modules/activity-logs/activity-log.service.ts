@@ -148,10 +148,7 @@ class ActivityLogService implements Service {
 
 		const allContributors = await (projectId
 			? this.contributorService.findAllByProjectId(Number(projectId))
-			: this.contributorService.findAll({
-					page: 1,
-					pageSize: Number.MAX_SAFE_INTEGER,
-				}));
+			: this.contributorService.findAllWithoutPagination());
 
 		const dateRange = getDateRange(startDate, endDate);
 

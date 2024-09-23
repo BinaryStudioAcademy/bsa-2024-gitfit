@@ -102,6 +102,26 @@ class ContributorService implements Service {
 		};
 	}
 
+	public async findAllWithoutPagination(): Promise<ContributorGetAllResponseDto> {
+		const contributors =
+			await this.contributorRepository.findAllWithoutPagination();
+
+		return {
+			items: contributors.items.map((item) => {
+				const contributor = item.toObject();
+
+				return {
+					...contributor,
+					gitEmails: contributor.gitEmails.map((gitEmail) => ({
+						email: gitEmail.email,
+						id: gitEmail.id,
+					})),
+				};
+			}),
+			totalItems: contributors.items.length,
+		};
+	}
+
 	public async findByName(
 		name: string,
 	): Promise<ContributorGetAllItemResponseDto | null> {

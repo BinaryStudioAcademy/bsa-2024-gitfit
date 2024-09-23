@@ -115,6 +115,30 @@ class ContributorRepository implements Repository {
 		};
 	}
 
+	public async findAllWithoutPagination(): Promise<{
+		items: ContributorEntity[];
+	}> {
+		const results = await this.contributorModel
+			.query()
+			.select("contributors.*")
+			.select(
+				raw(
+					"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
+				),
+			)
+			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
+			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
+			.leftJoin("projects", "activity_logs.project_id", "projects.id")
+			.groupBy("contributors.id")
+			.withGraphFetched("gitEmails");
+
+		return {
+			items: results.map((contributor) => {
+				return ContributorEntity.initialize(contributor);
+			}),
+		};
+	}
+
 	public async findByName(name: string): Promise<ContributorEntity | null> {
 		const contributor = await this.contributorModel
 			.query()
