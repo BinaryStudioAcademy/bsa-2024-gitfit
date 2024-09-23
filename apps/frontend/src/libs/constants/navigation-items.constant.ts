@@ -33,6 +33,9 @@ const SIDEBAR_ITEMS: NavigationItem[] = [
 		pagePermissions: [
 			PermissionKey.VIEW_ALL_PROJECTS,
 			PermissionKey.MANAGE_ALL_PROJECTS,
+			PermissionKey.VIEW_PROJECT,
+			PermissionKey.EDIT_PROJECT,
+			PermissionKey.MANAGE_PROJECT,
 		],
 	},
 ];

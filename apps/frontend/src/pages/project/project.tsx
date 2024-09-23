@@ -50,7 +50,7 @@ const Project = (): JSX.Element => {
 		projectStatus,
 	} = useAppSelector(({ projects }) => projects);
 
-	const { permissionedProjectsId, projectUserPermissions, userPermissions } =
+	const { authenticatedUser, projectUserPermissions, userPermissions } =
 		useAppSelector(({ auth }) => auth);
 
 	const allPermissions = [...userPermissions, ...projectUserPermissions];
@@ -152,7 +152,6 @@ const Project = (): JSX.Element => {
 		},
 		[dispatch, contributorToEdit, handleContributorUpdateModalClose, projectId],
 	);
-
 	const isLoading =
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
 
@@ -164,25 +163,41 @@ const Project = (): JSX.Element => {
 
 	const hasProject = project !== null;
 
-	const hasManagePermission =
+	const hasManagePermission = Boolean(
 		checkHasPermission(
-			[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_PROJECT],
+			[PermissionKey.MANAGE_ALL_PROJECTS, PermissionKey.MANAGE_PROJECT],
 			allPermissions,
 		) &&
-		hasProject &&
-		permissionedProjectsId.includes(project.id);
+			hasProject &&
+			authenticatedUser?.projectGroups.some(
+				(group) =>
+					group.projectId.includes(project.id) &&
+					group.permissions.some(
+						(permission) => permission.key === PermissionKey.MANAGE_PROJECT,
+					),
+			),
+	);
 
-	const hasEditPermission =
+	const hasEditPermission = Boolean(
 		checkHasPermission(
 			[
-				PermissionKey.VIEW_ALL_PROJECTS,
+				PermissionKey.MANAGE_ALL_PROJECTS,
 				PermissionKey.MANAGE_PROJECT,
 				PermissionKey.EDIT_PROJECT,
 			],
 			allPermissions,
 		) &&
-		hasProject &&
-		permissionedProjectsId.includes(project.id);
+			hasProject &&
+			authenticatedUser?.projectGroups.some(
+				(group) =>
+					group.projectId.includes(project.id) &&
+					group.permissions.some(
+						(permission) =>
+							permission.key === PermissionKey.MANAGE_PROJECT ||
+							permission.key === PermissionKey.EDIT_PROJECT,
+					),
+			),
+	);
 
 	const hasSetupAnalyticsPermission =
 		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||

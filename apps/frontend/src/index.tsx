@@ -19,9 +19,8 @@ import { NoAccess } from "~/pages/no-access/no-access.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { Profile } from "~/pages/profile/profile.jsx";
 import { Project } from "~/pages/project/project.jsx";
+import { ProjectAccessManagement } from "~/pages/project-access-management/project-access-management.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
-
-import { ProjectAccessManagement } from "./pages/project-access-management/project-access-management.js";
 
 createRoot(document.querySelector("#root") as HTMLElement).render(
 	<StrictMode>
@@ -79,6 +78,9 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 									<ProtectedRoute
 										routePermissions={[
 											PermissionKey.VIEW_ALL_PROJECTS,
+											PermissionKey.VIEW_PROJECT,
+											PermissionKey.EDIT_PROJECT,
+											PermissionKey.MANAGE_PROJECT,
 											PermissionKey.MANAGE_ALL_PROJECTS,
 										]}
 									>
@@ -127,11 +129,11 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 								element: (
 									<ProtectedRoute
 										routeExtraPermissions={[
-											PermissionKey.VIEW_ALL_PROJECTS,
 											PermissionKey.MANAGE_ALL_PROJECTS,
-											PermissionKey.MANAGE_PROJECT,
+											PermissionKey.MANAGE_USER_ACCESS,
 										]}
-										routePermissions={[PermissionKey.MANAGE_USER_ACCESS]}
+										routePermissions={[PermissionKey.MANAGE_PROJECT]}
+										routeProjectPermissions={[PermissionKey.MANAGE_PROJECT]}
 									>
 										<ProjectAccessManagement />
 									</ProtectedRoute>

@@ -18,12 +18,14 @@ type Properties = {
 	children: React.ReactNode;
 	routeExtraPermissions?: ValueOf<typeof PermissionKey>[];
 	routePermissions?: ValueOf<typeof PermissionKey>[];
+	routeProjectPermissions?: ValueOf<typeof PermissionKey>[];
 };
 
 const ProtectedRoute = ({
 	children,
 	routeExtraPermissions = [],
 	routePermissions = [],
+	routeProjectPermissions = [],
 }: Properties): JSX.Element => {
 	const {
 		authenticatedUser,
@@ -59,7 +61,13 @@ const ProtectedRoute = ({
 		userPermissions,
 	);
 
-	const hasRequiredPermissions = hasBasePermission && hasExtraPermission;
+	const hasProjectPermissions = checkHasPermission(
+		routeProjectPermissions,
+		projectUserPermissions,
+	);
+
+	const hasRequiredPermissions =
+		(hasBasePermission && hasExtraPermission) || hasProjectPermissions;
 
 	if (!hasRequiredPermissions) {
 		const [navigationItem] = getPermittedNavigationItems(
