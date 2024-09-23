@@ -1,7 +1,9 @@
+import { Tooltip } from "~/libs/components/components.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { ContributorMenu } from "../../components/components.js";
 import { type ContributorRow } from "../../types/types.js";
+import styles from "./styles.module.css";
 
 const getContributorColumns = (actions: {
 	onEdit: (contributorId: number) => void;
@@ -13,8 +15,17 @@ const getContributorColumns = (actions: {
 		size: 200,
 	},
 	{
-		accessorFn: (contributor: ContributorRow): string =>
-			contributor.gitEmails.join(", "),
+		cell: ({ row: { original: contributor } }): JSX.Element => {
+			const gitEmails = contributor.gitEmails.join(", ");
+
+			return (
+				<div className={styles["git-email-cell-wrapper"]}>
+					<Tooltip content={gitEmails} id={gitEmails}>
+						{gitEmails}
+					</Tooltip>
+				</div>
+			);
+		},
 		header: "Git Emails",
 		size: 300,
 	},

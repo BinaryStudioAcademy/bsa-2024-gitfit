@@ -1,0 +1,4 @@
+.git-email-cell-wrapper {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
