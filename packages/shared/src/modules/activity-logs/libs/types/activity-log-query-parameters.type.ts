@@ -1,6 +1,6 @@
 type ActivityLogQueryParameters = {
+	contributorName: string;
 	endDate: string;
-	search?: string;
 	startDate: string;
 };
 

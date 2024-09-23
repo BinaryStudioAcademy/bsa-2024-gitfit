@@ -29,6 +29,7 @@ class ActivityLogApi extends BaseHTTPApi {
 				hasAuth: true,
 				method: "GET",
 				query: {
+					contributorName: String(query.contributorName),
 					endDate: String(query.endDate),
 					startDate: String(query.startDate),
 				},

@@ -31,7 +31,7 @@ const AnalyticsContributorsSearch = <T extends FieldValues>({
 				label="Contributors search"
 				name={name}
 				onChange={onChange}
-				placeholder="Enter contributor name"
+				placeholder="Enter name"
 			/>
 		</div>
 	);

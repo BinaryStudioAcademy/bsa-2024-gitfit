@@ -12,13 +12,11 @@ import styles from "./styles.module.css";
 type Properties = {
 	activityLogs: ActivityLogGetAllItemAnalyticsResponseDto[];
 	dateRange: [Date, Date];
-	search: string;
 };
 
 const AnalyticsTable = ({
 	activityLogs,
 	dateRange,
-	search,
 }: Properties): JSX.Element => {
 	const [startDate, endDate] = dateRange;
 	const dateRangeFormatted = getDateRange(startDate, endDate);
@@ -28,11 +26,7 @@ const AnalyticsTable = ({
 		styles["analytics-empty-cell"],
 	);
 
-	const filteredLogs = activityLogs.filter((log) =>
-		log.contributorName.toLowerCase().includes(search.toLowerCase()),
-	);
-
-	const analyticsData: AnalyticsRow[] = getAnalyticsRows(filteredLogs);
+	const analyticsData: AnalyticsRow[] = getAnalyticsRows(activityLogs);
 
 	return (
 		<div className={styles["analytics-table"]}>

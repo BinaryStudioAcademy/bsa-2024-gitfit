@@ -23,6 +23,8 @@ const Analytics = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const todayDate = new Date();
 
+	const { onSearch, search } = useSearch();
+
 	const { activityLogs, dataStatus } = useAppSelector(
 		({ activityLogs }) => activityLogs,
 	);
@@ -33,12 +35,19 @@ const Analytics = (): JSX.Element => {
 				subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE),
 				todayDate,
 			] as [Date, Date],
-			search: "",
+			search,
 		},
+		mode: "onChange",
 	});
 
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			onSearch(value);
+		},
+		[onSearch],
+	);
+
 	const dateRangeValue = useFormWatch({ control, name: "dateRange" });
-	const { onSearch, search } = useSearch();
 
 	const handleLoadLogs = useCallback(
 		([startDate, endDate]: [Date, Date]) => {
@@ -47,8 +56,8 @@ const Analytics = (): JSX.Element => {
 
 			void dispatch(
 				activityLogActions.loadAll({
+					contributorName: search,
 					endDate: formattedEndDate,
-					search,
 					startDate: formattedStartDate,
 				}),
 			);
@@ -69,13 +78,6 @@ const Analytics = (): JSX.Element => {
 		[handleLoadLogs, handleSubmit],
 	);
 
-	const handleContributorsSearchChange = useCallback(
-		(value: string) => {
-			onSearch(value);
-		},
-		[onSearch],
-	);
-
 	useEffect(() => {
 		if (isDirty) {
 			handleFormSubmit();
@@ -94,7 +96,7 @@ const Analytics = (): JSX.Element => {
 						control={control}
 						errors={errors}
 						name="search"
-						onChange={handleContributorsSearchChange}
+						onChange={handleSearchChange}
 					/>
 					<DateInput
 						control={control}
@@ -109,7 +111,6 @@ const Analytics = (): JSX.Element => {
 					<AnalyticsTable
 						activityLogs={activityLogs}
 						dateRange={dateRangeValue}
-						search={search}
 					/>
 				)}
 			</section>

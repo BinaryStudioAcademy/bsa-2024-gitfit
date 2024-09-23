@@ -132,10 +132,12 @@ class ActivityLogService implements Service {
 	}
 
 	public async findAll({
+		contributorName,
 		endDate,
 		startDate,
 	}: ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
 		const activityLogsEntities = await this.activityLogRepository.findAll({
+			contributorName,
 			endDate,
 			startDate,
 		});

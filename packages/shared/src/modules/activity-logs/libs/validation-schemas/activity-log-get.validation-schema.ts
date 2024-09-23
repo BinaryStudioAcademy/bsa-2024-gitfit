@@ -4,6 +4,7 @@ import { ActivityLogValidationMessage } from "../enums/enums.js";
 import { type ActivityLogQueryParameters } from "../types/types.js";
 
 const activityLogGet: z.ZodType<ActivityLogQueryParameters> = z.object({
+	contributorName: z.string(),
 	endDate: z.string({
 		required_error: ActivityLogValidationMessage.END_DATE_REQUIRED,
 	}),
