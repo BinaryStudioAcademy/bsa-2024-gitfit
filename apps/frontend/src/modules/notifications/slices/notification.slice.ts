@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
+import { FIRST_PAGE } from "~/modules/projects/libs/constants/constants.js";
 
 import { type NotificationGetAllItemResponseDto } from "../libs/types/types.js";
 import { loadAll } from "./actions.js";
@@ -24,8 +25,12 @@ const { actions, name, reducer } = createSlice({
 			state.dataStatus = DataStatus.PENDING;
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
-			state.notifications = [...state.notifications, ...action.payload.items];
-			state.notificationsTotalCount = action.payload.totalItems;
+			const { items, totalItems } = action.payload;
+			const { page } = action.meta.arg;
+
+			state.notifications =
+				page === FIRST_PAGE ? items : [...state.notifications, ...items];
+			state.notificationsTotalCount = totalItems;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(loadAll.rejected, (state) => {
