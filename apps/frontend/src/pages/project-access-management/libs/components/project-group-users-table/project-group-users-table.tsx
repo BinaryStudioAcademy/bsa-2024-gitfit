@@ -53,8 +53,7 @@ const ProjectGroupUsersTable = ({
 		mode: "onChange",
 	});
 
-	const { onSearch, search } = useSearch();
-
+	const { onSearch, search } = useSearch({ isSavedToUrl: false });
 	const { projectGroups, users, usersDataStatus, usersTotalCount } =
 		useAppSelector(({ projectGroups }) => projectGroups);
 
