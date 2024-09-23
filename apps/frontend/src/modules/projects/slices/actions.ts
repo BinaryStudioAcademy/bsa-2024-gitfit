@@ -1,7 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { NotificationMessage } from "~/libs/enums/enums.js";
+import { subtractDays } from "~/libs/helpers/helpers.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
+import {
+	type ActivityLogGetAllAnalyticsResponseDto,
+	type ActivityLogQueryParameters,
+} from "~/modules/activity/activity.js";
 import { type ContributorGetAllResponseDto } from "~/modules/contributors/contributors.js";
 import {
 	type ProjectCreateRequestDto,
@@ -12,6 +17,7 @@ import {
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 } from "~/modules/projects/projects.js";
+import { ANALYTICS_DATE_MAX_RANGE } from "~/pages/analytics/libs/constants/analytics-date-max-range.constant.js";
 
 import { name as sliceName } from "./project.slice.js";
 
@@ -84,10 +90,38 @@ const loadAllContributorsByProjectId = createAsyncThunk<
 	AsyncThunkConfig
 >(
 	`${sliceName}/load-all-contributors-by-project-id`,
-	async (projectId, { extra }) => {
+	async (projectId, { dispatch, extra }) => {
 		const { contributorApi } = extra;
 
+		const todayDate = new Date();
+		const endDate = todayDate.toISOString();
+		const startDate = subtractDays(
+			todayDate,
+			ANALYTICS_DATE_MAX_RANGE,
+		).toISOString();
+
+		void dispatch(
+			loadAllContributorsActivityByProjectId({
+				endDate,
+				projectId,
+				startDate,
+			}),
+		);
+
 		return await contributorApi.getAllByProjectId(projectId);
+	},
+);
+
+const loadAllContributorsActivityByProjectId = createAsyncThunk<
+	ActivityLogGetAllAnalyticsResponseDto,
+	ActivityLogQueryParameters,
+	AsyncThunkConfig
+>(
+	`${sliceName}/load-all-contributors-activity-by-project-id`,
+	async (query, { extra }) => {
+		const { activityLogApi } = extra;
+
+		return await activityLogApi.getAll(query);
 	},
 );
 
@@ -96,6 +130,7 @@ export {
 	deleteById,
 	getById,
 	loadAll,
+	loadAllContributorsActivityByProjectId,
 	loadAllContributorsByProjectId,
 	patch,
 };

@@ -1,6 +1,6 @@
 {
 	"name": "git-fit",
-	"version": "1.47.0",
+	"version": "1.48.1",
 	"type": "module",
 	"workspaces": [
 		"apps/*",

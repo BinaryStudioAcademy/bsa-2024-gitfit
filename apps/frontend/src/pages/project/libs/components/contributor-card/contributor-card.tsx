@@ -1,24 +1,34 @@
-import { ActivityIndicator } from "~/libs/components/components.js";
+import { ActivityIndicator, Chart } from "~/libs/components/components.js";
 import {
 	getActivityIndicatorStatus,
 	getDifferenceInDays,
 	getRelativeDate,
 	getStartOfDay,
 } from "~/libs/helpers/helpers.js";
-import { useCallback } from "~/libs/hooks/hooks.js";
-import { type ContributorGetAllItemResponseDto } from "~/pages/project/libs/types/types.js";
+import { useCallback, useMemo } from "~/libs/hooks/hooks.js";
+import { type ChartData } from "~/libs/types/types.js";
+import {
+	type ContributorActivity,
+	type ContributorGetAllItemResponseDto,
+} from "~/pages/project/libs/types/types.js";
 
 import { ContributorMenu } from "../components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	activity?: ContributorActivity | undefined;
 	contributor: ContributorGetAllItemResponseDto;
+	hasEditPermission: boolean;
+	hasMergePermission: boolean;
 	onEdit: (contributorId: number) => void;
 	onMerge: (contributorId: number) => void;
 };
 
 const ContributorCard = ({
+	activity,
 	contributor,
+	hasEditPermission,
+	hasMergePermission,
 	onEdit,
 	onMerge,
 }: Properties): JSX.Element => {
@@ -42,6 +52,12 @@ const ContributorCard = ({
 
 	const hasActivityIndicator = lastUpdateLabel !== null && colorStatus !== null;
 
+	const hasActivityData = Boolean(activity);
+	const activityData: ChartData = useMemo(
+		() => activity?.map((commitsNumber) => ({ y: commitsNumber })) ?? [],
+		[activity],
+	);
+
 	const handleEditClick = useCallback(() => {
 		onEdit(contributor.id);
 	}, [onEdit, contributor.id]);
@@ -56,8 +72,11 @@ const ContributorCard = ({
 			{hasActivityIndicator && (
 				<ActivityIndicator label={lastUpdateLabel} status={colorStatus} />
 			)}
+			{hasActivityData && <Chart data={activityData} />}
 			<ContributorMenu
 				contributorId={contributor.id}
+				hasEditPermission={hasEditPermission}
+				hasMergePermission={hasMergePermission}
 				onEdit={handleEditClick}
 				onMerge={handleMergeClick}
 			/>
