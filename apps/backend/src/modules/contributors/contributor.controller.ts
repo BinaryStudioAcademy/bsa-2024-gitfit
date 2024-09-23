@@ -65,10 +65,7 @@ class ContributorController extends BaseController {
 			handler: (options) =>
 				this.findAll(
 					options as APIHandlerOptions<{
-						query: {
-							paginationQueryParameters: PaginationQueryParameters;
-							projectId: string;
-						};
+						query: { projectId?: string } & PaginationQueryParameters;
 					}>,
 				),
 			method: "GET",
@@ -142,10 +139,7 @@ class ContributorController extends BaseController {
 	 */
 	private async findAll(
 		options: APIHandlerOptions<{
-			query: {
-				paginationQueryParameters: PaginationQueryParameters;
-				projectId?: string;
-			};
+			query: { projectId?: string } & PaginationQueryParameters;
 		}>,
 	): Promise<APIHandlerResponse> {
 		if (options.query.projectId) {
@@ -158,9 +152,7 @@ class ContributorController extends BaseController {
 		}
 
 		return {
-			payload: await this.contributorService.findAll(
-				options.query.paginationQueryParameters,
-			),
+			payload: await this.contributorService.findAll(options.query),
 			status: HTTPCode.OK,
 		};
 	}
