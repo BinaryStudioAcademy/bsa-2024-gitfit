@@ -1,6 +1,11 @@
 import { raw } from "objection";
 
-import { type Repository } from "~/libs/types/types.js";
+import { SortType } from "~/libs/enums/enums.js";
+import {
+	type PaginationQueryParameters,
+	type PaginationResponseDto,
+	type Repository,
+} from "~/libs/types/types.js";
 import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
@@ -50,9 +55,16 @@ class ContributorRepository implements Repository {
 		return ContributorEntity.initialize(contributor);
 	}
 
-	public async findAll(): Promise<{ items: ContributorEntity[] }> {
-		const contributorsWithProjectsAndEmails = await this.contributorModel
+	public async findAll({
+		page,
+		pageSize,
+	}: PaginationQueryParameters): Promise<
+		PaginationResponseDto<ContributorEntity>
+	> {
+		const { results, total } = await this.contributorModel
 			.query()
+			.orderBy("createdAt", SortType.DESCENDING)
+			.page(page, pageSize)
 			.select("contributors.*")
 			.select(
 				raw(
@@ -66,9 +78,10 @@ class ContributorRepository implements Repository {
 			.withGraphFetched("gitEmails");
 
 		return {
-			items: contributorsWithProjectsAndEmails.map((contributor) => {
+			items: results.map((contributor) => {
 				return ContributorEntity.initialize(contributor);
 			}),
+			totalItems: total,
 		};
 	}
 

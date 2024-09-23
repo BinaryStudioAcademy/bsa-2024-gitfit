@@ -143,7 +143,10 @@ class ActivityLogService implements Service {
 		const activityLogs = activityLogsEntities.items.map((item) =>
 			item.toObject(),
 		);
-		const allContributors = await this.contributorService.findAll();
+		const allContributors = await this.contributorService.findAll({
+			page: 1,
+			pageSize: Number.MAX_SAFE_INTEGER,
+		});
 		const dateRange = getDateRange(startDate, endDate);
 
 		const INITIAL_COMMITS_NUMBER = 0;

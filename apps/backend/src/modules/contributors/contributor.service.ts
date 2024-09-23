@@ -1,6 +1,10 @@
+import { PAGE_INDEX_OFFSET } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
-import { type Service } from "~/libs/types/types.js";
+import {
+	type PaginationQueryParameters,
+	type Service,
+} from "~/libs/types/types.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorRepository } from "./contributor.repository.js";
@@ -52,8 +56,13 @@ class ContributorService implements Service {
 		return item.toObject();
 	}
 
-	public async findAll(): Promise<ContributorGetAllResponseDto> {
-		const contributors = await this.contributorRepository.findAll();
+	public async findAll(
+		parameters: PaginationQueryParameters,
+	): Promise<ContributorGetAllResponseDto> {
+		const contributors = await this.contributorRepository.findAll({
+			page: parameters.page - PAGE_INDEX_OFFSET,
+			pageSize: parameters.pageSize,
+		});
 
 		return {
 			items: contributors.items.map((item) => {
@@ -67,6 +76,7 @@ class ContributorService implements Service {
 					})),
 				};
 			}),
+			totalItems: contributors.totalItems,
 		};
 	}
 
@@ -88,6 +98,7 @@ class ContributorService implements Service {
 					})),
 				};
 			}),
+			totalItems: contributors.items.length,
 		};
 	}
 

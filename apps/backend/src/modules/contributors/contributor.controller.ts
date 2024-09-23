@@ -7,6 +7,7 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { type ContributorService } from "./contributor.service.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
@@ -64,7 +65,10 @@ class ContributorController extends BaseController {
 			handler: (options) =>
 				this.findAll(
 					options as APIHandlerOptions<{
-						query: { projectId: string };
+						query: {
+							paginationQueryParameters: PaginationQueryParameters;
+							projectId: string;
+						};
 					}>,
 				),
 			method: "GET",
@@ -138,7 +142,10 @@ class ContributorController extends BaseController {
 	 */
 	private async findAll(
 		options: APIHandlerOptions<{
-			query: { projectId?: string };
+			query: {
+				paginationQueryParameters: PaginationQueryParameters;
+				projectId?: string;
+			};
 		}>,
 	): Promise<APIHandlerResponse> {
 		if (options.query.projectId) {
@@ -151,7 +158,9 @@ class ContributorController extends BaseController {
 		}
 
 		return {
-			payload: await this.contributorService.findAll(),
+			payload: await this.contributorService.findAll(
+				options.query.paginationQueryParameters,
+			),
 			status: HTTPCode.OK,
 		};
 	}
