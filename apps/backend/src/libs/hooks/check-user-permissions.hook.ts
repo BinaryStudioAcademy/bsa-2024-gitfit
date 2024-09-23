@@ -17,8 +17,10 @@ const checkUserPermissions = (routePermissions: string[]): APIPreHandler => {
 		}
 
 		const resourceId = (params as { id?: string }).id;
+		const isUsersRoute = url.includes(APIPath.USERS);
+		const isCurrentUserRoute = isUsersRoute && Number(resourceId) === user.id;
 
-		if (url.includes(APIPath.USERS) && Number(resourceId) === user.id) {
+		if (isCurrentUserRoute) {
 			done();
 
 			return;
