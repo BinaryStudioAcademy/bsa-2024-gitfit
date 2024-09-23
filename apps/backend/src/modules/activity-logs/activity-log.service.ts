@@ -133,20 +133,26 @@ class ActivityLogService implements Service {
 
 	public async findAll({
 		endDate,
+		projectId,
 		startDate,
 	}: ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
 		const activityLogsEntities = await this.activityLogRepository.findAll({
 			endDate,
+			projectId,
 			startDate,
 		});
 
 		const activityLogs = activityLogsEntities.items.map((item) =>
 			item.toObject(),
 		);
-		const allContributors = await this.contributorService.findAll({
-			page: 1,
-			pageSize: Number.MAX_SAFE_INTEGER,
-		});
+
+		const allContributors = await (projectId
+			? this.contributorService.findAllByProjectId(Number(projectId))
+			: this.contributorService.findAll({
+					page: 1,
+					pageSize: Number.MAX_SAFE_INTEGER,
+				}));
+
 		const dateRange = getDateRange(startDate, endDate);
 
 		const INITIAL_COMMITS_NUMBER = 0;
