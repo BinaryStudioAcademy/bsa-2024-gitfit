@@ -91,7 +91,6 @@ const DateInput = <T extends FieldValues>({
 						locale="en"
 						{...(maxDate && { maxDate })}
 						{...(minDate && { minDate })}
-						minDetail="year"
 						next2Label={null}
 						nextLabel={<Icon height={16} name="rightArrow" width={16} />}
 						onChange={handleDateChange}
@@ -100,6 +99,7 @@ const DateInput = <T extends FieldValues>({
 						selectRange
 						showDoubleView
 						value={field.value}
+						view="month"
 					/>
 				}
 				isOpened={isOpened}

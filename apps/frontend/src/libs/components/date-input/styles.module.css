@@ -75,10 +75,6 @@
 	color: var(--color-text-secondary);
 }
 
-.calendar :global(.react-calendar__year-view__months__month) {
-	min-width: 100%;
-}
-
 .calendar :global(.react-calendar__tile--range) {
 	background: rgb(136 96 250 / 20%);
 	border-radius: 0;
@@ -96,10 +92,6 @@
 
 .calendar :global(.react-calendar__month-view) {
 	max-width: 224px;
-}
-
-.calendar :global(.react-calendar__year-view__months) {
-	min-width: 128px;
 }
 
 .date-input-trigger {
