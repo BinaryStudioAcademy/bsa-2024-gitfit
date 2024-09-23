@@ -47,19 +47,18 @@ const ContributorsList = ({
 		[onMergeContributor],
 	);
 
-	const contributorActivitiesMap = useMemo(() => {
-		const activitiesMap = new Map<number, ContributorActivity | undefined>();
+	const activities = useMemo(() => {
+		const activitiesMap = new Map<number, ContributorActivity>();
 
-		for (const contributor of contributors) {
-			const contributorActivity = activityLogs.find(
-				(activityLog) => Number(activityLog.contributorId) === contributor.id,
-			)?.commitsNumber;
-
-			activitiesMap.set(contributor.id, contributorActivity);
+		for (const activityLog of activityLogs) {
+			activitiesMap.set(
+				Number(activityLog.contributorId),
+				activityLog.commitsNumber,
+			);
 		}
 
 		return activitiesMap;
-	}, [contributors, activityLogs]);
+	}, [activityLogs]);
 
 	return (
 		<div className={styles["container"]}>
@@ -70,7 +69,7 @@ const ContributorsList = ({
 					{contributors.map((contributor) => (
 						<li key={contributor.id}>
 							<ContributorCard
-								activity={contributorActivitiesMap.get(contributor.id)}
+								activity={activities.get(contributor.id)}
 								contributor={contributor}
 								hasEditPermission={hasEditPermission}
 								hasMergePermission={hasMergePermission}
