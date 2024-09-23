@@ -201,10 +201,14 @@ const Project = (): JSX.Element => {
 
 	const hasProject = project !== null;
 
-	const hasSetupAnalyticsPermission = checkHasPermission(
+	const hasManageAllProjectsPermission = checkHasPermission(
 		[PermissionKey.MANAGE_ALL_PROJECTS],
 		userPermissions,
 	);
+
+	const hasSetupAnalyticsPermission = hasManageAllProjectsPermission;
+	const hasEditContributorPermission = hasManageAllProjectsPermission;
+	const hasMergeContributorPermission = hasManageAllProjectsPermission;
 
 	if (isRejected) {
 		return <NotFound />;
@@ -265,6 +269,8 @@ const Project = (): JSX.Element => {
 						<div className={styles["contributors-list-wrapper"]}>
 							<ContributorsList
 								contributors={projectContributors}
+								hasEditPermission={hasEditContributorPermission}
+								hasMergePermission={hasMergeContributorPermission}
 								isLoading={isContributorsDataLoading}
 								onEditContributor={handleEditContributor}
 								onMergeContributor={handleMergeContributor}
