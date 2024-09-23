@@ -1,5 +1,60 @@
 # Changelog
 
+## [1.47.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.46.0...frontend-v1.47.0) (2024-09-23)
+
+
+### Features
+
+* Add an ability to split contributors gf-462 ([#477](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/477)) ([adbf2af](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/adbf2afd81ac81518c50b158ab11cd89768e7c8a))
+
+## [1.46.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.45.0...frontend-v1.46.0) (2024-09-23)
+
+
+### Features
+
+* the earliest date availible to be choosen on the date range on the analytics page should be 1 year from today gf-482 ([#488](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/488)) ([f08b073](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f08b0733e296f8856983f462689a94a4f80dd855))
+
+
+### Bug Fixes
+
+* adjusted search for modal to remove double reload gf-455 ([#493](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/493)) ([d80d5c5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d80d5c5b201b7e44f82cc432e264e24bda39069a))
+
+## [1.45.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.44.1...frontend-v1.45.0) (2024-09-23)
+
+
+### Features
+
+* Add an activity chart to contributor items on project details page gf-420 ([#468](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/468)) ([38cf6eb](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/38cf6ebc535a40e117b68f18c53cbecb58ae356f))
+* add pagination to the contributors page gf-484 ([#491](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/491)) ([75e0b48](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75e0b483381fc8704feddbe3a6bf20b01331b98d))
+
+
+### Bug Fixes
+
+* date input component gf-472 ([#487](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/487)) ([b607eb3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b607eb3c2914717c60791f8185c29fb43376b891))
+* submit button labels in project create and update forms gf-474 ([#486](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/486)) ([00d9ade](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/00d9adec9421c90be57bc5f9a0b80e2c91c63eff))
+
+## [1.44.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.44.0...frontend-v1.44.1) (2024-09-23)
+
+
+### Bug Fixes
+
+* inconsistent alignment of the analytics table on the analytics page gf-473 ([#479](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/479)) ([3c5390c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3c5390c6a0d440d9600fece8e0bf027ffb73ea18))
+* loader component is not vertically centralized on the analytics page gf-471 ([#481](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/481)) ([bc36fa9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/bc36fa990d9c339b07f92777217384c13ddea499))
+
+## [1.44.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.43.0...frontend-v1.44.0) (2024-09-23)
+
+
+### Features
+
+* add ability to merge contributors gf-344 ([#435](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/435)) ([a52d648](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a52d6486d6753a73d228b3149eb5984ba32f4e81))
+
+
+### Bug Fixes
+
+* adjust column sizes so table fits 1440 screen resolution gf-448 ([#461](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/461)) ([bf7e7a6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/bf7e7a6596dc55a8d910bb48ed82f92040731227))
+* adjust root permissions gf-350 ([#466](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/466)) ([6e42ada](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6e42ada9f78adcd84fd348a76f7518f0d1b03819))
+* useSearch change to handle modal search gf-455 ([#459](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/459)) ([7b99a6d](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7b99a6d573eb67aa6d5517daff0c06ebb1fda8a4))
+
 ## [1.43.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.42.0...frontend-v1.43.0) (2024-09-20)
 
 

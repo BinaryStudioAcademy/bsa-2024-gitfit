@@ -10,14 +10,17 @@ import Ellipsis from "~/assets/images/icons/ellipsis.svg?react";
 import Eye from "~/assets/images/icons/eye.svg?react";
 import LeftArrow from "~/assets/images/icons/left-arrow.svg?react";
 import LeftDoubleArrow from "~/assets/images/icons/left-double-arrow.svg?react";
+import Merge from "~/assets/images/icons/merge.svg?react";
 import Notifications from "~/assets/images/icons/notifications.svg?react";
 import Pencil from "~/assets/images/icons/pencil.svg?react";
 import Project from "~/assets/images/icons/project.svg?react";
 import RightArrow from "~/assets/images/icons/right-arrow.svg?react";
 import RightDoubleArrow from "~/assets/images/icons/right-double-arrow.svg?react";
 import Search from "~/assets/images/icons/search.svg?react";
+import Split from "~/assets/images/icons/split.svg?react";
 import StrikedEye from "~/assets/images/icons/striked-eye.svg?react";
 import TrashBin from "~/assets/images/icons/trash-bin.svg?react";
+import Warning from "~/assets/images/icons/warning.svg?react";
 import { type IconName } from "~/libs/types/types.js";
 
 const iconNameToSvg: Record<IconName, FC<React.SVGProps<SVGSVGElement>>> = {
@@ -31,14 +34,17 @@ const iconNameToSvg: Record<IconName, FC<React.SVGProps<SVGSVGElement>>> = {
 	eye: Eye,
 	leftArrow: LeftArrow,
 	leftDoubleArrow: LeftDoubleArrow,
+	merge: Merge,
 	notifications: Notifications,
 	pencil: Pencil,
 	project: Project,
 	rightArrow: RightArrow,
 	rightDoubleArrow: RightDoubleArrow,
 	search: Search,
+	split: Split,
 	strikedEye: StrikedEye,
 	trashBin: TrashBin,
+	warning: Warning,
 };
 
 export { iconNameToSvg };

@@ -75,7 +75,10 @@ class ProjectGroupRepository implements Repository {
 		const projectGroup = await this.projectGroupModel
 			.query()
 			.findById(id)
-			.withGraphFetched("[permissions, projects, users]");
+			.withGraphFetched("[permissions, projects, users]")
+			.modifyGraph("users", (builder) => {
+				builder.whereNull("deletedAt");
+			});
 
 		if (projectGroup) {
 			const [project] = projectGroup.projects as [ProjectModel];
@@ -103,7 +106,10 @@ class ProjectGroupRepository implements Repository {
 			.page(page, pageSize)
 			.joinRelated("projects")
 			.where("projects.id", id)
-			.withGraphFetched("[permissions, users, projects]");
+			.withGraphFetched("[permissions, users, projects]")
+			.modifyGraph("users", (builder) => {
+				builder.whereNull("deletedAt");
+			});
 
 		return {
 			items: results.map((projectGroup) =>

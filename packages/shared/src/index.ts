@@ -63,14 +63,25 @@ export {
 } from "./modules/activity-logs/activity-logs.js";
 export { AuthApiPath, AuthError } from "./modules/auth/auth.js";
 export {
+	AuthAnalyticsApiPath,
+	type AuthAnalyticsValidateCredentialsRequestDto,
+	type AuthAnalyticsValidateCredentialsResponseDto,
+	authAnalyticsValidateCredentialsValidationSchema,
+} from "./modules/auth-analytics/auth-analytics.js";
+export {
 	type ContributorCreateRequestDto,
 	ContributorError,
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,
+	type ContributorMergeRequestDto,
+	contributorMergeValidationSchema,
 	type ContributorPatchRequestDto,
 	type ContributorPatchResponseDto,
-	ContributorPatchValidationSchema,
+	contributorPatchValidationSchema,
 	ContributorsApiPath,
+	type ContributorSplitRequestDto,
+	contributorSplitValidationSchema,
+	MIN_GIT_EMAILS_LENGTH_FOR_SPLIT,
 } from "./modules/contributors/contributors.js";
 export {
 	type GitEmailCreateRequestDto,

@@ -25,6 +25,7 @@ type Properties<T extends FieldValues> = {
 	control: Control<T, null>;
 	maxDate?: Date;
 	maxRange?: number;
+	minDate?: Date;
 	name: FieldPath<T>;
 };
 
@@ -32,6 +33,7 @@ const DateInput = <T extends FieldValues>({
 	control,
 	maxDate,
 	maxRange,
+	minDate,
 	name,
 }: Properties<T>): JSX.Element => {
 	const { field } = useFormController({
@@ -88,6 +90,7 @@ const DateInput = <T extends FieldValues>({
 						formatShortWeekday={handleFormatShortWeekday}
 						locale="en"
 						{...(maxDate && { maxDate })}
+						{...(minDate && { minDate })}
 						next2Label={null}
 						nextLabel={<Icon height={16} name="rightArrow" width={16} />}
 						onChange={handleDateChange}
@@ -96,12 +99,17 @@ const DateInput = <T extends FieldValues>({
 						selectRange
 						showDoubleView
 						value={field.value}
+						view="month"
 					/>
 				}
 				isOpened={isOpened}
 				onClose={onClose}
 			>
-				<button className={styles["date-input-trigger"]} onClick={onOpen}>
+				<button
+					className={styles["date-input-trigger"]}
+					onClick={isOpened ? onClose : onOpen}
+					type="button"
+				>
 					<span className={styles["calendar-icon-wrapper"]}>
 						<Icon height={20} name="calendar" width={20} />
 					</span>

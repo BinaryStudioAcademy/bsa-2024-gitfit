@@ -151,8 +151,11 @@ class ActivityLogService implements Service {
 			item.toObject(),
 		);
 
-		const allContributors =
-			await this.contributorService.findAllByProjects(projectIds);
+		const allContributors = await this.contributorService.findAllByProjects(
+			projectIds,
+			hasRootPermission,
+		);
+
 		const dateRange = getDateRange(startDate, endDate);
 
 		const INITIAL_COMMITS_NUMBER = 0;

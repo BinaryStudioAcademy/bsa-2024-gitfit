@@ -1,6 +1,10 @@
 const ExceptionMessage = {
 	ACTIVITY_LOG_CREATE_FAILED: "Failed to create activity log.",
+	CONTRIBUTOR_MERGE_FAILED: "Failed to merge contributors.",
 	CONTRIBUTOR_NOT_FOUND: "Contributor not found.",
+	CONTRIBUTOR_SELF_MERGE: "You can not merge the same contributor.",
+	CONTRIBUTOR_SPLIT_FAILED: "Failed to split contributors.",
+	CONTRIBUTOR_SPLIT_SINGLE_EMAIL: "You can not split single email.",
 	EMAIL_USED: "Email address is already in use.",
 	GIT_EMAIL_USED: "Git email is already in use.",
 	GROUP_NAME_USED: "Group name is already in use.",

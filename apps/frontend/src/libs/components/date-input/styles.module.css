@@ -75,12 +75,6 @@
 	color: var(--color-text-secondary);
 }
 
-.calendar :global(.react-calendar__year-view__months__month),
-.calendar :global(.react-calendar__century-view__decades__decade),
-.calendar :global(.react-calendar__decade-view__years__year) {
-	min-width: 100%;
-}
-
 .calendar :global(.react-calendar__tile--range) {
 	background: rgb(136 96 250 / 20%);
 	border-radius: 0;
@@ -100,12 +94,6 @@
 	max-width: 224px;
 }
 
-.calendar :global(.react-calendar__year-view__months),
-.calendar :global(.react-calendar__decade-view__years),
-.calendar :global(.react-calendar__century-view__decades) {
-	min-width: 128px;
-}
-
 .date-input-trigger {
 	display: flex;
 	gap: 8px;
@@ -113,6 +101,7 @@
 	width: 270px;
 	padding: 10px 16px;
 	color: inherit;
+	cursor: pointer;
 	background-color: var(--color-background-secondary);
 	border: 1px solid var(--color-border-primary);
 	border-radius: 6px;

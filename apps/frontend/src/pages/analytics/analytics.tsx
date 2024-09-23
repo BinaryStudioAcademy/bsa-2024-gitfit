@@ -1,4 +1,4 @@
-import { DateInput, Loader, PageLayout } from "~/libs/components/components.js";
+import { DateInput, PageLayout } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { subtractDays } from "~/libs/helpers/helpers.js";
 import {
@@ -12,12 +12,19 @@ import {
 import { actions as activityLogActions } from "~/modules/activity/activity.js";
 
 import { AnalyticsTable } from "./libs/components/components.js";
-import { ANALYTICS_DATE_MAX_RANGE } from "./libs/constants/constants.js";
+import {
+	ANALYTICS_DATE_MAX_RANGE,
+	ANALYTICS_LOOKBACK_DAYS_COUNT,
+} from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 const Analytics = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const todayDate = new Date();
+	const minChoosableDate = subtractDays(
+		todayDate,
+		ANALYTICS_LOOKBACK_DAYS_COUNT,
+	);
 
 	const { activityLogs, dataStatus } = useAppSelector(
 		({ activityLogs }) => activityLogs,
@@ -80,17 +87,15 @@ const Analytics = (): JSX.Element => {
 						control={control}
 						maxDate={todayDate}
 						maxRange={ANALYTICS_DATE_MAX_RANGE}
+						minDate={minChoosableDate}
 						name="dateRange"
 					/>
 				</form>
-				{isLoading ? (
-					<Loader />
-				) : (
-					<AnalyticsTable
-						activityLogs={activityLogs}
-						dateRange={dateRangeValue}
-					/>
-				)}
+				<AnalyticsTable
+					activityLogs={activityLogs}
+					dateRange={dateRangeValue}
+					isLoading={isLoading}
+				/>
 			</section>
 		</PageLayout>
 	);

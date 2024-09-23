@@ -4,11 +4,17 @@ import {
 	ContributorValidationMessage,
 	ContributorValidationRule,
 } from "../enums/enums.js";
-import { type ContributorPatchRequestDto } from "../types/types.js";
+import { type ContributorSplitRequestDto } from "../types/types.js";
 
-const ContributorPatch: z.ZodType<ContributorPatchRequestDto> = z
+const contributorSplit: z.ZodType<ContributorSplitRequestDto> = z
 	.object({
-		name: z
+		gitEmailId: z
+			.number({
+				required_error: ContributorValidationMessage.GIT_EMAIL_REQUIRED,
+			})
+			.int()
+			.positive(),
+		newContributorName: z
 			.string()
 			.trim()
 			.min(ContributorValidationRule.NAME_MINIMUM_LENGTH, {
@@ -20,4 +26,4 @@ const ContributorPatch: z.ZodType<ContributorPatchRequestDto> = z
 	})
 	.required();
 
-export { ContributorPatch };
+export { contributorSplit };
