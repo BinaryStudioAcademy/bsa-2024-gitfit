@@ -3,7 +3,11 @@ import { type GITService } from "~/libs/modules/git-service/git-service.js";
 import { logger } from "~/libs/modules/logger/logger.js";
 
 import { type analyticsApi } from "./analytics.js";
-import { COMMIT_REGEX } from "./libs/constants/constants.js";
+import {
+	COMMIT_REGEX,
+	EMPTY_LENGTH,
+	FIRST_ARRAY_INDEX,
+} from "./libs/constants/constants.js";
 import {
 	type ActivityLogCreateItemRequestDto,
 	type CommitStatistics,
@@ -82,6 +86,15 @@ class AnalyticsService {
 		try {
 			await this.fetchRepository();
 			const stats = await this.collectStatsByRepository();
+
+			if (
+				stats[FIRST_ARRAY_INDEX] &&
+				stats[FIRST_ARRAY_INDEX].items.length === EMPTY_LENGTH
+			) {
+				logger.info("There are no statistics for this day.");
+
+				return;
+			}
 
 			await this.analyticsApi.sendAnalytics(this.apiKey, {
 				items: stats,
