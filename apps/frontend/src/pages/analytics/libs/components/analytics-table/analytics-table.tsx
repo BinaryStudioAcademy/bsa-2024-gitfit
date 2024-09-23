@@ -29,7 +29,11 @@ const AnalyticsTable = ({
 
 	return (
 		<div className={styles["analytics-table"]}>
-			<Table<AnalyticsRow> columns={analyticsColumns} data={analyticsData} />
+			<Table<AnalyticsRow>
+				columns={analyticsColumns}
+				data={analyticsData}
+				isFullHeight
+			/>
 		</div>
 	);
 };
