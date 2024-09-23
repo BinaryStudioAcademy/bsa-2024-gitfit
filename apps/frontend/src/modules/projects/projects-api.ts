@@ -54,26 +54,36 @@ class ProjectApi extends BaseHTTPApi {
 	}
 
 	public async getAll(
-		query: ProjectGetAllRequestDto | undefined,
+		query: ProjectGetAllRequestDto,
 	): Promise<ProjectGetAllResponseDto> {
-		const queryParameters: Record<string, string> = {
-			...(query?.name && { name: query.name }),
-			...(query?.page !== undefined && { page: String(query.page) }),
-			...(query?.pageSize !== undefined && {
-				pageSize: String(query.pageSize),
-			}),
-		};
-
 		const response = await this.load(
 			this.getFullEndpoint(ProjectsApiPath.ROOT, {}),
 			{
 				hasAuth: true,
 				method: "GET",
-				query: queryParameters,
+				query: {
+					name: query.name,
+					page: String(query.page),
+					pageSize: String(query.pageSize),
+				},
 			},
 		);
 
 		return await response.json<ProjectGetAllResponseDto>();
+	}
+
+	public async getAllWithoutPagination(): Promise<
+		ProjectGetAllItemResponseDto[]
+	> {
+		const response = await this.load(
+			this.getFullEndpoint(ProjectsApiPath.All, {}),
+			{
+				hasAuth: true,
+				method: "GET",
+			},
+		);
+
+		return await response.json<ProjectGetAllItemResponseDto[]>();
 	}
 
 	public async getById(payload: {

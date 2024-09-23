@@ -120,7 +120,7 @@ class ProjectService implements Service {
 	}
 
 	public async findAll(
-		parameters: null | ProjectGetAllRequestDto,
+		parameters: ProjectGetAllRequestDto,
 	): Promise<ProjectGetAllResponseDto> {
 		const { items, totalItems } =
 			await this.projectRepository.findAll(parameters);
@@ -133,6 +133,18 @@ class ProjectService implements Service {
 			}),
 			totalItems,
 		};
+	}
+
+	public async findAllWithoutPagination(): Promise<
+		ProjectGetAllItemResponseDto[]
+	> {
+		const projects = await this.projectRepository.findAllWithoutPagination();
+
+		return projects.map((project) => {
+			const { id, lastActivityDate, name } = project.toObject();
+
+			return { id, lastActivityDate, name };
+		});
 	}
 
 	public async findInactiveProjects(

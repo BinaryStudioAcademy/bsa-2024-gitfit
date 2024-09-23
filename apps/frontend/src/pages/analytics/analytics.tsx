@@ -10,7 +10,6 @@ import {
 	useFormWatch,
 } from "~/libs/hooks/hooks.js";
 import { actions as activityLogActions } from "~/modules/activity/activity.js";
-import { actions as projectActions } from "~/modules/projects/projects.js";
 
 import { AnalyticsTable } from "./libs/components/components.js";
 import {
@@ -28,13 +27,12 @@ const Analytics = (): JSX.Element => {
 		ANALYTICS_LOOKBACK_DAYS_COUNT,
 	);
 
-	const { activityLogs, dataStatus } = useAppSelector(
+	const { activityLogs, dataStatus, projects } = useAppSelector(
 		({ activityLogs }) => activityLogs,
 	);
-	const { projects } = useAppSelector(({ projects }) => projects);
 
 	useEffect(() => {
-		void dispatch(projectActions.loadAll());
+		void dispatch(activityLogActions.loadAllProjects());
 	}, [dispatch]);
 
 	const { control, handleSubmit, isDirty } = useAppForm({
@@ -95,7 +93,7 @@ const Analytics = (): JSX.Element => {
 			<h1 className={styles["title"]}>Analytics</h1>
 			<section>
 				<form className={styles["filters-form"]} onSubmit={handleFormSubmit}>
-					<div className={styles["wraper-selector"]}>
+					<div className={styles["select-wrapper"]}>
 						<Select
 							control={control}
 							isClearable

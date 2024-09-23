@@ -5,6 +5,7 @@ import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import {
 	type ActivityLogGetAllAnalyticsResponseDto,
 	type ActivityLogQueryParameters,
+	type ProjectGetAllItemResponseDto,
 } from "../libs/types/types.js";
 import { name as sliceName } from "./activity.slice.js";
 
@@ -18,4 +19,14 @@ const loadAll = createAsyncThunk<
 	return await activityLogApi.getAll(query);
 });
 
-export { loadAll };
+const loadAllProjects = createAsyncThunk<
+	ProjectGetAllItemResponseDto[],
+	undefined,
+	AsyncThunkConfig
+>(`${sliceName}/load-all-projects`, async (_, { extra }) => {
+	const { projectApi } = extra;
+
+	return await projectApi.getAllWithoutPagination();
+});
+
+export { loadAll, loadAllProjects };
