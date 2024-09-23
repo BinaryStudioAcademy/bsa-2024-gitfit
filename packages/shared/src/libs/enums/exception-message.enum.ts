@@ -1,6 +1,6 @@
 const ExceptionMessage = {
 	ACTIVITY_LOG_CREATE_FAILED: "Failed to create activity log.",
-	CONTRIBUTOR_MERGE_FAILED: "Failed to merge contributor.",
+	CONTRIBUTOR_MERGE_FAILED: "Failed to merge contributors.",
 	CONTRIBUTOR_NOT_FOUND: "Contributor not found.",
 	CONTRIBUTOR_SELF_MERGE: "You can not merge the same contributor.",
 	CONTRIBUTOR_SPLIT_FAILED: "Failed to split contributor.",

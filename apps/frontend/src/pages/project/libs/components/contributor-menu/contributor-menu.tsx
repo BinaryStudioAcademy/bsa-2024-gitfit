@@ -45,21 +45,23 @@ const ContributorMenu = ({
 		hasEditPermission || hasMergePermission || hasSplitPermission;
 
 	return (
-		<div className={styles["menu-container"]}>
+		<>
 			{isMenuShown && (
-				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-					{hasEditPermission && (
-						<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
-					)}
-					{hasMergePermission && (
-						<MenuItem iconName="merge" label="Merge" onClick={handleMerge} />
-					)}
-					{hasSplitPermission && isSplitEnabled && (
-						<MenuItem iconName="split" label="Split" onClick={handleSplit} />
-					)}
-				</Menu>
+				<div className={styles["menu-container"]}>
+					<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+						{hasEditPermission && (
+							<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
+						)}
+						{hasMergePermission && (
+							<MenuItem iconName="merge" label="Merge" onClick={handleMerge} />
+						)}
+						{hasSplitPermission && isSplitEnabled && (
+							<MenuItem iconName="split" label="Split" onClick={handleSplit} />
+						)}
+					</Menu>
+				</div>
 			)}
-		</div>
+		</>
 	);
 };
 

@@ -121,6 +121,7 @@ class ContributorController extends BaseController {
 				),
 			method: "PATCH",
 			path: ContributorsApiPath.SPLIT_$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 			validation: {
 				body: contributorSplitValidationSchema,
 			},
