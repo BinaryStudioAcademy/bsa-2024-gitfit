@@ -2,11 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
+import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
-import {
-	type ActivityLogGetAllItemAnalyticsResponseDto,
-	type ProjectGetAllItemResponseDto,
-} from "../libs/types/types.js";
+import { type ActivityLogGetAllItemAnalyticsResponseDto } from "../libs/types/types.js";
 import { loadAll, loadAllProjects } from "./actions.js";
 
 type State = {

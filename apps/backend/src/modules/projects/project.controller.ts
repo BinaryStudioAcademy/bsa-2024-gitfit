@@ -97,18 +97,6 @@ class ProjectController extends BaseController {
 		});
 
 		this.addRoute({
-			handler: () => this.findAllProjects(),
-			method: "GET",
-			path: ProjectsApiPath.All,
-			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.VIEW_ALL_PROJECTS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
-			],
-		});
-
-		this.addRoute({
 			handler: (options) =>
 				this.getById(
 					options as APIHandlerOptions<{
@@ -244,39 +232,19 @@ class ProjectController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		const { name, page, pageSize } = options.query;
 
-		return {
-			payload: await this.projectService.findAll({
-				name,
-				page: Number(page),
-				pageSize: Number(pageSize),
-			}),
-			status: HTTPCode.OK,
-		};
-	}
-
-	/**
-	 * @swagger
-	 * /projects/all:
-	 *   get:
-	 *     summary: Get all projects without pagination
-	 *     description: Returns all projects without pagination or filters.
-	 *     tags:
-	 *       - Projects
-	 *     responses:
-	 *       200:
-	 *         description: Successful operation
-	 *         content:
-	 *           application/json:
-	 *             schema:
-	 *               type: array
-	 *               items:
-	 *                 $ref: "#/components/schemas/Project"
-	 */
-	private async findAllProjects(): Promise<APIHandlerResponse> {
-		const projects = await this.projectService.findAllWithoutPagination();
+		if (page && pageSize) {
+			return {
+				payload: await this.projectService.findAll({
+					name,
+					page: Number(page),
+					pageSize: Number(pageSize),
+				}),
+				status: HTTPCode.OK,
+			};
+		}
 
 		return {
-			payload: projects,
+			payload: await this.projectService.findAllWithoutPagination(),
 			status: HTTPCode.OK,
 		};
 	}

@@ -76,7 +76,7 @@ class ProjectApi extends BaseHTTPApi {
 		ProjectGetAllItemResponseDto[]
 	> {
 		const response = await this.load(
-			this.getFullEndpoint(ProjectsApiPath.All, {}),
+			this.getFullEndpoint(ProjectsApiPath.ROOT, {}),
 			{
 				hasAuth: true,
 				method: "GET",

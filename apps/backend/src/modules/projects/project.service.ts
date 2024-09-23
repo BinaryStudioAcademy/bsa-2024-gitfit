@@ -140,11 +140,7 @@ class ProjectService implements Service {
 	> {
 		const projects = await this.projectRepository.findAllWithoutPagination();
 
-		return projects.map((project) => {
-			const { id, lastActivityDate, name } = project.toObject();
-
-			return { id, lastActivityDate, name };
-		});
+		return projects.map((project) => project.toObject());
 	}
 
 	public async findInactiveProjects(

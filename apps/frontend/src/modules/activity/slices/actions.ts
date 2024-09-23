@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
+import { type ProjectGetAllItemResponseDto } from "~/modules/projects/projects.js";
 
 import {
 	type ActivityLogGetAllAnalyticsResponseDto,
 	type ActivityLogQueryParameters,
-	type ProjectGetAllItemResponseDto,
 } from "../libs/types/types.js";
 import { name as sliceName } from "./activity.slice.js";
 
