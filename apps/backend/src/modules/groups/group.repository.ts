@@ -65,7 +65,10 @@ class GroupRepository implements Repository {
 			.query()
 			.orderBy("createdAt", SortType.DESCENDING)
 			.page(page, pageSize)
-			.withGraphFetched("[permissions, users]");
+			.withGraphFetched("[permissions, users]")
+			.modifyGraph("users", (builder) => {
+				builder.whereNull("deletedAt");
+			});
 
 		return {
 			items: results.map((group) => GroupEntity.initialize(group)),

@@ -34,6 +34,7 @@ const AnalyticsTable = ({
 			<Table<AnalyticsRow>
 				columns={analyticsColumns}
 				data={analyticsData}
+				isFullHeight
 				isLoading={isLoading}
 			/>
 		</div>
