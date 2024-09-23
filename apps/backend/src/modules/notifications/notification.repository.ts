@@ -70,7 +70,7 @@ class NotificationRepository implements Repository {
 		const { results, total } = await this.notificationModel
 			.query()
 			.where("receiverUserId", userId)
-			.orderBy("createdAt", SortType.DESCENDING)
+			.orderBy("created_at", SortType.DESCENDING)
 			.page(page, pageSize);
 
 		return {

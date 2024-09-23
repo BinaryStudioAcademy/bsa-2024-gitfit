@@ -1,7 +1,7 @@
 .notifications-popover {
 	min-width: 380px;
-	max-height: 360px; /* Restrict the height */
-	overflow-y: auto; /* Enable scrolling */
+	max-height: 360px;
+	overflow-y: auto;
 }
 
 .notifications-title {
