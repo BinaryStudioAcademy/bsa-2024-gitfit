@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.30.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.29.0...backend-v1.30.0) (2024-09-23)
+
+
+### Features
+
+* add ability to merge contributors gf-344 ([#435](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/435)) ([a52d648](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a52d6486d6753a73d228b3149eb5984ba32f4e81))
+* authorize the request before starting background job for analytics gf-464 ([#467](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/467)) ([fb682c3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/fb682c36b7159031475896e12169738756928d6e))
+
+
+### Bug Fixes
+
+* adjust root permissions gf-350 ([#466](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/466)) ([6e42ada](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6e42ada9f78adcd84fd348a76f7518f0d1b03819))
+
 ## [1.29.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.28.1...backend-v1.29.0) (2024-09-20)
 
 
