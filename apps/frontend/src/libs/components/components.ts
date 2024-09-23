@@ -1,9 +1,9 @@
-export { ActivityChart } from "./activity-chart/activity-chart.js";
 export { ActivityIndicator } from "./activity-indicator/activity-indicator.js";
 export { App } from "./app/app.js";
 export { Avatar } from "./avatar/avatar.js";
 export { Breadcrumbs } from "./breadcrumbs/breadcrumbs.js";
 export { Button } from "./button/button.js";
+export { Chart } from "./chart/chart.js";
 export { Checkbox } from "./checkbox/checkbox.js";
 export { ConfirmationModal } from "./confirmation-modal/confirmation-modal.js";
 export { DateInput } from "./date-input/date-input.js";

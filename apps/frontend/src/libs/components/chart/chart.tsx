@@ -1,12 +1,12 @@
 import { Line, LineChart } from "recharts";
 
-import { type ActivityChartData } from "./libs/types/types.js";
+import { type ChartData } from "./libs/types/types.js";
 
 type Properties = {
-	data: ActivityChartData;
+	data: ChartData;
 };
 
-const ActivityChart = ({ data }: Properties): JSX.Element => {
+const Chart = ({ data }: Properties): JSX.Element => {
 	return (
 		<LineChart data={data} height={40} width={120}>
 			<Line
@@ -19,4 +19,4 @@ const ActivityChart = ({ data }: Properties): JSX.Element => {
 	);
 };
 
-export { ActivityChart };
+export { Chart };

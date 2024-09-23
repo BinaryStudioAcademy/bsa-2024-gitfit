@@ -1,8 +1,5 @@
-import { type ActivityChartData } from "~/libs/components/activity-chart/libs/types/types.js";
-import {
-	ActivityChart,
-	ActivityIndicator,
-} from "~/libs/components/components.js";
+import { type ChartData } from "~/libs/components/chart/libs/types/types.js";
+import { ActivityIndicator, Chart } from "~/libs/components/components.js";
 import {
 	getActivityIndicatorStatus,
 	getDifferenceInDays,
@@ -56,7 +53,7 @@ const ContributorCard = ({
 	const hasActivityIndicator = lastUpdateLabel !== null && colorStatus !== null;
 
 	const hasActivityData = Boolean(activity);
-	const activityData: ActivityChartData = useMemo(
+	const activityData: ChartData = useMemo(
 		() => activity?.map((commitsNumber) => ({ y: commitsNumber })) ?? [],
 		[activity],
 	);
@@ -75,7 +72,7 @@ const ContributorCard = ({
 			{hasActivityIndicator && (
 				<ActivityIndicator label={lastUpdateLabel} status={colorStatus} />
 			)}
-			{hasActivityData && <ActivityChart data={activityData} />}
+			{hasActivityData && <Chart data={activityData} />}
 			<ContributorMenu
 				contributorId={contributor.id}
 				hasEditPermission={hasEditPermission}
