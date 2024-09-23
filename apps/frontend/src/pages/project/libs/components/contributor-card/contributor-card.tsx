@@ -8,17 +8,17 @@ import {
 	getRelativeDate,
 	getStartOfDay,
 } from "~/libs/helpers/helpers.js";
-import { useCallback } from "~/libs/hooks/hooks.js";
-import { type ActivityLogGetAllItemAnalyticsResponseDto } from "~/modules/activity/activity.js";
-import { type ContributorGetAllItemResponseDto } from "~/pages/project/libs/types/types.js";
+import { useCallback, useMemo } from "~/libs/hooks/hooks.js";
+import {
+	type ContributorActivity,
+	type ContributorGetAllItemResponseDto,
+} from "~/pages/project/libs/types/types.js";
 
 import { ContributorMenu } from "../components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	activityLog?:
-		| ActivityLogGetAllItemAnalyticsResponseDto["commitsNumber"]
-		| undefined;
+	activity?: ContributorActivity | undefined;
 	contributor: ContributorGetAllItemResponseDto;
 	hasEditPermission: boolean;
 	hasMergePermission: boolean;
@@ -27,7 +27,7 @@ type Properties = {
 };
 
 const ContributorCard = ({
-	activityLog,
+	activity,
 	contributor,
 	hasEditPermission,
 	hasMergePermission,
@@ -54,11 +54,11 @@ const ContributorCard = ({
 
 	const hasActivityIndicator = lastUpdateLabel !== null && colorStatus !== null;
 
-	const hasActivityData = Boolean(activityLog);
-	const activityData =
-		activityLog?.map((commitsNumber) => ({
-			commitsNumber,
-		})) ?? [];
+	const hasActivityData = Boolean(activity);
+	const activityData = useMemo(
+		() => activity?.map((commitsNumber) => ({ commitsNumber })) ?? [],
+		[activity],
+	);
 
 	const handleEditClick = useCallback(() => {
 		onEdit(contributor.id);
