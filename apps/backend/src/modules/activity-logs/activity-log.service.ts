@@ -133,11 +133,13 @@ class ActivityLogService implements Service {
 
 	public async findAll({
 		endDate,
+		hasHidden = false,
 		projectId,
 		startDate,
 	}: ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
 		const activityLogsEntities = await this.activityLogRepository.findAll({
 			endDate,
+			hasHidden,
 			projectId,
 			startDate,
 		});
@@ -148,7 +150,7 @@ class ActivityLogService implements Service {
 
 		const allContributors = await (projectId
 			? this.contributorService.findAllByProjectId(Number(projectId))
-			: this.contributorService.findAll());
+			: this.contributorService.findAll({ hasHidden: false }));
 
 		const dateRange = getDateRange(startDate, endDate);
 
@@ -156,10 +158,6 @@ class ActivityLogService implements Service {
 		const contributorMap: Record<string, number[]> = {};
 
 		for (const contributor of allContributors.items) {
-			if (contributor.isHidden) {
-				continue;
-			}
-
 			const uniqueKey = `${contributor.name}_${String(contributor.id)}`;
 			contributorMap[uniqueKey] = Array.from(
 				{ length: dateRange.length },

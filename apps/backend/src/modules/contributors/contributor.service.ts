@@ -52,8 +52,14 @@ class ContributorService implements Service {
 		return item.toObject();
 	}
 
-	public async findAll(): Promise<ContributorGetAllResponseDto> {
-		const contributors = await this.contributorRepository.findAll();
+	public async findAll({
+		hasHidden = true,
+	}: {
+		hasHidden?: boolean;
+	}): Promise<ContributorGetAllResponseDto> {
+		const contributors = await this.contributorRepository.findAll({
+			hasHidden,
+		});
 
 		return {
 			items: contributors.items.map((item) => {

@@ -151,7 +151,7 @@ class ContributorController extends BaseController {
 		}
 
 		return {
-			payload: await this.contributorService.findAll(),
+			payload: await this.contributorService.findAll({ hasHidden: true }),
 			status: HTTPCode.OK,
 		};
 	}

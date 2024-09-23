@@ -50,8 +50,10 @@ class ContributorRepository implements Repository {
 		return ContributorEntity.initialize(contributor);
 	}
 
-	public async findAll(): Promise<{ items: ContributorEntity[] }> {
-		const contributorsWithProjectsAndEmails = await this.contributorModel
+	public async findAll({ hasHidden }: { hasHidden?: boolean } = {}): Promise<{
+		items: ContributorEntity[];
+	}> {
+		const query = this.contributorModel
 			.query()
 			.select("contributors.*")
 			.select(
@@ -64,6 +66,12 @@ class ContributorRepository implements Repository {
 			.leftJoin("projects", "activity_logs.project_id", "projects.id")
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
+
+		if (!hasHidden) {
+			query.where("contributors.isHidden", false);
+		}
+
+		const contributorsWithProjectsAndEmails = await query;
 
 		return {
 			items: contributorsWithProjectsAndEmails.map((contributor) => {
