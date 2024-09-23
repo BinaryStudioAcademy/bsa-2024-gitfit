@@ -1,6 +1,6 @@
 import { Line, LineChart } from "recharts";
 
-import { type ChartData } from "./libs/types/types.js";
+import { type ChartData } from "~/libs/types/types.js";
 
 type Properties = {
 	data: ChartData;

@@ -1,4 +1,3 @@
-import { type ChartData } from "~/libs/components/chart/libs/types/types.js";
 import { ActivityIndicator, Chart } from "~/libs/components/components.js";
 import {
 	getActivityIndicatorStatus,
@@ -7,6 +6,7 @@ import {
 	getStartOfDay,
 } from "~/libs/helpers/helpers.js";
 import { useCallback, useMemo } from "~/libs/hooks/hooks.js";
+import { type ChartData } from "~/libs/types/types.js";
 import {
 	type ContributorActivity,
 	type ContributorGetAllItemResponseDto,
