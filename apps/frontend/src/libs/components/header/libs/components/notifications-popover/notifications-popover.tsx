@@ -1,4 +1,4 @@
-import { Popover } from "~/libs/components/components.js";
+import { Loader, Popover } from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { formatRelativeTime } from "~/libs/helpers/helpers.js";
 import {
@@ -6,6 +6,7 @@ import {
 	useAppSelector,
 	useCallback,
 	useEffect,
+	useInfiniteScroll,
 } from "~/libs/hooks/hooks.js";
 import { actions as notificationActions } from "~/modules/notifications/notifications.js";
 
@@ -18,26 +19,40 @@ type Properties = {
 	onClose: () => void;
 };
 
+const PAGE_SIZE = 10;
+
 const NotificationsPopover = ({
 	children,
 	isOpened,
 	onClose,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-
-	const { notifications } = useAppSelector(
+	const { notifications, notificationsTotalCount } = useAppSelector(
 		({ notifications }) => notifications,
 	);
 
-	const handleLoadNotifications = useCallback(() => {
-		void dispatch(notificationActions.loadAll());
-	}, [dispatch]);
+	const handleLoadNotifications = useCallback(
+		(page: number, pageSize: number) => {
+			void dispatch(notificationActions.loadAll({ page, pageSize }));
+		},
+		[dispatch],
+	);
+
+	const { hasNextPage, onNextPage, onPageReset } = useInfiniteScroll({
+		currentItemsCount: notifications.length,
+		onLoading: handleLoadNotifications,
+		pageSize: PAGE_SIZE,
+		totalItemsCount: notificationsTotalCount,
+	});
 
 	useEffect(() => {
-		handleLoadNotifications();
-	}, [handleLoadNotifications]);
+		if (isOpened) {
+			onPageReset();
+		}
+	}, [isOpened, onPageReset]);
 
 	const hasNotifications = notifications.length !== EMPTY_LENGTH;
+	const isLoading = hasNextPage;
 
 	return (
 		<Popover
@@ -57,6 +72,15 @@ const NotificationsPopover = ({
 							<p className={styles["empty-placeholder"]}>
 								There is nothing yet.
 							</p>
+						)}
+						{isLoading && <Loader />}
+						{hasNextPage && (
+							<button
+								className={styles["load-more-button"]}
+								onClick={onNextPage}
+							>
+								Load More
+							</button>
 						)}
 					</div>
 				</div>

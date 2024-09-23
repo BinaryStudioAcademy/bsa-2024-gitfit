@@ -6,6 +6,7 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { NotificationsApiPath } from "./libs/enums/enums.js";
 import { type NotificationService } from "./notification.service.js";
@@ -43,7 +44,12 @@ class NotificationController extends BaseController {
 		this.notificationService = notificationService;
 
 		this.addRoute({
-			handler: (options) => this.findAll(options),
+			handler: (options) =>
+				this.findAll(
+					options as APIHandlerOptions<{
+						query: PaginationQueryParameters;
+					}>,
+				),
 			method: "GET",
 			path: NotificationsApiPath.ROOT,
 		});
@@ -67,18 +73,21 @@ class NotificationController extends BaseController {
 	 *                   items:
 	 *                     $ref: "#/components/schemas/Notification"
 	 */
-	private async findAll(
-		options: APIHandlerOptions,
-	): Promise<APIHandlerResponse> {
-		const { user } = options;
-
+	private async findAll({
+		query,
+		user,
+	}: APIHandlerOptions<{
+		query: PaginationQueryParameters;
+	}>): Promise<APIHandlerResponse> {
 		const typedUser = user as { id: number };
 
 		return {
-			payload: await this.notificationService.findAll(typedUser.id),
+			payload: await this.notificationService.findAll({
+				...query,
+				userId: typedUser.id,
+			}),
 			status: HTTPCode.OK,
 		};
 	}
 }
-
 export { NotificationController };
