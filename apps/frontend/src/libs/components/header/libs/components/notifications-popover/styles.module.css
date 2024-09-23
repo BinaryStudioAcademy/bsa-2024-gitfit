@@ -1,5 +1,7 @@
 .notifications-popover {
 	min-width: 380px;
+	max-height: 360px; /* Restrict the height */
+	overflow-y: auto; /* Enable scrolling */
 }
 
 .notifications-title {
@@ -18,6 +20,10 @@
 	flex-direction: column;
 	gap: 4px;
 	padding: 4px;
+}
+
+.sentinel {
+	height: 1px;
 }
 
 .button {

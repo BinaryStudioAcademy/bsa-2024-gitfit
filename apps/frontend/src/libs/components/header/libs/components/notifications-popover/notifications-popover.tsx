@@ -1,5 +1,6 @@
 import { Loader, Popover } from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
+import { DataStatus } from "~/libs/enums/enums.js";
 import { formatRelativeTime } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
@@ -7,6 +8,7 @@ import {
 	useCallback,
 	useEffect,
 	useInfiniteScroll,
+	useIntersectionObserver,
 } from "~/libs/hooks/hooks.js";
 import { actions as notificationActions } from "~/modules/notifications/notifications.js";
 
@@ -27,7 +29,7 @@ const NotificationsPopover = ({
 	onClose,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { notifications, notificationsTotalCount } = useAppSelector(
+	const { dataStatus, notifications, notificationsTotalCount } = useAppSelector(
 		({ notifications }) => notifications,
 	);
 
@@ -45,6 +47,12 @@ const NotificationsPopover = ({
 		totalItemsCount: notificationsTotalCount,
 	});
 
+	const { reference: sentinelReference } =
+		useIntersectionObserver<HTMLDivElement>({
+			isDisabled: !hasNextPage || dataStatus === "pending",
+			onIntersect: onNextPage,
+		});
+
 	useEffect(() => {
 		if (isOpened) {
 			onPageReset();
@@ -52,7 +60,7 @@ const NotificationsPopover = ({
 	}, [isOpened, onPageReset]);
 
 	const hasNotifications = notifications.length !== EMPTY_LENGTH;
-	const isLoading = hasNextPage;
+	const isLoadingMore = hasNextPage && dataStatus === DataStatus.PENDING;
 
 	return (
 		<Popover
@@ -73,15 +81,10 @@ const NotificationsPopover = ({
 								There is nothing yet.
 							</p>
 						)}
-						{isLoading && <Loader />}
-						{hasNextPage && (
-							<button
-								className={styles["load-more-button"]}
-								onClick={onNextPage}
-							>
-								Load More
-							</button>
-						)}
+
+						<div className={styles["sentinel"]} ref={sentinelReference} />
+
+						{isLoadingMore && <Loader />}
 					</div>
 				</div>
 			}
