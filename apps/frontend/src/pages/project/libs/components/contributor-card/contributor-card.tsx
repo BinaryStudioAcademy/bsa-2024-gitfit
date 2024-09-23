@@ -1,4 +1,5 @@
 import { ActivityIndicator, Chart } from "~/libs/components/components.js";
+import { MIN_GIT_EMAILS_LENGTH_FOR_SPLIT } from "~/libs/constants/constants.js";
 import {
 	getActivityIndicatorStatus,
 	getDifferenceInDays,
@@ -20,8 +21,10 @@ type Properties = {
 	contributor: ContributorGetAllItemResponseDto;
 	hasEditPermission: boolean;
 	hasMergePermission: boolean;
+	hasSplitPermission: boolean;
 	onEdit: (contributorId: number) => void;
 	onMerge: (contributorId: number) => void;
+	onSplit: (contributorId: number) => void;
 };
 
 const ContributorCard = ({
@@ -29,8 +32,10 @@ const ContributorCard = ({
 	contributor,
 	hasEditPermission,
 	hasMergePermission,
+	hasSplitPermission,
 	onEdit,
 	onMerge,
+	onSplit,
 }: Properties): JSX.Element => {
 	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = contributor.lastActivityDate
@@ -66,6 +71,10 @@ const ContributorCard = ({
 		onMerge(contributor.id);
 	}, [onMerge, contributor.id]);
 
+	const handleSplitClick = useCallback(() => {
+		onSplit(contributor.id);
+	}, [onSplit, contributor.id]);
+
 	return (
 		<div className={styles["card"]}>
 			<span className={styles["name"]}>{contributor.name}</span>
@@ -77,8 +86,13 @@ const ContributorCard = ({
 				contributorId={contributor.id}
 				hasEditPermission={hasEditPermission}
 				hasMergePermission={hasMergePermission}
+				hasSplitPermission={hasSplitPermission}
+				isSplitEnabled={
+					contributor.gitEmails.length > MIN_GIT_EMAILS_LENGTH_FOR_SPLIT
+				}
 				onEdit={handleEditClick}
 				onMerge={handleMergeClick}
+				onSplit={handleSplitClick}
 			/>
 		</div>
 	);
