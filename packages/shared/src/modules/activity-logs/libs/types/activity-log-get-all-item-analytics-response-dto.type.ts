@@ -1,7 +1,9 @@
 type ActivityLogGetAllItemAnalyticsResponseDto = {
 	commitsNumber: (number | string)[];
-	contributorId: string;
-	contributorName: string;
+	contributor: {
+		id: string;
+		name: string;
+	};
 };
 
 export { type ActivityLogGetAllItemAnalyticsResponseDto };

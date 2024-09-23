@@ -47,16 +47,19 @@ class ActivityLogRepository implements Repository {
 	}: ActivityLogQueryParameters): Promise<{ items: ActivityLogEntity[] }> {
 		const query = this.activityLogModel
 			.query()
-			.withGraphJoined("[gitEmail.contributor, project, createdByUser]")
+			.withGraphFetched("[project, createdByUser]")
+			.withGraphJoined("gitEmail.contributor")
 			.modifyGraph("gitEmail.contributor", (builder) => {
-				builder
-					.select("id", "name")
-					.where("name", "like", `%${contributorName}%`);
+				builder.select("id", "name");
 			})
 			.whereBetween("activity_logs.date", [startDate, endDate])
 			.orderBy("date");
 
-		const activityLogs = await query;
+		if (contributorName) {
+			query.whereILike("gitEmail:contributor.name", `%${contributorName}%`);
+		}
+
+		const activityLogs = await query.execute();
 
 		return {
 			items: activityLogs.map((activityLog) =>

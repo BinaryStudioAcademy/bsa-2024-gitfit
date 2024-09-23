@@ -145,19 +145,11 @@ class ActivityLogService implements Service {
 		const activityLogs = activityLogsEntities.items.map((item) =>
 			item.toObject(),
 		);
-		const allContributors = await this.contributorService.findAll();
+
 		const dateRange = getDateRange(startDate, endDate);
 
 		const INITIAL_COMMITS_NUMBER = 0;
 		const contributorMap: Record<string, number[]> = {};
-
-		for (const contributor of allContributors.items) {
-			const uniqueKey = `${contributor.name}_${String(contributor.id)}`;
-			contributorMap[uniqueKey] = Array.from(
-				{ length: dateRange.length },
-				() => INITIAL_COMMITS_NUMBER,
-			);
-		}
 
 		for (const log of activityLogs) {
 			const { commitsNumber, date, gitEmail } = log;
@@ -167,11 +159,16 @@ class ActivityLogService implements Service {
 			const formattedDate = formatDate(new Date(date), "MMM d");
 			const dateIndex = dateRange.indexOf(formattedDate);
 
-			if (contributorMap[uniqueKey]) {
-				const currentValue =
-					contributorMap[uniqueKey][dateIndex] ?? INITIAL_COMMITS_NUMBER;
-				contributorMap[uniqueKey][dateIndex] = currentValue + commitsNumber;
+			if (!contributorMap[uniqueKey]) {
+				contributorMap[uniqueKey] = Array.from(
+					{ length: dateRange.length },
+					() => INITIAL_COMMITS_NUMBER,
+				);
 			}
+
+			const currentValue =
+				contributorMap[uniqueKey][dateIndex] ?? INITIAL_COMMITS_NUMBER;
+			contributorMap[uniqueKey][dateIndex] = currentValue + commitsNumber;
 		}
 
 		return {
@@ -180,8 +177,10 @@ class ActivityLogService implements Service {
 
 				return {
 					commitsNumber: commitsArray,
-					contributorId: contributorId ?? "",
-					contributorName: contributorName ?? "",
+					contributor: {
+						id: contributorId ?? "",
+						name: contributorName ?? "",
+					},
 				};
 			}),
 		};
