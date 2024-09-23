@@ -1,4 +1,4 @@
-import { SINGLE_ITEM } from "~/libs/constants/constants.js";
+import { MIN_GIT_EMAILS_LENGTH_FOR_SPLIT } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
@@ -183,17 +183,19 @@ class ContributorService implements Service {
 
 		const currentContributor = currentContributorEntity.toObject();
 
-		if (currentContributor.gitEmails.length <= SINGLE_ITEM) {
+		if (
+			currentContributor.gitEmails.length <= MIN_GIT_EMAILS_LENGTH_FOR_SPLIT
+		) {
 			throw new ContributorError({
 				message: ExceptionMessage.CONTRIBUTOR_SPLIT_SINGLE_EMAIL,
 				status: HTTPCode.CONFLICT,
 			});
 		}
 
-		const splittedEmail = currentContributor.gitEmails.find(
-			({ id }) => id === payload.emailId,
+		const splitEmail = currentContributor.gitEmails.find(
+			({ id }) => id === payload.gitEmailId,
 		);
-		const hasSplittedEmail = splittedEmail !== undefined;
+		const hasSplittedEmail = splitEmail !== undefined;
 
 		if (!hasSplittedEmail) {
 			throw new ContributorError({
@@ -203,12 +205,12 @@ class ContributorService implements Service {
 		}
 
 		try {
-			const splittedContributor = await this.contributorRepository.split(
-				payload.emailId,
+			const splitContributor = await this.contributorRepository.split(
+				payload.gitEmailId,
 				payload.newContributorName,
 			);
 
-			return splittedContributor.toObject();
+			return splitContributor.toObject();
 		} catch {
 			throw new ContributorError({
 				message: ExceptionMessage.CONTRIBUTOR_SPLIT_FAILED,

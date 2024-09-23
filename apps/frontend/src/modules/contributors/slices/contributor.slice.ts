@@ -104,12 +104,12 @@ const { actions, name, reducer } = createSlice({
 					return contributor;
 				}
 
-				const [splittedEmail] = newContributor.gitEmails;
+				const [splitEmail] = newContributor.gitEmails;
 
 				return {
 					...contributor,
 					gitEmails: contributor.gitEmails.filter(
-						({ id }) => id !== splittedEmail?.id,
+						({ id }) => id !== splitEmail?.id,
 					),
 				};
 			});

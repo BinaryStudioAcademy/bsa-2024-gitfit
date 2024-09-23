@@ -8,9 +8,9 @@ import { type ContributorSplitRequestDto } from "../types/types.js";
 
 const contributorSplit: z.ZodType<ContributorSplitRequestDto> = z
 	.object({
-		emailId: z
+		gitEmailId: z
 			.number({
-				required_error: ContributorValidationMessage.EMAIL_REQUIRED,
+				required_error: ContributorValidationMessage.GIT_EMAIL_REQUIRED,
 			})
 			.int()
 			.positive(),

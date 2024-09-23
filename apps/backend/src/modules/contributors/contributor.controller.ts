@@ -296,7 +296,7 @@ class ContributorController extends BaseController {
 	 *           schema:
 	 *             type: object
 	 *             properties:
-	 *               emailId:
+	 *               gitEmailId:
 	 *                 type: number
 	 *               newContributorName:
 	 *                 type: number

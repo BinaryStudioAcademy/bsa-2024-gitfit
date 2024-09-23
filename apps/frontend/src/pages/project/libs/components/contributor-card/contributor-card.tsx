@@ -1,5 +1,5 @@
 import { ActivityIndicator } from "~/libs/components/components.js";
-import { SINGLE_ITEM } from "~/libs/constants/constants.js";
+import { MIN_GIT_EMAILS_LENGTH_FOR_SPLIT } from "~/libs/constants/constants.js";
 import {
 	getActivityIndicatorStatus,
 	getDifferenceInDays,
@@ -74,7 +74,9 @@ const ContributorCard = ({
 				hasEditPermission={hasEditPermission}
 				hasMergePermission={hasMergePermission}
 				hasSplitPermission={hasSplitPermission}
-				isSplitEnabled={contributor.gitEmails.length > SINGLE_ITEM}
+				isSplitEnabled={
+					contributor.gitEmails.length > MIN_GIT_EMAILS_LENGTH_FOR_SPLIT
+				}
 				onEdit={handleEditClick}
 				onMerge={handleMergeClick}
 				onSplit={handleSplitClick}

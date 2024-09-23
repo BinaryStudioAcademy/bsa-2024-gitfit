@@ -1,4 +1,4 @@
-import { SINGLE_ITEM } from "~/libs/constants/constants.js";
+import { MIN_GIT_EMAILS_LENGTH_FOR_SPLIT } from "~/libs/constants/constants.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { ContributorMenu } from "../../components/components.js";
@@ -30,7 +30,9 @@ const getContributorColumns = (actions: {
 		cell: ({ row: { original: contributor } }) => (
 			<ContributorMenu
 				contributorId={contributor.id}
-				isSplitEnabled={contributor.gitEmails.length > SINGLE_ITEM}
+				isSplitEnabled={
+					contributor.gitEmails.length > MIN_GIT_EMAILS_LENGTH_FOR_SPLIT
+				}
 				onEdit={actions.onEdit}
 				onMerge={actions.onMerge}
 				onSplit={actions.onSplit}

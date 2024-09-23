@@ -179,7 +179,7 @@ class ContributorRepository implements Repository {
 	}
 
 	public async split(
-		emailId: number,
+		gitEmailId: number,
 		newContributorName: string,
 	): Promise<ContributorEntity> {
 		const result = await this.contributorModel.transaction(async (trx) => {
@@ -190,7 +190,7 @@ class ContributorRepository implements Repository {
 
 			await this.gitEmailModel
 				.query(trx)
-				.patchAndFetchById(emailId, { contributorId: newContributor.id });
+				.patchAndFetchById(gitEmailId, { contributorId: newContributor.id });
 
 			return await this.contributorModel
 				.query(trx)

@@ -1,4 +1,4 @@
-export { EMPTY_LENGTH, SINGLE_ITEM } from "./libs/constants/constants.js";
+export { EMPTY_LENGTH } from "./libs/constants/constants.js";
 export {
 	APIPath,
 	AppEnvironment,
@@ -81,6 +81,7 @@ export {
 	ContributorsApiPath,
 	type ContributorSplitRequestDto,
 	contributorSplitValidationSchema,
+	MIN_GIT_EMAILS_LENGTH_FOR_SPLIT,
 } from "./modules/contributors/contributors.js";
 export {
 	type GitEmailCreateRequestDto,

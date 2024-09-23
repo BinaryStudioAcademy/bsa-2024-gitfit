@@ -1,7 +1,11 @@
 {
 	"extends": "../../tsconfig.json",
 	"files": ["src/index.d.ts"],
-	"include": ["**/*.ts", "**/*.js"],
+	"include": [
+		"**/*.ts",
+		"**/*.js",
+		"src/libs/constants/min-git-emails-length-for-split.constant.ts"
+	],
 	"exclude": ["node_modules", "build"],
 	"compilerOptions": {
 		"baseUrl": ".",

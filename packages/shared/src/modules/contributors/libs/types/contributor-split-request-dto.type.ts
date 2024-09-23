@@ -1,5 +1,5 @@
 type ContributorSplitRequestDto = {
-	emailId: number;
+	gitEmailId: number;
 	newContributorName: string;
 };
 

@@ -27,12 +27,12 @@ const ContributorSplitForm = ({
 
 	const { control, errors, handleSubmit } = useAppForm<{
 		currentContributor: string;
-		emailId: number;
+		gitEmailId: number;
 		newContributorName: string;
 	}>({
 		defaultValues: {
 			currentContributor: currentContributorInfo,
-			emailId: firstEmail?.id as number,
+			gitEmailId: firstEmail?.id as number,
 			newContributorName: currentContributor.name,
 		},
 		validationSchema: contributorSplitValidationSchema,
@@ -42,7 +42,7 @@ const ContributorSplitForm = ({
 		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData) => {
 				const payload: ContributorSplitRequestDto = {
-					emailId: formData.emailId,
+					gitEmailId: formData.gitEmailId,
 					newContributorName: formData.newContributorName,
 				};
 				onSubmit(payload);
@@ -69,7 +69,7 @@ const ContributorSplitForm = ({
 			<Select
 				control={control}
 				label="Email to detach"
-				name="emailId"
+				name="gitEmailId"
 				options={gitEmailOptions}
 				placeholder="Choose email"
 			/>

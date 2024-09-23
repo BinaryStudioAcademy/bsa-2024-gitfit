@@ -1,3 +1,4 @@
+export { MIN_GIT_EMAILS_LENGTH_FOR_SPLIT } from "./libs/constants/constants.js";
 export { ContributorsApiPath } from "./libs/enums/enums.js";
 export { ContributorError } from "./libs/exceptions/exceptions.js";
 export {
