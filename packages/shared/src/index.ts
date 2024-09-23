@@ -102,6 +102,7 @@ export {
 	type NotificationBulkCreateResponseDto,
 	type NotificationCreateRequestDto,
 	type NotificationGetAllItemResponseDto,
+	type NotificationGetAllRequestDto,
 	type NotificationGetAllResponseDto,
 	NotificationsApiPath,
 } from "./modules/notifications/notifications.js";

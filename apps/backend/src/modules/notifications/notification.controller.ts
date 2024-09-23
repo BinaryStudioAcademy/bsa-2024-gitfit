@@ -6,9 +6,9 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
-import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { NotificationsApiPath } from "./libs/enums/enums.js";
+import { type NotificationGetAllRequestDto } from "./libs/types/types.js";
 import { type NotificationService } from "./notification.service.js";
 
 /**
@@ -47,7 +47,7 @@ class NotificationController extends BaseController {
 			handler: (options) =>
 				this.findAll(
 					options as APIHandlerOptions<{
-						query: PaginationQueryParameters;
+						query: NotificationGetAllRequestDto;
 					}>,
 				),
 			method: "GET",
@@ -59,7 +59,22 @@ class NotificationController extends BaseController {
 	 * @swagger
 	 * /notifications:
 	 *   get:
-	 *     description: Returns an array of notifications
+	 *     description: Returns an array of notifications with pagination
+	 *     parameters:
+	 *       - in: query
+	 *         name: page
+	 *         schema:
+	 *           type: integer
+	 *           minimum: 1
+	 *           default: 1
+	 *         description: The page number to retrieve
+	 *       - in: query
+	 *         name: pageSize
+	 *         schema:
+	 *           type: integer
+	 *           minimum: 1
+	 *           default: 10
+	 *         description: The number of items per page
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
@@ -72,18 +87,24 @@ class NotificationController extends BaseController {
 	 *                   type: array
 	 *                   items:
 	 *                     $ref: "#/components/schemas/Notification"
+	 *                 totalItems:
+	 *                   type: integer
+	 *                   description: The total number of notifications
 	 */
+
 	private async findAll({
 		query,
 		user,
 	}: APIHandlerOptions<{
-		query: PaginationQueryParameters;
+		query: NotificationGetAllRequestDto;
 	}>): Promise<APIHandlerResponse> {
+		const { page, pageSize } = query;
 		const typedUser = user as { id: number };
 
 		return {
 			payload: await this.notificationService.findAll({
-				...query,
+				page,
+				pageSize,
 				userId: typedUser.id,
 			}),
 			status: HTTPCode.OK,

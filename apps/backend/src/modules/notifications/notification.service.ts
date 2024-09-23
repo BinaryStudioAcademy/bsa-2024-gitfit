@@ -1,13 +1,11 @@
-import {
-	type PaginationQueryParameters,
-	type Service,
-} from "~/libs/types/types.js";
+import { type Service } from "~/libs/types/types.js";
 
 import {
 	type NotificationBulkCreateRequestDto,
 	type NotificationBulkCreateResponseDto,
 	type NotificationCreateRequestDto,
 	type NotificationGetAllItemResponseDto,
+	type NotificationGetAllRequestDto,
 	type NotificationGetAllResponseDto,
 } from "./libs/types/types.js";
 import { NotificationEntity } from "./notification.entity.js";
@@ -63,18 +61,10 @@ class NotificationService implements Service {
 		return Promise.resolve(null);
 	}
 
-	public async findAll({
-		page,
-		pageSize,
-		userId,
-	}: {
-		userId: number;
-	} & PaginationQueryParameters): Promise<NotificationGetAllResponseDto> {
-		const notifications = await this.notificationRepository.findAll({
-			page,
-			pageSize,
-			userId,
-		});
+	public async findAll(
+		parameters: NotificationGetAllRequestDto,
+	): Promise<NotificationGetAllResponseDto> {
+		const notifications = await this.notificationRepository.findAll(parameters);
 
 		return {
 			items: notifications.items.map((item) => item.toObject()),
