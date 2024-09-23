@@ -75,9 +75,7 @@
 	color: var(--color-text-secondary);
 }
 
-.calendar :global(.react-calendar__year-view__months__month),
-.calendar :global(.react-calendar__century-view__decades__decade),
-.calendar :global(.react-calendar__decade-view__years__year) {
+.calendar :global(.react-calendar__year-view__months__month) {
 	min-width: 100%;
 }
 
@@ -100,9 +98,7 @@
 	max-width: 224px;
 }
 
-.calendar :global(.react-calendar__year-view__months),
-.calendar :global(.react-calendar__decade-view__years),
-.calendar :global(.react-calendar__century-view__decades) {
+.calendar :global(.react-calendar__year-view__months) {
 	min-width: 128px;
 }
 

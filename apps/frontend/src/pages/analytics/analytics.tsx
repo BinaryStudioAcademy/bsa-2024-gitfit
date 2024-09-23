@@ -12,12 +12,16 @@ import {
 import { actions as activityLogActions } from "~/modules/activity/activity.js";
 
 import { AnalyticsTable } from "./libs/components/components.js";
-import { ANALYTICS_DATE_MAX_RANGE } from "./libs/constants/constants.js";
+import {
+	ANALYTICS_DATE_MAX_RANGE,
+	ANALYTICS_LOOKBACK_DAYS,
+} from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 const Analytics = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const todayDate = new Date();
+	const minChoosableDate = subtractDays(todayDate, ANALYTICS_LOOKBACK_DAYS);
 
 	const { activityLogs, dataStatus } = useAppSelector(
 		({ activityLogs }) => activityLogs,
@@ -80,6 +84,7 @@ const Analytics = (): JSX.Element => {
 						control={control}
 						maxDate={todayDate}
 						maxRange={ANALYTICS_DATE_MAX_RANGE}
+						minDate={minChoosableDate}
 						name="dateRange"
 					/>
 				</form>
