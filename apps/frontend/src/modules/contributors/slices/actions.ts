@@ -13,6 +13,7 @@ import {
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 	type ContributorPatchResponseDto,
+	type ContributorSplitRequestDto,
 } from "../libs/types/types.js";
 import { name as sliceName } from "./contributor.slice.js";
 
@@ -38,6 +39,18 @@ const merge = createAsyncThunk<
 	return response;
 });
 
+const split = createAsyncThunk<
+	ContributorGetAllItemResponseDto,
+	{ id: number; payload: ContributorSplitRequestDto },
+	AsyncThunkConfig
+>(`${sliceName}/split`, async ({ id, payload }, { extra }) => {
+	const { contributorApi, toastNotifier } = extra;
+	const response = await contributorApi.split(id, payload);
+	toastNotifier.showSuccess(NotificationMessage.CONTRIBUTOR_SPLIT_SUCCESS);
+
+	return response;
+});
+
 const patch = createAsyncThunk<
 	ContributorPatchResponseDto,
 	{ id: number; payload: ContributorPatchRequestDto; projectId?: string },
@@ -58,4 +71,4 @@ const patch = createAsyncThunk<
 	},
 );
 
-export { loadAll, merge, patch };
+export { loadAll, merge, patch, split };
