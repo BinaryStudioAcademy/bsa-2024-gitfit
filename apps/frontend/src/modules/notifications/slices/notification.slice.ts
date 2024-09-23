@@ -24,7 +24,7 @@ const { actions, name, reducer } = createSlice({
 			state.dataStatus = DataStatus.PENDING;
 		});
 		builder.addCase(loadAll.fulfilled, (state, action) => {
-			state.notifications = action.payload.items;
+			state.notifications = [...state.notifications, ...action.payload.items];
 			state.notificationsTotalCount = action.payload.totalItems;
 			state.dataStatus = DataStatus.FULFILLED;
 		});
