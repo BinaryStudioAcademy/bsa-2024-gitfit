@@ -62,20 +62,10 @@ class ProjectRepository implements Repository {
 			query.whereILike("name", `%${name}%`);
 		}
 
-		let results;
-		let total;
-
-		if (page && pageSize) {
-			const { results: pageResults, total: pageTotal } = await query.page(
-				page,
-				pageSize,
-			);
-			results = pageResults;
-			total = pageTotal;
-		} else {
-			results = await query;
-			total = results.length;
-		}
+		const { results, total } =
+			page && pageSize
+				? await query.page(page, pageSize)
+				: { results: await query.execute(), total: await query.resultSize() };
 
 		return {
 			items: results.map((project) => ProjectEntity.initialize(project)),
