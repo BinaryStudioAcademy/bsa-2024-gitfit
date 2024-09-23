@@ -1,5 +1,5 @@
 type ActivityChartData = {
-	commitsNumber: number;
+	y: number;
 }[];
 
 export { type ActivityChartData };

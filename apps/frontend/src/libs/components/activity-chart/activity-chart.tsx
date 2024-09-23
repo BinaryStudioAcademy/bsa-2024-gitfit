@@ -10,7 +10,7 @@ const ActivityChart = ({ data }: Properties): JSX.Element => {
 	return (
 		<LineChart data={data} height={40} width={120}>
 			<Line
-				dataKey="commitsNumber"
+				dataKey="y"
 				dot={false}
 				stroke="var(--color-brand-primary)"
 				strokeWidth={3}

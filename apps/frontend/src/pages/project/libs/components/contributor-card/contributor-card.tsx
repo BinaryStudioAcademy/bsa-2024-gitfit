@@ -1,3 +1,4 @@
+import { type ActivityChartData } from "~/libs/components/activity-chart/libs/types/types.js";
 import {
 	ActivityChart,
 	ActivityIndicator,
@@ -55,8 +56,8 @@ const ContributorCard = ({
 	const hasActivityIndicator = lastUpdateLabel !== null && colorStatus !== null;
 
 	const hasActivityData = Boolean(activity);
-	const activityData = useMemo(
-		() => activity?.map((commitsNumber) => ({ commitsNumber })) ?? [],
+	const activityData: ActivityChartData = useMemo(
+		() => activity?.map((commitsNumber) => ({ y: commitsNumber })) ?? [],
 		[activity],
 	);
 
