@@ -44,7 +44,7 @@ const Analytics = (): JSX.Element => {
 	const projectValue = useFormWatch({ control, name: "project" });
 
 	const handleLoadLogs = useCallback(
-		([startDate, endDate]: [Date, Date], projectId?: null | number) => {
+		([startDate, endDate]: [Date, Date], projectId?: null | string) => {
 			const formattedStartDate = startDate.toISOString();
 			const formattedEndDate = endDate.toISOString();
 

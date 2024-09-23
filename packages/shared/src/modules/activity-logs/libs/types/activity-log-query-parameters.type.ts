@@ -1,6 +1,6 @@
 type ActivityLogQueryParameters = {
 	endDate: string;
-	projectId?: number | undefined;
+	projectId?: string | undefined;
 	startDate: string;
 };
 

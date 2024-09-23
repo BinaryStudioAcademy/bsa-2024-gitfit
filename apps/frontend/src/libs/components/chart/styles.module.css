@@ -1,0 +1,4 @@
+.line path {
+	stroke: var(--color-brand-primary);
+	stroke-width: 3px;
+}

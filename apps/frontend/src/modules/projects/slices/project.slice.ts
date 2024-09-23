@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ITEMS_CHANGED_COUNT } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
+import { type ActivityLogGetAllItemAnalyticsResponseDto } from "~/modules/activity/activity.js";
 import { type ContributorGetAllItemResponseDto } from "~/modules/contributors/contributors.js";
 import { actions as projectApiKeyActions } from "~/modules/project-api-keys/project-api-keys.js";
 import {
@@ -16,6 +17,7 @@ import {
 	deleteById,
 	getById,
 	loadAll,
+	loadAllContributorsActivityByProjectId,
 	loadAllContributorsByProjectId,
 	patch,
 } from "./actions.js";
@@ -24,6 +26,7 @@ type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
 	project: null | ProjectGetByIdResponseDto;
 	projectContributors: ContributorGetAllItemResponseDto[];
+	projectContributorsActivity: ActivityLogGetAllItemAnalyticsResponseDto[];
 	projectContributorsStatus: ValueOf<typeof DataStatus>;
 	projectCreateStatus: ValueOf<typeof DataStatus>;
 	projectDeleteStatus: ValueOf<typeof DataStatus>;
@@ -37,6 +40,7 @@ const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	project: null,
 	projectContributors: [],
+	projectContributorsActivity: [],
 	projectContributorsStatus: DataStatus.IDLE,
 	projectCreateStatus: DataStatus.IDLE,
 	projectDeleteStatus: DataStatus.IDLE,
@@ -132,6 +136,18 @@ const { actions, name, reducer } = createSlice({
 			state.projectContributors = [];
 			state.projectContributorsStatus = DataStatus.REJECTED;
 		});
+		builder.addCase(
+			loadAllContributorsActivityByProjectId.fulfilled,
+			(state, action) => {
+				state.projectContributorsActivity = action.payload.items;
+			},
+		);
+		builder.addCase(
+			loadAllContributorsActivityByProjectId.rejected,
+			(state) => {
+				state.projectContributorsActivity = [];
+			},
+		);
 	},
 	initialState,
 	name: "projects",

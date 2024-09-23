@@ -23,16 +23,20 @@ class ActivityLogApi extends BaseHTTPApi {
 	public async getAll(
 		query: ActivityLogQueryParameters,
 	): Promise<ActivityLogGetAllAnalyticsResponseDto> {
+		const { endDate, projectId, startDate } = query;
+
+		const queryToSend = {
+			endDate,
+			startDate,
+			...(projectId ? { projectId } : {}),
+		};
+
 		const response = await this.load(
 			this.getFullEndpoint(ActivityLogsApiPath.ROOT, {}),
 			{
 				hasAuth: true,
 				method: "GET",
-				query: {
-					endDate: String(query.endDate),
-					startDate: String(query.startDate),
-					...(query.projectId && { projectId: String(query.projectId) }),
-				},
+				query: queryToSend,
 			},
 		);
 
