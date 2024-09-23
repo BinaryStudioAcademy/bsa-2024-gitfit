@@ -1,19 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { ITEMS_CHANGED_COUNT } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
 import { type ContributorGetAllItemResponseDto } from "../libs/types/types.js";
-import { loadAll, merge, patch } from "./actions.js";
+import { loadAll, merge, patch, split } from "./actions.js";
 
 type State = {
 	contributors: ContributorGetAllItemResponseDto[];
 	dataStatus: ValueOf<typeof DataStatus>;
+	mergeContributorsStatus: ValueOf<typeof DataStatus>;
+	splitContributorsStatus: ValueOf<typeof DataStatus>;
+	totalCount: number;
+	updateContributorsStatus: ValueOf<typeof DataStatus>;
 };
 
 const initialState: State = {
 	contributors: [],
 	dataStatus: DataStatus.IDLE,
+	mergeContributorsStatus: DataStatus.IDLE,
+	splitContributorsStatus: DataStatus.IDLE,
+	totalCount: 0,
+	updateContributorsStatus: DataStatus.IDLE,
 };
 
 const { actions, name, reducer } = createSlice({
@@ -24,6 +33,7 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(loadAll.fulfilled, (state, action) => {
 			state.contributors = action.payload.items;
 			state.dataStatus = DataStatus.FULFILLED;
+			state.totalCount = action.payload.totalItems;
 		});
 		builder.addCase(loadAll.rejected, (state) => {
 			state.contributors = [];
@@ -31,7 +41,7 @@ const { actions, name, reducer } = createSlice({
 		});
 
 		builder.addCase(merge.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
+			state.mergeContributorsStatus = DataStatus.PENDING;
 		});
 		builder.addCase(merge.fulfilled, (state, action) => {
 			const { gitEmails: updatedGitEmails, id } = action.payload;
@@ -58,6 +68,7 @@ const { actions, name, reducer } = createSlice({
 				state.contributors = state.contributors.filter(
 					(contributor) => contributor.id !== removedContributorId,
 				);
+				state.totalCount -= ITEMS_CHANGED_COUNT;
 			}
 
 			state.contributors = state.contributors.map((contributor) =>
@@ -65,14 +76,14 @@ const { actions, name, reducer } = createSlice({
 					? { ...contributor, ...action.payload }
 					: contributor,
 			);
-			state.dataStatus = DataStatus.FULFILLED;
+			state.mergeContributorsStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(merge.rejected, (state) => {
-			state.dataStatus = DataStatus.REJECTED;
+			state.mergeContributorsStatus = DataStatus.REJECTED;
 		});
 
 		builder.addCase(patch.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
+			state.updateContributorsStatus = DataStatus.PENDING;
 		});
 		builder.addCase(patch.fulfilled, (state, action) => {
 			state.contributors = state.contributors.map((contributor) =>
@@ -80,10 +91,40 @@ const { actions, name, reducer } = createSlice({
 					? { ...contributor, ...action.payload }
 					: contributor,
 			);
-			state.dataStatus = DataStatus.FULFILLED;
+			state.updateContributorsStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(patch.rejected, (state) => {
-			state.dataStatus = DataStatus.REJECTED;
+			state.updateContributorsStatus = DataStatus.REJECTED;
+		});
+
+		builder.addCase(split.pending, (state) => {
+			state.splitContributorsStatus = DataStatus.PENDING;
+		});
+		builder.addCase(split.fulfilled, (state, action) => {
+			const { id: splittingContributorId } = action.meta.arg;
+			const { payload: newContributor } = action;
+
+			state.contributors = state.contributors.map((contributor) => {
+				if (contributor.id !== splittingContributorId) {
+					return contributor;
+				}
+
+				const [splitEmail] = newContributor.gitEmails;
+
+				return {
+					...contributor,
+					gitEmails: contributor.gitEmails.filter(
+						({ id }) => id !== splitEmail?.id,
+					),
+				};
+			});
+
+			state.contributors = [newContributor, ...state.contributors];
+
+			state.splitContributorsStatus = DataStatus.FULFILLED;
+		});
+		builder.addCase(split.rejected, (state) => {
+			state.splitContributorsStatus = DataStatus.REJECTED;
 		});
 	},
 	initialState,

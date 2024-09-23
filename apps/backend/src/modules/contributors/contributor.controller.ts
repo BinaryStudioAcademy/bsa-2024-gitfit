@@ -7,16 +7,19 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { type ContributorService } from "./contributor.service.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
 import {
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
+	type ContributorSplitRequestDto,
 } from "./libs/types/types.js";
 import {
 	contributorMergeValidationSchema,
 	contributorPatchValidationSchema,
+	contributorSplitValidationSchema,
 } from "./libs/validation-schemas/validation-schemas.js";
 
 /**
@@ -64,7 +67,7 @@ class ContributorController extends BaseController {
 			handler: (options) =>
 				this.findAll(
 					options as APIHandlerOptions<{
-						query: { projectId: string };
+						query: { projectId?: string } & PaginationQueryParameters;
 					}>,
 				),
 			method: "GET",
@@ -108,14 +111,40 @@ class ContributorController extends BaseController {
 				body: contributorPatchValidationSchema,
 			},
 		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.split(
+					options as APIHandlerOptions<{
+						body: ContributorSplitRequestDto;
+						params: { id: string };
+					}>,
+				),
+			method: "PATCH",
+			path: ContributorsApiPath.SPLIT_$ID,
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
+			validation: {
+				body: contributorSplitValidationSchema,
+			},
+		});
 	}
 
 	/**
 	 * @swagger
 	 * /contributors:
 	 *   get:
-	 *     description: Returns an array of contributors
+	 *     description: Returns an array of contributors with pagination
 	 *     parameters:
+	 *       - in: query
+	 *         name: page
+	 *         schema:
+	 *           type: integer
+	 *         description: The page number to retrieve
+	 *       - in: query
+	 *         name: pageSize
+	 *         schema:
+	 *           type: integer
+	 *         description: Number of items per page
 	 *       - name: projectId
 	 *         in: query
 	 *         description: Id of a project contributor should belong to
@@ -138,7 +167,7 @@ class ContributorController extends BaseController {
 	 */
 	private async findAll(
 		options: APIHandlerOptions<{
-			query: { projectId?: string };
+			query: { projectId?: string } & PaginationQueryParameters;
 		}>,
 	): Promise<APIHandlerResponse> {
 		if (options.query.projectId) {
@@ -151,7 +180,10 @@ class ContributorController extends BaseController {
 		}
 
 		return {
-			payload: await this.contributorService.findAll({ hasHidden: true }),
+			payload: await this.contributorService.findAll({
+				...options.query,
+				hasHidden: true,
+			}),
 			status: HTTPCode.OK,
 		};
 	}
@@ -253,6 +285,61 @@ class ContributorController extends BaseController {
 
 		return {
 			payload: await this.contributorService.patch(contributorId, options.body),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /contributors/split/{contributorId}:
+	 *   patch:
+	 *     description: Split contributors
+	 *     parameters:
+	 *       - name: contributorId
+	 *         in: path
+	 *         description: Id of the current contributor
+	 *         required: true
+	 *         schema:
+	 *           type: number
+	 *           minimum: 1
+	 *     requestBody:
+	 *       description: Payload for splitting contributors
+	 *       required: true
+	 *       content:
+	 *         application/json:
+	 *           schema:
+	 *             type: object
+	 *             properties:
+	 *               gitEmailId:
+	 *                 type: number
+	 *               newContributorName:
+	 *                 type: number
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: object
+	 *               properties:
+	 *                 items:
+	 *                   type: object
+	 *                   $ref: "#/components/schemas/Contributor"
+	 *       404:
+	 *         description: Contributor not found
+	 *       409:
+	 *         description: Attempt to split single email or merging failed
+	 */
+	private async split(
+		options: APIHandlerOptions<{
+			body: ContributorSplitRequestDto;
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		const contributorId = Number(options.params.id);
+
+		return {
+			payload: await this.contributorService.split(contributorId, options.body),
 			status: HTTPCode.OK,
 		};
 	}

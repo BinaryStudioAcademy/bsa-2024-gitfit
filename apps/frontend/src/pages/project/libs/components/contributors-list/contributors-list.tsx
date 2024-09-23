@@ -15,9 +15,11 @@ type Properties = {
 	contributors: ContributorGetAllItemResponseDto[];
 	hasEditPermission: boolean;
 	hasMergePermission: boolean;
+	hasSplitPermission: boolean;
 	isLoading: boolean;
 	onEditContributor: (contributorId: number) => void;
 	onMergeContributor: (contributorId: number) => void;
+	onSplitContributor: (contributorId: number) => void;
 };
 
 const ContributorsList = ({
@@ -25,9 +27,11 @@ const ContributorsList = ({
 	contributors,
 	hasEditPermission,
 	hasMergePermission,
+	hasSplitPermission,
 	isLoading,
 	onEditContributor,
 	onMergeContributor,
+	onSplitContributor,
 }: Properties): JSX.Element => {
 	const hasContributors = contributors.length > EMPTY_LENGTH;
 	const isListShown = !isLoading && hasContributors;
@@ -45,6 +49,13 @@ const ContributorsList = ({
 			onMergeContributor(contributorId);
 		},
 		[onMergeContributor],
+	);
+
+	const handleSplitContributor = useCallback(
+		(contributorId: number) => {
+			onSplitContributor(contributorId);
+		},
+		[onSplitContributor],
 	);
 
 	const activities = useMemo(() => {
@@ -73,8 +84,10 @@ const ContributorsList = ({
 								contributor={contributor}
 								hasEditPermission={hasEditPermission}
 								hasMergePermission={hasMergePermission}
+								hasSplitPermission={hasSplitPermission}
 								onEdit={handleEditContributor}
 								onMerge={handleMergeContributor}
+								onSplit={handleSplitContributor}
 							/>
 						</li>
 					))}

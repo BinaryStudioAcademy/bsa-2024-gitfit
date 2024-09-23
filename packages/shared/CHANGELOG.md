@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.30.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.29.0...shared-v1.30.0) (2024-09-23)
+
+
+### Features
+
+* Add an ability to split contributors gf-462 ([#477](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/477)) ([adbf2af](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/adbf2afd81ac81518c50b158ab11cd89768e7c8a))
+
+## [1.29.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.28.0...shared-v1.29.0) (2024-09-23)
+
+
+### Features
+
+* Add an activity chart to contributor items on project details page gf-420 ([#468](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/468)) ([38cf6eb](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/38cf6ebc535a40e117b68f18c53cbecb58ae356f))
+* add pagination to the contributors page gf-484 ([#491](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/491)) ([75e0b48](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75e0b483381fc8704feddbe3a6bf20b01331b98d))
+
 ## [1.28.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.27.0...shared-v1.28.0) (2024-09-23)
 
 

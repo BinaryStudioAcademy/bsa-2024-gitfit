@@ -18,6 +18,7 @@ import Project from "~/assets/images/icons/project.svg?react";
 import RightArrow from "~/assets/images/icons/right-arrow.svg?react";
 import RightDoubleArrow from "~/assets/images/icons/right-double-arrow.svg?react";
 import Search from "~/assets/images/icons/search.svg?react";
+import Split from "~/assets/images/icons/split.svg?react";
 import StrikedEye from "~/assets/images/icons/striked-eye.svg?react";
 import TrashBin from "~/assets/images/icons/trash-bin.svg?react";
 import Warning from "~/assets/images/icons/warning.svg?react";
@@ -42,6 +43,7 @@ const iconNameToSvg: Record<IconName, FC<React.SVGProps<SVGSVGElement>>> = {
 	rightArrow: RightArrow,
 	rightDoubleArrow: RightDoubleArrow,
 	search: Search,
+	split: Split,
 	strikedEye: StrikedEye,
 	trashBin: TrashBin,
 	warning: Warning,
