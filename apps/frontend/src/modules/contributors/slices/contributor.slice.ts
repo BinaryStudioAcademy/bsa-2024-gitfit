@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { ITEMS_CHANGED_COUNT } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
@@ -11,6 +12,7 @@ type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
 	mergeContributorsStatus: ValueOf<typeof DataStatus>;
 	splitContributorsStatus: ValueOf<typeof DataStatus>;
+	totalCount: number;
 	updateContributorsStatus: ValueOf<typeof DataStatus>;
 };
 
@@ -19,6 +21,7 @@ const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	mergeContributorsStatus: DataStatus.IDLE,
 	splitContributorsStatus: DataStatus.IDLE,
+	totalCount: 0,
 	updateContributorsStatus: DataStatus.IDLE,
 };
 
@@ -30,6 +33,7 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(loadAll.fulfilled, (state, action) => {
 			state.contributors = action.payload.items;
 			state.dataStatus = DataStatus.FULFILLED;
+			state.totalCount = action.payload.totalItems;
 		});
 		builder.addCase(loadAll.rejected, (state) => {
 			state.contributors = [];
@@ -64,6 +68,7 @@ const { actions, name, reducer } = createSlice({
 				state.contributors = state.contributors.filter(
 					(contributor) => contributor.id !== removedContributorId,
 				);
+				state.totalCount -= ITEMS_CHANGED_COUNT;
 			}
 
 			state.contributors = state.contributors.map((contributor) =>

@@ -1,6 +1,11 @@
 import { raw } from "objection";
 
-import { type Repository } from "~/libs/types/types.js";
+import { SortType } from "~/libs/enums/enums.js";
+import {
+	type PaginationQueryParameters,
+	type PaginationResponseDto,
+	type Repository,
+} from "~/libs/types/types.js";
 import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
@@ -50,9 +55,16 @@ class ContributorRepository implements Repository {
 		return ContributorEntity.initialize(contributor);
 	}
 
-	public async findAll(): Promise<{ items: ContributorEntity[] }> {
-		const contributorsWithProjectsAndEmails = await this.contributorModel
+	public async findAll({
+		page,
+		pageSize,
+	}: PaginationQueryParameters): Promise<
+		PaginationResponseDto<ContributorEntity>
+	> {
+		const { results, total } = await this.contributorModel
 			.query()
+			.orderBy("createdAt", SortType.DESCENDING)
+			.page(page, pageSize)
 			.select("contributors.*")
 			.select(
 				raw(
@@ -66,9 +78,10 @@ class ContributorRepository implements Repository {
 			.withGraphFetched("gitEmails");
 
 		return {
-			items: contributorsWithProjectsAndEmails.map((contributor) => {
+			items: results.map((contributor) => {
 				return ContributorEntity.initialize(contributor);
 			}),
+			totalItems: total,
 		};
 	}
 
@@ -97,6 +110,30 @@ class ContributorRepository implements Repository {
 
 		return {
 			items: contributorsWithProjectsAndEmails.map((contributor) => {
+				return ContributorEntity.initialize(contributor);
+			}),
+		};
+	}
+
+	public async findAllWithoutPagination(): Promise<{
+		items: ContributorEntity[];
+	}> {
+		const results = await this.contributorModel
+			.query()
+			.select("contributors.*")
+			.select(
+				raw(
+					"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
+				),
+			)
+			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
+			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
+			.leftJoin("projects", "activity_logs.project_id", "projects.id")
+			.groupBy("contributors.id")
+			.withGraphFetched("gitEmails");
+
+		return {
+			items: results.map((contributor) => {
 				return ContributorEntity.initialize(contributor);
 			}),
 		};

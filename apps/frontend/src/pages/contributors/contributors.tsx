@@ -1,4 +1,9 @@
-import { Modal, PageLayout, Table } from "~/libs/components/components.js";
+import {
+	Modal,
+	PageLayout,
+	Table,
+	TablePagination,
+} from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
@@ -7,6 +12,7 @@ import {
 	useEffect,
 	useMemo,
 	useModal,
+	usePagination,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import {
@@ -37,12 +43,18 @@ const Contributors = (): JSX.Element => {
 		dataStatus,
 		mergeContributorsStatus,
 		splitContributorsStatus,
+		totalCount,
 		updateContributorsStatus,
 	} = useAppSelector(({ contributors }) => contributors);
 
+	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
+		queryParameterPrefix: "contributor",
+		totalItemsCount: totalCount,
+	});
+
 	useEffect(() => {
-		void dispatch(contributorActions.loadAll());
-	}, [dispatch]);
+		void dispatch(contributorActions.loadAll({ page, pageSize }));
+	}, [dispatch, page, pageSize]);
 
 	const {
 		isOpened: isUpdateModalOpened,
@@ -205,6 +217,14 @@ const Contributors = (): JSX.Element => {
 					columns={contributorsColumns}
 					data={contributorsData}
 					isFullHeight
+				/>
+				<TablePagination
+					background="primary"
+					onPageChange={onPageChange}
+					onPageSizeChange={onPageSizeChange}
+					page={page}
+					pageSize={pageSize}
+					totalItemsCount={totalCount}
 				/>
 			</section>
 			{contributorToEdit && (
