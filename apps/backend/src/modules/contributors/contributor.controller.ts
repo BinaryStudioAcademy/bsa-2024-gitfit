@@ -115,8 +115,18 @@ class ContributorController extends BaseController {
 	 * @swagger
 	 * /contributors:
 	 *   get:
-	 *     description: Returns an array of contributors
+	 *     description: Returns an array of contributors with pagination
 	 *     parameters:
+	 *       - in: query
+	 *         name: page
+	 *         schema:
+	 *           type: integer
+	 *         description: The page number to retrieve
+	 *       - in: query
+	 *         name: pageSize
+	 *         schema:
+	 *           type: integer
+	 *         description: Number of items per page
 	 *       - name: projectId
 	 *         in: query
 	 *         description: Id of a project contributor should belong to
