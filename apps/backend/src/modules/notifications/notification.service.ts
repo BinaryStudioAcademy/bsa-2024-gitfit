@@ -1,5 +1,8 @@
+import { ExceptionMessage } from "~/libs/enums/enums.js";
+import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 
+import { NotificationError } from "./libs/exceptions/exceptions.js";
 import {
 	type NotificationBulkCreateRequestDto,
 	type NotificationBulkCreateResponseDto,
@@ -66,6 +69,19 @@ class NotificationService implements Service {
 		return {
 			items: result.items.map((item) => item.toObject()),
 		};
+	}
+
+	public async markAsRead(id: number): Promise<boolean> {
+		const isRead = await this.notificationRepository.markAsRead(id);
+
+		if (!isRead) {
+			throw new NotificationError({
+				message: ExceptionMessage.NOTIFICATION_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		return isRead;
 	}
 
 	public update(): ReturnType<Service["update"]> {

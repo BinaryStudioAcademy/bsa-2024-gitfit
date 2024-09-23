@@ -7,6 +7,8 @@ class NotificationEntity implements Entity {
 
 	private id: null | number;
 
+	private isRead: boolean;
+
 	private payload!: string;
 
 	private receiverUserId!: number;
@@ -14,16 +16,19 @@ class NotificationEntity implements Entity {
 	private constructor({
 		createdAt,
 		id,
+		isRead,
 		payload,
 		receiverUserId,
 	}: {
 		createdAt: null | string;
 		id: null | number;
+		isRead: boolean;
 		payload: string;
 		receiverUserId: number;
 	}) {
 		this.createdAt = createdAt;
 		this.id = id;
+		this.isRead = isRead;
 		this.payload = payload;
 		this.receiverUserId = receiverUserId;
 	}
@@ -31,17 +36,20 @@ class NotificationEntity implements Entity {
 	public static initialize({
 		createdAt,
 		id,
+		isRead,
 		payload,
 		receiverUserId,
 	}: {
 		createdAt: string;
 		id: null | number;
+		isRead: boolean;
 		payload: string;
 		receiverUserId: number;
 	}): NotificationEntity {
 		return new NotificationEntity({
 			createdAt,
 			id,
+			isRead,
 			payload,
 			receiverUserId,
 		});
@@ -57,6 +65,7 @@ class NotificationEntity implements Entity {
 		return new NotificationEntity({
 			createdAt: null,
 			id: null,
+			isRead: false,
 			payload,
 			receiverUserId,
 		});
@@ -76,6 +85,7 @@ class NotificationEntity implements Entity {
 		return {
 			createdAt: this.createdAt as string,
 			id: this.id as number,
+			isRead: this.isRead,
 			payload: this.payload,
 		};
 	}

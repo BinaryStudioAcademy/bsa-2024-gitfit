@@ -72,6 +72,17 @@ class NotificationRepository implements Repository {
 		};
 	}
 
+	public async markAsRead(id: number): Promise<boolean> {
+		const readNotification = await this.notificationModel
+			.query()
+			.patchAndFetchById(id, {
+				isRead: true,
+			})
+			.execute();
+
+		return Boolean(readNotification);
+	}
+
 	public update(): ReturnType<Repository["update"]> {
 		return Promise.resolve(null);
 	}

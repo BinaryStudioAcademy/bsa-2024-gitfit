@@ -8,6 +8,8 @@ import {
 import { UserModel } from "../users/users.js";
 
 class NotificationModel extends AbstractModel {
+	public isRead!: boolean;
+
 	public payload!: string;
 
 	public receiverUserId!: number;

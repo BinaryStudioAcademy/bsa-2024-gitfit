@@ -47,6 +47,19 @@ class NotificationController extends BaseController {
 			method: "GET",
 			path: NotificationsApiPath.ROOT,
 		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.markAsRead(
+					options as APIHandlerOptions<{
+						params: {
+							id: string;
+						};
+					}>,
+				),
+			method: "PATCH",
+			path: NotificationsApiPath.$ID,
+		});
 	}
 
 	/**
@@ -76,6 +89,37 @@ class NotificationController extends BaseController {
 
 		return {
 			payload: await this.notificationService.findAll(typedUser.id),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /notifications/{id}:
+	 *   patch:
+	 *     description: Mark notification as read
+	 *     parameters:
+	 *        - in: path
+	 *          name: id
+	 *          description: ID of the notification to read
+	 *          required: true
+	 *          schema:
+	 *            type: string
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *       404:
+	 *         description: Notification not found
+	 */
+	private async markAsRead(
+		options: APIHandlerOptions<{
+			params: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		const notificationId = Number(options.params.id);
+
+		return {
+			payload: await this.notificationService.markAsRead(notificationId),
 			status: HTTPCode.OK,
 		};
 	}
