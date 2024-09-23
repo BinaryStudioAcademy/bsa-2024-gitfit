@@ -8,7 +8,10 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { NotificationsApiPath } from "./libs/enums/enums.js";
-import { type NotificationGetAllRequestDto } from "./libs/types/types.js";
+import {
+	type NotificationGetAllRequestDto,
+	type UserAuthResponseDto,
+} from "./libs/types/types.js";
 import { type NotificationService } from "./notification.service.js";
 
 /**
@@ -95,13 +98,12 @@ class NotificationController extends BaseController {
 		query: NotificationGetAllRequestDto;
 	}>): Promise<APIHandlerResponse> {
 		const { page, pageSize } = query;
-		const typedUser = user as { id: number };
 
 		return {
 			payload: await this.notificationService.findAll({
 				page,
 				pageSize,
-				userId: typedUser.id,
+				userId: (user as UserAuthResponseDto).id,
 			}),
 			status: HTTPCode.OK,
 		};
