@@ -50,7 +50,7 @@ class ProjectRepository implements Repository {
 	}
 
 	public async findAll(
-		parameters: object | ProjectGetAllRequestDto,
+		parameters: null | ProjectGetAllRequestDto,
 	): Promise<PaginationResponseDto<ProjectEntity>> {
 		const query = this.projectModel
 			.query()

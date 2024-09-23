@@ -146,9 +146,9 @@ class ActivityLogService implements Service {
 			item.toObject(),
 		);
 
-		const allContributors = projectId
-			? await this.contributorService.findAllByProjectId(projectId)
-			: await this.contributorService.findAll();
+		const allContributors = await (projectId
+			? this.contributorService.findAllByProjectId(Number(projectId))
+			: this.contributorService.findAll());
 
 		const dateRange = getDateRange(startDate, endDate);
 

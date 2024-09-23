@@ -45,19 +45,20 @@ class ActivityLogRepository implements Repository {
 		projectId,
 		startDate,
 	}: ActivityLogQueryParameters): Promise<{ items: ActivityLogEntity[] }> {
-		const query = this.activityLogModel
+		let query = this.activityLogModel
 			.query()
 			.withGraphFetched("[gitEmail.contributor, project, createdByUser]")
 			.modifyGraph("gitEmail.contributor", (builder) => {
 				builder.select("id", "name");
 			})
-			.whereBetween("activity_logs.date", [startDate, endDate]);
+			.whereBetween("activity_logs.date", [startDate, endDate])
+			.orderBy("date");
 
 		if (projectId) {
-			query.where("activity_logs.projectId", projectId);
+			query = query.where("project_id", projectId);
 		}
 
-		const activityLogs = await query.orderBy("date");
+		const activityLogs = await query.execute();
 
 		return {
 			items: activityLogs.map((activityLog) =>

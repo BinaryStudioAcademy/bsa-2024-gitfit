@@ -227,7 +227,7 @@ class ProjectController extends BaseController {
 	 */
 	private async findAll(
 		options: APIHandlerOptions<{
-			query: object | ProjectGetAllRequestDto;
+			query: null | ProjectGetAllRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
 		return {
