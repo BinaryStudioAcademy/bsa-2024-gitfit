@@ -50,6 +50,7 @@ const Project = (): JSX.Element => {
 	const {
 		project,
 		projectContributors,
+		projectContributorsActivity,
 		projectContributorsStatus,
 		projectDeleteStatus,
 		projectPatchStatus,
@@ -268,6 +269,7 @@ const Project = (): JSX.Element => {
 
 						<div className={styles["contributors-list-wrapper"]}>
 							<ContributorsList
+								activityLogs={projectContributorsActivity}
 								contributors={projectContributors}
 								hasEditPermission={hasEditContributorPermission}
 								hasMergePermission={hasMergeContributorPermission}
