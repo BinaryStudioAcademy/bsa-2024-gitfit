@@ -11,6 +11,7 @@ type Properties = {
 	isLoading: boolean;
 	onEditContributor: (contributorId: number) => void;
 	onMergeContributor: (contributorId: number) => void;
+	onSplitContributor: (contributorId: number) => void;
 };
 
 const ContributorsList = ({
@@ -18,6 +19,7 @@ const ContributorsList = ({
 	isLoading,
 	onEditContributor,
 	onMergeContributor,
+	onSplitContributor,
 }: Properties): JSX.Element => {
 	const hasContributors = contributors.length > EMPTY_LENGTH;
 	const isListShown = !isLoading && hasContributors;
@@ -37,6 +39,13 @@ const ContributorsList = ({
 		[onMergeContributor],
 	);
 
+	const handleSplitContributor = useCallback(
+		(contributorId: number) => {
+			onSplitContributor(contributorId);
+		},
+		[onSplitContributor],
+	);
+
 	return (
 		<div className={styles["container"]}>
 			<h2 className={styles["title"]}>Contributors</h2>
@@ -49,6 +58,7 @@ const ContributorsList = ({
 								contributor={contributor}
 								onEdit={handleEditContributor}
 								onMerge={handleMergeContributor}
+								onSplit={handleSplitContributor}
 							/>
 						</li>
 					))}

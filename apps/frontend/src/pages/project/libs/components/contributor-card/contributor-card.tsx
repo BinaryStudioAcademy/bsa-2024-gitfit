@@ -1,4 +1,5 @@
 import { ActivityIndicator } from "~/libs/components/components.js";
+import { SINGLE_ITEM } from "~/libs/constants/constants.js";
 import {
 	getActivityIndicatorStatus,
 	getDifferenceInDays,
@@ -15,12 +16,14 @@ type Properties = {
 	contributor: ContributorGetAllItemResponseDto;
 	onEdit: (contributorId: number) => void;
 	onMerge: (contributorId: number) => void;
+	onSplit: (contributorId: number) => void;
 };
 
 const ContributorCard = ({
 	contributor,
 	onEdit,
 	onMerge,
+	onSplit,
 }: Properties): JSX.Element => {
 	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = contributor.lastActivityDate
@@ -50,6 +53,10 @@ const ContributorCard = ({
 		onMerge(contributor.id);
 	}, [onMerge, contributor.id]);
 
+	const handleSplitClick = useCallback(() => {
+		onSplit(contributor.id);
+	}, [onSplit, contributor.id]);
+
 	return (
 		<div className={styles["card"]}>
 			<span className={styles["name"]}>{contributor.name}</span>
@@ -58,8 +65,10 @@ const ContributorCard = ({
 			)}
 			<ContributorMenu
 				contributorId={contributor.id}
+				isSplitEnabled={contributor.gitEmails.length > SINGLE_ITEM}
 				onEdit={handleEditClick}
 				onMerge={handleMergeClick}
+				onSplit={handleSplitClick}
 			/>
 		</div>
 	);

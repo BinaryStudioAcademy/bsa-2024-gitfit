@@ -22,6 +22,7 @@ import {
 	type ContributorGetAllItemResponseDto,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
+	type ContributorSplitRequestDto,
 } from "~/modules/contributors/contributors.js";
 import {
 	actions as projectActions,
@@ -29,6 +30,7 @@ import {
 } from "~/modules/projects/projects.js";
 import {
 	ContributorMergeForm,
+	ContributorSplitForm,
 	ContributorUpdateForm,
 } from "~/pages/contributors/libs/components/components.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
@@ -86,10 +88,19 @@ const Project = (): JSX.Element => {
 		onOpen: handleContributorMergeModalOpen,
 	} = useModal();
 
+	const {
+		isOpened: isContributorSplitModalOpen,
+		onClose: handleContributorSplitModalClose,
+		onOpen: handleContributorSplitModalOpen,
+	} = useModal();
+
 	const [contributorToEdit, setContributorToEdit] =
 		useState<ContributorGetAllItemResponseDto | null>(null);
 
 	const [contributorToMerge, setContributorToMerge] =
+		useState<ContributorGetAllItemResponseDto | null>(null);
+
+	const [contributorToSplit, setContributorToSplit] =
 		useState<ContributorGetAllItemResponseDto | null>(null);
 
 	useEffect(() => {
@@ -190,6 +201,33 @@ const Project = (): JSX.Element => {
 		[contributorToMerge, dispatch, handleContributorMergeModalClose],
 	);
 
+	const handleSplitContributor = useCallback(
+		(contributorId: number) => {
+			const contributor = projectContributors.find(
+				(contributor) => contributor.id === contributorId,
+			);
+
+			if (contributor) {
+				setContributorToSplit(contributor);
+				handleContributorSplitModalOpen();
+			}
+		},
+		[handleContributorSplitModalOpen, projectContributors],
+	);
+
+	const handleContributorSplitSubmit = useCallback(
+		(payload: ContributorSplitRequestDto) => {
+			if (contributorToSplit) {
+				void dispatch(
+					contributorActions.split({ id: contributorToSplit.id, payload }),
+				);
+				setContributorToSplit(null);
+				handleContributorSplitModalClose();
+			}
+		},
+		[contributorToSplit, dispatch, handleContributorSplitModalClose],
+	);
+
 	const isLoading =
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
 
@@ -268,6 +306,7 @@ const Project = (): JSX.Element => {
 								isLoading={isContributorsDataLoading}
 								onEditContributor={handleEditContributor}
 								onMergeContributor={handleMergeContributor}
+								onSplitContributor={handleSplitContributor}
 							/>
 						</div>
 					</div>
@@ -306,6 +345,19 @@ const Project = (): JSX.Element => {
 								allContributors={projectContributors}
 								currentContributor={contributorToMerge}
 								onSubmit={handleContributorMergeSubmit}
+							/>
+						)}
+					</Modal>
+
+					<Modal
+						isOpened={isContributorSplitModalOpen}
+						onClose={handleContributorSplitModalClose}
+						title="Split contributors"
+					>
+						{contributorToSplit && (
+							<ContributorSplitForm
+								currentContributor={contributorToSplit}
+								onSubmit={handleContributorSplitSubmit}
 							/>
 						)}
 					</Modal>
