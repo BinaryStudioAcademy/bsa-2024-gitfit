@@ -5,7 +5,7 @@ import { type Storage } from "~/libs/modules/storage/storage.js";
 import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { NotificationsApiPath } from "./libs/enums/enums.js";
-import { type NotificationGetAllResponseDto } from "./libs/types/types.js"; // Import PaginationQueryParameters
+import { type NotificationGetAllResponseDto } from "./libs/types/types.js";
 
 type Constructor = {
 	baseUrl: string;

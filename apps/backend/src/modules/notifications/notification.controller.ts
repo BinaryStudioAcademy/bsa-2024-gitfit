@@ -59,22 +59,7 @@ class NotificationController extends BaseController {
 	 * @swagger
 	 * /notifications:
 	 *   get:
-	 *     description: Returns an array of notifications with pagination
-	 *     parameters:
-	 *       - in: query
-	 *         name: page
-	 *         schema:
-	 *           type: integer
-	 *           minimum: 1
-	 *           default: 1
-	 *         description: The page number to retrieve
-	 *       - in: query
-	 *         name: pageSize
-	 *         schema:
-	 *           type: integer
-	 *           minimum: 1
-	 *           default: 10
-	 *         description: The number of items per page
+	 *     description: Returns an array of notifications
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
@@ -87,9 +72,6 @@ class NotificationController extends BaseController {
 	 *                   type: array
 	 *                   items:
 	 *                     $ref: "#/components/schemas/Notification"
-	 *                 totalItems:
-	 *                   type: integer
-	 *                   description: The total number of notifications
 	 */
 
 	private async findAll({
