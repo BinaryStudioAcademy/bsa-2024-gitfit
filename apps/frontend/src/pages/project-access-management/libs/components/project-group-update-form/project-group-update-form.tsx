@@ -62,7 +62,7 @@ const ProjectGroupUpdateForm = ({
 				userIds,
 			}}
 			onSubmit={handleFormSubmit}
-			submitLabel="Submit"
+			submitLabel="Update"
 			validationSchema={projectGroupPatchValidationSchema}
 		/>
 	);
