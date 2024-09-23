@@ -20,13 +20,19 @@ type Properties = {
 		| ActivityLogGetAllItemAnalyticsResponseDto["commitsNumber"]
 		| undefined;
 	contributor: ContributorGetAllItemResponseDto;
+	hasEditPermission: boolean;
+	hasMergePermission: boolean;
 	onEdit: (contributorId: number) => void;
+	onMerge: (contributorId: number) => void;
 };
 
 const ContributorCard = ({
 	activityLog,
 	contributor,
+	hasEditPermission,
+	hasMergePermission,
 	onEdit,
+	onMerge,
 }: Properties): JSX.Element => {
 	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = contributor.lastActivityDate
@@ -58,6 +64,10 @@ const ContributorCard = ({
 		onEdit(contributor.id);
 	}, [onEdit, contributor.id]);
 
+	const handleMergeClick = useCallback(() => {
+		onMerge(contributor.id);
+	}, [onMerge, contributor.id]);
+
 	return (
 		<div className={styles["card"]}>
 			<span className={styles["name"]}>{contributor.name}</span>
@@ -67,7 +77,10 @@ const ContributorCard = ({
 			{hasActivityData && <ActivityChart data={activityData} />}
 			<ContributorMenu
 				contributorId={contributor.id}
+				hasEditPermission={hasEditPermission}
+				hasMergePermission={hasMergePermission}
 				onEdit={handleEditClick}
+				onMerge={handleMergeClick}
 			/>
 		</div>
 	);

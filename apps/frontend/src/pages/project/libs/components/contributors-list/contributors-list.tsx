@@ -10,15 +10,21 @@ import styles from "./styles.module.css";
 type Properties = {
 	activityLogs: ActivityLogGetAllItemAnalyticsResponseDto[];
 	contributors: ContributorGetAllItemResponseDto[];
+	hasEditPermission: boolean;
+	hasMergePermission: boolean;
 	isLoading: boolean;
 	onEditContributor: (contributorId: number) => void;
+	onMergeContributor: (contributorId: number) => void;
 };
 
 const ContributorsList = ({
 	activityLogs,
 	contributors,
+	hasEditPermission,
+	hasMergePermission,
 	isLoading,
 	onEditContributor,
+	onMergeContributor,
 }: Properties): JSX.Element => {
 	const hasContributors = contributors.length > EMPTY_LENGTH;
 	const isListShown = !isLoading && hasContributors;
@@ -29,6 +35,13 @@ const ContributorsList = ({
 			onEditContributor(contributorId);
 		},
 		[onEditContributor],
+	);
+
+	const handleMergeContributor = useCallback(
+		(contributorId: number) => {
+			onMergeContributor(contributorId);
+		},
+		[onMergeContributor],
 	);
 
 	return (
@@ -47,7 +60,10 @@ const ContributorsList = ({
 									)?.commitsNumber
 								}
 								contributor={contributor}
+								hasEditPermission={hasEditPermission}
+								hasMergePermission={hasMergePermission}
 								onEdit={handleEditContributor}
+								onMerge={handleMergeContributor}
 							/>
 						</li>
 					))}

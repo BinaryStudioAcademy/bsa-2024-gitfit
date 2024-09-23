@@ -12,10 +12,14 @@ import {
 import {
 	actions as contributorActions,
 	type ContributorGetAllItemResponseDto,
+	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 } from "~/modules/contributors/contributors.js";
 
-import { ContributorUpdateForm } from "./libs/components/components.js";
+import {
+	ContributorMergeForm,
+	ContributorUpdateForm,
+} from "./libs/components/components.js";
 import {
 	getContributorColumns,
 	getContributorRows,
@@ -40,7 +44,16 @@ const Contributors = (): JSX.Element => {
 		onOpen: onUpdateModalOpen,
 	} = useModal();
 
+	const {
+		isOpened: isMergeModalOpen,
+		onClose: onMergeModalClose,
+		onOpen: onMergeModalOpen,
+	} = useModal();
+
 	const [contributorToEdit, setContributorToEdit] =
+		useState<ContributorGetAllItemResponseDto | null>(null);
+
+	const [contributorToMerge, setContributorToMerge] =
 		useState<ContributorGetAllItemResponseDto | null>(null);
 
 	const openEditModal = useCallback(
@@ -54,12 +67,31 @@ const Contributors = (): JSX.Element => {
 		[onUpdateModalOpen],
 	);
 
+	const openMergeModal = useCallback(
+		(contributor: ContributorGetAllItemResponseDto | null) => {
+			setContributorToMerge(contributor);
+
+			if (contributor) {
+				onMergeModalOpen();
+			}
+		},
+		[onMergeModalOpen],
+	);
+
 	const handleEdit = useCallback(
 		(contributorId: number) => {
 			const contributor = contributors.find(({ id }) => id === contributorId);
-			openEditModal(contributor || null);
+			openEditModal(contributor ?? null);
 		},
 		[contributors, openEditModal],
+	);
+
+	const handleMerge = useCallback(
+		(contributorId: number): void => {
+			const contributor = contributors.find(({ id }) => id === contributorId);
+			openMergeModal(contributor ?? null);
+		},
+		[contributors, openMergeModal],
 	);
 
 	const handleContributorUpdateSubmit = useCallback(
@@ -75,9 +107,22 @@ const Contributors = (): JSX.Element => {
 		[dispatch, contributorToEdit, openEditModal, onUpdateModalClose],
 	);
 
+	const handleContributorMergeSubmit = useCallback(
+		(payload: ContributorMergeRequestDto) => {
+			if (contributorToMerge) {
+				void dispatch(
+					contributorActions.merge({ id: contributorToMerge.id, payload }),
+				);
+				openMergeModal(null);
+				onMergeModalClose();
+			}
+		},
+		[contributorToMerge, dispatch, openMergeModal, onMergeModalClose],
+	);
+
 	const contributorsColumns = useMemo(
-		() => getContributorColumns({ onEdit: handleEdit }),
-		[handleEdit],
+		() => getContributorColumns({ onEdit: handleEdit, onMerge: handleMerge }),
+		[handleEdit, handleMerge],
 	);
 
 	const contributorsData: ContributorRow[] = getContributorRows(contributors);
@@ -104,6 +149,19 @@ const Contributors = (): JSX.Element => {
 					<ContributorUpdateForm
 						contributor={contributorToEdit}
 						onSubmit={handleContributorUpdateSubmit}
+					/>
+				</Modal>
+			)}
+			{contributorToMerge && (
+				<Modal
+					isOpened={isMergeModalOpen}
+					onClose={onMergeModalClose}
+					title="Merge contributors"
+				>
+					<ContributorMergeForm
+						allContributors={contributors}
+						currentContributor={contributorToMerge}
+						onSubmit={handleContributorMergeSubmit}
 					/>
 				</Modal>
 			)}
