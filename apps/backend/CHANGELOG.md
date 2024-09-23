@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.30.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.30.0...backend-v1.30.1) (2024-09-23)
+
+
+### Bug Fixes
+
+* added filtering of deleted users to groups repositories gf-463 ([#480](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/480)) ([ef569ab](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ef569ab619a88ef74cafb8e984f3c20bf6256c79))
+
 ## [1.30.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.29.0...backend-v1.30.0) (2024-09-23)
 
 
