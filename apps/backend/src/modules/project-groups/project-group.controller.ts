@@ -88,11 +88,21 @@ class ProjectGroupController extends BaseController {
 			method: "DELETE",
 			path: ProjectGroupsApiPath.$ID,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.MANAGE_PROJECT,
-					PermissionKey.MANAGE_USER_ACCESS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[
+						PermissionKey.MANAGE_PROJECT,
+						PermissionKey.MANAGE_USER_ACCESS,
+						PermissionKey.MANAGE_ALL_PROJECTS,
+					],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									params: { id: string };
+								}>
+							).params.id,
+						),
+				),
 			],
 		});
 
@@ -126,10 +136,17 @@ class ProjectGroupController extends BaseController {
 			method: "PATCH",
 			path: ProjectGroupsApiPath.$ID,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.MANAGE_USER_ACCESS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									params: { id: string };
+								}>
+							).params.id,
+						),
+				),
 			],
 			validation: {
 				body: projectGroupPatchValidationSchema,

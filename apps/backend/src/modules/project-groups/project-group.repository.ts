@@ -116,6 +116,21 @@ class ProjectGroupRepository implements Repository {
 		};
 	}
 
+	public async findAllByUserId(userId: number): Promise<ProjectGroupEntity[]> {
+		const results = await this.projectGroupModel
+			.query()
+			.orderBy("createdAt", SortType.DESCENDING)
+			.withGraphJoined("[projects, users, permissions]")
+			.where("users.id", userId);
+
+		return results.map((projectGroup) =>
+			ProjectGroupEntity.initialize({
+				...projectGroup,
+				projectId: { id: projectGroup.projects.pop()?.id as number },
+			}),
+		);
+	}
+
 	public async findByProjectIdAndName({
 		name,
 		projectId,

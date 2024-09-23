@@ -42,16 +42,26 @@ class ActivityLogRepository implements Repository {
 
 	public async findAll({
 		endDate,
+		hasRootPermission,
+		projectIds,
 		startDate,
-	}: ActivityLogQueryParameters): Promise<{ items: ActivityLogEntity[] }> {
-		const activityLogs = await this.activityLogModel
+	}: {
+		hasRootPermission: boolean;
+		projectIds: number[];
+	} & ActivityLogQueryParameters): Promise<{ items: ActivityLogEntity[] }> {
+		const query = this.activityLogModel
 			.query()
 			.withGraphFetched("[gitEmail.contributor, project, createdByUser]")
 			.modifyGraph("gitEmail.contributor", (builder) => {
 				builder.select("id", "name");
 			})
-			.whereBetween("activity_logs.date", [startDate, endDate])
-			.orderBy("date");
+			.whereBetween("activity_logs.date", [startDate, endDate]);
+
+		if (!hasRootPermission) {
+			query.whereIn("activity_logs.projectId", projectIds);
+		}
+
+		const activityLogs = await query.orderBy("date");
 
 		return {
 			items: activityLogs.map((activityLog) =>

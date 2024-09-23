@@ -64,13 +64,23 @@ class ContributorController extends BaseController {
 			method: "GET",
 			path: ContributorsApiPath.ROOT,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.VIEW_ALL_PROJECTS,
-					PermissionKey.VIEW_PROJECT,
-					PermissionKey.EDIT_PROJECT,
-					PermissionKey.MANAGE_PROJECT,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[
+						PermissionKey.VIEW_ALL_PROJECTS,
+						PermissionKey.VIEW_PROJECT,
+						PermissionKey.EDIT_PROJECT,
+						PermissionKey.MANAGE_PROJECT,
+						PermissionKey.MANAGE_ALL_PROJECTS,
+					],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									query: { projectId: string };
+								}>
+							).query.projectId,
+						),
+				),
 			],
 		});
 
@@ -125,7 +135,7 @@ class ContributorController extends BaseController {
 			const projectId = Number(options.query.projectId);
 
 			return {
-				payload: await this.contributorService.findAllByProjectId(projectId),
+				payload: await this.contributorService.findAllByProjects([projectId]),
 				status: HTTPCode.OK,
 			};
 		}

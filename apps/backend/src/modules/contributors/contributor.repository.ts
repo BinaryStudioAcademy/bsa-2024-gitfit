@@ -63,8 +63,8 @@ class ContributorRepository implements Repository {
 		};
 	}
 
-	public async findAllByProjectId(
-		projectId: number,
+	public async findAllByProjects(
+		projectIds: number[],
 	): Promise<{ items: ContributorEntity[] }> {
 		const contributorsWithProjectsAndEmails = await this.contributorModel
 			.query()
@@ -82,7 +82,7 @@ class ContributorRepository implements Repository {
 			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
 			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
 			.leftJoin("projects", "activity_logs.project_id", "projects.id")
-			.where("projects.id", projectId)
+			.whereIn("projects.id", projectIds)
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
 

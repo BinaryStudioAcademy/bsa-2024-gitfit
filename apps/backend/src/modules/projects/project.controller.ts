@@ -76,7 +76,17 @@ class ProjectController extends BaseController {
 				),
 			method: "DELETE",
 			path: ProjectsApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
+			preHandlers: [
+				checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS], (options) =>
+					Number(
+						(
+							options as APIHandlerOptions<{
+								params: { id: string };
+							}>
+						).params.id,
+					),
+				),
+			],
 		});
 
 		this.addRoute({
@@ -109,13 +119,23 @@ class ProjectController extends BaseController {
 			method: "GET",
 			path: ProjectsApiPath.$ID,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.VIEW_ALL_PROJECTS,
-					PermissionKey.VIEW_PROJECT,
-					PermissionKey.EDIT_PROJECT,
-					PermissionKey.MANAGE_PROJECT,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[
+						PermissionKey.VIEW_ALL_PROJECTS,
+						PermissionKey.VIEW_PROJECT,
+						PermissionKey.EDIT_PROJECT,
+						PermissionKey.MANAGE_PROJECT,
+						PermissionKey.MANAGE_ALL_PROJECTS,
+					],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									params: { id: string };
+								}>
+							).params.id,
+						),
+				),
 			],
 		});
 
@@ -130,11 +150,21 @@ class ProjectController extends BaseController {
 			method: "PATCH",
 			path: ProjectsApiPath.$ID,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.EDIT_PROJECT,
-					PermissionKey.MANAGE_PROJECT,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[
+						PermissionKey.EDIT_PROJECT,
+						PermissionKey.MANAGE_PROJECT,
+						PermissionKey.MANAGE_ALL_PROJECTS,
+					],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									params: { id: string };
+								}>
+							).params.id,
+						),
+				),
 			],
 			validation: {
 				body: projectPatchValidationSchema,
