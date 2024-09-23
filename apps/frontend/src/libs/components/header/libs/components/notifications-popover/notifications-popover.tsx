@@ -1,13 +1,7 @@
 import { Popover } from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { formatRelativeTime } from "~/libs/helpers/helpers.js";
-import {
-	useAppDispatch,
-	useAppSelector,
-	useCallback,
-	useEffect,
-} from "~/libs/hooks/hooks.js";
-import { actions as notificationActions } from "~/modules/notifications/notifications.js";
+import { type NotificationGetAllItemResponseDto } from "~/modules/notifications/notifications.js";
 
 import { NotificationItem } from "./libs/components/components.js";
 import styles from "./styles.module.css";
@@ -15,28 +9,16 @@ import styles from "./styles.module.css";
 type Properties = {
 	children: React.ReactNode;
 	isOpened: boolean;
+	notifications: NotificationGetAllItemResponseDto[];
 	onClose: () => void;
 };
 
 const NotificationsPopover = ({
 	children,
 	isOpened,
+	notifications,
 	onClose,
 }: Properties): JSX.Element => {
-	const dispatch = useAppDispatch();
-
-	const { notifications } = useAppSelector(
-		({ notifications }) => notifications,
-	);
-
-	const handleLoadNotifications = useCallback(() => {
-		void dispatch(notificationActions.loadAll());
-	}, [dispatch]);
-
-	useEffect(() => {
-		handleLoadNotifications();
-	}, [handleLoadNotifications]);
-
 	const hasNotifications = notifications.length !== EMPTY_LENGTH;
 
 	return (
@@ -48,6 +30,7 @@ const NotificationsPopover = ({
 						{hasNotifications ? (
 							notifications.map((notification) => (
 								<NotificationItem
+									isRead={notification.isRead}
 									key={notification.id}
 									message={notification.payload}
 									timestamp={formatRelativeTime(notification.createdAt)}

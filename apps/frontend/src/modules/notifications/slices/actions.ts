@@ -15,4 +15,13 @@ const loadAll = createAsyncThunk<
 	return await notificationApi.getAll();
 });
 
-export { loadAll };
+const markAsRead = createAsyncThunk<boolean, { id: number }, AsyncThunkConfig>(
+	`${sliceName}/mark-as-read`,
+	async ({ id }, { extra }) => {
+		const { notificationApi } = extra;
+
+		return await notificationApi.markAsRead(id);
+	},
+);
+
+export { loadAll, markAsRead };
