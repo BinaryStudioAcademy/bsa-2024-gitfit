@@ -26,7 +26,7 @@ const getContributorColumns = (actions: {
 		size: 300,
 	},
 	{
-		cell: ({ row: { original: contributor } }): JSX.Element | null =>
+		cell: ({ row: { original: contributor } }) =>
 			contributor.isHidden ? (
 				<Icon height={18} name="check" width={18} />
 			) : null,
