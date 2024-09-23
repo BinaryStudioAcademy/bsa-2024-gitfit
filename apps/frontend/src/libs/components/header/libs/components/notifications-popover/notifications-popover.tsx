@@ -13,6 +13,7 @@ import {
 import { actions as notificationActions } from "~/modules/notifications/notifications.js";
 
 import { NotificationItem } from "./libs/components/components.js";
+import { PAGE_SIZE } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties = {
@@ -20,8 +21,6 @@ type Properties = {
 	isOpened: boolean;
 	onClose: () => void;
 };
-
-const PAGE_SIZE = 10;
 
 const NotificationsPopover = ({
 	children,
@@ -49,7 +48,7 @@ const NotificationsPopover = ({
 
 	const { reference: sentinelReference } =
 		useIntersectionObserver<HTMLDivElement>({
-			isDisabled: !hasNextPage || dataStatus === "pending",
+			isDisabled: !hasNextPage || dataStatus === DataStatus.PENDING,
 			onIntersect: onNextPage,
 		});
 
