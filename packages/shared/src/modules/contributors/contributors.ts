@@ -4,7 +4,11 @@ export {
 	type ContributorCreateRequestDto,
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,
+	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 	type ContributorPatchResponseDto,
 } from "./libs/types/types.js";
-export { ContributorPatch as ContributorPatchValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
+export {
+	contributorMerge as contributorMergeValidationSchema,
+	contributorPatch as contributorPatchValidationSchema,
+} from "./libs/validation-schemas/validation-schemas.js";

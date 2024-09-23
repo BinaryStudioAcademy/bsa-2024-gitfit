@@ -1,4 +1,5 @@
 const NotificationMessage = {
+	CONTRIBUTOR_MERGE_SUCCESS: "Contributor was successfully merged.",
 	CONTRIBUTOR_UPDATE_SUCCESS: "Contributor was successfully updated.",
 	GROUP_CREATE_SUCCESS: "Group was successfully created.",
 	GROUP_DELETE_SUCCESS: "Group was successfully deleted.",

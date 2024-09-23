@@ -8,14 +8,20 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	contributors: ContributorGetAllItemResponseDto[];
+	hasEditPermission: boolean;
+	hasMergePermission: boolean;
 	isLoading: boolean;
 	onEditContributor: (contributorId: number) => void;
+	onMergeContributor: (contributorId: number) => void;
 };
 
 const ContributorsList = ({
 	contributors,
+	hasEditPermission,
+	hasMergePermission,
 	isLoading,
 	onEditContributor,
+	onMergeContributor,
 }: Properties): JSX.Element => {
 	const hasContributors = contributors.length > EMPTY_LENGTH;
 	const isListShown = !isLoading && hasContributors;
@@ -28,6 +34,13 @@ const ContributorsList = ({
 		[onEditContributor],
 	);
 
+	const handleMergeContributor = useCallback(
+		(contributorId: number) => {
+			onMergeContributor(contributorId);
+		},
+		[onMergeContributor],
+	);
+
 	return (
 		<div className={styles["container"]}>
 			<h2 className={styles["title"]}>Contributors</h2>
@@ -38,7 +51,10 @@ const ContributorsList = ({
 						<li key={contributor.id}>
 							<ContributorCard
 								contributor={contributor}
+								hasEditPermission={hasEditPermission}
+								hasMergePermission={hasMergePermission}
 								onEdit={handleEditContributor}
+								onMerge={handleMergeContributor}
 							/>
 						</li>
 					))}

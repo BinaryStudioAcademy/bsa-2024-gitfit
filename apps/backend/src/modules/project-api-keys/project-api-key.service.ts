@@ -117,17 +117,17 @@ class ProjectApiKeyService implements Service {
 	): Promise<ProjectApiKeyCreateResponseDto> {
 		const encryptedKey = this.encryption.encrypt(projectApiKey);
 
-		const apiKeyEnitity =
+		const apiKeyEntity =
 			await this.projectApiKeyRepository.findByApiKey(encryptedKey);
 
-		if (!apiKeyEnitity) {
+		if (!apiKeyEntity) {
 			throw new ProjectApiKeyError({
 				message: ExceptionMessage.PROJECT_API_KEY_NOT_FOUND,
 				status: HTTPCode.NOT_FOUND,
 			});
 		}
 
-		const apiKey = apiKeyEnitity.toObject();
+		const apiKey = apiKeyEntity.toObject();
 		const decryptedApiKey = this.encryption.decrypt(apiKey.encryptedKey);
 
 		return {

@@ -13,10 +13,19 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	contributor: ContributorGetAllItemResponseDto;
+	hasEditPermission: boolean;
+	hasMergePermission: boolean;
 	onEdit: (contributorId: number) => void;
+	onMerge: (contributorId: number) => void;
 };
 
-const ContributorCard = ({ contributor, onEdit }: Properties): JSX.Element => {
+const ContributorCard = ({
+	contributor,
+	hasEditPermission,
+	hasMergePermission,
+	onEdit,
+	onMerge,
+}: Properties): JSX.Element => {
 	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = contributor.lastActivityDate
 		? getStartOfDay(new Date(contributor.lastActivityDate))
@@ -41,6 +50,10 @@ const ContributorCard = ({ contributor, onEdit }: Properties): JSX.Element => {
 		onEdit(contributor.id);
 	}, [onEdit, contributor.id]);
 
+	const handleMergeClick = useCallback(() => {
+		onMerge(contributor.id);
+	}, [onMerge, contributor.id]);
+
 	return (
 		<div className={styles["card"]}>
 			<span className={styles["name"]}>{contributor.name}</span>
@@ -49,7 +62,10 @@ const ContributorCard = ({ contributor, onEdit }: Properties): JSX.Element => {
 			)}
 			<ContributorMenu
 				contributorId={contributor.id}
+				hasEditPermission={hasEditPermission}
+				hasMergePermission={hasMergePermission}
 				onEdit={handleEditClick}
+				onMerge={handleMergeClick}
 			/>
 		</div>
 	);

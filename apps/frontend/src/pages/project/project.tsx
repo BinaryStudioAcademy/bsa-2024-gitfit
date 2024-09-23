@@ -20,13 +20,17 @@ import {
 import {
 	actions as contributorActions,
 	type ContributorGetAllItemResponseDto,
+	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 } from "~/modules/contributors/contributors.js";
 import {
 	actions as projectActions,
 	type ProjectPatchRequestDto,
 } from "~/modules/projects/projects.js";
-import { ContributorUpdateForm } from "~/pages/contributors/libs/components/components.js";
+import {
+	ContributorMergeForm,
+	ContributorUpdateForm,
+} from "~/pages/contributors/libs/components/components.js";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { ProjectUpdateForm } from "~/pages/projects/libs/components/components.js";
 
@@ -76,7 +80,16 @@ const Project = (): JSX.Element => {
 		onOpen: handleContributorUpdateModalOpen,
 	} = useModal();
 
+	const {
+		isOpened: isContributorMergeModalOpen,
+		onClose: handleContributorMergeModalClose,
+		onOpen: handleContributorMergeModalOpen,
+	} = useModal();
+
 	const [contributorToEdit, setContributorToEdit] =
+		useState<ContributorGetAllItemResponseDto | null>(null);
+
+	const [contributorToMerge, setContributorToMerge] =
 		useState<ContributorGetAllItemResponseDto | null>(null);
 
 	useEffect(() => {
@@ -150,6 +163,33 @@ const Project = (): JSX.Element => {
 		[dispatch, contributorToEdit, handleContributorUpdateModalClose, projectId],
 	);
 
+	const handleMergeContributor = useCallback(
+		(contributorId: number) => {
+			const contributor = projectContributors.find(
+				(contributor) => contributor.id === contributorId,
+			);
+
+			if (contributor) {
+				setContributorToMerge(contributor);
+				handleContributorMergeModalOpen();
+			}
+		},
+		[handleContributorMergeModalOpen, projectContributors],
+	);
+
+	const handleContributorMergeSubmit = useCallback(
+		(payload: ContributorMergeRequestDto) => {
+			if (contributorToMerge) {
+				void dispatch(
+					contributorActions.merge({ id: contributorToMerge.id, payload }),
+				);
+				setContributorToMerge(null);
+				handleContributorMergeModalClose();
+			}
+		},
+		[contributorToMerge, dispatch, handleContributorMergeModalClose],
+	);
+
 	const isLoading =
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
 
@@ -161,10 +201,14 @@ const Project = (): JSX.Element => {
 
 	const hasProject = project !== null;
 
-	const hasSetupAnalyticsPermission = checkHasPermission(
+	const hasManageAllProjectsPermission = checkHasPermission(
 		[PermissionKey.MANAGE_ALL_PROJECTS],
 		userPermissions,
 	);
+
+	const hasSetupAnalyticsPermission = hasManageAllProjectsPermission;
+	const hasEditContributorPermission = hasManageAllProjectsPermission;
+	const hasMergeContributorPermission = hasManageAllProjectsPermission;
 
 	if (isRejected) {
 		return <NotFound />;
@@ -225,8 +269,11 @@ const Project = (): JSX.Element => {
 						<div className={styles["contributors-list-wrapper"]}>
 							<ContributorsList
 								contributors={projectContributors}
+								hasEditPermission={hasEditContributorPermission}
+								hasMergePermission={hasMergeContributorPermission}
 								isLoading={isContributorsDataLoading}
 								onEditContributor={handleEditContributor}
+								onMergeContributor={handleMergeContributor}
 							/>
 						</div>
 					</div>
@@ -251,6 +298,20 @@ const Project = (): JSX.Element => {
 							<ContributorUpdateForm
 								contributor={contributorToEdit}
 								onSubmit={handleContributorUpdateSubmit}
+							/>
+						)}
+					</Modal>
+
+					<Modal
+						isOpened={isContributorMergeModalOpen}
+						onClose={handleContributorMergeModalClose}
+						title="Merge contributors"
+					>
+						{contributorToMerge && (
+							<ContributorMergeForm
+								allContributors={projectContributors}
+								currentContributor={contributorToMerge}
+								onSubmit={handleContributorMergeSubmit}
 							/>
 						)}
 					</Modal>

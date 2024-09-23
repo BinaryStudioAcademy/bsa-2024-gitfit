@@ -3,6 +3,7 @@ import { database } from "~/libs/modules/database/database.js";
 import { logger } from "~/libs/modules/logger/logger.js";
 import { activityLogController } from "~/modules/activity-logs/activity-logs.js";
 import { authController } from "~/modules/auth/auth.js";
+import { authAnalyticsController } from "~/modules/auth-analytics/auth-analytics.js";
 import { contributorController } from "~/modules/contributors/contributors.js";
 import { groupController } from "~/modules/groups/groups.js";
 import { notificationController } from "~/modules/notifications/notifications.js";
@@ -26,6 +27,7 @@ const apiV1 = new BaseServerApplicationApi(
 	"v1",
 	config,
 	...activityLogController.routes,
+	...authAnalyticsController.routes,
 	...authController.routes,
 	...notificationController.routes,
 	...permissionController.routes,
