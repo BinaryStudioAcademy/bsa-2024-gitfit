@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.51.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.50.0...v1.51.0) (2024-09-23)
+
+
+### Features
+
+* Add an ability to split contributors gf-462 ([#477](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/477)) ([adbf2af](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/adbf2afd81ac81518c50b158ab11cd89768e7c8a))
+
 ## [1.50.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.49.0...v1.50.0) (2024-09-23)
 
 
