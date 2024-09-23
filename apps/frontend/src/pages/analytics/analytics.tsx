@@ -1,4 +1,4 @@
-import { DateInput, Loader, PageLayout } from "~/libs/components/components.js";
+import { DateInput, PageLayout } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { subtractDays } from "~/libs/helpers/helpers.js";
 import {
@@ -88,14 +88,11 @@ const Analytics = (): JSX.Element => {
 						name="dateRange"
 					/>
 				</form>
-				{isLoading ? (
-					<Loader />
-				) : (
-					<AnalyticsTable
-						activityLogs={activityLogs}
-						dateRange={dateRangeValue}
-					/>
-				)}
+				<AnalyticsTable
+					activityLogs={activityLogs}
+					dateRange={dateRangeValue}
+					isLoading={isLoading}
+				/>
 			</section>
 		</PageLayout>
 	);

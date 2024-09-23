@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.44.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.44.0...frontend-v1.44.1) (2024-09-23)
+
+
+### Bug Fixes
+
+* inconsistent alignment of the analytics table on the analytics page gf-473 ([#479](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/479)) ([3c5390c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3c5390c6a0d440d9600fece8e0bf027ffb73ea18))
+* loader component is not vertically centralized on the analytics page gf-471 ([#481](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/481)) ([bc36fa9](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/bc36fa990d9c339b07f92777217384c13ddea499))
+
 ## [1.44.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.43.0...frontend-v1.44.0) (2024-09-23)
 
 
