@@ -79,6 +79,9 @@ export {
 	type ContributorPatchResponseDto,
 	contributorPatchValidationSchema,
 	ContributorsApiPath,
+	type ContributorSplitRequestDto,
+	contributorSplitValidationSchema,
+	MIN_GIT_EMAILS_LENGTH_FOR_SPLIT,
 } from "./modules/contributors/contributors.js";
 export {
 	type GitEmailCreateRequestDto,
