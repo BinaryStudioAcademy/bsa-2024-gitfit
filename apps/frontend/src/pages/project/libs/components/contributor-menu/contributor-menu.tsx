@@ -5,6 +5,9 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	contributorId: number;
+	hasEditPermission: boolean;
+	hasMergePermission: boolean;
+	hasSplitPermission: boolean;
 	isSplitEnabled?: boolean;
 	onEdit: (contributorId: number) => void;
 	onMerge: (contributorId: number) => void;
@@ -13,6 +16,9 @@ type Properties = {
 
 const ContributorMenu = ({
 	contributorId,
+	hasEditPermission,
+	hasMergePermission,
+	hasSplitPermission,
 	isSplitEnabled = false,
 	onEdit,
 	onMerge,
@@ -35,16 +41,24 @@ const ContributorMenu = ({
 		onClose();
 	}, [contributorId, onSplit, onClose]);
 
+	const isMenuShown =
+		hasEditPermission || hasMergePermission || hasSplitPermission;
+
 	return (
 		<div className={styles["menu-container"]}>
-			<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-				<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
-				<MenuItem iconName="merge" label="Merge" onClick={handleMerge} />
-
-				{isSplitEnabled && (
-					<MenuItem iconName="split" label="Split" onClick={handleSplit} />
-				)}
-			</Menu>
+			{isMenuShown && (
+				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+					{hasEditPermission && (
+						<MenuItem iconName="pencil" label="Edit" onClick={handleEdit} />
+					)}
+					{hasMergePermission && (
+						<MenuItem iconName="merge" label="Merge" onClick={handleMerge} />
+					)}
+					{hasSplitPermission && isSplitEnabled && (
+						<MenuItem iconName="split" label="Split" onClick={handleSplit} />
+					)}
+				</Menu>
+			)}
 		</div>
 	);
 };

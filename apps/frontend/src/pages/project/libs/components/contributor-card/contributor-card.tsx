@@ -14,6 +14,9 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	contributor: ContributorGetAllItemResponseDto;
+	hasEditPermission: boolean;
+	hasMergePermission: boolean;
+	hasSplitPermission: boolean;
 	onEdit: (contributorId: number) => void;
 	onMerge: (contributorId: number) => void;
 	onSplit: (contributorId: number) => void;
@@ -21,6 +24,9 @@ type Properties = {
 
 const ContributorCard = ({
 	contributor,
+	hasEditPermission,
+	hasMergePermission,
+	hasSplitPermission,
 	onEdit,
 	onMerge,
 	onSplit,
@@ -65,6 +71,9 @@ const ContributorCard = ({
 			)}
 			<ContributorMenu
 				contributorId={contributor.id}
+				hasEditPermission={hasEditPermission}
+				hasMergePermission={hasMergePermission}
+				hasSplitPermission={hasSplitPermission}
 				isSplitEnabled={contributor.gitEmails.length > SINGLE_ITEM}
 				onEdit={handleEditClick}
 				onMerge={handleMergeClick}

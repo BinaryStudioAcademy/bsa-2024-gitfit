@@ -1,0 +1,3 @@
+const FIRST_ARRAY_INDEX = 0;
+
+export { FIRST_ARRAY_INDEX };

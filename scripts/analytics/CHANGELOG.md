@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.6.0...analytics-v1.7.0) (2024-09-23)
+
+
+### Features
+
+* authorize the request before starting background job for analytics gf-464 ([#467](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/467)) ([fb682c3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/fb682c36b7159031475896e12169738756928d6e))
+
 ## [1.6.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.5.0...analytics-v1.6.0) (2024-09-20)
 
 

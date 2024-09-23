@@ -43,7 +43,7 @@ const split = createAsyncThunk<
 >(`${sliceName}/split`, async ({ id, payload }, { extra }) => {
 	const { contributorApi, toastNotifier } = extra;
 	const response = await contributorApi.split(id, payload);
-	toastNotifier.showSuccess(NotificationMessage.CONTRIBUTOR_MERGE_SUCCESS);
+	toastNotifier.showSuccess(NotificationMessage.CONTRIBUTOR_SPLIT_SUCCESS);
 
 	return response;
 });

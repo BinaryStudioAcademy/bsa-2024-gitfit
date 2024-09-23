@@ -8,6 +8,9 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	contributors: ContributorGetAllItemResponseDto[];
+	hasEditPermission: boolean;
+	hasMergePermission: boolean;
+	hasSplitPermission: boolean;
 	isLoading: boolean;
 	onEditContributor: (contributorId: number) => void;
 	onMergeContributor: (contributorId: number) => void;
@@ -16,6 +19,9 @@ type Properties = {
 
 const ContributorsList = ({
 	contributors,
+	hasEditPermission,
+	hasMergePermission,
+	hasSplitPermission,
 	isLoading,
 	onEditContributor,
 	onMergeContributor,
@@ -56,6 +62,9 @@ const ContributorsList = ({
 						<li key={contributor.id}>
 							<ContributorCard
 								contributor={contributor}
+								hasEditPermission={hasEditPermission}
+								hasMergePermission={hasMergePermission}
+								hasSplitPermission={hasSplitPermission}
 								onEdit={handleEditContributor}
 								onMerge={handleMergeContributor}
 								onSplit={handleSplitContributor}
