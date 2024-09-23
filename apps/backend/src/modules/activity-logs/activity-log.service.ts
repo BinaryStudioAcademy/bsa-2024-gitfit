@@ -156,13 +156,15 @@ class ActivityLogService implements Service {
 		const contributorMap: Record<string, number[]> = {};
 
 		for (const contributor of allContributors.items) {
-			if (!contributor.isHidden) {
-				const uniqueKey = `${contributor.name}_${String(contributor.id)}`;
-				contributorMap[uniqueKey] = Array.from(
-					{ length: dateRange.length },
-					() => INITIAL_COMMITS_NUMBER,
-				);
+			if (contributor.isHidden) {
+				continue;
 			}
+
+			const uniqueKey = `${contributor.name}_${String(contributor.id)}`;
+			contributorMap[uniqueKey] = Array.from(
+				{ length: dateRange.length },
+				() => INITIAL_COMMITS_NUMBER,
+			);
 		}
 
 		for (const log of activityLogs) {
