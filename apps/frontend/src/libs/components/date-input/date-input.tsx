@@ -101,7 +101,11 @@ const DateInput = <T extends FieldValues>({
 				isOpened={isOpened}
 				onClose={onClose}
 			>
-				<button className={styles["date-input-trigger"]} onClick={onOpen}>
+				<button
+					className={styles["date-input-trigger"]}
+					onClick={isOpened ? onClose : onOpen}
+					type="button"
+				>
 					<span className={styles["calendar-icon-wrapper"]}>
 						<Icon height={20} name="calendar" width={20} />
 					</span>
