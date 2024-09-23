@@ -168,13 +168,8 @@ class ActivityLogController extends BaseController {
 			query: ActivityLogQueryParameters;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { endDate, startDate } = options.query;
-
 		return {
-			payload: await this.activityLogService.findAll({
-				endDate,
-				startDate,
-			}),
+			payload: await this.activityLogService.findAll(options.query),
 			status: HTTPCode.OK,
 		};
 	}

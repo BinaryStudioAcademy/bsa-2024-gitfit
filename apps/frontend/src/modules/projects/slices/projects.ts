@@ -3,6 +3,7 @@ import {
 	deleteById,
 	getById,
 	loadAll,
+	loadAllContributorsActivityByProjectId,
 	loadAllContributorsByProjectId,
 	patch,
 } from "./actions.js";
@@ -14,6 +15,7 @@ const allActions = {
 	deleteById,
 	getById,
 	loadAll,
+	loadAllContributorsActivityByProjectId,
 	loadAllContributorsByProjectId,
 	patch,
 };

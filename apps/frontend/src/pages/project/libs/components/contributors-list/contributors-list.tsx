@@ -1,12 +1,17 @@
 import { Loader } from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
-import { useCallback } from "~/libs/hooks/hooks.js";
-import { type ContributorGetAllItemResponseDto } from "~/pages/project/libs/types/types.js";
+import { useCallback, useMemo } from "~/libs/hooks/hooks.js";
+import { type ActivityLogGetAllItemAnalyticsResponseDto } from "~/modules/activity/activity.js";
+import {
+	type ContributorActivity,
+	type ContributorGetAllItemResponseDto,
+} from "~/pages/project/libs/types/types.js";
 
 import { ContributorCard } from "../components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
+	activityLogs: ActivityLogGetAllItemAnalyticsResponseDto[];
 	contributors: ContributorGetAllItemResponseDto[];
 	hasEditPermission: boolean;
 	hasMergePermission: boolean;
@@ -18,6 +23,7 @@ type Properties = {
 };
 
 const ContributorsList = ({
+	activityLogs,
 	contributors,
 	hasEditPermission,
 	hasMergePermission,
@@ -52,6 +58,19 @@ const ContributorsList = ({
 		[onSplitContributor],
 	);
 
+	const activities = useMemo(() => {
+		const activitiesMap = new Map<number, ContributorActivity>();
+
+		for (const activityLog of activityLogs) {
+			activitiesMap.set(
+				Number(activityLog.contributorId),
+				activityLog.commitsNumber,
+			);
+		}
+
+		return activitiesMap;
+	}, [activityLogs]);
+
 	return (
 		<div className={styles["container"]}>
 			<h2 className={styles["title"]}>Contributors</h2>
@@ -61,6 +80,7 @@ const ContributorsList = ({
 					{contributors.map((contributor) => (
 						<li key={contributor.id}>
 							<ContributorCard
+								activity={activities.get(contributor.id)}
 								contributor={contributor}
 								hasEditPermission={hasEditPermission}
 								hasMergePermission={hasMergePermission}
