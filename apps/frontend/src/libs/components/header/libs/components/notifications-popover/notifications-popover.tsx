@@ -13,7 +13,7 @@ import {
 import { actions as notificationActions } from "~/modules/notifications/notifications.js";
 
 import { NotificationItem } from "./libs/components/components.js";
-import { PAGE_SIZE } from "./libs/constants/constants.js";
+import { NOTIFICATIONS_PAGE_SIZE } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties = {
@@ -42,7 +42,7 @@ const NotificationsPopover = ({
 	const { hasNextPage, onNextPage, onPageReset } = useInfiniteScroll({
 		currentItemsCount: notifications.length,
 		onLoading: handleLoadNotifications,
-		pageSize: PAGE_SIZE,
+		pageSize: NOTIFICATIONS_PAGE_SIZE,
 		totalItemsCount: notificationsTotalCount,
 	});
 

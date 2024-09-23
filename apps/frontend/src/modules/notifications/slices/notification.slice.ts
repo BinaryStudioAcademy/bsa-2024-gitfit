@@ -16,7 +16,7 @@ type State = {
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
 	notifications: [],
-	notificationsTotalCount: 1,
+	notificationsTotalCount: 0,
 };
 
 const { actions, name, reducer } = createSlice({
@@ -35,7 +35,7 @@ const { actions, name, reducer } = createSlice({
 		});
 		builder.addCase(loadAll.rejected, (state) => {
 			state.notifications = [];
-			state.notificationsTotalCount = 1;
+			state.notificationsTotalCount = initialState.notificationsTotalCount;
 			state.dataStatus = DataStatus.REJECTED;
 		});
 	},

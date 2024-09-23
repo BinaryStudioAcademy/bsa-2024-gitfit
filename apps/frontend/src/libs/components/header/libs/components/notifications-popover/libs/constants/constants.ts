@@ -1,1 +1,1 @@
-export { PAGE_SIZE } from "./default-page-size.constant.js";
+export { NOTIFICATIONS_PAGE_SIZE } from "./notifications-page-size.constant.js";
