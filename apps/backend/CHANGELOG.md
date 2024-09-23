@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.31.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.30.1...backend-v1.31.0) (2024-09-23)
+
+
+### Features
+
+* Add an activity chart to contributor items on project details page gf-420 ([#468](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/468)) ([38cf6eb](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/38cf6ebc535a40e117b68f18c53cbecb58ae356f))
+* add pagination to the contributors page gf-484 ([#491](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/491)) ([75e0b48](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75e0b483381fc8704feddbe3a6bf20b01331b98d))
+
+## [1.30.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.30.0...backend-v1.30.1) (2024-09-23)
+
+
+### Bug Fixes
+
+* added filtering of deleted users to groups repositories gf-463 ([#480](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/480)) ([ef569ab](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ef569ab619a88ef74cafb8e984f3c20bf6256c79))
+
 ## [1.30.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.29.0...backend-v1.30.0) (2024-09-23)
 
 

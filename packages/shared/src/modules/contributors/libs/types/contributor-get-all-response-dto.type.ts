@@ -2,6 +2,7 @@ import { type ContributorGetAllItemResponseDto } from "./contributor-get-all-ite
 
 type ContributorGetAllResponseDto = {
 	items: ContributorGetAllItemResponseDto[];
+	totalItems: number;
 };
 
 export { type ContributorGetAllResponseDto };
