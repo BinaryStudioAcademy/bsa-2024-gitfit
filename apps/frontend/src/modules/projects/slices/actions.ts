@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { NotificationMessage } from "~/libs/enums/enums.js";
+import { subtractDays } from "~/libs/helpers/helpers.js";
 import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import {
 	type ActivityLogGetAllAnalyticsResponseDto,
@@ -16,6 +17,7 @@ import {
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 } from "~/modules/projects/projects.js";
+import { ANALYTICS_DATE_MAX_RANGE } from "~/pages/analytics/libs/constants/analytics-date-max-range.constant.js";
 
 import { name as sliceName } from "./project.slice.js";
 
@@ -88,8 +90,23 @@ const loadAllContributorsByProjectId = createAsyncThunk<
 	AsyncThunkConfig
 >(
 	`${sliceName}/load-all-contributors-by-project-id`,
-	async (projectId, { extra }) => {
+	async (projectId, { dispatch, extra }) => {
 		const { contributorApi } = extra;
+
+		const todayDate = new Date();
+		const endDate = todayDate.toISOString();
+		const startDate = subtractDays(
+			todayDate,
+			ANALYTICS_DATE_MAX_RANGE,
+		).toISOString();
+
+		void dispatch(
+			loadAllContributorsActivityByProjectId({
+				endDate,
+				projectId,
+				startDate,
+			}),
+		);
 
 		return await contributorApi.getAllByProjectId(projectId);
 	},
