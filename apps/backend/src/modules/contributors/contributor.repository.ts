@@ -92,10 +92,13 @@ class ContributorRepository implements Repository {
 		};
 	}
 
-	public async findAllByProjectId(
-		hasHidden: boolean = true,
-		projectId: number,
-	): Promise<{ items: ContributorEntity[] }> {
+	public async findAllByProjectId({
+		hasHidden = true,
+		projectId,
+	}: {
+		hasHidden?: boolean;
+		projectId: number;
+	}): Promise<{ items: ContributorEntity[] }> {
 		const query = this.contributorModel
 			.query()
 			.select("contributors.*")
@@ -130,7 +133,11 @@ class ContributorRepository implements Repository {
 		};
 	}
 
-	public async findAllWithoutPagination(hasHidden: boolean = true): Promise<{
+	public async findAllWithoutPagination({
+		hasHidden = true,
+	}: {
+		hasHidden?: boolean;
+	}): Promise<{
 		items: ContributorEntity[];
 	}> {
 		const query = this.contributorModel

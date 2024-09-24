@@ -85,14 +85,17 @@ class ContributorService implements Service {
 		};
 	}
 
-	public async findAllByProjectId(
-		projectId: number,
-		hasHidden?: boolean,
-	): Promise<ContributorGetAllResponseDto> {
-		const contributors = await this.contributorRepository.findAllByProjectId(
+	public async findAllByProjectId({
+		hasHidden = true,
+		projectId,
+	}: {
+		hasHidden?: boolean;
+		projectId: number;
+	}): Promise<ContributorGetAllResponseDto> {
+		const contributors = await this.contributorRepository.findAllByProjectId({
 			hasHidden,
 			projectId,
-		);
+		});
 
 		return {
 			items: contributors.items.map((item) => {
@@ -110,11 +113,15 @@ class ContributorService implements Service {
 		};
 	}
 
-	public async findAllWithoutPagination(
-		hasHidden?: boolean,
-	): Promise<ContributorGetAllResponseDto> {
+	public async findAllWithoutPagination({
+		hasHidden,
+	}: {
+		hasHidden?: boolean;
+	}): Promise<ContributorGetAllResponseDto> {
 		const contributors =
-			await this.contributorRepository.findAllWithoutPagination(hasHidden);
+			await this.contributorRepository.findAllWithoutPagination({
+				hasHidden: hasHidden ?? true,
+			});
 
 		return {
 			items: contributors.items.map((item) => {

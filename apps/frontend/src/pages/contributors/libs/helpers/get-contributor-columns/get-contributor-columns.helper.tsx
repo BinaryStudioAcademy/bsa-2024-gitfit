@@ -41,7 +41,9 @@ const getContributorColumns = (actions: {
 		cell: ({ row: { original: contributor } }) =>
 			contributor.hiddenAt ? (
 				<Icon height={18} name="check" width={18} />
-			) : null,
+			) : (
+				<></>
+			),
 		header: "Do Not Track",
 		id: "hiddenAt",
 		size: 130,

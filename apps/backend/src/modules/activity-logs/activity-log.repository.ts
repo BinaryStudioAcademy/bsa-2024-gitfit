@@ -50,7 +50,7 @@ class ActivityLogRepository implements Repository {
 			.withGraphFetched("[project, createdByUser]")
 			.withGraphJoined("gitEmail.contributor")
 			.modifyGraph("gitEmail.contributor", (builder) => {
-				builder.select("id", "name", "HiddenAt");
+				builder.select("id", "name", "hiddenAt");
 			})
 			.whereNull("gitEmail:contributor.hiddenAt")
 			.whereBetween("activity_logs.date", [startDate, endDate])
