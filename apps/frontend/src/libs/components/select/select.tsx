@@ -17,6 +17,7 @@ import styles from "./styles.module.css";
 type Properties<TFieldValues extends FieldValues, TOptionValue> = {
 	background?: "primary" | "secondary";
 	control: Control<TFieldValues, null>;
+	isClearable?: boolean;
 	isLabelHidden?: boolean;
 	isMulti?: boolean;
 	isSearchable?: boolean;
@@ -30,6 +31,7 @@ type Properties<TFieldValues extends FieldValues, TOptionValue> = {
 const Select = <TFieldValues extends FieldValues, TOptionValue>({
 	background = "secondary",
 	control,
+	isClearable = false,
 	isLabelHidden = false,
 	isMulti = false,
 	isSearchable = false,
@@ -122,7 +124,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 						),
 					valueContainer: () => styles["value-container"] as string,
 				}}
-				isClearable={false}
+				isClearable={isClearable}
 				isMulti={isMulti}
 				isSearchable={isSearchable}
 				name={name}

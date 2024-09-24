@@ -274,12 +274,19 @@ class ProjectController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		const { name, page, pageSize } = options.query;
 
+		if (page && pageSize) {
+			return {
+				payload: await this.projectService.findAll({
+					name,
+					page: Number(page),
+					pageSize: Number(pageSize),
+				}),
+				status: HTTPCode.OK,
+			};
+		}
+
 		return {
-			payload: await this.projectService.findAll({
-				name,
-				page: Number(page),
-				pageSize: Number(pageSize),
-			}),
+			payload: await this.projectService.findAllWithoutPagination(),
 			status: HTTPCode.OK,
 		};
 	}

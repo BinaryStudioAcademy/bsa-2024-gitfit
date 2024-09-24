@@ -5,11 +5,7 @@ import { actions as userActions } from "~/modules/users/users.js";
 
 import styles from "./styles.module.css";
 
-type Properties = {
-	userId: number;
-};
-
-const DeleteAccount = ({ userId }: Properties): JSX.Element => {
+const DeleteAccount = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const { isOpened, onClose, onOpen } = useModal();
@@ -19,9 +15,9 @@ const DeleteAccount = ({ userId }: Properties): JSX.Element => {
 	}, [onOpen]);
 
 	const handleDeleteConfirm = useCallback(() => {
-		void dispatch(userActions.deleteById({ id: userId }));
+		void dispatch(userActions.deleteCurrentUser());
 		void dispatch(authActions.logout());
-	}, [dispatch, userId]);
+	}, [dispatch]);
 
 	return (
 		<div className={styles["profile-delete"]}>

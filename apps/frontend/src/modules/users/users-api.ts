@@ -34,6 +34,18 @@ class UserApi extends BaseHTTPApi {
 		return await response.json<boolean>();
 	}
 
+	public async deleteCurrentUser(): Promise<boolean> {
+		const response = await this.load(
+			this.getFullEndpoint(UsersApiPath.ROOT, {}),
+			{
+				hasAuth: true,
+				method: "DELETE",
+			},
+		);
+
+		return await response.json<boolean>();
+	}
+
 	public async getAll({
 		name = "",
 		page,
@@ -61,6 +73,22 @@ class UserApi extends BaseHTTPApi {
 	): Promise<UserPatchResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(UsersApiPath.$ID, { id: String(id) }),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "PATCH",
+				payload: JSON.stringify(payload),
+			},
+		);
+
+		return await response.json<UserPatchResponseDto>();
+	}
+
+	public async patchCurrentUser(
+		payload: UserPatchRequestDto,
+	): Promise<UserPatchResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(UsersApiPath.ROOT, {}),
 			{
 				contentType: ContentType.JSON,
 				hasAuth: true,
