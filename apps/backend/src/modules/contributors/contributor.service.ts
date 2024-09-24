@@ -86,10 +86,13 @@ class ContributorService implements Service {
 		};
 	}
 
-	public async findAllByProjectId(
-		projectId: number,
-		contributorName?: string,
-	): Promise<ContributorGetAllResponseDto> {
+	public async findAllByProjectId({
+		contributorName,
+		projectId,
+	}: {
+		contributorName?: string;
+		projectId: number;
+	}): Promise<ContributorGetAllResponseDto> {
 		const contributors = await this.contributorRepository.findAllByProjectId({
 			contributorName: contributorName ?? "",
 			projectId,
@@ -111,9 +114,11 @@ class ContributorService implements Service {
 		};
 	}
 
-	public async findAllWithoutPagination(
-		contributorName?: string,
-	): Promise<ContributorGetAllResponseDto> {
+	public async findAllWithoutPagination({
+		contributorName,
+	}: {
+		contributorName?: string;
+	}): Promise<ContributorGetAllResponseDto> {
 		const contributors =
 			await this.contributorRepository.findAllWithoutPagination({
 				contributorName: contributorName ?? "",
