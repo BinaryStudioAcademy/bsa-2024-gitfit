@@ -17,6 +17,7 @@ export {
 	addDays,
 	changeCase,
 	checkHasPermission,
+	configureQueryString,
 	configureString,
 	formatDate,
 	formatRelativeTime,

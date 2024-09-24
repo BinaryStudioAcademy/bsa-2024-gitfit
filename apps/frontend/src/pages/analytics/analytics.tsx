@@ -1,5 +1,5 @@
 import { DateInput, PageLayout, Select } from "~/libs/components/components.js";
-import { DataStatus } from "~/libs/enums/enums.js";
+import { DataStatus, QueryParameterName } from "~/libs/enums/enums.js";
 import { subtractDays } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
@@ -8,6 +8,8 @@ import {
 	useCallback,
 	useEffect,
 	useFormWatch,
+	useSearch,
+	useSearchParams,
 } from "~/libs/hooks/hooks.js";
 import { actions as activityLogActions } from "~/modules/activity/activity.js";
 
@@ -35,18 +37,28 @@ const Analytics = (): JSX.Element => {
 		void dispatch(activityLogActions.loadAllProjects());
 	}, [dispatch]);
 
+	const [searchParameters] = useSearchParams();
+
+	const { onSearch: onSelect } = useSearch({
+		queryParameterName: QueryParameterName.PROJECT_SELECT,
+	});
+
 	const { control, handleSubmit, isDirty } = useAppForm({
 		defaultValues: {
 			dateRange: [
 				subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE),
 				todayDate,
 			] as [Date, Date],
-			project: null,
+			project: searchParameters.get(QueryParameterName.PROJECT_SELECT),
 		},
 	});
 
 	const dateRangeValue = useFormWatch({ control, name: "dateRange" });
 	const projectValue = useFormWatch({ control, name: "project" });
+
+	useEffect(() => {
+		onSelect(projectValue ?? "");
+	}, [projectValue, onSelect]);
 
 	const handleLoadLogs = useCallback(
 		([startDate, endDate]: [Date, Date], projectId?: null | string) => {

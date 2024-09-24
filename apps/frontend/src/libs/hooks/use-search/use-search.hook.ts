@@ -1,16 +1,21 @@
 import { QueryParameterName } from "~/libs/enums/enums.js";
 import { useEffect, useSearchParams, useState } from "~/libs/hooks/hooks.js";
+import { type ValueOf } from "~/libs/types/types.js";
 
 type Parameters = {
 	isSavedToUrl?: boolean;
+	queryParameterName?: ValueOf<typeof QueryParameterName>;
 };
 
-const useSearch = ({ isSavedToUrl = true }: Parameters = {}): {
+const useSearch = ({
+	isSavedToUrl = true,
+	queryParameterName,
+}: Parameters = {}): {
 	onSearch: (search: string) => void;
 	search: string;
 } => {
 	const [searchParameters, setSearchParameters] = useSearchParams();
-	const searchParameterName = QueryParameterName.SEARCH;
+	const searchParameterName = queryParameterName ?? QueryParameterName.SEARCH;
 
 	const searchParameter = isSavedToUrl
 		? (searchParameters.get(searchParameterName) ?? "")

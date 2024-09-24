@@ -317,6 +317,7 @@ const Project = (): JSX.Element => {
 								onEditContributor={handleEditContributor}
 								onMergeContributor={handleMergeContributor}
 								onSplitContributor={handleSplitContributor}
+								projectId={projectId as string}
 							/>
 						</div>
 					</div>
