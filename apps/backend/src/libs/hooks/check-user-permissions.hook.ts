@@ -19,25 +19,13 @@ const checkUserPermissions = (
 	getProjectId?: (options: APIHandlerOptions) => number | undefined,
 ): APIPreHandler => {
 	return (options, done): void => {
-		const user = options.user as null | UserAuthResponseDto;
-		const shouldValidateProject = Boolean(getProjectId);
+		const user = options.user as UserAuthResponseDto;
 		const projectId = getProjectId?.(options);
-
-		if (!user) {
-			throw new HTTPError({
-				message: ExceptionMessage.USER_NOT_FOUND,
-				status: HTTPCode.UNAUTHORIZED,
-			});
-		}
 
 		const userPermissions = [
 			...user.groups.flatMap((group) => group.permissions),
 			...user.projectGroups
-				.filter(
-					(group) =>
-						!shouldValidateProject ||
-						(projectId && group.projectId.includes(projectId)),
-				)
+				.filter((group) => projectId && group.projectId.includes(projectId))
 				.flatMap((projectGroup) => projectGroup.permissions),
 		];
 
