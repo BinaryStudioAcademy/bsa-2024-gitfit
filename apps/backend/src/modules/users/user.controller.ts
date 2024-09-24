@@ -87,6 +87,32 @@ class UserController extends BaseController {
 			path: UsersApiPath.$ID,
 			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
 		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.patchCurrentUser(
+					options as APIHandlerOptions<{
+						body: UserPatchRequestDto;
+						user: { id: string };
+					}>,
+				),
+			method: "PATCH",
+			path: UsersApiPath.ROOT,
+			validation: {
+				body: userPatchValidationSchema,
+			},
+		});
+
+		this.addRoute({
+			handler: (options) =>
+				this.deleteCurrentUser(
+					options as APIHandlerOptions<{
+						user: { id: string };
+					}>,
+				),
+			method: "DELETE",
+			path: UsersApiPath.ROOT,
+		});
 	}
 
 	/**
@@ -114,6 +140,28 @@ class UserController extends BaseController {
 	): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.userService.delete(Number(options.params.id)),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /users:
+	 *    delete:
+	 *      tags:
+	 *        - Users
+	 *      description: Delete the current user
+	 *      responses:
+	 *        204:
+	 *          description: User deleted successfully
+	 */
+	private async deleteCurrentUser(
+		options: APIHandlerOptions<{
+			user: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		return {
+			payload: await this.userService.delete(Number(options.user.id)),
 			status: HTTPCode.OK,
 		};
 	}
@@ -212,6 +260,50 @@ class UserController extends BaseController {
 
 		return {
 			payload: await this.userService.patch(userId, options.body),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /users:
+	 *    patch:
+	 *      tags:
+	 *        - Users
+	 *      description: Update current user's information
+	 *      requestBody:
+	 *        description: Updated user object
+	 *        content:
+	 *          application/json:
+	 *            schema:
+	 *              type: object
+	 *              properties:
+	 *                name:
+	 *                  type: string
+	 *                email:
+	 *                  type: string
+	 *      responses:
+	 *        200:
+	 *          description: User updated successfully
+	 *          content:
+	 *            application/json:
+	 *              schema:
+	 *                type: object
+	 *                properties:
+	 *                  message:
+	 *                    type: object
+	 *                    $ref: "#/components/schemas/User"
+	 */
+	private async patchCurrentUser(
+		options: APIHandlerOptions<{
+			body: UserPatchRequestDto;
+			user: { id: string };
+		}>,
+	): Promise<APIHandlerResponse> {
+		const currentUserId = Number(options.user.id);
+
+		return {
+			payload: await this.userService.patch(currentUserId, options.body),
 			status: HTTPCode.OK,
 		};
 	}
