@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.33.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.33.0...backend-v1.33.1) (2024-09-24)
+
+
+### Bug Fixes
+
+* user profile not deleted without "Manage User Access" permission gf-449 ([#478](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/478)) ([5e017f5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5e017f58640efbaca8ace6877e5c8a846b11ce62))
+
 ## [1.33.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.32.0...backend-v1.33.0) (2024-09-24)
 
 

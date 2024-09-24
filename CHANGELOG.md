@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.53.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.52.0...v1.53.0) (2024-09-24)
+
+
+### Features
+
+* add Tooltip component and adjust gitEmail column gf-450 ([#497](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/497)) ([5583d7e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5583d7ebe22b01b9eff84b136ef7e8785b5a1521))
+
+
+### Bug Fixes
+
+* make sidebar width consistent gf-475 ([#500](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/500)) ([c3148b0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c3148b0d638407fd629794e42c3b54bffdd1c7fa))
+* user profile not deleted without "Manage User Access" permission gf-449 ([#478](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/478)) ([5e017f5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5e017f58640efbaca8ace6877e5c8a846b11ce62))
+
 ## [1.52.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.51.0...v1.52.0) (2024-09-24)
 
 
