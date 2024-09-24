@@ -50,8 +50,12 @@ class ContributorRepository implements Repository {
 		return ContributorEntity.initialize(contributor);
 	}
 
-	public async findAll(): Promise<{ items: ContributorEntity[] }> {
-		const contributorsWithProjectsAndEmails = await this.contributorModel
+	public async findAll({
+		contributorName,
+	}: {
+		contributorName?: string;
+	}): Promise<{ items: ContributorEntity[] }> {
+		const query = this.contributorModel
 			.query()
 			.select("contributors.*")
 			.select(
@@ -64,6 +68,12 @@ class ContributorRepository implements Repository {
 			.leftJoin("projects", "activity_logs.project_id", "projects.id")
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
+
+		if (contributorName) {
+			query.whereILike("contributors.name", `%${contributorName}%`);
+		}
+
+		const contributorsWithProjectsAndEmails = await query.execute();
 
 		return {
 			items: contributorsWithProjectsAndEmails.map((contributor) => {

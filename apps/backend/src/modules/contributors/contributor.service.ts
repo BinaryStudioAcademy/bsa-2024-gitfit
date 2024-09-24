@@ -52,8 +52,12 @@ class ContributorService implements Service {
 		return item.toObject();
 	}
 
-	public async findAll(): Promise<ContributorGetAllResponseDto> {
-		const contributors = await this.contributorRepository.findAll();
+	public async findAll(
+		contributorName?: string,
+	): Promise<ContributorGetAllResponseDto> {
+		const contributors = await this.contributorRepository.findAll({
+			...(contributorName !== undefined && { contributorName }),
+		});
 
 		return {
 			items: contributors.items.map((item) => {
