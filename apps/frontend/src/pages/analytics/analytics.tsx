@@ -14,6 +14,7 @@ import { actions as activityLogActions } from "~/modules/activity/activity.js";
 import { AnalyticsTable } from "./libs/components/components.js";
 import {
 	ANALYTICS_DATE_MAX_RANGE,
+	ANALYTICS_DEFAULT_DATE_RANGE,
 	ANALYTICS_LOOKBACK_DAYS_COUNT,
 } from "./libs/constants/constants.js";
 import { getProjectOptions } from "./libs/helpers/helpers.js";
@@ -38,7 +39,7 @@ const Analytics = (): JSX.Element => {
 	const { control, handleSubmit, isDirty } = useAppForm({
 		defaultValues: {
 			dateRange: [
-				subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE),
+				subtractDays(todayDate, ANALYTICS_DEFAULT_DATE_RANGE),
 				todayDate,
 			] as [Date, Date],
 			project: null,
