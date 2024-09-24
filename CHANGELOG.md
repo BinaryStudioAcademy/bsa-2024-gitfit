@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.53.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.53.0...v1.53.1) (2024-09-24)
+
+
+### Bug Fixes
+
+* adjusted project/contributor style to match figma design gf-506 ([#513](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/513)) ([b27a06e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b27a06e477ae812f6e36f4cc9c05e76cb7407955))
+* change decrypt function gf-495 ([#505](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/505)) ([c2dc8fe](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c2dc8fe3c569a4fb9e7b997242eec6902961aee5))
+
 ## [1.53.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.52.0...v1.53.0) (2024-09-24)
 
 

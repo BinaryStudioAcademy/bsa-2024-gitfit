@@ -27,6 +27,8 @@
 }
 
 .project-name {
-	flex-basis: 300px;
+	flex-basis: min(300px, 30%);
 	min-width: 150px;
+	font-size: 16px;
+	line-height: 120%;
 }
