@@ -1,4 +1,8 @@
-import { ExceptionMessage, type PermissionKey } from "~/libs/enums/enums.js";
+import {
+	ExceptionMessage,
+	type PermissionKey,
+	type ProjectPermissionKey,
+} from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
 	type APIHandlerOptions,
@@ -11,6 +15,7 @@ import { type ValueOf } from "../types/types.js";
 
 const checkUserPermissions = (
 	permissions: ValueOf<typeof PermissionKey>[],
+	projectPermissions?: ValueOf<typeof ProjectPermissionKey>[],
 	getProjectId?: (options: APIHandlerOptions) => number | undefined,
 ): APIPreHandler => {
 	return (options, done): void => {
@@ -25,7 +30,7 @@ const checkUserPermissions = (
 			});
 		}
 
-		const hasPermission = checkHasPermission(permissions, [
+		const userPermissions = [
 			...user.groups.flatMap((group) => group.permissions),
 			...user.projectGroups
 				.filter(
@@ -34,9 +39,21 @@ const checkUserPermissions = (
 						(projectId && group.projectId.includes(projectId)),
 				)
 				.flatMap((projectGroup) => projectGroup.permissions),
-		]);
+		];
 
-		if (!hasPermission) {
+		const hasGlobalPermission = checkHasPermission(
+			permissions,
+			userPermissions,
+		);
+
+		const hasProjectPermission = projectId
+			? checkHasPermission(
+					projectPermissions as ValueOf<typeof ProjectPermissionKey>[],
+					userPermissions,
+				)
+			: true;
+
+		if (!hasGlobalPermission && !hasProjectPermission) {
 			throw new HTTPError({
 				message: ExceptionMessage.NO_PERMISSION,
 				status: HTTPCode.FORBIDDEN,

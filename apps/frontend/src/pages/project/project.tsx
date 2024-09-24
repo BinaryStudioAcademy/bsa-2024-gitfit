@@ -6,7 +6,12 @@ import {
 	Navigate,
 	PageLayout,
 } from "~/libs/components/components.js";
-import { AppRoute, DataStatus, PermissionKey } from "~/libs/enums/enums.js";
+import {
+	AppRoute,
+	DataStatus,
+	PermissionKey,
+	ProjectPermissionKey,
+} from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
@@ -246,20 +251,20 @@ const Project = (): JSX.Element => {
 	const userHasProjectPermission =
 		hasProject &&
 		checkHasProjectPermission(projectUserPermissions, project.id, [
-			PermissionKey.MANAGE_PROJECT,
+			ProjectPermissionKey.MANAGE_PROJECT,
 		]);
 
 	const hasManageRequiredPermissions =
 		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||
 		checkHasPermission(
-			[PermissionKey.MANAGE_PROJECT],
+			[ProjectPermissionKey.MANAGE_PROJECT],
 			Object.values(projectUserPermissions).flat(),
 		);
 
 	const hasEditRequiredPermissions =
 		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||
 		checkHasPermission(
-			[PermissionKey.EDIT_PROJECT, PermissionKey.MANAGE_PROJECT],
+			[ProjectPermissionKey.EDIT_PROJECT, ProjectPermissionKey.MANAGE_PROJECT],
 			Object.values(projectUserPermissions).flat(),
 		);
 

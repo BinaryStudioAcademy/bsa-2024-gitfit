@@ -4,6 +4,7 @@ import {
 	AppRoute,
 	DataStatus,
 	type PermissionKey,
+	type ProjectPermissionKey,
 } from "~/libs/enums/enums.js";
 import {
 	checkHasPermission,
@@ -18,7 +19,7 @@ type Properties = {
 	children: React.ReactNode;
 	routeExtraPermissions?: ValueOf<typeof PermissionKey>[];
 	routePermissions?: ValueOf<typeof PermissionKey>[];
-	routeProjectPermissions?: ValueOf<typeof PermissionKey>[];
+	routeProjectPermissions?: ValueOf<typeof ProjectPermissionKey>[];
 };
 
 const ProtectedRoute = ({

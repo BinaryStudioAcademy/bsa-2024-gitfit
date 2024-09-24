@@ -1,4 +1,8 @@
-import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import {
+	APIPath,
+	PermissionKey,
+	ProjectPermissionKey,
+} from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import { checkUserPermissions } from "~/libs/hooks/hooks.js";
 import {
@@ -87,14 +91,17 @@ class ProjectController extends BaseController {
 			method: "DELETE",
 			path: ProjectsApiPath.$ID,
 			preHandlers: [
-				checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS], (options) =>
-					Number(
-						(
-							options as APIHandlerOptions<{
-								params: { id: string };
-							}>
-						).params.id,
-					),
+				checkUserPermissions(
+					[PermissionKey.MANAGE_ALL_PROJECTS],
+					[],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									params: { id: string };
+								}>
+							).params.id,
+						),
 				),
 			],
 		});
@@ -110,13 +117,14 @@ class ProjectController extends BaseController {
 			method: "GET",
 			path: ProjectsApiPath.ROOT,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.VIEW_ALL_PROJECTS,
-					PermissionKey.VIEW_PROJECT,
-					PermissionKey.EDIT_PROJECT,
-					PermissionKey.MANAGE_PROJECT,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
+					[
+						ProjectPermissionKey.VIEW_PROJECT,
+						ProjectPermissionKey.EDIT_PROJECT,
+						ProjectPermissionKey.MANAGE_PROJECT,
+					],
+				),
 			],
 		});
 
@@ -131,12 +139,11 @@ class ProjectController extends BaseController {
 			path: ProjectsApiPath.$ID,
 			preHandlers: [
 				checkUserPermissions(
+					[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
 					[
-						PermissionKey.VIEW_ALL_PROJECTS,
-						PermissionKey.VIEW_PROJECT,
-						PermissionKey.EDIT_PROJECT,
-						PermissionKey.MANAGE_PROJECT,
-						PermissionKey.MANAGE_ALL_PROJECTS,
+						ProjectPermissionKey.VIEW_PROJECT,
+						ProjectPermissionKey.EDIT_PROJECT,
+						ProjectPermissionKey.MANAGE_PROJECT,
 					],
 					(options) =>
 						Number(
@@ -162,10 +169,10 @@ class ProjectController extends BaseController {
 			path: ProjectsApiPath.$ID,
 			preHandlers: [
 				checkUserPermissions(
+					[PermissionKey.MANAGE_ALL_PROJECTS],
 					[
-						PermissionKey.EDIT_PROJECT,
-						PermissionKey.MANAGE_PROJECT,
-						PermissionKey.MANAGE_ALL_PROJECTS,
+						ProjectPermissionKey.EDIT_PROJECT,
+						ProjectPermissionKey.MANAGE_PROJECT,
 					],
 					(options) =>
 						Number(

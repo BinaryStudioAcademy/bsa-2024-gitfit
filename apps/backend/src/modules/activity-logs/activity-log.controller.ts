@@ -1,4 +1,8 @@
-import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import {
+	APIPath,
+	PermissionKey,
+	ProjectPermissionKey,
+} from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import { checkUserPermissions } from "~/libs/hooks/hooks.js";
 import {
@@ -96,13 +100,14 @@ class ActivityLogController extends BaseController {
 			method: "GET",
 			path: ActivityLogsApiPath.ROOT,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.VIEW_ALL_PROJECTS,
-					PermissionKey.VIEW_PROJECT,
-					PermissionKey.EDIT_PROJECT,
-					PermissionKey.MANAGE_PROJECT,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
+					[
+						ProjectPermissionKey.VIEW_PROJECT,
+						ProjectPermissionKey.EDIT_PROJECT,
+						ProjectPermissionKey.MANAGE_PROJECT,
+					],
+				),
 			],
 			validation: {
 				query: activityLogGetValidationSchema,
