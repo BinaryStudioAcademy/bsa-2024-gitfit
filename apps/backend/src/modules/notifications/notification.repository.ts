@@ -1,6 +1,10 @@
 import { SortType } from "~/libs/enums/enums.js";
-import { type Repository } from "~/libs/types/types.js";
+import {
+	type PaginationResponseDto,
+	type Repository,
+} from "~/libs/types/types.js";
 
+import { type NotificationGetAllRequestDto } from "./libs/types/types.js";
 import { NotificationEntity } from "./notification.entity.js";
 import { type NotificationModel } from "./notification.model.js";
 
@@ -56,19 +60,25 @@ class NotificationRepository implements Repository {
 		return Promise.resolve(null);
 	}
 
-	public async findAll(
-		userId: number,
-	): Promise<{ items: NotificationEntity[] }> {
-		const notifications = await this.notificationModel
+	public async findAll({
+		page,
+		pageSize,
+		userId,
+	}: NotificationGetAllRequestDto): Promise<
+		PaginationResponseDto<NotificationEntity>
+	> {
+		const { results, total } = await this.notificationModel
 			.query()
 			.where("receiverUserId", userId)
 			.orderBy("created_at", SortType.DESCENDING)
+			.page(page, pageSize)
 			.execute();
 
 		return {
-			items: notifications.map((notification) =>
+			items: results.map((notification) =>
 				NotificationEntity.initialize(notification),
 			),
+			totalItems: total,
 		};
 	}
 

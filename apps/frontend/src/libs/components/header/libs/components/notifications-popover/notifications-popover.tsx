@@ -1,15 +1,19 @@
-import { Popover } from "~/libs/components/components.js";
+import { Loader, Popover } from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
+import { DataStatus } from "~/libs/enums/enums.js";
 import { formatRelativeTime } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
 	useAppSelector,
 	useCallback,
 	useEffect,
+	useInfiniteScroll,
+	useIntersectionObserver,
 } from "~/libs/hooks/hooks.js";
 import { actions as notificationActions } from "~/modules/notifications/notifications.js";
 
 import { NotificationItem } from "./libs/components/components.js";
+import { NOTIFICATIONS_PAGE_SIZE } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties = {
@@ -24,20 +28,38 @@ const NotificationsPopover = ({
 	onClose,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-
-	const { notifications } = useAppSelector(
+	const { dataStatus, notifications, notificationsTotalCount } = useAppSelector(
 		({ notifications }) => notifications,
 	);
 
-	const handleLoadNotifications = useCallback(() => {
-		void dispatch(notificationActions.loadAll());
-	}, [dispatch]);
+	const handleLoadNotifications = useCallback(
+		(page: number, pageSize: number) => {
+			void dispatch(notificationActions.loadAll({ page, pageSize }));
+		},
+		[dispatch],
+	);
+
+	const { hasNextPage, onNextPage, onPageReset } = useInfiniteScroll({
+		currentItemsCount: notifications.length,
+		onLoading: handleLoadNotifications,
+		pageSize: NOTIFICATIONS_PAGE_SIZE,
+		totalItemsCount: notificationsTotalCount,
+	});
+
+	const { reference: sentinelReference } =
+		useIntersectionObserver<HTMLDivElement>({
+			isDisabled: !hasNextPage || dataStatus === DataStatus.PENDING,
+			onIntersect: onNextPage,
+		});
 
 	useEffect(() => {
-		handleLoadNotifications();
-	}, [handleLoadNotifications]);
+		if (isOpened) {
+			onPageReset();
+		}
+	}, [isOpened, onPageReset]);
 
 	const hasNotifications = notifications.length !== EMPTY_LENGTH;
+	const isLoadingMore = hasNextPage && dataStatus === DataStatus.PENDING;
 
 	return (
 		<Popover
@@ -58,6 +80,10 @@ const NotificationsPopover = ({
 								There is nothing yet.
 							</p>
 						)}
+
+						<div className={styles["sentinel"]} ref={sentinelReference} />
+
+						{isLoadingMore && <Loader />}
 					</div>
 				</div>
 			}
