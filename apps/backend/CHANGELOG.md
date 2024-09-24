@@ -1,5 +1,55 @@
 # Changelog
 
+## [1.33.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.33.0...backend-v1.33.1) (2024-09-24)
+
+
+### Bug Fixes
+
+* user profile not deleted without "Manage User Access" permission gf-449 ([#478](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/478)) ([5e017f5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5e017f58640efbaca8ace6877e5c8a846b11ce62))
+
+## [1.33.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.32.0...backend-v1.33.0) (2024-09-24)
+
+
+### Features
+
+* add infinite scroll and pagination to notificationspopover gf-458 ([#490](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/490)) ([9daf38b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9daf38b8ab392357d17919a0a6507e884d5a52be))
+* add projects select to analytics page gf-348 ([#470](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/470)) ([47d8620](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/47d8620dff09d6f21febd1cb74fa08fb53fd6fca))
+
+## [1.32.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.31.0...backend-v1.32.0) (2024-09-23)
+
+
+### Features
+
+* Add an ability to split contributors gf-462 ([#477](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/477)) ([adbf2af](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/adbf2afd81ac81518c50b158ab11cd89768e7c8a))
+
+## [1.31.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.30.1...backend-v1.31.0) (2024-09-23)
+
+
+### Features
+
+* Add an activity chart to contributor items on project details page gf-420 ([#468](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/468)) ([38cf6eb](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/38cf6ebc535a40e117b68f18c53cbecb58ae356f))
+* add pagination to the contributors page gf-484 ([#491](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/491)) ([75e0b48](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75e0b483381fc8704feddbe3a6bf20b01331b98d))
+
+## [1.30.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.30.0...backend-v1.30.1) (2024-09-23)
+
+
+### Bug Fixes
+
+* added filtering of deleted users to groups repositories gf-463 ([#480](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/480)) ([ef569ab](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ef569ab619a88ef74cafb8e984f3c20bf6256c79))
+
+## [1.30.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.29.0...backend-v1.30.0) (2024-09-23)
+
+
+### Features
+
+* add ability to merge contributors gf-344 ([#435](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/435)) ([a52d648](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a52d6486d6753a73d228b3149eb5984ba32f4e81))
+* authorize the request before starting background job for analytics gf-464 ([#467](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/467)) ([fb682c3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/fb682c36b7159031475896e12169738756928d6e))
+
+
+### Bug Fixes
+
+* adjust root permissions gf-350 ([#466](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/466)) ([6e42ada](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6e42ada9f78adcd84fd348a76f7518f0d1b03819))
+
 ## [1.29.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.28.1...backend-v1.29.0) (2024-09-20)
 
 

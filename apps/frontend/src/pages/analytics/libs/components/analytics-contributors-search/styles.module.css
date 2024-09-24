@@ -1,4 +1,4 @@
 .search-container {
-	max-width: 300px;
+	width: 300px;
 	background-color: var(--color-background-secondary);
 }

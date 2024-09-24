@@ -12,11 +12,13 @@ import styles from "./styles.module.css";
 type Properties = {
 	activityLogs: ActivityLogGetAllItemAnalyticsResponseDto[];
 	dateRange: [Date, Date];
+	isLoading: boolean;
 };
 
 const AnalyticsTable = ({
 	activityLogs,
 	dateRange,
+	isLoading,
 }: Properties): JSX.Element => {
 	const [startDate, endDate] = dateRange;
 	const dateRangeFormatted = getDateRange(startDate, endDate);
@@ -34,6 +36,8 @@ const AnalyticsTable = ({
 				columns={analyticsColumns}
 				data={analyticsData}
 				emptyPlaceholder="No contributors matching your search criteria."
+				isFullHeight
+				isLoading={isLoading}
 			/>
 		</div>
 	);

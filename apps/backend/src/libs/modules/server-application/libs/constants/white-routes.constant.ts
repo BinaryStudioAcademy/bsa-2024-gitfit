@@ -1,4 +1,9 @@
-import { ActivityLogsApiPath, APIPath, AuthApiPath } from "@git-fit/shared";
+import {
+	ActivityLogsApiPath,
+	APIPath,
+	AuthAnalyticsApiPath,
+	AuthApiPath,
+} from "@git-fit/shared";
 
 import { type WhiteRoute } from "~/libs/types/types.js";
 
@@ -8,6 +13,10 @@ const WHITE_ROUTES: WhiteRoute[] = [
 	{
 		methods: ["POST"],
 		path: `${APIPath.ACTIVITY_LOGS}${ActivityLogsApiPath.ROOT}`,
+	},
+	{
+		methods: ["POST"],
+		path: `${APIPath.AUTH_ANALYTICS}${AuthAnalyticsApiPath.ROOT}`,
 	},
 ];
 

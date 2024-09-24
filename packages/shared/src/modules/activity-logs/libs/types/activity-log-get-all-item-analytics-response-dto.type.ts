@@ -1,5 +1,5 @@
 type ActivityLogGetAllItemAnalyticsResponseDto = {
-	commitsNumber: (number | string)[];
+	commitsNumber: number[];
 	contributor: {
 		id: string;
 		name: string;

@@ -70,6 +70,15 @@ class ProjectRepository implements Repository {
 		};
 	}
 
+	public async findAllWithoutPagination(): Promise<ProjectEntity[]> {
+		const projects = await this.projectModel
+			.query()
+			.orderBy("created_at", SortType.DESCENDING)
+			.execute();
+
+		return projects.map((project) => ProjectEntity.initialize(project));
+	}
+
 	public async findByName(name: string): Promise<null | ProjectEntity> {
 		const item = await this.projectModel.query().findOne({ name });
 

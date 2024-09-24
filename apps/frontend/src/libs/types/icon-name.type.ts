@@ -16,6 +16,7 @@ type IconName =
 	| "rightArrow"
 	| "rightDoubleArrow"
 	| "search"
+	| "split"
 	| "strikedEye"
 	| "trashBin"
 	| "warning";

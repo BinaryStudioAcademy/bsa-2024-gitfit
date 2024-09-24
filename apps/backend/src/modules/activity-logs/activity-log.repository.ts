@@ -43,6 +43,7 @@ class ActivityLogRepository implements Repository {
 	public async findAll({
 		contributorName,
 		endDate,
+		projectId,
 		startDate,
 	}: ActivityLogQueryParameters): Promise<{ items: ActivityLogEntity[] }> {
 		const query = this.activityLogModel
@@ -57,6 +58,10 @@ class ActivityLogRepository implements Repository {
 
 		if (contributorName) {
 			query.whereILike("gitEmail:contributor.name", `%${contributorName}%`);
+		}
+
+		if (projectId) {
+			query.where("project_id", projectId);
 		}
 
 		const activityLogs = await query.execute();

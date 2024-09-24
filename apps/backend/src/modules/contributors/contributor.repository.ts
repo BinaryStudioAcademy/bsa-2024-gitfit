@@ -1,6 +1,11 @@
 import { raw } from "objection";
 
-import { type Repository } from "~/libs/types/types.js";
+import { SortType } from "~/libs/enums/enums.js";
+import {
+	type PaginationQueryParameters,
+	type PaginationResponseDto,
+	type Repository,
+} from "~/libs/types/types.js";
 import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
@@ -52,11 +57,16 @@ class ContributorRepository implements Repository {
 
 	public async findAll({
 		contributorName,
+		page,
+		pageSize,
 	}: {
 		contributorName?: string;
-	}): Promise<{ items: ContributorEntity[] }> {
+	} & PaginationQueryParameters): Promise<
+		PaginationResponseDto<ContributorEntity>
+	> {
 		const query = this.contributorModel
 			.query()
+			.orderBy("createdAt", SortType.DESCENDING)
 			.select("contributors.*")
 			.select(
 				raw(
@@ -73,19 +83,21 @@ class ContributorRepository implements Repository {
 			query.whereILike("contributors.name", `%${contributorName}%`);
 		}
 
-		const contributorsWithProjectsAndEmails = await query.execute();
+		const { results, total } = await query.page(page, pageSize).execute();
 
 		return {
-			items: contributorsWithProjectsAndEmails.map((contributor) => {
-				return ContributorEntity.initialize(contributor);
-			}),
+			items: results.map((contributor) =>
+				ContributorEntity.initialize(contributor),
+			),
+			totalItems: total,
 		};
 	}
 
 	public async findAllByProjectId(
 		projectId: number,
+		contributorName?: string,
 	): Promise<{ items: ContributorEntity[] }> {
-		const contributorsWithProjectsAndEmails = await this.contributorModel
+		const query = this.contributorModel
 			.query()
 			.select("contributors.*")
 			.select(
@@ -105,8 +117,44 @@ class ContributorRepository implements Repository {
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
 
+		if (contributorName) {
+			query.whereILike("contributors.name", `%${contributorName}%`);
+		}
+
+		const contributorsWithProjectsAndEmails = await query.execute();
+
 		return {
 			items: contributorsWithProjectsAndEmails.map((contributor) => {
+				return ContributorEntity.initialize(contributor);
+			}),
+		};
+	}
+
+	public async findAllWithoutPagination(
+		contributorName?: string,
+	): Promise<{ items: ContributorEntity[] }> {
+		const query = this.contributorModel
+			.query()
+			.select("contributors.*")
+			.select(
+				raw(
+					"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
+				),
+			)
+			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
+			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
+			.leftJoin("projects", "activity_logs.project_id", "projects.id")
+			.groupBy("contributors.id")
+			.withGraphFetched("gitEmails");
+
+		if (contributorName) {
+			query.whereILike("contributors.name", `%${contributorName}%`);
+		}
+
+		const results = await query.execute();
+
+		return {
+			items: results.map((contributor) => {
 				return ContributorEntity.initialize(contributor);
 			}),
 		};
@@ -186,6 +234,46 @@ class ContributorRepository implements Repository {
 			.patchAndFetchById(contributorId, { name: data.name });
 
 		return ContributorEntity.initialize(contributor);
+	}
+
+	public async split(
+		gitEmailId: number,
+		newContributorName: string,
+	): Promise<ContributorEntity> {
+		const result = await this.contributorModel.transaction(async (trx) => {
+			const newContributor = await this.contributorModel
+				.query(trx)
+				.insert({ name: newContributorName })
+				.execute();
+
+			await this.gitEmailModel
+				.query(trx)
+				.patchAndFetchById(gitEmailId, { contributorId: newContributor.id });
+
+			return await this.contributorModel
+				.query(trx)
+				.select("contributors.*")
+				.select(
+					raw(
+						"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
+					),
+				)
+				.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
+				.leftJoin(
+					"activity_logs",
+					"git_emails.id",
+					"activity_logs.git_email_id",
+				)
+				.leftJoin("projects", "activity_logs.project_id", "projects.id")
+				.groupBy("contributors.id")
+				.withGraphFetched("gitEmails")
+				.modifyGraph("gitEmails", (builder) => {
+					builder.select("id", "email");
+				})
+				.findById(newContributor.id);
+		});
+
+		return ContributorEntity.initialize(result as ContributorModel);
 	}
 
 	public update(): ReturnType<Repository["update"]> {

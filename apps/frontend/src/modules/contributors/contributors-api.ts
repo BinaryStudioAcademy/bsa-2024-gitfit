@@ -2,6 +2,7 @@ import { APIPath, ContentType } from "~/libs/enums/enums.js";
 import { BaseHTTPApi } from "~/libs/modules/api/api.js";
 import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
+import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import {
 	type ContributorGetAllItemResponseDto,
@@ -9,6 +10,7 @@ import {
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 	type ContributorPatchResponseDto,
+	type ContributorSplitRequestDto,
 } from "./contributors.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
 
@@ -23,12 +25,18 @@ class ContributorApi extends BaseHTTPApi {
 		super({ baseUrl, http, path: APIPath.CONTRIBUTORS, storage });
 	}
 
-	public async getAll(): Promise<ContributorGetAllResponseDto> {
+	public async getAll(
+		query: PaginationQueryParameters,
+	): Promise<ContributorGetAllResponseDto> {
 		const response = await this.load(
 			this.getFullEndpoint(ContributorsApiPath.ROOT, {}),
 			{
 				hasAuth: true,
 				method: "GET",
+				query: {
+					page: String(query.page),
+					pageSize: String(query.pageSize),
+				},
 			},
 		);
 
@@ -84,6 +92,23 @@ class ContributorApi extends BaseHTTPApi {
 		);
 
 		return await response.json<ContributorPatchResponseDto>();
+	}
+
+	public async split(
+		id: number,
+		payload: ContributorSplitRequestDto,
+	): Promise<ContributorGetAllItemResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(ContributorsApiPath.SPLIT_$ID, { id: String(id) }),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "PATCH",
+				payload: JSON.stringify(payload),
+			},
+		);
+
+		return await response.json<ContributorGetAllItemResponseDto>();
 	}
 }
 

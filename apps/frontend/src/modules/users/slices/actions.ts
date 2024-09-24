@@ -28,6 +28,23 @@ const deleteById = createAsyncThunk<boolean, { id: number }, AsyncThunkConfig>(
 	},
 );
 
+const deleteCurrentUser = createAsyncThunk<
+	boolean,
+	undefined,
+	AsyncThunkConfig
+>(`${sliceName}/delete-current-user`, async (_, { dispatch, extra }) => {
+	const { toastNotifier, userApi } = extra;
+
+	const isDeleted = await userApi.deleteCurrentUser();
+
+	if (isDeleted) {
+		toastNotifier.showSuccess(NotificationMessage.USER_DELETE_SUCCESS);
+		void dispatch(authActions.logout());
+	}
+
+	return isDeleted;
+});
+
 const loadAll = createAsyncThunk<
 	UserGetAllResponseDto,
 	UserGetAllQueryParameters,
@@ -38,19 +55,22 @@ const loadAll = createAsyncThunk<
 	return userApi.getAll(query);
 });
 
-const updateProfile = createAsyncThunk<
+const updateCurrentUserProfile = createAsyncThunk<
 	UserPatchResponseDto,
-	{ id: number; payload: UserPatchRequestDto },
+	UserPatchRequestDto,
 	AsyncThunkConfig
->(`${sliceName}/profile`, async ({ id, payload }, { dispatch, extra }) => {
-	const { toastNotifier, userApi } = extra;
+>(
+	`${sliceName}/update-current-user-profile`,
+	async (payload, { dispatch, extra }) => {
+		const { toastNotifier, userApi } = extra;
 
-	const user = await userApi.patch(id, payload);
-	void dispatch(authActions.getAuthenticatedUser());
+		const user = await userApi.patchCurrentUser(payload);
+		void dispatch(authActions.getAuthenticatedUser());
 
-	toastNotifier.showSuccess(NotificationMessage.PROFILE_UPDATE_SUCCESS);
+		toastNotifier.showSuccess(NotificationMessage.PROFILE_UPDATE_SUCCESS);
 
-	return user;
-});
+		return user;
+	},
+);
 
-export { deleteById, loadAll, updateProfile };
+export { deleteById, deleteCurrentUser, loadAll, updateCurrentUserProfile };

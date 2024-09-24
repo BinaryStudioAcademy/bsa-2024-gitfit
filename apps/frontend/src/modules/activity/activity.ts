@@ -16,5 +16,6 @@ export {
 	type ActivityLogGetAllItemAnalyticsResponseDto,
 	type ActivityLogGetAllItemResponseDto,
 	type ActivityLogGetAllResponseDto,
+	type ActivityLogQueryParameters,
 } from "./libs/types/types.js";
 export { actions, reducer } from "./slices/activity.js";
