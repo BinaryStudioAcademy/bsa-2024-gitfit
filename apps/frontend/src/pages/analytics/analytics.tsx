@@ -8,7 +8,7 @@ import {
 	useCallback,
 	useEffect,
 	useFormWatch,
-	useSearch,
+	useQueryParameters,
 	useSearchParams,
 } from "~/libs/hooks/hooks.js";
 import { actions as activityLogActions } from "~/modules/activity/activity.js";
@@ -39,7 +39,7 @@ const Analytics = (): JSX.Element => {
 
 	const [searchParameters] = useSearchParams();
 
-	const { onSearch: onSelect } = useSearch({
+	const { onSearch: onSelect } = useQueryParameters({
 		queryParameterName: QueryParameterName.PROJECT_SELECT,
 	});
 

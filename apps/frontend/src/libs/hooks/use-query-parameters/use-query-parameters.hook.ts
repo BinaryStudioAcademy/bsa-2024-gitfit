@@ -7,7 +7,7 @@ type Parameters = {
 	queryParameterName?: ValueOf<typeof QueryParameterName>;
 };
 
-const useSearch = ({
+const useQueryParameters = ({
 	isSavedToUrl = true,
 	queryParameterName,
 }: Parameters = {}): {
@@ -42,4 +42,4 @@ const useSearch = ({
 	};
 };
 
-export { useSearch };
+export { useQueryParameters };
