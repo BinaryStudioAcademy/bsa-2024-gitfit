@@ -4,19 +4,20 @@ const configureQueryString = <T extends Record<string, string>>(
 	baseUrl: string,
 	parameters: T[],
 ): string => {
-	let queryString = baseUrl;
+	const searchParameters = new URLSearchParams();
 
 	if (parameters.length > EMPTY_LENGTH) {
-		queryString += "?";
-		queryString += parameters
-			.map(
-				(parameter) =>
-					`${parameter["name"] as string}=${parameter["value"] as string}`,
-			)
-			.join("&");
+		for (const parameter of parameters) {
+			searchParameters.append(
+				parameter["name"] as string,
+				parameter["value"] as string,
+			);
+		}
+
+		return `${baseUrl}?${searchParameters.toString()}`;
 	}
 
-	return queryString;
+	return baseUrl;
 };
 
 export { configureQueryString };
