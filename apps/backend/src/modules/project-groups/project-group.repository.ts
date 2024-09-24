@@ -129,10 +129,10 @@ class ProjectGroupRepository implements Repository {
 			.withGraphJoined("[projects, users, permissions]")
 			.where("users.id", userId);
 
-		return results.map((projectGroup) =>
+		return results.map(({ projects, ...projectGroup }) =>
 			ProjectGroupEntity.initialize({
 				...projectGroup,
-				projectId: { id: (projectGroup.projects.pop() as ProjectModel).id },
+				projectId: { id: (projects.pop() as ProjectModel).id },
 			}),
 		);
 	}
