@@ -7,5 +7,11 @@
 
 .filters-form {
 	display: flex;
+	gap: 12px;
+	align-items: center;
 	margin-top: 24px;
+}
+
+.select-wrapper {
+	min-width: 270px;
 }
