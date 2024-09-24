@@ -132,7 +132,7 @@ class ProjectGroupRepository implements Repository {
 		return results.map((projectGroup) =>
 			ProjectGroupEntity.initialize({
 				...projectGroup,
-				projectId: { id: projectGroup.projects.pop()?.id as number },
+				projectId: { id: (projectGroup.projects.pop() as ProjectModel).id },
 			}),
 		);
 	}
