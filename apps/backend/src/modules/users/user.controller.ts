@@ -62,22 +62,6 @@ class UserController extends BaseController {
 
 		this.addRoute({
 			handler: (options) =>
-				this.patch(
-					options as APIHandlerOptions<{
-						body: UserPatchRequestDto;
-						params: { id: string };
-					}>,
-				),
-			method: "PATCH",
-			path: UsersApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_USER_ACCESS])],
-			validation: {
-				body: userPatchValidationSchema,
-			},
-		});
-
-		this.addRoute({
-			handler: (options) =>
 				this.delete(
 					options as APIHandlerOptions<{
 						params: { id: string };
@@ -209,57 +193,6 @@ class UserController extends BaseController {
 	}>): Promise<APIHandlerResponse> {
 		return {
 			payload: await this.userService.findAll(query),
-			status: HTTPCode.OK,
-		};
-	}
-
-	/**
-	 * @swagger
-	 * /users/{id}:
-	 *    patch:
-	 *      tags:
-	 *        - Users
-	 *      description: Update user info
-	 *      parameters:
-	 *        - in: path
-	 *          name: id
-	 *          description: ID of the user to update\
-	 *          schema:
-	 *            type: string
-	 *      requestBody:
-	 *        description: Updated user object\
-	 *        content:
-	 *          application/json:
-	 *            schema:
-	 *              type: object
-	 *              properties:
-	 *                name:
-	 *                  type: string
-	 *                email:
-	 *                  type: string
-	 *      responses:
-	 *        200:
-	 *          description: Successful operation
-	 *          content:
-	 *            application/json:
-	 *              schema:
-	 *                type: object
-	 *                properties:
-	 *                  message:
-	 *                    type: object
-	 *                    $ref: "#/components/schemas/User"
-	 */
-
-	private async patch(
-		options: APIHandlerOptions<{
-			body: UserPatchRequestDto;
-			params: { id: string };
-		}>,
-	): Promise<APIHandlerResponse> {
-		const userId = Number(options.params.id);
-
-		return {
-			payload: await this.userService.patch(userId, options.body),
 			status: HTTPCode.OK,
 		};
 	}
