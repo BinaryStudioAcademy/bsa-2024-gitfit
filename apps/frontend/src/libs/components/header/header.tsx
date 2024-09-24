@@ -37,16 +37,13 @@ const Header = (): JSX.Element => {
 		({ auth }) => auth.authenticatedUser,
 	);
 
-	const { notifications } = useAppSelector(
+	const { unreadNotifications } = useAppSelector(
 		({ notifications }) => notifications,
 	);
 
 	useEffect(() => {
-		void dispatch(notificationActions.loadAll());
+		void dispatch(notificationActions.loadAllUnread());
 	}, [dispatch]);
-
-	const unreadNotifications = notifications.filter((n) => !n.isRead);
-	const hasUnreadNotifications = unreadNotifications.length !== EMPTY_LENGTH;
 
 	const markAllNotificationsAsRead = useCallback(() => {
 		for (const notification of unreadNotifications) {
@@ -55,8 +52,8 @@ const Header = (): JSX.Element => {
 	}, [dispatch, unreadNotifications]);
 
 	const handleNotificationsClose = useCallback(() => {
-		markAllNotificationsAsRead();
 		onNotificationsClose();
+		markAllNotificationsAsRead();
 	}, [markAllNotificationsAsRead, onNotificationsClose]);
 
 	if (!authenticatedUser) {
@@ -64,6 +61,7 @@ const Header = (): JSX.Element => {
 	}
 
 	const { email, name } = authenticatedUser;
+	const hasUnreadNotifications = unreadNotifications.length !== EMPTY_LENGTH;
 
 	return (
 		<header className={styles["header"]}>
@@ -73,7 +71,6 @@ const Header = (): JSX.Element => {
 			<div className={styles["header-popovers"]}>
 				<NotificationsPopover
 					isOpened={isNotificationsOpened}
-					notifications={notifications}
 					onClose={handleNotificationsClose}
 				>
 					<button
@@ -83,7 +80,9 @@ const Header = (): JSX.Element => {
 								styles["notifications-popover-trigger-opened"],
 						)}
 						onClick={
-							isNotificationsOpened ? onNotificationsClose : onNotificationsOpen
+							isNotificationsOpened
+								? handleNotificationsClose
+								: onNotificationsOpen
 						}
 					>
 						<div className={styles["notifications-icon-wrapper"]}>

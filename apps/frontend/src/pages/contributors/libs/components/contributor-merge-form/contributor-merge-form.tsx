@@ -75,8 +75,8 @@ const ContributorMergeForm = ({
 			<div className={styles["warn-message"]}>
 				<Icon height={16} name="warning" width={16} />
 				<span className={styles["warn-message-text"]}>
-					The selected contributor will be deleted. This action cannot be
-					undone.
+					The selected contributor will be deleted. This action can be undone
+					later using the split functionality.
 				</span>
 			</div>
 			<div className={styles["button-wrapper"]}>

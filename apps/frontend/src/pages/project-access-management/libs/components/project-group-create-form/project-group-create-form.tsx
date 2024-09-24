@@ -49,7 +49,7 @@ const ProjectGroupCreateForm = ({
 				projectId,
 			}}
 			onSubmit={onSubmit}
-			submitLabel="Submit"
+			submitLabel="Create"
 			validationSchema={projectGroupCreateValidationSchema}
 		/>
 	);

@@ -18,7 +18,7 @@ const Popover = ({
 	const popoverReference = useRef<HTMLDivElement>(null);
 	const popoverTargetReference = useRef<HTMLDivElement>(null);
 
-	useHandleClickOutside(popoverReference, onClose);
+	useHandleClickOutside(popoverReference, onClose, popoverTargetReference);
 
 	return (
 		<div className={styles["popover-wrapper"]} ref={popoverReference}>

@@ -8,6 +8,7 @@ import {
 	type NotificationBulkCreateResponseDto,
 	type NotificationCreateRequestDto,
 	type NotificationGetAllItemResponseDto,
+	type NotificationGetAllRequestDto,
 	type NotificationGetAllResponseDto,
 } from "./libs/types/types.js";
 import { NotificationEntity } from "./notification.entity.js";
@@ -63,11 +64,27 @@ class NotificationService implements Service {
 		return Promise.resolve(null);
 	}
 
-	public async findAll(userId: number): Promise<NotificationGetAllResponseDto> {
-		const result = await this.notificationRepository.findAll(userId);
+	public async findAll(
+		parameters: NotificationGetAllRequestDto,
+	): Promise<NotificationGetAllResponseDto> {
+		const notifications = await this.notificationRepository.findAll(parameters);
 
 		return {
-			items: result.items.map((item) => item.toObject()),
+			items: notifications.items.map((item) => item.toObject()),
+			totalItems: notifications.totalItems,
+		};
+	}
+
+	public async findAllUnread(
+		userId: number,
+	): Promise<Pick<NotificationGetAllResponseDto, "items">> {
+		const unreadNotifications =
+			await this.notificationRepository.findAllUnread(userId);
+
+		return {
+			items: unreadNotifications.items.map((notification) =>
+				notification.toObject(),
+			),
 		};
 	}
 

@@ -1,9 +1,10 @@
-import { loadAll, markAsRead } from "./actions.js";
+import { loadAll, loadAllUnread, markAsRead } from "./actions.js";
 import { actions } from "./notification.slice.js";
 
 const allActions = {
 	...actions,
 	loadAll,
+	loadAllUnread,
 	markAsRead,
 };
 

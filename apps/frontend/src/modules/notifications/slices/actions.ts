@@ -1,18 +1,31 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { type AsyncThunkConfig } from "~/libs/types/types.js";
+import {
+	type AsyncThunkConfig,
+	type PaginationQueryParameters,
+} from "~/libs/types/types.js";
 
 import { type NotificationGetAllResponseDto } from "../libs/types/types.js";
 import { name as sliceName } from "./notification.slice.js";
 
 const loadAll = createAsyncThunk<
 	NotificationGetAllResponseDto,
-	undefined,
+	PaginationQueryParameters,
 	AsyncThunkConfig
->(`${sliceName}/load-all`, async (_, { extra }) => {
+>(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { notificationApi } = extra;
 
-	return await notificationApi.getAll();
+	return await notificationApi.getAll(query);
+});
+
+const loadAllUnread = createAsyncThunk<
+	Pick<NotificationGetAllResponseDto, "items">,
+	undefined,
+	AsyncThunkConfig
+>(`${sliceName}/load-all-unread`, async (_, { extra }) => {
+	const { notificationApi } = extra;
+
+	return await notificationApi.getAllUnread();
 });
 
 const markAsRead = createAsyncThunk<boolean, { id: number }, AsyncThunkConfig>(
@@ -24,4 +37,4 @@ const markAsRead = createAsyncThunk<boolean, { id: number }, AsyncThunkConfig>(
 	},
 );
 
-export { loadAll, markAsRead };
+export { loadAll, loadAllUnread, markAsRead };

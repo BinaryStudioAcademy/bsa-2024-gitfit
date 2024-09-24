@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.33.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.32.0...backend-v1.33.0) (2024-09-24)
+
+
+### Features
+
+* add infinite scroll and pagination to notificationspopover gf-458 ([#490](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/490)) ([9daf38b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9daf38b8ab392357d17919a0a6507e884d5a52be))
+* add projects select to analytics page gf-348 ([#470](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/470)) ([47d8620](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/47d8620dff09d6f21febd1cb74fa08fb53fd6fca))
+
+## [1.32.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.31.0...backend-v1.32.0) (2024-09-23)
+
+
+### Features
+
+* Add an ability to split contributors gf-462 ([#477](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/477)) ([adbf2af](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/adbf2afd81ac81518c50b158ab11cd89768e7c8a))
+
+## [1.31.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.30.1...backend-v1.31.0) (2024-09-23)
+
+
+### Features
+
+* Add an activity chart to contributor items on project details page gf-420 ([#468](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/468)) ([38cf6eb](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/38cf6ebc535a40e117b68f18c53cbecb58ae356f))
+* add pagination to the contributors page gf-484 ([#491](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/491)) ([75e0b48](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/75e0b483381fc8704feddbe3a6bf20b01331b98d))
+
 ## [1.30.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.30.0...backend-v1.30.1) (2024-09-23)
 
 

@@ -8,6 +8,10 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { NotificationsApiPath } from "./libs/enums/enums.js";
+import {
+	type NotificationGetAllRequestDto,
+	type UserAuthResponseDto,
+} from "./libs/types/types.js";
 import { type NotificationService } from "./notification.service.js";
 
 /**
@@ -43,9 +47,20 @@ class NotificationController extends BaseController {
 		this.notificationService = notificationService;
 
 		this.addRoute({
-			handler: (options) => this.findAll(options),
+			handler: (options) =>
+				this.findAll(
+					options as APIHandlerOptions<{
+						query: NotificationGetAllRequestDto;
+					}>,
+				),
 			method: "GET",
 			path: NotificationsApiPath.ROOT,
+		});
+
+		this.addRoute({
+			handler: (options) => this.findAllUnread(options),
+			method: "GET",
+			path: NotificationsApiPath.UNREAD,
 		});
 
 		this.addRoute({
@@ -66,7 +81,58 @@ class NotificationController extends BaseController {
 	 * @swagger
 	 * /notifications:
 	 *   get:
-	 *     description: Returns an array of notifications
+	 *     description: Returns an array of notifications with pagination
+	 *     parameters:
+	 *       - in: query
+	 *         name: page
+	 *         schema:
+	 *           type: integer
+	 *         description: The page number to retrieve
+	 *       - in: query
+	 *         name: pageSize
+	 *         schema:
+	 *           type: integer
+	 *         description: The number of items per page
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: object
+	 *               properties:
+	 *                 items:
+	 *                   type: array
+	 *                   items:
+	 *                     $ref: "#/components/schemas/Notification"
+	 *                 totalItems:
+	 *                   type: integer
+	 *                   description: The total number of notifications
+	 */
+
+	private async findAll({
+		query,
+		user,
+	}: APIHandlerOptions<{
+		query: NotificationGetAllRequestDto;
+	}>): Promise<APIHandlerResponse> {
+		const { page, pageSize } = query;
+
+		return {
+			payload: await this.notificationService.findAll({
+				page,
+				pageSize,
+				userId: (user as UserAuthResponseDto).id,
+			}),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /notifications/unread:
+	 *   get:
+	 *     description: Returns an array of unread notifications
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
@@ -80,7 +146,7 @@ class NotificationController extends BaseController {
 	 *                   items:
 	 *                     $ref: "#/components/schemas/Notification"
 	 */
-	private async findAll(
+	private async findAllUnread(
 		options: APIHandlerOptions,
 	): Promise<APIHandlerResponse> {
 		const { user } = options;
@@ -88,7 +154,7 @@ class NotificationController extends BaseController {
 		const typedUser = user as { id: number };
 
 		return {
-			payload: await this.notificationService.findAll(typedUser.id),
+			payload: await this.notificationService.findAllUnread(typedUser.id),
 			status: HTTPCode.OK,
 		};
 	}
@@ -124,5 +190,4 @@ class NotificationController extends BaseController {
 		};
 	}
 }
-
 export { NotificationController };
