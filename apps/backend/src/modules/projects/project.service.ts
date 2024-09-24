@@ -119,11 +119,26 @@ class ProjectService implements Service {
 		};
 	}
 
-	public async findAll(
-		parameters: ProjectGetAllRequestDto,
-	): Promise<ProjectGetAllResponseDto> {
-		const { items, totalItems } =
-			await this.projectRepository.findAll(parameters);
+	public async findAll({
+		hasRootPermission,
+		parameters,
+		userProjectIds,
+	}: {
+		hasRootPermission: boolean;
+		parameters: ProjectGetAllRequestDto;
+		userProjectIds: number[];
+	}): Promise<ProjectGetAllResponseDto> {
+		const projects = hasRootPermission
+			? await this.projectRepository.findAll({
+					...parameters,
+					userProjectIds: [],
+				})
+			: await this.projectRepository.findAll({
+					...parameters,
+					userProjectIds,
+				});
+
+		const { items, totalItems } = projects;
 
 		return {
 			items: items.map((item) => {

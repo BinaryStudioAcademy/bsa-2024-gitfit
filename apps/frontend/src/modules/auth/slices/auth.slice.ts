@@ -12,7 +12,10 @@ type State = {
 	authenticatedUser: null | UserAuthResponseDto;
 	dataStatus: ValueOf<typeof DataStatus>;
 	permissionedProjectsId: number[];
-	projectUserPermissions: ProjectPermissionsGetAllItemResponseDto[];
+	projectUserPermissions: Record<
+		number,
+		ProjectPermissionsGetAllItemResponseDto[]
+	>;
 	userPermissions: PermissionGetAllItemResponseDto[];
 };
 
@@ -20,7 +23,7 @@ const initialState: State = {
 	authenticatedUser: null,
 	dataStatus: DataStatus.IDLE,
 	permissionedProjectsId: [],
-	projectUserPermissions: [],
+	projectUserPermissions: {},
 	userPermissions: [],
 };
 
@@ -46,7 +49,7 @@ const { actions, name, reducer } = createSlice({
 			state.authenticatedUser = null;
 			state.permissionedProjectsId = [];
 			state.userPermissions = [];
-			state.projectUserPermissions = [];
+			state.projectUserPermissions = {};
 			state.dataStatus = DataStatus.REJECTED;
 		});
 
@@ -64,7 +67,7 @@ const { actions, name, reducer } = createSlice({
 			state.authenticatedUser = null;
 			state.permissionedProjectsId = [];
 			state.userPermissions = [];
-			state.projectUserPermissions = [];
+			state.projectUserPermissions = {};
 			state.dataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(logout.pending, (state) => {
@@ -84,9 +87,26 @@ const { actions, name, reducer } = createSlice({
 				state.authenticatedUser = action.payload;
 				state.userPermissions =
 					action.payload?.groups.flatMap((group) => group.permissions) ?? [];
-				state.projectUserPermissions =
-					action.payload?.projectGroups.flatMap((group) => group.permissions) ??
-					[];
+				const projectPermissionsMap: Record<
+					number,
+					ProjectPermissionsGetAllItemResponseDto[]
+				> = {};
+				const projectGroups = action.payload?.projectGroups ?? [];
+
+				for (const group of projectGroups) {
+					for (const projectId of group.projectId) {
+						if (!projectPermissionsMap[projectId]) {
+							projectPermissionsMap[projectId] = [];
+						}
+
+						projectPermissionsMap[projectId] = [
+							...projectPermissionsMap[projectId],
+							...group.permissions,
+						];
+					}
+				}
+
+				state.projectUserPermissions = projectPermissionsMap;
 				state.permissionedProjectsId =
 					action.payload?.projectGroups.flatMap((group) => group.projectId) ??
 					[];

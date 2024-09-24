@@ -54,13 +54,20 @@ class ProjectRepository implements Repository {
 		name,
 		page,
 		pageSize,
-	}: ProjectGetAllRequestDto): Promise<PaginationResponseDto<ProjectEntity>> {
-		const query = this.projectModel
+		userProjectIds,
+	}: { userProjectIds?: number[] } & ProjectGetAllRequestDto): Promise<
+		PaginationResponseDto<ProjectEntity>
+	> {
+		let query = this.projectModel
 			.query()
 			.orderBy("created_at", SortType.DESCENDING);
 
 		if (name) {
 			query.whereILike("name", `%${name}%`);
+		}
+
+		if (userProjectIds && userProjectIds.length !== EMPTY_LENGTH) {
+			query.whereIn("id", userProjectIds);
 		}
 
 		const { results, total } = await query.page(page, pageSize);

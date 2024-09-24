@@ -38,13 +38,7 @@ import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { permissionedProjectsId, projectUserPermissions, userPermissions } =
-		useAppSelector(({ auth }) => auth);
-
-	const hasRootPermission = checkHasPermission(
-		[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
-		userPermissions,
-	);
+	const { userPermissions } = useAppSelector(({ auth }) => auth);
 
 	const { onSearch, search } = useSearch();
 
@@ -81,21 +75,7 @@ const Projects = (): JSX.Element => {
 		}
 	}, [dispatch, projectToModifyId]);
 
-	const filteredProjects = hasRootPermission
-		? projects
-		: projects.filter(
-				(project) =>
-					permissionedProjectsId.includes(project.id) &&
-					projectUserPermissions.some(
-						(permission) =>
-							permission.key === PermissionKey.MANAGE_PROJECT ||
-							permission.key === PermissionKey.VIEW_PROJECT ||
-							permission.key === PermissionKey.EDIT_PROJECT,
-					),
-			);
-
 	const hasProjects = projects.length !== EMPTY_LENGTH;
-	const hasPermissionedProjects = filteredProjects.length !== EMPTY_LENGTH;
 	const hasSearch = search.length !== EMPTY_LENGTH;
 	const emptyPlaceholderMessage = hasSearch
 		? "No projects found matching your search criteria. Please try different keywords."
@@ -242,8 +222,8 @@ const Projects = (): JSX.Element => {
 				<Loader />
 			) : (
 				<div className={styles["projects-list"]}>
-					{hasPermissionedProjects ? (
-						filteredProjects.map((project) => (
+					{hasProjects ? (
+						projects.map((project) => (
 							<ProjectCard
 								key={project.id}
 								onDelete={handleDeleteClick}

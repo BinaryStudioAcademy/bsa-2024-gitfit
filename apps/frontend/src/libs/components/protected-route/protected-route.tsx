@@ -34,7 +34,10 @@ const ProtectedRoute = ({
 		userPermissions,
 	} = useAppSelector(({ auth }) => auth);
 
-	const allPermissions = [...projectUserPermissions, ...userPermissions];
+	const allPermissions = [
+		...Object.values(projectUserPermissions).flat(),
+		...userPermissions,
+	];
 
 	const isLoading =
 		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
@@ -63,7 +66,7 @@ const ProtectedRoute = ({
 
 	const hasProjectPermissions = checkHasPermission(
 		routeProjectPermissions,
-		projectUserPermissions,
+		Object.values(projectUserPermissions).flat(),
 	);
 
 	const hasRequiredPermissions =

@@ -307,9 +307,13 @@ class ProjectController extends BaseController {
 		if (page && pageSize) {
 			return {
 				payload: await this.projectService.findAll({
-					name,
-					page: Number(page),
-					pageSize: Number(pageSize),
+					hasRootPermission,
+					parameters: {
+						name,
+						page: Number(page),
+						pageSize: Number(pageSize),
+					},
+					userProjectIds,
 				}),
 				status: HTTPCode.OK,
 			};

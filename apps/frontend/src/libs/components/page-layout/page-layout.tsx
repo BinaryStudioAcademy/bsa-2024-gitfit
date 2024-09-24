@@ -17,7 +17,10 @@ const PageLayout = ({
 		({ auth }) => auth,
 	);
 
-	const allPermissions = [...projectUserPermissions, ...userPermissions];
+	const allPermissions = [
+		...Object.values(projectUserPermissions).flat(),
+		...userPermissions,
+	];
 
 	return (
 		<div className={styles["page"]}>

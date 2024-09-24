@@ -58,10 +58,9 @@ const Project = (): JSX.Element => {
 		projectStatus,
 	} = useAppSelector(({ projects }) => projects);
 
-	const { authenticatedUser, projectUserPermissions, userPermissions } =
-		useAppSelector(({ auth }) => auth);
-
-	const allPermissions = [...userPermissions, ...projectUserPermissions];
+	const { projectUserPermissions, userPermissions } = useAppSelector(
+		({ auth }) => auth,
+	);
 
 	const {
 		isOpened: isSetupAnalyticsModalOpened,
@@ -244,32 +243,31 @@ const Project = (): JSX.Element => {
 
 	const hasProject = project !== null;
 
-	const hasManagePermission = Boolean(
-		checkHasPermission(
-			[PermissionKey.MANAGE_ALL_PROJECTS, PermissionKey.MANAGE_PROJECT],
-			allPermissions,
-		) &&
-			hasProject &&
-			checkHasProjectPermission(authenticatedUser, project.id, [
-				PermissionKey.MANAGE_PROJECT,
-			]),
-	);
+	const userHasProjectPermission =
+		hasProject &&
+		checkHasProjectPermission(projectUserPermissions, project.id, [
+			PermissionKey.MANAGE_PROJECT,
+		]);
 
-	const hasEditPermission = Boolean(
+	const hasManageRequiredPermissions =
+		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||
 		checkHasPermission(
-			[
-				PermissionKey.MANAGE_ALL_PROJECTS,
-				PermissionKey.MANAGE_PROJECT,
-				PermissionKey.EDIT_PROJECT,
-			],
-			allPermissions,
-		) &&
-			hasProject &&
-			checkHasProjectPermission(authenticatedUser, project.id, [
-				PermissionKey.MANAGE_PROJECT,
-				PermissionKey.EDIT_PROJECT,
-			]),
-	);
+			[PermissionKey.MANAGE_PROJECT],
+			Object.values(projectUserPermissions).flat(),
+		);
+
+	const hasEditRequiredPermissions =
+		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||
+		checkHasPermission(
+			[PermissionKey.EDIT_PROJECT, PermissionKey.MANAGE_PROJECT],
+			Object.values(projectUserPermissions).flat(),
+		);
+
+	const hasManagePermission =
+		hasManageRequiredPermissions && userHasProjectPermission;
+
+	const hasEditPermission =
+		hasEditRequiredPermissions && userHasProjectPermission;
 
 	const hasManageAllProjectsPermission =
 		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||
