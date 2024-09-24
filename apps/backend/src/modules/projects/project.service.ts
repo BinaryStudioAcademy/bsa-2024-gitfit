@@ -135,6 +135,14 @@ class ProjectService implements Service {
 		};
 	}
 
+	public async findAllWithoutPagination(): Promise<
+		ProjectGetAllItemResponseDto[]
+	> {
+		const projects = await this.projectRepository.findAllWithoutPagination();
+
+		return projects.map((project) => project.toObject());
+	}
+
 	public async findInactiveProjects(
 		thresholdInDays: number,
 	): Promise<ProjectGetAllItemResponseDto[]> {
