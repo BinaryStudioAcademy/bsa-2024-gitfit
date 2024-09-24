@@ -49,16 +49,20 @@ const Analytics = (): JSX.Element => {
 				subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE),
 				todayDate,
 			] as [Date, Date],
-			project: searchParameters.get(QueryParameterName.PROJECT_SELECT),
+			project: searchParameters.get(QueryParameterName.PROJECT_SELECT)
+				? Number(searchParameters.get(QueryParameterName.PROJECT_SELECT))
+				: null,
 		},
 	});
 
 	const dateRangeValue = useFormWatch({ control, name: "dateRange" });
 	const projectValue = useFormWatch({ control, name: "project" });
+	const projectValueString =
+		projectValue === null ? "" : projectValue.toString();
 
 	useEffect(() => {
-		onSelect(projectValue ?? "");
-	}, [projectValue, onSelect]);
+		onSelect(projectValueString);
+	}, [onSelect, projectValueString]);
 
 	const handleLoadLogs = useCallback(
 		([startDate, endDate]: [Date, Date], projectId?: null | string) => {
@@ -77,13 +81,16 @@ const Analytics = (): JSX.Element => {
 	);
 
 	useEffect(() => {
-		handleLoadLogs(dateRangeValue, projectValue);
-	}, [dateRangeValue, projectValue, handleLoadLogs]);
+		handleLoadLogs(dateRangeValue, projectValueString);
+	}, [dateRangeValue, projectValue, handleLoadLogs, projectValueString]);
 
 	const handleFormSubmit = useCallback(
 		(event_?: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData) => {
-				handleLoadLogs(formData.dateRange, formData.project);
+				handleLoadLogs(
+					formData.dateRange,
+					formData.project === null ? "" : formData.project.toString(),
+				);
 			})(event_);
 		},
 		[handleLoadLogs, handleSubmit],
