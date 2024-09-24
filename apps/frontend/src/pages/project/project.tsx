@@ -279,7 +279,6 @@ const Project = (): JSX.Element => {
 					<div className={styles["project-layout"]}>
 						<div className={styles["project-header"]}>
 							<h1 className={styles["title"]}>{project.name}</h1>
-
 							<ProjectDetailsMenu
 								onDelete={handleDeleteProject}
 								onEdit={handleEditProject}
