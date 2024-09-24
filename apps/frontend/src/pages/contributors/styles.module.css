@@ -9,5 +9,15 @@
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	margin-top: 32px;
+	margin-top: 16px;
+}
+
+.filters-form {
+	display: flex;
+	gap: 12px;
+}
+
+.select-wrapper {
+	min-width: 270px;
+	margin-top: 24px;
 }

@@ -1,20 +1,24 @@
 import {
 	Modal,
 	PageLayout,
+	Select,
 	Table,
 	TablePagination,
 } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
+	useAppForm,
 	useAppSelector,
 	useCallback,
 	useEffect,
+	useFormWatch,
 	useMemo,
 	useModal,
 	usePagination,
 	useState,
 } from "~/libs/hooks/hooks.js";
+import { actions as activityActions } from "~/modules/activity/activity.js";
 import {
 	actions as contributorActions,
 	type ContributorGetAllItemResponseDto,
@@ -22,6 +26,7 @@ import {
 	type ContributorPatchRequestDto,
 	type ContributorSplitRequestDto,
 } from "~/modules/contributors/contributors.js";
+import { getProjectOptions } from "~/pages/analytics/libs/helpers/helpers.js";
 
 import {
 	ContributorMergeForm,
@@ -47,14 +52,24 @@ const Contributors = (): JSX.Element => {
 		updateContributorsStatus,
 	} = useAppSelector(({ contributors }) => contributors);
 
+	const { projects } = useAppSelector(({ activityLogs }) => activityLogs);
+
+	useEffect(() => {
+		void dispatch(activityActions.loadAllProjects());
+	}, [dispatch]);
+
 	const { onPageChange, onPageSizeChange, page, pageSize } = usePagination({
 		queryParameterPrefix: "contributor",
 		totalItemsCount: totalCount,
 	});
 
-	useEffect(() => {
+	const loadContributors = useCallback(() => {
 		void dispatch(contributorActions.loadAll({ page, pageSize }));
 	}, [dispatch, page, pageSize]);
+
+	useEffect(() => {
+		loadContributors();
+	}, [loadContributors]);
 
 	const {
 		isOpened: isUpdateModalOpened,
@@ -204,6 +219,50 @@ const Contributors = (): JSX.Element => {
 		[handleEdit, handleMerge, handleSplit],
 	);
 
+	const loadContributorsByProjectId = useCallback(
+		(projectId: number) => {
+			// TODO: add projectId to contributos loadAll query
+			Boolean(projectId);
+
+			void dispatch(
+				contributorActions.loadAll({
+					page,
+					pageSize,
+				}),
+			);
+		},
+		[dispatch, page, pageSize],
+	);
+
+	const { control, handleSubmit } = useAppForm<{
+		projectId: null | number;
+	}>({
+		defaultValues: {
+			projectId: null,
+		},
+	});
+
+	const { projectId } = useFormWatch({ control });
+
+	const handleFiltersFormSubmit = useCallback(
+		(event_?: React.BaseSyntheticEvent): void => {
+			void handleSubmit(({ projectId }) => {
+				if (projectId) {
+					loadContributorsByProjectId(projectId);
+				} else {
+					loadContributors();
+				}
+			})(event_);
+		},
+		[handleSubmit, loadContributorsByProjectId, loadContributors],
+	);
+
+	useEffect(() => {
+		handleFiltersFormSubmit();
+	}, [projectId, handleFiltersFormSubmit]);
+
+	const projectOptions = getProjectOptions(projects);
+
 	const contributorsData: ContributorRow[] = getContributorRows(contributors);
 
 	const isLoading =
@@ -212,6 +271,23 @@ const Contributors = (): JSX.Element => {
 	return (
 		<PageLayout isLoading={isLoading}>
 			<h1 className={styles["title"]}>Contributors</h1>
+			<form
+				className={styles["filters-form"]}
+				onSubmit={handleFiltersFormSubmit}
+			>
+				<div className={styles["select-wrapper"]}>
+					<Select
+						control={control}
+						isClearable
+						isLabelHidden
+						isSearchable
+						label="Select project"
+						name="projectId"
+						options={projectOptions}
+						placeholder="Select project"
+					/>
+				</div>
+			</form>
 			<section className={styles["contributors-table"]}>
 				<Table<ContributorRow>
 					columns={contributorsColumns}
