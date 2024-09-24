@@ -269,7 +269,7 @@ const Contributors = (): JSX.Element => {
 		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
 	return (
-		<PageLayout isLoading={isLoading}>
+		<PageLayout>
 			<h1 className={styles["title"]}>Contributors</h1>
 			<form
 				className={styles["filters-form"]}
@@ -293,6 +293,7 @@ const Contributors = (): JSX.Element => {
 					columns={contributorsColumns}
 					data={contributorsData}
 					isFullHeight
+					isLoading={isLoading}
 				/>
 				<TablePagination
 					background="primary"
