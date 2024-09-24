@@ -17,8 +17,8 @@ import {
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 } from "~/modules/projects/projects.js";
-import { ANALYTICS_DATE_MAX_RANGE } from "~/pages/analytics/libs/constants/analytics-date-max-range.constant.js";
 
+import { CONTRIBUTION_ANALYTICS_DATE_MAX_RANGE } from "../libs/constants/constants.js";
 import { name as sliceName } from "./project.slice.js";
 
 const getById = createAsyncThunk<
@@ -97,7 +97,7 @@ const loadAllContributorsByProjectId = createAsyncThunk<
 		const endDate = todayDate.toISOString();
 		const startDate = subtractDays(
 			todayDate,
-			ANALYTICS_DATE_MAX_RANGE,
+			CONTRIBUTION_ANALYTICS_DATE_MAX_RANGE,
 		).toISOString();
 
 		void dispatch(
