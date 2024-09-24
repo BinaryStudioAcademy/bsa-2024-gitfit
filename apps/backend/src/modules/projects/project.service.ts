@@ -135,10 +135,20 @@ class ProjectService implements Service {
 		};
 	}
 
-	public async findAllWithoutPagination(): Promise<
-		ProjectGetAllItemResponseDto[]
-	> {
-		const projects = await this.projectRepository.findAllWithoutPagination();
+	public async findAllWithoutPagination({
+		hasRootPermission,
+		userProjectIds,
+	}: {
+		hasRootPermission: boolean;
+		userProjectIds: number[];
+	}): Promise<ProjectGetAllItemResponseDto[]> {
+		const projects = hasRootPermission
+			? await this.projectRepository.findAllWithoutPagination({
+					userProjectIds: [],
+				})
+			: await this.projectRepository.findAllWithoutPagination({
+					userProjectIds,
+				});
 
 		return projects.map((project) => project.toObject());
 	}

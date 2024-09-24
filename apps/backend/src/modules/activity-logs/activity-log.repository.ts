@@ -42,12 +42,10 @@ class ActivityLogRepository implements Repository {
 
 	public async findAll({
 		endDate,
-		hasRootPermission,
 		projectIds,
 		startDate,
 	}: {
-		hasRootPermission: boolean;
-		projectIds: number[];
+		projectIds: number[] | undefined;
 	} & ActivityLogQueryParameters): Promise<{ items: ActivityLogEntity[] }> {
 		const query = this.activityLogModel
 			.query()
@@ -57,7 +55,7 @@ class ActivityLogRepository implements Repository {
 			})
 			.whereBetween("activity_logs.date", [startDate, endDate]);
 
-		if (!hasRootPermission) {
+		if (projectIds) {
 			query.whereIn("activity_logs.projectId", projectIds);
 		}
 

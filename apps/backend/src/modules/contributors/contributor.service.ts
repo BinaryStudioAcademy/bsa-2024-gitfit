@@ -85,13 +85,10 @@ class ContributorService implements Service {
 	}
 
 	public async findAllByProjects(
-		projectIds: number[],
-		hasRootPermission = false,
+		projectIds: number[] | undefined,
 	): Promise<ContributorGetAllResponseDto> {
-		const contributors = await this.contributorRepository.findAllByProjects(
-			projectIds,
-			hasRootPermission,
-		);
+		const contributors =
+			await this.contributorRepository.findAllByProjects(projectIds);
 
 		return {
 			items: contributors.items.map((item) => {

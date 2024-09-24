@@ -1,5 +1,6 @@
 import { logger } from "~/libs/modules/logger/logger.js";
 import { projectApiKeyService } from "~/modules/project-api-keys/project-api-keys.js";
+import { projectGroupService } from "~/modules/project-groups/project-groups.js";
 
 import { notificationService } from "../notifications/notifications.js";
 import { userService } from "../users/users.js";
@@ -16,7 +17,11 @@ const projectService = new ProjectService({
 	projectRepository,
 	userService,
 });
-const projectController = new ProjectController(logger, projectService);
+const projectController = new ProjectController(
+	logger,
+	projectGroupService,
+	projectService,
+);
 
 export { projectController, projectService };
 export { type ProjectService } from "./project.service.js";

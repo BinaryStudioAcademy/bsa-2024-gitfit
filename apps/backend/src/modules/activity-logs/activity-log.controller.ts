@@ -190,7 +190,7 @@ class ActivityLogController extends BaseController {
 			user: UserAuthResponseDto;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { endDate, startDate } = options.query;
+		const { endDate, projectId, startDate } = options.query;
 		const { user } = options;
 
 		const groups = await this.projectGroupService.findAllByUserId(user.id);
@@ -207,13 +207,15 @@ class ActivityLogController extends BaseController {
 			[PermissionKey.MANAGE_ALL_PROJECTS, PermissionKey.VIEW_ALL_PROJECTS],
 			rootPermissions,
 		);
+		const userProjectIds = groups.map(({ projectId }) => projectId.id);
 
 		return {
 			payload: await this.activityLogService.findAll({
 				endDate,
 				hasRootPermission,
-				projectIds: groups.map(({ projectId }) => projectId.id),
+				projectId,
 				startDate,
+				userProjectIds,
 			}),
 			status: HTTPCode.OK,
 		};

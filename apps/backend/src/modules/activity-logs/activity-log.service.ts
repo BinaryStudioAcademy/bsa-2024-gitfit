@@ -87,6 +87,29 @@ class ActivityLogService implements Service {
 		}
 	}
 
+	private getAllowedProjectIds(
+		hasRootPermission: boolean,
+		userProjectIds: number[],
+		projectId?: number,
+	): number[] | undefined {
+		if (!projectId && hasRootPermission) {
+			return;
+		}
+
+		if (
+			projectId &&
+			!hasRootPermission &&
+			!userProjectIds.includes(projectId)
+		) {
+			throw new ActivityLogError({
+				message: ExceptionMessage.NO_PERMISSION,
+				status: HTTPCode.FORBIDDEN,
+			});
+		}
+
+		return projectId ? [projectId] : userProjectIds;
+	}
+
 	public async create(
 		payload: { apiKey: string } & ActivityLogCreateRequestDto,
 	): Promise<ActivityLogGetAllResponseDto> {
@@ -134,15 +157,22 @@ class ActivityLogService implements Service {
 	public async findAll({
 		endDate,
 		hasRootPermission,
-		projectIds,
+		projectId,
 		startDate,
+		userProjectIds,
 	}: {
 		hasRootPermission: boolean;
-		projectIds: number[];
+		userProjectIds: number[];
 	} & ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
+		const projectIdParsed = projectId ? Number(projectId) : undefined;
+		const projectIds = this.getAllowedProjectIds(
+			hasRootPermission,
+			userProjectIds,
+			projectIdParsed,
+		);
+
 		const activityLogsEntities = await this.activityLogRepository.findAll({
 			endDate,
-			hasRootPermission,
 			projectIds,
 			startDate,
 		});
@@ -151,10 +181,8 @@ class ActivityLogService implements Service {
 			item.toObject(),
 		);
 
-		const allContributors = await this.contributorService.findAllByProjects(
-			projectIds,
-			hasRootPermission,
-		);
+		const allContributors =
+			await this.contributorService.findAllByProjects(projectIds);
 
 		const dateRange = getDateRange(startDate, endDate);
 

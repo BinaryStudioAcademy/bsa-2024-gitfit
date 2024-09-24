@@ -86,8 +86,7 @@ class ContributorRepository implements Repository {
 	}
 
 	public async findAllByProjects(
-		projectIds: number[],
-		hasRootPermission: boolean,
+		projectIds: number[] | undefined,
 	): Promise<{ items: ContributorEntity[] }> {
 		const query = this.contributorModel
 			.query()
@@ -106,7 +105,7 @@ class ContributorRepository implements Repository {
 			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
 			.leftJoin("projects", "activity_logs.project_id", "projects.id");
 
-		if (!hasRootPermission) {
+		if (projectIds) {
 			query.whereIn("projects.id", projectIds);
 		}
 

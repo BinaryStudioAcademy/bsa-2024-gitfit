@@ -1,3 +1,4 @@
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { SortType } from "~/libs/enums/enums.js";
 import { subtractDays } from "~/libs/helpers/helpers.js";
 import {
@@ -70,9 +71,18 @@ class ProjectRepository implements Repository {
 		};
 	}
 
-	public async findAllWithoutPagination(): Promise<ProjectEntity[]> {
-		const projects = await this.projectModel
-			.query()
+	public async findAllWithoutPagination({
+		userProjectIds,
+	}: {
+		userProjectIds?: number[];
+	}): Promise<ProjectEntity[]> {
+		let query = this.projectModel.query();
+
+		if (userProjectIds && userProjectIds.length !== EMPTY_LENGTH) {
+			query = query.whereIn("id", userProjectIds);
+		}
+
+		const projects = await query
 			.orderBy("created_at", SortType.DESCENDING)
 			.execute();
 
