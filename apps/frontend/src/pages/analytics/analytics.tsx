@@ -50,7 +50,6 @@ const Analytics = (): JSX.Element => {
 			project: null,
 			search,
 		},
-		mode: "onChange",
 	});
 
 	const handleSearchChange = useCallback(
