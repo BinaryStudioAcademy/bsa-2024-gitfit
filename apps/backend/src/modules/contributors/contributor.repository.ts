@@ -93,10 +93,13 @@ class ContributorRepository implements Repository {
 		};
 	}
 
-	public async findAllByProjectId(
-		projectId: number,
-		contributorName?: string,
-	): Promise<{ items: ContributorEntity[] }> {
+	public async findAllByProjectId({
+		contributorName,
+		projectId,
+	}: {
+		contributorName?: string;
+		projectId: number;
+	}): Promise<{ items: ContributorEntity[] }> {
 		const query = this.contributorModel
 			.query()
 			.select("contributors.*")
@@ -130,9 +133,11 @@ class ContributorRepository implements Repository {
 		};
 	}
 
-	public async findAllWithoutPagination(
-		contributorName?: string,
-	): Promise<{ items: ContributorEntity[] }> {
+	public async findAllWithoutPagination({
+		contributorName,
+	}: {
+		contributorName?: string;
+	}): Promise<{ items: ContributorEntity[] }> {
 		const query = this.contributorModel
 			.query()
 			.select("contributors.*")

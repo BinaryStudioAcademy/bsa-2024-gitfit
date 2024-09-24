@@ -90,10 +90,10 @@ class ContributorService implements Service {
 		projectId: number,
 		contributorName?: string,
 	): Promise<ContributorGetAllResponseDto> {
-		const contributors = await this.contributorRepository.findAllByProjectId(
+		const contributors = await this.contributorRepository.findAllByProjectId({
+			contributorName: contributorName ?? "",
 			projectId,
-			contributorName,
-		);
+		});
 
 		return {
 			items: contributors.items.map((item) => {
@@ -115,9 +115,9 @@ class ContributorService implements Service {
 		contributorName?: string,
 	): Promise<ContributorGetAllResponseDto> {
 		const contributors =
-			await this.contributorRepository.findAllWithoutPagination(
-				contributorName,
-			);
+			await this.contributorRepository.findAllWithoutPagination({
+				contributorName: contributorName ?? "",
+			});
 
 		return {
 			items: contributors.items.map((item) => {
