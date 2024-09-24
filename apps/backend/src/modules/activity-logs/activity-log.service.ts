@@ -142,10 +142,14 @@ class ActivityLogService implements Service {
 		startDate,
 	}: ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
 		const formattedStartDate = formatDate(
-			getStartOfDay(startDate),
+			getStartOfDay(new Date(startDate)),
 			"yyyy-MM-dd",
 		);
-		const formattedEndDate = formatDate(getEndOfDay(endDate), "yyyy-MM-dd");
+
+		const formattedEndDate = formatDate(
+			getEndOfDay(new Date(endDate)),
+			"yyyy-MM-dd",
+		);
 
 		const activityLogsEntities = await this.activityLogRepository.findAll({
 			endDate: formattedEndDate,
