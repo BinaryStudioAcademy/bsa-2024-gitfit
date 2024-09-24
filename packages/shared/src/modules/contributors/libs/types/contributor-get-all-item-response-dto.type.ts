@@ -3,8 +3,8 @@ type ContributorGetAllItemResponseDto = {
 		email: string;
 		id: number;
 	}[];
+	hiddenAt: null | string;
 	id: number;
-	isHidden: boolean;
 	lastActivityDate: null | string;
 	name: string;
 	projects: {

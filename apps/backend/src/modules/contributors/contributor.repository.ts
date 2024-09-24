@@ -79,7 +79,7 @@ class ContributorRepository implements Repository {
 			.withGraphFetched("gitEmails");
 
 		if (!hasHidden) {
-			query.where("contributors.isHidden", false);
+			query.whereNull("contributors.hiddenAt");
 		}
 
 		const { results, total } = await query;
@@ -113,12 +113,12 @@ class ContributorRepository implements Repository {
 			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
 			.leftJoin("projects", "activity_logs.project_id", "projects.id")
 			.where("projects.id", projectId)
-			.andWhere("contributors.isHidden", false)
+			.whereNull("contributors.hiddenAt")
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
 
 		if (!hasHidden) {
-			query.where("contributors.isHidden", false);
+			query.whereNull("contributors.hiddenAt");
 		}
 
 		const contributorsWithProjectsAndEmails = await query;
@@ -148,7 +148,7 @@ class ContributorRepository implements Repository {
 			.withGraphFetched("gitEmails");
 
 		if (!hasHidden) {
-			query.where("contributors.isHidden", false);
+			query.whereNull("contributors.hiddenAt");
 		}
 
 		const results = await query;
@@ -232,7 +232,7 @@ class ContributorRepository implements Repository {
 		const contributor = await this.contributorModel
 			.query()
 			.patchAndFetchById(contributorId, {
-				isHidden: data.isHidden,
+				hiddenAt: data.hiddenAt,
 				name: data.name,
 			});
 

@@ -17,19 +17,23 @@ const ContributorUpdateForm = ({
 	contributor,
 	onSubmit,
 }: Properties): JSX.Element => {
-	const { gitEmails, isHidden, name, projects } = contributor;
+	const { gitEmails, hiddenAt, name, projects } = contributor;
+
+	const isHidden = Boolean(hiddenAt);
 
 	const gitEmailsString = gitEmails.map((email) => email.email).join(", ");
 	const projectsString = projects.map((project) => project.name).join(", ");
 
 	const { control, errors, handleSubmit } = useAppForm<{
 		gitEmails: string;
+		hiddenAt: null | string;
 		isHidden: boolean;
 		name: string;
 		projects: string;
 	}>({
 		defaultValues: {
 			gitEmails: gitEmailsString,
+			hiddenAt,
 			isHidden,
 			name,
 			projects: projectsString,
@@ -40,10 +44,15 @@ const ContributorUpdateForm = ({
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData: { isHidden: boolean; name: string }) => {
+				const hiddenAtValue = formData.isHidden
+					? new Date().toISOString()
+					: null;
+
 				const payload: ContributorPatchRequestDto = {
-					isHidden: formData.isHidden,
+					hiddenAt: hiddenAtValue,
 					name: formData.name,
 				};
+
 				onSubmit(payload);
 			})(event_);
 		},

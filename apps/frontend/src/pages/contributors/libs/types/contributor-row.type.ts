@@ -1,7 +1,7 @@
 type ContributorRow = {
 	gitEmails: string[];
+	hiddenAt: null | string;
 	id: number;
-	isHidden: boolean;
 	name: string;
 	projects: string[];
 };

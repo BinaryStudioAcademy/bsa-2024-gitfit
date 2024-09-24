@@ -50,9 +50,9 @@ class ActivityLogRepository implements Repository {
 			.withGraphFetched("[project, createdByUser]")
 			.withGraphJoined("gitEmail.contributor")
 			.modifyGraph("gitEmail.contributor", (builder) => {
-				builder.select("id", "name", "isHidden");
+				builder.select("id", "name", "HiddenAt");
 			})
-			.where("gitEmail:contributor.isHidden", false)
+			.whereNull("gitEmail:contributor.hiddenAt")
 			.whereBetween("activity_logs.date", [startDate, endDate])
 			.orderBy("date");
 

@@ -3,18 +3,18 @@ import { type Knex } from "knex";
 const TABLE_NAME = "contributors";
 
 const ColumnName = {
-	IS_HIDDEN: "is_hidden",
+	HIDDEN_AT: "hidden_at",
 } as const;
 
 function up(knex: Knex): Promise<void> {
 	return knex.schema.alterTable(TABLE_NAME, (table) => {
-		table.boolean(ColumnName.IS_HIDDEN).defaultTo(false).notNullable();
+		table.timestamp(ColumnName.HIDDEN_AT).nullable().defaultTo(null);
 	});
 }
 
 function down(knex: Knex): Promise<void> {
 	return knex.schema.alterTable(TABLE_NAME, (table) => {
-		table.dropColumn(ColumnName.IS_HIDDEN);
+		table.dropColumn(ColumnName.HIDDEN_AT);
 	});
 }
 

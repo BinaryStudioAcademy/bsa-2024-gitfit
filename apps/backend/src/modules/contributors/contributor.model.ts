@@ -11,7 +11,7 @@ import { type ProjectModel } from "../projects/project.model.js";
 class ContributorModel extends AbstractModel {
 	public gitEmails!: GitEmailModel[];
 
-	public isHidden!: boolean;
+	public hiddenAt!: null | string;
 
 	public lastActivityDate!: null | string;
 

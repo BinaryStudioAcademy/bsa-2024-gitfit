@@ -4,30 +4,30 @@ import { type ContributorGetAllItemResponseDto } from "./libs/types/types.js";
 
 class ContributorEntity implements Entity {
 	private gitEmails: { email: string; id: number }[];
+	private hiddenAt: null | string;
 	private id: null | number;
-	private isHidden: boolean;
 	private lastActivityDate: null | string;
 	private name: string;
 	private projects: { id: number; name: string }[];
 
 	private constructor({
 		gitEmails,
+		hiddenAt,
 		id,
-		isHidden,
 		lastActivityDate,
 		name,
 		projects,
 	}: {
 		gitEmails: { email: string; id: number }[];
+		hiddenAt: null | string;
 		id: null | number;
-		isHidden: boolean;
 		lastActivityDate: null | string;
 		name: string;
 		projects: { id: number; name: string }[];
 	}) {
 		this.gitEmails = gitEmails;
 		this.id = id;
-		this.isHidden = isHidden;
+		this.hiddenAt = hiddenAt;
 		this.lastActivityDate = lastActivityDate;
 		this.name = name;
 		this.projects = projects;
@@ -35,23 +35,23 @@ class ContributorEntity implements Entity {
 
 	public static initialize({
 		gitEmails,
+		hiddenAt,
 		id,
-		isHidden,
 		lastActivityDate,
 		name,
 		projects,
 	}: {
 		gitEmails: { email: string; id: number }[];
+		hiddenAt: null | string;
 		id: number;
-		isHidden: boolean;
 		lastActivityDate: null | string;
 		name: string;
 		projects: { id: number; name: string }[];
 	}): ContributorEntity {
 		return new ContributorEntity({
 			gitEmails,
+			hiddenAt,
 			id,
-			isHidden,
 			lastActivityDate,
 			name,
 			projects,
@@ -60,19 +60,19 @@ class ContributorEntity implements Entity {
 
 	public static initializeNew({
 		gitEmails = [],
-		isHidden = false,
+		hiddenAt = null,
 		name,
 		projects = [],
 	}: {
 		gitEmails?: { email: string; id: number }[];
-		isHidden?: boolean;
+		hiddenAt?: null | string;
 		name: string;
 		projects?: { id: number; name: string }[];
 	}): ContributorEntity {
 		return new ContributorEntity({
 			gitEmails,
+			hiddenAt,
 			id: null,
-			isHidden,
 			lastActivityDate: null,
 			name,
 			projects,
@@ -81,14 +81,14 @@ class ContributorEntity implements Entity {
 
 	public toNewObject(): {
 		gitEmails: { email: string; id: number }[];
-		isHidden: boolean;
+		hiddenAt: null | string;
 		lastActivityDate: null | string;
 		name: string;
 		projects: { id: number; name: string }[];
 	} {
 		return {
 			gitEmails: this.gitEmails,
-			isHidden: this.isHidden,
+			hiddenAt: this.hiddenAt,
 			lastActivityDate: this.lastActivityDate,
 			name: this.name,
 			projects: this.projects,
@@ -98,8 +98,8 @@ class ContributorEntity implements Entity {
 	public toObject(): ContributorGetAllItemResponseDto {
 		return {
 			gitEmails: this.gitEmails,
+			hiddenAt: this.hiddenAt,
 			id: this.id as number,
-			isHidden: this.isHidden,
 			lastActivityDate: this.lastActivityDate,
 			name: this.name,
 			projects: this.projects,
