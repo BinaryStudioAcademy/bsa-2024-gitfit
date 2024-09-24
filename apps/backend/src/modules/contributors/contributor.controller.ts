@@ -180,10 +180,7 @@ class ContributorController extends BaseController {
 		}
 
 		return {
-			payload: await this.contributorService.findAll({
-				...options.query,
-				hasHidden: true,
-			}),
+			payload: await this.contributorService.findAll(options.query),
 			status: HTTPCode.OK,
 		};
 	}

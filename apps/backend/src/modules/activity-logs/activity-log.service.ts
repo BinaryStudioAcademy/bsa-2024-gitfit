@@ -133,13 +133,11 @@ class ActivityLogService implements Service {
 
 	public async findAll({
 		endDate,
-		hasHidden = false,
 		projectId,
 		startDate,
 	}: ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
 		const activityLogsEntities = await this.activityLogRepository.findAll({
 			endDate,
-			hasHidden,
 			projectId,
 			startDate,
 		});
@@ -149,8 +147,8 @@ class ActivityLogService implements Service {
 		);
 
 		const allContributors = await (projectId
-			? this.contributorService.findAllByProjectId(Number(projectId))
-			: this.contributorService.findAllWithoutPagination({ hasHidden }));
+			? this.contributorService.findAllByProjectId(Number(projectId), false)
+			: this.contributorService.findAllWithoutPagination(false));
 
 		const dateRange = getDateRange(startDate, endDate);
 

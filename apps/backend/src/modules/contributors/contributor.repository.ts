@@ -56,7 +56,7 @@ class ContributorRepository implements Repository {
 	}
 
 	public async findAll({
-		hasHidden = false,
+		hasHidden = true,
 		page,
 		pageSize,
 	}: { hasHidden?: boolean } & PaginationQueryParameters): Promise<
@@ -93,9 +93,10 @@ class ContributorRepository implements Repository {
 	}
 
 	public async findAllByProjectId(
+		hasHidden: boolean = true,
 		projectId: number,
 	): Promise<{ items: ContributorEntity[] }> {
-		const contributorsWithProjectsAndEmails = await this.contributorModel
+		const query = this.contributorModel
 			.query()
 			.select("contributors.*")
 			.select(
@@ -116,6 +117,12 @@ class ContributorRepository implements Repository {
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
 
+		if (!hasHidden) {
+			query.where("contributors.isHidden", false);
+		}
+
+		const contributorsWithProjectsAndEmails = await query;
+
 		return {
 			items: contributorsWithProjectsAndEmails.map((contributor) => {
 				return ContributorEntity.initialize(contributor);
@@ -123,11 +130,7 @@ class ContributorRepository implements Repository {
 		};
 	}
 
-	public async findAllWithoutPagination({
-		hasHidden = true,
-	}: {
-		hasHidden?: boolean;
-	}): Promise<{
+	public async findAllWithoutPagination(hasHidden: boolean = true): Promise<{
 		items: ContributorEntity[];
 	}> {
 		const query = this.contributorModel
