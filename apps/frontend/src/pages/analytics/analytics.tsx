@@ -38,6 +38,9 @@ const Analytics = (): JSX.Element => {
 	}, [dispatch]);
 
 	const [searchParameters] = useSearchParams();
+	const projectIdQueryParameter = searchParameters.get(
+		QueryParameterName.PROJECT_ID,
+	);
 
 	const { onSearch: onSelect } = useSearchFilters({
 		queryParameterName: QueryParameterName.PROJECT_ID,
@@ -49,30 +52,26 @@ const Analytics = (): JSX.Element => {
 				subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE),
 				todayDate,
 			] as [Date, Date],
-			project: searchParameters.get(QueryParameterName.PROJECT_ID)
-				? Number(searchParameters.get(QueryParameterName.PROJECT_ID))
-				: null,
+			project: projectIdQueryParameter ? Number(projectIdQueryParameter) : null,
 		},
 	});
 
 	const dateRangeValue = useFormWatch({ control, name: "dateRange" });
 	const projectValue = useFormWatch({ control, name: "project" });
-	const projectValueString =
-		projectValue === null ? "" : projectValue.toString();
 
 	useEffect(() => {
-		onSelect(projectValueString);
-	}, [onSelect, projectValueString]);
+		onSelect(projectValue ? String(projectValue) : "");
+	}, [onSelect, projectValue]);
 
 	const handleLoadLogs = useCallback(
-		([startDate, endDate]: [Date, Date], projectId?: null | string) => {
+		([startDate, endDate]: [Date, Date], projectId?: null | number) => {
 			const formattedStartDate = startDate.toISOString();
 			const formattedEndDate = endDate.toISOString();
 
 			void dispatch(
 				activityLogActions.loadAll({
 					endDate: formattedEndDate,
-					projectId: projectId ?? undefined,
+					projectId: projectId?.toString() ?? undefined,
 					startDate: formattedStartDate,
 				}),
 			);
@@ -81,16 +80,13 @@ const Analytics = (): JSX.Element => {
 	);
 
 	useEffect(() => {
-		handleLoadLogs(dateRangeValue, projectValueString);
-	}, [dateRangeValue, projectValue, handleLoadLogs, projectValueString]);
+		handleLoadLogs(dateRangeValue, projectValue);
+	}, [dateRangeValue, projectValue, handleLoadLogs]);
 
 	const handleFormSubmit = useCallback(
 		(event_?: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData) => {
-				handleLoadLogs(
-					formData.dateRange,
-					formData.project === null ? "" : formData.project.toString(),
-				);
+				handleLoadLogs(formData.dateRange, formData.project);
 			})(event_);
 		},
 		[handleLoadLogs, handleSubmit],
