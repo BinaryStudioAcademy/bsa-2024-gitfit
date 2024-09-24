@@ -17,7 +17,7 @@ import {
 	type ProjectPatchRequestDto,
 	type ProjectPatchResponseDto,
 } from "~/modules/projects/projects.js";
-import { ANALYTICS_DATE_MAX_RANGE } from "~/pages/analytics/libs/constants/constants.js";
+import { ANALYTICS_DATE_MAX_RANGE } from "~/pages/analytics/libs/constants/analytics-date-max-range.constant.js";
 
 import { name as sliceName } from "./project.slice.js";
 
