@@ -8,7 +8,7 @@ const ColumnName = {
 
 function up(knex: Knex): Promise<void> {
 	return knex.schema.alterTable(TABLE_NAME, (table) => {
-		table.timestamp(ColumnName.HIDDEN_AT).nullable().defaultTo(null);
+		table.dateTime(ColumnName.HIDDEN_AT).nullable().defaultTo(null);
 	});
 }
 
