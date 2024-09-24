@@ -2,7 +2,6 @@ import { raw } from "objection";
 
 import { SortType } from "~/libs/enums/enums.js";
 import {
-	type PaginationQueryParameters,
 	type PaginationResponseDto,
 	type Repository,
 } from "~/libs/types/types.js";
@@ -11,6 +10,7 @@ import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorModel } from "./contributor.model.js";
 import {
+	type ContributorGetAllRequestDto,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 } from "./libs/types/types.js";
@@ -59,9 +59,7 @@ class ContributorRepository implements Repository {
 		contributorName,
 		page,
 		pageSize,
-	}: {
-		contributorName?: string;
-	} & PaginationQueryParameters): Promise<
+	}: ContributorGetAllRequestDto): Promise<
 		PaginationResponseDto<ContributorEntity>
 	> {
 		const query = this.contributorModel
