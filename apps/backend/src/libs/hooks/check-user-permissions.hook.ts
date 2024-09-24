@@ -1,4 +1,4 @@
-import { ExceptionMessage } from "~/libs/enums/enums.js";
+import { ExceptionMessage, type PermissionKey } from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
 	type APIHandlerOptions,
@@ -7,8 +7,10 @@ import {
 import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
 import { type UserAuthResponseDto } from "~/modules/users/users.js";
 
+import { type ValueOf } from "../types/types.js";
+
 const checkUserPermissions = (
-	routePermissions: string[],
+	permissions: ValueOf<typeof PermissionKey>[],
 	getProjectId?: (options: APIHandlerOptions) => number | undefined,
 ): APIPreHandler => {
 	return (options, done): void => {
@@ -23,7 +25,7 @@ const checkUserPermissions = (
 			});
 		}
 
-		const hasPermission = checkHasPermission(routePermissions, [
+		const hasPermission = checkHasPermission(permissions, [
 			...user.groups.flatMap((group) => group.permissions),
 			...user.projectGroups
 				.filter(
