@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 
 import { ITEMS_CHANGED_COUNT } from "~/libs/constants/constants.js";
 import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
 import { type ContributorGetAllItemResponseDto } from "../libs/types/types.js";
-import { loadAll, merge, patch, split } from "./actions.js";
+import { loadAll, loadAllByProjectId, merge, patch, split } from "./actions.js";
 
 type State = {
 	contributors: ContributorGetAllItemResponseDto[];
@@ -27,19 +27,6 @@ const initialState: State = {
 
 const { actions, name, reducer } = createSlice({
 	extraReducers(builder) {
-		builder.addCase(loadAll.pending, (state) => {
-			state.dataStatus = DataStatus.PENDING;
-		});
-		builder.addCase(loadAll.fulfilled, (state, action) => {
-			state.contributors = action.payload.items;
-			state.dataStatus = DataStatus.FULFILLED;
-			state.totalCount = action.payload.totalItems;
-		});
-		builder.addCase(loadAll.rejected, (state) => {
-			state.contributors = [];
-			state.dataStatus = DataStatus.REJECTED;
-		});
-
 		builder.addCase(merge.pending, (state) => {
 			state.mergeContributorsStatus = DataStatus.PENDING;
 		});
@@ -126,6 +113,28 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(split.rejected, (state) => {
 			state.splitContributorsStatus = DataStatus.REJECTED;
 		});
+
+		builder.addMatcher(
+			isAnyOf(loadAll.pending, loadAllByProjectId.pending),
+			(state) => {
+				state.dataStatus = DataStatus.PENDING;
+			},
+		);
+		builder.addMatcher(
+			isAnyOf(loadAll.fulfilled, loadAllByProjectId.fulfilled),
+			(state, action) => {
+				state.contributors = action.payload.items;
+				state.dataStatus = DataStatus.FULFILLED;
+				state.totalCount = action.payload.totalItems;
+			},
+		);
+		builder.addMatcher(
+			isAnyOf(loadAll.rejected, loadAllByProjectId.rejected),
+			(state) => {
+				state.contributors = [];
+				state.dataStatus = DataStatus.REJECTED;
+			},
+		);
 	},
 	initialState,
 	name: "contributors",

@@ -221,17 +221,13 @@ const Contributors = (): JSX.Element => {
 
 	const loadContributorsByProjectId = useCallback(
 		(projectId: number) => {
-			// TODO: add projectId to contributos loadAll query
-			Boolean(projectId);
-
 			void dispatch(
-				contributorActions.loadAll({
-					page,
-					pageSize,
+				contributorActions.loadAllByProjectId({
+					projectId: String(projectId),
 				}),
 			);
 		},
-		[dispatch, page, pageSize],
+		[dispatch],
 	);
 
 	const { control, handleSubmit } = useAppForm<{

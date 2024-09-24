@@ -27,6 +27,16 @@ const loadAll = createAsyncThunk<
 	return await contributorApi.getAll(query);
 });
 
+const loadAllByProjectId = createAsyncThunk<
+	ContributorGetAllResponseDto,
+	{ projectId: string },
+	AsyncThunkConfig
+>(`${sliceName}/load-all-by-projectId`, async ({ projectId }, { extra }) => {
+	const { contributorApi } = extra;
+
+	return await contributorApi.getAllByProjectId(projectId);
+});
+
 const merge = createAsyncThunk<
 	ContributorGetAllItemResponseDto,
 	{ id: number; payload: ContributorMergeRequestDto },
@@ -71,4 +81,4 @@ const patch = createAsyncThunk<
 	},
 );
 
-export { loadAll, merge, patch, split };
+export { loadAll, loadAllByProjectId, merge, patch, split };
