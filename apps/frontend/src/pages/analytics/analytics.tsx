@@ -8,7 +8,7 @@ import {
 	useCallback,
 	useEffect,
 	useFormWatch,
-	useQueryParameters,
+	useSearchFilters,
 	useSearchParams,
 } from "~/libs/hooks/hooks.js";
 import { actions as activityLogActions } from "~/modules/activity/activity.js";
@@ -39,8 +39,8 @@ const Analytics = (): JSX.Element => {
 
 	const [searchParameters] = useSearchParams();
 
-	const { onSearch: onSelect } = useQueryParameters({
-		queryParameterName: QueryParameterName.PROJECT_SELECT,
+	const { onSearch: onSelect } = useSearchFilters({
+		queryParameterName: QueryParameterName.PROJECT_ID,
 	});
 
 	const { control, handleSubmit, isDirty } = useAppForm({
@@ -49,8 +49,8 @@ const Analytics = (): JSX.Element => {
 				subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE),
 				todayDate,
 			] as [Date, Date],
-			project: searchParameters.get(QueryParameterName.PROJECT_SELECT)
-				? Number(searchParameters.get(QueryParameterName.PROJECT_SELECT))
+			project: searchParameters.get(QueryParameterName.PROJECT_ID)
+				? Number(searchParameters.get(QueryParameterName.PROJECT_ID))
 				: null,
 		},
 	});

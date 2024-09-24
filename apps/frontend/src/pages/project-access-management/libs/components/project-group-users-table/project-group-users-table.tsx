@@ -14,7 +14,7 @@ import {
 	useCallback,
 	useEffect,
 	usePagination,
-	useQueryParameters,
+	useSearchFilters,
 } from "~/libs/hooks/hooks.js";
 import { actions as projectGroupActions } from "~/modules/project-groups/project-groups.js";
 import {
@@ -53,7 +53,7 @@ const ProjectGroupUsersTable = ({
 		mode: "onChange",
 	});
 
-	const { onSearch, search } = useQueryParameters({ isSavedToUrl: false });
+	const { onSearch, search } = useSearchFilters({ isSavedToUrl: false });
 	const { projectGroups, users, usersDataStatus, usersTotalCount } =
 		useAppSelector(({ projectGroups }) => projectGroups);
 

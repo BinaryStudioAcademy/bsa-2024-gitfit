@@ -7,31 +7,29 @@ type Parameters = {
 	queryParameterName?: ValueOf<typeof QueryParameterName>;
 };
 
-const useQueryParameters = ({
+const useSearchFilters = ({
 	isSavedToUrl = true,
-	queryParameterName,
+	queryParameterName = QueryParameterName.SEARCH,
 }: Parameters = {}): {
 	onSearch: (search: string) => void;
 	search: string;
 } => {
 	const [searchParameters, setSearchParameters] = useSearchParams();
-	const searchParameterName = queryParameterName ?? QueryParameterName.SEARCH;
-
 	const searchParameter = isSavedToUrl
-		? (searchParameters.get(searchParameterName) ?? "")
+		? (searchParameters.get(queryParameterName) ?? "")
 		: "";
 	const [search, setSearch] = useState<string>(searchParameter);
 
 	useEffect(() => {
 		if (isSavedToUrl) {
 			const updatedSearchParameters = new URLSearchParams(searchParameters);
-			updatedSearchParameters.set(searchParameterName, search);
+			updatedSearchParameters.set(queryParameterName, search);
 			setSearchParameters(updatedSearchParameters);
 		}
 	}, [
 		search,
 		searchParameters,
-		searchParameterName,
+		queryParameterName,
 		setSearchParameters,
 		isSavedToUrl,
 	]);
@@ -42,4 +40,4 @@ const useQueryParameters = ({
 	};
 };
 
-export { useQueryParameters };
+export { useSearchFilters };

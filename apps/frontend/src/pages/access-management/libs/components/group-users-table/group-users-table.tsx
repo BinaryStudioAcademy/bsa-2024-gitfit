@@ -14,7 +14,7 @@ import {
 	useCallback,
 	useEffect,
 	usePagination,
-	useQueryParameters,
+	useSearchFilters,
 } from "~/libs/hooks/hooks.js";
 import {
 	actions as groupActions,
@@ -43,7 +43,7 @@ const GroupUsersTable = ({
 	setValue,
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const { onSearch, search } = useQueryParameters({ isSavedToUrl: false });
+	const { onSearch, search } = useSearchFilters({ isSavedToUrl: false });
 	const { users, usersDataStatus, usersTotalCount } = useAppSelector(
 		({ groups }) => groups,
 	);

@@ -17,7 +17,7 @@ import {
 	useInfiniteScroll,
 	useIntersectionObserver,
 	useModal,
-	useQueryParameters,
+	useSearchFilters,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import {
@@ -41,7 +41,7 @@ const Projects = (): JSX.Element => {
 
 	const { userPermissions } = useAppSelector(({ auth }) => auth);
 
-	const { onSearch, search } = useQueryParameters();
+	const { onSearch, search } = useSearchFilters();
 
 	const [projectToModifyId, setProjectToModifyId] = useState<null | number>(
 		null,

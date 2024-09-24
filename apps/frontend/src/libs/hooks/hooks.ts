@@ -7,7 +7,7 @@ export { useIntersectionObserver } from "./use-intersection-observer/use-interse
 export { useModal } from "./use-modal-state/use-modal-state.hook.js";
 export { usePagination } from "./use-pagination/use-pagination.hook.js";
 export { usePopover } from "./use-popover/use-popover.hook.js";
-export { useQueryParameters } from "./use-query-parameters/use-query-parameters.hook.js";
+export { useSearchFilters } from "./use-search-filters/use-search-filters.hook.js";
 export { useSelectedItems } from "./use-selected-items/use-selected-items.hook.js";
 export { useCallback, useEffect, useMemo, useRef, useState } from "react";
 export {
