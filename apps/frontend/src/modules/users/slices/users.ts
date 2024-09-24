@@ -1,11 +1,17 @@
-import { deleteById, loadAll, updateProfile } from "./actions.js";
+import {
+	deleteById,
+	deleteCurrentUser,
+	loadAll,
+	updateCurrentUserProfile,
+} from "./actions.js";
 import { actions } from "./users.slice.js";
 
 const allActions = {
 	...actions,
 	deleteById,
+	deleteCurrentUser,
 	loadAll,
-	updateProfile,
+	updateCurrentUserProfile,
 };
 
 export { allActions as actions };
