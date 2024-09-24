@@ -17,9 +17,11 @@ export {
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 	type ContributorPatchResponseDto,
+	type ContributorSplitRequestDto,
 } from "./libs/types/types.js";
 export {
 	contributorMergeValidationSchema,
 	contributorPatchValidationSchema,
+	contributorSplitValidationSchema,
 } from "./libs/validation-schemas/validation-schemas.js";
 export { actions, reducer } from "./slices/contributors.js";

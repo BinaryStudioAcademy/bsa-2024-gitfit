@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.51.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.50.0...v1.51.0) (2024-09-23)
+
+
+### Features
+
+* Add an ability to split contributors gf-462 ([#477](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/477)) ([adbf2af](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/adbf2afd81ac81518c50b158ab11cd89768e7c8a))
+
+## [1.50.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.49.0...v1.50.0) (2024-09-23)
+
+
+### Features
+
+* the earliest date availible to be choosen on the date range on the analytics page should be 1 year from today gf-482 ([#488](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/488)) ([f08b073](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f08b0733e296f8856983f462689a94a4f80dd855))
+
+
+### Bug Fixes
+
+* adjusted search for modal to remove double reload gf-455 ([#493](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/493)) ([d80d5c5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d80d5c5b201b7e44f82cc432e264e24bda39069a))
+
 ## [1.49.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.48.1...v1.49.0) (2024-09-23)
 
 
