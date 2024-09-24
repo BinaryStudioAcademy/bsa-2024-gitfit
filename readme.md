@@ -134,9 +134,10 @@ erDiagram
 
    contributors {
       int id PK
+      varchar name
       dateTime created_at
       dateTime updated_at
-      varchar name
+      dateTime hidden_at
    }
 
    git_emails {
