@@ -72,6 +72,20 @@ class ProjectApi extends BaseHTTPApi {
 		return await response.json<ProjectGetAllResponseDto>();
 	}
 
+	public async getAllWithoutPagination(): Promise<
+		ProjectGetAllItemResponseDto[]
+	> {
+		const response = await this.load(
+			this.getFullEndpoint(ProjectsApiPath.ROOT, {}),
+			{
+				hasAuth: true,
+				method: "GET",
+			},
+		);
+
+		return await response.json<ProjectGetAllItemResponseDto[]>();
+	}
+
 	public async getById(payload: {
 		id: string;
 	}): Promise<ProjectGetByIdResponseDto> {
