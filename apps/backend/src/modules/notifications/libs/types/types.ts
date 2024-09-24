@@ -5,5 +5,6 @@ export {
 	type NotificationGetAllItemResponseDto,
 	type NotificationGetAllRequestDto,
 	type NotificationGetAllResponseDto,
+	type NotificationStatusValue,
 	type UserAuthResponseDto,
 } from "@git-fit/shared";

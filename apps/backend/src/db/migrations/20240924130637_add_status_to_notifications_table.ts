@@ -3,18 +3,21 @@ import { type Knex } from "knex";
 const TABLE_NAME = "notifications";
 
 const ColumnName = {
-	IS_READ: "is_read",
+	STATUS: "status",
 } as const;
 
 function up(knex: Knex): Promise<void> {
 	return knex.schema.alterTable(TABLE_NAME, (table) => {
-		table.boolean(ColumnName.IS_READ).notNullable().defaultTo(false);
+		table
+			.enu(ColumnName.STATUS, ["unread", "read"])
+			.notNullable()
+			.defaultTo("unread");
 	});
 }
 
 function down(knex: Knex): Promise<void> {
 	return knex.schema.alterTable(TABLE_NAME, (table) => {
-		table.dropColumn(ColumnName.IS_READ);
+		table.dropColumn(ColumnName.STATUS);
 	});
 }
 

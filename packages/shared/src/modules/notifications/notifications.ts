@@ -1,4 +1,7 @@
-export { NotificationsApiPath } from "./libs/enums/enums.js";
+export {
+	NotificationsApiPath,
+	NotificationStatus,
+} from "./libs/enums/enums.js";
 export { NotificationError } from "./libs/exceptions/exceptions.js";
 export {
 	type NotificationBulkCreateRequestDto,
@@ -7,4 +10,5 @@ export {
 	type NotificationGetAllItemResponseDto,
 	type NotificationGetAllRequestDto,
 	type NotificationGetAllResponseDto,
+	type NotificationStatusValue,
 } from "./libs/types/types.js";

@@ -168,10 +168,10 @@ erDiagram
 
    notifications {
       int id PK
-      boolean is_read
       dateTime created_at
       dateTime updated_at
       int receiver_user_id FK
+      enum status
       varchar payload
    }
 

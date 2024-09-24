@@ -4,6 +4,7 @@ import {
 	type Repository,
 } from "~/libs/types/types.js";
 
+import { NotificationStatus } from "./libs/enums/enums.js";
 import { type NotificationGetAllRequestDto } from "./libs/types/types.js";
 import { NotificationEntity } from "./notification.entity.js";
 import { type NotificationModel } from "./notification.model.js";
@@ -88,7 +89,7 @@ class NotificationRepository implements Repository {
 		const notifications = await this.notificationModel
 			.query()
 			.where("receiverUserId", userId)
-			.where("isRead", false)
+			.where("status", NotificationStatus.UNREAD)
 			.orderBy("created_at", SortType.DESCENDING)
 			.execute();
 
@@ -103,7 +104,7 @@ class NotificationRepository implements Repository {
 		const readNotification = await this.notificationModel
 			.query()
 			.patchAndFetchById(id, {
-				isRead: true,
+				status: NotificationStatus.READ,
 			})
 			.execute();
 

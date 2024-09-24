@@ -1,21 +1,23 @@
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
 
+import { NotificationStatus } from "../../enums/enums.js";
+import { type NotificationStatusValue } from "../../types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	isRead: boolean;
 	message: string;
+	status: NotificationStatusValue;
 	timestamp: string;
 };
 
 const NotificationItem = ({
-	isRead,
 	message,
+	status,
 	timestamp,
 }: Properties): JSX.Element => {
 	const itemClassName = getValidClassNames(
 		styles["notification-item"],
-		!isRead && styles["notification-item-unread"],
+		status === NotificationStatus.UNREAD && styles["notification-item-unread"],
 	);
 
 	return (

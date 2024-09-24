@@ -6,13 +6,14 @@ import {
 } from "~/libs/modules/database/database.js";
 
 import { UserModel } from "../users/users.js";
+import { type NotificationStatusValue } from "./libs/types/types.js";
 
 class NotificationModel extends AbstractModel {
-	public isRead!: boolean;
-
 	public payload!: string;
 
 	public receiverUserId!: number;
+
+	public status!: NotificationStatusValue;
 
 	public static override get relationMappings(): RelationMappings {
 		return {

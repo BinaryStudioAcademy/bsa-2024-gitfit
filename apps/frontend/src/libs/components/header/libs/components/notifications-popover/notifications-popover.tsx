@@ -70,9 +70,9 @@ const NotificationsPopover = ({
 						{hasNotifications ? (
 							notifications.map((notification) => (
 								<NotificationItem
-									isRead={notification.isRead}
 									key={notification.id}
 									message={notification.payload}
+									status={notification.status}
 									timestamp={formatRelativeTime(notification.createdAt)}
 								/>
 							))
