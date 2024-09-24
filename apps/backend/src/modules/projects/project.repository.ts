@@ -58,7 +58,7 @@ class ProjectRepository implements Repository {
 	}: { userProjectIds?: number[] } & ProjectGetAllRequestDto): Promise<
 		PaginationResponseDto<ProjectEntity>
 	> {
-		let query = this.projectModel
+		const query = this.projectModel
 			.query()
 			.orderBy("created_at", SortType.DESCENDING);
 
@@ -83,10 +83,10 @@ class ProjectRepository implements Repository {
 	}: {
 		userProjectIds?: number[];
 	}): Promise<ProjectEntity[]> {
-		let query = this.projectModel.query();
+		const query = this.projectModel.query();
 
 		if (userProjectIds && userProjectIds.length !== EMPTY_LENGTH) {
-			query = query.whereIn("id", userProjectIds);
+			query.whereIn("id", userProjectIds);
 		}
 
 		const projects = await query
