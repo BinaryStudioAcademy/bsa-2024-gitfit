@@ -53,7 +53,7 @@ const ProjectDetailsMenu = ({
 		<>
 			{isMenuShown && (
 				<Menu
-					buttonClassName={styles["menu-trigger-button"] as string}
+					buttonClassName={styles["trigger-button"] as string}
 					isOpened={isOpened}
 					onClose={onClose}
 					onOpen={onOpen}
