@@ -27,7 +27,7 @@
 	position: sticky;
 	top: var(--header-height);
 	left: 0;
-	width: max(280px, 20%);
+	min-width: 280px;
 	max-height: calc(100vh - var(--header-height));
 }
 
