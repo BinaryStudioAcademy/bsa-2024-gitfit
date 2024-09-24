@@ -46,7 +46,7 @@ const ContributorCard = ({
 	projectId,
 }: Properties): JSX.Element => {
 	const analyticsRoute = configureQueryString(AppRoute.ANALYTICS, [
-		{ name: QueryParameterName.PROJECT_ID, value: projectId },
+		[QueryParameterName.PROJECT_ID, projectId],
 	]);
 
 	const currentDate = getStartOfDay(new Date());

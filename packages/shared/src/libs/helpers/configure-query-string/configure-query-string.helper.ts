@@ -1,23 +1,14 @@
-import { EMPTY_LENGTH } from "../../constants/constants.js";
-
-const configureQueryString = <T extends Record<string, string>>(
+const configureQueryString = (
 	baseUrl: string,
-	parameters: T[],
+	parameters?: ConstructorParameters<typeof URLSearchParams>[number],
 ): string => {
-	const searchParameters = new URLSearchParams();
-
-	if (parameters.length > EMPTY_LENGTH) {
-		for (const parameter of parameters) {
-			searchParameters.append(
-				parameter["name"] as string,
-				parameter["value"] as string,
-			);
-		}
-
-		return `${baseUrl}?${searchParameters.toString()}`;
+	if (!parameters) {
+		return baseUrl;
 	}
 
-	return baseUrl;
+	const searchParameters = new URLSearchParams(parameters);
+
+	return `${baseUrl}?${searchParameters.toString()}`;
 };
 
 export { configureQueryString };
