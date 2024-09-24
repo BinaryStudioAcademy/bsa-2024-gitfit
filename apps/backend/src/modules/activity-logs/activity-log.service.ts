@@ -87,29 +87,6 @@ class ActivityLogService implements Service {
 		}
 	}
 
-	private getAllowedProjectIds(
-		hasRootPermission: boolean,
-		userProjectIds: number[],
-		projectId?: number,
-	): number[] | undefined {
-		if (!projectId && hasRootPermission) {
-			return;
-		}
-
-		if (
-			projectId &&
-			!hasRootPermission &&
-			!userProjectIds.includes(projectId)
-		) {
-			throw new ActivityLogError({
-				message: ExceptionMessage.NO_PERMISSION,
-				status: HTTPCode.FORBIDDEN,
-			});
-		}
-
-		return projectId ? [projectId] : userProjectIds;
-	}
-
 	public async create(
 		payload: { apiKey: string } & ActivityLogCreateRequestDto,
 	): Promise<ActivityLogGetAllResponseDto> {
@@ -165,7 +142,7 @@ class ActivityLogService implements Service {
 		userProjectIds: number[];
 	} & ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
 		const projectIdParsed = projectId ? Number(projectId) : undefined;
-		const projectIds = this.getAllowedProjectIds(
+		const projectIds = this.projectService.getAllowedProjectIds(
 			hasRootPermission,
 			userProjectIds,
 			projectIdParsed,
