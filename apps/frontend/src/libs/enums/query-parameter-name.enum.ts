@@ -1,7 +1,7 @@
 const QueryParameterName = {
 	PAGE: "page",
 	PAGE_SIZE: "pageSize",
-	PROJECT_SELECT: "project",
+	PROJECT_SELECT: "projectId",
 	SEARCH: "q",
 } as const;
 
