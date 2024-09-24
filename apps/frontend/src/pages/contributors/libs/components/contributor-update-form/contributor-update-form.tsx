@@ -1,10 +1,5 @@
 import { Button, Checkbox, Input } from "~/libs/components/components.js";
-import {
-	useAppForm,
-	useCallback,
-	useEffect,
-	useFormWatch,
-} from "~/libs/hooks/hooks.js";
+import { useAppForm, useCallback } from "~/libs/hooks/hooks.js";
 import {
 	type ContributorGetAllItemResponseDto,
 	type ContributorPatchRequestDto,
@@ -29,16 +24,14 @@ const ContributorUpdateForm = ({
 	const gitEmailsString = gitEmails.map((email) => email.email).join(", ");
 	const projectsString = projects.map((project) => project.name).join(", ");
 
-	const { control, errors, handleSubmit, handleValueSet } = useAppForm<{
+	const { control, errors, handleSubmit } = useAppForm<{
 		gitEmails: string;
-		hiddenAt: null | string;
 		isHidden: boolean;
 		name: string;
 		projects: string;
 	}>({
 		defaultValues: {
 			gitEmails: gitEmailsString,
-			hiddenAt,
 			isHidden,
 			name,
 			projects: projectsString,
@@ -46,29 +39,17 @@ const ContributorUpdateForm = ({
 		validationSchema: contributorPatchValidationSchema,
 	});
 
-	const isHiddenValue = useFormWatch({
-		control,
-		name: "isHidden",
-	});
-
-	useEffect(() => {
-		handleValueSet("isHidden", isHidden);
-	}, [isHidden, handleValueSet]);
-
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData: { isHidden: boolean; name: string }) => {
-				const hiddenAtValue = isHiddenValue ? new Date().toISOString() : null;
-
 				const payload: ContributorPatchRequestDto = {
-					hiddenAt: hiddenAtValue,
+					isHidden: formData.isHidden,
 					name: formData.name,
 				};
-
 				onSubmit(payload);
 			})(event_);
 		},
-		[handleSubmit, isHiddenValue, onSubmit],
+		[handleSubmit, onSubmit],
 	);
 
 	return (

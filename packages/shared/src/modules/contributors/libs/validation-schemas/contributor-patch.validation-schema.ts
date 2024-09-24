@@ -8,7 +8,7 @@ import { type ContributorPatchRequestDto } from "../types/types.js";
 
 const contributorPatch: z.ZodType<ContributorPatchRequestDto> = z
 	.object({
-		hiddenAt: z.union([z.string().nullable(), z.null()]),
+		isHidden: z.boolean(),
 		name: z
 			.string()
 			.trim()

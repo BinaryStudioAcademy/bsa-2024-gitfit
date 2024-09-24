@@ -1,5 +1,5 @@
 type ContributorPatchRequestDto = {
-	hiddenAt: null | string;
+	isHidden: boolean;
 	name: string;
 };
 

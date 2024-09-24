@@ -1,6 +1,6 @@
 type ContributorPatchResponseDto = {
-	hiddenAt: null | string;
 	id: number;
+	isHidden?: boolean;
 	name: string;
 };
 

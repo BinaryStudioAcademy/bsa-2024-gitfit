@@ -236,10 +236,11 @@ class ContributorRepository implements Repository {
 		contributorId: number,
 		data: ContributorPatchRequestDto,
 	): Promise<ContributorEntity | null> {
+		const hiddenAt = data.isHidden ? new Date().toISOString() : null;
 		const contributor = await this.contributorModel
 			.query()
 			.patchAndFetchById(contributorId, {
-				hiddenAt: data.hiddenAt,
+				hiddenAt,
 				name: data.name,
 			});
 
