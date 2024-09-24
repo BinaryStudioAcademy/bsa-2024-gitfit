@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.48.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.47.0...frontend-v1.48.0) (2024-09-24)
+
+
+### Features
+
+* add infinite scroll and pagination to notificationspopover gf-458 ([#490](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/490)) ([9daf38b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9daf38b8ab392357d17919a0a6507e884d5a52be))
+* add projects select to analytics page gf-348 ([#470](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/470)) ([47d8620](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/47d8620dff09d6f21febd1cb74fa08fb53fd6fca))
+
 ## [1.47.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.46.0...frontend-v1.47.0) (2024-09-23)
 
 
