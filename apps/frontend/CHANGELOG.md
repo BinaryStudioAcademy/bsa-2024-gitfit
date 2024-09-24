@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.49.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.49.0...frontend-v1.49.1) (2024-09-24)
+
+
+### Bug Fixes
+
+* adjusted project/contributor style to match figma design gf-506 ([#513](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/513)) ([b27a06e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b27a06e477ae812f6e36f4cc9c05e76cb7407955))
+
 ## [1.49.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.48.0...frontend-v1.49.0) (2024-09-24)
 
 
