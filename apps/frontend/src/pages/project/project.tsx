@@ -41,6 +41,7 @@ import {
 	ProjectDetailsMenu,
 	SetupAnalyticsModal,
 } from "./libs/components/components.js";
+import { checkHasProjectPermission } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
@@ -249,13 +250,9 @@ const Project = (): JSX.Element => {
 			allPermissions,
 		) &&
 			hasProject &&
-			authenticatedUser?.projectGroups.some(
-				(group) =>
-					group.projectId.includes(project.id) &&
-					group.permissions.some(
-						(permission) => permission.key === PermissionKey.MANAGE_PROJECT,
-					),
-			),
+			checkHasProjectPermission(authenticatedUser, project.id, [
+				PermissionKey.MANAGE_PROJECT,
+			]),
 	);
 
 	const hasEditPermission = Boolean(
@@ -268,15 +265,10 @@ const Project = (): JSX.Element => {
 			allPermissions,
 		) &&
 			hasProject &&
-			authenticatedUser?.projectGroups.some(
-				(group) =>
-					group.projectId.includes(project.id) &&
-					group.permissions.some(
-						(permission) =>
-							permission.key === PermissionKey.MANAGE_PROJECT ||
-							permission.key === PermissionKey.EDIT_PROJECT,
-					),
-			),
+			checkHasProjectPermission(authenticatedUser, project.id, [
+				PermissionKey.MANAGE_PROJECT,
+				PermissionKey.EDIT_PROJECT,
+			]),
 	);
 
 	const hasManageAllProjectsPermission =
