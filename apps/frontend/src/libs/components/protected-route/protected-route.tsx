@@ -1,5 +1,5 @@
 import { Loader, Navigate } from "~/libs/components/components.js";
-import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
+import { EMPTY_LENGTH, SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
 import {
 	AppRoute,
 	DataStatus,
@@ -57,7 +57,7 @@ const ProtectedRoute = ({
 
 	const hasBasePermission = checkHasPermission(
 		routePermissions,
-		allPermissions,
+		userPermissions,
 	);
 
 	const hasExtraPermission = checkHasPermission(
@@ -65,10 +65,13 @@ const ProtectedRoute = ({
 		userPermissions,
 	);
 
-	const hasProjectPermissions = checkHasPermission(
-		routeProjectPermissions,
-		Object.values(projectUserPermissions).flat(),
-	);
+	const hasProjectPermissions =
+		routeProjectPermissions.length === EMPTY_LENGTH
+			? false
+			: checkHasPermission(
+					routeProjectPermissions,
+					Object.values(projectUserPermissions).flat(),
+				);
 
 	const hasRequiredPermissions =
 		(hasBasePermission && hasExtraPermission) || hasProjectPermissions;
