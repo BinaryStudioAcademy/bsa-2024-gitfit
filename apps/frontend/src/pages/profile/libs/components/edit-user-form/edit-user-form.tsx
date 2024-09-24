@@ -14,7 +14,7 @@ type Properties = {
 };
 
 const EditUserForm = ({ user }: Properties): JSX.Element => {
-	const { email, id: userId, name } = user;
+	const { email, name } = user;
 	const dispatch = useAppDispatch();
 
 	const { control, errors, handleSubmit, isDirty } =
@@ -29,15 +29,10 @@ const EditUserForm = ({ user }: Properties): JSX.Element => {
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
 			void handleSubmit((formData: UserPatchRequestDto) => {
-				void dispatch(
-					usersActions.updateProfile({
-						id: userId,
-						payload: formData,
-					}),
-				);
+				void dispatch(usersActions.updateCurrentUserProfile(formData));
 			})(event_);
 		},
-		[dispatch, handleSubmit, userId],
+		[dispatch, handleSubmit],
 	);
 
 	return (

@@ -5,7 +5,12 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type UserGetAllItemResponseDto } from "~/modules/users/users.js";
 
-import { deleteById, loadAll, updateProfile } from "./actions.js";
+import {
+	deleteById,
+	deleteCurrentUser,
+	loadAll,
+	updateCurrentUserProfile,
+} from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
@@ -39,15 +44,6 @@ const { actions, name, reducer } = createSlice({
 			state.dataStatus = DataStatus.REJECTED;
 		});
 
-		builder.addCase(updateProfile.pending, (state) => {
-			state.updateProfileStatus = DataStatus.PENDING;
-		});
-		builder.addCase(updateProfile.fulfilled, (state) => {
-			state.updateProfileStatus = DataStatus.FULFILLED;
-		});
-		builder.addCase(updateProfile.rejected, (state) => {
-			state.updateProfileStatus = DataStatus.REJECTED;
-		});
 		builder.addCase(deleteById.pending, (state) => {
 			state.deleteStatus = DataStatus.PENDING;
 		});
@@ -58,6 +54,27 @@ const { actions, name, reducer } = createSlice({
 			state.deleteStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(deleteById.rejected, (state) => {
+			state.deleteStatus = DataStatus.REJECTED;
+		});
+
+		builder.addCase(updateCurrentUserProfile.pending, (state) => {
+			state.updateProfileStatus = DataStatus.PENDING;
+		});
+		builder.addCase(updateCurrentUserProfile.fulfilled, (state) => {
+			state.updateProfileStatus = DataStatus.FULFILLED;
+		});
+		builder.addCase(updateCurrentUserProfile.rejected, (state) => {
+			state.updateProfileStatus = DataStatus.REJECTED;
+		});
+
+		builder.addCase(deleteCurrentUser.pending, (state) => {
+			state.deleteStatus = DataStatus.PENDING;
+		});
+		builder.addCase(deleteCurrentUser.fulfilled, (state) => {
+			state.usersTotalCount -= ITEMS_CHANGED_COUNT;
+			state.deleteStatus = DataStatus.FULFILLED;
+		});
+		builder.addCase(deleteCurrentUser.rejected, (state) => {
 			state.deleteStatus = DataStatus.REJECTED;
 		});
 	},

@@ -1,7 +1,7 @@
 {
 	"name": "@git-fit/frontend",
 	"private": true,
-	"version": "1.47.0",
+	"version": "1.48.0",
 	"type": "module",
 	"engines": {
 		"node": "20.x.x",
@@ -30,6 +30,7 @@
 		"react-router-dom": "6.26.0",
 		"react-select": "5.8.0",
 		"react-toastify": "10.0.5",
+		"react-tooltip": "5.28.0",
 		"recharts": "2.12.7"
 	},
 	"devDependencies": {
