@@ -90,6 +90,7 @@ class ContributorRepository implements Repository {
 	): Promise<{ items: ContributorEntity[] }> {
 		const contributorsWithProjectsAndEmails = await this.contributorModel
 			.query()
+			.orderBy("createdAt", SortType.DESCENDING)
 			.select("contributors.*")
 			.select(
 				raw(
@@ -120,6 +121,7 @@ class ContributorRepository implements Repository {
 	}> {
 		const results = await this.contributorModel
 			.query()
+			.orderBy("createdAt", SortType.DESCENDING)
 			.select("contributors.*")
 			.select(
 				raw(
