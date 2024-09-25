@@ -1,5 +1,3 @@
-import { type ContributorGetAllRequestDto } from "@git-fit/shared";
-
 import { APIPath, ContentType } from "~/libs/enums/enums.js";
 import { BaseHTTPApi } from "~/libs/modules/api/api.js";
 import { type HTTP } from "~/libs/modules/http/http.js";
@@ -14,6 +12,7 @@ import {
 	type ContributorSplitRequestDto,
 } from "./contributors.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
+import { type ContributorGetAllRequestDto } from "./libs/types/types.js";
 
 type Constructor = {
 	baseUrl: string;
