@@ -20,7 +20,7 @@ type UserAuthResponseDto = {
 			key: string;
 			name: string;
 		}[];
-		projectId: number[];
+		projectId: number;
 	}[];
 };
 

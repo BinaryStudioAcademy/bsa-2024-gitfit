@@ -94,7 +94,9 @@ const { actions, name, reducer } = createSlice({
 				const projectGroups = action.payload?.projectGroups ?? [];
 
 				for (const group of projectGroups) {
-					for (const projectId of group.projectId) {
+					const { projectId } = group;
+
+					if (projectId) {
 						if (!projectPermissionsMap[projectId]) {
 							projectPermissionsMap[projectId] = [];
 						}
