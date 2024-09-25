@@ -5,10 +5,7 @@ import {
 } from "~/libs/types/types.js";
 
 import { NotificationStatus } from "./libs/enums/enums.js";
-import {
-	type NotificationBulkMarkAsReadRequestDto,
-	type NotificationGetAllRequestDto,
-} from "./libs/types/types.js";
+import { type NotificationGetAllRequestDto } from "./libs/types/types.js";
 import { NotificationEntity } from "./notification.entity.js";
 import { type NotificationModel } from "./notification.model.js";
 
@@ -39,12 +36,10 @@ class NotificationRepository implements Repository {
 		);
 	}
 
-	public async bulkMarkAsRead({
-		notificationIds,
-	}: NotificationBulkMarkAsReadRequestDto): Promise<number> {
+	public async bulkMarkAsRead(userId: number): Promise<number> {
 		return await this.notificationModel
 			.query()
-			.whereIn("id", notificationIds)
+			.where("receiverUserId", userId)
 			.patch({
 				status: NotificationStatus.READ,
 			})

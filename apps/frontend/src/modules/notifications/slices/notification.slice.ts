@@ -60,19 +60,7 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(markAsRead.pending, (state) => {
 			state.markAsReadStatus = DataStatus.PENDING;
 		});
-		builder.addCase(markAsRead.fulfilled, (state, action) => {
-			const { notificationIds } = action.meta.arg;
-
-			state.notifications = state.notifications.map((notification) =>
-				notificationIds.includes(notification.id)
-					? { ...notification, isRead: true }
-					: notification,
-			);
-
-			state.unreadNotifications = state.unreadNotifications.filter(
-				(notification) => !notificationIds.includes(notification.id),
-			);
-
+		builder.addCase(markAsRead.fulfilled, (state) => {
 			state.markAsReadStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(markAsRead.rejected, (state) => {

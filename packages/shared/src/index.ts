@@ -105,13 +105,10 @@ export {
 export {
 	type NotificationBulkCreateRequestDto,
 	type NotificationBulkCreateResponseDto,
-	type NotificationBulkMarkAsReadRequestDto,
 	type NotificationCreateRequestDto,
-	NotificationError,
 	type NotificationGetAllItemResponseDto,
 	type NotificationGetAllRequestDto,
 	type NotificationGetAllResponseDto,
-	notificationMarkAsReadValidationSchema,
 	NotificationsApiPath,
 	NotificationStatus,
 } from "./modules/notifications/notifications.js";

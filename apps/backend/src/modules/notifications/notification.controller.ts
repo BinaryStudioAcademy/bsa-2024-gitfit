@@ -9,11 +9,9 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { NotificationsApiPath } from "./libs/enums/enums.js";
 import {
-	type NotificationBulkMarkAsReadRequestDto,
 	type NotificationGetAllRequestDto,
 	type UserAuthResponseDto,
 } from "./libs/types/types.js";
-import { notificationMarkAsReadValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 import { type NotificationService } from "./notification.service.js";
 
 /**
@@ -66,15 +64,9 @@ class NotificationController extends BaseController {
 		});
 
 		this.addRoute({
-			handler: (options) =>
-				this.markAsRead(
-					options as APIHandlerOptions<{
-						body: NotificationBulkMarkAsReadRequestDto;
-					}>,
-				),
+			handler: (options) => this.markAsRead(options),
 			method: "PATCH",
 			path: NotificationsApiPath.READ,
-			validation: { body: notificationMarkAsReadValidationSchema },
 		});
 	}
 
@@ -165,16 +157,6 @@ class NotificationController extends BaseController {
 	 * /notifications/read:
 	 *   patch:
 	 *     description: Mark notification as read
-	 *     requestBody:
-	 *        description: Notification ids
-	 *        content:
-	 *          application/json:
-	 *             type: object
-	 *             properties:
-	 *               notificationIds:
-	 *                 type: array
-	 *                 items:
-	 *                   type: number
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
@@ -182,12 +164,14 @@ class NotificationController extends BaseController {
 	 *         description: Notification not found
 	 */
 	private async markAsRead(
-		options: APIHandlerOptions<{
-			body: NotificationBulkMarkAsReadRequestDto;
-		}>,
+		options: APIHandlerOptions,
 	): Promise<APIHandlerResponse> {
+		const { user } = options;
+
 		return {
-			payload: await this.notificationService.bulkMarkAsRead(options.body),
+			payload: await this.notificationService.bulkMarkAsRead(
+				(user as UserAuthResponseDto).id,
+			),
 			status: HTTPCode.OK,
 		};
 	}

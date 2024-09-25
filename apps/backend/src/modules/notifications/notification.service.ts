@@ -1,12 +1,8 @@
-import { ExceptionMessage } from "~/libs/enums/enums.js";
-import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 
-import { NotificationError } from "./libs/exceptions/exceptions.js";
 import {
 	type NotificationBulkCreateRequestDto,
 	type NotificationBulkCreateResponseDto,
-	type NotificationBulkMarkAsReadRequestDto,
 	type NotificationCreateRequestDto,
 	type NotificationGetAllItemResponseDto,
 	type NotificationGetAllRequestDto,
@@ -42,19 +38,9 @@ class NotificationService implements Service {
 		};
 	}
 
-	public async bulkMarkAsRead({
-		notificationIds,
-	}: NotificationBulkMarkAsReadRequestDto): Promise<boolean> {
-		const updatedCount = await this.notificationRepository.bulkMarkAsRead({
-			notificationIds,
-		});
-
-		if (!updatedCount || updatedCount !== notificationIds.length) {
-			throw new NotificationError({
-				message: ExceptionMessage.NOTIFICATION_NOT_FOUND,
-				status: HTTPCode.NOT_FOUND,
-			});
-		}
+	public async bulkMarkAsRead(userId: number): Promise<boolean> {
+		const updatedCount =
+			await this.notificationRepository.bulkMarkAsRead(userId);
 
 		return Boolean(updatedCount);
 	}

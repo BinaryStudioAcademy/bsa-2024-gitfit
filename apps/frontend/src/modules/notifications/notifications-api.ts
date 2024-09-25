@@ -5,10 +5,7 @@ import { type Storage } from "~/libs/modules/storage/storage.js";
 import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { NotificationsApiPath } from "./libs/enums/enums.js";
-import {
-	type NotificationBulkMarkAsReadRequestDto,
-	type NotificationGetAllResponseDto,
-} from "./libs/types/types.js";
+import { type NotificationGetAllResponseDto } from "./libs/types/types.js";
 
 type Constructor = {
 	baseUrl: string;
@@ -55,16 +52,12 @@ class NotificationApi extends BaseHTTPApi {
 		return await response.json<Pick<NotificationGetAllResponseDto, "items">>();
 	}
 
-	public async markAsRead(
-		payload: NotificationBulkMarkAsReadRequestDto,
-	): Promise<boolean> {
+	public async markAsRead(): Promise<boolean> {
 		const response = await this.load(
 			this.getFullEndpoint(NotificationsApiPath.READ, {}),
 			{
-				contentType: ContentType.JSON,
 				hasAuth: true,
 				method: "PATCH",
-				payload: JSON.stringify(payload),
 			},
 		);
 

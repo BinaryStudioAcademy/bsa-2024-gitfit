@@ -48,18 +48,13 @@ const Header = (): JSX.Element => {
 	}, [dispatch]);
 
 	const markAllNotificationsAsRead = useCallback(() => {
-		if (hasUnreadNotifications) {
-			const unreadNotificationIds = unreadNotifications.map((notification) =>
-				Number(notification.id),
-			);
+		void dispatch(notificationActions.markAsRead());
+	}, [dispatch]);
 
-			void dispatch(
-				notificationActions.markAsRead({
-					notificationIds: unreadNotificationIds,
-				}),
-			);
-		}
-	}, [dispatch, hasUnreadNotifications, unreadNotifications]);
+	const handleNotificationsOpen = useCallback(() => {
+		onNotificationsOpen();
+		void dispatch(notificationActions.loadAllUnread());
+	}, [onNotificationsOpen, dispatch]);
 
 	const handleNotificationsClose = useCallback(() => {
 		onNotificationsClose();
@@ -91,7 +86,7 @@ const Header = (): JSX.Element => {
 						onClick={
 							isNotificationsOpened
 								? handleNotificationsClose
-								: onNotificationsOpen
+								: handleNotificationsOpen
 						}
 					>
 						<div className={styles["notifications-icon-wrapper"]}>
