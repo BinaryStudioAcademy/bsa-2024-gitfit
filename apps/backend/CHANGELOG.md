@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.33.3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.33.2...backend-v1.33.3) (2024-09-25)
+
+
+### Bug Fixes
+
+* inconsistent data display on analytics table due to date format issue gf-510 ([#521](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/521)) ([9882708](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/988270876568673d43945e27ae3c50daf509a435))
+
+## [1.33.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.33.1...backend-v1.33.2) (2024-09-24)
+
+
+### Bug Fixes
+
+* change decrypt function gf-495 ([#505](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/505)) ([c2dc8fe](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c2dc8fe3c569a4fb9e7b997242eec6902961aee5))
+
+## [1.33.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.33.0...backend-v1.33.1) (2024-09-24)
+
+
+### Bug Fixes
+
+* user profile not deleted without "Manage User Access" permission gf-449 ([#478](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/478)) ([5e017f5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5e017f58640efbaca8ace6877e5c8a846b11ce62))
+
+## [1.33.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.32.0...backend-v1.33.0) (2024-09-24)
+
+
+### Features
+
+* add infinite scroll and pagination to notificationspopover gf-458 ([#490](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/490)) ([9daf38b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9daf38b8ab392357d17919a0a6507e884d5a52be))
+* add projects select to analytics page gf-348 ([#470](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/470)) ([47d8620](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/47d8620dff09d6f21febd1cb74fa08fb53fd6fca))
+
 ## [1.32.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.31.0...backend-v1.32.0) (2024-09-23)
 
 

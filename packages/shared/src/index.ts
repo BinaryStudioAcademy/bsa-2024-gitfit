@@ -23,6 +23,7 @@ export {
 	formatRelativeTime,
 	getDateRange,
 	getDifferenceInDays,
+	getEndOfDay,
 	getRelativeDate,
 	getStartOfDay,
 	initDebounce,

@@ -1,5 +1,45 @@
 # Changelog
 
+## [1.50.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.49.1...frontend-v1.50.0) (2024-09-25)
+
+
+### Features
+
+* decrease default date range to one week gf-503 ([#518](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/518)) ([8bc6dd8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8bc6dd8a0812f2e9dc6866c62ccc62adbf8e7caa))
+
+
+### Bug Fixes
+
+* inconsistent data display on analytics table due to date format issue gf-510 ([#521](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/521)) ([9882708](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/988270876568673d43945e27ae3c50daf509a435))
+
+## [1.49.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.49.0...frontend-v1.49.1) (2024-09-24)
+
+
+### Bug Fixes
+
+* adjusted project/contributor style to match figma design gf-506 ([#513](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/513)) ([b27a06e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b27a06e477ae812f6e36f4cc9c05e76cb7407955))
+
+## [1.49.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.48.0...frontend-v1.49.0) (2024-09-24)
+
+
+### Features
+
+* add Tooltip component and adjust gitEmail column gf-450 ([#497](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/497)) ([5583d7e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5583d7ebe22b01b9eff84b136ef7e8785b5a1521))
+
+
+### Bug Fixes
+
+* make sidebar width consistent gf-475 ([#500](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/500)) ([c3148b0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c3148b0d638407fd629794e42c3b54bffdd1c7fa))
+* user profile not deleted without "Manage User Access" permission gf-449 ([#478](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/478)) ([5e017f5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5e017f58640efbaca8ace6877e5c8a846b11ce62))
+
+## [1.48.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.47.0...frontend-v1.48.0) (2024-09-24)
+
+
+### Features
+
+* add infinite scroll and pagination to notificationspopover gf-458 ([#490](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/490)) ([9daf38b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9daf38b8ab392357d17919a0a6507e884d5a52be))
+* add projects select to analytics page gf-348 ([#470](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/470)) ([47d8620](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/47d8620dff09d6f21febd1cb74fa08fb53fd6fca))
+
 ## [1.47.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.46.0...frontend-v1.47.0) (2024-09-23)
 
 

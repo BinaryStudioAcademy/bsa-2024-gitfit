@@ -30,10 +30,9 @@ class BaseEncryption implements Encryption {
 	public decrypt(encryptedData: string): string {
 		const decipher = crypto.createDecipheriv(this.algorithm, this.secret, null);
 
-		return decipher.update(
-			encryptedData,
-			this.outputEncoding,
-			this.inputEncoding,
+		return (
+			decipher.update(encryptedData, this.outputEncoding, this.inputEncoding) +
+			decipher.final(this.inputEncoding)
 		);
 	}
 

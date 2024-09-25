@@ -1,8 +1,10 @@
+import { Icon, Tooltip } from "~/libs/components/components.js";
 import { MIN_GIT_EMAILS_LENGTH_FOR_SPLIT } from "~/libs/constants/constants.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { ContributorMenu } from "../../components/components.js";
 import { type ContributorRow } from "../../types/types.js";
+import styles from "./styles.module.css";
 
 const getContributorColumns = (actions: {
 	onEdit: (contributorId: number) => void;
@@ -15,8 +17,17 @@ const getContributorColumns = (actions: {
 		size: 200,
 	},
 	{
-		accessorFn: (contributor: ContributorRow): string =>
-			contributor.gitEmails.join(", "),
+		cell: ({ row: { original: contributor } }): JSX.Element => {
+			const gitEmails = contributor.gitEmails.join(", ");
+
+			return (
+				<div className={styles["git-email-cell-wrapper"]}>
+					<Tooltip content={gitEmails} id={gitEmails}>
+						{gitEmails}
+					</Tooltip>
+				</div>
+			);
+		},
 		header: "Git Emails",
 		size: 300,
 	},
@@ -26,6 +37,18 @@ const getContributorColumns = (actions: {
 		header: "Projects",
 		size: 300,
 	},
+	{
+		cell: ({ row: { original: contributor } }) =>
+			contributor.hiddenAt ? (
+				<Icon height={18} name="check" width={18} />
+			) : (
+				<></>
+			),
+		header: "Do Not Track",
+		id: "hiddenAt",
+		size: 130,
+	},
+
 	{
 		cell: ({ row: { original: contributor } }) => (
 			<ContributorMenu
