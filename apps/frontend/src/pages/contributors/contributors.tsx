@@ -206,8 +206,17 @@ const Contributors = (): JSX.Element => {
 		if (splitContributorsStatus === DataStatus.FULFILLED) {
 			onSplitModalClose();
 			setContributorToSplit(null);
+
+			void dispatch(contributorActions.loadAll({ page, pageSize }));
 		}
-	}, [splitContributorsStatus, onSplitModalClose, setContributorToSplit]);
+	}, [
+		dispatch,
+		splitContributorsStatus,
+		onSplitModalClose,
+		setContributorToSplit,
+		page,
+		pageSize,
+	]);
 
 	const contributorsColumns = useMemo(
 		() =>

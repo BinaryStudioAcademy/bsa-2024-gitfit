@@ -172,9 +172,11 @@ class ContributorController extends BaseController {
 			query: ContributorGetAllRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { hasHidden, page, pageSize, projectId } = options.query;
+		const { contributorName, hasHidden, page, pageSize, projectId } =
+			options.query;
 
 		const query = {
+			...(contributorName ? { contributorName } : {}),
 			...(hasHidden ? { hasHidden: Boolean(hasHidden) } : {}),
 			...(page ? { page: Number(page) } : {}),
 			...(pageSize ? { pageSize: Number(pageSize) } : {}),

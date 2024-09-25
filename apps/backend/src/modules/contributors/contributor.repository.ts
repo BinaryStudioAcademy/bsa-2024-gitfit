@@ -57,6 +57,7 @@ class ContributorRepository implements Repository {
 	}
 
 	public async findAll({
+		contributorName,
 		hasHidden = false,
 		page,
 		pageSize,
@@ -86,6 +87,10 @@ class ContributorRepository implements Repository {
 
 		if (!hasHidden) {
 			query.whereNull("contributors.hiddenAt");
+		}
+
+		if (contributorName) {
+			query.whereILike("contributors.name", `%${contributorName}%`);
 		}
 
 		if (projectId) {

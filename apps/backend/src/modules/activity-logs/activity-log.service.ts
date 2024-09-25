@@ -137,6 +137,7 @@ class ActivityLogService implements Service {
 	}
 
 	public async findAll({
+		contributorName,
 		endDate,
 		projectId,
 		startDate,
@@ -152,6 +153,7 @@ class ActivityLogService implements Service {
 		);
 
 		const activityLogsEntities = await this.activityLogRepository.findAll({
+			contributorName,
 			endDate: formattedEndDate,
 			projectId,
 			startDate: formattedStartDate,
@@ -162,6 +164,7 @@ class ActivityLogService implements Service {
 		);
 
 		const allContributors = await this.contributorService.findAll({
+			contributorName,
 			projectId: projectId ? Number(projectId) : undefined,
 		});
 
@@ -201,8 +204,8 @@ class ActivityLogService implements Service {
 					commitsNumber: commitsArray,
 					contributor: {
 						hiddenAt: null,
-						id: contributorId ?? "",
-						name: contributorName ?? "",
+						id: contributorId as string,
+						name: contributorName as string,
 					},
 				};
 			}),

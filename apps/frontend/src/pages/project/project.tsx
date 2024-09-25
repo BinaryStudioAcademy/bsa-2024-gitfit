@@ -60,6 +60,12 @@ const Project = (): JSX.Element => {
 	} = useAppSelector(({ projects }) => projects);
 
 	const {
+		mergeContributorsStatus,
+		splitContributorsStatus,
+		updateContributorsStatus,
+	} = useAppSelector(({ contributors }) => contributors);
+
+	const {
 		isOpened: isSetupAnalyticsModalOpened,
 		onClose: onSetupAnalyticsModalClose,
 		onOpen: onSetupAnalyticsModalOpen,
@@ -170,11 +176,9 @@ const Project = (): JSX.Element => {
 						projectId: Number(projectId),
 					}),
 				);
-				setContributorToEdit(null);
-				handleContributorUpdateModalClose();
 			}
 		},
-		[dispatch, contributorToEdit, handleContributorUpdateModalClose, projectId],
+		[dispatch, contributorToEdit, projectId],
 	);
 
 	const handleMergeContributor = useCallback(
@@ -197,11 +201,9 @@ const Project = (): JSX.Element => {
 				void dispatch(
 					contributorActions.merge({ id: contributorToMerge.id, payload }),
 				);
-				setContributorToMerge(null);
-				handleContributorMergeModalClose();
 			}
 		},
-		[contributorToMerge, dispatch, handleContributorMergeModalClose],
+		[contributorToMerge, dispatch],
 	);
 
 	const handleSplitContributor = useCallback(
@@ -224,12 +226,49 @@ const Project = (): JSX.Element => {
 				void dispatch(
 					contributorActions.split({ id: contributorToSplit.id, payload }),
 				);
-				setContributorToSplit(null);
-				handleContributorSplitModalClose();
 			}
 		},
-		[contributorToSplit, dispatch, handleContributorSplitModalClose],
+		[contributorToSplit, dispatch],
 	);
+
+	useEffect(() => {
+		if (updateContributorsStatus === DataStatus.FULFILLED) {
+			handleContributorUpdateModalClose();
+			setContributorToEdit(null);
+		}
+	}, [
+		updateContributorsStatus,
+		handleContributorUpdateModalClose,
+		setContributorToEdit,
+	]);
+
+	useEffect(() => {
+		if (mergeContributorsStatus === DataStatus.FULFILLED) {
+			handleContributorMergeModalClose();
+			setContributorToMerge(null);
+		}
+	}, [
+		mergeContributorsStatus,
+		handleContributorMergeModalClose,
+		setContributorToMerge,
+	]);
+
+	useEffect(() => {
+		if (splitContributorsStatus === DataStatus.FULFILLED) {
+			handleContributorSplitModalClose();
+			setContributorToSplit(null);
+
+			void dispatch(
+				projectActions.loadAllContributorsByProjectId(Number(projectId)),
+			);
+		}
+	}, [
+		dispatch,
+		projectId,
+		splitContributorsStatus,
+		handleContributorSplitModalClose,
+		setContributorToSplit,
+	]);
 
 	const isLoading =
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
@@ -281,7 +320,6 @@ const Project = (): JSX.Element => {
 					<div className={styles["project-layout"]}>
 						<div className={styles["project-header"]}>
 							<h1 className={styles["title"]}>{project.name}</h1>
-
 							<ProjectDetailsMenu
 								onDelete={handleDeleteProject}
 								onEdit={handleEditProject}

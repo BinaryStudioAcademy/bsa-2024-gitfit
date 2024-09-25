@@ -23,9 +23,10 @@ class ActivityLogApi extends BaseHTTPApi {
 	public async getAll(
 		query: ActivityLogQueryParameters,
 	): Promise<ActivityLogGetAllAnalyticsResponseDto> {
-		const { endDate, projectId, startDate } = query;
+		const { contributorName, endDate, projectId, startDate } = query;
 
 		const queryToSend = {
+			...(contributorName ? { contributorName } : {}),
 			endDate,
 			startDate,
 			...(projectId ? { projectId } : {}),
