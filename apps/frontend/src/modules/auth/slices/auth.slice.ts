@@ -91,6 +91,7 @@ const { actions, name, reducer } = createSlice({
 					number,
 					ProjectPermissionsGetAllItemResponseDto[]
 				> = {};
+
 				const projectGroups = action.payload?.projectGroups ?? [];
 
 				for (const group of projectGroups) {
@@ -109,9 +110,9 @@ const { actions, name, reducer } = createSlice({
 				}
 
 				state.projectUserPermissions = projectPermissionsMap;
-				state.permissionedProjectsId =
-					action.payload?.projectGroups.flatMap((group) => group.projectId) ??
-					[];
+				state.permissionedProjectsId = projectGroups.map(
+					(group) => group.projectId,
+				);
 			},
 		);
 	},
