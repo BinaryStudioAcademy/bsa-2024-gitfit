@@ -37,15 +37,19 @@ const Header = (): JSX.Element => {
 		({ auth }) => auth.authenticatedUser,
 	);
 
-	const { unreadNotifications } = useAppSelector(
+	const { unreadNotificationsCount } = useAppSelector(
 		({ notifications }) => notifications,
 	);
 
-	const hasUnreadNotifications = unreadNotifications.length !== EMPTY_LENGTH;
+	const hasUnreadNotifications = unreadNotificationsCount !== EMPTY_LENGTH;
+
+	const loadUnreadNotificationsCount = useCallback(() => {
+		void dispatch(notificationActions.loadUnreadCount());
+	}, [dispatch]);
 
 	useEffect(() => {
-		void dispatch(notificationActions.loadAllUnread());
-	}, [dispatch]);
+		loadUnreadNotificationsCount();
+	}, [loadUnreadNotificationsCount]);
 
 	const markAllNotificationsAsRead = useCallback(() => {
 		void dispatch(notificationActions.markAsRead());
@@ -53,8 +57,8 @@ const Header = (): JSX.Element => {
 
 	const handleNotificationsOpen = useCallback(() => {
 		onNotificationsOpen();
-		void dispatch(notificationActions.loadAllUnread());
-	}, [onNotificationsOpen, dispatch]);
+		loadUnreadNotificationsCount();
+	}, [onNotificationsOpen, loadUnreadNotificationsCount]);
 
 	const handleNotificationsClose = useCallback(() => {
 		onNotificationsClose();
@@ -93,7 +97,7 @@ const Header = (): JSX.Element => {
 							<Icon height={22} name="notifications" width={22} />
 							{hasUnreadNotifications && (
 								<span className={styles["notifications-badge-count"]}>
-									{unreadNotifications.length}
+									{unreadNotificationsCount}
 								</span>
 							)}
 						</div>

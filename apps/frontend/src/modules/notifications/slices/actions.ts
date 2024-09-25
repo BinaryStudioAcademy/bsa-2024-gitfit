@@ -18,15 +18,14 @@ const loadAll = createAsyncThunk<
 	return await notificationApi.getAll(query);
 });
 
-const loadAllUnread = createAsyncThunk<
-	Pick<NotificationGetAllResponseDto, "items">,
-	undefined,
-	AsyncThunkConfig
->(`${sliceName}/load-all-unread`, async (_, { extra }) => {
-	const { notificationApi } = extra;
+const loadUnreadCount = createAsyncThunk<number, undefined, AsyncThunkConfig>(
+	`${sliceName}/load-unread-count`,
+	async (_, { extra }) => {
+		const { notificationApi } = extra;
 
-	return await notificationApi.getAllUnread();
-});
+		return await notificationApi.getUnreadCount();
+	},
+);
 
 const markAsRead = createAsyncThunk<boolean, undefined, AsyncThunkConfig>(
 	`${sliceName}/mark-as-read`,
@@ -37,4 +36,4 @@ const markAsRead = createAsyncThunk<boolean, undefined, AsyncThunkConfig>(
 	},
 );
 
-export { loadAll, loadAllUnread, markAsRead };
+export { loadAll, loadUnreadCount, markAsRead };

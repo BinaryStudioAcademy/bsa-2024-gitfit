@@ -5,7 +5,7 @@ import { type ValueOf } from "~/libs/types/types.js";
 import { FIRST_PAGE } from "~/modules/projects/libs/constants/constants.js";
 
 import { type NotificationGetAllItemResponseDto } from "../libs/types/types.js";
-import { loadAll, loadAllUnread, markAsRead } from "./actions.js";
+import { loadAll, loadUnreadCount, markAsRead } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
@@ -13,7 +13,7 @@ type State = {
 	notifications: NotificationGetAllItemResponseDto[];
 	notificationsTotalCount: number;
 	unreadDataStatus: ValueOf<typeof DataStatus>;
-	unreadNotifications: NotificationGetAllItemResponseDto[];
+	unreadNotificationsCount: number;
 };
 
 const initialState: State = {
@@ -22,7 +22,7 @@ const initialState: State = {
 	notifications: [],
 	notificationsTotalCount: 0,
 	unreadDataStatus: DataStatus.IDLE,
-	unreadNotifications: [],
+	unreadNotificationsCount: 0,
 };
 
 const { actions, name, reducer } = createSlice({
@@ -45,15 +45,15 @@ const { actions, name, reducer } = createSlice({
 			state.dataStatus = DataStatus.REJECTED;
 		});
 
-		builder.addCase(loadAllUnread.pending, (state) => {
+		builder.addCase(loadUnreadCount.pending, (state) => {
 			state.unreadDataStatus = DataStatus.PENDING;
 		});
-		builder.addCase(loadAllUnread.fulfilled, (state, action) => {
-			state.unreadNotifications = action.payload.items;
+		builder.addCase(loadUnreadCount.fulfilled, (state, action) => {
+			state.unreadNotificationsCount = action.payload;
 			state.unreadDataStatus = DataStatus.FULFILLED;
 		});
-		builder.addCase(loadAllUnread.rejected, (state) => {
-			state.unreadNotifications = [];
+		builder.addCase(loadUnreadCount.rejected, (state) => {
+			state.unreadNotificationsCount = initialState.unreadNotificationsCount;
 			state.unreadDataStatus = DataStatus.REJECTED;
 		});
 

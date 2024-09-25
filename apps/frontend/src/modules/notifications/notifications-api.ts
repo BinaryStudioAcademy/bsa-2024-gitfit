@@ -37,9 +37,7 @@ class NotificationApi extends BaseHTTPApi {
 		return await response.json<NotificationGetAllResponseDto>();
 	}
 
-	public async getAllUnread(): Promise<
-		Pick<NotificationGetAllResponseDto, "items">
-	> {
+	public async getUnreadCount(): Promise<number> {
 		const response = await this.load(
 			this.getFullEndpoint(NotificationsApiPath.UNREAD, {}),
 			{
@@ -49,7 +47,7 @@ class NotificationApi extends BaseHTTPApi {
 			},
 		);
 
-		return await response.json<Pick<NotificationGetAllResponseDto, "items">>();
+		return await response.json<number>();
 	}
 
 	public async markAsRead(): Promise<boolean> {
