@@ -19,10 +19,7 @@ const handleUnauthorizedError = (): Middleware<
 				isRejected(action) &&
 				action.error.name === ExceptionName.UNAUTHORIZED
 			) {
-				if (
-					isRejected(action) &&
-					action.type === authActions.signIn.rejected.type
-				) {
+				if (action.type === authActions.signIn.rejected.type) {
 					toastNotifier.showError("Invalid credentials.");
 				} else {
 					void dispatch(authActions.logout());
