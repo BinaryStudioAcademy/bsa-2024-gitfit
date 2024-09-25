@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.52.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.51.0...frontend-v1.52.0) (2024-09-25)
+
+
+### Features
+
+* add search field to analytics page gf-352 ([#444](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/444)) ([71dcfb1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/71dcfb15462b289bad70d90f65875bea40bbc560))
+* upgrade the visibility of the project's options button on the project detail page gf-508 ([#514](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/514)) ([1d7d6f1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1d7d6f1f8ed86321fe2b7231c0424d06a5772daa))
+
+
+### Bug Fixes
+
+* reload contributors on split gf-519 ([#525](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/525)) ([f766ce8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f766ce8145a202626ad154753dc01e1af5ee29f4))
+
 ## [1.51.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.50.0...frontend-v1.51.0) (2024-09-25)
 
 
