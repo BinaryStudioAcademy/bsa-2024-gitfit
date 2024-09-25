@@ -166,10 +166,12 @@ class ActivityLogService implements Service {
 		const allContributors = await (projectId
 			? this.contributorService.findAllByProjectId({
 					contributorName: contributorName ?? "",
+					hasHidden: false,
 					projectId: Number(projectId),
 				})
 			: this.contributorService.findAllWithoutPagination({
 					contributorName: contributorName ?? "",
+					hasHidden: false,
 				}));
 
 		const dateRange = getDateRange(formattedStartDate, formattedEndDate);
@@ -207,6 +209,7 @@ class ActivityLogService implements Service {
 				return {
 					commitsNumber: commitsArray,
 					contributor: {
+						hiddenAt: null,
 						id: contributorId as string,
 						name: contributorName as string,
 					},

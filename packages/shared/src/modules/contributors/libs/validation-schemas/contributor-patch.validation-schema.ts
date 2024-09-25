@@ -8,6 +8,7 @@ import { type ContributorPatchRequestDto } from "../types/types.js";
 
 const contributorPatch: z.ZodType<ContributorPatchRequestDto> = z
 	.object({
+		isHidden: z.boolean(),
 		name: z
 			.string()
 			.trim()
