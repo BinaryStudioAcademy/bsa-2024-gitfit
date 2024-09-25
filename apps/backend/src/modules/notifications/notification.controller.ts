@@ -125,7 +125,7 @@ class NotificationController extends BaseController {
 	 * @swagger
 	 * /notifications/unread-count:
 	 *   get:
-	 *     description: Returns an array of unread notifications
+	 *     description: Returns the count of unread notifications
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
@@ -135,9 +135,8 @@ class NotificationController extends BaseController {
 	 *               type: object
 	 *               properties:
 	 *                 items:
-	 *                   type: array
-	 *                   items:
-	 *                     $ref: "#/components/schemas/Notification"
+	 *                  type: number
+	 *                  description: The number of unread notifications
 	 */
 	private async getUnreadCount(
 		options: APIHandlerOptions,
