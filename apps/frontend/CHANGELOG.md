@@ -1,5 +1,43 @@
 # Changelog
 
+## [1.53.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.52.0...frontend-v1.53.0) (2024-09-25)
+
+
+### Features
+
+* add analytics last sync time to project details page gf-502 ([#526](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/526)) ([7f3f5c2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7f3f5c21a6312fb0a3ad1e04db1c2e17ffd47cc2))
+* redirect to analytics page on contributor item click gf-349 ([#512](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/512)) ([9861355](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9861355e5ea555866cb5cf3fa909115d4a21beac))
+
+
+### Bug Fixes
+
+* fixed inconsistent analytics page alignment gf-530 ([#535](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/535)) ([8ee08ba](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8ee08ba43e0e559706025ceec16fa43457d34978))
+
+## [1.52.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.51.0...frontend-v1.52.0) (2024-09-25)
+
+
+### Features
+
+* add search field to analytics page gf-352 ([#444](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/444)) ([71dcfb1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/71dcfb15462b289bad70d90f65875bea40bbc560))
+* upgrade the visibility of the project's options button on the project detail page gf-508 ([#514](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/514)) ([1d7d6f1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1d7d6f1f8ed86321fe2b7231c0424d06a5772daa))
+
+
+### Bug Fixes
+
+* reload contributors on split gf-519 ([#525](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/525)) ([f766ce8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f766ce8145a202626ad154753dc01e1af5ee29f4))
+
+## [1.51.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.50.0...frontend-v1.51.0) (2024-09-25)
+
+
+### Features
+
+* add an ability to mark contributors as hidden gf-346 ([#400](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/400)) ([6143e4c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6143e4cb851e28de4080230e5e80e0665f65f41f))
+
+
+### Bug Fixes
+
+* adjusted loader and placeholder to render properly when loading gf-515 ([#520](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/520)) ([f94c6b6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f94c6b614d4e2a2f37f41a62d7cb2d5d1594d513))
+
 ## [1.50.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.49.1...frontend-v1.50.0) (2024-09-25)
 
 

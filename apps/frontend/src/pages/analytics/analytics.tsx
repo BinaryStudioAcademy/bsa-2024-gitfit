@@ -1,5 +1,5 @@
 import { DateInput, PageLayout, Select } from "~/libs/components/components.js";
-import { DataStatus } from "~/libs/enums/enums.js";
+import { DataStatus, QueryParameterName } from "~/libs/enums/enums.js";
 import {
 	formatDate,
 	getEndOfDay,
@@ -13,10 +13,15 @@ import {
 	useCallback,
 	useEffect,
 	useFormWatch,
+	useSearchFilters,
+	useSearchParams,
 } from "~/libs/hooks/hooks.js";
 import { actions as activityLogActions } from "~/modules/activity/activity.js";
 
-import { AnalyticsTable } from "./libs/components/components.js";
+import {
+	AnalyticsContributorsSearch,
+	AnalyticsTable,
+} from "./libs/components/components.js";
 import {
 	ANALYTICS_DATE_MAX_RANGE,
 	ANALYTICS_DEFAULT_DATE_RANGE,
@@ -33,6 +38,8 @@ const Analytics = (): JSX.Element => {
 		ANALYTICS_LOOKBACK_DAYS_COUNT,
 	);
 
+	const { onSearch, search } = useSearchFilters();
+
 	const { activityLogs, dataStatus, projects } = useAppSelector(
 		({ activityLogs }) => activityLogs,
 	);
@@ -41,21 +48,42 @@ const Analytics = (): JSX.Element => {
 		void dispatch(activityLogActions.loadAllProjects());
 	}, [dispatch]);
 
-	const { control, handleSubmit, isDirty } = useAppForm({
+	const [searchParameters] = useSearchParams();
+	const projectIdQueryParameter = searchParameters.get(
+		QueryParameterName.PROJECT_ID,
+	);
+
+	const { onSearch: onSelect } = useSearchFilters({
+		queryParameterName: QueryParameterName.PROJECT_ID,
+	});
+
+	const { control, errors, handleSubmit, isDirty } = useAppForm({
 		defaultValues: {
 			dateRange: [
 				subtractDays(todayDate, ANALYTICS_DEFAULT_DATE_RANGE),
 				todayDate,
 			] as [Date, Date],
-			project: null,
+			project: projectIdQueryParameter ? Number(projectIdQueryParameter) : null,
+			search,
 		},
 	});
+
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			onSearch(value);
+		},
+		[onSearch],
+	);
 
 	const dateRangeValue = useFormWatch({ control, name: "dateRange" });
 	const projectValue = useFormWatch({ control, name: "project" });
 
+	useEffect(() => {
+		onSelect(projectValue ? String(projectValue) : "");
+	}, [onSelect, projectValue]);
+
 	const handleLoadLogs = useCallback(
-		([startDate, endDate]: [Date, Date], projectId?: null | string) => {
+		([startDate, endDate]: [Date, Date], projectId?: null | number) => {
 			const formattedStartDate = formatDate(
 				getStartOfDay(startDate),
 				"yyyy-MM-dd",
@@ -64,13 +92,14 @@ const Analytics = (): JSX.Element => {
 
 			void dispatch(
 				activityLogActions.loadAll({
+					contributorName: search,
 					endDate: formattedEndDate,
-					projectId: projectId ?? undefined,
+					projectId: projectId?.toString() ?? undefined,
 					startDate: formattedStartDate,
 				}),
 			);
 		},
-		[dispatch],
+		[dispatch, search],
 	);
 
 	useEffect(() => {
@@ -102,6 +131,12 @@ const Analytics = (): JSX.Element => {
 			<h1 className={styles["title"]}>Analytics</h1>
 			<section>
 				<form className={styles["filters-form"]} onSubmit={handleFormSubmit}>
+					<AnalyticsContributorsSearch
+						control={control}
+						errors={errors}
+						name="search"
+						onChange={handleSearchChange}
+					/>
 					<div className={styles["select-wrapper"]}>
 						<Select
 							control={control}
@@ -114,13 +149,15 @@ const Analytics = (): JSX.Element => {
 							placeholder="Select project"
 						/>
 					</div>
-					<DateInput
-						control={control}
-						maxDate={todayDate}
-						maxRange={ANALYTICS_DATE_MAX_RANGE}
-						minDate={minChoosableDate}
-						name="dateRange"
-					/>
+					<div className={styles["date-input-wrapper"]}>
+						<DateInput
+							control={control}
+							maxDate={todayDate}
+							maxRange={ANALYTICS_DATE_MAX_RANGE}
+							minDate={minChoosableDate}
+							name="dateRange"
+						/>
+					</div>
 				</form>
 				<AnalyticsTable
 					activityLogs={activityLogs}

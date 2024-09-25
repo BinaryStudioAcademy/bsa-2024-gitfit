@@ -98,7 +98,7 @@
 	display: flex;
 	gap: 8px;
 	align-items: center;
-	width: 270px;
+	max-width: 270px;
 	padding: 10px 16px;
 	color: inherit;
 	cursor: pointer;
@@ -120,6 +120,7 @@
 	font-weight: 400;
 	line-height: 1.5;
 	color: inherit;
+	text-overflow: ellipsis;
 	pointer-events: none;
 	background-color: transparent;
 	border: none;

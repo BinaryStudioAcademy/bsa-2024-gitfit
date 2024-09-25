@@ -100,27 +100,7 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(split.pending, (state) => {
 			state.splitContributorsStatus = DataStatus.PENDING;
 		});
-		builder.addCase(split.fulfilled, (state, action) => {
-			const { id: splittingContributorId } = action.meta.arg;
-			const { payload: newContributor } = action;
-
-			state.contributors = state.contributors.map((contributor) => {
-				if (contributor.id !== splittingContributorId) {
-					return contributor;
-				}
-
-				const [splitEmail] = newContributor.gitEmails;
-
-				return {
-					...contributor,
-					gitEmails: contributor.gitEmails.filter(
-						({ id }) => id !== splitEmail?.id,
-					),
-				};
-			});
-
-			state.contributors = [newContributor, ...state.contributors];
-
+		builder.addCase(split.fulfilled, (state) => {
 			state.splitContributorsStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(split.rejected, (state) => {

@@ -17,7 +17,7 @@ import {
 	useModal,
 	usePagination,
 	useParams,
-	useSearch,
+	useSearchFilters,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import { type ValueOf } from "~/libs/types/types.js";
@@ -63,7 +63,7 @@ const ProjectAccessManagement = (): JSX.Element => {
 		usersTotalCount,
 	} = useAppSelector(({ users }) => users);
 
-	const { onSearch: onUserSearch, search: userSearch } = useSearch();
+	const { onSearch: onUserSearch, search: userSearch } = useSearchFilters();
 	const { control, errors } = useAppForm({
 		defaultValues: { userSearch },
 	});

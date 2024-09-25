@@ -2,7 +2,6 @@ import { raw } from "objection";
 
 import { SortType } from "~/libs/enums/enums.js";
 import {
-	type PaginationQueryParameters,
 	type PaginationResponseDto,
 	type Repository,
 } from "~/libs/types/types.js";
@@ -11,6 +10,7 @@ import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorModel } from "./contributor.model.js";
 import {
+	type ContributorGetAllQueryParameters,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 } from "./libs/types/types.js";
@@ -56,10 +56,11 @@ class ContributorRepository implements Repository {
 	}
 
 	public async findAll({
+		contributorName,
 		hasHidden = true,
 		page,
 		pageSize,
-	}: { hasHidden?: boolean } & PaginationQueryParameters): Promise<
+	}: { hasHidden?: boolean } & ContributorGetAllQueryParameters): Promise<
 		PaginationResponseDto<ContributorEntity>
 	> {
 		const query = this.contributorModel
@@ -82,20 +83,26 @@ class ContributorRepository implements Repository {
 			query.whereNull("contributors.hiddenAt");
 		}
 
-		const { results, total } = await query;
+		if (contributorName) {
+			query.whereILike("contributors.name", `%${contributorName}%`);
+		}
+
+		const { results, total } = await query.execute();
 
 		return {
-			items: results.map((contributor) => {
-				return ContributorEntity.initialize(contributor);
-			}),
+			items: results.map((contributor) =>
+				ContributorEntity.initialize(contributor),
+			),
 			totalItems: total,
 		};
 	}
 
 	public async findAllByProjectId({
+		contributorName,
 		hasHidden = true,
 		projectId,
 	}: {
+		contributorName?: string;
 		hasHidden?: boolean;
 		projectId: number;
 	}): Promise<{ items: ContributorEntity[] }> {
@@ -124,7 +131,11 @@ class ContributorRepository implements Repository {
 			query.whereNull("contributors.hiddenAt");
 		}
 
-		const contributorsWithProjectsAndEmails = await query;
+		if (contributorName) {
+			query.whereILike("contributors.name", `%${contributorName}%`);
+		}
+
+		const contributorsWithProjectsAndEmails = await query.execute();
 
 		return {
 			items: contributorsWithProjectsAndEmails.map((contributor) => {
@@ -134,12 +145,12 @@ class ContributorRepository implements Repository {
 	}
 
 	public async findAllWithoutPagination({
+		contributorName,
 		hasHidden = true,
 	}: {
+		contributorName?: string;
 		hasHidden?: boolean;
-	}): Promise<{
-		items: ContributorEntity[];
-	}> {
+	}): Promise<{ items: ContributorEntity[] }> {
 		const query = this.contributorModel
 			.query()
 			.select("contributors.*")
@@ -158,7 +169,11 @@ class ContributorRepository implements Repository {
 			query.whereNull("contributors.hiddenAt");
 		}
 
-		const results = await query;
+		if (contributorName) {
+			query.whereILike("contributors.name", `%${contributorName}%`);
+		}
+
+		const results = await query.execute();
 
 		return {
 			items: results.map((contributor) => {

@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.34.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.33.0...shared-v1.34.0) (2024-09-25)
+
+
+### Features
+
+* add analytics last sync time to project details page gf-502 ([#526](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/526)) ([7f3f5c2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7f3f5c21a6312fb0a3ad1e04db1c2e17ffd47cc2))
+* redirect to analytics page on contributor item click gf-349 ([#512](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/512)) ([9861355](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9861355e5ea555866cb5cf3fa909115d4a21beac))
+
+## [1.33.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.32.0...shared-v1.33.0) (2024-09-25)
+
+
+### Features
+
+* add search field to analytics page gf-352 ([#444](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/444)) ([71dcfb1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/71dcfb15462b289bad70d90f65875bea40bbc560))
+
+## [1.32.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.31.1...shared-v1.32.0) (2024-09-25)
+
+
+### Features
+
+* add an ability to mark contributors as hidden gf-346 ([#400](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/400)) ([6143e4c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6143e4cb851e28de4080230e5e80e0665f65f41f))
+
 ## [1.31.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.31.0...shared-v1.31.1) (2024-09-25)
 
 

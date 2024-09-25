@@ -50,7 +50,12 @@ const ProjectDetailsMenu = ({
 	return (
 		<>
 			{isMenuShown && (
-				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
+				<Menu
+					buttonVariant="outlined"
+					isOpened={isOpened}
+					onClose={onClose}
+					onOpen={onOpen}
+				>
 					{hasManageProjectPermission && (
 						<MenuItem
 							iconName="pencil"

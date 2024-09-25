@@ -1,6 +1,12 @@
-import { ActivityIndicator, Chart } from "~/libs/components/components.js";
-import { MIN_GIT_EMAILS_LENGTH_FOR_SPLIT } from "~/libs/constants/constants.js";
 import {
+	ActivityIndicator,
+	Chart,
+	NavLink,
+} from "~/libs/components/components.js";
+import { MIN_GIT_EMAILS_LENGTH_FOR_SPLIT } from "~/libs/constants/constants.js";
+import { AppRoute, QueryParameterName } from "~/libs/enums/enums.js";
+import {
+	configureQueryString,
 	getActivityIndicatorStatus,
 	getDifferenceInDays,
 	getRelativeDate,
@@ -25,6 +31,7 @@ type Properties = {
 	onEdit: (contributorId: number) => void;
 	onMerge: (contributorId: number) => void;
 	onSplit: (contributorId: number) => void;
+	projectId: string;
 };
 
 const ContributorCard = ({
@@ -36,7 +43,12 @@ const ContributorCard = ({
 	onEdit,
 	onMerge,
 	onSplit,
+	projectId,
 }: Properties): JSX.Element => {
+	const analyticsRoute = configureQueryString(AppRoute.ANALYTICS, [
+		[QueryParameterName.PROJECT_ID, projectId],
+	]);
+
 	const currentDate = getStartOfDay(new Date());
 	const lastActivityDate = contributor.lastActivityDate
 		? getStartOfDay(new Date(contributor.lastActivityDate))
@@ -76,7 +88,8 @@ const ContributorCard = ({
 	}, [onSplit, contributor.id]);
 
 	return (
-		<div className={styles["card"]}>
+		<div className={styles["card-container"]}>
+			<NavLink className={styles["card"] as string} to={analyticsRoute} />
 			<span className={styles["name"]}>{contributor.name}</span>
 			{hasActivityIndicator && (
 				<ActivityIndicator label={lastUpdateLabel} status={colorStatus} />
