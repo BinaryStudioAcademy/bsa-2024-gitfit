@@ -63,12 +63,12 @@ class ContributorService implements Service {
 	public async findAll(
 		parameters: {
 			contributorName?: string;
-			hasHidden?: boolean;
 		} & PaginationQueryParameters,
+		hasHidden?: boolean,
 	): Promise<ContributorGetAllResponseDto> {
 		const contributors = await this.contributorRepository.findAll({
 			contributorName: parameters.contributorName ?? "",
-			hasHidden: parameters.hasHidden ?? true,
+			hasHidden: hasHidden ?? true,
 			page: parameters.page - PAGE_INDEX_OFFSET,
 			pageSize: parameters.pageSize,
 		});

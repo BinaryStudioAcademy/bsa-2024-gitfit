@@ -4,7 +4,7 @@ export { ContributorError } from "./libs/exceptions/exceptions.js";
 export {
 	type ContributorCreateRequestDto,
 	type ContributorGetAllItemResponseDto,
-	type ContributorGetAllRequestDto,
+	type ContributorGetAllQueryParameters,
 	type ContributorGetAllResponseDto,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,

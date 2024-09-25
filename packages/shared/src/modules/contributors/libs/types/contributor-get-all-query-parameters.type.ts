@@ -1,7 +1,7 @@
 import { type PaginationQueryParameters } from "../../../../index.js";
 
-type ContributorGetAllRequestDto = {
+type ContributorGetAllQueryParameters = {
 	contributorName?: string;
 } & PaginationQueryParameters;
 
-export { type ContributorGetAllRequestDto };
+export { type ContributorGetAllQueryParameters };

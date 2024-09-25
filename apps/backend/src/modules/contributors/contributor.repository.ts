@@ -10,7 +10,7 @@ import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorModel } from "./contributor.model.js";
 import {
-	type ContributorGetAllRequestDto,
+	type ContributorGetAllQueryParameters,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 } from "./libs/types/types.js";
@@ -60,7 +60,7 @@ class ContributorRepository implements Repository {
 		hasHidden = true,
 		page,
 		pageSize,
-	}: ContributorGetAllRequestDto): Promise<
+	}: { hasHidden?: boolean } & ContributorGetAllQueryParameters): Promise<
 		PaginationResponseDto<ContributorEntity>
 	> {
 		const query = this.contributorModel
