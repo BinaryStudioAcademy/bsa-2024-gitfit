@@ -18,11 +18,11 @@ const handleUnauthorizedError = (): Middleware<
 				isRejected(action) &&
 				action.error.name === ExceptionName.UNAUTHORIZED
 			) {
-				if (action.type === authActions.signIn.rejected.type) {
+				if (isRejected(authActions.signIn)(action)) {
 					return next(action);
-				} else {
-					void dispatch(authActions.logout());
 				}
+
+				void dispatch(authActions.logout());
 
 				return;
 			}
