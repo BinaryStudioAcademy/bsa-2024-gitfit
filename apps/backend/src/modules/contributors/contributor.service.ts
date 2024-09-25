@@ -1,13 +1,7 @@
-import {
-	MIN_GIT_EMAILS_LENGTH_FOR_SPLIT,
-	PAGE_INDEX_OFFSET,
-} from "~/libs/constants/constants.js";
+import { MIN_GIT_EMAILS_LENGTH_FOR_SPLIT } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
-import {
-	type PaginationQueryParameters,
-	type Service,
-} from "~/libs/types/types.js";
+import { type Service } from "~/libs/types/types.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorRepository } from "./contributor.repository.js";
@@ -15,6 +9,7 @@ import { ContributorError } from "./libs/exceptions/exceptions.js";
 import {
 	type ContributorCreateRequestDto,
 	type ContributorGetAllItemResponseDto,
+	type ContributorGetAllRequestDto,
 	type ContributorGetAllResponseDto,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
@@ -61,12 +56,9 @@ class ContributorService implements Service {
 	}
 
 	public async findAll(
-		parameters: PaginationQueryParameters,
+		query: ContributorGetAllRequestDto,
 	): Promise<ContributorGetAllResponseDto> {
-		const contributors = await this.contributorRepository.findAll({
-			page: parameters.page - PAGE_INDEX_OFFSET,
-			pageSize: parameters.pageSize,
-		});
+		const contributors = await this.contributorRepository.findAll(query);
 
 		return {
 			items: contributors.items.map((item) => {
@@ -81,48 +73,6 @@ class ContributorService implements Service {
 				};
 			}),
 			totalItems: contributors.totalItems,
-		};
-	}
-
-	public async findAllByProjectId(
-		projectId: number,
-	): Promise<ContributorGetAllResponseDto> {
-		const contributors =
-			await this.contributorRepository.findAllByProjectId(projectId);
-
-		return {
-			items: contributors.items.map((item) => {
-				const contributor = item.toObject();
-
-				return {
-					...contributor,
-					gitEmails: contributor.gitEmails.map((gitEmail) => ({
-						email: gitEmail.email,
-						id: gitEmail.id,
-					})),
-				};
-			}),
-			totalItems: contributors.items.length,
-		};
-	}
-
-	public async findAllWithoutPagination(): Promise<ContributorGetAllResponseDto> {
-		const contributors =
-			await this.contributorRepository.findAllWithoutPagination();
-
-		return {
-			items: contributors.items.map((item) => {
-				const contributor = item.toObject();
-
-				return {
-					...contributor,
-					gitEmails: contributor.gitEmails.map((gitEmail) => ({
-						email: gitEmail.email,
-						id: gitEmail.id,
-					})),
-				};
-			}),
-			totalItems: contributors.items.length,
 		};
 	}
 

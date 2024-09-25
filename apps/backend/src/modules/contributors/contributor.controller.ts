@@ -7,11 +7,11 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
-import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { type ContributorService } from "./contributor.service.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
 import {
+	type ContributorGetAllRequestDto,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 	type ContributorSplitRequestDto,
@@ -67,7 +67,7 @@ class ContributorController extends BaseController {
 			handler: (options) =>
 				this.findAll(
 					options as APIHandlerOptions<{
-						query: { projectId?: string } & PaginationQueryParameters;
+						query: ContributorGetAllRequestDto;
 					}>,
 				),
 			method: "GET",
@@ -140,11 +140,13 @@ class ContributorController extends BaseController {
 	 *         schema:
 	 *           type: integer
 	 *         description: The page number to retrieve
+	 *         required: false
 	 *       - in: query
 	 *         name: pageSize
 	 *         schema:
 	 *           type: integer
 	 *         description: Number of items per page
+	 *         required: false
 	 *       - name: projectId
 	 *         in: query
 	 *         description: Id of a project contributor should belong to
@@ -167,20 +169,19 @@ class ContributorController extends BaseController {
 	 */
 	private async findAll(
 		options: APIHandlerOptions<{
-			query: { projectId?: string } & PaginationQueryParameters;
+			query: ContributorGetAllRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
-		if (options.query.projectId) {
-			const projectId = Number(options.query.projectId);
+		const { page, pageSize, projectId } = options.query;
 
-			return {
-				payload: await this.contributorService.findAllByProjectId(projectId),
-				status: HTTPCode.OK,
-			};
-		}
+		const query = {
+			...(page ? { page: Number(page) } : {}),
+			...(pageSize ? { pageSize: Number(pageSize) } : {}),
+			...(projectId ? { projectId: Number(projectId) } : {}),
+		};
 
 		return {
-			payload: await this.contributorService.findAll(options.query),
+			payload: await this.contributorService.findAll(query),
 			status: HTTPCode.OK,
 		};
 	}

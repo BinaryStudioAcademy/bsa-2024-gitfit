@@ -1,8 +1,9 @@
+import { type ContributorGetAllRequestDto } from "@git-fit/shared";
+
 import { APIPath, ContentType } from "~/libs/enums/enums.js";
 import { BaseHTTPApi } from "~/libs/modules/api/api.js";
 import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
-import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import {
 	type ContributorGetAllItemResponseDto,
@@ -26,34 +27,22 @@ class ContributorApi extends BaseHTTPApi {
 	}
 
 	public async getAll(
-		query: PaginationQueryParameters,
+		query: ContributorGetAllRequestDto,
 	): Promise<ContributorGetAllResponseDto> {
+		const { page, pageSize, projectId } = query;
+
+		const queryToSend = {
+			...(page ? { page: String(page) } : {}),
+			...(pageSize ? { pageSize: String(pageSize) } : {}),
+			...(projectId ? { projectId: String(projectId) } : {}),
+		};
+
 		const response = await this.load(
 			this.getFullEndpoint(ContributorsApiPath.ROOT, {}),
 			{
 				hasAuth: true,
 				method: "GET",
-				query: {
-					page: String(query.page),
-					pageSize: String(query.pageSize),
-				},
-			},
-		);
-
-		return await response.json<ContributorGetAllResponseDto>();
-	}
-
-	public async getAllByProjectId(
-		projectId: string,
-	): Promise<ContributorGetAllResponseDto> {
-		const response = await this.load(
-			this.getFullEndpoint(ContributorsApiPath.ROOT, {}),
-			{
-				hasAuth: true,
-				method: "GET",
-				query: {
-					projectId,
-				},
+				query: queryToSend,
 			},
 		);
 

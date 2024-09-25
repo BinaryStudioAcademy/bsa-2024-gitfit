@@ -86,7 +86,7 @@ const deleteById = createAsyncThunk<boolean, number, AsyncThunkConfig>(
 
 const loadAllContributorsByProjectId = createAsyncThunk<
 	ContributorGetAllResponseDto,
-	string,
+	number,
 	AsyncThunkConfig
 >(
 	`${sliceName}/load-all-contributors-by-project-id`,
@@ -103,12 +103,12 @@ const loadAllContributorsByProjectId = createAsyncThunk<
 		void dispatch(
 			loadAllContributorsActivityByProjectId({
 				endDate,
-				projectId,
+				projectId: String(projectId),
 				startDate,
 			}),
 		);
 
-		return await contributorApi.getAllByProjectId(projectId);
+		return await contributorApi.getAll({ projectId });
 	},
 );
 

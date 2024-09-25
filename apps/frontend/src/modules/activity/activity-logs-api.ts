@@ -28,7 +28,7 @@ class ActivityLogApi extends BaseHTTPApi {
 		const queryToSend = {
 			endDate,
 			startDate,
-			...(projectId ? { projectId } : {}),
+			...(projectId ? { projectId: String(projectId) } : {}),
 		};
 
 		const response = await this.load(

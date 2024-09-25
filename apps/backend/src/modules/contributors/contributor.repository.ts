@@ -1,8 +1,8 @@
 import { raw } from "objection";
 
+import { PAGE_INDEX_OFFSET } from "~/libs/constants/constants.js";
 import { SortType } from "~/libs/enums/enums.js";
 import {
-	type PaginationQueryParameters,
 	type PaginationResponseDto,
 	type Repository,
 } from "~/libs/types/types.js";
@@ -11,6 +11,7 @@ import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorModel } from "./contributor.model.js";
 import {
+	type ContributorGetAllRequestDto,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 } from "./libs/types/types.js";
@@ -58,37 +59,11 @@ class ContributorRepository implements Repository {
 	public async findAll({
 		page,
 		pageSize,
-	}: PaginationQueryParameters): Promise<
+		projectId,
+	}: ContributorGetAllRequestDto): Promise<
 		PaginationResponseDto<ContributorEntity>
 	> {
-		const { results, total } = await this.contributorModel
-			.query()
-			.orderBy("createdAt", SortType.DESCENDING)
-			.page(page, pageSize)
-			.select("contributors.*")
-			.select(
-				raw(
-					"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
-				),
-			)
-			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
-			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
-			.leftJoin("projects", "activity_logs.project_id", "projects.id")
-			.groupBy("contributors.id")
-			.withGraphFetched("gitEmails");
-
-		return {
-			items: results.map((contributor) => {
-				return ContributorEntity.initialize(contributor);
-			}),
-			totalItems: total,
-		};
-	}
-
-	public async findAllByProjectId(
-		projectId: number,
-	): Promise<{ items: ContributorEntity[] }> {
-		const contributorsWithProjectsAndEmails = await this.contributorModel
+		const query = this.contributorModel
 			.query()
 			.orderBy("createdAt", SortType.DESCENDING)
 			.select("contributors.*")
@@ -105,39 +80,32 @@ class ContributorRepository implements Repository {
 			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
 			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
 			.leftJoin("projects", "activity_logs.project_id", "projects.id")
-			.havingRaw("?? = ANY(ARRAY_AGG(projects.id))", projectId)
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
 
-		return {
-			items: contributorsWithProjectsAndEmails.map((contributor) => {
-				return ContributorEntity.initialize(contributor);
-			}),
-		};
-	}
+		if (projectId) {
+			query.havingRaw("?? = ANY(ARRAY_AGG(projects.id))", projectId);
+		}
 
-	public async findAllWithoutPagination(): Promise<{
-		items: ContributorEntity[];
-	}> {
-		const results = await this.contributorModel
-			.query()
-			.orderBy("createdAt", SortType.DESCENDING)
-			.select("contributors.*")
-			.select(
-				raw(
-					"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
-				),
-			)
-			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
-			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
-			.leftJoin("projects", "activity_logs.project_id", "projects.id")
-			.groupBy("contributors.id")
-			.withGraphFetched("gitEmails");
+		let contributors, totalItems;
+
+		if (page && pageSize) {
+			const { results, total } = await query.page(
+				page - PAGE_INDEX_OFFSET,
+				pageSize,
+			);
+			contributors = results;
+			totalItems = total;
+		} else {
+			contributors = await query;
+			totalItems = contributors.length;
+		}
 
 		return {
-			items: results.map((contributor) => {
+			items: contributors.map((contributor) => {
 				return ContributorEntity.initialize(contributor);
 			}),
+			totalItems,
 		};
 	}
 

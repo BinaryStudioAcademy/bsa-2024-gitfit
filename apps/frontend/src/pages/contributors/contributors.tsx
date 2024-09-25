@@ -222,12 +222,14 @@ const Contributors = (): JSX.Element => {
 	const loadContributorsByProjectId = useCallback(
 		(projectId: number) => {
 			void dispatch(
-				contributorActions.loadAllByProjectId({
-					projectId: String(projectId),
+				contributorActions.loadAll({
+					page,
+					pageSize,
+					projectId,
 				}),
 			);
 		},
-		[dispatch],
+		[dispatch, page, pageSize],
 	);
 
 	const { control, handleSubmit } = useAppForm<{
