@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.50.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.49.1...frontend-v1.50.0) (2024-09-25)
+
+
+### Features
+
+* decrease default date range to one week gf-503 ([#518](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/518)) ([8bc6dd8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8bc6dd8a0812f2e9dc6866c62ccc62adbf8e7caa))
+
+
+### Bug Fixes
+
+* inconsistent data display on analytics table due to date format issue gf-510 ([#521](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/521)) ([9882708](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/988270876568673d43945e27ae3c50daf509a435))
+
+## [1.49.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.49.0...frontend-v1.49.1) (2024-09-24)
+
+
+### Bug Fixes
+
+* adjusted project/contributor style to match figma design gf-506 ([#513](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/513)) ([b27a06e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b27a06e477ae812f6e36f4cc9c05e76cb7407955))
+
 ## [1.49.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.48.0...frontend-v1.49.0) (2024-09-24)
 
 
