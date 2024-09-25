@@ -2,16 +2,13 @@ import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import {
 	type NavigationItem,
 	type PermissionGetAllItemResponseDto,
-	type ProjectPermissionsGetAllItemResponseDto,
 } from "~/libs/types/types.js";
 
 import { checkHasPermission } from "../helpers.js";
 
 const getPermittedNavigationItems = (
 	items: NavigationItem[],
-	userPermissions:
-		| PermissionGetAllItemResponseDto[]
-		| ProjectPermissionsGetAllItemResponseDto[],
+	userPermissions: PermissionGetAllItemResponseDto[],
 ): NavigationItem[] => {
 	const allPermittedItems = items.filter(
 		({ pagePermissions = [], pageProjectPermissions = [] }) =>
