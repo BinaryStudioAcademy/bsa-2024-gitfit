@@ -4,8 +4,6 @@ import { checkHasPermission, configureString } from "~/libs/helpers/helpers.js";
 import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
 import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/permissions.js";
 
-import styles from "./styles.module.css";
-
 type Properties = {
 	onDelete: () => void;
 	onEdit: () => void;
@@ -53,7 +51,7 @@ const ProjectDetailsMenu = ({
 		<>
 			{isMenuShown && (
 				<Menu
-					buttonClassName={styles["trigger-button"] as string}
+					buttonVariant="outlined"
 					isOpened={isOpened}
 					onClose={onClose}
 					onOpen={onOpen}

@@ -3,7 +3,7 @@ import { IconButton, Popover } from "~/libs/components/components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	buttonClassName?: string;
+	buttonVariant?: "outlined" | "primary";
 	children: React.ReactNode;
 	isOpened: boolean;
 	onClose: () => void;
@@ -11,7 +11,7 @@ type Properties = {
 };
 
 const Menu = ({
-	buttonClassName,
+	buttonVariant = "primary",
 	children,
 	isOpened,
 	onClose,
@@ -28,10 +28,10 @@ const Menu = ({
 			onClose={onClose}
 		>
 			<IconButton
-				{...(buttonClassName && { className: buttonClassName })}
 				iconName="ellipsis"
 				label="options"
 				onClick={isOpened ? onClose : onOpen}
+				variant={buttonVariant}
 			/>
 		</Popover>
 	);

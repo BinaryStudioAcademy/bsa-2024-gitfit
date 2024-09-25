@@ -6,7 +6,6 @@ import { ICON_SIZE } from "./libs/constants/constants.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	className?: string;
 	iconName: IconName;
 	isDisabled?: boolean;
 	label: string;
@@ -15,7 +14,6 @@ type Properties = {
 };
 
 const IconButton = ({
-	className,
 	iconName,
 	isDisabled = false,
 	label,
@@ -24,7 +22,6 @@ const IconButton = ({
 }: Properties): JSX.Element => {
 	const isOutlined = variant === "outlined";
 	const buttonClasses = getValidClassNames({
-		[className as string]: !!className,
 		[styles["icon-button"] as string]: true,
 		[styles["outlined"] as string]: isOutlined,
 	});
