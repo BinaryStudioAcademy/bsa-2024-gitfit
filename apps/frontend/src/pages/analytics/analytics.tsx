@@ -1,6 +1,11 @@
 import { DateInput, PageLayout, Select } from "~/libs/components/components.js";
 import { DataStatus } from "~/libs/enums/enums.js";
-import { subtractDays } from "~/libs/helpers/helpers.js";
+import {
+	formatDate,
+	getEndOfDay,
+	getStartOfDay,
+	subtractDays,
+} from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
 	useAppForm,
@@ -14,6 +19,7 @@ import { actions as activityLogActions } from "~/modules/activity/activity.js";
 import { AnalyticsTable } from "./libs/components/components.js";
 import {
 	ANALYTICS_DATE_MAX_RANGE,
+	ANALYTICS_DEFAULT_DATE_RANGE,
 	ANALYTICS_LOOKBACK_DAYS_COUNT,
 } from "./libs/constants/constants.js";
 import { getProjectOptions } from "./libs/helpers/helpers.js";
@@ -38,7 +44,7 @@ const Analytics = (): JSX.Element => {
 	const { control, handleSubmit, isDirty } = useAppForm({
 		defaultValues: {
 			dateRange: [
-				subtractDays(todayDate, ANALYTICS_DATE_MAX_RANGE),
+				subtractDays(todayDate, ANALYTICS_DEFAULT_DATE_RANGE),
 				todayDate,
 			] as [Date, Date],
 			project: null,
@@ -50,8 +56,11 @@ const Analytics = (): JSX.Element => {
 
 	const handleLoadLogs = useCallback(
 		([startDate, endDate]: [Date, Date], projectId?: null | string) => {
-			const formattedStartDate = startDate.toISOString();
-			const formattedEndDate = endDate.toISOString();
+			const formattedStartDate = formatDate(
+				getStartOfDay(startDate),
+				"yyyy-MM-dd",
+			);
+			const formattedEndDate = formatDate(getEndOfDay(endDate), "yyyy-MM-dd");
 
 			void dispatch(
 				activityLogActions.loadAll({

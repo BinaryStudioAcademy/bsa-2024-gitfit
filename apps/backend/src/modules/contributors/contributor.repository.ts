@@ -57,10 +57,11 @@ class ContributorRepository implements Repository {
 	}
 
 	public async findAll({
+		hasHidden = true,
 		page,
 		pageSize,
 		projectId,
-	}: ContributorGetAllRequestDto): Promise<
+	}: { hasHidden?: boolean } & ContributorGetAllRequestDto): Promise<
 		PaginationResponseDto<ContributorEntity>
 	> {
 		const query = this.contributorModel
@@ -82,6 +83,10 @@ class ContributorRepository implements Repository {
 			.leftJoin("projects", "activity_logs.project_id", "projects.id")
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
+
+		if (!hasHidden) {
+			query.whereNull("contributors.hiddenAt");
+		}
 
 		if (projectId) {
 			query.havingRaw("?? = ANY(ARRAY_AGG(projects.id))", projectId);
@@ -178,9 +183,13 @@ class ContributorRepository implements Repository {
 		contributorId: number,
 		data: ContributorPatchRequestDto,
 	): Promise<ContributorEntity | null> {
+		const hiddenAt = data.isHidden ? new Date().toISOString() : null;
 		const contributor = await this.contributorModel
 			.query()
-			.patchAndFetchById(contributorId, { name: data.name });
+			.patchAndFetchById(contributorId, {
+				hiddenAt,
+				name: data.name,
+			});
 
 		return ContributorEntity.initialize(contributor);
 	}

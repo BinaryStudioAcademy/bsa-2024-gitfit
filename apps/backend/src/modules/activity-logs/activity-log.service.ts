@@ -1,6 +1,11 @@
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
-import { formatDate, getDateRange } from "~/libs/helpers/helpers.js";
+import {
+	formatDate,
+	getDateRange,
+	getEndOfDay,
+	getStartOfDay,
+} from "~/libs/helpers/helpers.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 import { type ContributorService } from "~/modules/contributors/contributors.js";
@@ -136,10 +141,20 @@ class ActivityLogService implements Service {
 		projectId,
 		startDate,
 	}: ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
+		const formattedStartDate = formatDate(
+			getStartOfDay(new Date(startDate)),
+			"yyyy-MM-dd",
+		);
+
+		const formattedEndDate = formatDate(
+			getEndOfDay(new Date(endDate)),
+			"yyyy-MM-dd",
+		);
+
 		const activityLogsEntities = await this.activityLogRepository.findAll({
-			endDate,
+			endDate: formattedEndDate,
 			projectId,
-			startDate,
+			startDate: formattedStartDate,
 		});
 
 		const activityLogs = activityLogsEntities.items.map((item) =>
@@ -147,10 +162,11 @@ class ActivityLogService implements Service {
 		);
 
 		const allContributors = await this.contributorService.findAll({
+			hasHidden: false,
 			projectId: projectId ? Number(projectId) : undefined,
 		});
 
-		const dateRange = getDateRange(startDate, endDate);
+		const dateRange = getDateRange(formattedStartDate, formattedEndDate);
 
 		const INITIAL_COMMITS_NUMBER = 0;
 		const contributorMap: Record<string, number[]> = {};
@@ -184,8 +200,11 @@ class ActivityLogService implements Service {
 
 				return {
 					commitsNumber: commitsArray,
-					contributorId: contributorId ?? "",
-					contributorName: contributorName ?? "",
+					contributor: {
+						hiddenAt: null,
+						id: contributorId ?? "",
+						name: contributorName ?? "",
+					},
 				};
 			}),
 		};

@@ -56,7 +56,7 @@ class ContributorService implements Service {
 	}
 
 	public async findAll(
-		query: ContributorGetAllRequestDto,
+		query: { hasHidden?: boolean } & ContributorGetAllRequestDto,
 	): Promise<ContributorGetAllResponseDto> {
 		const contributors = await this.contributorRepository.findAll(query);
 
