@@ -20,7 +20,6 @@ type IconName =
 	| "split"
 	| "strikedEye"
 	| "sync"
-	| "syncOverdue"
 	| "trashBin"
 	| "warning";
 

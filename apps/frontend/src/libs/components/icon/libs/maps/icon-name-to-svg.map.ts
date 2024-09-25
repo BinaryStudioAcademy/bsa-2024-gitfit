@@ -21,7 +21,6 @@ import Search from "~/assets/images/icons/search.svg?react";
 import Split from "~/assets/images/icons/split.svg?react";
 import StrikedEye from "~/assets/images/icons/striked-eye.svg?react";
 import Sync from "~/assets/images/icons/sync.svg?react";
-import SyncOverdue from "~/assets/images/icons/sync-overdue.svg?react";
 import TrashBin from "~/assets/images/icons/trash-bin.svg?react";
 import Warning from "~/assets/images/icons/warning.svg?react";
 import { type IconName } from "~/libs/types/types.js";
@@ -48,7 +47,6 @@ const iconNameToSvg: Record<IconName, FC<React.SVGProps<SVGSVGElement>>> = {
 	split: Split,
 	strikedEye: StrikedEye,
 	sync: Sync,
-	syncOverdue: SyncOverdue,
 	trashBin: TrashBin,
 	warning: Warning,
 };
