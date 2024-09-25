@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.34.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.33.3...backend-v1.34.0) (2024-09-25)
+
+
+### Features
+
+* add an ability to mark contributors as hidden gf-346 ([#400](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/400)) ([6143e4c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6143e4cb851e28de4080230e5e80e0665f65f41f))
+
 ## [1.33.3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.33.2...backend-v1.33.3) (2024-09-25)
 
 
