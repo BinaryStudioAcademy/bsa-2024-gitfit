@@ -61,10 +61,14 @@ class ContributorService implements Service {
 	}
 
 	public async findAll(
-		parameters: { hasHidden?: boolean } & PaginationQueryParameters,
+		parameters: {
+			contributorName?: string;
+		} & PaginationQueryParameters,
+		hasHidden?: boolean,
 	): Promise<ContributorGetAllResponseDto> {
 		const contributors = await this.contributorRepository.findAll({
-			hasHidden: parameters.hasHidden ?? true,
+			contributorName: parameters.contributorName ?? "",
+			hasHidden: hasHidden ?? true,
 			page: parameters.page - PAGE_INDEX_OFFSET,
 			pageSize: parameters.pageSize,
 		});
@@ -86,13 +90,16 @@ class ContributorService implements Service {
 	}
 
 	public async findAllByProjectId({
+		contributorName,
 		hasHidden = true,
 		projectId,
 	}: {
+		contributorName?: string;
 		hasHidden?: boolean;
 		projectId: number;
 	}): Promise<ContributorGetAllResponseDto> {
 		const contributors = await this.contributorRepository.findAllByProjectId({
+			contributorName: contributorName ?? "",
 			hasHidden,
 			projectId,
 		});
@@ -114,13 +121,16 @@ class ContributorService implements Service {
 	}
 
 	public async findAllWithoutPagination({
-		hasHidden,
+		contributorName,
+		hasHidden = true,
 	}: {
+		contributorName?: string;
 		hasHidden?: boolean;
 	}): Promise<ContributorGetAllResponseDto> {
 		const contributors =
 			await this.contributorRepository.findAllWithoutPagination({
-				hasHidden: hasHidden ?? true,
+				contributorName: contributorName ?? "",
+				hasHidden,
 			});
 
 		return {

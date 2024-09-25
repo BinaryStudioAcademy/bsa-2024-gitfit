@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.51.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.50.0...frontend-v1.51.0) (2024-09-25)
+
+
+### Features
+
+* add an ability to mark contributors as hidden gf-346 ([#400](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/400)) ([6143e4c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6143e4cb851e28de4080230e5e80e0665f65f41f))
+
+
+### Bug Fixes
+
+* adjusted loader and placeholder to render properly when loading gf-515 ([#520](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/520)) ([f94c6b6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f94c6b614d4e2a2f37f41a62d7cb2d5d1594d513))
+
 ## [1.50.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.49.1...frontend-v1.50.0) (2024-09-25)
 
 
