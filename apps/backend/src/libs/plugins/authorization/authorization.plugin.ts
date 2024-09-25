@@ -36,7 +36,7 @@ const authorization = fp<Options>((fastify, options, done) => {
 		const BEARER_PREFIX = "Bearer ";
 		const authHeader = request.headers["authorization"];
 
-		if (!authHeader || !authHeader.startsWith(BEARER_PREFIX)) {
+		if (!authHeader?.startsWith(BEARER_PREFIX)) {
 			throw new AuthError({
 				message: ExceptionMessage.NO_TOKEN_PROVIDED,
 				status: HTTPCode.UNAUTHORIZED,
