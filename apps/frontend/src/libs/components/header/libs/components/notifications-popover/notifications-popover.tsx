@@ -60,7 +60,7 @@ const NotificationsPopover = ({
 
 	const hasNotifications = notifications.length !== EMPTY_LENGTH;
 	const isLoadingMore = dataStatus === DataStatus.PENDING;
-	const shouldShowPlaceholder = !hasNotifications && !isLoadingMore;
+	const isPlaceholderShown = !hasNotifications && !isLoadingMore;
 
 	return (
 		<Popover
@@ -68,20 +68,20 @@ const NotificationsPopover = ({
 				<div className={styles["notifications-popover"]}>
 					<h3 className={styles["notifications-title"]}>Notifications</h3>
 					<div className={styles["notifications"]}>
-						{hasNotifications
-							? notifications.map((notification) => (
-									<NotificationItem
-										key={notification.id}
-										message={notification.payload}
-										timestamp={formatRelativeTime(notification.createdAt)}
-									/>
-								))
-							: null}
-						{shouldShowPlaceholder ? (
+						{hasNotifications &&
+							notifications.map((notification) => (
+								<NotificationItem
+									key={notification.id}
+									message={notification.payload}
+									timestamp={formatRelativeTime(notification.createdAt)}
+								/>
+							))}
+
+						{isPlaceholderShown && (
 							<p className={styles["empty-placeholder"]}>
 								There is nothing yet.
 							</p>
-						) : null}
+						)}
 
 						<div className={styles["sentinel"]} ref={sentinelReference} />
 
