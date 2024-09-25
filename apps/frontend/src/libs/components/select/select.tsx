@@ -62,7 +62,7 @@ const Select = <TFieldValues extends FieldValues, TOptionValue>({
 
 		return isMulti
 			? matchedOptions
-			: matchedOptions[FIRST_OPTION_INDEX] || null;
+			: (matchedOptions[FIRST_OPTION_INDEX] ?? null);
 	}, [field.value, options, isMulti]);
 
 	const handleChange = useCallback(
