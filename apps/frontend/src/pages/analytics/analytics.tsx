@@ -149,13 +149,15 @@ const Analytics = (): JSX.Element => {
 							placeholder="Select project"
 						/>
 					</div>
-					<DateInput
-						control={control}
-						maxDate={todayDate}
-						maxRange={ANALYTICS_DATE_MAX_RANGE}
-						minDate={minChoosableDate}
-						name="dateRange"
-					/>
+					<div className={styles["date-input-wrapper"]}>
+						<DateInput
+							control={control}
+							maxDate={todayDate}
+							maxRange={ANALYTICS_DATE_MAX_RANGE}
+							minDate={minChoosableDate}
+							name="dateRange"
+						/>
+					</div>
 				</form>
 				<AnalyticsTable
 					activityLogs={activityLogs}
