@@ -160,8 +160,6 @@ class NotificationController extends BaseController {
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
-	 *       404:
-	 *         description: Notification not found
 	 */
 	private async markAsRead(
 		options: APIHandlerOptions,
