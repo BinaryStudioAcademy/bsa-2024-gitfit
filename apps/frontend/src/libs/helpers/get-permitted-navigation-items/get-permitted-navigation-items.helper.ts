@@ -1,4 +1,3 @@
-import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import {
 	type NavigationItem,
 	type PermissionGetAllItemResponseDto,
@@ -9,31 +8,23 @@ import { checkHasPermission } from "../helpers.js";
 
 const getPermittedNavigationItems = (
 	items: NavigationItem[],
-	userPermissions:
-		| PermissionGetAllItemResponseDto[]
-		| ProjectPermissionsGetAllItemResponseDto[],
+	userPermissions: PermissionGetAllItemResponseDto[] = [],
+	projectPermissions: ProjectPermissionsGetAllItemResponseDto[] = [],
 ): NavigationItem[] => {
-	const itemsWithRootPermissions = items.filter(
-		({ pagePermissions = [] }) =>
-			pagePermissions.length !== EMPTY_LENGTH &&
-			checkHasPermission(pagePermissions, userPermissions),
-	);
+	return items.filter(
+		({ pagePermissions = [], pageProjectPermissions = [] }) => {
+			const hasRootPermissions = checkHasPermission(
+				pagePermissions,
+				userPermissions,
+			);
 
-	const itemsWithProjectPermissions = items.filter(
-		({ pageProjectPermissions = [] }) =>
-			pageProjectPermissions.length !== EMPTY_LENGTH &&
-			checkHasPermission(pageProjectPermissions, userPermissions),
-	);
+			const hasProjectPermissions = checkHasPermission(
+				pageProjectPermissions,
+				projectPermissions,
+			);
 
-	const allPermittedItems = [
-		...itemsWithRootPermissions,
-		...itemsWithProjectPermissions,
-	];
-
-	return allPermittedItems.filter(
-		(item, index, self) =>
-			index ===
-			self.findIndex((navigationItem) => navigationItem.label === item.label),
+			return hasRootPermissions || hasProjectPermissions;
+		},
 	);
 };
 

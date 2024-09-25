@@ -38,10 +38,10 @@ const ProjectDetailsMenu = ({
 			id: projectId.toString(),
 		},
 	);
-
-	const isMenuShown = hasEditPermission || hasManagePermission;
 	const hasManageProjectAccessPermission =
 		hasManageAllProjectsPermission || hasManagePermission;
+
+	const isMenuShown = hasEditPermission || hasManageProjectAccessPermission;
 
 	return (
 		<>
@@ -55,7 +55,7 @@ const ProjectDetailsMenu = ({
 						/>
 					)}
 
-					{hasManagePermission && (
+					{hasManageProjectAccessPermission && (
 						<MenuItem
 							href={projectAccessManagementRoute}
 							iconName="access"
