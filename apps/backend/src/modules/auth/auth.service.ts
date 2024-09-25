@@ -50,7 +50,7 @@ class AuthService {
 		if (!isPasswordCorrect) {
 			throw new AuthError({
 				message: ExceptionMessage.INVALID_CREDENTIALS,
-				status: HTTPCode.UNAUTHORIZED,
+				status: HTTPCode.NOT_FOUND,
 			});
 		}
 
