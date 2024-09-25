@@ -27,6 +27,7 @@ const AnalyticsTable = ({
 		dateRangeFormatted,
 		styles["analytics-empty-cell"],
 	);
+
 	const analyticsData: AnalyticsRow[] = getAnalyticsRows(activityLogs);
 
 	return (
@@ -34,6 +35,7 @@ const AnalyticsTable = ({
 			<Table<AnalyticsRow>
 				columns={analyticsColumns}
 				data={analyticsData}
+				emptyPlaceholder="No contributors matching your search criteria."
 				isFullHeight
 				isLoading={isLoading}
 			/>

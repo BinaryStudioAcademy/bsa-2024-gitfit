@@ -6,6 +6,7 @@ export { formatDate } from "./format-date/format-date.helper.js";
 export { formatRelativeTime } from "./format-relative-time/format-relative-time.helper.js";
 export { getDateRange } from "./get-date-range/get-date-range.helper.js";
 export { getDifferenceInDays } from "./get-difference-in-days/get-difference-in-days.helper.js";
+export { getEndOfDay } from "./get-end-of-day/get-end-of-day.helper.js";
 export { getRelativeDate } from "./get-relative-date/get-relative-date.helper.js";
 export { getStartOfDay } from "./get-start-of-day/get-start-of-day.helper.js";
 export { getSyncTime } from "./get-sync-time/get-sync-time.helper.js";

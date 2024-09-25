@@ -1,4 +1,4 @@
-import { Button, Input } from "~/libs/components/components.js";
+import { Button, Checkbox, Input } from "~/libs/components/components.js";
 import { useAppForm, useCallback } from "~/libs/hooks/hooks.js";
 import {
 	type ContributorGetAllItemResponseDto,
@@ -17,18 +17,22 @@ const ContributorUpdateForm = ({
 	contributor,
 	onSubmit,
 }: Properties): JSX.Element => {
-	const { gitEmails, name, projects } = contributor;
+	const { gitEmails, hiddenAt, name, projects } = contributor;
+
+	const isHidden = Boolean(hiddenAt);
 
 	const gitEmailsString = gitEmails.map((email) => email.email).join(", ");
 	const projectsString = projects.map((project) => project.name).join(", ");
 
 	const { control, errors, handleSubmit } = useAppForm<{
 		gitEmails: string;
+		isHidden: boolean;
 		name: string;
 		projects: string;
 	}>({
 		defaultValues: {
 			gitEmails: gitEmailsString,
+			isHidden,
 			name,
 			projects: projectsString,
 		},
@@ -37,8 +41,11 @@ const ContributorUpdateForm = ({
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit((formData: { name: string }) => {
-				const payload: ContributorPatchRequestDto = { name: formData.name };
+			void handleSubmit(({ isHidden, name }) => {
+				const payload: ContributorPatchRequestDto = {
+					isHidden,
+					name,
+				};
 				onSubmit(payload);
 			})(event_);
 		},
@@ -68,6 +75,21 @@ const ContributorUpdateForm = ({
 				label="Project"
 				name="projects"
 			/>
+			<div className={styles["checkbox-wrapper"]}>
+				<label className={styles["checkbox-label"]} htmlFor="isHidden">
+					<Checkbox
+						control={control}
+						errors={errors}
+						id="isHidden"
+						name="isHidden"
+					/>
+					<span>Do Not Track</span>
+				</label>
+				<p className={styles["checkbox-description"]}>
+					If this option is checked, the contributor will be hidden from the
+					analytics and projects list.
+				</p>
+			</div>
 			<div className={styles["button-wrapper"]}>
 				<Button label="Update" type="submit" />
 			</div>

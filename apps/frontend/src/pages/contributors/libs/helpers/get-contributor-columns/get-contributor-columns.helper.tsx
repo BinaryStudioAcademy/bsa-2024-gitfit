@@ -1,4 +1,4 @@
-import { Tooltip } from "~/libs/components/components.js";
+import { Icon, Tooltip } from "~/libs/components/components.js";
 import { MIN_GIT_EMAILS_LENGTH_FOR_SPLIT } from "~/libs/constants/constants.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
@@ -37,6 +37,18 @@ const getContributorColumns = (actions: {
 		header: "Projects",
 		size: 300,
 	},
+	{
+		cell: ({ row: { original: contributor } }) =>
+			contributor.hiddenAt ? (
+				<Icon height={18} name="check" width={18} />
+			) : (
+				<></>
+			),
+		header: "Do Not Track",
+		id: "hiddenAt",
+		size: 130,
+	},
+
 	{
 		cell: ({ row: { original: contributor } }) => (
 			<ContributorMenu

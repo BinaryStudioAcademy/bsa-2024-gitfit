@@ -7,8 +7,8 @@ const getAnalyticsRows = (
 ): AnalyticsRow[] => {
 	return activityLogs.map((log) => ({
 		commitsNumber: log.commitsNumber,
-		contributorId: log.contributorId,
-		contributorName: log.contributorName,
+		contributorId: log.contributor.id,
+		contributorName: log.contributor.name,
 	}));
 };
 

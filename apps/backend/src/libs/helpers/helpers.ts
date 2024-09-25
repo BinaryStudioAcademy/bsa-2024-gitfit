@@ -4,5 +4,7 @@ export {
 	formatDate,
 	getDateRange,
 	getDifferenceInDays,
+	getEndOfDay,
+	getStartOfDay,
 	subtractDays,
 } from "@git-fit/shared";
