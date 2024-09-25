@@ -5,7 +5,7 @@ import {
 	Table,
 	TablePagination,
 } from "~/libs/components/components.js";
-import { DataStatus } from "~/libs/enums/enums.js";
+import { DataStatus, QueryParameterName } from "~/libs/enums/enums.js";
 import {
 	useAppDispatch,
 	useAppForm,
@@ -16,6 +16,8 @@ import {
 	useMemo,
 	useModal,
 	usePagination,
+	useSearchFilters,
+	useSearchParams,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import { actions as activityActions } from "~/modules/activity/activity.js";
@@ -241,15 +243,26 @@ const Contributors = (): JSX.Element => {
 		[dispatch, page, pageSize],
 	);
 
+	const [searchParameters] = useSearchParams();
+	const projectIdQueryParameter = searchParameters.get(
+		QueryParameterName.PROJECT_ID,
+	);
+
+	const { onSearch: onProjectSelect } = useSearchFilters({
+		queryParameterName: QueryParameterName.PROJECT_ID,
+	});
+
 	const { control, handleSubmit } = useAppForm<{
 		projectId: null | number;
 	}>({
 		defaultValues: {
-			projectId: null,
+			projectId: projectIdQueryParameter
+				? Number(projectIdQueryParameter)
+				: null,
 		},
 	});
 
-	const { projectId } = useFormWatch({ control });
+	const projectIdValue = useFormWatch({ control, name: "projectId" });
 
 	const handleFiltersFormSubmit = useCallback(
 		(event_?: React.BaseSyntheticEvent): void => {
@@ -266,7 +279,8 @@ const Contributors = (): JSX.Element => {
 
 	useEffect(() => {
 		handleFiltersFormSubmit();
-	}, [projectId, handleFiltersFormSubmit]);
+		onProjectSelect(projectIdValue ? String(projectIdValue) : "");
+	}, [projectIdValue, handleFiltersFormSubmit, onProjectSelect]);
 
 	const projectOptions = getProjectOptions(projects);
 
