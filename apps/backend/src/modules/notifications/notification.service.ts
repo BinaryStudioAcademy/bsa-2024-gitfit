@@ -80,10 +80,7 @@ class NotificationService implements Service {
 	}
 
 	public async getUnreadCount(userId: number): Promise<number> {
-		const unreadNotifications =
-			await this.notificationRepository.getUnreadCount(userId);
-
-		return unreadNotifications.items.length;
+		return await this.notificationRepository.getUnreadCount(userId);
 	}
 
 	public update(): ReturnType<Service["update"]> {

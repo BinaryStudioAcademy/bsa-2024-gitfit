@@ -93,21 +93,12 @@ class NotificationRepository implements Repository {
 		};
 	}
 
-	public async getUnreadCount(
-		userId: number,
-	): Promise<{ items: NotificationEntity[] }> {
-		const notifications = await this.notificationModel
+	public async getUnreadCount(userId: number): Promise<number> {
+		return await this.notificationModel
 			.query()
 			.where("receiverUserId", userId)
 			.where("status", NotificationStatus.UNREAD)
-			.orderBy("created_at", SortType.DESCENDING)
-			.execute();
-
-		return {
-			items: notifications.map((notification) =>
-				NotificationEntity.initialize(notification),
-			),
-		};
+			.resultSize();
 	}
 
 	public update(): ReturnType<Repository["update"]> {
