@@ -1,9 +1,11 @@
+import { type ComponentProps } from "react";
+
 import { IconButton, Popover } from "~/libs/components/components.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
-	buttonVariant?: "outlined" | "primary";
+	buttonVariant?: ComponentProps<typeof IconButton>["variant"];
 	children: React.ReactNode;
 	isOpened: boolean;
 	onClose: () => void;
