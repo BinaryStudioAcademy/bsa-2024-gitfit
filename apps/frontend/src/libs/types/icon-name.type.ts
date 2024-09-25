@@ -18,6 +18,8 @@ type IconName =
 	| "search"
 	| "split"
 	| "strikedEye"
+	| "sync"
+	| "syncOverdue"
 	| "trashBin"
 	| "warning";
 
