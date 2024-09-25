@@ -20,6 +20,7 @@ type Properties = {
 	onEditContributor: (contributorId: number) => void;
 	onMergeContributor: (contributorId: number) => void;
 	onSplitContributor: (contributorId: number) => void;
+	projectId: string;
 };
 
 const ContributorsList = ({
@@ -32,6 +33,7 @@ const ContributorsList = ({
 	onEditContributor,
 	onMergeContributor,
 	onSplitContributor,
+	projectId,
 }: Properties): JSX.Element => {
 	const hasContributors = contributors.length > EMPTY_LENGTH;
 	const isListShown = !isLoading && hasContributors;
@@ -88,6 +90,7 @@ const ContributorsList = ({
 								onEdit={handleEditContributor}
 								onMerge={handleMergeContributor}
 								onSplit={handleSplitContributor}
+								projectId={projectId}
 							/>
 						</li>
 					))}
