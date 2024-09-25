@@ -41,15 +41,25 @@ const Header = (): JSX.Element => {
 		({ notifications }) => notifications,
 	);
 
+	const hasUnreadNotifications = unreadNotifications.length !== EMPTY_LENGTH;
+
 	useEffect(() => {
 		void dispatch(notificationActions.loadAllUnread());
 	}, [dispatch]);
 
 	const markAllNotificationsAsRead = useCallback(() => {
-		for (const notification of unreadNotifications) {
-			void dispatch(notificationActions.markAsRead({ id: notification.id }));
+		if (hasUnreadNotifications) {
+			const unreadNotificationIds = unreadNotifications.map((notification) =>
+				Number(notification.id),
+			);
+
+			void dispatch(
+				notificationActions.markAsRead({
+					notificationIds: unreadNotificationIds,
+				}),
+			);
 		}
-	}, [dispatch, unreadNotifications]);
+	}, [dispatch, hasUnreadNotifications, unreadNotifications]);
 
 	const handleNotificationsClose = useCallback(() => {
 		onNotificationsClose();
@@ -61,7 +71,6 @@ const Header = (): JSX.Element => {
 	}
 
 	const { email, name } = authenticatedUser;
-	const hasUnreadNotifications = unreadNotifications.length !== EMPTY_LENGTH;
 
 	return (
 		<header className={styles["header"]}>

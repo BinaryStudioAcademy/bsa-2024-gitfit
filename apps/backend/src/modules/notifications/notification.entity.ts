@@ -1,10 +1,7 @@
-import { type Entity } from "~/libs/types/types.js";
+import { type Entity, type ValueOf } from "~/libs/types/types.js";
 
 import { NotificationStatus } from "./libs/enums/enums.js";
-import {
-	type NotificationGetAllItemResponseDto,
-	type NotificationStatusValue,
-} from "./libs/types/types.js";
+import { type NotificationGetAllItemResponseDto } from "./libs/types/types.js";
 
 class NotificationEntity implements Entity {
 	private createdAt: null | string;
@@ -15,7 +12,7 @@ class NotificationEntity implements Entity {
 
 	private receiverUserId!: number;
 
-	private status!: NotificationStatusValue;
+	private status!: ValueOf<typeof NotificationStatus>;
 
 	private constructor({
 		createdAt,
@@ -28,7 +25,7 @@ class NotificationEntity implements Entity {
 		id: null | number;
 		payload: string;
 		receiverUserId: number;
-		status: NotificationStatusValue;
+		status: ValueOf<typeof NotificationStatus>;
 	}) {
 		this.createdAt = createdAt;
 		this.id = id;
@@ -48,7 +45,7 @@ class NotificationEntity implements Entity {
 		id: null | number;
 		payload: string;
 		receiverUserId: number;
-		status: NotificationStatusValue;
+		status: ValueOf<typeof NotificationStatus>;
 	}): NotificationEntity {
 		return new NotificationEntity({
 			createdAt,

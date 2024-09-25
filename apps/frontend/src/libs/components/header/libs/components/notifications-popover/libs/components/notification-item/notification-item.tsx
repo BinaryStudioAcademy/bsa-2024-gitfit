@@ -1,12 +1,12 @@
 import { getValidClassNames } from "~/libs/helpers/helpers.js";
+import { type ValueOf } from "~/libs/types/types.js";
 
 import { NotificationStatus } from "../../enums/enums.js";
-import { type NotificationStatusValue } from "../../types/types.js";
 import styles from "./styles.module.css";
 
 type Properties = {
 	message: string;
-	status: NotificationStatusValue;
+	status: ValueOf<typeof NotificationStatus>;
 	timestamp: string;
 };
 

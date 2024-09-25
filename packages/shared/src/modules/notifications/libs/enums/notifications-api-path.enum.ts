@@ -1,7 +1,7 @@
 const NotificationsApiPath = {
-	$ID: "/:id",
+	READ: "/read",
 	ROOT: "/",
-	UNREAD: "/unread",
+	UNREAD: "/unread-count",
 } as const;
 
 export { NotificationsApiPath };

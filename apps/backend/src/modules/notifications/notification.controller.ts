@@ -9,9 +9,11 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 
 import { NotificationsApiPath } from "./libs/enums/enums.js";
 import {
+	type NotificationBulkMarkAsReadRequestDto,
 	type NotificationGetAllRequestDto,
 	type UserAuthResponseDto,
 } from "./libs/types/types.js";
+import { notificationMarkAsReadValidationSchema } from "./libs/validation-schemas/validation-schemas.js";
 import { type NotificationService } from "./notification.service.js";
 
 /**
@@ -58,7 +60,7 @@ class NotificationController extends BaseController {
 		});
 
 		this.addRoute({
-			handler: (options) => this.findAllUnread(options),
+			handler: (options) => this.getUnreadCount(options),
 			method: "GET",
 			path: NotificationsApiPath.UNREAD,
 		});
@@ -67,13 +69,12 @@ class NotificationController extends BaseController {
 			handler: (options) =>
 				this.markAsRead(
 					options as APIHandlerOptions<{
-						params: {
-							id: string;
-						};
+						body: NotificationBulkMarkAsReadRequestDto;
 					}>,
 				),
 			method: "PATCH",
-			path: NotificationsApiPath.$ID,
+			path: NotificationsApiPath.READ,
+			validation: { body: notificationMarkAsReadValidationSchema },
 		});
 	}
 
@@ -130,7 +131,7 @@ class NotificationController extends BaseController {
 
 	/**
 	 * @swagger
-	 * /notifications/unread:
+	 * /notifications/unread-count:
 	 *   get:
 	 *     description: Returns an array of unread notifications
 	 *     responses:
@@ -146,31 +147,34 @@ class NotificationController extends BaseController {
 	 *                   items:
 	 *                     $ref: "#/components/schemas/Notification"
 	 */
-	private async findAllUnread(
+	private async getUnreadCount(
 		options: APIHandlerOptions,
 	): Promise<APIHandlerResponse> {
 		const { user } = options;
 
-		const typedUser = user as { id: number };
-
 		return {
-			payload: await this.notificationService.findAllUnread(typedUser.id),
+			payload: await this.notificationService.getUnreadCount(
+				(user as UserAuthResponseDto).id,
+			),
 			status: HTTPCode.OK,
 		};
 	}
 
 	/**
 	 * @swagger
-	 * /notifications/{id}:
+	 * /notifications/read:
 	 *   patch:
 	 *     description: Mark notification as read
-	 *     parameters:
-	 *        - in: path
-	 *          name: id
-	 *          description: ID of the notification to read
-	 *          required: true
-	 *          schema:
-	 *            type: string
+	 *     requestBody:
+	 *        description: Notification ids
+	 *        content:
+	 *          application/json:
+	 *             type: object
+	 *             properties:
+	 *               notificationIds:
+	 *                 type: array
+	 *                 items:
+	 *                   type: number
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
@@ -179,13 +183,11 @@ class NotificationController extends BaseController {
 	 */
 	private async markAsRead(
 		options: APIHandlerOptions<{
-			params: { id: string };
+			body: NotificationBulkMarkAsReadRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const notificationId = Number(options.params.id);
-
 		return {
-			payload: await this.notificationService.markAsRead(notificationId),
+			payload: await this.notificationService.bulkMarkAsRead(options.body),
 			status: HTTPCode.OK,
 		};
 	}

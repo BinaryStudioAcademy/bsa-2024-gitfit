@@ -5,7 +5,10 @@ import {
 	type PaginationQueryParameters,
 } from "~/libs/types/types.js";
 
-import { type NotificationGetAllResponseDto } from "../libs/types/types.js";
+import {
+	type NotificationBulkMarkAsReadRequestDto,
+	type NotificationGetAllResponseDto,
+} from "../libs/types/types.js";
 import { name as sliceName } from "./notification.slice.js";
 
 const loadAll = createAsyncThunk<
@@ -28,13 +31,14 @@ const loadAllUnread = createAsyncThunk<
 	return await notificationApi.getAllUnread();
 });
 
-const markAsRead = createAsyncThunk<boolean, { id: number }, AsyncThunkConfig>(
-	`${sliceName}/mark-as-read`,
-	async ({ id }, { extra }) => {
-		const { notificationApi } = extra;
+const markAsRead = createAsyncThunk<
+	boolean,
+	NotificationBulkMarkAsReadRequestDto,
+	AsyncThunkConfig
+>(`${sliceName}/mark-as-read`, async (payload, { extra }) => {
+	const { notificationApi } = extra;
 
-		return await notificationApi.markAsRead(id);
-	},
-);
+	return await notificationApi.markAsRead(payload);
+});
 
 export { loadAll, loadAllUnread, markAsRead };

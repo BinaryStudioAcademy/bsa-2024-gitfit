@@ -5,7 +5,10 @@ import {
 } from "~/libs/types/types.js";
 
 import { NotificationStatus } from "./libs/enums/enums.js";
-import { type NotificationGetAllRequestDto } from "./libs/types/types.js";
+import {
+	type NotificationBulkMarkAsReadRequestDto,
+	type NotificationGetAllRequestDto,
+} from "./libs/types/types.js";
 import { NotificationEntity } from "./notification.entity.js";
 import { type NotificationModel } from "./notification.model.js";
 
@@ -34,6 +37,18 @@ class NotificationRepository implements Repository {
 		return createdNotifications.map((notificationData) =>
 			NotificationEntity.initialize(notificationData),
 		);
+	}
+
+	public async bulkMarkAsRead({
+		notificationIds,
+	}: NotificationBulkMarkAsReadRequestDto): Promise<number> {
+		return await this.notificationModel
+			.query()
+			.whereIn("id", notificationIds)
+			.patch({
+				status: NotificationStatus.READ,
+			})
+			.execute();
 	}
 
 	public async create(entity: NotificationEntity): Promise<NotificationEntity> {
@@ -83,7 +98,7 @@ class NotificationRepository implements Repository {
 		};
 	}
 
-	public async findAllUnread(
+	public async getUnreadCount(
 		userId: number,
 	): Promise<{ items: NotificationEntity[] }> {
 		const notifications = await this.notificationModel
@@ -98,17 +113,6 @@ class NotificationRepository implements Repository {
 				NotificationEntity.initialize(notification),
 			),
 		};
-	}
-
-	public async markAsRead(id: number): Promise<boolean> {
-		const readNotification = await this.notificationModel
-			.query()
-			.patchAndFetchById(id, {
-				status: NotificationStatus.READ,
-			})
-			.execute();
-
-		return Boolean(readNotification);
 	}
 
 	public update(): ReturnType<Repository["update"]> {

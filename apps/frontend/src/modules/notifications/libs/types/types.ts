@@ -1,4 +1,5 @@
 export {
+	type NotificationBulkMarkAsReadRequestDto,
 	type NotificationGetAllItemResponseDto,
 	type NotificationGetAllRequestDto,
 	type NotificationGetAllResponseDto,

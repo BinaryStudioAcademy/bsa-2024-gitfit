@@ -4,16 +4,17 @@ import {
 	AbstractModel,
 	DatabaseTableName,
 } from "~/libs/modules/database/database.js";
+import { type ValueOf } from "~/libs/types/types.js";
 
 import { UserModel } from "../users/users.js";
-import { type NotificationStatusValue } from "./libs/types/types.js";
+import { type NotificationStatus } from "./libs/enums/enums.js";
 
 class NotificationModel extends AbstractModel {
 	public payload!: string;
 
 	public receiverUserId!: number;
 
-	public status!: NotificationStatusValue;
+	public status!: ValueOf<typeof NotificationStatus>;
 
 	public static override get relationMappings(): RelationMappings {
 		return {

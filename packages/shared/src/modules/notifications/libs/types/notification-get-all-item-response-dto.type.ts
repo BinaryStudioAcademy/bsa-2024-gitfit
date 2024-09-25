@@ -1,10 +1,11 @@
-import { type NotificationStatusValue } from "./notification-status-value.type.js";
+import { type ValueOf } from "../../../../libs/types/value-of.type.js";
+import { type NotificationStatus } from "../enums/enums.js";
 
 type NotificationGetAllItemResponseDto = {
 	createdAt: string;
 	id: number;
 	payload: string;
-	status: NotificationStatusValue;
+	status: ValueOf<typeof NotificationStatus>;
 };
 
 export { type NotificationGetAllItemResponseDto };

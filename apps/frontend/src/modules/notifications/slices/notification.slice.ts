@@ -61,16 +61,16 @@ const { actions, name, reducer } = createSlice({
 			state.markAsReadStatus = DataStatus.PENDING;
 		});
 		builder.addCase(markAsRead.fulfilled, (state, action) => {
-			const { id } = action.meta.arg;
+			const { notificationIds } = action.meta.arg;
 
 			state.notifications = state.notifications.map((notification) =>
-				notification.id === id
+				notificationIds.includes(notification.id)
 					? { ...notification, isRead: true }
 					: notification,
 			);
 
 			state.unreadNotifications = state.unreadNotifications.filter(
-				(notification) => notification.id !== id,
+				(notification) => !notificationIds.includes(notification.id),
 			);
 
 			state.markAsReadStatus = DataStatus.FULFILLED;

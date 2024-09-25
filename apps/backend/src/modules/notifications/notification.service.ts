@@ -6,6 +6,7 @@ import { NotificationError } from "./libs/exceptions/exceptions.js";
 import {
 	type NotificationBulkCreateRequestDto,
 	type NotificationBulkCreateResponseDto,
+	type NotificationBulkMarkAsReadRequestDto,
 	type NotificationCreateRequestDto,
 	type NotificationGetAllItemResponseDto,
 	type NotificationGetAllRequestDto,
@@ -39,6 +40,23 @@ class NotificationService implements Service {
 		return {
 			items: createdItems.map((item) => item.toObject()),
 		};
+	}
+
+	public async bulkMarkAsRead({
+		notificationIds,
+	}: NotificationBulkMarkAsReadRequestDto): Promise<boolean> {
+		const updatedCount = await this.notificationRepository.bulkMarkAsRead({
+			notificationIds,
+		});
+
+		if (!updatedCount || updatedCount !== notificationIds.length) {
+			throw new NotificationError({
+				message: ExceptionMessage.NOTIFICATION_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		return Boolean(updatedCount);
 	}
 
 	public async create(
@@ -75,30 +93,17 @@ class NotificationService implements Service {
 		};
 	}
 
-	public async findAllUnread(
+	public async getUnreadCount(
 		userId: number,
 	): Promise<Pick<NotificationGetAllResponseDto, "items">> {
 		const unreadNotifications =
-			await this.notificationRepository.findAllUnread(userId);
+			await this.notificationRepository.getUnreadCount(userId);
 
 		return {
 			items: unreadNotifications.items.map((notification) =>
 				notification.toObject(),
 			),
 		};
-	}
-
-	public async markAsRead(id: number): Promise<boolean> {
-		const isRead = await this.notificationRepository.markAsRead(id);
-
-		if (!isRead) {
-			throw new NotificationError({
-				message: ExceptionMessage.NOTIFICATION_NOT_FOUND,
-				status: HTTPCode.NOT_FOUND,
-			});
-		}
-
-		return isRead;
 	}
 
 	public update(): ReturnType<Service["update"]> {
