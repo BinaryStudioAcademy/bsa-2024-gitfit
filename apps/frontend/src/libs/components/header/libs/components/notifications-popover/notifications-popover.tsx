@@ -59,7 +59,8 @@ const NotificationsPopover = ({
 	}, [isOpened, onPageReset]);
 
 	const hasNotifications = notifications.length !== EMPTY_LENGTH;
-	const isLoadingMore = hasNextPage && dataStatus === DataStatus.PENDING;
+	const isLoadingMore = dataStatus === DataStatus.PENDING;
+	const isPlaceholderShown = !hasNotifications && !isLoadingMore;
 
 	return (
 		<Popover
@@ -67,15 +68,16 @@ const NotificationsPopover = ({
 				<div className={styles["notifications-popover"]}>
 					<h3 className={styles["notifications-title"]}>Notifications</h3>
 					<div className={styles["notifications"]}>
-						{hasNotifications ? (
+						{hasNotifications &&
 							notifications.map((notification) => (
 								<NotificationItem
 									key={notification.id}
 									message={notification.payload}
 									timestamp={formatRelativeTime(notification.createdAt)}
 								/>
-							))
-						) : (
+							))}
+
+						{isPlaceholderShown && (
 							<p className={styles["empty-placeholder"]}>
 								There is nothing yet.
 							</p>
