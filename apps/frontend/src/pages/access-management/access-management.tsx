@@ -14,7 +14,7 @@ import {
 	useEffect,
 	useModal,
 	usePagination,
-	useSearch,
+	useSearchFilters,
 	useState,
 } from "~/libs/hooks/hooks.js";
 import {
@@ -52,7 +52,7 @@ const AccessManagement = (): JSX.Element => {
 		groupUpdateStatus,
 	} = useAppSelector(({ groups }) => groups);
 
-	const { onSearch: onUserSearch, search: userSearch } = useSearch();
+	const { onSearch: onUserSearch, search: userSearch } = useSearchFilters();
 	const { control, errors } = useAppForm({
 		defaultValues: { userSearch },
 	});

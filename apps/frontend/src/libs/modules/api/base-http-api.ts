@@ -1,5 +1,8 @@
 import { ServerErrorType } from "~/libs/enums/enums.js";
-import { configureString } from "~/libs/helpers/helpers.js";
+import {
+	configureQueryString,
+	configureString,
+} from "~/libs/helpers/helpers.js";
 import {
 	type HTTP,
 	HTTPCode,
@@ -82,19 +85,6 @@ class BaseHTTPApi implements HTTPApi {
 		return headers;
 	}
 
-	private getUrl(
-		path: string,
-		query?: ConstructorParameters<typeof URLSearchParams>[number],
-	): string {
-		if (!query) {
-			return path;
-		}
-
-		const queryParameters = new URLSearchParams(query);
-
-		return `${path}?${queryParameters.toString()}`;
-	}
-
 	private async handleError(response: Response): Promise<never> {
 		let parsedException: ServerErrorResponse;
 
@@ -143,7 +133,7 @@ class BaseHTTPApi implements HTTPApi {
 			hasAuth,
 		});
 
-		const url = this.getUrl(path, query);
+		const url = configureQueryString(path, query);
 
 		const response = await this.http.load(url, {
 			headers,

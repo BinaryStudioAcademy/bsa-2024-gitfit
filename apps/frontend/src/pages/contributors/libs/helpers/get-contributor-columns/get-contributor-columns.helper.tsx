@@ -46,7 +46,7 @@ const getContributorColumns = (actions: {
 			),
 		header: "Do Not Track",
 		id: "hiddenAt",
-		size: 130,
+		size: 140,
 	},
 
 	{
