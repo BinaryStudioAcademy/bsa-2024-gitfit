@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.31.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.31.0...shared-v1.31.1) (2024-09-25)
+
+
+### Bug Fixes
+
+* inconsistent data display on analytics table due to date format issue gf-510 ([#521](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/521)) ([9882708](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/988270876568673d43945e27ae3c50daf509a435))
+
 ## [1.31.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.30.0...shared-v1.31.0) (2024-09-24)
 
 
