@@ -126,7 +126,7 @@ class ContributorRepository implements Repository {
 			.whereNull("contributors.hiddenAt")
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails")
-			.orderBy("last_activity_date", "desc");
+			.orderBy("last_activity_date", SortType.DESCENDING);
 
 		if (!hasHidden) {
 			query.whereNull("contributors.hiddenAt");
