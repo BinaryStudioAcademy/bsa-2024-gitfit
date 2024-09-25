@@ -45,7 +45,7 @@ const SyncTime = ({
 			{hasSyncTime && (
 				<div
 					className={
-						styles[isOverdue ? "sync-time-container" : "sync-time-overdue"]
+						styles[isOverdue ? "sync-time-overdue" : "sync-time-container"]
 					}
 				>
 					<p>
