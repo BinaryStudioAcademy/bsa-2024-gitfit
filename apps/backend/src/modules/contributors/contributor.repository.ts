@@ -57,11 +57,11 @@ class ContributorRepository implements Repository {
 	}
 
 	public async findAll({
-		hasHidden = true,
+		hasHidden = false,
 		page,
 		pageSize,
 		projectId,
-	}: { hasHidden?: boolean } & ContributorGetAllRequestDto): Promise<
+	}: ContributorGetAllRequestDto): Promise<
 		PaginationResponseDto<ContributorEntity>
 	> {
 		const query = this.contributorModel

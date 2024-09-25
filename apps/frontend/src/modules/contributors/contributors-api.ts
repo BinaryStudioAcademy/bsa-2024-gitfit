@@ -28,9 +28,10 @@ class ContributorApi extends BaseHTTPApi {
 	public async getAll(
 		query: ContributorGetAllRequestDto,
 	): Promise<ContributorGetAllResponseDto> {
-		const { page, pageSize, projectId } = query;
+		const { hasHidden, page, pageSize, projectId } = query;
 
 		const queryToSend = {
+			...(hasHidden ? { hasHidden: String(hasHidden) } : {}),
 			...(page ? { page: String(page) } : {}),
 			...(pageSize ? { pageSize: String(pageSize) } : {}),
 			...(projectId ? { projectId: String(projectId) } : {}),

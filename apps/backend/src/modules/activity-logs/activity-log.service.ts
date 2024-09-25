@@ -162,7 +162,6 @@ class ActivityLogService implements Service {
 		);
 
 		const allContributors = await this.contributorService.findAll({
-			hasHidden: false,
 			projectId: projectId ? Number(projectId) : undefined,
 		});
 
