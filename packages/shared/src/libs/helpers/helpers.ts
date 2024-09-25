@@ -8,5 +8,6 @@ export { getDateRange } from "./get-date-range/get-date-range.helper.js";
 export { getDifferenceInDays } from "./get-difference-in-days/get-difference-in-days.helper.js";
 export { getRelativeDate } from "./get-relative-date/get-relative-date.helper.js";
 export { getStartOfDay } from "./get-start-of-day/get-start-of-day.helper.js";
+export { getSyncTime } from "./get-sync-time/get-sync-time.helper.js";
 export { initDebounce } from "./init-debounce/init-debounce.helper.js";
 export { subtractDays } from "./subtract-days/subtract-days.helper.js";

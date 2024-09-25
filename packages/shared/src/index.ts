@@ -24,6 +24,7 @@ export {
 	getDifferenceInDays,
 	getRelativeDate,
 	getStartOfDay,
+	getSyncTime,
 	initDebounce,
 	subtractDays,
 } from "./libs/helpers/helpers.js";
