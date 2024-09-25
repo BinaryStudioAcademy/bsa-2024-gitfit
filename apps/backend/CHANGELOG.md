@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.36.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.35.0...backend-v1.36.0) (2024-09-25)
+
+
+### Features
+
+* add analytics last sync time to project details page gf-502 ([#526](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/526)) ([7f3f5c2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7f3f5c21a6312fb0a3ad1e04db1c2e17ffd47cc2))
+
 ## [1.35.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.34.0...backend-v1.35.0) (2024-09-25)
 
 

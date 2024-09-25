@@ -4,6 +4,10 @@ import {
 } from "~/libs/modules/database/database.js";
 
 class ProjectModel extends AbstractModel {
+	public analyticsLastSyncedAt!: string;
+
+	public analyticsLastSyncedByUser!: string;
+
 	public description!: string;
 
 	public lastActivityDate!: string;

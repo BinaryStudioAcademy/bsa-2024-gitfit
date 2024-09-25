@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.53.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.52.0...frontend-v1.53.0) (2024-09-25)
+
+
+### Features
+
+* add analytics last sync time to project details page gf-502 ([#526](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/526)) ([7f3f5c2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7f3f5c21a6312fb0a3ad1e04db1c2e17ffd47cc2))
+* redirect to analytics page on contributor item click gf-349 ([#512](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/512)) ([9861355](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9861355e5ea555866cb5cf3fa909115d4a21beac))
+
+
+### Bug Fixes
+
+* fixed inconsistent analytics page alignment gf-530 ([#535](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/535)) ([8ee08ba](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8ee08ba43e0e559706025ceec16fa43457d34978))
+
 ## [1.52.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.51.0...frontend-v1.52.0) (2024-09-25)
 
 
