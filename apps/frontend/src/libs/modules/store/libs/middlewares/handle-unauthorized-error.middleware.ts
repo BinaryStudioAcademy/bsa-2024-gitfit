@@ -5,7 +5,6 @@ import {
 	type AppDispatch,
 	type RootState,
 } from "~/libs/modules/store/store.js";
-import { toastNotifier } from "~/libs/modules/toast-notifier/toast-notifier.js";
 import { actions as authActions } from "~/modules/auth/auth.js";
 
 const handleUnauthorizedError = (): Middleware<
@@ -20,7 +19,7 @@ const handleUnauthorizedError = (): Middleware<
 				action.error.name === ExceptionName.UNAUTHORIZED
 			) {
 				if (action.type === authActions.signIn.rejected.type) {
-					toastNotifier.showError("Invalid credentials.");
+					return next(action);
 				} else {
 					void dispatch(authActions.logout());
 				}
