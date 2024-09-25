@@ -26,6 +26,7 @@ import {
 	ANALYTICS_DATE_MAX_RANGE,
 	ANALYTICS_DEFAULT_DATE_RANGE,
 	ANALYTICS_LOOKBACK_DAYS_COUNT,
+	EMPTY_LENGTH,
 } from "./libs/constants/constants.js";
 import { getProjectOptions } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
@@ -126,6 +127,11 @@ const Analytics = (): JSX.Element => {
 	const isLoading =
 		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
+	const hasSearch = search.length !== EMPTY_LENGTH;
+	const emptyPlaceholderMessage = hasSearch
+		? "No contributors matching your search criteria."
+		: "There is nothing yet.";
+
 	return (
 		<PageLayout>
 			<h1 className={styles["title"]}>Analytics</h1>
@@ -162,6 +168,7 @@ const Analytics = (): JSX.Element => {
 				<AnalyticsTable
 					activityLogs={activityLogs}
 					dateRange={dateRangeValue}
+					emptyPlaceholder={emptyPlaceholderMessage}
 					isLoading={isLoading}
 				/>
 			</section>
