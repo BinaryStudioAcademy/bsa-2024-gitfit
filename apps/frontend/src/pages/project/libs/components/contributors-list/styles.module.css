@@ -28,3 +28,14 @@
 	line-height: 150%;
 	color: var(--color-text-secondary);
 }
+
+.contributors-header-wrapper {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+.button-wrapper {
+	min-width: 130px;
+	margin-left: auto;
+}

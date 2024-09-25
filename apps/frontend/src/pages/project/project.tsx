@@ -6,6 +6,7 @@ import {
 	Navigate,
 	PageLayout,
 } from "~/libs/components/components.js";
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { AppRoute, DataStatus, PermissionKey } from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
@@ -250,6 +251,8 @@ const Project = (): JSX.Element => {
 	const hasMergeContributorPermission = hasManageAllProjectsPermission;
 	const hasSplitContributorPermission = hasManageAllProjectsPermission;
 
+	const hasContributors = projectContributors.length > EMPTY_LENGTH;
+
 	if (isRejected) {
 		return <NotFound />;
 	}
@@ -279,7 +282,6 @@ const Project = (): JSX.Element => {
 					<div className={styles["project-layout"]}>
 						<div className={styles["project-header"]}>
 							<h1 className={styles["title"]}>{project.name}</h1>
-
 							<ProjectDetailsMenu
 								onDelete={handleDeleteProject}
 								onEdit={handleEditProject}
@@ -297,7 +299,7 @@ const Project = (): JSX.Element => {
 							</p>
 						</div>
 
-						{hasSetupAnalyticsPermission && (
+						{hasSetupAnalyticsPermission && !hasContributors && (
 							<div>
 								<Button
 									label="Setup Analytics"
@@ -310,10 +312,15 @@ const Project = (): JSX.Element => {
 							<ContributorsList
 								activityLogs={projectContributorsActivity}
 								contributors={projectContributors}
+								hasContributors={hasContributors}
 								hasEditPermission={hasEditContributorPermission}
 								hasMergePermission={hasMergeContributorPermission}
+								hasSetupAnalyticsPermission={hasSetupAnalyticsPermission}
 								hasSplitPermission={hasSplitContributorPermission}
 								isLoading={isContributorsDataLoading}
+								lastActivityDate={project.lastActivityDate}
+								lastActivityUserName={project.lastActivityUserName}
+								onClickSetupAgain={onSetupAnalyticsModalOpen}
 								onEditContributor={handleEditContributor}
 								onMergeContributor={handleMergeContributor}
 								onSplitContributor={handleSplitContributor}
