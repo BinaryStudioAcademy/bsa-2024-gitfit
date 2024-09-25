@@ -56,12 +56,13 @@ class ContributorRepository implements Repository {
 	}
 
 	public async findAll({
+		hasHidden = true,
 		page,
 		pageSize,
-	}: PaginationQueryParameters): Promise<
+	}: { hasHidden?: boolean } & PaginationQueryParameters): Promise<
 		PaginationResponseDto<ContributorEntity>
 	> {
-		const { results, total } = await this.contributorModel
+		const query = this.contributorModel
 			.query()
 			.orderBy("createdAt", SortType.DESCENDING)
 			.page(page, pageSize)
@@ -77,6 +78,12 @@ class ContributorRepository implements Repository {
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
 
+		if (!hasHidden) {
+			query.whereNull("contributors.hiddenAt");
+		}
+
+		const { results, total } = await query;
+
 		return {
 			items: results.map((contributor) => {
 				return ContributorEntity.initialize(contributor);
@@ -85,10 +92,14 @@ class ContributorRepository implements Repository {
 		};
 	}
 
-	public async findAllByProjectId(
-		projectId: number,
-	): Promise<{ items: ContributorEntity[] }> {
-		const contributorsWithProjectsAndEmails = await this.contributorModel
+	public async findAllByProjectId({
+		hasHidden = true,
+		projectId,
+	}: {
+		hasHidden?: boolean;
+		projectId: number;
+	}): Promise<{ items: ContributorEntity[] }> {
+		const query = this.contributorModel
 			.query()
 			.select("contributors.*")
 			.select(
@@ -105,8 +116,15 @@ class ContributorRepository implements Repository {
 			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
 			.leftJoin("projects", "activity_logs.project_id", "projects.id")
 			.where("projects.id", projectId)
+			.whereNull("contributors.hiddenAt")
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
+
+		if (!hasHidden) {
+			query.whereNull("contributors.hiddenAt");
+		}
+
+		const contributorsWithProjectsAndEmails = await query;
 
 		return {
 			items: contributorsWithProjectsAndEmails.map((contributor) => {
@@ -115,10 +133,14 @@ class ContributorRepository implements Repository {
 		};
 	}
 
-	public async findAllWithoutPagination(): Promise<{
+	public async findAllWithoutPagination({
+		hasHidden = true,
+	}: {
+		hasHidden?: boolean;
+	}): Promise<{
 		items: ContributorEntity[];
 	}> {
-		const results = await this.contributorModel
+		const query = this.contributorModel
 			.query()
 			.select("contributors.*")
 			.select(
@@ -131,6 +153,12 @@ class ContributorRepository implements Repository {
 			.leftJoin("projects", "activity_logs.project_id", "projects.id")
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
+
+		if (!hasHidden) {
+			query.whereNull("contributors.hiddenAt");
+		}
+
+		const results = await query;
 
 		return {
 			items: results.map((contributor) => {
@@ -208,9 +236,13 @@ class ContributorRepository implements Repository {
 		contributorId: number,
 		data: ContributorPatchRequestDto,
 	): Promise<ContributorEntity | null> {
+		const hiddenAt = data.isHidden ? new Date().toISOString() : null;
 		const contributor = await this.contributorModel
 			.query()
-			.patchAndFetchById(contributorId, { name: data.name });
+			.patchAndFetchById(contributorId, {
+				hiddenAt,
+				name: data.name,
+			});
 
 		return ContributorEntity.initialize(contributor);
 	}

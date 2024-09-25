@@ -3,6 +3,7 @@ type ContributorGetAllItemResponseDto = {
 		email: string;
 		id: number;
 	}[];
+	hiddenAt: null | string;
 	id: number;
 	lastActivityDate: null | string;
 	name: string;

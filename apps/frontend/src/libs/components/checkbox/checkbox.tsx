@@ -12,12 +12,14 @@ import styles from "./styles.module.css";
 type Properties<T extends FieldValues> = {
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
+	id?: string;
 	name: FieldPath<T>;
 };
 
 const Checkbox = <T extends FieldValues>({
 	control,
 	errors,
+	id,
 	name,
 }: Properties<T>): JSX.Element => {
 	const { field } = useFormController({ control, name });
@@ -30,6 +32,7 @@ const Checkbox = <T extends FieldValues>({
 			<input
 				className={styles["checkbox"]}
 				defaultChecked={field.value}
+				id={id}
 				name={name}
 				onChange={field.onChange}
 				type="checkbox"

@@ -162,8 +162,11 @@ class ActivityLogService implements Service {
 		);
 
 		const allContributors = await (projectId
-			? this.contributorService.findAllByProjectId(Number(projectId))
-			: this.contributorService.findAllWithoutPagination());
+			? this.contributorService.findAllByProjectId({
+					hasHidden: false,
+					projectId: Number(projectId),
+				})
+			: this.contributorService.findAllWithoutPagination({ hasHidden: false }));
 
 		const dateRange = getDateRange(formattedStartDate, formattedEndDate);
 
@@ -199,8 +202,11 @@ class ActivityLogService implements Service {
 
 				return {
 					commitsNumber: commitsArray,
-					contributorId: contributorId ?? "",
-					contributorName: contributorName ?? "",
+					contributor: {
+						hiddenAt: null,
+						id: contributorId ?? "",
+						name: contributorName ?? "",
+					},
 				};
 			}),
 		};
