@@ -9,22 +9,27 @@ class ProjectEntity implements Entity {
 
 	private lastActivityDate!: null | string;
 
+	private lastActivityUserName: null | string;
+
 	private name!: string;
 
 	private constructor({
 		description,
 		id,
 		lastActivityDate,
+		lastActivityUserName,
 		name,
 	}: {
 		description: string;
 		id: null | number;
 		lastActivityDate: null | string;
+		lastActivityUserName: null | string;
 		name: string;
 	}) {
 		this.id = id;
 		this.description = description;
 		this.lastActivityDate = lastActivityDate;
+		this.lastActivityUserName = lastActivityUserName;
 		this.name = name;
 	}
 
@@ -32,17 +37,20 @@ class ProjectEntity implements Entity {
 		description,
 		id,
 		lastActivityDate,
+		lastActivityUserName,
 		name,
 	}: {
 		description: string;
 		id: number;
 		lastActivityDate: string;
+		lastActivityUserName: string;
 		name: string;
 	}): ProjectEntity {
 		return new ProjectEntity({
 			description,
 			id,
 			lastActivityDate,
+			lastActivityUserName,
 			name,
 		});
 	}
@@ -58,6 +66,7 @@ class ProjectEntity implements Entity {
 			description,
 			id: null,
 			lastActivityDate: null,
+			lastActivityUserName: null,
 			name,
 		});
 	}
@@ -74,12 +83,13 @@ class ProjectEntity implements Entity {
 
 	public toObject(): Pick<
 		ProjectGetByIdResponseDto,
-		"description" | "id" | "lastActivityDate" | "name"
+		"description" | "id" | "lastActivityDate" | "lastActivityUserName" | "name"
 	> {
 		return {
 			description: this.description,
 			id: this.id as number,
 			lastActivityDate: this.lastActivityDate,
+			lastActivityUserName: this.lastActivityUserName,
 			name: this.name,
 		};
 	}

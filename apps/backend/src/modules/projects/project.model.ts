@@ -8,6 +8,8 @@ class ProjectModel extends AbstractModel {
 
 	public lastActivityDate!: string;
 
+	public lastActivityUserName!: string;
+
 	public name!: string;
 
 	public static override get tableName(): string {
