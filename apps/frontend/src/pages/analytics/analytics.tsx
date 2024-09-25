@@ -18,7 +18,10 @@ import {
 } from "~/libs/hooks/hooks.js";
 import { actions as activityLogActions } from "~/modules/activity/activity.js";
 
-import { AnalyticsTable } from "./libs/components/components.js";
+import {
+	AnalyticsContributorsSearch,
+	AnalyticsTable,
+} from "./libs/components/components.js";
 import {
 	ANALYTICS_DATE_MAX_RANGE,
 	ANALYTICS_DEFAULT_DATE_RANGE,
@@ -34,6 +37,8 @@ const Analytics = (): JSX.Element => {
 		todayDate,
 		ANALYTICS_LOOKBACK_DAYS_COUNT,
 	);
+
+	const { onSearch, search } = useSearchFilters();
 
 	const { activityLogs, dataStatus, projects } = useAppSelector(
 		({ activityLogs }) => activityLogs,
@@ -52,15 +57,23 @@ const Analytics = (): JSX.Element => {
 		queryParameterName: QueryParameterName.PROJECT_ID,
 	});
 
-	const { control, handleSubmit, isDirty } = useAppForm({
+	const { control, errors, handleSubmit, isDirty } = useAppForm({
 		defaultValues: {
 			dateRange: [
 				subtractDays(todayDate, ANALYTICS_DEFAULT_DATE_RANGE),
 				todayDate,
 			] as [Date, Date],
 			project: projectIdQueryParameter ? Number(projectIdQueryParameter) : null,
+			search,
 		},
 	});
+
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			onSearch(value);
+		},
+		[onSearch],
+	);
 
 	const dateRangeValue = useFormWatch({ control, name: "dateRange" });
 	const projectValue = useFormWatch({ control, name: "project" });
@@ -79,13 +92,14 @@ const Analytics = (): JSX.Element => {
 
 			void dispatch(
 				activityLogActions.loadAll({
+					contributorName: search,
 					endDate: formattedEndDate,
 					projectId: projectId?.toString() ?? undefined,
 					startDate: formattedStartDate,
 				}),
 			);
 		},
-		[dispatch],
+		[dispatch, search],
 	);
 
 	useEffect(() => {
@@ -117,6 +131,12 @@ const Analytics = (): JSX.Element => {
 			<h1 className={styles["title"]}>Analytics</h1>
 			<section>
 				<form className={styles["filters-form"]} onSubmit={handleFormSubmit}>
+					<AnalyticsContributorsSearch
+						control={control}
+						errors={errors}
+						name="search"
+						onChange={handleSearchChange}
+					/>
 					<div className={styles["select-wrapper"]}>
 						<Select
 							control={control}

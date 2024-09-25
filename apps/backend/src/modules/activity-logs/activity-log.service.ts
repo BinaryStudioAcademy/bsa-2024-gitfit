@@ -137,6 +137,7 @@ class ActivityLogService implements Service {
 	}
 
 	public async findAll({
+		contributorName,
 		endDate,
 		projectId,
 		startDate,
@@ -152,6 +153,7 @@ class ActivityLogService implements Service {
 		);
 
 		const activityLogsEntities = await this.activityLogRepository.findAll({
+			contributorName,
 			endDate: formattedEndDate,
 			projectId,
 			startDate: formattedStartDate,
@@ -163,10 +165,14 @@ class ActivityLogService implements Service {
 
 		const allContributors = await (projectId
 			? this.contributorService.findAllByProjectId({
+					contributorName: contributorName ?? "",
 					hasHidden: false,
 					projectId: Number(projectId),
 				})
-			: this.contributorService.findAllWithoutPagination({ hasHidden: false }));
+			: this.contributorService.findAllWithoutPagination({
+					contributorName: contributorName ?? "",
+					hasHidden: false,
+				}));
 
 		const dateRange = getDateRange(formattedStartDate, formattedEndDate);
 
@@ -204,8 +210,8 @@ class ActivityLogService implements Service {
 					commitsNumber: commitsArray,
 					contributor: {
 						hiddenAt: null,
-						id: contributorId ?? "",
-						name: contributorName ?? "",
+						id: contributorId as string,
+						name: contributorName as string,
 					},
 				};
 			}),
