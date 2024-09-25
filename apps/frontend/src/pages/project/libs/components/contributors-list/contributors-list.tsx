@@ -12,6 +12,8 @@ import styles from "./styles.module.css";
 
 type Properties = {
 	activityLogs: ActivityLogGetAllItemAnalyticsResponseDto[];
+	analyticsLastSyncedAt: null | string;
+	analyticsLastSyncedByUser: null | string;
 	contributors: ContributorGetAllItemResponseDto[];
 	hasContributors: boolean;
 	hasEditPermission: boolean;
@@ -19,8 +21,6 @@ type Properties = {
 	hasSetupAnalyticsPermission: boolean;
 	hasSplitPermission: boolean;
 	isLoading: boolean;
-	lastActivityDate: null | string;
-	lastActivityUserName: null | string;
 	onClickSetupAgain: () => void;
 	onEditContributor: (contributorId: number) => void;
 	onMergeContributor: (contributorId: number) => void;
@@ -29,6 +29,8 @@ type Properties = {
 
 const ContributorsList = ({
 	activityLogs,
+	analyticsLastSyncedAt,
+	analyticsLastSyncedByUser,
 	contributors,
 	hasContributors,
 	hasEditPermission,
@@ -36,8 +38,6 @@ const ContributorsList = ({
 	hasSetupAnalyticsPermission,
 	hasSplitPermission,
 	isLoading,
-	lastActivityDate,
-	lastActivityUserName,
 	onClickSetupAgain,
 	onEditContributor,
 	onMergeContributor,
@@ -81,7 +81,7 @@ const ContributorsList = ({
 	}, [activityLogs]);
 
 	const hasSyncTime =
-		lastActivityDate !== null && lastActivityUserName !== null;
+		analyticsLastSyncedAt !== null && analyticsLastSyncedByUser !== null;
 
 	return (
 		<div className={styles["container"]}>
@@ -89,8 +89,8 @@ const ContributorsList = ({
 				<h2 className={styles["title"]}>Contributors</h2>
 				{hasSyncTime && (
 					<SyncTime
-						lastActivityDate={lastActivityDate}
-						lastActivityUserName={lastActivityUserName}
+						analyticsLastSyncedAt={analyticsLastSyncedAt}
+						analyticsLastSyncedByUser={analyticsLastSyncedByUser}
 					/>
 				)}
 

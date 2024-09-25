@@ -46,14 +46,17 @@ class ProjectRepository implements Repository {
 	public async find(id: number): Promise<null | ProjectEntity> {
 		const item = await this.projectModel
 			.query()
-			.select("projects.*", { lastActivityUserName: "users.name" })
+			.select(
+				"projects.*",
+				"activity_logs.date as analyticsLastSyncedAt",
+				"users.name as analyticsLastSyncedByUser",
+			)
 			.from("projects")
 			.leftJoin("activity_logs", "projects.id", "activity_logs.projectId")
 			.leftJoin("users", "activity_logs.createdByUserId", "users.id")
 			.where("projects.id", id)
 			.orderBy("activity_logs.date", SortType.DESCENDING)
-			.first()
-			.execute();
+			.first();
 
 		return item ? ProjectEntity.initialize(item) : null;
 	}

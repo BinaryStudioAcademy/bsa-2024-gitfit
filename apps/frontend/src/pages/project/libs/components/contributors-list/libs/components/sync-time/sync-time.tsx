@@ -2,23 +2,23 @@ import { Icon, Tooltip } from "~/libs/components/components.js";
 import { useEffect, useState } from "~/libs/hooks/hooks.js";
 
 import { OVERDUE_LIMIT } from "./libs/constants/constants.js";
-import { getStartOfDay, getSyncTime } from "./libs/helpers/helpers.js";
+import { getSyncTime } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 type Properties = {
-	lastActivityDate: null | string;
-	lastActivityUserName: null | string;
+	analyticsLastSyncedAt: null | string;
+	analyticsLastSyncedByUser: null | string;
 };
 
 const SyncTime = ({
-	lastActivityDate,
-	lastActivityUserName,
+	analyticsLastSyncedAt,
+	analyticsLastSyncedByUser,
 }: Properties): JSX.Element => {
 	const [isOverdue, setIsOverdue] = useState<boolean>(false);
-	const currentDate = getStartOfDay(new Date());
+	const currentDate = new Date();
 
-	const lastActivity = lastActivityDate
-		? getStartOfDay(new Date(lastActivityDate))
+	const lastActivity = analyticsLastSyncedAt
+		? new Date(analyticsLastSyncedAt)
 		: null;
 
 	const lastUpdateLabel = lastActivity
@@ -31,7 +31,7 @@ const SyncTime = ({
 		}
 	}, [lastUpdateLabel]);
 
-	const hasSyncTime = lastUpdateLabel && lastActivityUserName;
+	const hasSyncTime = lastUpdateLabel && analyticsLastSyncedByUser;
 
 	return (
 		<Tooltip
@@ -49,7 +49,7 @@ const SyncTime = ({
 					}
 				>
 					<p>
-						{lastUpdateLabel.label} • {lastActivityUserName}
+						{lastUpdateLabel.label} • {analyticsLastSyncedByUser}
 					</p>
 					<Icon height={18} name="sync" width={18} />
 				</div>

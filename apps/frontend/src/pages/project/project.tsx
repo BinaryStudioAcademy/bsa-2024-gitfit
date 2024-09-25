@@ -311,6 +311,8 @@ const Project = (): JSX.Element => {
 						<div className={styles["contributors-list-wrapper"]}>
 							<ContributorsList
 								activityLogs={projectContributorsActivity}
+								analyticsLastSyncedAt={project.analyticsLastSyncedAt}
+								analyticsLastSyncedByUser={project.analyticsLastSyncedByUser}
 								contributors={projectContributors}
 								hasContributors={hasContributors}
 								hasEditPermission={hasEditContributorPermission}
@@ -318,8 +320,6 @@ const Project = (): JSX.Element => {
 								hasSetupAnalyticsPermission={hasSetupAnalyticsPermission}
 								hasSplitPermission={hasSplitContributorPermission}
 								isLoading={isContributorsDataLoading}
-								lastActivityDate={project.lastActivityDate}
-								lastActivityUserName={project.lastActivityUserName}
 								onClickSetupAgain={onSetupAnalyticsModalOpen}
 								onEditContributor={handleEditContributor}
 								onMergeContributor={handleMergeContributor}
