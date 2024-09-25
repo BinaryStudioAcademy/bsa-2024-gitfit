@@ -1,25 +1,24 @@
 import { Menu, MenuItem } from "~/libs/components/components.js";
-import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
-import { checkHasPermission, configureString } from "~/libs/helpers/helpers.js";
+import { AppRoute } from "~/libs/enums/enums.js";
+import { configureString } from "~/libs/helpers/helpers.js";
 import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
-import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/permissions.js";
 
 type Properties = {
 	hasEditPermission: boolean;
+	hasManageAllProjectsPermission: boolean;
 	hasManagePermission: boolean;
 	onDelete: () => void;
 	onEdit: () => void;
 	projectId: number;
-	userPermissions: PermissionGetAllItemResponseDto[];
 };
 
 const ProjectDetailsMenu = ({
 	hasEditPermission,
+	hasManageAllProjectsPermission,
 	hasManagePermission,
 	onDelete,
 	onEdit,
 	projectId,
-	userPermissions,
 }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
 
@@ -40,25 +39,15 @@ const ProjectDetailsMenu = ({
 		},
 	);
 
+	const isMenuShown = hasEditPermission || hasManagePermission;
 	const hasManageProjectAccessPermission =
-		checkHasPermission(
-			[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
-			userPermissions,
-		) || hasManagePermission;
-
-	const hasEditProjectPermission =
-		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||
-		hasEditPermission ||
-		hasManagePermission;
-
-	const isMenuShown =
-		hasManageProjectAccessPermission || hasEditProjectPermission;
+		hasManageAllProjectsPermission || hasManagePermission;
 
 	return (
 		<>
 			{isMenuShown && (
 				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-					{hasEditProjectPermission && (
+					{hasEditPermission && (
 						<MenuItem
 							iconName="pencil"
 							label="Edit"
@@ -66,7 +55,7 @@ const ProjectDetailsMenu = ({
 						/>
 					)}
 
-					{hasManageProjectAccessPermission && (
+					{hasManagePermission && (
 						<MenuItem
 							href={projectAccessManagementRoute}
 							iconName="access"
