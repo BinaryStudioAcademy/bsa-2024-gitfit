@@ -174,7 +174,10 @@ class ContributorController extends BaseController {
 			const projectId = Number(options.query.projectId);
 
 			return {
-				payload: await this.contributorService.findAllByProjectId(projectId),
+				payload: await this.contributorService.findAllByProjectId({
+					hasHidden: true,
+					projectId,
+				}),
 				status: HTTPCode.OK,
 			};
 		}

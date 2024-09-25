@@ -63,7 +63,7 @@ const ContributorsList = ({
 
 		for (const activityLog of activityLogs) {
 			activitiesMap.set(
-				Number(activityLog.contributorId),
+				Number(activityLog.contributor.id),
 				activityLog.commitsNumber,
 			);
 		}
