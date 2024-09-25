@@ -154,6 +154,18 @@ class ContributorController extends BaseController {
 	 *         schema:
 	 *           type: number
 	 *           minimum: 1
+	 *       - name: hasHidden
+	 *         in: query
+	 *         description: Determines whether include all contributors or tracked only
+	 *         required: false
+	 *         schema:
+	 *           type: boolean
+	 *       - name: contributorName
+	 *         in: query
+	 *         description: Contributor name search query
+	 *         required: false
+	 *         schema:
+	 *           type: string
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
