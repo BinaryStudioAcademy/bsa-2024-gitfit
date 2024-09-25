@@ -26,10 +26,12 @@ const SyncTime = ({
 		: null;
 
 	useEffect(() => {
-		if (lastUpdateLabel && lastUpdateLabel.hoursDifference !== undefined) {
+		if (lastUpdateLabel?.hoursDifference !== undefined) {
 			setIsOverdue(lastUpdateLabel.hoursDifference >= OVERDUE_LIMIT);
 		}
 	}, [lastUpdateLabel]);
+
+	const hasSyncTime = lastUpdateLabel && lastActivityUserName;
 
 	return (
 		<Tooltip
@@ -40,20 +42,18 @@ const SyncTime = ({
 			}
 			id="lastUpdateTooltip"
 		>
-			<div className={styles["sync-time-container"]}>
-				<p
+			{hasSyncTime && (
+				<div
 					className={
-						isOverdue ? styles["sync-time-overdue"] : styles["sync-time"]
+						styles[isOverdue ? "sync-time-container" : "sync-time-overdue"]
 					}
 				>
-					{lastUpdateLabel?.label} • {lastActivityUserName}
-				</p>
-				{isOverdue ? (
-					<Icon height={18} name="syncOverdue" width={18} />
-				) : (
+					<p>
+						{lastUpdateLabel.label} • {lastActivityUserName}
+					</p>
 					<Icon height={18} name="sync" width={18} />
-				)}
-			</div>
+				</div>
+			)}
 		</Tooltip>
 	);
 };

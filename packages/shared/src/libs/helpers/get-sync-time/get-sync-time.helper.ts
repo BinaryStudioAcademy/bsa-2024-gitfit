@@ -5,11 +5,11 @@ type SyncTimeResult = {
 	label: string;
 };
 
-const getSyncTime = (date: Date, baseDate: Date): SyncTimeResult => {
-	const HOURS_IN_A_DAY = 24;
-	const ONE_HOUR = 1;
-	const ZERO_HOURS = 0;
+const HOURS_IN_A_DAY = 24;
+const ONE_HOUR = 1;
+const ZERO_HOURS = 0;
 
+const getSyncTime = (date: Date, baseDate: Date): SyncTimeResult => {
 	const hoursDifference = differenceInHours(baseDate, date);
 
 	if (hoursDifference === ZERO_HOURS) {

@@ -13,5 +13,15 @@
 }
 
 .sync-time-overdue {
+	display: flex;
+	flex-direction: row;
+	gap: 8px;
+	align-items: center;
+	max-height: 20px;
+	margin-left: 16px;
+	font-family: Inter, sans-serif;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 120%;
 	color: var(--color-danger);
 }
