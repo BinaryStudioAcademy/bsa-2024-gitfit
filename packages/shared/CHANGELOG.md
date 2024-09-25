@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.33.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.32.0...shared-v1.33.0) (2024-09-25)
+
+
+### Features
+
+* add search field to analytics page gf-352 ([#444](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/444)) ([71dcfb1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/71dcfb15462b289bad70d90f65875bea40bbc560))
+
+## [1.32.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.31.1...shared-v1.32.0) (2024-09-25)
+
+
+### Features
+
+* add an ability to mark contributors as hidden gf-346 ([#400](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/400)) ([6143e4c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6143e4cb851e28de4080230e5e80e0665f65f41f))
+
+## [1.31.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.31.0...shared-v1.31.1) (2024-09-25)
+
+
+### Bug Fixes
+
+* inconsistent data display on analytics table due to date format issue gf-510 ([#521](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/521)) ([9882708](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/988270876568673d43945e27ae3c50daf509a435))
+
 ## [1.31.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.30.0...shared-v1.31.0) (2024-09-24)
 
 

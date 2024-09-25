@@ -1,5 +1,63 @@
 # Changelog
 
+## [1.56.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.55.0...v1.56.0) (2024-09-25)
+
+
+### Features
+
+* add search field to analytics page gf-352 ([#444](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/444)) ([71dcfb1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/71dcfb15462b289bad70d90f65875bea40bbc560))
+* upgrade the visibility of the project's options button on the project detail page gf-508 ([#514](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/514)) ([1d7d6f1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1d7d6f1f8ed86321fe2b7231c0424d06a5772daa))
+
+
+### Bug Fixes
+
+* reload contributors on split gf-519 ([#525](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/525)) ([f766ce8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f766ce8145a202626ad154753dc01e1af5ee29f4))
+
+## [1.55.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.54.0...v1.55.0) (2024-09-25)
+
+
+### Features
+
+* add an ability to mark contributors as hidden gf-346 ([#400](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/400)) ([6143e4c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6143e4cb851e28de4080230e5e80e0665f65f41f))
+
+
+### Bug Fixes
+
+* adjusted loader and placeholder to render properly when loading gf-515 ([#520](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/520)) ([f94c6b6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f94c6b614d4e2a2f37f41a62d7cb2d5d1594d513))
+
+## [1.54.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.53.1...v1.54.0) (2024-09-25)
+
+
+### Features
+
+* decrease default date range to one week gf-503 ([#518](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/518)) ([8bc6dd8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8bc6dd8a0812f2e9dc6866c62ccc62adbf8e7caa))
+
+
+### Bug Fixes
+
+* inconsistent data display on analytics table due to date format issue gf-510 ([#521](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/521)) ([9882708](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/988270876568673d43945e27ae3c50daf509a435))
+
+## [1.53.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.53.0...v1.53.1) (2024-09-24)
+
+
+### Bug Fixes
+
+* adjusted project/contributor style to match figma design gf-506 ([#513](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/513)) ([b27a06e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b27a06e477ae812f6e36f4cc9c05e76cb7407955))
+* change decrypt function gf-495 ([#505](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/505)) ([c2dc8fe](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c2dc8fe3c569a4fb9e7b997242eec6902961aee5))
+
+## [1.53.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.52.0...v1.53.0) (2024-09-24)
+
+
+### Features
+
+* add Tooltip component and adjust gitEmail column gf-450 ([#497](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/497)) ([5583d7e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5583d7ebe22b01b9eff84b136ef7e8785b5a1521))
+
+
+### Bug Fixes
+
+* make sidebar width consistent gf-475 ([#500](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/500)) ([c3148b0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c3148b0d638407fd629794e42c3b54bffdd1c7fa))
+* user profile not deleted without "Manage User Access" permission gf-449 ([#478](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/478)) ([5e017f5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5e017f58640efbaca8ace6877e5c8a846b11ce62))
+
 ## [1.52.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.51.0...v1.52.0) (2024-09-24)
 
 

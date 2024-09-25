@@ -1,8 +1,11 @@
+import { type ComponentProps } from "react";
+
 import { IconButton, Popover } from "~/libs/components/components.js";
 
 import styles from "./styles.module.css";
 
 type Properties = {
+	buttonVariant?: ComponentProps<typeof IconButton>["variant"];
 	children: React.ReactNode;
 	isOpened: boolean;
 	onClose: () => void;
@@ -10,6 +13,7 @@ type Properties = {
 };
 
 const Menu = ({
+	buttonVariant = "primary",
 	children,
 	isOpened,
 	onClose,
@@ -29,6 +33,7 @@ const Menu = ({
 				iconName="ellipsis"
 				label="options"
 				onClick={isOpened ? onClose : onOpen}
+				variant={buttonVariant}
 			/>
 		</Popover>
 	);
