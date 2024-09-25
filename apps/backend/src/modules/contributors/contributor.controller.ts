@@ -175,7 +175,6 @@ class ContributorController extends BaseController {
 
 			return {
 				payload: await this.contributorService.findAllByProjectId({
-					hasHidden: true,
 					projectId,
 				}),
 				status: HTTPCode.OK,
