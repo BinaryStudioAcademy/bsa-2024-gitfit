@@ -41,10 +41,10 @@ const ContributorUpdateForm = ({
 
 	const handleFormSubmit = useCallback(
 		(event_: React.BaseSyntheticEvent): void => {
-			void handleSubmit((formData: { isHidden: boolean; name: string }) => {
+			void handleSubmit(({ isHidden, name }) => {
 				const payload: ContributorPatchRequestDto = {
-					isHidden: formData.isHidden,
-					name: formData.name,
+					isHidden,
+					name,
 				};
 				onSubmit(payload);
 			})(event_);
