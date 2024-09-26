@@ -94,7 +94,7 @@ const Analytics = (): JSX.Element => {
 				activityLogActions.loadAll({
 					contributorName: search,
 					endDate: formattedEndDate,
-					projectId: projectId?.toString() ?? undefined,
+					projectId: projectId ?? undefined,
 					startDate: formattedStartDate,
 				}),
 			);

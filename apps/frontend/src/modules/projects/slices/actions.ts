@@ -106,7 +106,7 @@ const loadAllContributorsByProjectId = createAsyncThunk<
 		void dispatch(
 			loadAllContributorsActivityByProjectId({
 				endDate,
-				projectId: String(projectId),
+				projectId,
 				startDate,
 			}),
 		);

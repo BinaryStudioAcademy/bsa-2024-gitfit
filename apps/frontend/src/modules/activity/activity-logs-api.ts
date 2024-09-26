@@ -29,7 +29,7 @@ class ActivityLogApi extends BaseHTTPApi {
 			...(contributorName ? { contributorName } : {}),
 			endDate,
 			startDate,
-			...(projectId ? { projectId } : {}),
+			...(projectId ? { projectId: String(projectId) } : {}),
 		};
 
 		const response = await this.load(

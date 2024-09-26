@@ -165,7 +165,7 @@ class ActivityLogService implements Service {
 
 		const allContributors = await this.contributorService.findAll({
 			contributorName,
-			projectId: projectId ? Number(projectId) : undefined,
+			projectId,
 		});
 
 		const dateRange = getDateRange(formattedStartDate, formattedEndDate);
