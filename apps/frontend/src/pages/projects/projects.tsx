@@ -38,7 +38,6 @@ import styles from "./styles.module.css";
 
 const Projects = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-
 	const { userPermissions } = useAppSelector(({ auth }) => auth);
 
 	const { onSearch, search } = useSearchFilters();

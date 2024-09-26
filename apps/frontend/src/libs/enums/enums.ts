@@ -8,5 +8,6 @@ export {
 	AppEnvironment,
 	ContentType,
 	PermissionKey,
+	ProjectPermissionKey,
 	ServerErrorType,
 } from "@git-fit/shared";

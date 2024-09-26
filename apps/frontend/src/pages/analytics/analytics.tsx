@@ -1,4 +1,5 @@
 import { DateInput, PageLayout, Select } from "~/libs/components/components.js";
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus, QueryParameterName } from "~/libs/enums/enums.js";
 import {
 	formatDate,
@@ -120,6 +121,11 @@ const Analytics = (): JSX.Element => {
 	const isLoading =
 		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
+	const hasSearch = search.length !== EMPTY_LENGTH;
+	const emptyPlaceholderMessage = hasSearch
+		? "No contributors matching your search criteria."
+		: "There is nothing yet.";
+
 	return (
 		<PageLayout>
 			<h1 className={styles["title"]}>Analytics</h1>
@@ -156,6 +162,7 @@ const Analytics = (): JSX.Element => {
 				<AnalyticsTable
 					activityLogs={activityLogs}
 					dateRange={dateRangeValue}
+					emptyPlaceholder={emptyPlaceholderMessage}
 					isLoading={isLoading}
 				/>
 			</section>

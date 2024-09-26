@@ -1,21 +1,24 @@
 import { Menu, MenuItem } from "~/libs/components/components.js";
-import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
-import { checkHasPermission, configureString } from "~/libs/helpers/helpers.js";
+import { AppRoute } from "~/libs/enums/enums.js";
+import { configureString } from "~/libs/helpers/helpers.js";
 import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
-import { type PermissionGetAllItemResponseDto } from "~/modules/permissions/permissions.js";
 
 type Properties = {
+	hasEditPermission: boolean;
+	hasManageAllProjectsPermission: boolean;
+	hasManagePermission: boolean;
 	onDelete: () => void;
 	onEdit: () => void;
 	projectId: number;
-	userPermissions: PermissionGetAllItemResponseDto[];
 };
 
 const ProjectDetailsMenu = ({
+	hasEditPermission,
+	hasManageAllProjectsPermission,
+	hasManagePermission,
 	onDelete,
 	onEdit,
 	projectId,
-	userPermissions,
 }: Properties): JSX.Element => {
 	const { isOpened, onClose, onOpen } = usePopover();
 
@@ -36,16 +39,8 @@ const ProjectDetailsMenu = ({
 		},
 	);
 
-	const hasManageProjectAccessPermission = checkHasPermission(
-		[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
-		userPermissions,
-	);
-	const hasManageProjectPermission = checkHasPermission(
-		[PermissionKey.MANAGE_ALL_PROJECTS],
-		userPermissions,
-	);
 	const isMenuShown =
-		hasManageProjectAccessPermission || hasManageProjectPermission;
+		hasManagePermission || hasEditPermission || hasManageAllProjectsPermission;
 
 	return (
 		<>
@@ -56,29 +51,22 @@ const ProjectDetailsMenu = ({
 					onClose={onClose}
 					onOpen={onOpen}
 				>
-					{hasManageProjectPermission && (
-						<MenuItem
-							iconName="pencil"
-							label="Edit"
-							onClick={handleEditClick}
-						/>
-					)}
+					<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
 
-					{hasManageProjectAccessPermission && (
-						<MenuItem
-							href={projectAccessManagementRoute}
-							iconName="access"
-							label="Manage Access"
-						/>
-					)}
-
-					{hasManageProjectPermission && (
-						<MenuItem
-							iconName="trashBin"
-							label="Delete"
-							onClick={handleDeleteClick}
-							variant="danger"
-						/>
+					{(hasManagePermission || hasManageAllProjectsPermission) && (
+						<>
+							<MenuItem
+								href={projectAccessManagementRoute}
+								iconName="access"
+								label="Manage Access"
+							/>
+							<MenuItem
+								iconName="trashBin"
+								label="Delete"
+								onClick={handleDeleteClick}
+								variant="danger"
+							/>
+						</>
 					)}
 				</Menu>
 			)}

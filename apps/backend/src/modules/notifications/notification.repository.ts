@@ -4,6 +4,7 @@ import {
 	type Repository,
 } from "~/libs/types/types.js";
 
+import { NotificationStatus } from "./libs/enums/enums.js";
 import { type NotificationGetAllRequestDto } from "./libs/types/types.js";
 import { NotificationEntity } from "./notification.entity.js";
 import { type NotificationModel } from "./notification.model.js";
@@ -33,6 +34,16 @@ class NotificationRepository implements Repository {
 		return createdNotifications.map((notificationData) =>
 			NotificationEntity.initialize(notificationData),
 		);
+	}
+
+	public async bulkMarkAsRead(userId: number): Promise<number> {
+		return await this.notificationModel
+			.query()
+			.where("receiverUserId", userId)
+			.patch({
+				status: NotificationStatus.READ,
+			})
+			.execute();
 	}
 
 	public async create(entity: NotificationEntity): Promise<NotificationEntity> {
@@ -80,6 +91,14 @@ class NotificationRepository implements Repository {
 			),
 			totalItems: total,
 		};
+	}
+
+	public async getUnreadCount(userId: number): Promise<number> {
+		return await this.notificationModel
+			.query()
+			.where("receiverUserId", userId)
+			.where("status", NotificationStatus.UNREAD)
+			.resultSize();
 	}
 
 	public update(): ReturnType<Repository["update"]> {

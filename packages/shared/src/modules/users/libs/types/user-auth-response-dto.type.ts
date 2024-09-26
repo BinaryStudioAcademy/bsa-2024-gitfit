@@ -15,6 +15,12 @@ type UserAuthResponseDto = {
 	projectGroups: {
 		id: number;
 		name: string;
+		permissions: {
+			id: number;
+			key: string;
+			name: string;
+		}[];
+		projectId: number;
 	}[];
 };
 

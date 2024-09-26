@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.39.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.38.0...backend-v1.39.0) (2024-09-26)
+
+
+### Features
+
+* Adjust project permissions gf-351 ([#401](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/401)) ([1453c52](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1453c52927ec3940e40331a3a93ea96c6a3ce060))
+
+## [1.38.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.37.0...backend-v1.38.0) (2024-09-26)
+
+
+### Features
+
+* ability to mark notifications as read gf-460 ([#498](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/498)) ([3ce21f7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3ce21f7c102898077d4be4177b02534277972c06))
+
+## [1.37.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.36.0...backend-v1.37.0) (2024-09-25)
+
+
+### Features
+
+* order contributors list on the project details page by the last activity (the latest active ones on top) gf-533 ([#537](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/537)) ([7286b31](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7286b31ffaee75053516686c5a4a743fd57f6daa))
+
 ## [1.36.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.35.0...backend-v1.36.0) (2024-09-25)
 
 

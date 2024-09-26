@@ -7,7 +7,12 @@ import {
 	PageLayout,
 } from "~/libs/components/components.js";
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
-import { AppRoute, DataStatus, PermissionKey } from "~/libs/enums/enums.js";
+import {
+	AppRoute,
+	DataStatus,
+	PermissionKey,
+	ProjectPermissionKey,
+} from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import {
 	useAppDispatch,
@@ -42,13 +47,12 @@ import {
 	ProjectDetailsMenu,
 	SetupAnalyticsModal,
 } from "./libs/components/components.js";
+import { checkIsProjectPermitted } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 	const { id: projectId } = useParams<{ id: string }>();
-
-	const { userPermissions } = useAppSelector(({ auth }) => auth);
 
 	const {
 		project,
@@ -59,6 +63,10 @@ const Project = (): JSX.Element => {
 		projectPatchStatus,
 		projectStatus,
 	} = useAppSelector(({ projects }) => projects);
+
+	const { projectUserPermissions, userPermissions } = useAppSelector(
+		({ auth }) => auth,
+	);
 
 	const {
 		mergeContributorsStatus,
@@ -281,11 +289,37 @@ const Project = (): JSX.Element => {
 	const isRejected = projectStatus === DataStatus.REJECTED;
 
 	const hasProject = project !== null;
+	const projectPermissions = Object.values(projectUserPermissions).flat();
 
-	const hasManageAllProjectsPermission = checkHasPermission(
-		[PermissionKey.MANAGE_ALL_PROJECTS],
-		userPermissions,
-	);
+	const combinedPermissions = [...projectPermissions, ...userPermissions];
+
+	const hasManagePermission =
+		checkHasPermission(
+			[ProjectPermissionKey.MANAGE_PROJECT],
+			combinedPermissions,
+		) &&
+		checkIsProjectPermitted({
+			permission: ProjectPermissionKey.MANAGE_PROJECT,
+			projectId,
+			projectUserPermissions,
+		});
+
+	const hasEditPermission =
+		checkHasPermission(
+			[ProjectPermissionKey.EDIT_PROJECT],
+			combinedPermissions,
+		) &&
+		checkIsProjectPermitted({
+			permission: ProjectPermissionKey.EDIT_PROJECT,
+			projectId,
+			projectUserPermissions,
+		});
+
+	const hasManageAllProjectsPermission =
+		checkHasPermission(
+			[PermissionKey.MANAGE_ALL_PROJECTS],
+			combinedPermissions,
+		) || hasManagePermission;
 
 	const hasSetupAnalyticsPermission = hasManageAllProjectsPermission;
 	const hasEditContributorPermission = hasManageAllProjectsPermission;
@@ -324,10 +358,12 @@ const Project = (): JSX.Element => {
 						<div className={styles["project-header"]}>
 							<h1 className={styles["title"]}>{project.name}</h1>
 							<ProjectDetailsMenu
+								hasEditPermission={hasEditPermission}
+								hasManageAllProjectsPermission={hasManageAllProjectsPermission}
+								hasManagePermission={hasManagePermission}
 								onDelete={handleDeleteProject}
 								onEdit={handleEditProject}
 								projectId={project.id}
-								userPermissions={userPermissions}
 							/>
 						</div>
 

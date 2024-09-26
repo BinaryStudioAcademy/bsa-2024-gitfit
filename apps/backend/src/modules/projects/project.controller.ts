@@ -1,4 +1,9 @@
-import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import {
+	APIPath,
+	PermissionKey,
+	ProjectPermissionKey,
+} from "~/libs/enums/enums.js";
+import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import { checkUserPermissions } from "~/libs/hooks/hooks.js";
 import {
 	type APIHandlerOptions,
@@ -8,6 +13,9 @@ import {
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 
+import { type PermissionGetAllItemResponseDto } from "../permissions/libs/types/types.js";
+import { type ProjectGroupService } from "../project-groups/project-groups.js";
+import { type UserAuthResponseDto } from "../users/users.js";
 import { ProjectsApiPath } from "./libs/enums/enums.js";
 import {
 	type ProjectCreateRequestDto,
@@ -45,11 +53,17 @@ import { type ProjectService } from "./project.service.js";
  */
 
 class ProjectController extends BaseController {
+	private projectGroupService: ProjectGroupService;
 	private projectService: ProjectService;
 
-	public constructor(logger: Logger, projectService: ProjectService) {
+	public constructor(
+		logger: Logger,
+		projectGroupService: ProjectGroupService,
+		projectService: ProjectService,
+	) {
 		super(logger, APIPath.PROJECTS);
 
+		this.projectGroupService = projectGroupService;
 		this.projectService = projectService;
 
 		this.addRoute({
@@ -76,7 +90,20 @@ class ProjectController extends BaseController {
 				),
 			method: "DELETE",
 			path: ProjectsApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
+			preHandlers: [
+				checkUserPermissions(
+					[PermissionKey.MANAGE_ALL_PROJECTS],
+					[],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									params: { id: string };
+								}>
+							).params.id,
+						),
+				),
+			],
 		});
 
 		this.addRoute({
@@ -84,15 +111,20 @@ class ProjectController extends BaseController {
 				this.findAll(
 					options as APIHandlerOptions<{
 						query: ProjectGetAllRequestDto;
+						user: UserAuthResponseDto;
 					}>,
 				),
 			method: "GET",
 			path: ProjectsApiPath.ROOT,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.VIEW_ALL_PROJECTS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
+					[
+						ProjectPermissionKey.VIEW_PROJECT,
+						ProjectPermissionKey.EDIT_PROJECT,
+						ProjectPermissionKey.MANAGE_PROJECT,
+					],
+				),
 			],
 		});
 
@@ -106,10 +138,22 @@ class ProjectController extends BaseController {
 			method: "GET",
 			path: ProjectsApiPath.$ID,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.VIEW_ALL_PROJECTS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
+					[
+						ProjectPermissionKey.VIEW_PROJECT,
+						ProjectPermissionKey.EDIT_PROJECT,
+						ProjectPermissionKey.MANAGE_PROJECT,
+					],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									params: { id: string };
+								}>
+							).params.id,
+						),
+				),
 			],
 		});
 
@@ -123,7 +167,23 @@ class ProjectController extends BaseController {
 				),
 			method: "PATCH",
 			path: ProjectsApiPath.$ID,
-			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
+			preHandlers: [
+				checkUserPermissions(
+					[PermissionKey.MANAGE_ALL_PROJECTS],
+					[
+						ProjectPermissionKey.EDIT_PROJECT,
+						ProjectPermissionKey.MANAGE_PROJECT,
+					],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									params: { id: string };
+								}>
+							).params.id,
+						),
+				),
+			],
 			validation: {
 				body: projectPatchValidationSchema,
 			},
@@ -228,23 +288,51 @@ class ProjectController extends BaseController {
 	private async findAll(
 		options: APIHandlerOptions<{
 			query: ProjectGetAllRequestDto;
+			user: UserAuthResponseDto;
 		}>,
 	): Promise<APIHandlerResponse> {
 		const { name, page, pageSize } = options.query;
+		const { user } = options;
+
+		const groups = await this.projectGroupService.findAllByUserId(user.id);
+
+		const rootPermissions: PermissionGetAllItemResponseDto[] =
+			user.groups.flatMap((group) =>
+				group.permissions.map((permission) => ({
+					id: permission.id,
+					key: permission.key,
+					name: permission.name,
+				})),
+			);
+
+		const hasRootPermission = checkHasPermission(
+			[PermissionKey.MANAGE_ALL_PROJECTS, PermissionKey.VIEW_ALL_PROJECTS],
+			rootPermissions,
+		);
+
+		const userProjectIds = hasRootPermission
+			? []
+			: groups.map(({ projectId }) => projectId.id);
 
 		if (page && pageSize) {
 			return {
 				payload: await this.projectService.findAll({
-					name,
-					page: Number(page),
-					pageSize: Number(pageSize),
+					hasRootPermission,
+					parameters: {
+						name,
+						page: Number(page),
+						pageSize: Number(pageSize),
+					},
+					userProjectIds,
 				}),
 				status: HTTPCode.OK,
 			};
 		}
 
 		return {
-			payload: await this.projectService.findAllWithoutPagination(),
+			payload: await this.projectService.findAllWithoutPagination({
+				userProjectIds,
+			}),
 			status: HTTPCode.OK,
 		};
 	}

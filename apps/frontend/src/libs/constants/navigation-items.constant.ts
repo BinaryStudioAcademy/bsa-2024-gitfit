@@ -1,4 +1,8 @@
-import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
+import {
+	AppRoute,
+	PermissionKey,
+	ProjectPermissionKey,
+} from "~/libs/enums/enums.js";
 import { type NavigationItem } from "~/libs/types/types.js";
 
 const SIDEBAR_ITEMS: NavigationItem[] = [
@@ -9,6 +13,11 @@ const SIDEBAR_ITEMS: NavigationItem[] = [
 		pagePermissions: [
 			PermissionKey.VIEW_ALL_PROJECTS,
 			PermissionKey.MANAGE_ALL_PROJECTS,
+		],
+		pageProjectPermissions: [
+			ProjectPermissionKey.VIEW_PROJECT,
+			ProjectPermissionKey.EDIT_PROJECT,
+			ProjectPermissionKey.MANAGE_PROJECT,
 		],
 	},
 	{
@@ -30,6 +39,11 @@ const SIDEBAR_ITEMS: NavigationItem[] = [
 		pagePermissions: [
 			PermissionKey.VIEW_ALL_PROJECTS,
 			PermissionKey.MANAGE_ALL_PROJECTS,
+		],
+		pageProjectPermissions: [
+			ProjectPermissionKey.VIEW_PROJECT,
+			ProjectPermissionKey.EDIT_PROJECT,
+			ProjectPermissionKey.MANAGE_PROJECT,
 		],
 	},
 ];

@@ -1,6 +1,6 @@
 import { raw } from "objection";
 
-import { PAGE_INDEX_OFFSET } from "~/libs/constants/constants.js";
+import { EMPTY_LENGTH, PAGE_INDEX_OFFSET } from "~/libs/constants/constants.js";
 import { SortType } from "~/libs/enums/enums.js";
 import {
 	type PaginationResponseDto,
@@ -63,8 +63,11 @@ class ContributorRepository implements Repository {
 		orderBy = ContributorOrderByKey.CREATED_AT,
 		page,
 		pageSize,
+		permittedProjectIds = [],
 		projectId,
-	}: ContributorGetAllQueryParameters): Promise<
+	}: {
+		permittedProjectIds?: number[] | undefined;
+	} & ContributorGetAllQueryParameters): Promise<
 		PaginationResponseDto<ContributorEntity>
 	> {
 		const query = this.contributorModel
@@ -96,6 +99,12 @@ class ContributorRepository implements Repository {
 
 		if (projectId) {
 			query.havingRaw("?? = ANY(ARRAY_AGG(projects.id))", projectId);
+		}
+
+		const hasPermissionedProjects = permittedProjectIds.length !== EMPTY_LENGTH;
+
+		if (hasPermissionedProjects) {
+			query.whereIn("projects.id", permittedProjectIds); // TODO: think about this
 		}
 
 		query.orderBy(orderBy, SortType.DESCENDING);

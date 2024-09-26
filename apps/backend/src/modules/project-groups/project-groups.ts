@@ -12,5 +12,5 @@ const projectGroupController = new ProjectGroupController(
 	projectGroupService,
 );
 
-export { projectGroupController };
+export { projectGroupController, projectGroupService };
 export { ProjectGroupService } from "./project-group.service.js";

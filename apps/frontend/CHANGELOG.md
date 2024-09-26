@@ -1,5 +1,37 @@
 # Changelog
 
+## [1.56.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.55.0...frontend-v1.56.0) (2024-09-26)
+
+
+### Features
+
+* Adjust project permissions gf-351 ([#401](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/401)) ([1453c52](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1453c52927ec3940e40331a3a93ea96c6a3ce060))
+
+## [1.55.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.54.0...frontend-v1.55.0) (2024-09-26)
+
+
+### Features
+
+* ability to mark notifications as read gf-460 ([#498](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/498)) ([3ce21f7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3ce21f7c102898077d4be4177b02534277972c06))
+* adjusted style for date column to align with the table head gf-545 ([#548](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/548)) ([11a237c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/11a237c7c2b59a3a2a7049ef97ae4134229b2db0))
+
+
+### Bug Fixes
+
+* incorrect message displayed when all contributors are hidden gf-538 ([#539](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/539)) ([0dc06ae](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0dc06aef56a3064730def9a6e46540d2c7ab79e8))
+
+## [1.54.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.53.0...frontend-v1.54.0) (2024-09-25)
+
+
+### Features
+
+* add validation notification for incorrect password on login gf-517 ([#532](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/532)) ([1cd0f50](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1cd0f502ef3746940863937fd6f0b9c0ba11044a))
+
+
+### Bug Fixes
+
+* remove isDirty from analytics page gf-529 ([#531](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/531)) ([f43187b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f43187b1dd2fbe81eedf4ebe5d5a089f36602e82))
+
 ## [1.53.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.52.0...frontend-v1.53.0) (2024-09-25)
 
 

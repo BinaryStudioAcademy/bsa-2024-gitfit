@@ -139,9 +139,33 @@ class ActivityLogService implements Service {
 	public async findAll({
 		contributorName,
 		endDate,
+		hasRootPermission,
 		projectId,
 		startDate,
-	}: ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
+		userProjectIds,
+	}: {
+		hasRootPermission: boolean;
+		userProjectIds: number[];
+	} & ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
+		const projectIdParsed = projectId ? Number(projectId) : undefined;
+
+		let permittedProjectIds: number[];
+
+		if (projectIdParsed) {
+			if (!hasRootPermission && !userProjectIds.includes(projectIdParsed)) {
+				throw new ActivityLogError({
+					message: ExceptionMessage.NO_PERMISSION,
+					status: HTTPCode.FORBIDDEN,
+				});
+			}
+
+			permittedProjectIds = [projectIdParsed];
+		} else if (hasRootPermission) {
+			permittedProjectIds = [];
+		} else {
+			permittedProjectIds = userProjectIds;
+		}
+
 		const formattedStartDate = formatDate(
 			getStartOfDay(new Date(startDate)),
 			"yyyy-MM-dd",
@@ -155,6 +179,7 @@ class ActivityLogService implements Service {
 		const activityLogsEntities = await this.activityLogRepository.findAll({
 			contributorName,
 			endDate: formattedEndDate,
+			permittedProjectIds,
 			projectId,
 			startDate: formattedStartDate,
 		});
@@ -165,6 +190,7 @@ class ActivityLogService implements Service {
 
 		const allContributors = await this.contributorService.findAll({
 			contributorName,
+			permittedProjectIds,
 			projectId,
 		});
 

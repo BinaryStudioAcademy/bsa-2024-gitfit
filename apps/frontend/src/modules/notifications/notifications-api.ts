@@ -36,6 +36,31 @@ class NotificationApi extends BaseHTTPApi {
 
 		return await response.json<NotificationGetAllResponseDto>();
 	}
+
+	public async getUnreadCount(): Promise<number> {
+		const response = await this.load(
+			this.getFullEndpoint(NotificationsApiPath.UNREAD, {}),
+			{
+				contentType: ContentType.JSON,
+				hasAuth: true,
+				method: "GET",
+			},
+		);
+
+		return await response.json<number>();
+	}
+
+	public async markAsRead(): Promise<boolean> {
+		const response = await this.load(
+			this.getFullEndpoint(NotificationsApiPath.READ, {}),
+			{
+				hasAuth: true,
+				method: "PATCH",
+			},
+		);
+
+		return await response.json<boolean>();
+	}
 }
 
 export { NotificationApi };

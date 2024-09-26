@@ -56,7 +56,9 @@ class ContributorService implements Service {
 	}
 
 	public async findAll(
-		query: ContributorGetAllQueryParameters,
+		query: {
+			permittedProjectIds?: number[] | undefined;
+		} & ContributorGetAllQueryParameters,
 	): Promise<ContributorGetAllResponseDto> {
 		const contributors = await this.contributorRepository.findAll(query);
 

@@ -1,4 +1,8 @@
-import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import {
+	APIPath,
+	PermissionKey,
+	ProjectPermissionKey,
+} from "~/libs/enums/enums.js";
 import { checkUserPermissions } from "~/libs/hooks/check-user-permissions.hook.js";
 import {
 	type APIHandlerOptions,
@@ -74,10 +78,22 @@ class ContributorController extends BaseController {
 			method: "GET",
 			path: ContributorsApiPath.ROOT,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.VIEW_ALL_PROJECTS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
+					[
+						ProjectPermissionKey.VIEW_PROJECT,
+						ProjectPermissionKey.EDIT_PROJECT,
+						ProjectPermissionKey.MANAGE_PROJECT,
+					],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									query: { projectId: string };
+								}>
+							).query.projectId,
+						),
+				),
 			],
 			validation: {
 				query: contributorGetAllValidationSchema,

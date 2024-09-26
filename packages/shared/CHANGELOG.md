@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.36.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.35.0...shared-v1.36.0) (2024-09-26)
+
+
+### Features
+
+* Adjust project permissions gf-351 ([#401](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/401)) ([1453c52](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1453c52927ec3940e40331a3a93ea96c6a3ce060))
+
+## [1.35.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.34.0...shared-v1.35.0) (2024-09-26)
+
+
+### Features
+
+* ability to mark notifications as read gf-460 ([#498](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/498)) ([3ce21f7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3ce21f7c102898077d4be4177b02534277972c06))
+
+
+### Bug Fixes
+
+* incorrect time display and color coding for analytics last sync time gf-547 ([#549](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/549)) ([6247724](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/624772468a6305b04c95460ef0e5f4af0f33e955))
+
 ## [1.34.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.33.0...shared-v1.34.0) (2024-09-25)
 
 
