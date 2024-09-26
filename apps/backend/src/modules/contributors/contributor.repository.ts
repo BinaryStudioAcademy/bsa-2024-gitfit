@@ -98,20 +98,7 @@ class ContributorRepository implements Repository {
 			query.havingRaw("?? = ANY(ARRAY_AGG(projects.id))", projectId);
 		}
 
-		switch (orderBy) {
-			case ContributorOrderByKey.CREATED_AT: {
-				query.orderBy(ContributorOrderByKey.CREATED_AT, SortType.DESCENDING);
-				break;
-			}
-
-			case ContributorOrderByKey.LAST_ACTIVITY_DATE: {
-				query.orderBy(
-					ContributorOrderByKey.LAST_ACTIVITY_DATE,
-					SortType.DESCENDING,
-				);
-				break;
-			}
-		}
+		query.orderBy(orderBy, SortType.DESCENDING);
 
 		let contributors, totalItems;
 

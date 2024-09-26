@@ -77,6 +77,7 @@ export {
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllQueryParameters,
 	type ContributorGetAllResponseDto,
+	contributorGetAllValidationSchema,
 	type ContributorMergeRequestDto,
 	contributorMergeValidationSchema,
 	ContributorOrderByKey,

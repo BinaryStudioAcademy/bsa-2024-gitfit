@@ -17,6 +17,7 @@ import {
 	type ContributorSplitRequestDto,
 } from "./libs/types/types.js";
 import {
+	contributorGetAllValidationSchema,
 	contributorMergeValidationSchema,
 	contributorPatchValidationSchema,
 	contributorSplitValidationSchema,
@@ -78,6 +79,9 @@ class ContributorController extends BaseController {
 					PermissionKey.MANAGE_ALL_PROJECTS,
 				]),
 			],
+			validation: {
+				query: contributorGetAllValidationSchema,
+			},
 		});
 
 		this.addRoute({

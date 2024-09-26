@@ -15,6 +15,7 @@ export {
 	type ContributorSplitRequestDto,
 } from "./libs/types/types.js";
 export {
+	contributorGetAll as contributorGetAllValidationSchema,
 	contributorMerge as contributorMergeValidationSchema,
 	contributorPatch as contributorPatchValidationSchema,
 	contributorSplit as contributorSplitValidationSchema,

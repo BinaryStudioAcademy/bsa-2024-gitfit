@@ -1,4 +1,5 @@
 export {
+	contributorGetAllValidationSchema,
 	contributorMergeValidationSchema,
 	contributorPatchValidationSchema,
 	contributorSplitValidationSchema,
