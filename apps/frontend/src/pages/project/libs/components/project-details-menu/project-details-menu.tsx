@@ -5,7 +5,6 @@ import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	hasEditPermission: boolean;
-	hasManageAllProjectsPermission: boolean;
 	hasManagePermission: boolean;
 	onDelete: () => void;
 	onEdit: () => void;
@@ -14,7 +13,6 @@ type Properties = {
 
 const ProjectDetailsMenu = ({
 	hasEditPermission,
-	hasManageAllProjectsPermission,
 	hasManagePermission,
 	onDelete,
 	onEdit,
@@ -38,10 +36,8 @@ const ProjectDetailsMenu = ({
 			id: projectId.toString(),
 		},
 	);
-	const hasManageProjectAccessPermission =
-		hasManageAllProjectsPermission || hasManagePermission;
 
-	const isMenuShown = hasEditPermission || hasManageProjectAccessPermission;
+	const isMenuShown = hasManagePermission || hasEditPermission;
 
 	return (
 		<>
@@ -54,16 +50,14 @@ const ProjectDetailsMenu = ({
 							onClick={handleEditClick}
 						/>
 					)}
-
-					{hasManageProjectAccessPermission && (
+					{hasManagePermission && (
 						<MenuItem
 							href={projectAccessManagementRoute}
 							iconName="access"
 							label="Manage Access"
 						/>
 					)}
-
-					{hasManageProjectAccessPermission && (
+					{hasManagePermission && (
 						<MenuItem
 							iconName="trashBin"
 							label="Delete"

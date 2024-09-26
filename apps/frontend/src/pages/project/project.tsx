@@ -46,7 +46,6 @@ import {
 	ProjectDetailsMenu,
 	SetupAnalyticsModal,
 } from "./libs/components/components.js";
-import { checkHasProjectPermission } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
 
 const Project = (): JSX.Element => {
@@ -247,37 +246,24 @@ const Project = (): JSX.Element => {
 	const isRejected = projectStatus === DataStatus.REJECTED;
 
 	const hasProject = project !== null;
+	const projectPermissions = Object.values(projectUserPermissions).flat();
 
-	const userHasProjectPermission =
-		hasProject &&
-		checkHasProjectPermission(projectUserPermissions, project.id, [
-			ProjectPermissionKey.MANAGE_PROJECT,
-		]);
+	const combinedPermissions = [...projectPermissions, ...userPermissions];
 
-	const hasManageRequiredPermissions =
-		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||
-		checkHasPermission(
-			[ProjectPermissionKey.MANAGE_PROJECT],
-			Object.values(projectUserPermissions).flat(),
-		);
+	const hasManageAllProjectsPermission = checkHasPermission(
+		[PermissionKey.MANAGE_ALL_PROJECTS],
+		combinedPermissions,
+	);
 
-	const hasEditRequiredPermissions =
-		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||
-		checkHasPermission(
-			[ProjectPermissionKey.EDIT_PROJECT, ProjectPermissionKey.MANAGE_PROJECT],
-			Object.values(projectUserPermissions).flat(),
-		);
+	const hasManagePermission = checkHasPermission(
+		[ProjectPermissionKey.MANAGE_PROJECT],
+		combinedPermissions,
+	);
 
-	const hasManagePermission =
-		hasManageRequiredPermissions && userHasProjectPermission;
-
-	const hasEditPermission =
-		hasEditRequiredPermissions && userHasProjectPermission;
-
-	const hasManageAllProjectsPermission =
-		checkHasPermission([PermissionKey.MANAGE_ALL_PROJECTS], userPermissions) ||
-		hasManagePermission ||
-		hasEditPermission;
+	const hasEditPermission = checkHasPermission(
+		[ProjectPermissionKey.EDIT_PROJECT],
+		combinedPermissions,
+	);
 
 	const hasSetupAnalyticsPermission = hasManageAllProjectsPermission;
 	const hasEditContributorPermission = hasManageAllProjectsPermission;
@@ -316,7 +302,6 @@ const Project = (): JSX.Element => {
 
 							<ProjectDetailsMenu
 								hasEditPermission={hasEditPermission}
-								hasManageAllProjectsPermission={hasManageAllProjectsPermission}
 								hasManagePermission={hasManagePermission}
 								onDelete={handleDeleteProject}
 								onEdit={handleEditProject}
