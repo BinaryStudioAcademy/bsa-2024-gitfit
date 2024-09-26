@@ -1,4 +1,5 @@
 import { DateInput, PageLayout, Select } from "~/libs/components/components.js";
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { DataStatus, QueryParameterName } from "~/libs/enums/enums.js";
 import {
 	formatDate,
@@ -26,7 +27,6 @@ import {
 	ANALYTICS_DATE_MAX_RANGE,
 	ANALYTICS_DEFAULT_DATE_RANGE,
 	ANALYTICS_LOOKBACK_DAYS_COUNT,
-	EMPTY_LENGTH,
 } from "./libs/constants/constants.js";
 import { getProjectOptions } from "./libs/helpers/helpers.js";
 import styles from "./styles.module.css";
