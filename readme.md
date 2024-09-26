@@ -71,7 +71,8 @@ erDiagram
       int id PK
       dateTime created_at
       dateTime updated_at
-      varchar name
+      dateTime last_activity_date
+      varchar name UK
       varchar description
    }
 
@@ -130,14 +131,15 @@ erDiagram
       int project_id FK
       int created_by_user_id FK
       int updated_by_user_id FK
+      varchar encrypted_key UK
    }
 
    contributors {
       int id PK
-      varchar name
       dateTime created_at
       dateTime updated_at
       dateTime hidden_at
+      varchar name
    }
 
    git_emails {
@@ -160,10 +162,10 @@ erDiagram
       int id PK
       dateTime created_at
       dateTime updated_at
+      dateTime date
       int git_email_id FK
       int project_id FK
       int created_by_user_id FK
-      date date
       int commits_number
    }
 
