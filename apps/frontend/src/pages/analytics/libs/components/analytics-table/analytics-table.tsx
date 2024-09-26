@@ -35,7 +35,7 @@ const AnalyticsTable = ({
 			<Table<AnalyticsRow>
 				columns={analyticsColumns}
 				data={analyticsData}
-				emptyPlaceholder="No contributors matchig your search criteria."
+				emptyPlaceholder="No contributors matching your search criteria."
 				isFullHeight
 				isLoading={isLoading}
 			/>
