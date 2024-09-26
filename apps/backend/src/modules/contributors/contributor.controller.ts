@@ -170,13 +170,20 @@ class ContributorController extends BaseController {
 			query: { projectId?: string } & PaginationQueryParameters;
 		}>,
 	): Promise<APIHandlerResponse> {
-		if (options.query.projectId) {
-			const projectId = Number(options.query.projectId);
+		const { page, pageSize, projectId } = options.query;
 
+		if (projectId) {
 			return {
 				payload: await this.contributorService.findAllByProjectId({
-					projectId,
+					projectId: Number(projectId),
 				}),
+				status: HTTPCode.OK,
+			};
+		}
+
+		if (!page || !pageSize) {
+			return {
+				payload: await this.contributorService.findAllWithoutPagination({}),
 				status: HTTPCode.OK,
 			};
 		}

@@ -1,4 +1,10 @@
-import { Button, Icon, Input, Select } from "~/libs/components/components.js";
+import {
+	Button,
+	Icon,
+	Input,
+	Loader,
+	Select,
+} from "~/libs/components/components.js";
 import { useAppForm, useCallback, useMemo } from "~/libs/hooks/hooks.js";
 import {
 	type ContributorGetAllItemResponseDto,
@@ -12,12 +18,14 @@ import styles from "./styles.module.css";
 type Properties = {
 	allContributors: ContributorGetAllItemResponseDto[];
 	currentContributor: ContributorGetAllItemResponseDto;
+	isLoading?: boolean;
 	onSubmit: (payload: ContributorMergeRequestDto) => void;
 };
 
 const ContributorMergeForm = ({
 	allContributors,
 	currentContributor,
+	isLoading,
 	onSubmit,
 }: Properties): JSX.Element => {
 	const { gitEmails, id, name } = currentContributor;
@@ -55,7 +63,9 @@ const ContributorMergeForm = ({
 		[otherContributors],
 	);
 
-	return (
+	return isLoading ? (
+		<Loader />
+	) : (
 		<form className={styles["form-wrapper"]} onSubmit={handleFormSubmit}>
 			<Input
 				control={control}
