@@ -1,10 +1,11 @@
+import { getValidClassNames } from "~/libs/helpers/helpers.js";
 import { type TableColumn } from "~/libs/types/types.js";
 
 import { type AnalyticsRow } from "../../types/types.js";
+import styles from "./styles.module.css";
 
 const getAnalyticsColumns = (
 	dateRange: string[],
-	emptyCellClassName?: string,
 ): TableColumn<AnalyticsRow>[] => {
 	const columns: TableColumn<AnalyticsRow>[] = [
 		{
@@ -22,7 +23,12 @@ const getAnalyticsColumns = (
 				const isEmpty = !Number(value);
 
 				return (
-					<span className={isEmpty ? emptyCellClassName : ""}>
+					<span
+						className={getValidClassNames(
+							styles["analytics-cell"],
+							isEmpty && styles["analytics-empty-cell"],
+						)}
+					>
 						{isEmpty ? "-" : value}
 					</span>
 				);

@@ -1,0 +1,8 @@
+.analytics-empty-cell {
+	color: var(--color-danger);
+}
+
+.analytics-cell {
+	display: flex;
+	justify-content: center;
+}
