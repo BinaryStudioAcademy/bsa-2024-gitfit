@@ -92,18 +92,18 @@ class ContributorService implements Service {
 	public async findAllByProjectId({
 		contributorName,
 		hasHidden = true,
-		permissionedProjectIds,
+		permittedProjectIds,
 		projectId,
 	}: {
 		contributorName?: string;
 		hasHidden?: boolean;
-		permissionedProjectIds?: number[] | undefined;
+		permittedProjectIds?: number[] | undefined;
 		projectId: number;
 	}): Promise<ContributorGetAllResponseDto> {
 		const contributors = await this.contributorRepository.findAllByProjectId({
 			contributorName: contributorName ?? "",
 			hasHidden,
-			permissionedProjectIds,
+			permittedProjectIds,
 			projectId,
 		});
 
@@ -126,17 +126,17 @@ class ContributorService implements Service {
 	public async findAllWithoutPagination({
 		contributorName,
 		hasHidden = true,
-		permissionedProjectIds,
+		permittedProjectIds,
 	}: {
 		contributorName?: string;
 		hasHidden?: boolean;
-		permissionedProjectIds: number[] | undefined;
+		permittedProjectIds: number[] | undefined;
 	}): Promise<ContributorGetAllResponseDto> {
 		const contributors =
 			await this.contributorRepository.findAllWithoutPagination({
 				contributorName: contributorName ?? "",
 				hasHidden,
-				permissionedProjectIds,
+				permittedProjectIds,
 			});
 
 		return {

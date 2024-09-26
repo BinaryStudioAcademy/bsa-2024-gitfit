@@ -44,11 +44,11 @@ class ActivityLogRepository implements Repository {
 	public async findAll({
 		contributorName,
 		endDate,
-		permissionedProjectIds,
+		permittedProjectIds,
 		projectId,
 		startDate,
 	}: {
-		permissionedProjectIds: number[] | undefined;
+		permittedProjectIds: number[] | undefined;
 	} & ActivityLogQueryParameters): Promise<{ items: ActivityLogEntity[] }> {
 		const query = this.activityLogModel
 			.query()
@@ -66,12 +66,12 @@ class ActivityLogRepository implements Repository {
 		}
 
 		const hasPermissionedProjects =
-			permissionedProjectIds && permissionedProjectIds.length !== EMPTY_LENGTH;
+			permittedProjectIds && permittedProjectIds.length !== EMPTY_LENGTH;
 
 		if (projectId) {
 			query.where("project_id", projectId);
 		} else if (hasPermissionedProjects) {
-			query.whereIn("project_id", permissionedProjectIds);
+			query.whereIn("project_id", permittedProjectIds);
 		}
 
 		const activityLogs = await query.orderBy("date");

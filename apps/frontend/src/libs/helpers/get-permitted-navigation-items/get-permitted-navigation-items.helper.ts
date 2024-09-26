@@ -13,11 +13,17 @@ const getPermittedNavigationItems = (
 	projectPermissions: ProjectPermissionsGetAllItemResponseDto[] = [],
 ): NavigationItem[] => {
 	return items.filter(
-		({ pagePermissions = [], pageProjectPermissions = [] }) =>
-			(pagePermissions.length !== EMPTY_LENGTH &&
-				checkHasPermission(pagePermissions, userPermissions)) ||
-			(pageProjectPermissions.length !== EMPTY_LENGTH &&
-				checkHasPermission(pageProjectPermissions, projectPermissions)),
+		({ pagePermissions = [], pageProjectPermissions = [] }) => {
+			const hasPagePermissions =
+				pagePermissions.length !== EMPTY_LENGTH &&
+				checkHasPermission(pagePermissions, userPermissions);
+
+			const hasProjectPermissions =
+				pageProjectPermissions.length !== EMPTY_LENGTH &&
+				checkHasPermission(pageProjectPermissions, projectPermissions);
+
+			return hasPagePermissions || hasProjectPermissions;
+		},
 	);
 };
 

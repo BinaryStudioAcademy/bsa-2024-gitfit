@@ -149,7 +149,7 @@ class ActivityLogService implements Service {
 	} & ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
 		const projectIdParsed = projectId ? Number(projectId) : undefined;
 
-		let permissionedProjectIds: number[];
+		let permittedProjectIds: number[];
 
 		if (projectIdParsed) {
 			if (!hasRootPermission && !userProjectIds.includes(projectIdParsed)) {
@@ -159,11 +159,11 @@ class ActivityLogService implements Service {
 				});
 			}
 
-			permissionedProjectIds = [projectIdParsed];
+			permittedProjectIds = [projectIdParsed];
 		} else if (hasRootPermission) {
-			permissionedProjectIds = [];
+			permittedProjectIds = [];
 		} else {
-			permissionedProjectIds = userProjectIds;
+			permittedProjectIds = userProjectIds;
 		}
 
 		const formattedStartDate = formatDate(
@@ -179,7 +179,7 @@ class ActivityLogService implements Service {
 		const activityLogsEntities = await this.activityLogRepository.findAll({
 			contributorName,
 			endDate: formattedEndDate,
-			permissionedProjectIds,
+			permittedProjectIds,
 			projectId,
 			startDate: formattedStartDate,
 		});
@@ -192,13 +192,13 @@ class ActivityLogService implements Service {
 			? this.contributorService.findAllByProjectId({
 					contributorName: contributorName ?? "",
 					hasHidden: false,
-					permissionedProjectIds,
+					permittedProjectIds,
 					projectId: Number(projectId),
 				})
 			: this.contributorService.findAllWithoutPagination({
 					contributorName: contributorName ?? "",
 					hasHidden: false,
-					permissionedProjectIds,
+					permittedProjectIds,
 				}));
 
 		const dateRange = getDateRange(formattedStartDate, formattedEndDate);

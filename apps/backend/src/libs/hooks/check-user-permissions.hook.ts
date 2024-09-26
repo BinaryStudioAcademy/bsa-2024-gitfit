@@ -15,19 +15,17 @@ import { type ValueOf } from "../types/types.js";
 
 const checkUserPermissions = (
 	permissions: ValueOf<typeof PermissionKey>[],
-	projectPermissions?: ValueOf<typeof ProjectPermissionKey>[],
+	projectsPermissions?: ValueOf<typeof ProjectPermissionKey>[],
 	getProjectId?: (options: APIHandlerOptions) => number | undefined,
 ): APIPreHandler => {
 	return (options, done): void => {
 		const user = options.user as UserAuthResponseDto;
 		const projectId = getProjectId?.(options);
 
-		const userPermissions = [
-			...user.groups.flatMap((group) => group.permissions),
-			...user.projectGroups
-				.filter((group) => projectId && group.projectId === projectId)
-				.flatMap((projectGroup) => projectGroup.permissions),
-		];
+		const userPermissions = user.groups.flatMap((group) => group.permissions);
+		const projectPermissions = user.projectGroups
+			.filter((group) => projectId && group.projectId === projectId)
+			.flatMap((projectGroup) => projectGroup.permissions);
 
 		const hasGlobalPermission = checkHasPermission(
 			permissions,
@@ -36,8 +34,8 @@ const checkUserPermissions = (
 
 		const hasProjectPermission = projectId
 			? checkHasPermission(
-					projectPermissions as ValueOf<typeof ProjectPermissionKey>[],
-					userPermissions,
+					projectsPermissions as ValueOf<typeof ProjectPermissionKey>[],
+					projectPermissions,
 				)
 			: true;
 

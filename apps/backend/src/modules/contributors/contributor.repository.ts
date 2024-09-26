@@ -101,12 +101,12 @@ class ContributorRepository implements Repository {
 	public async findAllByProjectId({
 		contributorName,
 		hasHidden = true,
-		permissionedProjectIds,
+		permittedProjectIds,
 		projectId,
 	}: {
 		contributorName?: string;
 		hasHidden?: boolean;
-		permissionedProjectIds?: number[] | undefined;
+		permittedProjectIds?: number[] | undefined;
 		projectId: number;
 	}): Promise<{ items: ContributorEntity[] }> {
 		const query = this.contributorModel
@@ -132,10 +132,10 @@ class ContributorRepository implements Repository {
 			.orderBy("last_activity_date", SortType.DESCENDING);
 
 		const hasPermissionedProjects =
-			permissionedProjectIds && permissionedProjectIds.length !== EMPTY_LENGTH;
+			permittedProjectIds && permittedProjectIds.length !== EMPTY_LENGTH;
 
 		if (hasPermissionedProjects) {
-			query.whereIn("projects.id", permissionedProjectIds);
+			query.whereIn("projects.id", permittedProjectIds);
 		}
 
 		if (!hasHidden) {
@@ -158,11 +158,11 @@ class ContributorRepository implements Repository {
 	public async findAllWithoutPagination({
 		contributorName,
 		hasHidden = true,
-		permissionedProjectIds,
+		permittedProjectIds,
 	}: {
 		contributorName?: string;
 		hasHidden?: boolean;
-		permissionedProjectIds: number[] | undefined;
+		permittedProjectIds: number[] | undefined;
 	}): Promise<{ items: ContributorEntity[] }> {
 		const query = this.contributorModel
 			.query()
@@ -187,10 +187,10 @@ class ContributorRepository implements Repository {
 		}
 
 		const hasPermissionedProjects =
-			permissionedProjectIds && permissionedProjectIds.length !== EMPTY_LENGTH;
+			permittedProjectIds && permittedProjectIds.length !== EMPTY_LENGTH;
 
 		if (hasPermissionedProjects) {
-			query.whereIn("projects.id", permissionedProjectIds);
+			query.whereIn("projects.id", permittedProjectIds);
 		}
 
 		const results = await query.execute();

@@ -66,12 +66,11 @@ const ProtectedRoute = ({
 	);
 
 	const hasProjectPermissions =
-		routeProjectPermissions.length === EMPTY_LENGTH
-			? false
-			: checkHasPermission(
-					routeProjectPermissions,
-					Object.values(projectUserPermissions).flat(),
-				);
+		routeProjectPermissions.length !== EMPTY_LENGTH &&
+		checkHasPermission(
+			routeProjectPermissions,
+			Object.values(projectUserPermissions).flat(),
+		);
 
 	const hasRequiredPermissions =
 		(hasBasePermission && hasExtraPermission) || hasProjectPermissions;

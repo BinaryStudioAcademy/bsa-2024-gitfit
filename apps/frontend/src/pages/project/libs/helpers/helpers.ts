@@ -1,1 +1,1 @@
-export { checkIsProjectPermitted } from "./chask-is-project-permitted.js";
+export { checkIsProjectPermitted } from "./check-is-project-permitted.js";
