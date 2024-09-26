@@ -79,7 +79,7 @@ export {
 	type ContributorGetAllResponseDto,
 	type ContributorMergeRequestDto,
 	contributorMergeValidationSchema,
-	ContributorOrderBy,
+	ContributorOrderByKey,
 	type ContributorPatchRequestDto,
 	type ContributorPatchResponseDto,
 	contributorPatchValidationSchema,

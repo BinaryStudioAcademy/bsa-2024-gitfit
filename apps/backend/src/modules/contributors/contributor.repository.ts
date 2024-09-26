@@ -10,7 +10,7 @@ import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorModel } from "./contributor.model.js";
-import { ContributorOrderBy } from "./libs/enums/enums.js";
+import { ContributorOrderByKey } from "./libs/enums/enums.js";
 import {
 	type ContributorGetAllQueryParameters,
 	type ContributorMergeRequestDto,
@@ -60,7 +60,7 @@ class ContributorRepository implements Repository {
 	public async findAll({
 		contributorName,
 		hasHidden = false,
-		orderBy = ContributorOrderBy.CREATED_AT,
+		orderBy = ContributorOrderByKey.CREATED_AT,
 		page,
 		pageSize,
 		projectId,
@@ -99,14 +99,14 @@ class ContributorRepository implements Repository {
 		}
 
 		switch (orderBy) {
-			case ContributorOrderBy.CREATED_AT: {
-				query.orderBy(ContributorOrderBy.CREATED_AT, SortType.DESCENDING);
+			case ContributorOrderByKey.CREATED_AT: {
+				query.orderBy(ContributorOrderByKey.CREATED_AT, SortType.DESCENDING);
 				break;
 			}
 
-			case ContributorOrderBy.LAST_ACTIVITY_DATE: {
+			case ContributorOrderByKey.LAST_ACTIVITY_DATE: {
 				query.orderBy(
-					ContributorOrderBy.LAST_ACTIVITY_DATE,
+					ContributorOrderByKey.LAST_ACTIVITY_DATE,
 					SortType.DESCENDING,
 				);
 				break;

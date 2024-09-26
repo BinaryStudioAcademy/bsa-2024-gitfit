@@ -9,7 +9,7 @@ import {
 } from "~/modules/activity/activity.js";
 import {
 	type ContributorGetAllResponseDto,
-	ContributorOrderBy,
+	ContributorOrderByKey,
 } from "~/modules/contributors/contributors.js";
 import {
 	type ProjectCreateRequestDto,
@@ -112,7 +112,7 @@ const loadAllContributorsByProjectId = createAsyncThunk<
 		);
 
 		return await contributorApi.getAll({
-			orderBy: ContributorOrderBy.LAST_ACTIVITY_DATE,
+			orderBy: ContributorOrderByKey.LAST_ACTIVITY_DATE,
 			projectId,
 		});
 	},
