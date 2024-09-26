@@ -309,7 +309,10 @@ class ProjectController extends BaseController {
 			[PermissionKey.MANAGE_ALL_PROJECTS, PermissionKey.VIEW_ALL_PROJECTS],
 			rootPermissions,
 		);
-		const userProjectIds = groups.map(({ projectId }) => projectId.id);
+
+		const userProjectIds = hasRootPermission
+			? []
+			: groups.map(({ projectId }) => projectId.id);
 
 		if (page && pageSize) {
 			return {
@@ -326,19 +329,8 @@ class ProjectController extends BaseController {
 			};
 		}
 
-		if (hasRootPermission) {
-			return {
-				payload: await this.projectService.findAllWithoutPagination({
-					hasRootPermission,
-					userProjectIds,
-				}),
-				status: HTTPCode.OK,
-			};
-		}
-
 		return {
 			payload: await this.projectService.findAllWithoutPagination({
-				hasRootPermission: false,
 				userProjectIds,
 			}),
 			status: HTTPCode.OK,

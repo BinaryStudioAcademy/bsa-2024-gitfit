@@ -25,7 +25,7 @@ const checkUserPermissions = (
 		const userPermissions = [
 			...user.groups.flatMap((group) => group.permissions),
 			...user.projectGroups
-				.filter((group) => projectId && group.projectId.includes(projectId))
+				.filter((group) => projectId && group.projectId === projectId)
 				.flatMap((projectGroup) => projectGroup.permissions),
 		];
 

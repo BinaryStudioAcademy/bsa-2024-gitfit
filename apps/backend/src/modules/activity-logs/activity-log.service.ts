@@ -142,11 +142,23 @@ class ActivityLogService implements Service {
 		userProjectIds: number[];
 	} & ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
 		const projectIdParsed = projectId ? Number(projectId) : undefined;
-		const projectIds = this.projectService.getAllowedProjectIds(
-			hasRootPermission,
-			userProjectIds,
-			projectIdParsed,
-		);
+
+		let projectIds: number[];
+
+		if (projectIdParsed) {
+			if (!hasRootPermission && !userProjectIds.includes(projectIdParsed)) {
+				throw new ActivityLogError({
+					message: ExceptionMessage.NO_PERMISSION,
+					status: HTTPCode.FORBIDDEN,
+				});
+			}
+
+			projectIds = [projectIdParsed];
+		} else if (hasRootPermission) {
+			projectIds = [];
+		} else {
+			projectIds = userProjectIds;
+		}
 
 		const activityLogsEntities = await this.activityLogRepository.findAll({
 			endDate,

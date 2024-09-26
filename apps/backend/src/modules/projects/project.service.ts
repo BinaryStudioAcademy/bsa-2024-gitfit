@@ -10,7 +10,6 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 import { type Service } from "~/libs/types/types.js";
 import { type ProjectApiKeyService } from "~/modules/project-api-keys/project-api-key.service.js";
 
-import { ActivityLogError } from "../activity-logs/libs/exceptions/exceptions.js";
 import { type NotificationService } from "../notifications/notification.service.js";
 import { type UserService } from "../users/user.service.js";
 import { NOTIFICATION_DAY_THRESHOLD } from "./libs/constants/constants.js";
@@ -152,19 +151,18 @@ class ProjectService implements Service {
 	}
 
 	public async findAllWithoutPagination({
-		hasRootPermission,
 		userProjectIds,
 	}: {
-		hasRootPermission: boolean;
-		userProjectIds: number[];
+		userProjectIds?: number[];
 	}): Promise<ProjectGetAllItemResponseDto[]> {
-		const projects = hasRootPermission
-			? await this.projectRepository.findAllWithoutPagination({
-					userProjectIds: [],
-				})
-			: await this.projectRepository.findAllWithoutPagination({
-					userProjectIds,
-				});
+		const projects =
+			userProjectIds && userProjectIds.length !== EMPTY_LENGTH
+				? await this.projectRepository.findAllWithoutPagination({
+						userProjectIds,
+					})
+				: await this.projectRepository.findAllWithoutPagination({
+						userProjectIds: [],
+					});
 
 		return projects.map((project) => project.toObject());
 	}
@@ -180,29 +178,6 @@ class ProjectService implements Service {
 
 			return { id, lastActivityDate, name };
 		});
-	}
-
-	public getAllowedProjectIds(
-		hasRootPermission: boolean,
-		userProjectIds: number[],
-		projectId?: number,
-	): number[] | undefined {
-		if (!projectId && hasRootPermission) {
-			return;
-		}
-
-		if (
-			projectId &&
-			!hasRootPermission &&
-			!userProjectIds.includes(projectId)
-		) {
-			throw new ActivityLogError({
-				message: ExceptionMessage.NO_PERMISSION,
-				status: HTTPCode.FORBIDDEN,
-			});
-		}
-
-		return projectId ? [projectId] : userProjectIds;
 	}
 
 	public async patch(

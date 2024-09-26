@@ -1,3 +1,4 @@
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { type Entity } from "~/libs/types/types.js";
 import { type GroupModel } from "~/modules/groups/group.model.js";
 import { type PermissionModel } from "~/modules/permissions/permission.model.js";
@@ -193,7 +194,10 @@ class UserEntity implements Entity {
 					key: permissions.key,
 					name: permissions.name,
 				})),
-				projectId: projectGroup.projects.map((project) => project.id),
+				projectId:
+					projectGroup.projects.length === EMPTY_LENGTH
+						? EMPTY_LENGTH
+						: (projectGroup.projects[EMPTY_LENGTH]?.id ?? EMPTY_LENGTH),
 			})),
 		};
 	}
