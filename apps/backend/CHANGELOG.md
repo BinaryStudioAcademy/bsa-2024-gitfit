@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.38.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.37.0...backend-v1.38.0) (2024-09-26)
+
+
+### Features
+
+* ability to mark notifications as read gf-460 ([#498](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/498)) ([3ce21f7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3ce21f7c102898077d4be4177b02534277972c06))
+
 ## [1.37.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.36.0...backend-v1.37.0) (2024-09-25)
 
 

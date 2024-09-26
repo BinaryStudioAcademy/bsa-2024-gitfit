@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.59.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.58.0...v1.59.0) (2024-09-26)
+
+
+### Features
+
+* ability to mark notifications as read gf-460 ([#498](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/498)) ([3ce21f7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3ce21f7c102898077d4be4177b02534277972c06))
+* adjusted style for date column to align with the table head gf-545 ([#548](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/548)) ([11a237c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/11a237c7c2b59a3a2a7049ef97ae4134229b2db0))
+* update schema in readme to match the app gf-543 ([#544](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/544)) ([14abdce](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/14abdcee1b61e60aef4f4be1017c50e8cbddfd75))
+
+
+### Bug Fixes
+
+* incorrect message displayed when all contributors are hidden gf-538 ([#539](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/539)) ([0dc06ae](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0dc06aef56a3064730def9a6e46540d2c7ab79e8))
+* incorrect time display and color coding for analytics last sync time gf-547 ([#549](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/549)) ([6247724](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/624772468a6305b04c95460ef0e5f4af0f33e955))
+
 ## [1.58.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.57.0...v1.58.0) (2024-09-25)
 
 
