@@ -18,4 +18,22 @@ const loadAll = createAsyncThunk<
 	return await notificationApi.getAll(query);
 });
 
-export { loadAll };
+const loadUnreadCount = createAsyncThunk<number, undefined, AsyncThunkConfig>(
+	`${sliceName}/load-unread-count`,
+	async (_, { extra }) => {
+		const { notificationApi } = extra;
+
+		return await notificationApi.getUnreadCount();
+	},
+);
+
+const markAsRead = createAsyncThunk<boolean, undefined, AsyncThunkConfig>(
+	`${sliceName}/mark-as-read`,
+	async (_, { extra }) => {
+		const { notificationApi } = extra;
+
+		return await notificationApi.markAsRead();
+	},
+);
+
+export { loadAll, loadUnreadCount, markAsRead };

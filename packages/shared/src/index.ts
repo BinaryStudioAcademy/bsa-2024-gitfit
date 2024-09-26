@@ -112,6 +112,7 @@ export {
 	type NotificationGetAllRequestDto,
 	type NotificationGetAllResponseDto,
 	NotificationsApiPath,
+	NotificationStatus,
 } from "./modules/notifications/notifications.js";
 export {
 	type PermissionGetAllItemResponseDto,
