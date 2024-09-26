@@ -65,13 +65,13 @@ const Contributors = (): JSX.Element => {
 		totalItemsCount: totalCount,
 	});
 
-	const loadContributors = useCallback(() => {
+	const handleLoadContributors = useCallback(() => {
 		void dispatch(contributorActions.loadAll({ page, pageSize }));
 	}, [dispatch, page, pageSize]);
 
 	useEffect(() => {
-		loadContributors();
-	}, [loadContributors]);
+		handleLoadContributors();
+	}, [handleLoadContributors]);
 
 	const {
 		isOpened: isUpdateModalOpened,
@@ -230,7 +230,7 @@ const Contributors = (): JSX.Element => {
 		[handleEdit, handleMerge, handleSplit],
 	);
 
-	const loadContributorsByProjectId = useCallback(
+	const handleLoadContributorsByProjectId = useCallback(
 		(projectId: number) => {
 			void dispatch(
 				contributorActions.loadAll({
@@ -268,13 +268,13 @@ const Contributors = (): JSX.Element => {
 		(event_?: React.BaseSyntheticEvent): void => {
 			void handleSubmit(({ projectId }) => {
 				if (projectId) {
-					loadContributorsByProjectId(projectId);
+					handleLoadContributorsByProjectId(projectId);
 				} else {
-					loadContributors();
+					handleLoadContributors();
 				}
 			})(event_);
 		},
-		[handleSubmit, loadContributorsByProjectId, loadContributors],
+		[handleSubmit, handleLoadContributorsByProjectId, handleLoadContributors],
 	);
 
 	useEffect(() => {
