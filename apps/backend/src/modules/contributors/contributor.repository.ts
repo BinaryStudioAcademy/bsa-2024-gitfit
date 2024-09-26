@@ -1,5 +1,6 @@
 import { raw } from "objection";
 
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { SortType } from "~/libs/enums/enums.js";
 import {
 	type PaginationQueryParameters,
@@ -105,7 +106,7 @@ class ContributorRepository implements Repository {
 			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
 			.leftJoin("projects", "activity_logs.project_id", "projects.id");
 
-		if (projectIds) {
+		if (projectIds && projectIds.length !== EMPTY_LENGTH) {
 			query.whereIn("projects.id", projectIds);
 		}
 
