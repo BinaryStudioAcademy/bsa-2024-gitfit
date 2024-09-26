@@ -56,6 +56,18 @@ class NotificationController extends BaseController {
 			method: "GET",
 			path: NotificationsApiPath.ROOT,
 		});
+
+		this.addRoute({
+			handler: (options) => this.getUnreadCount(options),
+			method: "GET",
+			path: NotificationsApiPath.UNREAD,
+		});
+
+		this.addRoute({
+			handler: (options) => this.markAsRead(options),
+			method: "PATCH",
+			path: NotificationsApiPath.READ,
+		});
 	}
 
 	/**
@@ -105,6 +117,58 @@ class NotificationController extends BaseController {
 				pageSize,
 				userId: (user as UserAuthResponseDto).id,
 			}),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /notifications/unread-count:
+	 *   get:
+	 *     description: Returns the count of unread notifications
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: object
+	 *               properties:
+	 *                 items:
+	 *                  type: number
+	 *                  description: The number of unread notifications
+	 */
+	private async getUnreadCount(
+		options: APIHandlerOptions,
+	): Promise<APIHandlerResponse> {
+		const { user } = options;
+
+		return {
+			payload: await this.notificationService.getUnreadCount(
+				(user as UserAuthResponseDto).id,
+			),
+			status: HTTPCode.OK,
+		};
+	}
+
+	/**
+	 * @swagger
+	 * /notifications/read:
+	 *   patch:
+	 *     description: Mark notification as read
+	 *     responses:
+	 *       200:
+	 *         description: Successful operation
+	 */
+	private async markAsRead(
+		options: APIHandlerOptions,
+	): Promise<APIHandlerResponse> {
+		const { user } = options;
+
+		return {
+			payload: await this.notificationService.bulkMarkAsRead(
+				(user as UserAuthResponseDto).id,
+			),
 			status: HTTPCode.OK,
 		};
 	}

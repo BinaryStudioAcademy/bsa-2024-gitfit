@@ -12,12 +12,14 @@ import styles from "./styles.module.css";
 type Properties = {
 	activityLogs: ActivityLogGetAllItemAnalyticsResponseDto[];
 	dateRange: [Date, Date];
+	emptyPlaceholder: string;
 	isLoading: boolean;
 };
 
 const AnalyticsTable = ({
 	activityLogs,
 	dateRange,
+	emptyPlaceholder,
 	isLoading,
 }: Properties): JSX.Element => {
 	const [startDate, endDate] = dateRange;
@@ -35,7 +37,7 @@ const AnalyticsTable = ({
 			<Table<AnalyticsRow>
 				columns={analyticsColumns}
 				data={analyticsData}
-				emptyPlaceholder="No contributors matching your search criteria."
+				emptyPlaceholder={emptyPlaceholder}
 				isFullHeight
 				isLoading={isLoading}
 			/>

@@ -1,1 +1,1 @@
-export { NotificationsApiPath } from "@git-fit/shared";
+export { NotificationsApiPath, NotificationStatus } from "@git-fit/shared";
