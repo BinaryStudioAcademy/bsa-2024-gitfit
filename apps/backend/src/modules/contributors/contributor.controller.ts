@@ -11,7 +11,7 @@ import { type Logger } from "~/libs/modules/logger/logger.js";
 import { type ContributorService } from "./contributor.service.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
 import {
-	type ContributorGetAllRequestDto,
+	type ContributorGetAllQueryParameters,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 	type ContributorSplitRequestDto,
@@ -67,7 +67,7 @@ class ContributorController extends BaseController {
 			handler: (options) =>
 				this.findAll(
 					options as APIHandlerOptions<{
-						query: ContributorGetAllRequestDto;
+						query: ContributorGetAllQueryParameters;
 					}>,
 				),
 			method: "GET",
@@ -188,7 +188,7 @@ class ContributorController extends BaseController {
 	 */
 	private async findAll(
 		options: APIHandlerOptions<{
-			query: ContributorGetAllRequestDto;
+			query: ContributorGetAllQueryParameters;
 		}>,
 	): Promise<APIHandlerResponse> {
 		const { contributorName, hasHidden, orderBy, page, pageSize, projectId } =
@@ -196,7 +196,7 @@ class ContributorController extends BaseController {
 
 		const query = {
 			...(contributorName ? { contributorName } : {}),
-			...(hasHidden ? { hasHidden: Boolean(hasHidden) } : {}),
+			...(hasHidden ? { hasHidden: (hasHidden as unknown) === "true" } : {}),
 			...(orderBy ? { orderBy } : {}),
 			...(page ? { page: Number(page) } : {}),
 			...(pageSize ? { pageSize: Number(pageSize) } : {}),

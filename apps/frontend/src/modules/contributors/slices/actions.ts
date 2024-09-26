@@ -6,7 +6,7 @@ import { actions as projectActions } from "~/modules/projects/projects.js";
 
 import {
 	type ContributorGetAllItemResponseDto,
-	type ContributorGetAllRequestDto,
+	type ContributorGetAllQueryParameters,
 	type ContributorGetAllResponseDto,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
@@ -17,7 +17,7 @@ import { name as sliceName } from "./contributor.slice.js";
 
 const loadAll = createAsyncThunk<
 	ContributorGetAllResponseDto,
-	ContributorGetAllRequestDto,
+	ContributorGetAllQueryParameters,
 	AsyncThunkConfig
 >(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { contributorApi } = extra;

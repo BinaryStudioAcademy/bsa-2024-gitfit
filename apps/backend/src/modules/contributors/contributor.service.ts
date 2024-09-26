@@ -9,7 +9,7 @@ import { ContributorError } from "./libs/exceptions/exceptions.js";
 import {
 	type ContributorCreateRequestDto,
 	type ContributorGetAllItemResponseDto,
-	type ContributorGetAllRequestDto,
+	type ContributorGetAllQueryParameters,
 	type ContributorGetAllResponseDto,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
@@ -56,7 +56,7 @@ class ContributorService implements Service {
 	}
 
 	public async findAll(
-		query: ContributorGetAllRequestDto,
+		query: ContributorGetAllQueryParameters,
 	): Promise<ContributorGetAllResponseDto> {
 		const contributors = await this.contributorRepository.findAll(query);
 

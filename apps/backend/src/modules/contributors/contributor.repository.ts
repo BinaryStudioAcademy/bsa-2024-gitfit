@@ -12,7 +12,7 @@ import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorModel } from "./contributor.model.js";
 import { ContributorOrderBy } from "./libs/enums/enums.js";
 import {
-	type ContributorGetAllRequestDto,
+	type ContributorGetAllQueryParameters,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 } from "./libs/types/types.js";
@@ -64,7 +64,7 @@ class ContributorRepository implements Repository {
 		page,
 		pageSize,
 		projectId,
-	}: ContributorGetAllRequestDto): Promise<
+	}: ContributorGetAllQueryParameters): Promise<
 		PaginationResponseDto<ContributorEntity>
 	> {
 		const query = this.contributorModel

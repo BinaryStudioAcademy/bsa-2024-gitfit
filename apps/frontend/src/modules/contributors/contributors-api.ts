@@ -12,7 +12,7 @@ import {
 	type ContributorSplitRequestDto,
 } from "./contributors.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
-import { type ContributorGetAllRequestDto } from "./libs/types/types.js";
+import { type ContributorGetAllQueryParameters } from "./libs/types/types.js";
 
 type Constructor = {
 	baseUrl: string;
@@ -26,7 +26,7 @@ class ContributorApi extends BaseHTTPApi {
 	}
 
 	public async getAll(
-		query: ContributorGetAllRequestDto,
+		query: ContributorGetAllQueryParameters,
 	): Promise<ContributorGetAllResponseDto> {
 		const { contributorName, hasHidden, orderBy, page, pageSize, projectId } =
 			query;
