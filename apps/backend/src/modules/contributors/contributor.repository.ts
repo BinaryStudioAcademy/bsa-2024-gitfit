@@ -100,12 +100,15 @@ class ContributorRepository implements Repository {
 
 		switch (orderBy) {
 			case ContributorOrderBy.CREATED_AT: {
-				query.orderBy("created_at", SortType.DESCENDING);
+				query.orderBy(ContributorOrderBy.CREATED_AT, SortType.DESCENDING);
 				break;
 			}
 
 			case ContributorOrderBy.LAST_ACTIVITY_DATE: {
-				query.orderBy("last_activity_date", SortType.DESCENDING);
+				query.orderBy(
+					ContributorOrderBy.LAST_ACTIVITY_DATE,
+					SortType.DESCENDING,
+				);
 				break;
 			}
 		}
