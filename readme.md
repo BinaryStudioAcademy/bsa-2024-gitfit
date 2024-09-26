@@ -175,7 +175,6 @@ erDiagram
       dateTime updated_at
       int receiver_user_id FK
       enum status
-      enum type
       varchar payload
    }
 
