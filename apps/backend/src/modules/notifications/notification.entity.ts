@@ -1,5 +1,6 @@
-import { type Entity } from "~/libs/types/types.js";
+import { type Entity, type ValueOf } from "~/libs/types/types.js";
 
+import { NotificationStatus } from "./libs/enums/enums.js";
 import { type NotificationGetAllItemResponseDto } from "./libs/types/types.js";
 
 class NotificationEntity implements Entity {
@@ -11,21 +12,26 @@ class NotificationEntity implements Entity {
 
 	private receiverUserId!: number;
 
+	private status!: ValueOf<typeof NotificationStatus>;
+
 	private constructor({
 		createdAt,
 		id,
 		payload,
 		receiverUserId,
+		status,
 	}: {
 		createdAt: null | string;
 		id: null | number;
 		payload: string;
 		receiverUserId: number;
+		status: ValueOf<typeof NotificationStatus>;
 	}) {
 		this.createdAt = createdAt;
 		this.id = id;
 		this.payload = payload;
 		this.receiverUserId = receiverUserId;
+		this.status = status;
 	}
 
 	public static initialize({
@@ -33,17 +39,20 @@ class NotificationEntity implements Entity {
 		id,
 		payload,
 		receiverUserId,
+		status,
 	}: {
 		createdAt: string;
 		id: null | number;
 		payload: string;
 		receiverUserId: number;
+		status: ValueOf<typeof NotificationStatus>;
 	}): NotificationEntity {
 		return new NotificationEntity({
 			createdAt,
 			id,
 			payload,
 			receiverUserId,
+			status,
 		});
 	}
 
@@ -59,6 +68,7 @@ class NotificationEntity implements Entity {
 			id: null,
 			payload,
 			receiverUserId,
+			status: NotificationStatus.UNREAD,
 		});
 	}
 
@@ -77,6 +87,7 @@ class NotificationEntity implements Entity {
 			createdAt: this.createdAt as string,
 			id: this.id as number,
 			payload: this.payload,
+			status: this.status,
 		};
 	}
 }

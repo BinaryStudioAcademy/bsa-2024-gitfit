@@ -6,7 +6,7 @@
 	border-radius: 4px;
 }
 
-.notification-item:hover {
+.notification-item-unread {
 	background-color: var(--color-background-hover);
 }
 

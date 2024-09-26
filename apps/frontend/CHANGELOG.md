@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.54.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.53.0...frontend-v1.54.0) (2024-09-25)
+
+
+### Features
+
+* add validation notification for incorrect password on login gf-517 ([#532](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/532)) ([1cd0f50](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1cd0f502ef3746940863937fd6f0b9c0ba11044a))
+
+
+### Bug Fixes
+
+* remove isDirty from analytics page gf-529 ([#531](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/531)) ([f43187b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f43187b1dd2fbe81eedf4ebe5d5a089f36602e82))
+
 ## [1.53.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.52.0...frontend-v1.53.0) (2024-09-25)
 
 
