@@ -47,6 +47,7 @@ const ContributorCard = ({
 }: Properties): JSX.Element => {
 	const analyticsRoute = configureQueryString(AppRoute.ANALYTICS, [
 		[QueryParameterName.PROJECT_ID, projectId],
+		[QueryParameterName.SEARCH, contributor.name],
 	]);
 
 	const currentDate = getStartOfDay(new Date());
@@ -94,7 +95,11 @@ const ContributorCard = ({
 			{hasActivityIndicator && (
 				<ActivityIndicator label={lastUpdateLabel} status={colorStatus} />
 			)}
-			{hasActivityData && <Chart data={activityData} />}
+			{hasActivityData && (
+				<NavLink to={analyticsRoute}>
+					<Chart data={activityData} isCursorPointer />
+				</NavLink>
+			)}
 			<ContributorMenu
 				contributorId={contributor.id}
 				hasEditPermission={hasEditPermission}
