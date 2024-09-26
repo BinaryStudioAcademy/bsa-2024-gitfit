@@ -13,6 +13,7 @@ const getAnalyticsColumns = (
 			size: 220,
 		},
 	];
+
 	const dateColumns: TableColumn<AnalyticsRow>[] = dateRange.map(
 		(date, index) => ({
 			accessorKey: `commitsNumber.${String(index)}`,
