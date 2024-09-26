@@ -1,5 +1,4 @@
-import { Loader } from "~/libs/components/components.js";
-import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
+import { Button, Loader } from "~/libs/components/components.js";
 import { useCallback, useMemo } from "~/libs/hooks/hooks.js";
 import { type ActivityLogGetAllItemAnalyticsResponseDto } from "~/modules/activity/activity.js";
 import {
@@ -8,15 +7,21 @@ import {
 } from "~/pages/project/libs/types/types.js";
 
 import { ContributorCard } from "../components.js";
+import { SyncTime } from "./libs/components/components.js";
 import styles from "./styles.module.css";
 
 type Properties = {
 	activityLogs: ActivityLogGetAllItemAnalyticsResponseDto[];
+	analyticsLastSyncedAt: null | string;
+	analyticsLastSyncedByUser: null | string;
 	contributors: ContributorGetAllItemResponseDto[];
+	hasContributors: boolean;
 	hasEditPermission: boolean;
 	hasMergePermission: boolean;
+	hasSetupAnalyticsPermission: boolean;
 	hasSplitPermission: boolean;
 	isLoading: boolean;
+	onClickSetupAgain: () => void;
 	onEditContributor: (contributorId: number) => void;
 	onMergeContributor: (contributorId: number) => void;
 	onSplitContributor: (contributorId: number) => void;
@@ -25,17 +30,21 @@ type Properties = {
 
 const ContributorsList = ({
 	activityLogs,
+	analyticsLastSyncedAt,
+	analyticsLastSyncedByUser,
 	contributors,
+	hasContributors,
 	hasEditPermission,
 	hasMergePermission,
+	hasSetupAnalyticsPermission,
 	hasSplitPermission,
 	isLoading,
+	onClickSetupAgain,
 	onEditContributor,
 	onMergeContributor,
 	onSplitContributor,
 	projectId,
 }: Properties): JSX.Element => {
-	const hasContributors = contributors.length > EMPTY_LENGTH;
 	const isListShown = !isLoading && hasContributors;
 	const isEmptyPlaceholderShown = !isLoading && !hasContributors;
 
@@ -73,9 +82,30 @@ const ContributorsList = ({
 		return activitiesMap;
 	}, [activityLogs]);
 
+	const hasSyncTime =
+		analyticsLastSyncedAt !== null && analyticsLastSyncedByUser !== null;
+
 	return (
 		<div className={styles["container"]}>
-			<h2 className={styles["title"]}>Contributors</h2>
+			<div className={styles["contributors-header-wrapper"]}>
+				<h2 className={styles["title"]}>Contributors</h2>
+				{hasSyncTime && (
+					<SyncTime
+						analyticsLastSyncedAt={analyticsLastSyncedAt}
+						analyticsLastSyncedByUser={analyticsLastSyncedByUser}
+					/>
+				)}
+
+				{hasSetupAnalyticsPermission && hasContributors && (
+					<div className={styles["button-wrapper"]}>
+						<Button
+							label="Setup Again"
+							onClick={onClickSetupAgain}
+							variant="outlined"
+						/>
+					</div>
+				)}
+			</div>
 			{isLoading && <Loader />}
 			{isListShown && (
 				<ul className={styles["list"]}>

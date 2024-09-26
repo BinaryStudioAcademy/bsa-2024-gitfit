@@ -57,7 +57,7 @@ const Analytics = (): JSX.Element => {
 		queryParameterName: QueryParameterName.PROJECT_ID,
 	});
 
-	const { control, errors, handleSubmit, isDirty } = useAppForm({
+	const { control, errors, handleSubmit } = useAppForm({
 		defaultValues: {
 			dateRange: [
 				subtractDays(todayDate, ANALYTICS_DEFAULT_DATE_RANGE),
@@ -117,12 +117,6 @@ const Analytics = (): JSX.Element => {
 
 	const projectOptions = getProjectOptions(projects);
 
-	useEffect(() => {
-		if (isDirty) {
-			handleFormSubmit();
-		}
-	}, [dateRangeValue, projectValue, isDirty, handleFormSubmit]);
-
 	const isLoading =
 		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
@@ -149,13 +143,15 @@ const Analytics = (): JSX.Element => {
 							placeholder="Select project"
 						/>
 					</div>
-					<DateInput
-						control={control}
-						maxDate={todayDate}
-						maxRange={ANALYTICS_DATE_MAX_RANGE}
-						minDate={minChoosableDate}
-						name="dateRange"
-					/>
+					<div className={styles["date-input-wrapper"]}>
+						<DateInput
+							control={control}
+							maxDate={todayDate}
+							maxRange={ANALYTICS_DATE_MAX_RANGE}
+							minDate={minChoosableDate}
+							name="dateRange"
+						/>
+					</div>
 				</form>
 				<AnalyticsTable
 					activityLogs={activityLogs}
