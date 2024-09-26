@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.37.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.36.0...backend-v1.37.0) (2024-09-25)
+
+
+### Features
+
+* order contributors list on the project details page by the last activity (the latest active ones on top) gf-533 ([#537](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/537)) ([7286b31](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7286b31ffaee75053516686c5a4a743fd57f6daa))
+
 ## [1.36.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.35.0...backend-v1.36.0) (2024-09-25)
 
 
