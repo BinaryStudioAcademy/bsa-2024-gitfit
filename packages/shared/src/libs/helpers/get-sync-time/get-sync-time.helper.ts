@@ -16,7 +16,7 @@ const getSyncTime = (date: Date, baseDate: Date): SyncTimeResult => {
 		return { hoursDifference: ONE_HOUR, label: "1 hour ago" };
 	}
 
-	if (hoursDifference <= HOURS_IN_A_DAY) {
+	if (hoursDifference < HOURS_IN_A_DAY) {
 		return {
 			hoursDifference,
 			label: `${String(hoursDifference)} ${hoursDifference === ONE_HOUR ? "hour" : "hours"} ago`,
@@ -24,6 +24,7 @@ const getSyncTime = (date: Date, baseDate: Date): SyncTimeResult => {
 	}
 
 	return {
+		hoursDifference,
 		label: formatDistance(date, baseDate, { addSuffix: true }),
 	};
 };
