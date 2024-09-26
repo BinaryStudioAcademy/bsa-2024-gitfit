@@ -45,8 +45,27 @@
 }
 
 .notifications-icon-wrapper {
+	position: relative;
 	display: flex;
 	color: var(--color-text-primary);
+}
+
+.notifications-badge-count {
+	position: absolute;
+	top: -15%;
+	right: -12%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 14px;
+	height: 14px;
+	font-family: Inter, sans-serif;
+	font-size: 10px;
+	font-weight: 600;
+	color: var(--color-text-primary);
+	text-align: center;
+	background-color: var(--color-brand-primary);
+	border-radius: 50%;
 }
 
 .user-popover-trigger {

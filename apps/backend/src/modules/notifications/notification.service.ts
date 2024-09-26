@@ -38,6 +38,13 @@ class NotificationService implements Service {
 		};
 	}
 
+	public async bulkMarkAsRead(userId: number): Promise<boolean> {
+		const updatedCount =
+			await this.notificationRepository.bulkMarkAsRead(userId);
+
+		return Boolean(updatedCount);
+	}
+
 	public async create(
 		payload: NotificationCreateRequestDto,
 	): Promise<NotificationGetAllItemResponseDto> {
@@ -70,6 +77,10 @@ class NotificationService implements Service {
 			items: notifications.items.map((item) => item.toObject()),
 			totalItems: notifications.totalItems,
 		};
+	}
+
+	public async getUnreadCount(userId: number): Promise<number> {
+		return await this.notificationRepository.getUnreadCount(userId);
 	}
 
 	public update(): ReturnType<Service["update"]> {

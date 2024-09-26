@@ -14,6 +14,7 @@ const ExceptionMessage = {
 	INVALID_TOKEN_NO_USER_ID: "Token is invalid: userId missing.",
 	NO_PERMISSION: "You do not have permission to access this resource.",
 	NO_TOKEN_PROVIDED: "No token provided.",
+	NOTIFICATION_NOT_FOUND: "Notification not found.",
 	PROJECT_API_KEY_ALREADY_EXISTS: "API key already exists for the project.",
 	PROJECT_API_KEY_NOT_FOUND: "API key not found.",
 	PROJECT_GROUP_CREATE_FAILED: "Failed to create project group.",

@@ -73,6 +73,7 @@ const NotificationsPopover = ({
 								<NotificationItem
 									key={notification.id}
 									message={notification.payload}
+									status={notification.status}
 									timestamp={formatRelativeTime(notification.createdAt)}
 								/>
 							))}
