@@ -5,6 +5,7 @@ import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
 type Properties = {
 	hasEditPermission: boolean;
+	hasManageAllProjectsPermission: boolean;
 	hasManagePermission: boolean;
 	onDelete: () => void;
 	onEdit: () => void;
@@ -13,6 +14,7 @@ type Properties = {
 
 const ProjectDetailsMenu = ({
 	hasEditPermission,
+	hasManageAllProjectsPermission,
 	hasManagePermission,
 	onDelete,
 	onEdit,
@@ -37,33 +39,36 @@ const ProjectDetailsMenu = ({
 		},
 	);
 
-	const isMenuShown = hasManagePermission || hasEditPermission;
+	const isMenuShown =
+		hasManagePermission || hasEditPermission || hasManageAllProjectsPermission;
 
 	return (
 		<>
 			{isMenuShown && (
 				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-					{(hasEditPermission || hasManagePermission) && (
+					{(hasEditPermission ||
+						hasManagePermission ||
+						hasManageAllProjectsPermission) && (
 						<MenuItem
 							iconName="pencil"
 							label="Edit"
 							onClick={handleEditClick}
 						/>
 					)}
-					{hasManagePermission && (
-						<MenuItem
-							href={projectAccessManagementRoute}
-							iconName="access"
-							label="Manage Access"
-						/>
-					)}
-					{hasManagePermission && (
-						<MenuItem
-							iconName="trashBin"
-							label="Delete"
-							onClick={handleDeleteClick}
-							variant="danger"
-						/>
+					{(hasManagePermission || hasManageAllProjectsPermission) && (
+						<>
+							<MenuItem
+								href={projectAccessManagementRoute}
+								iconName="access"
+								label="Manage Access"
+							/>
+							<MenuItem
+								iconName="trashBin"
+								label="Delete"
+								onClick={handleDeleteClick}
+								variant="danger"
+							/>
+						</>
 					)}
 				</Menu>
 			)}

@@ -315,6 +315,7 @@ const Project = (): JSX.Element => {
 
 							<ProjectDetailsMenu
 								hasEditPermission={hasEditPermission}
+								hasManageAllProjectsPermission={hasManageAllProjectsPermission}
 								hasManagePermission={hasManagePermission}
 								onDelete={handleDeleteProject}
 								onEdit={handleEditProject}
