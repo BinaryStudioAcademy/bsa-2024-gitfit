@@ -2,6 +2,7 @@ type IconName =
 	| "access"
 	| "analytics"
 	| "calendar"
+	| "check"
 	| "clipboard"
 	| "contributors"
 	| "cross"
@@ -18,6 +19,7 @@ type IconName =
 	| "search"
 	| "split"
 	| "strikedEye"
+	| "sync"
 	| "trashBin"
 	| "warning";
 

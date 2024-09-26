@@ -10,8 +10,13 @@ import { type ProjectModel } from "../projects/project.model.js";
 
 class ContributorModel extends AbstractModel {
 	public gitEmails!: GitEmailModel[];
+
+	public hiddenAt!: null | string;
+
 	public lastActivityDate!: null | string;
+
 	public name!: string;
+
 	public projects!: ProjectModel[];
 
 	public static override get relationMappings(): RelationMappings {

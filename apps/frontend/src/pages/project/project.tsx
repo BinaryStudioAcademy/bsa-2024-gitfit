@@ -6,6 +6,7 @@ import {
 	Navigate,
 	PageLayout,
 } from "~/libs/components/components.js";
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import {
 	AppRoute,
 	DataStatus,
@@ -66,6 +67,12 @@ const Project = (): JSX.Element => {
 	const { projectUserPermissions, userPermissions } = useAppSelector(
 		({ auth }) => auth,
 	);
+
+	const {
+		mergeContributorsStatus,
+		splitContributorsStatus,
+		updateContributorsStatus,
+	} = useAppSelector(({ contributors }) => contributors);
 
 	const {
 		isOpened: isSetupAnalyticsModalOpened,
@@ -176,11 +183,9 @@ const Project = (): JSX.Element => {
 						projectId,
 					}),
 				);
-				setContributorToEdit(null);
-				handleContributorUpdateModalClose();
 			}
 		},
-		[dispatch, contributorToEdit, handleContributorUpdateModalClose, projectId],
+		[dispatch, contributorToEdit, projectId],
 	);
 
 	const handleMergeContributor = useCallback(
@@ -203,11 +208,9 @@ const Project = (): JSX.Element => {
 				void dispatch(
 					contributorActions.merge({ id: contributorToMerge.id, payload }),
 				);
-				setContributorToMerge(null);
-				handleContributorMergeModalClose();
 			}
 		},
-		[contributorToMerge, dispatch, handleContributorMergeModalClose],
+		[contributorToMerge, dispatch],
 	);
 
 	const handleSplitContributor = useCallback(
@@ -230,12 +233,49 @@ const Project = (): JSX.Element => {
 				void dispatch(
 					contributorActions.split({ id: contributorToSplit.id, payload }),
 				);
-				setContributorToSplit(null);
-				handleContributorSplitModalClose();
 			}
 		},
-		[contributorToSplit, dispatch, handleContributorSplitModalClose],
+		[contributorToSplit, dispatch],
 	);
+
+	useEffect(() => {
+		if (updateContributorsStatus === DataStatus.FULFILLED) {
+			handleContributorUpdateModalClose();
+			setContributorToEdit(null);
+		}
+	}, [
+		updateContributorsStatus,
+		handleContributorUpdateModalClose,
+		setContributorToEdit,
+	]);
+
+	useEffect(() => {
+		if (mergeContributorsStatus === DataStatus.FULFILLED) {
+			handleContributorMergeModalClose();
+			setContributorToMerge(null);
+		}
+	}, [
+		mergeContributorsStatus,
+		handleContributorMergeModalClose,
+		setContributorToMerge,
+	]);
+
+	useEffect(() => {
+		if (splitContributorsStatus === DataStatus.FULFILLED) {
+			handleContributorSplitModalClose();
+			setContributorToSplit(null);
+
+			void dispatch(
+				projectActions.loadAllContributorsByProjectId(projectId as string),
+			);
+		}
+	}, [
+		dispatch,
+		projectId,
+		splitContributorsStatus,
+		handleContributorSplitModalClose,
+		setContributorToSplit,
+	]);
 
 	const isLoading =
 		projectStatus === DataStatus.PENDING || projectStatus === DataStatus.IDLE;
@@ -283,6 +323,8 @@ const Project = (): JSX.Element => {
 	const hasMergeContributorPermission = hasManageAllProjectsPermission;
 	const hasSplitContributorPermission = hasManageAllProjectsPermission;
 
+	const hasContributors = projectContributors.length > EMPTY_LENGTH;
+
 	if (isRejected) {
 		return <NotFound />;
 	}
@@ -312,7 +354,6 @@ const Project = (): JSX.Element => {
 					<div className={styles["project-layout"]}>
 						<div className={styles["project-header"]}>
 							<h1 className={styles["title"]}>{project.name}</h1>
-
 							<ProjectDetailsMenu
 								hasEditPermission={hasEditPermission}
 								hasManageAllProjectsPermission={hasManageAllProjectsPermission}
@@ -332,7 +373,7 @@ const Project = (): JSX.Element => {
 							</p>
 						</div>
 
-						{hasSetupAnalyticsPermission && (
+						{hasSetupAnalyticsPermission && !hasContributors && (
 							<div>
 								<Button
 									label="Setup Analytics"
@@ -344,14 +385,20 @@ const Project = (): JSX.Element => {
 						<div className={styles["contributors-list-wrapper"]}>
 							<ContributorsList
 								activityLogs={projectContributorsActivity}
+								analyticsLastSyncedAt={project.analyticsLastSyncedAt}
+								analyticsLastSyncedByUser={project.analyticsLastSyncedByUser}
 								contributors={projectContributors}
+								hasContributors={hasContributors}
 								hasEditPermission={hasEditContributorPermission}
 								hasMergePermission={hasMergeContributorPermission}
+								hasSetupAnalyticsPermission={hasSetupAnalyticsPermission}
 								hasSplitPermission={hasSplitContributorPermission}
 								isLoading={isContributorsDataLoading}
+								onClickSetupAgain={onSetupAnalyticsModalOpen}
 								onEditContributor={handleEditContributor}
 								onMergeContributor={handleMergeContributor}
 								onSplitContributor={handleSplitContributor}
+								projectId={projectId as string}
 							/>
 						</div>
 					</div>

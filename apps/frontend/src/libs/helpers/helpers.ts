@@ -4,11 +4,13 @@ export { getValidClassNames } from "./get-valid-classes/get-valid-classes.helper
 export {
 	addDays,
 	checkHasPermission,
+	configureQueryString,
 	configureString,
 	formatDate,
 	formatRelativeTime,
 	getDateRange,
 	getDifferenceInDays,
+	getEndOfDay,
 	getRelativeDate,
 	getStartOfDay,
 	initDebounce,

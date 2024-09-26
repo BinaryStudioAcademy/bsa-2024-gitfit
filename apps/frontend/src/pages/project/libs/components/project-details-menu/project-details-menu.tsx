@@ -45,16 +45,14 @@ const ProjectDetailsMenu = ({
 	return (
 		<>
 			{isMenuShown && (
-				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-					{(hasEditPermission ||
-						hasManagePermission ||
-						hasManageAllProjectsPermission) && (
-						<MenuItem
-							iconName="pencil"
-							label="Edit"
-							onClick={handleEditClick}
-						/>
-					)}
+				<Menu
+					buttonVariant="outlined"
+					isOpened={isOpened}
+					onClose={onClose}
+					onOpen={onOpen}
+				>
+					<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
+
 					{(hasManagePermission || hasManageAllProjectsPermission) && (
 						<>
 							<MenuItem

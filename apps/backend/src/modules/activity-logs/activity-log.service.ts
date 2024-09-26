@@ -1,6 +1,11 @@
 import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
-import { formatDate, getDateRange } from "~/libs/helpers/helpers.js";
+import {
+	formatDate,
+	getDateRange,
+	getEndOfDay,
+	getStartOfDay,
+} from "~/libs/helpers/helpers.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Service } from "~/libs/types/types.js";
 import { type ContributorService } from "~/modules/contributors/contributors.js";
@@ -132,6 +137,7 @@ class ActivityLogService implements Service {
 	}
 
 	public async findAll({
+		contributorName,
 		endDate,
 		hasRootPermission,
 		projectId,
@@ -143,7 +149,7 @@ class ActivityLogService implements Service {
 	} & ActivityLogQueryParameters): Promise<ActivityLogGetAllAnalyticsResponseDto> {
 		const projectIdParsed = projectId ? Number(projectId) : undefined;
 
-		let projectIds: number[];
+		let permissionedProjectIds: number[];
 
 		if (projectIdParsed) {
 			if (!hasRootPermission && !userProjectIds.includes(projectIdParsed)) {
@@ -153,27 +159,49 @@ class ActivityLogService implements Service {
 				});
 			}
 
-			projectIds = [projectIdParsed];
+			permissionedProjectIds = [projectIdParsed];
 		} else if (hasRootPermission) {
-			projectIds = [];
+			permissionedProjectIds = [];
 		} else {
-			projectIds = userProjectIds;
+			permissionedProjectIds = userProjectIds;
 		}
 
+		const formattedStartDate = formatDate(
+			getStartOfDay(new Date(startDate)),
+			"yyyy-MM-dd",
+		);
+
+		const formattedEndDate = formatDate(
+			getEndOfDay(new Date(endDate)),
+			"yyyy-MM-dd",
+		);
+
 		const activityLogsEntities = await this.activityLogRepository.findAll({
-			endDate,
-			projectIds,
-			startDate,
+			contributorName,
+			endDate: formattedEndDate,
+			permissionedProjectIds,
+			projectId,
+			startDate: formattedStartDate,
 		});
 
 		const activityLogs = activityLogsEntities.items.map((item) =>
 			item.toObject(),
 		);
 
-		const allContributors =
-			await this.contributorService.findAllByProjects(projectIds);
+		const allContributors = await (projectId
+			? this.contributorService.findAllByProjectId({
+					contributorName: contributorName ?? "",
+					hasHidden: false,
+					permissionedProjectIds,
+					projectId: Number(projectId),
+				})
+			: this.contributorService.findAllWithoutPagination({
+					contributorName: contributorName ?? "",
+					hasHidden: false,
+					permissionedProjectIds,
+				}));
 
-		const dateRange = getDateRange(startDate, endDate);
+		const dateRange = getDateRange(formattedStartDate, formattedEndDate);
 
 		const INITIAL_COMMITS_NUMBER = 0;
 		const contributorMap: Record<string, number[]> = {};
@@ -207,8 +235,11 @@ class ActivityLogService implements Service {
 
 				return {
 					commitsNumber: commitsArray,
-					contributorId: contributorId ?? "",
-					contributorName: contributorName ?? "",
+					contributor: {
+						hiddenAt: null,
+						id: contributorId as string,
+						name: contributorName as string,
+					},
 				};
 			}),
 		};

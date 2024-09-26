@@ -1,3 +1,4 @@
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { type Repository } from "~/libs/types/types.js";
 
 import { ActivityLogEntity } from "./activity-log.entity.js";
@@ -41,22 +42,36 @@ class ActivityLogRepository implements Repository {
 	}
 
 	public async findAll({
+		contributorName,
 		endDate,
-		projectIds,
+		permissionedProjectIds,
+		projectId,
 		startDate,
 	}: {
-		projectIds: number[] | undefined;
+		permissionedProjectIds: number[] | undefined;
 	} & ActivityLogQueryParameters): Promise<{ items: ActivityLogEntity[] }> {
 		const query = this.activityLogModel
 			.query()
-			.withGraphFetched("[gitEmail.contributor, project, createdByUser]")
+			.withGraphFetched("[project, createdByUser]")
+			.withGraphJoined("gitEmail.contributor")
 			.modifyGraph("gitEmail.contributor", (builder) => {
-				builder.select("id", "name");
+				builder.select("id", "name", "hiddenAt");
 			})
-			.whereBetween("activity_logs.date", [startDate, endDate]);
+			.whereNull("gitEmail:contributor.hiddenAt")
+			.whereBetween("activity_logs.date", [startDate, endDate])
+			.orderBy("date");
 
-		if (projectIds) {
-			query.whereIn("activity_logs.projectId", projectIds);
+		if (contributorName) {
+			query.whereILike("gitEmail:contributor.name", `%${contributorName}%`);
+		}
+
+		const hasPermissionedProjects =
+			permissionedProjectIds && permissionedProjectIds.length !== EMPTY_LENGTH;
+
+		if (projectId) {
+			query.where("project_id", projectId);
+		} else if (hasPermissionedProjects) {
+			query.whereIn("project_id", permissionedProjectIds);
 		}
 
 		const activityLogs = await query.orderBy("date");
