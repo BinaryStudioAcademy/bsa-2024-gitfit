@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.36.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.35.0...shared-v1.36.0) (2024-09-26)
+
+
+### Features
+
+* Adjust project permissions gf-351 ([#401](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/401)) ([1453c52](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1453c52927ec3940e40331a3a93ea96c6a3ce060))
+
 ## [1.35.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.34.0...shared-v1.35.0) (2024-09-26)
 
 
