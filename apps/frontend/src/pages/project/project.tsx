@@ -291,11 +291,6 @@ const Project = (): JSX.Element => {
 
 	const combinedPermissions = [...projectPermissions, ...userPermissions];
 
-	const hasManageAllProjectsPermission = checkHasPermission(
-		[PermissionKey.MANAGE_ALL_PROJECTS],
-		combinedPermissions,
-	);
-
 	const hasManagePermission =
 		checkHasPermission(
 			[ProjectPermissionKey.MANAGE_PROJECT],
@@ -317,6 +312,12 @@ const Project = (): JSX.Element => {
 			projectId,
 			projectUserPermissions,
 		});
+
+	const hasManageAllProjectsPermission =
+		checkHasPermission(
+			[PermissionKey.MANAGE_ALL_PROJECTS],
+			combinedPermissions,
+		) || hasManagePermission;
 
 	const hasSetupAnalyticsPermission = hasManageAllProjectsPermission;
 	const hasEditContributorPermission = hasManageAllProjectsPermission;
