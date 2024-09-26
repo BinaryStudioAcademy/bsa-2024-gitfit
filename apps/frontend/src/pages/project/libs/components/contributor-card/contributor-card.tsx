@@ -95,7 +95,11 @@ const ContributorCard = ({
 			{hasActivityIndicator && (
 				<ActivityIndicator label={lastUpdateLabel} status={colorStatus} />
 			)}
-			{hasActivityData && <Chart data={activityData} />}
+			{hasActivityData && (
+				<NavLink to={analyticsRoute}>
+					<Chart data={activityData} isCursorPointer />
+				</NavLink>
+			)}
 			<ContributorMenu
 				contributorId={contributor.id}
 				hasEditPermission={hasEditPermission}
