@@ -195,7 +195,7 @@ class ActivityLogController extends BaseController {
 			user: UserAuthResponseDto;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { endDate, projectId, startDate } = options.query;
+		const { contributorName, endDate, projectId, startDate } = options.query;
 		const { user } = options;
 
 		const groups = await this.projectGroupService.findAllByUserId(user.id);
@@ -216,6 +216,7 @@ class ActivityLogController extends BaseController {
 
 		return {
 			payload: await this.activityLogService.findAll({
+				contributorName,
 				endDate,
 				hasRootPermission,
 				projectId,
