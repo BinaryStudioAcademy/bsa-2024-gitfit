@@ -43,7 +43,7 @@ const ProjectDetailsMenu = ({
 		<>
 			{isMenuShown && (
 				<Menu isOpened={isOpened} onClose={onClose} onOpen={onOpen}>
-					{hasEditPermission && (
+					{(hasEditPermission || hasManagePermission) && (
 						<MenuItem
 							iconName="pencil"
 							label="Edit"
