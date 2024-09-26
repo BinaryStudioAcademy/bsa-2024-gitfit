@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.55.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.54.0...frontend-v1.55.0) (2024-09-26)
+
+
+### Features
+
+* ability to mark notifications as read gf-460 ([#498](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/498)) ([3ce21f7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3ce21f7c102898077d4be4177b02534277972c06))
+* adjusted style for date column to align with the table head gf-545 ([#548](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/548)) ([11a237c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/11a237c7c2b59a3a2a7049ef97ae4134229b2db0))
+
+
+### Bug Fixes
+
+* incorrect message displayed when all contributors are hidden gf-538 ([#539](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/539)) ([0dc06ae](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0dc06aef56a3064730def9a6e46540d2c7ab79e8))
+
 ## [1.54.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.53.0...frontend-v1.54.0) (2024-09-25)
 
 
