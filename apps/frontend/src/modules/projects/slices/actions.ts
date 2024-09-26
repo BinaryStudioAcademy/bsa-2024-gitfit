@@ -7,7 +7,10 @@ import {
 	type ActivityLogGetAllAnalyticsResponseDto,
 	type ActivityLogQueryParameters,
 } from "~/modules/activity/activity.js";
-import { type ContributorGetAllResponseDto } from "~/modules/contributors/contributors.js";
+import {
+	type ContributorGetAllResponseDto,
+	ContributorOrderBy,
+} from "~/modules/contributors/contributors.js";
 import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
@@ -108,7 +111,10 @@ const loadAllContributorsByProjectId = createAsyncThunk<
 			}),
 		);
 
-		return await contributorApi.getAll({ projectId });
+		return await contributorApi.getAll({
+			orderBy: ContributorOrderBy.LAST_ACTIVITY_DATE,
+			projectId,
+		});
 	},
 );
 

@@ -10,6 +10,7 @@ import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorModel } from "./contributor.model.js";
+import { ContributorOrderBy } from "./libs/enums/enums.js";
 import {
 	type ContributorGetAllRequestDto,
 	type ContributorMergeRequestDto,
@@ -59,6 +60,7 @@ class ContributorRepository implements Repository {
 	public async findAll({
 		contributorName,
 		hasHidden = false,
+		orderBy = ContributorOrderBy.CREATED_AT,
 		page,
 		pageSize,
 		projectId,
@@ -67,7 +69,6 @@ class ContributorRepository implements Repository {
 	> {
 		const query = this.contributorModel
 			.query()
-			.orderBy("createdAt", SortType.DESCENDING)
 			.select("contributors.*")
 			.select(
 				raw(
@@ -83,8 +84,7 @@ class ContributorRepository implements Repository {
 			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
 			.leftJoin("projects", "activity_logs.project_id", "projects.id")
 			.groupBy("contributors.id")
-			.withGraphFetched("gitEmails")
-			.orderBy("last_activity_date", SortType.DESCENDING);
+			.withGraphFetched("gitEmails");
 
 		if (!hasHidden) {
 			query.whereNull("contributors.hiddenAt");
@@ -96,6 +96,18 @@ class ContributorRepository implements Repository {
 
 		if (projectId) {
 			query.havingRaw("?? = ANY(ARRAY_AGG(projects.id))", projectId);
+		}
+
+		switch (orderBy) {
+			case ContributorOrderBy.CREATED_AT: {
+				query.orderBy("created_at", SortType.DESCENDING);
+				break;
+			}
+
+			case ContributorOrderBy.LAST_ACTIVITY_DATE: {
+				query.orderBy("last_activity_date", SortType.DESCENDING);
+				break;
+			}
 		}
 
 		let contributors, totalItems;

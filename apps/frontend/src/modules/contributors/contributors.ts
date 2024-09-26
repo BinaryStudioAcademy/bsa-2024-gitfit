@@ -11,6 +11,7 @@ const contributorApi = new ContributorApi({
 });
 
 export { contributorApi };
+export { ContributorOrderBy } from "./libs/enums/enums.js";
 export {
 	type ContributorGetAllItemResponseDto,
 	type ContributorGetAllResponseDto,

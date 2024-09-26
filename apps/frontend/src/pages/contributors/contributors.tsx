@@ -66,12 +66,14 @@ const Contributors = (): JSX.Element => {
 	});
 
 	const handleLoadContributors = useCallback(() => {
-		void dispatch(contributorActions.loadAll({ page, pageSize }));
+		void dispatch(
+			contributorActions.loadAll({
+				hasHidden: true,
+				page,
+				pageSize,
+			}),
+		);
 	}, [dispatch, page, pageSize]);
-
-	useEffect(() => {
-		handleLoadContributors();
-	}, [handleLoadContributors]);
 
 	const {
 		isOpened: isUpdateModalOpened,
@@ -234,6 +236,7 @@ const Contributors = (): JSX.Element => {
 		(projectId: number) => {
 			void dispatch(
 				contributorActions.loadAll({
+					hasHidden: true,
 					page,
 					pageSize,
 					projectId,

@@ -1,1 +1,1 @@
-export { ContributorsApiPath } from "@git-fit/shared";
+export { ContributorOrderBy, ContributorsApiPath } from "@git-fit/shared";

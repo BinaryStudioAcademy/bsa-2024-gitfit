@@ -22,10 +22,7 @@ const loadAll = createAsyncThunk<
 >(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { contributorApi } = extra;
 
-	return await contributorApi.getAll({
-		...query,
-		hasHidden: true,
-	});
+	return await contributorApi.getAll(query);
 });
 
 const merge = createAsyncThunk<

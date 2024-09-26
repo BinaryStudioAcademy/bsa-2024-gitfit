@@ -166,6 +166,13 @@ class ContributorController extends BaseController {
 	 *         required: false
 	 *         schema:
 	 *           type: string
+	 *       - name: orderBy
+	 *         in: query
+	 *         description: Field by which to sort contributors
+	 *         required: false
+	 *         schema:
+	 *           type: string
+	 *           enum: [created_at, last_activity_date]
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
@@ -184,12 +191,13 @@ class ContributorController extends BaseController {
 			query: ContributorGetAllRequestDto;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { contributorName, hasHidden, page, pageSize, projectId } =
+		const { contributorName, hasHidden, orderBy, page, pageSize, projectId } =
 			options.query;
 
 		const query = {
 			...(contributorName ? { contributorName } : {}),
 			...(hasHidden ? { hasHidden: Boolean(hasHidden) } : {}),
+			...(orderBy ? { orderBy } : {}),
 			...(page ? { page: Number(page) } : {}),
 			...(pageSize ? { pageSize: Number(pageSize) } : {}),
 			...(projectId ? { projectId: Number(projectId) } : {}),
