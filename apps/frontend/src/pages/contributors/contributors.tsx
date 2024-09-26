@@ -1,4 +1,5 @@
 import {
+	Loader,
 	Modal,
 	PageLayout,
 	Table,
@@ -261,12 +262,15 @@ const Contributors = (): JSX.Element => {
 					onClose={onMergeModalClose}
 					title="Merge contributors"
 				>
-					<ContributorMergeForm
-						allContributors={allContributors}
-						currentContributor={contributorToMerge}
-						isLoading={isLoadingAllContributors}
-						onSubmit={handleContributorMergeSubmit}
-					/>
+					{isLoadingAllContributors ? (
+						<Loader />
+					) : (
+						<ContributorMergeForm
+							allContributors={allContributors}
+							currentContributor={contributorToMerge}
+							onSubmit={handleContributorMergeSubmit}
+						/>
+					)}
 				</Modal>
 			)}
 			{contributorToSplit && (
