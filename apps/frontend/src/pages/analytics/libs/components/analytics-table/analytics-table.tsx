@@ -23,7 +23,10 @@ const AnalyticsTable = ({
 	const [startDate, endDate] = dateRange;
 	const dateRangeFormatted = getDateRange(startDate, endDate);
 
-	const analyticsColumns = getAnalyticsColumns(dateRangeFormatted);
+	const analyticsColumns = getAnalyticsColumns(
+		dateRangeFormatted,
+		styles["analytics-empty-cell"],
+	);
 
 	const analyticsData: AnalyticsRow[] = getAnalyticsRows(activityLogs);
 
@@ -32,7 +35,7 @@ const AnalyticsTable = ({
 			<Table<AnalyticsRow>
 				columns={analyticsColumns}
 				data={analyticsData}
-				emptyPlaceholder="No contributors matching your search criteria."
+				emptyPlaceholder="No contributors matchig your search criteria."
 				isFullHeight
 				isLoading={isLoading}
 			/>

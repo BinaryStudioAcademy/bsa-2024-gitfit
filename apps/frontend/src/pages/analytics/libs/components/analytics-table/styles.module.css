@@ -8,3 +8,11 @@
 .analytics-table th:not(:first-child) {
 	text-align: center;
 }
+
+.analytics-table td:not(:first-child) {
+	text-align: center;
+}
+
+.analytics-empty-cell {
+	color: var(--color-danger);
+}
