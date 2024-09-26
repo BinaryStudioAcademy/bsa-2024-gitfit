@@ -1,4 +1,8 @@
-import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import {
+	APIPath,
+	PermissionKey,
+	ProjectPermissionKey,
+} from "~/libs/enums/enums.js";
 import { checkUserPermissions } from "~/libs/hooks/check-user-permissions.hook.js";
 import {
 	type APIHandlerOptions,
@@ -53,10 +57,10 @@ class UserController extends BaseController {
 			method: "GET",
 			path: UsersApiPath.ROOT,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.MANAGE_USER_ACCESS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
+					[ProjectPermissionKey.MANAGE_PROJECT],
+				),
 			],
 		});
 

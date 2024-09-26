@@ -4,6 +4,7 @@ import { type ServerApplicationRouteParameters } from "~/libs/modules/server-app
 import {
 	type APIHandler,
 	type APIHandlerOptions,
+	type APIPreHandler,
 	type Controller,
 	type ControllerRouteParameters,
 } from "./libs/types/types.js";
@@ -34,6 +35,20 @@ class BaseController implements Controller {
 		return await reply.status(status).send(payload);
 	}
 
+	private mapPreHandler(
+		preHandler: APIPreHandler,
+		request: Parameters<
+			NonNullable<ServerApplicationRouteParameters["preHandlers"]>[number]
+		>[0],
+		done: Parameters<
+			NonNullable<ServerApplicationRouteParameters["preHandlers"]>[number]
+		>[2],
+	): void {
+		const handlerOptions = this.mapRequest(request);
+
+		preHandler(handlerOptions, done);
+	}
+
 	private mapRequest(
 		request: Parameters<ServerApplicationRouteParameters["handler"]>[0],
 	): APIHandlerOptions {
@@ -49,13 +64,18 @@ class BaseController implements Controller {
 	}
 
 	public addRoute(options: ControllerRouteParameters): void {
-		const { handler, path } = options;
+		const { handler, path, preHandlers = [] } = options;
 		const fullPath = this.apiUrl + path;
 
 		this.routes.push({
 			...options,
 			handler: (request, reply) => this.mapHandler(handler, request, reply),
 			path: fullPath,
+			preHandlers: preHandlers.map((preHandler) => {
+				return (request, _, done): void => {
+					this.mapPreHandler(preHandler, request, done);
+				};
+			}),
 		});
 	}
 }

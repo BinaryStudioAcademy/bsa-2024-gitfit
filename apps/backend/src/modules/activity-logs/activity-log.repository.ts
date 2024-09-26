@@ -1,3 +1,4 @@
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { type Repository } from "~/libs/types/types.js";
 
 import { ActivityLogEntity } from "./activity-log.entity.js";
@@ -43,9 +44,12 @@ class ActivityLogRepository implements Repository {
 	public async findAll({
 		contributorName,
 		endDate,
+		permittedProjectIds,
 		projectId,
 		startDate,
-	}: ActivityLogQueryParameters): Promise<{ items: ActivityLogEntity[] }> {
+	}: {
+		permittedProjectIds: number[] | undefined;
+	} & ActivityLogQueryParameters): Promise<{ items: ActivityLogEntity[] }> {
 		const query = this.activityLogModel
 			.query()
 			.withGraphFetched("[project, createdByUser]")
@@ -61,11 +65,16 @@ class ActivityLogRepository implements Repository {
 			query.whereILike("gitEmail:contributor.name", `%${contributorName}%`);
 		}
 
+		const hasPermissionedProjects =
+			permittedProjectIds && permittedProjectIds.length !== EMPTY_LENGTH;
+
 		if (projectId) {
 			query.where("project_id", projectId);
+		} else if (hasPermissionedProjects) {
+			query.whereIn("project_id", permittedProjectIds);
 		}
 
-		const activityLogs = await query.execute();
+		const activityLogs = await query.orderBy("date");
 
 		return {
 			items: activityLogs.map((activityLog) =>

@@ -1,4 +1,8 @@
-import { APIPath, PermissionKey } from "~/libs/enums/enums.js";
+import {
+	APIPath,
+	PermissionKey,
+	ProjectPermissionKey,
+} from "~/libs/enums/enums.js";
 import { checkUserPermissions } from "~/libs/hooks/hooks.js";
 import {
 	type APIHandlerOptions,
@@ -71,10 +75,10 @@ class ProjectGroupController extends BaseController {
 			method: "POST",
 			path: ProjectGroupsApiPath.ROOT,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.MANAGE_USER_ACCESS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
+					[ProjectPermissionKey.MANAGE_PROJECT],
+				),
 			],
 			validation: {
 				body: projectGroupCreateValidationSchema,
@@ -87,10 +91,18 @@ class ProjectGroupController extends BaseController {
 			method: "DELETE",
 			path: ProjectGroupsApiPath.$ID,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.MANAGE_USER_ACCESS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
+					[ProjectPermissionKey.MANAGE_PROJECT],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									params: { id: string };
+								}>
+							).params.id,
+						),
+				),
 			],
 		});
 
@@ -105,10 +117,10 @@ class ProjectGroupController extends BaseController {
 			method: "GET",
 			path: ProjectGroupsApiPath.$ID,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.MANAGE_USER_ACCESS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
+					[ProjectPermissionKey.MANAGE_PROJECT],
+				),
 			],
 		});
 
@@ -123,10 +135,18 @@ class ProjectGroupController extends BaseController {
 			method: "PATCH",
 			path: ProjectGroupsApiPath.$ID,
 			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.MANAGE_USER_ACCESS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
+				checkUserPermissions(
+					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
+					[],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									params: { id: string };
+								}>
+							).params.id,
+						),
+				),
 			],
 			validation: {
 				body: projectGroupPatchValidationSchema,

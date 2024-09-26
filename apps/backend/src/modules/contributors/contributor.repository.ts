@@ -1,5 +1,6 @@
 import { raw } from "objection";
 
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { SortType } from "~/libs/enums/enums.js";
 import {
 	type PaginationResponseDto,
@@ -100,10 +101,12 @@ class ContributorRepository implements Repository {
 	public async findAllByProjectId({
 		contributorName,
 		hasHidden = true,
+		permittedProjectIds,
 		projectId,
 	}: {
 		contributorName?: string;
 		hasHidden?: boolean;
+		permittedProjectIds?: number[] | undefined;
 		projectId: number;
 	}): Promise<{ items: ContributorEntity[] }> {
 		const query = this.contributorModel
@@ -128,6 +131,13 @@ class ContributorRepository implements Repository {
 			.withGraphFetched("gitEmails")
 			.orderBy("last_activity_date", SortType.DESCENDING);
 
+		const hasPermissionedProjects =
+			permittedProjectIds && permittedProjectIds.length !== EMPTY_LENGTH;
+
+		if (hasPermissionedProjects) {
+			query.whereIn("projects.id", permittedProjectIds);
+		}
+
 		if (!hasHidden) {
 			query.whereNull("contributors.hiddenAt");
 		}
@@ -148,9 +158,11 @@ class ContributorRepository implements Repository {
 	public async findAllWithoutPagination({
 		contributorName,
 		hasHidden = true,
+		permittedProjectIds,
 	}: {
 		contributorName?: string;
 		hasHidden?: boolean;
+		permittedProjectIds: number[] | undefined;
 	}): Promise<{ items: ContributorEntity[] }> {
 		const query = this.contributorModel
 			.query()
@@ -172,6 +184,13 @@ class ContributorRepository implements Repository {
 
 		if (contributorName) {
 			query.whereILike("contributors.name", `%${contributorName}%`);
+		}
+
+		const hasPermissionedProjects =
+			permittedProjectIds && permittedProjectIds.length !== EMPTY_LENGTH;
+
+		if (hasPermissionedProjects) {
+			query.whereIn("projects.id", permittedProjectIds);
 		}
 
 		const results = await query.execute();

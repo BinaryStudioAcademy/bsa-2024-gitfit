@@ -9,7 +9,11 @@ import {
 	StoreProvider,
 	ToastContainer,
 } from "~/libs/components/components.js";
-import { AppRoute, PermissionKey } from "~/libs/enums/enums.js";
+import {
+	AppRoute,
+	PermissionKey,
+	ProjectPermissionKey,
+} from "~/libs/enums/enums.js";
 import { store } from "~/libs/modules/store/store.js";
 import { AccessManagement } from "~/pages/access-management/access-management.jsx";
 import { Analytics } from "~/pages/analytics/analytics.jsx";
@@ -19,9 +23,8 @@ import { NoAccess } from "~/pages/no-access/no-access.jsx";
 import { NotFound } from "~/pages/not-found/not-found.jsx";
 import { Profile } from "~/pages/profile/profile.jsx";
 import { Project } from "~/pages/project/project.jsx";
+import { ProjectAccessManagement } from "~/pages/project-access-management/project-access-management.jsx";
 import { Projects } from "~/pages/projects/projects.jsx";
-
-import { ProjectAccessManagement } from "./pages/project-access-management/project-access-management.js";
 
 createRoot(document.querySelector("#root") as HTMLElement).render(
 	<StrictMode>
@@ -36,6 +39,11 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 										routePermissions={[
 											PermissionKey.VIEW_ALL_PROJECTS,
 											PermissionKey.MANAGE_ALL_PROJECTS,
+										]}
+										routeProjectPermissions={[
+											ProjectPermissionKey.VIEW_PROJECT,
+											ProjectPermissionKey.EDIT_PROJECT,
+											ProjectPermissionKey.MANAGE_PROJECT,
 										]}
 									>
 										<Projects />
@@ -78,6 +86,11 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 											PermissionKey.VIEW_ALL_PROJECTS,
 											PermissionKey.MANAGE_ALL_PROJECTS,
 										]}
+										routeProjectPermissions={[
+											ProjectPermissionKey.VIEW_PROJECT,
+											ProjectPermissionKey.EDIT_PROJECT,
+											ProjectPermissionKey.MANAGE_PROJECT,
+										]}
 									>
 										<Analytics />
 									</ProtectedRoute>
@@ -111,6 +124,11 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 											PermissionKey.VIEW_ALL_PROJECTS,
 											PermissionKey.MANAGE_ALL_PROJECTS,
 										]}
+										routeProjectPermissions={[
+											ProjectPermissionKey.VIEW_PROJECT,
+											ProjectPermissionKey.EDIT_PROJECT,
+											ProjectPermissionKey.MANAGE_PROJECT,
+										]}
 									>
 										<Project />
 									</ProtectedRoute>
@@ -127,6 +145,9 @@ createRoot(document.querySelector("#root") as HTMLElement).render(
 										routePermissions={[
 											PermissionKey.MANAGE_USER_ACCESS,
 											PermissionKey.MANAGE_ALL_PROJECTS,
+										]}
+										routeProjectPermissions={[
+											ProjectPermissionKey.MANAGE_PROJECT,
 										]}
 									>
 										<ProjectAccessManagement />

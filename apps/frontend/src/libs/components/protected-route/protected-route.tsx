@@ -1,9 +1,10 @@
 import { Loader, Navigate } from "~/libs/components/components.js";
-import { SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
+import { EMPTY_LENGTH, SIDEBAR_ITEMS } from "~/libs/constants/constants.js";
 import {
 	AppRoute,
 	DataStatus,
 	type PermissionKey,
+	type ProjectPermissionKey,
 } from "~/libs/enums/enums.js";
 import {
 	checkHasPermission,
@@ -18,16 +19,26 @@ type Properties = {
 	children: React.ReactNode;
 	routeExtraPermissions?: ValueOf<typeof PermissionKey>[];
 	routePermissions?: ValueOf<typeof PermissionKey>[];
+	routeProjectPermissions?: ValueOf<typeof ProjectPermissionKey>[];
 };
 
 const ProtectedRoute = ({
 	children,
 	routeExtraPermissions = [],
 	routePermissions = [],
+	routeProjectPermissions = [],
 }: Properties): JSX.Element => {
-	const { authenticatedUser, dataStatus, userPermissions } = useAppSelector(
-		({ auth }) => auth,
-	);
+	const {
+		authenticatedUser,
+		dataStatus,
+		projectUserPermissions,
+		userPermissions,
+	} = useAppSelector(({ auth }) => auth);
+
+	const allPermissions = [
+		...Object.values(projectUserPermissions).flat(),
+		...userPermissions,
+	];
 
 	const isLoading =
 		dataStatus === DataStatus.PENDING || dataStatus === DataStatus.IDLE;
@@ -54,13 +65,22 @@ const ProtectedRoute = ({
 		userPermissions,
 	);
 
-	const hasRequiredPermissions = hasBasePermission && hasExtraPermission;
+	const hasProjectPermissions =
+		routeProjectPermissions.length !== EMPTY_LENGTH &&
+		checkHasPermission(
+			routeProjectPermissions,
+			Object.values(projectUserPermissions).flat(),
+		);
+
+	const hasRequiredPermissions =
+		(hasBasePermission && hasExtraPermission) || hasProjectPermissions;
 
 	if (!hasRequiredPermissions) {
 		const [navigationItem] = getPermittedNavigationItems(
 			SIDEBAR_ITEMS,
-			userPermissions,
+			allPermissions,
 		);
+
 		const redirectLink = navigationItem?.href ?? AppRoute.NO_ACCESS;
 
 		return <Navigate replace to={redirectLink} />;

@@ -1,3 +1,4 @@
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { SortType } from "~/libs/enums/enums.js";
 import { subtractDays } from "~/libs/helpers/helpers.js";
 import {
@@ -65,13 +66,20 @@ class ProjectRepository implements Repository {
 		name,
 		page,
 		pageSize,
-	}: ProjectGetAllRequestDto): Promise<PaginationResponseDto<ProjectEntity>> {
+		userProjectIds,
+	}: { userProjectIds?: number[] } & ProjectGetAllRequestDto): Promise<
+		PaginationResponseDto<ProjectEntity>
+	> {
 		const query = this.projectModel
 			.query()
 			.orderBy("created_at", SortType.DESCENDING);
 
 		if (name) {
 			query.whereILike("name", `%${name}%`);
+		}
+
+		if (userProjectIds && userProjectIds.length !== EMPTY_LENGTH) {
+			query.whereIn("id", userProjectIds);
 		}
 
 		const { results, total } = await query.page(page, pageSize);
@@ -82,9 +90,18 @@ class ProjectRepository implements Repository {
 		};
 	}
 
-	public async findAllWithoutPagination(): Promise<ProjectEntity[]> {
-		const projects = await this.projectModel
-			.query()
+	public async findAllWithoutPagination({
+		userProjectIds,
+	}: {
+		userProjectIds?: number[];
+	}): Promise<ProjectEntity[]> {
+		const query = this.projectModel.query();
+
+		if (userProjectIds && userProjectIds.length !== EMPTY_LENGTH) {
+			query.whereIn("id", userProjectIds);
+		}
+
+		const projects = await query
 			.orderBy("created_at", SortType.DESCENDING)
 			.execute();
 

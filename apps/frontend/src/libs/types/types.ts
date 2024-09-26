@@ -6,6 +6,7 @@ export { type SelectOption } from "./select-option.type.js";
 export {
 	type PaginationQueryParameters,
 	type PermissionGetAllItemResponseDto,
+	type ProjectPermissionsGetAllItemResponseDto,
 	type ServerErrorDetail,
 	type ServerErrorResponse,
 	type ValidationSchema,

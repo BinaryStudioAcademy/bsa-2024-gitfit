@@ -1,7 +1,9 @@
+import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
 import { type Entity } from "~/libs/types/types.js";
 import { type GroupModel } from "~/modules/groups/group.model.js";
 import { type PermissionModel } from "~/modules/permissions/permission.model.js";
 import { type ProjectGroupModel } from "~/modules/project-groups/project-group.model.js";
+import { type ProjectPermissionModel } from "~/modules/project-permissions/project-permissions.model.js";
 
 import { type UserAuthResponseDto } from "./libs/types/types.js";
 
@@ -18,7 +20,12 @@ class UserEntity implements Entity {
 	private name: string;
 	private passwordHash: string;
 	private passwordSalt: string;
-	private projectGroups: Array<Pick<ProjectGroupModel, "id" | "name">>;
+	private projectGroups: Array<
+		{
+			permissions: Array<Pick<ProjectPermissionModel, "id" | "key" | "name">>;
+			projects: Array<{ id: number }>;
+		} & Pick<ProjectGroupModel, "id" | "name">
+	>;
 
 	private constructor({
 		createdAt,
@@ -43,7 +50,12 @@ class UserEntity implements Entity {
 		name: string;
 		passwordHash: string;
 		passwordSalt: string;
-		projectGroups?: Array<Pick<ProjectGroupModel, "id" | "name">>;
+		projectGroups?: Array<
+			{
+				permissions: Array<Pick<ProjectPermissionModel, "id" | "key" | "name">>;
+				projects: Array<{ id: number }>;
+			} & Pick<ProjectGroupModel, "id" | "name">
+		>;
 	}) {
 		this.id = id;
 		this.email = email;
@@ -79,7 +91,14 @@ class UserEntity implements Entity {
 		name: string;
 		passwordHash: string;
 		passwordSalt: string;
-		projectGroups?: Array<Pick<ProjectGroupModel, "id" | "name">>;
+		projectGroups?: Array<
+			{
+				permissions?: Array<
+					Pick<ProjectPermissionModel, "id" | "key" | "name">
+				>;
+				projects?: Array<{ id: number }>;
+			} & Pick<ProjectGroupModel, "id" | "name">
+		>;
 	}): UserEntity {
 		return new UserEntity({
 			createdAt,
@@ -90,7 +109,13 @@ class UserEntity implements Entity {
 			name,
 			passwordHash,
 			passwordSalt,
-			projectGroups,
+			projectGroups: projectGroups.map(
+				({ permissions, projects, ...group }) => ({
+					permissions: permissions ?? [],
+					projects: projects ?? [],
+					...group,
+				}),
+			),
 		});
 	}
 
@@ -109,7 +134,11 @@ class UserEntity implements Entity {
 		name: string;
 		passwordHash: string;
 		passwordSalt: string;
-		projectGroups: Array<Pick<ProjectGroupModel, "id" | "name">>;
+		projectGroups: Array<
+			{
+				permissions: Array<Pick<ProjectPermissionModel, "id" | "key" | "name">>;
+			} & Pick<ProjectGroupModel, "id" | "name" | "projects">
+		>;
 	}): UserEntity {
 		return new UserEntity({
 			createdAt: null,
@@ -160,6 +189,15 @@ class UserEntity implements Entity {
 			projectGroups: this.projectGroups.map((projectGroup) => ({
 				id: projectGroup.id,
 				name: projectGroup.name,
+				permissions: projectGroup.permissions.map((permissions) => ({
+					id: permissions.id,
+					key: permissions.key,
+					name: permissions.name,
+				})),
+				projectId:
+					projectGroup.projects.length === EMPTY_LENGTH
+						? EMPTY_LENGTH
+						: (projectGroup.projects[EMPTY_LENGTH]?.id ?? EMPTY_LENGTH),
 			})),
 		};
 	}

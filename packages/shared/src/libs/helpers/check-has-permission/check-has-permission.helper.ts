@@ -1,9 +1,12 @@
-import { EMPTY_LENGTH } from "../../../libs/constants/empty-length.constant.js";
 import { type PermissionGetAllItemResponseDto } from "../../../modules/permissions/permissions.js";
+import { type ProjectPermissionsGetAllItemResponseDto } from "../../../modules/project-permissions/project-permissions.js";
+import { EMPTY_LENGTH } from "../../constants/constants.js";
 
 const checkHasPermission = (
 	requiredPermissions: string[],
-	permissions: PermissionGetAllItemResponseDto[],
+	permissions:
+		| PermissionGetAllItemResponseDto[]
+		| ProjectPermissionsGetAllItemResponseDto[],
 ): boolean => {
 	if (requiredPermissions.length === EMPTY_LENGTH) {
 		return true;

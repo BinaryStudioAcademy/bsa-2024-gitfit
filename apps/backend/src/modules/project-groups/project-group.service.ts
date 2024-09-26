@@ -10,6 +10,7 @@ import { ProjectGroupError } from "./libs/exceptions/exceptions.js";
 import {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupCreateResponseDto,
+	type ProjectGroupGetAllItemResponseDto,
 	type ProjectGroupGetAllResponseDto,
 	type ProjectGroupPatchRequestDto,
 	type ProjectGroupPatchResponseDto,
@@ -92,6 +93,15 @@ class ProjectGroupService implements Service {
 			items: projectGroups.items.map((item) => item.toObject()),
 			totalItems: projectGroups.totalItems,
 		};
+	}
+
+	public async findAllByUserId(
+		userId: number,
+	): Promise<ProjectGroupGetAllItemResponseDto[]> {
+		const projectGroups =
+			await this.projectGroupRepository.findAllByUserId(userId);
+
+		return projectGroups.map((item) => item.toObject());
 	}
 
 	public async patch(

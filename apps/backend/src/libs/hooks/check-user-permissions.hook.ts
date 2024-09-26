@@ -1,27 +1,45 @@
-import { type FastifyRequest } from "fastify";
-
-import { ExceptionMessage } from "~/libs/enums/enums.js";
+import {
+	ExceptionMessage,
+	type PermissionKey,
+	type ProjectPermissionKey,
+} from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
-import { type APIPreHandler } from "~/libs/modules/controller/controller.js";
+import {
+	type APIHandlerOptions,
+	type APIPreHandler,
+} from "~/libs/modules/controller/controller.js";
 import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
+import { type UserAuthResponseDto } from "~/modules/users/users.js";
 
-const checkUserPermissions = (routePermissions: string[]): APIPreHandler => {
-	return (request: FastifyRequest, _, done): void => {
-		const { user } = request;
+import { type ValueOf } from "../types/types.js";
 
-		if (!user) {
-			throw new HTTPError({
-				message: ExceptionMessage.USER_NOT_FOUND,
-				status: HTTPCode.UNAUTHORIZED,
-			});
-		}
+const checkUserPermissions = (
+	permissions: ValueOf<typeof PermissionKey>[],
+	projectsPermissions?: ValueOf<typeof ProjectPermissionKey>[],
+	getProjectId?: (options: APIHandlerOptions) => number | undefined,
+): APIPreHandler => {
+	return (options, done): void => {
+		const user = options.user as UserAuthResponseDto;
+		const projectId = getProjectId?.(options);
 
-		const hasPermission = checkHasPermission(
-			routePermissions,
-			user.groups.flatMap((group) => group.permissions),
+		const userPermissions = user.groups.flatMap((group) => group.permissions);
+		const projectPermissions = user.projectGroups
+			.filter((group) => projectId && group.projectId === projectId)
+			.flatMap((projectGroup) => projectGroup.permissions);
+
+		const hasGlobalPermission = checkHasPermission(
+			permissions,
+			userPermissions,
 		);
 
-		if (!hasPermission) {
+		const hasProjectPermission = projectId
+			? checkHasPermission(
+					projectsPermissions as ValueOf<typeof ProjectPermissionKey>[],
+					projectPermissions,
+				)
+			: true;
+
+		if (!hasGlobalPermission && !hasProjectPermission) {
 			throw new HTTPError({
 				message: ExceptionMessage.NO_PERMISSION,
 				status: HTTPCode.FORBIDDEN,
