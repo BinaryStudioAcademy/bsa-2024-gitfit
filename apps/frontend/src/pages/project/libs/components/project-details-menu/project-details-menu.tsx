@@ -60,13 +60,15 @@ const ProjectDetailsMenu = ({
 								iconName="access"
 								label="Manage Access"
 							/>
-							<MenuItem
-								iconName="trashBin"
-								label="Delete"
-								onClick={handleDeleteClick}
-								variant="danger"
-							/>
 						</>
+					)}
+					{hasManageAllProjectsPermission && (
+						<MenuItem
+							iconName="trashBin"
+							label="Delete"
+							onClick={handleDeleteClick}
+							variant="danger"
+						/>
 					)}
 				</Menu>
 			)}
