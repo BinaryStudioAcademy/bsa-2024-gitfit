@@ -71,6 +71,16 @@ class ProjectGroupRepository implements Repository {
 		return Boolean(deletedRowsCount);
 	}
 
+	public async deleteByProjectId(projectId: number): Promise<boolean> {
+		const deletedRowsCount = await this.projectGroupModel
+			.query()
+			.delete()
+			.withGraphJoined("[projects]")
+			.where("projects.id", projectId);
+
+		return Boolean(deletedRowsCount);
+	}
+
 	public async find(id: number): Promise<null | ProjectGroupEntity> {
 		const projectGroup = await this.projectGroupModel
 			.query()
