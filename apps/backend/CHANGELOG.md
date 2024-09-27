@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.41.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.41.0...backend-v1.41.1) (2024-09-27)
+
+
+### Bug Fixes
+
+* Project groups are not deleted from the DB after deleting the project they corresponds to gf-504 ([#559](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/559)) ([6f519dc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6f519dc3e74c46a925a0bf156af2526d87089e4b))
+
 ## [1.41.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.40.0...backend-v1.41.0) (2024-09-27)
 
 

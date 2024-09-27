@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.62.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.62.0...v1.62.1) (2024-09-27)
+
+
+### Bug Fixes
+
+* Project groups are not deleted from the DB after deleting the project they corresponds to gf-504 ([#559](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/559)) ([6f519dc](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6f519dc3e74c46a925a0bf156af2526d87089e4b))
+* update hasSetupAnalyticsPermission check gf-573 ([#574](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/574)) ([b968e29](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b968e291860ef52fb45b747abbef32affa0e730b))
+
 ## [1.62.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.61.0...v1.62.0) (2024-09-27)
 
 

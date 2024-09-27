@@ -321,12 +321,14 @@ const Project = (): JSX.Element => {
 			combinedPermissions,
 		) || hasManagePermission;
 
+	const hasSetupAnalyticsPermission =
+		hasManageAllProjectsPermission || hasEditPermission;
+
 	const hasDeleteProjectsPermissions = checkHasPermission(
 		[PermissionKey.MANAGE_ALL_PROJECTS],
 		combinedPermissions,
 	);
 
-	const hasSetupAnalyticsPermission = hasManageAllProjectsPermission;
 	const hasEditContributorPermission = hasManageAllProjectsPermission;
 	const hasMergeContributorPermission = hasManageAllProjectsPermission;
 	const hasSplitContributorPermission = hasManageAllProjectsPermission;
