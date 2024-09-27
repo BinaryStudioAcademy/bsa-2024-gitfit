@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.57.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.56.2...frontend-v1.57.0) (2024-09-27)
+
+
+### Features
+
+* Add project select to the contributors page gf-504 ([#516](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/516)) ([3f1f1c5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3f1f1c52204f3233a350567b8c2b8915ce952cd7))
+
 ## [1.56.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.56.1...frontend-v1.56.2) (2024-09-27)
 
 
