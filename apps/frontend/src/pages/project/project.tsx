@@ -125,17 +125,11 @@ const Project = (): JSX.Element => {
 			userPermissions,
 		) ||
 		checkIsProjectPermitted({
-			permission: ProjectPermissionKey.VIEW_PROJECT,
-			projectId,
-			projectUserPermissions,
-		}) ||
-		checkIsProjectPermitted({
-			permission: ProjectPermissionKey.EDIT_PROJECT,
-			projectId,
-			projectUserPermissions,
-		}) ||
-		checkIsProjectPermitted({
-			permission: ProjectPermissionKey.MANAGE_PROJECT,
+			permissions: [
+				ProjectPermissionKey.VIEW_PROJECT,
+				ProjectPermissionKey.EDIT_PROJECT,
+				ProjectPermissionKey.MANAGE_PROJECT,
+			],
 			projectId,
 			projectUserPermissions,
 		});
@@ -323,7 +317,7 @@ const Project = (): JSX.Element => {
 			combinedPermissions,
 		) &&
 		checkIsProjectPermitted({
-			permission: ProjectPermissionKey.MANAGE_PROJECT,
+			permissions: [ProjectPermissionKey.MANAGE_PROJECT],
 			projectId,
 			projectUserPermissions,
 		});
@@ -334,7 +328,7 @@ const Project = (): JSX.Element => {
 			combinedPermissions,
 		) &&
 		checkIsProjectPermitted({
-			permission: ProjectPermissionKey.EDIT_PROJECT,
+			permissions: [ProjectPermissionKey.EDIT_PROJECT],
 			projectId,
 			projectUserPermissions,
 		});

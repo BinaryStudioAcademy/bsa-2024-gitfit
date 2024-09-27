@@ -1,7 +1,7 @@
 import { type ProjectPermissionsGetAllItemResponseDto } from "~/modules/project-permissions/project-permissions.js";
 
 type Properties = {
-	permission: string;
+	permissions: string[];
 	projectId: string | undefined;
 	projectUserPermissions: Record<
 		number,
@@ -10,7 +10,7 @@ type Properties = {
 };
 
 const checkIsProjectPermitted = ({
-	permission,
+	permissions,
 	projectId,
 	projectUserPermissions,
 }: Properties): boolean => {
@@ -19,8 +19,8 @@ const checkIsProjectPermitted = ({
 	}
 
 	return (
-		projectUserPermissions[Number(projectId)]?.some(
-			(projectPermission) => projectPermission.key === permission,
+		projectUserPermissions[Number(projectId)]?.some((projectPermission) =>
+			permissions.includes(projectPermission.key),
 		) ?? false
 	);
 };
