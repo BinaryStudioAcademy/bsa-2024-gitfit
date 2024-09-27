@@ -119,14 +119,38 @@ const Project = (): JSX.Element => {
 	const [contributorToSplit, setContributorToSplit] =
 		useState<ContributorGetAllItemResponseDto | null>(null);
 
+	const hasViewPermission =
+		checkHasPermission(
+			[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
+			userPermissions,
+		) ||
+		checkIsProjectPermitted({
+			permission: ProjectPermissionKey.VIEW_PROJECT,
+			projectId,
+			projectUserPermissions,
+		}) ||
+		checkIsProjectPermitted({
+			permission: ProjectPermissionKey.EDIT_PROJECT,
+			projectId,
+			projectUserPermissions,
+		}) ||
+		checkIsProjectPermitted({
+			permission: ProjectPermissionKey.MANAGE_PROJECT,
+			projectId,
+			projectUserPermissions,
+		});
+
 	useEffect(() => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
-			void dispatch(
-				projectActions.loadAllContributorsByProjectId(Number(projectId)),
-			);
+
+			if (hasViewPermission) {
+				void dispatch(
+					projectActions.loadAllContributorsByProjectId(Number(projectId)),
+				);
+			}
 		}
-	}, [dispatch, projectId]);
+	}, [dispatch, hasViewPermission, projectId]);
 
 	useEffect(() => {
 		if (projectPatchStatus === DataStatus.FULFILLED) {
