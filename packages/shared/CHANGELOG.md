@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.38.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.38.0...shared-v1.38.1) (2024-09-27)
+
+
+### Bug Fixes
+
+* quality criteria issues gf-557 ([#580](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/580)) ([5013012](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/5013012e1c41baea1f729ee62e35ca4f59386008))
+
 ## [1.38.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.37.0...shared-v1.38.0) (2024-09-27)
 
 
