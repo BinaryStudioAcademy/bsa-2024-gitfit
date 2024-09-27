@@ -13,8 +13,12 @@ const ColumnName = {
 } as const;
 
 function up(knex: Knex): Promise<void> {
-	// TODO: remove all unused project groups which already present in db
 	return knex.raw(`
+		DELETE FROM ${PROJECT_GROUPS_TABLE_NAME}
+		WHERE ${ColumnName.ID} NOT IN (
+			SELECT ${ColumnName.PROJECT_GROUP_ID} FROM ${PROJECTS_TO_PROJECT_GROUPS_TABLE_NAME}
+		);
+
 		CREATE OR REPLACE FUNCTION ${DELETE_UNUSED_PROJECT_GROUPS_FUNCTION_NAME}()
 		RETURNS TRIGGER AS $$
 		BEGIN
