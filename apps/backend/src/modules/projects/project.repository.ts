@@ -49,14 +49,14 @@ class ProjectRepository implements Repository {
 			.query()
 			.select(
 				"projects.*",
-				"activity_logs.date as analyticsLastSyncedAt",
+				"activityLogs.date as analyticsLastSyncedAt",
 				"users.name as analyticsLastSyncedByUser",
 			)
 			.from("projects")
-			.leftJoin("activity_logs", "projects.id", "activity_logs.projectId")
-			.leftJoin("users", "activity_logs.createdByUserId", "users.id")
+			.leftJoin("activityLogs", "projects.id", "activityLogs.projectId")
+			.leftJoin("users", "activityLogs.createdByUserId", "users.id")
 			.where("projects.id", id)
-			.orderBy("activity_logs.date", SortType.DESCENDING)
+			.orderBy("activityLogs.date", SortType.DESCENDING)
 			.first();
 
 		return item ? ProjectEntity.initialize(item) : null;
@@ -72,7 +72,7 @@ class ProjectRepository implements Repository {
 	> {
 		const query = this.projectModel
 			.query()
-			.orderBy("created_at", SortType.DESCENDING);
+			.orderBy("createdAt", SortType.DESCENDING);
 
 		if (name) {
 			query.whereILike("name", `%${name}%`);
@@ -102,7 +102,7 @@ class ProjectRepository implements Repository {
 		}
 
 		const projects = await query
-			.orderBy("created_at", SortType.DESCENDING)
+			.orderBy("createdAt", SortType.DESCENDING)
 			.execute();
 
 		return projects.map((project) => ProjectEntity.initialize(project));

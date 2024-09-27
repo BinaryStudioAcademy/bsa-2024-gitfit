@@ -54,19 +54,19 @@ class UserRepository implements Repository {
 				"[groups.permissions, projectGroups.[permissions, projects]]",
 			)
 			.modifyGraph("groups", (builder) => {
-				builder.select("user_groups.id", "name");
+				builder.select("userGroups.id", "name");
 			})
 			.modifyGraph("groups.permissions", (builder) => {
 				builder.select("permissions.id", "name", "key");
 			})
 			.modifyGraph("projectGroups", (builder) => {
-				builder.select("project_groups.id", "name");
+				builder.select("projectGroups.id", "name");
 			})
 			.modifyGraph("projectGroups.projects", (builder) => {
 				builder.select("projects.id");
 			})
 			.modifyGraph("projectGroups.permissions", (builder) => {
-				builder.select("project_permissions.id", "name", "key");
+				builder.select("projectPermissions.id", "name", "key");
 			})
 			.execute();
 
@@ -111,12 +111,12 @@ class UserRepository implements Repository {
 					.relatedQuery("projectGroups")
 					.joinRelated("permissions")
 					.join(
-						"projects_to_project_groups",
-						"project_groups.id",
-						"projects_to_project_groups.project_group_id",
+						"projectsToProjectGroups",
+						"projectGroups.id",
+						"projectsToProjectGroups.projectGroupId",
 					)
 					.whereIn("permissions.key", permissionKeys)
-					.where("projects_to_project_groups.project_id", projectId),
+					.where("projectsToProjectGroups.projectId", projectId),
 			)
 			.whereNull("deletedAt")
 			.execute();
@@ -153,14 +153,14 @@ class UserRepository implements Repository {
 			.query()
 			.findOne({ email })
 			.withGraphFetched("groups.permissions")
-			.modifyGraph("user_groups.id", (builder) => {
+			.modifyGraph("userGroups.id", (builder) => {
 				builder.select("id", "name");
 			})
 			.modifyGraph("groups.permissions", (builder) => {
 				builder.select("permissions.id", "name", "key");
 			})
 			.modifyGraph("projectGroups", (builder) => {
-				builder.select("project_groups.id", "name");
+				builder.select("projectGroups.id", "name");
 			});
 
 		if (!hasDeleted) {
