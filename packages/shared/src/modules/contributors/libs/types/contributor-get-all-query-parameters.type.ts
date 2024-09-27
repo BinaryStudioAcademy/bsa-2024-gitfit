@@ -2,7 +2,7 @@ import {
 	type PaginationQueryParameters,
 	type ValueOf,
 } from "../../../../libs/types/types.js";
-import { type ContributorOrderByKey } from "../enums/contributor-order-by-key.enum.js";
+import { type ContributorOrderByKey } from "../enums/enums.js";
 
 type ContributorGetAllQueryParameters = {
 	contributorName?: string | undefined;
