@@ -58,7 +58,7 @@ class ActivityLogRepository implements Repository {
 				builder.select("id", "name", "hiddenAt");
 			})
 			.whereNull("gitEmail:contributor.hiddenAt")
-			.whereBetween("activity_logs.date", [startDate, endDate])
+			.whereBetween("activityLogs.date", [startDate, endDate])
 			.orderBy("date");
 
 		if (contributorName) {
@@ -69,9 +69,9 @@ class ActivityLogRepository implements Repository {
 			permittedProjectIds && permittedProjectIds.length !== EMPTY_LENGTH;
 
 		if (projectId) {
-			query.where("project_id", projectId);
+			query.where("projectId", projectId);
 		} else if (hasPermissionedProjects) {
-			query.whereIn("project_id", permittedProjectIds);
+			query.whereIn("projectId", permittedProjectIds);
 		}
 
 		const activityLogs = await query.orderBy("date");

@@ -49,7 +49,7 @@ import {
  *         gitEmailId:
  *           type: number
  *           minimum: 1
- *         ptojectId :
+ *         projectId :
  *           type: number
  *           minimum: 1
  *         createdAt:

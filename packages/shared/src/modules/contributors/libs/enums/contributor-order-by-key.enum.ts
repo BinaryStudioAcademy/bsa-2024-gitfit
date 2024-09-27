@@ -1,6 +1,6 @@
 const ContributorOrderByKey = {
-	CREATED_AT: "created_at",
-	LAST_ACTIVITY_DATE: "last_activity_date",
+	CREATED_AT: "createdAt",
+	LAST_ACTIVITY_DATE: "lastActivityDate",
 } as const;
 
 export { ContributorOrderByKey };

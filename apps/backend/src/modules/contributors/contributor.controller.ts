@@ -268,7 +268,7 @@ class ContributorController extends BaseController {
 	 *       404:
 	 *         description: Contributor not found
 	 *       409:
-	 *         description: Attept to self-merge or merging failed
+	 *         description: Attempt to self-merge or merging failed
 	 */
 	private async merge(
 		options: APIHandlerOptions<{

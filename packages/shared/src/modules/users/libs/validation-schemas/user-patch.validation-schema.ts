@@ -8,6 +8,9 @@ const userPatch: z.ZodType<UserPatchRequestDto> = z
 		name: z
 			.string()
 			.trim()
+			.regex(UserValidationRule.NAME_PATTERN, {
+				message: UserValidationMessage.NAME_PATTERN,
+			})
 			.min(UserValidationRule.NAME_MINIMUM_LENGTH, {
 				message: UserValidationMessage.NAME_TOO_SHORT,
 			})

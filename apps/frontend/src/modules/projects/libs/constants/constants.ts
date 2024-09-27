@@ -1,1 +1,1 @@
-export { FIRST_PAGE } from "~/libs/hooks/use-infinity-scroll/libs/constants/constants.js";
+export { FIRST_PAGE } from "~/libs/hooks/use-infinite-scroll/libs/constants/constants.js";

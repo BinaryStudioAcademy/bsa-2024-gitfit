@@ -83,9 +83,9 @@ class ContributorRepository implements Repository {
 					"MAX(CASE WHEN activity_logs.commits_number > 0 THEN activity_logs.date ELSE NULL END) AS last_activity_date",
 				),
 			)
-			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
-			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
-			.leftJoin("projects", "activity_logs.project_id", "projects.id")
+			.leftJoin("gitEmails", "contributors.id", "gitEmails.contributorId")
+			.leftJoin("activityLogs", "gitEmails.id", "activityLogs.gitEmailId")
+			.leftJoin("projects", "activityLogs.projectId", "projects.id")
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
 
@@ -174,13 +174,9 @@ class ContributorRepository implements Repository {
 						"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
 					),
 				)
-				.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
-				.leftJoin(
-					"activity_logs",
-					"git_emails.id",
-					"activity_logs.git_email_id",
-				)
-				.leftJoin("projects", "activity_logs.project_id", "projects.id")
+				.leftJoin("gitEmails", "contributors.id", "gitEmails.contributorId")
+				.leftJoin("activityLogs", "gitEmails.id", "activityLogs.gitEmailId")
+				.leftJoin("projects", "activityLogs.projectId", "projects.id")
 				.groupBy("contributors.id")
 				.withGraphFetched("gitEmails")
 				.modifyGraph("gitEmails", (builder) => {
@@ -233,13 +229,9 @@ class ContributorRepository implements Repository {
 						"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
 					),
 				)
-				.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
-				.leftJoin(
-					"activity_logs",
-					"git_emails.id",
-					"activity_logs.git_email_id",
-				)
-				.leftJoin("projects", "activity_logs.project_id", "projects.id")
+				.leftJoin("gitEmails", "contributors.id", "gitEmails.contributorId")
+				.leftJoin("activityLogs", "gitEmails.id", "activityLogs.gitEmailId")
+				.leftJoin("projects", "activityLogs.projectId", "projects.id")
 				.groupBy("contributors.id")
 				.withGraphFetched("gitEmails")
 				.modifyGraph("gitEmails", (builder) => {

@@ -142,14 +142,14 @@ class ProjectApiKeyService implements Service {
 	public async findByProjectId(
 		projectId: number,
 	): Promise<null | ProjectApiKeyCreateResponseDto> {
-		const apiKeyEnitity =
+		const apiKeyEntity =
 			await this.projectApiKeyRepository.findByProjectId(projectId);
 
-		if (!apiKeyEnitity) {
+		if (!apiKeyEntity) {
 			return null;
 		}
 
-		const apiKey = apiKeyEnitity.toObject();
+		const apiKey = apiKeyEntity.toObject();
 		const decryptedApiKey = this.encryption.decrypt(apiKey.encryptedKey);
 
 		return {
