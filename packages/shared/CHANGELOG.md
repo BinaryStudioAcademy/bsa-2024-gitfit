@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.38.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.37.0...shared-v1.38.0) (2024-09-27)
+
+
+### Features
+
+* fix quality criteria issues gf-557 ([#561](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/561)) ([6b3c9ed](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6b3c9edb8d111e64e175183f6222dfa33940679c))
+
+
+### Bug Fixes
+
+* update user patch validation schema gf-562 ([#566](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/566)) ([3ab48eb](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3ab48eb2014837f8b2103d2dc9cf5a0a64d6c95b))
+
 ## [1.37.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/shared-v1.36.0...shared-v1.37.0) (2024-09-27)
 
 

@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.62.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.61.0...v1.62.0) (2024-09-27)
+
+
+### Features
+
+* add green tick for generation api key fulfilled gf-189 ([#568](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/568)) ([d4b2d82](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d4b2d821ff6e40e0e792414545e80561a9f23bd3))
+* fix quality criteria issues gf-557 ([#561](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/561)) ([6b3c9ed](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6b3c9edb8d111e64e175183f6222dfa33940679c))
+
+
+### Bug Fixes
+
+* add project permissions to sign in response gf-560 ([#563](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/563)) ([34b9245](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/34b9245cb8ca3da7d620ebcc0cb47420fec4a4b1))
+* restrict project card visibility based on user permissions gf-558 ([#565](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/565)) ([cfc71fa](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/cfc71fabc5d1fa829c9f0e30b9535cda7c6819b3))
+* update user patch validation schema gf-562 ([#566](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/566)) ([3ab48eb](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3ab48eb2014837f8b2103d2dc9cf5a0a64d6c95b))
+
 ## [1.61.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.60.2...v1.61.0) (2024-09-27)
 
 

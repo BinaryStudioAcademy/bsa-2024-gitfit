@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.41.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.40.0...backend-v1.41.0) (2024-09-27)
+
+
+### Features
+
+* fix quality criteria issues gf-557 ([#561](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/561)) ([6b3c9ed](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6b3c9edb8d111e64e175183f6222dfa33940679c))
+
+
+### Bug Fixes
+
+* add project permissions to sign in response gf-560 ([#563](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/563)) ([34b9245](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/34b9245cb8ca3da7d620ebcc0cb47420fec4a4b1))
+* restrict project card visibility based on user permissions gf-558 ([#565](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/565)) ([cfc71fa](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/cfc71fabc5d1fa829c9f0e30b9535cda7c6819b3))
+
 ## [1.40.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.39.1...backend-v1.40.0) (2024-09-27)
 
 
