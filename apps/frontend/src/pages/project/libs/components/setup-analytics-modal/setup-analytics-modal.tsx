@@ -1,5 +1,6 @@
 import {
 	Button,
+	Icon,
 	IconButton,
 	Input,
 	Modal,
@@ -32,11 +33,15 @@ const SetupAnalyticsModal = ({
 }: Properties): JSX.Element => {
 	const dispatch = useAppDispatch();
 
-	const { dataStatus } = useAppSelector(({ projectApiKeys }) => projectApiKeys);
+	const { dataStatus, generateKeyDataStatus } = useAppSelector(
+		({ projectApiKeys }) => projectApiKeys,
+	);
 	const { authenticatedUser } = useAppSelector(({ auth }) => auth);
 
 	const hasProjectApiKey = project.apiKey !== null;
 	const hasAuthenticatedUser = authenticatedUser !== null;
+
+	const isKeyGenerated = generateKeyDataStatus === DataStatus.FULFILLED;
 
 	const isGenerateButtonDisabled = dataStatus === DataStatus.PENDING;
 	const isCopyButtonDisabled =
@@ -129,6 +134,15 @@ const SetupAnalyticsModal = ({
 						label="API key"
 						name="apiKey"
 						placeholder="No API key"
+						{...(isKeyGenerated
+							? {
+									leftIcon: (
+										<div className={styles["generated-key-indicator"]}>
+											<Icon height={20} name="check" width={20} />
+										</div>
+									),
+								}
+							: {})}
 						rightIcon={
 							<IconButton
 								iconName="clipboard"

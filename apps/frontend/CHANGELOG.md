@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.58.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.58.0...frontend-v1.58.1) (2024-09-27)
+
+
+### Bug Fixes
+
+* update hasSetupAnalyticsPermission check gf-573 ([#574](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/574)) ([b968e29](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b968e291860ef52fb45b747abbef32affa0e730b))
+
+## [1.58.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.57.0...frontend-v1.58.0) (2024-09-27)
+
+
+### Features
+
+* add green tick for generation api key fulfilled gf-189 ([#568](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/568)) ([d4b2d82](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d4b2d821ff6e40e0e792414545e80561a9f23bd3))
+* fix quality criteria issues gf-557 ([#561](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/561)) ([6b3c9ed](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6b3c9edb8d111e64e175183f6222dfa33940679c))
+
 ## [1.57.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.56.2...frontend-v1.57.0) (2024-09-27)
 
 

@@ -1,6 +1,6 @@
 import { transaction } from "objection";
 
-import { SortType } from "~/libs/enums/enums.js";
+import { ProjectPermissionKey, SortType } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/libs/enums/enums.js";
 import {
 	type PaginationQueryParameters,
@@ -71,6 +71,16 @@ class ProjectGroupRepository implements Repository {
 		return Boolean(deletedRowsCount);
 	}
 
+	public async deleteByProjectId(projectId: number): Promise<boolean> {
+		const deletedRowsCount = await this.projectGroupModel
+			.query()
+			.delete()
+			.withGraphJoined("[projects]")
+			.where("projects.id", projectId);
+
+		return Boolean(deletedRowsCount);
+	}
+
 	public async find(id: number): Promise<null | ProjectGroupEntity> {
 		const projectGroup = await this.projectGroupModel
 			.query()
@@ -127,18 +137,21 @@ class ProjectGroupRepository implements Repository {
 			.query()
 			.orderBy("createdAt", SortType.DESCENDING)
 			.withGraphJoined("[projects, users, permissions]")
-			.where("users.id", userId);
+			.where("users.id", userId)
+			.andWhere("permissions.key", "in", [
+				ProjectPermissionKey.VIEW_PROJECT,
+				ProjectPermissionKey.EDIT_PROJECT,
+				ProjectPermissionKey.MANAGE_PROJECT,
+			]);
 
-		return results
-			.filter(({ projects }) => projects.length)
-			.map(({ projects, ...projectGroup }) => {
-				const [project] = projects;
+		return results.map(({ projects, ...projectGroup }) => {
+			const [project] = projects;
 
-				return ProjectGroupEntity.initialize({
-					...projectGroup,
-					projectId: { id: (project as ProjectModel).id },
-				});
+			return ProjectGroupEntity.initialize({
+				...projectGroup,
+				projectId: { id: (project as ProjectModel).id },
 			});
+		});
 	}
 
 	public async findByProjectIdAndName({

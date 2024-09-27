@@ -7,22 +7,27 @@ import { copyToClipboard, create } from "./actions.js";
 
 type State = {
 	dataStatus: ValueOf<typeof DataStatus>;
+	generateKeyDataStatus: ValueOf<typeof DataStatus>;
 };
 
 const initialState: State = {
 	dataStatus: DataStatus.IDLE,
+	generateKeyDataStatus: DataStatus.IDLE,
 };
 
 const { actions, name, reducer } = createSlice({
 	extraReducers(builder) {
 		builder.addCase(create.pending, (state) => {
 			state.dataStatus = DataStatus.PENDING;
+			state.generateKeyDataStatus = DataStatus.PENDING;
 		});
 		builder.addCase(create.fulfilled, (state) => {
 			state.dataStatus = DataStatus.FULFILLED;
+			state.generateKeyDataStatus = DataStatus.FULFILLED;
 		});
 		builder.addCase(create.rejected, (state) => {
 			state.dataStatus = DataStatus.REJECTED;
+			state.generateKeyDataStatus = DataStatus.REJECTED;
 		});
 
 		builder.addCase(copyToClipboard.pending, (state) => {

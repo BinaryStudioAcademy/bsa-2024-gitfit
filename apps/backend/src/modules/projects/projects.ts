@@ -14,6 +14,7 @@ const projectService = new ProjectService({
 	logger,
 	notificationService,
 	projectApiKeyService,
+	projectGroupService,
 	projectRepository,
 	userService,
 });

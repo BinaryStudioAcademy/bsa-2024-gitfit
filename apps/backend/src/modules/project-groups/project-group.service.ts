@@ -70,6 +70,10 @@ class ProjectGroupService implements Service {
 		return isDeleted;
 	}
 
+	public async deleteByProjectId(projectId: number): Promise<boolean> {
+		return await this.projectGroupRepository.deleteByProjectId(projectId);
+	}
+
 	public async find(id: number): Promise<ProjectGroupGetAllItemResponseDto> {
 		const projectGroup = await this.projectGroupRepository.find(id);
 

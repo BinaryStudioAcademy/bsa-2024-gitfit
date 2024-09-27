@@ -9,6 +9,7 @@ import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 import { type Service } from "~/libs/types/types.js";
 import { type ProjectApiKeyService } from "~/modules/project-api-keys/project-api-key.service.js";
+import { type ProjectGroupService } from "~/modules/project-groups/project-groups.js";
 
 import { type NotificationService } from "../notifications/notification.service.js";
 import { type UserService } from "../users/user.service.js";
@@ -30,6 +31,7 @@ type Constructor = {
 	logger: Logger;
 	notificationService: NotificationService;
 	projectApiKeyService: ProjectApiKeyService;
+	projectGroupService: ProjectGroupService;
 	projectRepository: ProjectRepository;
 	userService: UserService;
 };
@@ -41,6 +43,8 @@ class ProjectService implements Service {
 
 	private projectApiKeyService: ProjectApiKeyService;
 
+	private projectGroupService: ProjectGroupService;
+
 	private projectRepository: ProjectRepository;
 
 	private userService: UserService;
@@ -49,12 +53,14 @@ class ProjectService implements Service {
 		logger,
 		notificationService,
 		projectApiKeyService,
+		projectGroupService,
 		projectRepository,
 		userService,
 	}: Constructor) {
 		this.logger = logger;
 		this.notificationService = notificationService;
 		this.userService = userService;
+		this.projectGroupService = projectGroupService;
 		this.projectRepository = projectRepository;
 		this.projectApiKeyService = projectApiKeyService;
 	}
@@ -83,6 +89,8 @@ class ProjectService implements Service {
 	}
 
 	public async delete(id: number): Promise<boolean> {
+		await this.projectGroupService.deleteByProjectId(id);
+
 		const isDeleted = await this.projectRepository.delete(id);
 
 		if (!isDeleted) {
