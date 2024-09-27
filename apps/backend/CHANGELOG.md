@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.41.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.41.1...backend-v1.41.2) (2024-09-27)
+
+
+### Bug Fixes
+
+* rid of error throwing when project groups were not deleted by project id gf-555 ([#579](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/579)) ([38c6c23](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/38c6c234f6d212e62dc9220cea5d8abafaa81236))
+
 ## [1.41.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.41.0...backend-v1.41.1) (2024-09-27)
 
 
