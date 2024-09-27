@@ -100,12 +100,6 @@ class ProjectGroupController extends BaseController {
 				this.delete(options as APIHandlerOptions<{ params: { id: string } }>),
 			method: "DELETE",
 			path: ProjectGroupsApiPath.$ID,
-			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.MANAGE_USER_ACCESS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
-			],
 		});
 
 		this.addRoute({
@@ -123,11 +117,13 @@ class ProjectGroupController extends BaseController {
 					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
 					[ProjectPermissionKey.MANAGE_PROJECT],
 					(options) =>
-						(
-							options as APIHandlerOptions<{
-								params: ProjectGroupGetAllRequestDto;
-							}>
-						).params.id,
+						Number(
+							(
+								options as APIHandlerOptions<{
+									params: ProjectGroupGetAllRequestDto;
+								}>
+							).params.id,
+						),
 				),
 			],
 		});
@@ -142,12 +138,6 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "PATCH",
 			path: ProjectGroupsApiPath.$ID,
-			preHandlers: [
-				checkUserPermissions([
-					PermissionKey.MANAGE_USER_ACCESS,
-					PermissionKey.MANAGE_ALL_PROJECTS,
-				]),
-			],
 			validation: {
 				body: projectGroupPatchValidationSchema,
 			},
@@ -248,6 +238,10 @@ class ProjectGroupController extends BaseController {
 		const projectGroupId = checkProjectGroupPermission({
 			projectGroup,
 			projectsPermissions: [ProjectPermissionKey.MANAGE_PROJECT],
+			rootPermissions: [
+				PermissionKey.MANAGE_USER_ACCESS,
+				PermissionKey.MANAGE_ALL_PROJECTS,
+			],
 			user: options.user as UserAuthResponseDto,
 		});
 
@@ -313,6 +307,10 @@ class ProjectGroupController extends BaseController {
 		const projectGroupId = checkProjectGroupPermission({
 			projectGroup,
 			projectsPermissions: [ProjectPermissionKey.MANAGE_PROJECT],
+			rootPermissions: [
+				PermissionKey.MANAGE_USER_ACCESS,
+				PermissionKey.MANAGE_ALL_PROJECTS,
+			],
 			user: options.user as UserAuthResponseDto,
 		});
 
