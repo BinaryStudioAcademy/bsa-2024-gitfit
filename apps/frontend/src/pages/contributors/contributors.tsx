@@ -1,4 +1,5 @@
 import {
+	Loader,
 	Modal,
 	PageLayout,
 	Table,
@@ -39,6 +40,8 @@ const Contributors = (): JSX.Element => {
 	const dispatch = useAppDispatch();
 
 	const {
+		allContributors,
+		allContributorsStatus,
 		contributors,
 		dataStatus,
 		mergeContributorsStatus,
@@ -93,10 +96,11 @@ const Contributors = (): JSX.Element => {
 
 	const openMergeModal = useCallback(
 		(contributor: ContributorGetAllItemResponseDto | null) => {
+			void dispatch(contributorActions.loadAllWithoutPagination());
 			setContributorToMerge(contributor);
 			onMergeModalOpen();
 		},
-		[setContributorToMerge, onMergeModalOpen],
+		[dispatch, setContributorToMerge, onMergeModalOpen],
 	);
 
 	const openSplitModal = useCallback(
@@ -218,6 +222,10 @@ const Contributors = (): JSX.Element => {
 	const isLoading =
 		dataStatus === DataStatus.IDLE || dataStatus === DataStatus.PENDING;
 
+	const isLoadingAllContributors =
+		allContributorsStatus === DataStatus.IDLE ||
+		allContributorsStatus === DataStatus.PENDING;
+
 	return (
 		<PageLayout isLoading={isLoading}>
 			<h1 className={styles["title"]}>Contributors</h1>
@@ -254,11 +262,15 @@ const Contributors = (): JSX.Element => {
 					onClose={onMergeModalClose}
 					title="Merge contributors"
 				>
-					<ContributorMergeForm
-						allContributors={contributors}
-						currentContributor={contributorToMerge}
-						onSubmit={handleContributorMergeSubmit}
-					/>
+					{isLoadingAllContributors ? (
+						<Loader />
+					) : (
+						<ContributorMergeForm
+							allContributors={allContributors}
+							currentContributor={contributorToMerge}
+							onSubmit={handleContributorMergeSubmit}
+						/>
+					)}
 				</Modal>
 			)}
 			{contributorToSplit && (
