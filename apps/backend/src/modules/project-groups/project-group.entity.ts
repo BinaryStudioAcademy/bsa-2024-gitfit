@@ -1,9 +1,9 @@
 import { type Entity } from "~/libs/types/types.js";
+import { type ProjectPermissionModel } from "~/modules/project-permissions/project-permissions.js";
 
 import { type ProjectModel } from "../projects/project.model.js";
 import { type UserModel } from "../users/user.model.js";
 import { type ProjectGroupCreateResponseDto } from "./libs/types/types.js";
-import { type ProjectPermissionModel } from "./project-permission.model.js";
 
 class ProjectGroupEntity implements Entity {
 	private createdAt: null | string;

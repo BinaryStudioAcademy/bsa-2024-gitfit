@@ -17,3 +17,4 @@ const projectPermissionsController = new ProjectPermissionsController(
 );
 
 export { projectPermissionsController };
+export { ProjectPermissionModel } from "./project-permissions.model.js";
