@@ -52,6 +52,18 @@ class ContributorApi extends BaseHTTPApi {
 		return await response.json<ContributorGetAllResponseDto>();
 	}
 
+	public async getAllWithoutPagination(): Promise<ContributorGetAllResponseDto> {
+		const response = await this.load(
+			this.getFullEndpoint(ContributorsApiPath.ROOT, {}),
+			{
+				hasAuth: true,
+				method: "GET",
+			},
+		);
+
+		return await response.json<ContributorGetAllResponseDto>();
+	}
+
 	public async merge(
 		id: number,
 		payload: ContributorMergeRequestDto,

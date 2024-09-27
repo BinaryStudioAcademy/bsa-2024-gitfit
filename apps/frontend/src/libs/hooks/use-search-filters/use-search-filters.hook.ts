@@ -20,7 +20,15 @@ const useSearchFilters = ({
 		: "";
 	const [search, setSearch] = useState<string>(searchParameter);
 
+	const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
+
 	useEffect(() => {
+		if (isInitialLoad) {
+			setIsInitialLoad(false);
+
+			return;
+		}
+
 		if (isSavedToUrl) {
 			const updatedSearchParameters = new URLSearchParams(searchParameters);
 			updatedSearchParameters.set(queryParameterName, search);

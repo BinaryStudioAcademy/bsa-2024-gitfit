@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.56.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.56.1...frontend-v1.56.2) (2024-09-27)
+
+
+### Bug Fixes
+
+* not all contributors are displayed in contributor merge form gf-550 ([#551](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/551)) ([c19adb8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c19adb8b042f877f18581626cfc22dc52e06de51))
+
+## [1.56.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.56.0...frontend-v1.56.1) (2024-09-26)
+
+
+### Bug Fixes
+
+* Browser Back button not functioning after redirecting to the Analytics page from the Project details page gf-540 ([#542](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/542)) ([4c8d9dd](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/4c8d9dd70e9e3cc6485bdbc3ff193da9584205f9))
+
 ## [1.56.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.55.0...frontend-v1.56.0) (2024-09-26)
 
 

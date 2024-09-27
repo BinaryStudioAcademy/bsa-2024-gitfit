@@ -25,6 +25,16 @@ const loadAll = createAsyncThunk<
 	return await contributorApi.getAll(query);
 });
 
+const loadAllWithoutPagination = createAsyncThunk<
+	ContributorGetAllResponseDto,
+	undefined,
+	AsyncThunkConfig
+>(`${sliceName}/load-all-without-pagination`, async (_payload, { extra }) => {
+	const { contributorApi } = extra;
+
+	return await contributorApi.getAllWithoutPagination();
+});
+
 const merge = createAsyncThunk<
 	ContributorGetAllItemResponseDto,
 	{ id: number; payload: ContributorMergeRequestDto },
@@ -69,4 +79,4 @@ const patch = createAsyncThunk<
 	},
 );
 
-export { loadAll, merge, patch, split };
+export { loadAll, loadAllWithoutPagination, merge, patch, split };

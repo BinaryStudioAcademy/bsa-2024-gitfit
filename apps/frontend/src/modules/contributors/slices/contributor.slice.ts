@@ -5,9 +5,18 @@ import { DataStatus } from "~/libs/enums/enums.js";
 import { type ValueOf } from "~/libs/types/types.js";
 
 import { type ContributorGetAllItemResponseDto } from "../libs/types/types.js";
-import { loadAll, merge, patch, split } from "./actions.js";
+import {
+	loadAll,
+	loadAllWithoutPagination,
+	merge,
+	patch,
+	split,
+} from "./actions.js";
 
 type State = {
+	allContributors: ContributorGetAllItemResponseDto[];
+	allContributorsStatus: ValueOf<typeof DataStatus>;
+	allContributorsTotalCount: number;
 	contributors: ContributorGetAllItemResponseDto[];
 	dataStatus: ValueOf<typeof DataStatus>;
 	mergeContributorsStatus: ValueOf<typeof DataStatus>;
@@ -17,6 +26,9 @@ type State = {
 };
 
 const initialState: State = {
+	allContributors: [],
+	allContributorsStatus: DataStatus.IDLE,
+	allContributorsTotalCount: 0,
 	contributors: [],
 	dataStatus: DataStatus.IDLE,
 	mergeContributorsStatus: DataStatus.IDLE,
@@ -38,6 +50,18 @@ const { actions, name, reducer } = createSlice({
 		builder.addCase(loadAll.rejected, (state) => {
 			state.contributors = [];
 			state.dataStatus = DataStatus.REJECTED;
+		});
+		builder.addCase(loadAllWithoutPagination.pending, (state) => {
+			state.allContributorsStatus = DataStatus.PENDING;
+		});
+		builder.addCase(loadAllWithoutPagination.fulfilled, (state, action) => {
+			state.allContributors = action.payload.items;
+			state.allContributorsStatus = DataStatus.FULFILLED;
+			state.allContributorsTotalCount = action.payload.totalItems;
+		});
+		builder.addCase(loadAllWithoutPagination.rejected, (state) => {
+			state.allContributors = [];
+			state.allContributorsStatus = DataStatus.REJECTED;
 		});
 
 		builder.addCase(merge.pending, (state) => {
@@ -69,6 +93,7 @@ const { actions, name, reducer } = createSlice({
 					(contributor) => contributor.id !== removedContributorId,
 				);
 				state.totalCount -= ITEMS_CHANGED_COUNT;
+				state.allContributorsTotalCount -= ITEMS_CHANGED_COUNT;
 			}
 
 			state.contributors = state.contributors.map((contributor) =>
