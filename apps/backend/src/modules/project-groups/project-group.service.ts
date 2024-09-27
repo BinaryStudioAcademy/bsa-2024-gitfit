@@ -58,19 +58,29 @@ class ProjectGroupService implements Service {
 	}
 
 	public async delete(id: number): Promise<boolean> {
-		const isDeleted = await this.projectGroupRepository.delete(id);
+		const projectGroup = await this.projectGroupRepository.find(id);
 
-		if (!isDeleted) {
+		if (!projectGroup) {
 			throw new ProjectGroupError({
 				message: ExceptionMessage.PROJECT_GROUP_NOT_FOUND,
 				status: HTTPCode.NOT_FOUND,
 			});
 		}
 
-		return isDeleted;
+		return await this.projectGroupRepository.delete(id);
 	}
-	public find(): ReturnType<Service["find"]> {
-		return Promise.resolve(null);
+
+	public async find(id: number): Promise<ProjectGroupGetAllItemResponseDto> {
+		const projectGroup = await this.projectGroupRepository.find(id);
+
+		if (!projectGroup) {
+			throw new ProjectGroupError({
+				message: ExceptionMessage.PROJECT_GROUP_NOT_FOUND,
+				status: HTTPCode.NOT_FOUND,
+			});
+		}
+
+		return projectGroup.toObject();
 	}
 
 	public findAll(): ReturnType<Service["findAll"]> {
