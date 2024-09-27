@@ -118,6 +118,18 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "GET",
 			path: ProjectGroupsApiPath.$ID,
+			preHandlers: [
+				checkUserPermissions(
+					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
+					[ProjectPermissionKey.MANAGE_PROJECT],
+					(options) =>
+						(
+							options as APIHandlerOptions<{
+								params: ProjectGroupGetAllRequestDto;
+							}>
+						).params.id,
+				),
+			],
 		});
 
 		this.addRoute({
