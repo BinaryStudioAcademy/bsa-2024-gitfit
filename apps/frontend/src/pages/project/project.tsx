@@ -321,7 +321,9 @@ const Project = (): JSX.Element => {
 			combinedPermissions,
 		) || hasManagePermission;
 
-	const hasSetupAnalyticsPermission = hasManageAllProjectsPermission;
+	const hasSetupAnalyticsPermission =
+		hasManageAllProjectsPermission || hasEditPermission;
+
 	const hasEditContributorPermission = hasManageAllProjectsPermission;
 	const hasMergeContributorPermission = hasManageAllProjectsPermission;
 	const hasSplitContributorPermission = hasManageAllProjectsPermission;
