@@ -104,7 +104,7 @@ class ContributorRepository implements Repository {
 		const hasPermissionedProjects = permittedProjectIds.length !== EMPTY_LENGTH;
 
 		if (hasPermissionedProjects) {
-			query.whereIn("projects.id", permittedProjectIds); // TODO: think about this
+			query.whereIn("projects.id", permittedProjectIds);
 		}
 
 		query.orderBy(orderBy, SortType.DESCENDING);
