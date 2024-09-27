@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.58.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.58.0...frontend-v1.58.1) (2024-09-27)
+
+
+### Bug Fixes
+
+* update hasSetupAnalyticsPermission check gf-573 ([#574](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/574)) ([b968e29](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b968e291860ef52fb45b747abbef32affa0e730b))
+
 ## [1.58.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.57.0...frontend-v1.58.0) (2024-09-27)
 
 
