@@ -216,12 +216,12 @@ class ActivityLogController extends BaseController {
 
 		return {
 			payload: await this.activityLogService.findAll({
-				contributorName,
 				endDate,
 				hasRootPermission,
-				projectId,
 				startDate,
 				userProjectIds,
+				...(contributorName ? { contributorName } : {}),
+				...(projectId ? { projectId: Number(projectId) } : {}),
 			}),
 			status: HTTPCode.OK,
 		};

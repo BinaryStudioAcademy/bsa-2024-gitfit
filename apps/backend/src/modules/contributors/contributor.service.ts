@@ -1,13 +1,7 @@
-import {
-	MIN_GIT_EMAILS_LENGTH_FOR_SPLIT,
-	PAGE_INDEX_OFFSET,
-} from "~/libs/constants/constants.js";
+import { MIN_GIT_EMAILS_LENGTH_FOR_SPLIT } from "~/libs/constants/constants.js";
 import { ExceptionMessage } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
-import {
-	type PaginationQueryParameters,
-	type Service,
-} from "~/libs/types/types.js";
+import { type Service } from "~/libs/types/types.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorRepository } from "./contributor.repository.js";
@@ -15,6 +9,7 @@ import { ContributorError } from "./libs/exceptions/exceptions.js";
 import {
 	type ContributorCreateRequestDto,
 	type ContributorGetAllItemResponseDto,
+	type ContributorGetAllQueryParameters,
 	type ContributorGetAllResponseDto,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
@@ -61,17 +56,11 @@ class ContributorService implements Service {
 	}
 
 	public async findAll(
-		parameters: {
-			contributorName?: string;
-		} & PaginationQueryParameters,
-		hasHidden?: boolean,
+		query: {
+			permittedProjectIds?: number[] | undefined;
+		} & ContributorGetAllQueryParameters,
 	): Promise<ContributorGetAllResponseDto> {
-		const contributors = await this.contributorRepository.findAll({
-			contributorName: parameters.contributorName ?? "",
-			hasHidden: hasHidden ?? true,
-			page: parameters.page - PAGE_INDEX_OFFSET,
-			pageSize: parameters.pageSize,
-		});
+		const contributors = await this.contributorRepository.findAll(query);
 
 		return {
 			items: contributors.items.map((item) => {
@@ -86,72 +75,6 @@ class ContributorService implements Service {
 				};
 			}),
 			totalItems: contributors.totalItems,
-		};
-	}
-
-	public async findAllByProjectId({
-		contributorName,
-		hasHidden = true,
-		permittedProjectIds,
-		projectId,
-	}: {
-		contributorName?: string;
-		hasHidden?: boolean;
-		permittedProjectIds?: number[] | undefined;
-		projectId: number;
-	}): Promise<ContributorGetAllResponseDto> {
-		const contributors = await this.contributorRepository.findAllByProjectId({
-			contributorName: contributorName ?? "",
-			hasHidden,
-			permittedProjectIds,
-			projectId,
-		});
-
-		return {
-			items: contributors.items.map((item) => {
-				const contributor = item.toObject();
-
-				return {
-					...contributor,
-					gitEmails: contributor.gitEmails.map((gitEmail) => ({
-						email: gitEmail.email,
-						id: gitEmail.id,
-					})),
-				};
-			}),
-			totalItems: contributors.items.length,
-		};
-	}
-
-	public async findAllWithoutPagination({
-		contributorName,
-		hasHidden = true,
-		permittedProjectIds,
-	}: {
-		contributorName?: string;
-		hasHidden?: boolean;
-		permittedProjectIds: number[] | undefined;
-	}): Promise<ContributorGetAllResponseDto> {
-		const contributors =
-			await this.contributorRepository.findAllWithoutPagination({
-				contributorName: contributorName ?? "",
-				hasHidden,
-				permittedProjectIds,
-			});
-
-		return {
-			items: contributors.items.map((item) => {
-				const contributor = item.toObject();
-
-				return {
-					...contributor,
-					gitEmails: contributor.gitEmails.map((gitEmail) => ({
-						email: gitEmail.email,
-						id: gitEmail.id,
-					})),
-				};
-			}),
-			totalItems: contributors.items.length,
 		};
 	}
 

@@ -1,14 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { NotificationMessage } from "~/libs/enums/enums.js";
-import {
-	type AsyncThunkConfig,
-	type PaginationQueryParameters,
-} from "~/libs/types/types.js";
+import { type AsyncThunkConfig } from "~/libs/types/types.js";
 import { actions as projectActions } from "~/modules/projects/projects.js";
 
 import {
 	type ContributorGetAllItemResponseDto,
+	type ContributorGetAllQueryParameters,
 	type ContributorGetAllResponseDto,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
@@ -19,7 +17,7 @@ import { name as sliceName } from "./contributor.slice.js";
 
 const loadAll = createAsyncThunk<
 	ContributorGetAllResponseDto,
-	PaginationQueryParameters,
+	ContributorGetAllQueryParameters,
 	AsyncThunkConfig
 >(`${sliceName}/load-all`, async (query, { extra }) => {
 	const { contributorApi } = extra;
@@ -63,7 +61,7 @@ const split = createAsyncThunk<
 
 const patch = createAsyncThunk<
 	ContributorPatchResponseDto,
-	{ id: number; payload: ContributorPatchRequestDto; projectId?: string },
+	{ id: number; payload: ContributorPatchRequestDto; projectId?: number },
 	AsyncThunkConfig
 >(
 	`${sliceName}/update`,

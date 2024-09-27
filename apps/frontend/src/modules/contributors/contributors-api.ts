@@ -2,7 +2,6 @@ import { APIPath, ContentType } from "~/libs/enums/enums.js";
 import { BaseHTTPApi } from "~/libs/modules/api/api.js";
 import { type HTTP } from "~/libs/modules/http/http.js";
 import { type Storage } from "~/libs/modules/storage/storage.js";
-import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import {
 	type ContributorGetAllItemResponseDto,
@@ -13,6 +12,7 @@ import {
 	type ContributorSplitRequestDto,
 } from "./contributors.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
+import { type ContributorGetAllQueryParameters } from "./libs/types/types.js";
 
 type Constructor = {
 	baseUrl: string;
@@ -26,34 +26,26 @@ class ContributorApi extends BaseHTTPApi {
 	}
 
 	public async getAll(
-		query: PaginationQueryParameters,
+		query: ContributorGetAllQueryParameters,
 	): Promise<ContributorGetAllResponseDto> {
+		const { contributorName, hasHidden, orderBy, page, pageSize, projectId } =
+			query;
+
+		const queryToSend = {
+			...(contributorName ? { contributorName } : {}),
+			...(orderBy ? { orderBy } : {}),
+			...(hasHidden ? { hasHidden: String(hasHidden) } : {}),
+			...(page ? { page: String(page) } : {}),
+			...(pageSize ? { pageSize: String(pageSize) } : {}),
+			...(projectId ? { projectId: String(projectId) } : {}),
+		};
+
 		const response = await this.load(
 			this.getFullEndpoint(ContributorsApiPath.ROOT, {}),
 			{
 				hasAuth: true,
 				method: "GET",
-				query: {
-					page: String(query.page),
-					pageSize: String(query.pageSize),
-				},
-			},
-		);
-
-		return await response.json<ContributorGetAllResponseDto>();
-	}
-
-	public async getAllByProjectId(
-		projectId: string,
-	): Promise<ContributorGetAllResponseDto> {
-		const response = await this.load(
-			this.getFullEndpoint(ContributorsApiPath.ROOT, {}),
-			{
-				hasAuth: true,
-				method: "GET",
-				query: {
-					projectId,
-				},
+				query: queryToSend,
 			},
 		);
 

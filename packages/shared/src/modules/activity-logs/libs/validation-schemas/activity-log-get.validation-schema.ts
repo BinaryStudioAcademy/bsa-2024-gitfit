@@ -7,7 +7,6 @@ const activityLogGet: z.ZodType<ActivityLogQueryParameters> = z.object({
 	endDate: z.string({
 		required_error: ActivityLogValidationMessage.END_DATE_REQUIRED,
 	}),
-	projectId: z.string().optional(),
 	startDate: z.string({
 		required_error: ActivityLogValidationMessage.START_DATE_REQUIRED,
 	}),

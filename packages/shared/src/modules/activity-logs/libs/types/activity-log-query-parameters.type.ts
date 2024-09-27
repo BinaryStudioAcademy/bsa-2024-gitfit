@@ -1,7 +1,7 @@
 type ActivityLogQueryParameters = {
 	contributorName?: string | undefined;
 	endDate: string;
-	projectId?: string | undefined;
+	projectId?: number | undefined;
 	startDate: string;
 };
 

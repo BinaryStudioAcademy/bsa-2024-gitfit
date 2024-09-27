@@ -11,16 +11,17 @@ import {
 } from "~/libs/modules/controller/controller.js";
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
-import { type PaginationQueryParameters } from "~/libs/types/types.js";
 
 import { type ContributorService } from "./contributor.service.js";
 import { ContributorsApiPath } from "./libs/enums/enums.js";
 import {
+	type ContributorGetAllQueryParameters,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
 	type ContributorSplitRequestDto,
 } from "./libs/types/types.js";
 import {
+	contributorGetAllValidationSchema,
 	contributorMergeValidationSchema,
 	contributorPatchValidationSchema,
 	contributorSplitValidationSchema,
@@ -71,7 +72,7 @@ class ContributorController extends BaseController {
 			handler: (options) =>
 				this.findAll(
 					options as APIHandlerOptions<{
-						query: { projectId?: string } & PaginationQueryParameters;
+						query: ContributorGetAllQueryParameters;
 					}>,
 				),
 			method: "GET",
@@ -94,6 +95,9 @@ class ContributorController extends BaseController {
 						),
 				),
 			],
+			validation: {
+				query: contributorGetAllValidationSchema,
+			},
 		});
 
 		this.addRoute({
@@ -156,11 +160,13 @@ class ContributorController extends BaseController {
 	 *         schema:
 	 *           type: integer
 	 *         description: The page number to retrieve
+	 *         required: false
 	 *       - in: query
 	 *         name: pageSize
 	 *         schema:
 	 *           type: integer
 	 *         description: Number of items per page
+	 *         required: false
 	 *       - name: projectId
 	 *         in: query
 	 *         description: Id of a project contributor should belong to
@@ -168,6 +174,25 @@ class ContributorController extends BaseController {
 	 *         schema:
 	 *           type: number
 	 *           minimum: 1
+	 *       - name: hasHidden
+	 *         in: query
+	 *         description: Determines whether include all contributors or tracked only
+	 *         required: false
+	 *         schema:
+	 *           type: boolean
+	 *       - name: contributorName
+	 *         in: query
+	 *         description: Contributor name search query
+	 *         required: false
+	 *         schema:
+	 *           type: string
+	 *       - name: orderBy
+	 *         in: query
+	 *         description: Field by which to sort contributors
+	 *         required: false
+	 *         schema:
+	 *           type: string
+	 *           enum: [created_at, last_activity_date]
 	 *     responses:
 	 *       200:
 	 *         description: Successful operation
@@ -183,29 +208,23 @@ class ContributorController extends BaseController {
 	 */
 	private async findAll(
 		options: APIHandlerOptions<{
-			query: { projectId?: string } & PaginationQueryParameters;
+			query: ContributorGetAllQueryParameters;
 		}>,
 	): Promise<APIHandlerResponse> {
-		const { page, pageSize, projectId } = options.query;
+		const { contributorName, hasHidden, orderBy, page, pageSize, projectId } =
+			options.query;
 
-		if (projectId) {
-			return {
-				payload: await this.contributorService.findAllByProjectId({
-					projectId: Number(projectId),
-				}),
-				status: HTTPCode.OK,
-			};
-		}
-
-		if (!page || !pageSize) {
-			return {
-				payload: await this.contributorService.findAllWithoutPagination({}),
-				status: HTTPCode.OK,
-			};
-		}
+		const query = {
+			...(contributorName ? { contributorName } : {}),
+			...(hasHidden ? { hasHidden: (hasHidden as unknown) === "true" } : {}),
+			...(orderBy ? { orderBy } : {}),
+			...(page ? { page: Number(page) } : {}),
+			...(pageSize ? { pageSize: Number(pageSize) } : {}),
+			...(projectId ? { projectId: Number(projectId) } : {}),
+		};
 
 		return {
-			payload: await this.contributorService.findAll(options.query),
+			payload: await this.contributorService.findAll(query),
 			status: HTTPCode.OK,
 		};
 	}

@@ -1,6 +1,6 @@
 import { raw } from "objection";
 
-import { EMPTY_LENGTH } from "~/libs/constants/constants.js";
+import { EMPTY_LENGTH, PAGE_INDEX_OFFSET } from "~/libs/constants/constants.js";
 import { SortType } from "~/libs/enums/enums.js";
 import {
 	type PaginationResponseDto,
@@ -10,6 +10,7 @@ import { type GitEmailModel } from "~/modules/git-emails/git-emails.js";
 
 import { ContributorEntity } from "./contributor.entity.js";
 import { type ContributorModel } from "./contributor.model.js";
+import { ContributorOrderByKey } from "./libs/enums/enums.js";
 import {
 	type ContributorGetAllQueryParameters,
 	type ContributorMergeRequestDto,
@@ -58,57 +59,17 @@ class ContributorRepository implements Repository {
 
 	public async findAll({
 		contributorName,
-		hasHidden = true,
+		hasHidden = false,
+		orderBy = ContributorOrderByKey.CREATED_AT,
 		page,
 		pageSize,
-	}: { hasHidden?: boolean } & ContributorGetAllQueryParameters): Promise<
-		PaginationResponseDto<ContributorEntity>
-	> {
-		const query = this.contributorModel
-			.query()
-			.orderBy("createdAt", SortType.DESCENDING)
-			.page(page, pageSize)
-			.select("contributors.*")
-			.select(
-				raw(
-					"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
-				),
-			)
-			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
-			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
-			.leftJoin("projects", "activity_logs.project_id", "projects.id")
-			.groupBy("contributors.id")
-			.withGraphFetched("gitEmails");
-
-		if (!hasHidden) {
-			query.whereNull("contributors.hiddenAt");
-		}
-
-		if (contributorName) {
-			query.whereILike("contributors.name", `%${contributorName}%`);
-		}
-
-		const { results, total } = await query.execute();
-
-		return {
-			items: results.map((contributor) =>
-				ContributorEntity.initialize(contributor),
-			),
-			totalItems: total,
-		};
-	}
-
-	public async findAllByProjectId({
-		contributorName,
-		hasHidden = true,
-		permittedProjectIds,
+		permittedProjectIds = [],
 		projectId,
 	}: {
-		contributorName?: string;
-		hasHidden?: boolean;
 		permittedProjectIds?: number[] | undefined;
-		projectId: number;
-	}): Promise<{ items: ContributorEntity[] }> {
+	} & ContributorGetAllQueryParameters): Promise<
+		PaginationResponseDto<ContributorEntity>
+	> {
 		const query = this.contributorModel
 			.query()
 			.select("contributors.*")
@@ -125,56 +86,6 @@ class ContributorRepository implements Repository {
 			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
 			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
 			.leftJoin("projects", "activity_logs.project_id", "projects.id")
-			.where("projects.id", projectId)
-			.whereNull("contributors.hiddenAt")
-			.groupBy("contributors.id")
-			.withGraphFetched("gitEmails")
-			.orderBy("last_activity_date", SortType.DESCENDING);
-
-		const hasPermissionedProjects =
-			permittedProjectIds && permittedProjectIds.length !== EMPTY_LENGTH;
-
-		if (hasPermissionedProjects) {
-			query.whereIn("projects.id", permittedProjectIds);
-		}
-
-		if (!hasHidden) {
-			query.whereNull("contributors.hiddenAt");
-		}
-
-		if (contributorName) {
-			query.whereILike("contributors.name", `%${contributorName}%`);
-		}
-
-		const contributorsWithProjectsAndEmails = await query.execute();
-
-		return {
-			items: contributorsWithProjectsAndEmails.map((contributor) => {
-				return ContributorEntity.initialize(contributor);
-			}),
-		};
-	}
-
-	public async findAllWithoutPagination({
-		contributorName,
-		hasHidden = true,
-		permittedProjectIds,
-	}: {
-		contributorName?: string;
-		hasHidden?: boolean;
-		permittedProjectIds: number[] | undefined;
-	}): Promise<{ items: ContributorEntity[] }> {
-		const query = this.contributorModel
-			.query()
-			.select("contributors.*")
-			.select(
-				raw(
-					"COALESCE(ARRAY_AGG(DISTINCT jsonb_build_object('id', projects.id, 'name', projects.name)) FILTER (WHERE projects.id IS NOT NULL), '{}') AS projects",
-				),
-			)
-			.leftJoin("git_emails", "contributors.id", "git_emails.contributor_id")
-			.leftJoin("activity_logs", "git_emails.id", "activity_logs.git_email_id")
-			.leftJoin("projects", "activity_logs.project_id", "projects.id")
 			.groupBy("contributors.id")
 			.withGraphFetched("gitEmails");
 
@@ -186,19 +97,37 @@ class ContributorRepository implements Repository {
 			query.whereILike("contributors.name", `%${contributorName}%`);
 		}
 
-		const hasPermissionedProjects =
-			permittedProjectIds && permittedProjectIds.length !== EMPTY_LENGTH;
+		if (projectId) {
+			query.havingRaw("?? = ANY(ARRAY_AGG(projects.id))", projectId);
+		}
+
+		const hasPermissionedProjects = permittedProjectIds.length !== EMPTY_LENGTH;
 
 		if (hasPermissionedProjects) {
 			query.whereIn("projects.id", permittedProjectIds);
 		}
 
-		const results = await query.execute();
+		query.orderBy(orderBy, SortType.DESCENDING);
+
+		let contributors, totalItems;
+
+		if (page && pageSize) {
+			const { results, total } = await query.page(
+				page - PAGE_INDEX_OFFSET,
+				pageSize,
+			);
+			contributors = results;
+			totalItems = total;
+		} else {
+			contributors = await query;
+			totalItems = contributors.length;
+		}
 
 		return {
-			items: results.map((contributor) => {
+			items: contributors.map((contributor) => {
 				return ContributorEntity.initialize(contributor);
 			}),
+			totalItems,
 		};
 	}
 

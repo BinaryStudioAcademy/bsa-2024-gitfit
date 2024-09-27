@@ -7,7 +7,10 @@ import {
 	type ActivityLogGetAllAnalyticsResponseDto,
 	type ActivityLogQueryParameters,
 } from "~/modules/activity/activity.js";
-import { type ContributorGetAllResponseDto } from "~/modules/contributors/contributors.js";
+import {
+	type ContributorGetAllResponseDto,
+	ContributorOrderByKey,
+} from "~/modules/contributors/contributors.js";
 import {
 	type ProjectCreateRequestDto,
 	type ProjectGetAllItemResponseDto,
@@ -86,7 +89,7 @@ const deleteById = createAsyncThunk<boolean, number, AsyncThunkConfig>(
 
 const loadAllContributorsByProjectId = createAsyncThunk<
 	ContributorGetAllResponseDto,
-	string,
+	number,
 	AsyncThunkConfig
 >(
 	`${sliceName}/load-all-contributors-by-project-id`,
@@ -108,7 +111,10 @@ const loadAllContributorsByProjectId = createAsyncThunk<
 			}),
 		);
 
-		return await contributorApi.getAllByProjectId(projectId);
+		return await contributorApi.getAll({
+			orderBy: ContributorOrderByKey.LAST_ACTIVITY_DATE,
+			projectId,
+		});
 	},
 );
 

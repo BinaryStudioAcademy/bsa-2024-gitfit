@@ -129,14 +129,16 @@ class ProjectGroupRepository implements Repository {
 			.withGraphJoined("[projects, users, permissions]")
 			.where("users.id", userId);
 
-		return results.map(({ projects, ...projectGroup }) => {
-			const [project] = projects;
+		return results
+			.filter(({ projects }) => projects.length)
+			.map(({ projects, ...projectGroup }) => {
+				const [project] = projects;
 
-			return ProjectGroupEntity.initialize({
-				...projectGroup,
-				projectId: { id: (project as ProjectModel).id },
+				return ProjectGroupEntity.initialize({
+					...projectGroup,
+					projectId: { id: (project as ProjectModel).id },
+				});
 			});
-		});
 	}
 
 	public async findByProjectIdAndName({

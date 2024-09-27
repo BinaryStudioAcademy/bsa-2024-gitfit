@@ -122,7 +122,9 @@ const Project = (): JSX.Element => {
 	useEffect(() => {
 		if (projectId) {
 			void dispatch(projectActions.getById({ id: projectId }));
-			void dispatch(projectActions.loadAllContributorsByProjectId(projectId));
+			void dispatch(
+				projectActions.loadAllContributorsByProjectId(Number(projectId)),
+			);
 		}
 	}, [dispatch, projectId]);
 
@@ -180,7 +182,7 @@ const Project = (): JSX.Element => {
 					contributorActions.patch({
 						id: contributorToEdit.id,
 						payload,
-						projectId,
+						projectId: Number(projectId),
 					}),
 				);
 			}
@@ -266,7 +268,7 @@ const Project = (): JSX.Element => {
 			setContributorToSplit(null);
 
 			void dispatch(
-				projectActions.loadAllContributorsByProjectId(projectId as string),
+				projectActions.loadAllContributorsByProjectId(Number(projectId)),
 			);
 		}
 	}, [

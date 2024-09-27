@@ -1,5 +1,6 @@
 export {
 	type ContributorGetAllItemResponseDto,
+	type ContributorGetAllQueryParameters,
 	type ContributorGetAllResponseDto,
 	type ContributorMergeRequestDto,
 	type ContributorPatchRequestDto,
