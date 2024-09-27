@@ -152,15 +152,24 @@ class UserRepository implements Repository {
 		const query = this.userModel
 			.query()
 			.findOne({ email })
-			.withGraphFetched("groups.permissions")
-			.modifyGraph("userGroups.id", (builder) => {
-				builder.select("id", "name");
+			.whereNull("deletedAt")
+			.withGraphFetched(
+				"[groups.permissions, projectGroups.[permissions, projects]]",
+			)
+			.modifyGraph("groups", (builder) => {
+				builder.select("userGroups.id", "name");
 			})
 			.modifyGraph("groups.permissions", (builder) => {
 				builder.select("permissions.id", "name", "key");
 			})
 			.modifyGraph("projectGroups", (builder) => {
 				builder.select("projectGroups.id", "name");
+			})
+			.modifyGraph("projectGroups.projects", (builder) => {
+				builder.select("projects.id");
+			})
+			.modifyGraph("projectGroups.permissions", (builder) => {
+				builder.select("projectPermissions.id", "name", "key");
 			});
 
 		if (!hasDeleted) {
