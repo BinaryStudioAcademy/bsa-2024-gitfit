@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { AuthAnalyticsValidationMessage } from "../enums/enums.js";
-import { type AuthAnalyticsValidateCredentialsRequestDto } from "../types/auth-analytics-validate-credentials-request-dto.type.js";
+import { type AuthAnalyticsValidateCredentialsRequestDto } from "../types/types.js";
 
 const authAnalyticsValidateCredentials: z.ZodType<AuthAnalyticsValidateCredentialsRequestDto> =
 	z.object({

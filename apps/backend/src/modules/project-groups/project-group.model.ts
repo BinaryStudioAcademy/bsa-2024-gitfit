@@ -4,10 +4,10 @@ import {
 	AbstractModel,
 	DatabaseTableName,
 } from "~/libs/modules/database/database.js";
+import { ProjectPermissionModel } from "~/modules/project-permissions/project-permissions.js";
 
 import { ProjectModel } from "../projects/project.model.js";
 import { UserModel } from "../users/user.model.js";
-import { ProjectPermissionModel } from "./project-permission.model.js";
 
 class ProjectGroupModel extends AbstractModel {
 	public key!: string;
