@@ -1,6 +1,6 @@
 import { transaction } from "objection";
 
-import { SortType } from "~/libs/enums/enums.js";
+import { ProjectPermissionKey, SortType } from "~/libs/enums/enums.js";
 import { HTTPCode } from "~/libs/modules/http/libs/enums/enums.js";
 import {
 	type PaginationQueryParameters,
@@ -127,7 +127,12 @@ class ProjectGroupRepository implements Repository {
 			.query()
 			.orderBy("createdAt", SortType.DESCENDING)
 			.withGraphJoined("[projects, users, permissions]")
-			.where("users.id", userId);
+			.where("users.id", userId)
+			.andWhere("permissions.key", "in", [
+				ProjectPermissionKey.VIEW_PROJECT,
+				ProjectPermissionKey.EDIT_PROJECT,
+				ProjectPermissionKey.MANAGE_PROJECT,
+			]);
 
 		return results
 			.filter(({ projects }) => projects.length)
