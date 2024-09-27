@@ -90,20 +90,7 @@ class ProjectController extends BaseController {
 				),
 			method: "DELETE",
 			path: ProjectsApiPath.$ID,
-			preHandlers: [
-				checkUserPermissions(
-					[PermissionKey.MANAGE_ALL_PROJECTS],
-					[],
-					(options) =>
-						Number(
-							(
-								options as APIHandlerOptions<{
-									params: { id: string };
-								}>
-							).params.id,
-						),
-				),
-			],
+			preHandlers: [checkUserPermissions([PermissionKey.MANAGE_ALL_PROJECTS])],
 		});
 
 		this.addRoute({
