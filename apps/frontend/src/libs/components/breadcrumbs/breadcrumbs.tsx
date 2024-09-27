@@ -1,4 +1,4 @@
-import { BreadcrumbItem } from "./libs/components/componenets.js";
+import { BreadcrumbItem } from "./libs/components/components.js";
 import { type BreadcrumbNavigationItem } from "./libs/types/types.js";
 import styles from "./styles.module.css";
 
