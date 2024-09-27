@@ -71,6 +71,16 @@ class ProjectGroupRepository implements Repository {
 		return Boolean(deletedRowsCount);
 	}
 
+	public async deleteByProjectId(projectId: number): Promise<boolean> {
+		const deletedRowsCount = await this.projectGroupModel
+			.query()
+			.delete()
+			.withGraphJoined("[projects]")
+			.where("projects.id", projectId);
+
+		return Boolean(deletedRowsCount);
+	}
+
 	public async find(id: number): Promise<null | ProjectGroupEntity> {
 		const projectGroup = await this.projectGroupModel
 			.query()
@@ -134,16 +144,14 @@ class ProjectGroupRepository implements Repository {
 				ProjectPermissionKey.MANAGE_PROJECT,
 			]);
 
-		return results
-			.filter(({ projects }) => projects.length)
-			.map(({ projects, ...projectGroup }) => {
-				const [project] = projects;
+		return results.map(({ projects, ...projectGroup }) => {
+			const [project] = projects;
 
-				return ProjectGroupEntity.initialize({
-					...projectGroup,
-					projectId: { id: (project as ProjectModel).id },
-				});
+			return ProjectGroupEntity.initialize({
+				...projectGroup,
+				projectId: { id: (project as ProjectModel).id },
 			});
+		});
 	}
 
 	public async findByProjectIdAndName({
