@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.39.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.39.0...backend-v1.39.1) (2024-09-27)
+
+
+### Bug Fixes
+
+* not all contributors are displayed in contributor merge form gf-550 ([#551](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/551)) ([c19adb8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c19adb8b042f877f18581626cfc22dc52e06de51))
+
 ## [1.39.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.38.0...backend-v1.39.0) (2024-09-26)
 
 

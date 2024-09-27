@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.60.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.60.1...v1.60.2) (2024-09-27)
+
+
+### Bug Fixes
+
+* not all contributors are displayed in contributor merge form gf-550 ([#551](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/551)) ([c19adb8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c19adb8b042f877f18581626cfc22dc52e06de51))
+
 ## [1.60.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.60.0...v1.60.1) (2024-09-26)
 
 
