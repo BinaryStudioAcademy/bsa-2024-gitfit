@@ -12,8 +12,10 @@ import {
 import { HTTPCode } from "~/libs/modules/http/http.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
 import { type PaginationQueryParameters } from "~/libs/types/types.js";
+import { type UserAuthResponseDto } from "~/modules/users/users.js";
 
 import { ProjectGroupsApiPath } from "./libs/enums/enums.js";
+import { checkProjectGroupPermission } from "./libs/helpers/helpers.js";
 import {
 	type ProjectGroupCreateRequestDto,
 	type ProjectGroupGetAllRequestDto,
@@ -78,6 +80,14 @@ class ProjectGroupController extends BaseController {
 				checkUserPermissions(
 					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
 					[ProjectPermissionKey.MANAGE_PROJECT],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									body: ProjectGroupCreateRequestDto;
+								}>
+							).body.projectId,
+						),
 				),
 			],
 			validation: {
@@ -90,20 +100,6 @@ class ProjectGroupController extends BaseController {
 				this.delete(options as APIHandlerOptions<{ params: { id: string } }>),
 			method: "DELETE",
 			path: ProjectGroupsApiPath.$ID,
-			preHandlers: [
-				checkUserPermissions(
-					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
-					[ProjectPermissionKey.MANAGE_PROJECT],
-					(options) =>
-						Number(
-							(
-								options as APIHandlerOptions<{
-									params: { id: string };
-								}>
-							).params.id,
-						),
-				),
-			],
 		});
 
 		this.addRoute({
@@ -120,6 +116,14 @@ class ProjectGroupController extends BaseController {
 				checkUserPermissions(
 					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
 					[ProjectPermissionKey.MANAGE_PROJECT],
+					(options) =>
+						Number(
+							(
+								options as APIHandlerOptions<{
+									params: ProjectGroupGetAllRequestDto;
+								}>
+							).params.id,
+						),
 				),
 			],
 		});
@@ -134,20 +138,6 @@ class ProjectGroupController extends BaseController {
 				),
 			method: "PATCH",
 			path: ProjectGroupsApiPath.$ID,
-			preHandlers: [
-				checkUserPermissions(
-					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
-					[],
-					(options) =>
-						Number(
-							(
-								options as APIHandlerOptions<{
-									params: { id: string };
-								}>
-							).params.id,
-						),
-				),
-			],
 			validation: {
 				body: projectGroupPatchValidationSchema,
 			},
@@ -241,8 +231,22 @@ class ProjectGroupController extends BaseController {
 	private async delete(
 		options: APIHandlerOptions<{ params: { id: string } }>,
 	): Promise<APIHandlerResponse> {
+		const projectGroup = await this.projectGroupService.find(
+			Number(options.params.id),
+		);
+
+		const projectGroupId = checkProjectGroupPermission({
+			projectGroup,
+			projectsPermissions: [ProjectPermissionKey.MANAGE_PROJECT],
+			rootPermissions: [
+				PermissionKey.MANAGE_USER_ACCESS,
+				PermissionKey.MANAGE_ALL_PROJECTS,
+			],
+			user: options.user as UserAuthResponseDto,
+		});
+
 		return {
-			payload: await this.projectGroupService.delete(Number(options.params.id)),
+			payload: await this.projectGroupService.delete(projectGroupId),
 			status: HTTPCode.OK,
 		};
 	}
@@ -296,7 +300,19 @@ class ProjectGroupController extends BaseController {
 			params: { id: string };
 		}>,
 	): Promise<APIHandlerResponse> {
-		const projectGroupId = Number(options.params.id);
+		const projectGroup = await this.projectGroupService.find(
+			Number(options.params.id),
+		);
+
+		const projectGroupId = checkProjectGroupPermission({
+			projectGroup,
+			projectsPermissions: [ProjectPermissionKey.MANAGE_PROJECT],
+			rootPermissions: [
+				PermissionKey.MANAGE_USER_ACCESS,
+				PermissionKey.MANAGE_ALL_PROJECTS,
+			],
+			user: options.user as UserAuthResponseDto,
+		});
 
 		return {
 			payload: await this.projectGroupService.patch(

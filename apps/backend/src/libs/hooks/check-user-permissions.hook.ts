@@ -1,14 +1,12 @@
 import {
-	ExceptionMessage,
 	type PermissionKey,
 	type ProjectPermissionKey,
 } from "~/libs/enums/enums.js";
-import { checkHasPermission } from "~/libs/helpers/helpers.js";
+import { checkPermissions } from "~/libs/helpers/helpers.js";
 import {
 	type APIHandlerOptions,
 	type APIPreHandler,
 } from "~/libs/modules/controller/controller.js";
-import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
 import { type UserAuthResponseDto } from "~/modules/users/users.js";
 
 import { type ValueOf } from "../types/types.js";
@@ -22,29 +20,12 @@ const checkUserPermissions = (
 		const user = options.user as UserAuthResponseDto;
 		const projectId = getProjectId?.(options);
 
-		const userPermissions = user.groups.flatMap((group) => group.permissions);
-		const projectPermissions = user.projectGroups
-			.filter((group) => projectId && group.projectId === projectId)
-			.flatMap((projectGroup) => projectGroup.permissions);
-
-		const hasGlobalPermission = checkHasPermission(
-			permissions,
-			userPermissions,
-		);
-
-		const hasProjectPermission = projectId
-			? checkHasPermission(
-					projectsPermissions as ValueOf<typeof ProjectPermissionKey>[],
-					projectPermissions,
-				)
-			: true;
-
-		if (!hasGlobalPermission && !hasProjectPermission) {
-			throw new HTTPError({
-				message: ExceptionMessage.NO_PERMISSION,
-				status: HTTPCode.FORBIDDEN,
-			});
-		}
+		checkPermissions({
+			projectId: projectId ?? null,
+			projectsPermissions: projectsPermissions ?? null,
+			rootPermissions: permissions,
+			user,
+		});
 
 		done();
 	};
