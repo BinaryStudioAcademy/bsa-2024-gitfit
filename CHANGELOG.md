@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.62.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.62.1...v1.62.2) (2024-09-27)
+
+
+### Bug Fixes
+
+* rid of error throwing when project groups were not deleted by project id gf-555 ([#579](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/579)) ([38c6c23](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/38c6c234f6d212e62dc9220cea5d8abafaa81236))
+* Three Toast notifications are displayed on attempt to open a project page without a permission gf-567 ([#571](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/571)) ([6cb31d6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6cb31d6dcaca455a624df568738400ac722f122a))
+
 ## [1.62.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.62.0...v1.62.1) (2024-09-27)
 
 

@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.59.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.58.1...frontend-v1.59.0) (2024-09-27)
+
+
+### Features
+
+* ability to mark notifications as read gf-460 ([#498](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/498)) ([3ce21f7](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3ce21f7c102898077d4be4177b02534277972c06))
+* add analytics last sync time to project details page gf-502 ([#526](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/526)) ([7f3f5c2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/7f3f5c21a6312fb0a3ad1e04db1c2e17ffd47cc2))
+* add green tick for generation api key fulfilled gf-189 ([#568](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/568)) ([d4b2d82](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d4b2d821ff6e40e0e792414545e80561a9f23bd3))
+* Add project select to the contributors page gf-504 ([#516](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/516)) ([3f1f1c5](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3f1f1c52204f3233a350567b8c2b8915ce952cd7))
+* add search field to analytics page gf-352 ([#444](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/444)) ([71dcfb1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/71dcfb15462b289bad70d90f65875bea40bbc560))
+* add validation notification for incorrect password on login gf-517 ([#532](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/532)) ([1cd0f50](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1cd0f502ef3746940863937fd6f0b9c0ba11044a))
+* Adjust project permissions gf-351 ([#401](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/401)) ([1453c52](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1453c52927ec3940e40331a3a93ea96c6a3ce060))
+* adjusted style for date column to align with the table head gf-545 ([#548](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/548)) ([11a237c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/11a237c7c2b59a3a2a7049ef97ae4134229b2db0))
+* fix quality criteria issues gf-557 ([#561](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/561)) ([6b3c9ed](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6b3c9edb8d111e64e175183f6222dfa33940679c))
+* redirect to analytics page on contributor item click gf-349 ([#512](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/512)) ([9861355](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9861355e5ea555866cb5cf3fa909115d4a21beac))
+* upgrade the visibility of the project's options button on the project detail page gf-508 ([#514](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/514)) ([1d7d6f1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1d7d6f1f8ed86321fe2b7231c0424d06a5772daa))
+
+
+### Bug Fixes
+
+* Browser Back button not functioning after redirecting to the Analytics page from the Project details page gf-540 ([#542](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/542)) ([4c8d9dd](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/4c8d9dd70e9e3cc6485bdbc3ff193da9584205f9))
+* fixed inconsistent analytics page alignment gf-530 ([#535](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/535)) ([8ee08ba](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/8ee08ba43e0e559706025ceec16fa43457d34978))
+* incorrect message displayed when all contributors are hidden gf-538 ([#539](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/539)) ([0dc06ae](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/0dc06aef56a3064730def9a6e46540d2c7ab79e8))
+* not all contributors are displayed in contributor merge form gf-550 ([#551](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/551)) ([c19adb8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/c19adb8b042f877f18581626cfc22dc52e06de51))
+* reload contributors on split gf-519 ([#525](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/525)) ([f766ce8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f766ce8145a202626ad154753dc01e1af5ee29f4))
+* remove isDirty from analytics page gf-529 ([#531](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/531)) ([f43187b](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/f43187b1dd2fbe81eedf4ebe5d5a089f36602e82))
+* Three Toast notifications are displayed on attempt to open a project page without a permission gf-567 ([#571](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/571)) ([6cb31d6](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/6cb31d6dcaca455a624df568738400ac722f122a))
+* update hasSetupAnalyticsPermission check gf-573 ([#574](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/574)) ([b968e29](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/b968e291860ef52fb45b747abbef32affa0e730b))
+
 ## [1.58.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.58.0...frontend-v1.58.1) (2024-09-27)
 
 
