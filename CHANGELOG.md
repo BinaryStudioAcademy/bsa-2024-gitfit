@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.63.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.63.0...v1.63.1) (2024-09-28)
+
+
+### Bug Fixes
+
+* update auth user permissions after project group deleted gf-585 ([#586](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/586)) ([e8a9d1f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/e8a9d1f8c72131f65e5a42ca062f9c55c1ae3257))
+
 ## [1.63.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.62.2...v1.63.0) (2024-09-28)
 
 

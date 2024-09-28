@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.59.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.59.1...frontend-v1.59.2) (2024-09-28)
+
+
+### Bug Fixes
+
+* update auth user permissions after project group deleted gf-585 ([#586](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/586)) ([e8a9d1f](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/e8a9d1f8c72131f65e5a42ca062f9c55c1ae3257))
+
 ## [1.59.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.59.0...frontend-v1.59.1) (2024-09-28)
 
 
