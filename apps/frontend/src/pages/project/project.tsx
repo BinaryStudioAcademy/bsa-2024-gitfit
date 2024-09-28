@@ -342,6 +342,11 @@ const Project = (): JSX.Element => {
 	const hasSetupAnalyticsPermission =
 		hasManageAllProjectsPermission || hasEditPermission;
 
+	const hasDeleteProjectsPermissions = checkHasPermission(
+		[PermissionKey.MANAGE_ALL_PROJECTS],
+		combinedPermissions,
+	);
+
 	const hasEditContributorPermission = hasManageAllProjectsPermission;
 	const hasMergeContributorPermission = hasManageAllProjectsPermission;
 	const hasSplitContributorPermission = hasManageAllProjectsPermission;
@@ -378,8 +383,8 @@ const Project = (): JSX.Element => {
 						<div className={styles["project-header"]}>
 							<h1 className={styles["title"]}>{project.name}</h1>
 							<ProjectDetailsMenu
+								hasDeleteProjectsPermissions={hasDeleteProjectsPermissions}
 								hasEditPermission={hasEditPermission}
-								hasManageAllProjectsPermission={hasManageAllProjectsPermission}
 								hasManagePermission={hasManagePermission}
 								onDelete={handleDeleteProject}
 								onEdit={handleEditProject}

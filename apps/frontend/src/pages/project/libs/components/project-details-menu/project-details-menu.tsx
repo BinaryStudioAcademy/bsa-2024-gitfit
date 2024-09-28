@@ -4,8 +4,8 @@ import { configureString } from "~/libs/helpers/helpers.js";
 import { useCallback, usePopover } from "~/libs/hooks/hooks.js";
 
 type Properties = {
+	hasDeleteProjectsPermissions: boolean;
 	hasEditPermission: boolean;
-	hasManageAllProjectsPermission: boolean;
 	hasManagePermission: boolean;
 	onDelete: () => void;
 	onEdit: () => void;
@@ -13,8 +13,8 @@ type Properties = {
 };
 
 const ProjectDetailsMenu = ({
+	hasDeleteProjectsPermissions,
 	hasEditPermission,
-	hasManageAllProjectsPermission,
 	hasManagePermission,
 	onDelete,
 	onEdit,
@@ -40,7 +40,7 @@ const ProjectDetailsMenu = ({
 	);
 
 	const isMenuShown =
-		hasManagePermission || hasEditPermission || hasManageAllProjectsPermission;
+		hasManagePermission || hasEditPermission || hasDeleteProjectsPermissions;
 
 	return (
 		<>
@@ -53,20 +53,22 @@ const ProjectDetailsMenu = ({
 				>
 					<MenuItem iconName="pencil" label="Edit" onClick={handleEditClick} />
 
-					{(hasManagePermission || hasManageAllProjectsPermission) && (
+					{(hasManagePermission || hasDeleteProjectsPermissions) && (
 						<>
 							<MenuItem
 								href={projectAccessManagementRoute}
 								iconName="access"
 								label="Manage Access"
 							/>
-							<MenuItem
-								iconName="trashBin"
-								label="Delete"
-								onClick={handleDeleteClick}
-								variant="danger"
-							/>
 						</>
+					)}
+					{hasDeleteProjectsPermissions && (
+						<MenuItem
+							iconName="trashBin"
+							label="Delete"
+							onClick={handleDeleteClick}
+							variant="danger"
+						/>
 					)}
 				</Menu>
 			)}
