@@ -2,7 +2,7 @@ import {
 	type PermissionKey,
 	type ProjectPermissionKey,
 } from "~/libs/enums/enums.js";
-import { checkUserPermissionsHelper } from "~/libs/helpers/helpers.js";
+import { checkPermissions } from "~/libs/helpers/helpers.js";
 import {
 	type APIHandlerOptions,
 	type APIPreHandler,
@@ -20,7 +20,7 @@ const checkUserPermissions = (
 		const user = options.user as UserAuthResponseDto;
 		const projectId = getProjectId?.(options);
 
-		checkUserPermissionsHelper({
+		checkPermissions({
 			projectId: projectId ?? null,
 			projectsPermissions: projectsPermissions ?? null,
 			rootPermissions: permissions,

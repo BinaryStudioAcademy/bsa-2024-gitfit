@@ -2,7 +2,7 @@ import {
 	type PermissionKey,
 	type ProjectPermissionKey,
 } from "~/libs/enums/enums.js";
-import { checkUserPermissionsHelper } from "~/libs/helpers/helpers.js";
+import { checkPermissions } from "~/libs/helpers/helpers.js";
 import { type ValueOf } from "~/libs/types/types.js";
 import { type UserAuthResponseDto } from "~/modules/users/users.js";
 
@@ -17,7 +17,7 @@ const checkProjectGroupPermission = (payload: {
 	const { projectGroup, projectsPermissions, rootPermissions, user } = payload;
 	const { id: projectId } = projectGroup.projectId;
 
-	checkUserPermissionsHelper({
+	checkPermissions({
 		projectId,
 		projectsPermissions,
 		rootPermissions,

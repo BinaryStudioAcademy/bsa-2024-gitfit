@@ -7,9 +7,9 @@ import { checkHasPermission } from "~/libs/helpers/helpers.js";
 import { HTTPCode, HTTPError } from "~/libs/modules/http/http.js";
 import { type UserAuthResponseDto } from "~/modules/users/users.js";
 
-import { type ValueOf } from "../types/types.js";
+import { type ValueOf } from "../../types/types.js";
 
-const checkUserPermissions = (payload: {
+const checkPermissions = (payload: {
 	projectId?: null | number;
 	projectsPermissions?: null | ValueOf<typeof ProjectPermissionKey>[];
 	rootPermissions: ValueOf<typeof PermissionKey>[];
@@ -42,4 +42,4 @@ const checkUserPermissions = (payload: {
 	}
 };
 
-export { checkUserPermissions };
+export { checkPermissions };

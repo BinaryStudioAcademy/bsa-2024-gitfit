@@ -1,4 +1,4 @@
-export { checkUserPermissions as checkUserPermissionsHelper } from "./check-user-permissions.helper.js";
+export { checkPermissions } from "./check-permissions/check-permissions.helper.js";
 export {
 	changeCase,
 	checkHasPermission,
