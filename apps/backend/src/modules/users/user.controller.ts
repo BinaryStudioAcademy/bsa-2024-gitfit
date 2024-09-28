@@ -4,6 +4,7 @@ import {
 	ProjectPermissionKey,
 } from "~/libs/enums/enums.js";
 import { checkUserPermissions } from "~/libs/hooks/check-user-permissions.hook.js";
+import { checkGlobalOrProjectPermissions } from "~/libs/hooks/hooks.js";
 import {
 	type APIHandlerOptions,
 	type APIHandlerResponse,
@@ -57,7 +58,7 @@ class UserController extends BaseController {
 			method: "GET",
 			path: UsersApiPath.ROOT,
 			preHandlers: [
-				checkUserPermissions(
+				checkGlobalOrProjectPermissions(
 					[PermissionKey.MANAGE_USER_ACCESS, PermissionKey.MANAGE_ALL_PROJECTS],
 					[ProjectPermissionKey.MANAGE_PROJECT],
 				),

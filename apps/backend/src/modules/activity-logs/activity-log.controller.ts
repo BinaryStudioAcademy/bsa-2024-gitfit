@@ -4,7 +4,7 @@ import {
 	ProjectPermissionKey,
 } from "~/libs/enums/enums.js";
 import { checkHasPermission } from "~/libs/helpers/helpers.js";
-import { checkUserPermissions } from "~/libs/hooks/hooks.js";
+import { checkGlobalOrProjectPermissions } from "~/libs/hooks/hooks.js";
 import {
 	type APIHandlerOptions,
 	type APIHandlerResponse,
@@ -100,7 +100,7 @@ class ActivityLogController extends BaseController {
 			method: "GET",
 			path: ActivityLogsApiPath.ROOT,
 			preHandlers: [
-				checkUserPermissions(
+				checkGlobalOrProjectPermissions(
 					[PermissionKey.VIEW_ALL_PROJECTS, PermissionKey.MANAGE_ALL_PROJECTS],
 					[
 						ProjectPermissionKey.VIEW_PROJECT,
