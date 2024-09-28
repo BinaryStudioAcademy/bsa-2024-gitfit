@@ -113,7 +113,7 @@ class ProjectController extends BaseController {
 						ProjectPermissionKey.VIEW_PROJECT,
 						ProjectPermissionKey.EDIT_PROJECT,
 						ProjectPermissionKey.MANAGE_PROJECT,
-					], // Project-level permissions
+					],
 				),
 			],
 		});
