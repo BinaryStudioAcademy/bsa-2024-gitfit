@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.41.3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.41.2...backend-v1.41.3) (2024-09-28)
+
+
+### Bug Fixes
+
+* Manage Project permission does not allow user to delete a Project group in this specific project on the Manage Access page gf-569 ([#572](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/572)) ([582b31a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/582b31a0417824fafbd4ae396ce27fc65db3ff4c))
+* the delete project button is displayed and the deletion is accessible for the manage specific project permission gf-570 ([#578](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/578)) ([d5737b1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d5737b1a0fdf9c29753af6178206ccd6ec4fd24c))
+
 ## [1.41.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.41.1...backend-v1.41.2) (2024-09-27)
 
 

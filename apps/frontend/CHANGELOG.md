@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.59.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.59.0...frontend-v1.59.1) (2024-09-28)
+
+
+### Bug Fixes
+
+* the delete project button is displayed and the deletion is accessible for the manage specific project permission gf-570 ([#578](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/578)) ([d5737b1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/d5737b1a0fdf9c29753af6178206ccd6ec4fd24c))
+
 ## [1.59.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.58.1...frontend-v1.59.0) (2024-09-27)
 
 
