@@ -4,6 +4,7 @@ import pm2 from "pm2";
 
 import { executeCommand } from "~/libs/helpers/helpers.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
+import { EMPTY_LENGTH } from "~/modules/analytics/libs/constants/constants.js";
 import { type AuthAnalyticsService } from "~/modules/auth-analytics/auth-analytics.js";
 
 type Constructor = {
@@ -46,10 +47,10 @@ class BaseAnalyticsCli {
 
 	private setupCommands(): void {
 		this.program
-			.command("track <apiKey> <userId> <repoPath>")
+			.command("track <apiKey> <userId> <repoPaths...>")
 			.description("Start the background job for collecting statistics")
-			.action(async (apiKey: string, userId: string, repoPath: string) => {
-				if (!apiKey || !userId || !repoPath) {
+			.action(async (apiKey: string, userId: string, repoPaths: string[]) => {
+				if (!apiKey || !userId || repoPaths.length === EMPTY_LENGTH) {
 					this.logger.error("Not all command arguments are provided.");
 
 					return;
@@ -80,7 +81,7 @@ class BaseAnalyticsCli {
 
 					pm2.start(
 						{
-							args: [apiKey, userId, repoPath],
+							args: [apiKey, userId, ...repoPaths],
 							autorestart: false,
 							error: `${project.projectName}-err.log`,
 							name: project.projectName,

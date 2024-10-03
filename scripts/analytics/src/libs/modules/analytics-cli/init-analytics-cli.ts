@@ -10,17 +10,15 @@ import {
 	CRON_SCHEDULE,
 } from "./libs/constants/constants.js";
 
-const [apiKey, userId, repoPath] = process.argv.slice(ARGUMENT_START_INDEX) as [
-	string,
-	string,
-	string,
-];
+const [apiKey, userId, ...repoPaths] = process.argv.slice(
+	ARGUMENT_START_INDEX,
+) as [string, string, string];
 
 const analyticsService = new AnalyticsService({
 	analyticsApi,
 	apiKey,
 	gitService,
-	repoPath,
+	repoPaths,
 	userId,
 });
 
