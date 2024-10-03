@@ -57,7 +57,7 @@ const SetupAnalyticsModal = ({
 		const apiKey = project.apiKey as string;
 		const userId = String(authenticatedUser.id);
 
-		return `npx @git-fit/analytics@latest track ${apiKey} ${userId} <project-path>`;
+		return `npx @git-fit/analytics@latest track ${apiKey} ${userId} <project-path-1> <project-path-2> ...`;
 	}, [hasProjectApiKey, hasAuthenticatedUser, project, authenticatedUser]);
 
 	const { control, errors, handleSubmit, handleValueSet } = useAppForm({
@@ -233,8 +233,9 @@ const SetupAnalyticsModal = ({
 								Prepare the script.
 							</span>
 							<p className={styles["list-item-text"]}>
-								Copy the command below and replace &lt;project-path&gt;
-								placeholder with your local repository&apos;s path:
+								Copy the command below and replace &lt;project-path-1&gt;,
+								&lt;project-path-2&gt;, ... placeholder with your local
+								repositories paths:
 							</p>
 							<Input
 								control={control}

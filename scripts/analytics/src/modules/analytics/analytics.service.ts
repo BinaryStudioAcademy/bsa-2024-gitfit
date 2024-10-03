@@ -17,7 +17,7 @@ type Constructor = {
 	analyticsApi: typeof analyticsApi;
 	apiKey: string;
 	gitService: GITService;
-	repoPath: string;
+	repoPaths: string[];
 	userId: string;
 };
 
@@ -25,29 +25,29 @@ class AnalyticsService {
 	private analyticsApi: typeof analyticsApi;
 	private apiKey: string;
 	private gitService: GITService;
-	private repoPath: string;
+	private repoPaths: string[];
 	private userId: string;
 
 	public constructor({
 		analyticsApi,
 		apiKey,
 		gitService,
-		repoPath,
+		repoPaths,
 		userId,
 	}: Constructor) {
 		this.analyticsApi = analyticsApi;
 		this.apiKey = apiKey;
 		this.gitService = gitService;
-		this.repoPath = repoPath;
+		this.repoPaths = repoPaths;
 		this.userId = userId;
 	}
 
-	private async collectStatsByRepository(): Promise<
-		ActivityLogCreateItemRequestDto[]
-	> {
+	private async collectStatsByRepository(
+		repoPath: string,
+	): Promise<ActivityLogCreateItemRequestDto[]> {
 		const stats: ActivityLogCreateItemRequestDto[] = [];
 		const shortLogResult = await executeCommand(
-			this.gitService.getShortLogCommand(this.repoPath, "midnight"),
+			this.gitService.getShortLogCommand(repoPath, "midnight"),
 		);
 
 		const commitItems: CommitStatistics[] = [];
@@ -77,15 +77,21 @@ class AnalyticsService {
 		return stats;
 	}
 
-	private async fetchRepository(): Promise<void> {
-		await executeCommand(this.gitService.getFetchCommand(this.repoPath));
-		logger.info(`Fetched latest updates for repo at path: ${this.repoPath}`);
+	private async fetchRepository(repoPath: string): Promise<void> {
+		await executeCommand(this.gitService.getFetchCommand(repoPath));
+		logger.info(`Fetched latest updates for repo at path: ${repoPath}`);
 	}
 
 	public async collectAndSendStats(): Promise<void> {
 		try {
-			await this.fetchRepository();
-			const stats = await this.collectStatsByRepository();
+			const statsAll = [];
+
+			for (const repoPath of this.repoPaths) {
+				await this.fetchRepository(repoPath);
+				statsAll.push(...(await this.collectStatsByRepository(repoPath)));
+			}
+
+			const stats = mergeStats(statsAll);
 
 			if (
 				stats[FIRST_ARRAY_INDEX] &&
@@ -114,6 +120,52 @@ class AnalyticsService {
 			}
 		}
 	}
+}
+
+function mergeStats(
+	statsAll: ActivityLogCreateItemRequestDto[],
+): ActivityLogCreateItemRequestDto[] {
+	return mergeByCriteria(
+		statsAll,
+		(item1, item2) => item1.date === item2.date,
+		(mergedItem, item) =>
+			(mergedItem.items = mergeStatsItems([
+				...mergedItem.items,
+				...item.items,
+			])),
+	);
+}
+
+function mergeStatsItems(items: CommitStatistics[]): CommitStatistics[] {
+	return mergeByCriteria(
+		items,
+		(item1, item2) =>
+			item1.authorEmail === item2.authorEmail &&
+			item1.authorName === item2.authorName,
+		(mergedItem, item) => (mergedItem.commitsNumber += item.commitsNumber),
+	);
+}
+
+function mergeByCriteria<T>(
+	items: T[],
+	compareFunction: (item1: T, item2: T) => boolean,
+	mergeFunction: (mergedItem: T, item: T) => void,
+): T[] {
+	const mergedItems: T[] = [];
+
+	for (const item of items) {
+		const mergedItem = mergedItems.find((mergedItem) =>
+			compareFunction(mergedItem, item),
+		);
+
+		if (mergedItem) {
+			mergeFunction(mergedItem, item);
+		} else {
+			mergedItems.push(item);
+		}
+	}
+
+	return mergedItems;
 }
 
 export { AnalyticsService };
