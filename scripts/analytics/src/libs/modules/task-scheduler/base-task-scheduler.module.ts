@@ -16,9 +16,13 @@ class BaseTaskScheduler implements TaskScheduler {
 	}
 
 	public start(schedule: string, task: () => void): void {
-		cron.schedule(schedule, () => {
-			task();
-		});
+		cron.schedule(
+			schedule,
+			() => {
+				task();
+			},
+			{ runOnInit: true },
+		);
 		this.logger.info(
 			`Task is scheduled to run according to the pattern: ${schedule}.`,
 		);
