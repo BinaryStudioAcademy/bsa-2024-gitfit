@@ -8,6 +8,7 @@ import {
 	EMPTY_LENGTH,
 	FIRST_ARRAY_INDEX,
 } from "./libs/constants/constants.js";
+import { mergeStats } from "./libs/helpers/helpers.js";
 import {
 	type ActivityLogCreateItemRequestDto,
 	type CommitStatistics,
@@ -120,52 +121,6 @@ class AnalyticsService {
 			}
 		}
 	}
-}
-
-function mergeStats(
-	statsAll: ActivityLogCreateItemRequestDto[],
-): ActivityLogCreateItemRequestDto[] {
-	return mergeByCriteria(
-		statsAll,
-		(item1, item2) => item1.date === item2.date,
-		(mergedItem, item) =>
-			(mergedItem.items = mergeStatsItems([
-				...mergedItem.items,
-				...item.items,
-			])),
-	);
-}
-
-function mergeStatsItems(items: CommitStatistics[]): CommitStatistics[] {
-	return mergeByCriteria(
-		items,
-		(item1, item2) =>
-			item1.authorEmail === item2.authorEmail &&
-			item1.authorName === item2.authorName,
-		(mergedItem, item) => (mergedItem.commitsNumber += item.commitsNumber),
-	);
-}
-
-function mergeByCriteria<T>(
-	items: T[],
-	compareFunction: (item1: T, item2: T) => boolean,
-	mergeFunction: (mergedItem: T, item: T) => void,
-): T[] {
-	const mergedItems: T[] = [];
-
-	for (const item of items) {
-		const mergedItem = mergedItems.find((mergedItem) =>
-			compareFunction(mergedItem, item),
-		);
-
-		if (mergedItem) {
-			mergeFunction(mergedItem, item);
-		} else {
-			mergedItems.push(item);
-		}
-	}
-
-	return mergedItems;
 }
 
 export { AnalyticsService };
