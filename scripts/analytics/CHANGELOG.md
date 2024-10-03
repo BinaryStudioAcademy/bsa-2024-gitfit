@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.8.0...analytics-v1.9.0) (2024-10-03)
+
+
+### Features
+
+* change script to support more than 1 git repository gf-589 ([#590](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/590)) ([a7e9082](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/a7e9082823aad891c6aed34174ee11385918a8fb))
+
 ## [1.8.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.7.0...analytics-v1.8.0) (2024-09-25)
 
 
