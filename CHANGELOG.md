@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.65.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.64.0...v1.65.0) (2024-10-04)
+
+
+### Features
+
+* change script to take parameters from configuration file instead of CLI gf-595 ([#595](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/595)) ([#596](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/596)) ([00acb5a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/00acb5afe103271f4d23723fd6591c3f515e0513))
+* run analytics upload immediately on start gf-592 ([#592](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/592)) ([#593](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/593)) ([1f0b90c](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/1f0b90cec8253cbdb7902078071a193d52abb868))
+
 ## [1.64.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.63.1...v1.64.0) (2024-10-03)
 
 
