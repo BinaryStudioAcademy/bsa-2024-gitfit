@@ -1,10 +1,12 @@
+import { EMPTY_LENGTH } from "@git-fit/shared";
 import { Command } from "commander";
+import fs from "node:fs/promises";
 import path from "node:path";
 import pm2 from "pm2";
 
 import { executeCommand } from "~/libs/helpers/helpers.js";
 import { type Logger } from "~/libs/modules/logger/logger.js";
-import { EMPTY_LENGTH } from "~/modules/analytics/libs/constants/constants.js";
+import { type AnalyticsScriptConfig } from "~/libs/types/types.js";
 import { type AuthAnalyticsService } from "~/modules/auth-analytics/auth-analytics.js";
 
 type Constructor = {
@@ -27,8 +29,10 @@ class BaseAnalyticsCli {
 
 	private async setupAutoStart(): Promise<void> {
 		try {
-			const { stderr: saveError, stdout: saveOut } =
-				await executeCommand("pm2 save");
+			const { stderr: saveError, stdout: saveOut } = await executeCommand(
+				"pm2 save",
+				process.cwd(),
+			);
 
 			if (saveError) {
 				this.logger.error(`PM2 save error: ${saveError as string}`);
@@ -47,11 +51,22 @@ class BaseAnalyticsCli {
 
 	private setupCommands(): void {
 		this.program
-			.command("track <apiKey> <userId> <repoPaths...>")
+			.command("track <configPath>")
 			.description("Start the background job for collecting statistics")
-			.action(async (apiKey: string, userId: string, repoPaths: string[]) => {
+			.action(async (configPath: string) => {
+				if (!configPath) {
+					this.logger.error("Configuration path is not provided.");
+
+					return;
+				}
+
+				const config = JSON.parse(
+					await fs.readFile(configPath, "utf8"),
+				) as AnalyticsScriptConfig;
+				const { apiKey, repoPaths, userId } = config;
+
 				if (!apiKey || !userId || repoPaths.length === EMPTY_LENGTH) {
-					this.logger.error("Not all command arguments are provided.");
+					this.logger.error("Configuration is not full.");
 
 					return;
 				}
@@ -62,6 +77,8 @@ class BaseAnalyticsCli {
 				);
 
 				if (!project) {
+					this.logger.error("API key is not valid.");
+
 					return;
 				}
 
@@ -81,10 +98,10 @@ class BaseAnalyticsCli {
 
 					pm2.start(
 						{
-							args: [apiKey, userId, ...repoPaths],
+							args: [configPath],
 							autorestart: false,
 							error: `${project.projectName}-err.log`,
-							name: project.projectName,
+							name: `GitFit - ${project.projectName}`,
 							output: `${project.projectName}-out.log`,
 							script: scriptPath,
 						},

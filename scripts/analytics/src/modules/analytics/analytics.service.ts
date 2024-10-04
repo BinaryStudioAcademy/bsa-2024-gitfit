@@ -1,6 +1,9 @@
+import fs from "node:fs/promises";
+
 import { executeCommand, formatDate } from "~/libs/helpers/helpers.js";
 import { type GITService } from "~/libs/modules/git-service/git-service.js";
 import { logger } from "~/libs/modules/logger/logger.js";
+import { type AnalyticsScriptConfig } from "~/libs/types/types.js";
 
 import { type analyticsApi } from "./analytics.js";
 import {
@@ -16,31 +19,19 @@ import {
 
 type Constructor = {
 	analyticsApi: typeof analyticsApi;
-	apiKey: string;
+	configPath: string;
 	gitService: GITService;
-	repoPaths: string[];
-	userId: string;
 };
 
 class AnalyticsService {
 	private analyticsApi: typeof analyticsApi;
-	private apiKey: string;
+	private configPath: string;
 	private gitService: GITService;
-	private repoPaths: string[];
-	private userId: string;
 
-	public constructor({
-		analyticsApi,
-		apiKey,
-		gitService,
-		repoPaths,
-		userId,
-	}: Constructor) {
+	public constructor({ analyticsApi, configPath, gitService }: Constructor) {
 		this.analyticsApi = analyticsApi;
-		this.apiKey = apiKey;
+		this.configPath = configPath;
 		this.gitService = gitService;
-		this.repoPaths = repoPaths;
-		this.userId = userId;
 	}
 
 	private async collectStatsByRepository(
@@ -48,7 +39,8 @@ class AnalyticsService {
 	): Promise<ActivityLogCreateItemRequestDto[]> {
 		const stats: ActivityLogCreateItemRequestDto[] = [];
 		const shortLogResult = await executeCommand(
-			this.gitService.getShortLogCommand(repoPath, "midnight"),
+			this.gitService.getShortLogCommand("midnight"),
+			repoPath,
 		);
 
 		const commitItems: CommitStatistics[] = [];
@@ -79,15 +71,23 @@ class AnalyticsService {
 	}
 
 	private async fetchRepository(repoPath: string): Promise<void> {
-		await executeCommand(this.gitService.getFetchCommand(repoPath));
+		await executeCommand(this.gitService.getFetchCommand(), repoPath);
 		logger.info(`Fetched latest updates for repo at path: ${repoPath}`);
+	}
+
+	private async getConfig(): Promise<AnalyticsScriptConfig> {
+		return JSON.parse(
+			await fs.readFile(this.configPath, "utf8"),
+		) as AnalyticsScriptConfig;
 	}
 
 	public async collectAndSendStats(): Promise<void> {
 		try {
+			const config = await this.getConfig();
+			const { apiKey, repoPaths, userId } = config;
 			const statsAll = [];
 
-			for (const repoPath of this.repoPaths) {
+			for (const repoPath of repoPaths) {
 				await this.fetchRepository(repoPath);
 				statsAll.push(...(await this.collectStatsByRepository(repoPath)));
 			}
@@ -103,9 +103,9 @@ class AnalyticsService {
 				return;
 			}
 
-			await this.analyticsApi.sendAnalytics(this.apiKey, {
+			await this.analyticsApi.sendAnalytics(apiKey, {
 				items: stats,
-				userId: Number(this.userId),
+				userId: Number(userId),
 			});
 
 			logger.info("Statistics successfully sent.");

@@ -10,16 +10,12 @@ import {
 	CRON_SCHEDULE,
 } from "./libs/constants/constants.js";
 
-const [apiKey, userId, ...repoPaths] = process.argv.slice(
-	ARGUMENT_START_INDEX,
-) as [string, string, string];
+const [configPath] = process.argv.slice(ARGUMENT_START_INDEX) as [string];
 
 const analyticsService = new AnalyticsService({
 	analyticsApi,
-	apiKey,
+	configPath,
 	gitService,
-	repoPaths,
-	userId,
 });
 
 taskScheduler.start(
