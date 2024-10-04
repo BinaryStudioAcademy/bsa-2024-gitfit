@@ -1,6 +1,6 @@
 type GITService = {
-	getFetchCommand: (repoPath: string) => string;
-	getShortLogCommand: (repoPath: string, since: string) => string;
+	getFetchCommand: () => string;
+	getShortLogCommand: (since: string) => string;
 };
 
 export { type GITService };

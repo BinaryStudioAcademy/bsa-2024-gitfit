@@ -5,8 +5,9 @@ const execAsync = promisify(exec);
 
 const executeCommand = async (
 	command: string,
+	cwd: string,
 ): Promise<{ stderr: Buffer | string; stdout: Buffer | string }> => {
-	return await execAsync(command);
+	return await execAsync(command, { cwd });
 };
 
 export { executeCommand };

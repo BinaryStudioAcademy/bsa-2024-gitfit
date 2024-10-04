@@ -49,7 +49,7 @@ const SetupAnalyticsModal = ({
 
 	const pm2StartupScript = "pm2 startup";
 
-	const analyticsScript = useMemo<string>(() => {
+	const analyticsScriptConfiguration = useMemo<string>(() => {
 		if (!hasProjectApiKey || !hasAuthenticatedUser) {
 			return "";
 		}
@@ -57,12 +57,27 @@ const SetupAnalyticsModal = ({
 		const apiKey = project.apiKey as string;
 		const userId = String(authenticatedUser.id);
 
-		return `npx @git-fit/analytics@latest track ${apiKey} ${userId} <project-path-1> <project-path-2> ...`;
+		return `{
+		"apiKey": "${apiKey}",
+		"userId": ${userId},
+		"repoPaths": [
+
+		]
+}`;
 	}, [hasProjectApiKey, hasAuthenticatedUser, project, authenticatedUser]);
+
+	const analyticsScript = useMemo<string>(() => {
+		if (!hasProjectApiKey || !hasAuthenticatedUser) {
+			return "";
+		}
+
+		return "npx @git-fit/analytics@latest track <config-path>";
+	}, [hasProjectApiKey, hasAuthenticatedUser]);
 
 	const { control, errors, handleSubmit, handleValueSet } = useAppForm({
 		defaultValues: {
 			analyticsScript,
+			analyticsScriptConfiguration,
 			apiKey: project.apiKey ?? "",
 			pm2StartupScript,
 			projectId: project.id,
@@ -95,6 +110,10 @@ const SetupAnalyticsModal = ({
 	const handleCopyAPIKeyClick = useCallback(() => {
 		handleCopyApiKeyToClipboard(project.apiKey as string);
 	}, [handleCopyApiKeyToClipboard, project]);
+
+	const handleCopyAnalyticsScriptConfigurationClick = useCallback(() => {
+		handleCopyScriptToClipboard(analyticsScriptConfiguration);
+	}, [handleCopyScriptToClipboard, analyticsScriptConfiguration]);
 
 	const handleCopyAnalyticsScriptClick = useCallback(() => {
 		handleCopyScriptToClipboard(analyticsScript);
@@ -221,11 +240,38 @@ const SetupAnalyticsModal = ({
 						</li>
 						<li className={styles["list-item"]}>
 							<span className={styles["list-item-title"]}>
-								Clone your project repository.
+								Clone your project repositories.
 							</span>
 							<p className={styles["list-item-text"]}>
-								Use Git to clone your project repository to your local machine.
+								Use Git to clone your project repositories to your local
+								machine.
 							</p>
+						</li>
+
+						<li className={styles["list-item"]}>
+							<span className={styles["list-item-title"]}>
+								Save the following configuration file to your local machine and
+								add local paths to all of your repositories to it.
+							</span>
+
+							<Input
+								control={control}
+								errors={errors}
+								isLabelHidden
+								isReadOnly
+								label="Analytics script configuration"
+								name="analyticsScriptConfiguration"
+								placeholder="Need to generate API key"
+								rightIcon={
+									<IconButton
+										iconName="clipboard"
+										isDisabled={isCopyButtonDisabled}
+										label="Copy script configuration"
+										onClick={handleCopyAnalyticsScriptConfigurationClick}
+									/>
+								}
+								rowsCount={9}
+							/>
 						</li>
 
 						<li className={styles["list-item"]}>
@@ -233,9 +279,8 @@ const SetupAnalyticsModal = ({
 								Prepare the script.
 							</span>
 							<p className={styles["list-item-text"]}>
-								Copy the command below and replace &lt;project-path-1&gt;,
-								&lt;project-path-2&gt;, ... placeholder with your local
-								repositories paths:
+								Copy the command below and replace &lt;config-path&gt; with the
+								path to your configuration file from the previous step.
 							</p>
 							<Input
 								control={control}
