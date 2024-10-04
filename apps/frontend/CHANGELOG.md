@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.61.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.61.0...frontend-v1.61.1) (2024-10-04)
+
+
+### Bug Fixes
+
+* analytics script configuration is not updated when api key is generated gf-597 ([#598](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/598)) ([917dea8](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/917dea8fda1c674e7ef4c05a399118a7a683ab63))
+
 ## [1.61.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.60.0...frontend-v1.61.0) (2024-10-04)
 
 
