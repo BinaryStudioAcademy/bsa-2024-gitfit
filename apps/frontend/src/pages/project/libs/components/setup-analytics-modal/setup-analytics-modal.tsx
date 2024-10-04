@@ -131,6 +131,13 @@ const SetupAnalyticsModal = ({
 		handleValueSet("analyticsScript", analyticsScript);
 	}, [handleValueSet, analyticsScript]);
 
+	useEffect(() => {
+		handleValueSet(
+			"analyticsScriptConfiguration",
+			analyticsScriptConfiguration,
+		);
+	}, [handleValueSet, analyticsScriptConfiguration]);
+
 	return (
 		<Modal isOpened={isOpened} onClose={onClose} title="Setup Analytics">
 			<div className={styles["content"]}>
