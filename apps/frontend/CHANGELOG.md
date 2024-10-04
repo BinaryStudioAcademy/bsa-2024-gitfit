@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.61.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.60.0...frontend-v1.61.0) (2024-10-04)
+
+
+### Features
+
+* change script to take parameters from configuration file instead of CLI gf-595 ([#595](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/595)) ([#596](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/596)) ([00acb5a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/00acb5afe103271f4d23723fd6591c3f515e0513))
+
 ## [1.60.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/frontend-v1.59.2...frontend-v1.60.0) (2024-10-03)
 
 
