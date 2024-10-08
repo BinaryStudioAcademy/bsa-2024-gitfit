@@ -41,7 +41,7 @@ class ActivityLogRepository implements Repository {
 		await this.activityLogModel
 			.query()
 			.where("projectId", projectId)
-			.where("date", date)
+			.andWhere("date", date)
 			.delete();
 	}
 
