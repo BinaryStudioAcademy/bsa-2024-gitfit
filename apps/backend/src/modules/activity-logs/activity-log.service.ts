@@ -109,6 +109,8 @@ class ActivityLogService implements Service {
 		for (const record of items) {
 			const { date, items } = record;
 
+			await this.activityLogRepository.deleteForDate(projectId, date);
+
 			for (const logItem of items) {
 				const activityLog = await this.createActivityLog({
 					date,

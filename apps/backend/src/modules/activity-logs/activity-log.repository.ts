@@ -37,6 +37,14 @@ class ActivityLogRepository implements Repository {
 		return Promise.resolve(true);
 	}
 
+	public async deleteForDate(projectId: number, date: string): Promise<void> {
+		await this.activityLogModel
+			.query()
+			.where("projectId", projectId)
+			.where("date", date)
+			.delete();
+	}
+
 	public find(): ReturnType<Repository["find"]> {
 		return Promise.resolve(null);
 	}
