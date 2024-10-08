@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 
-import { executeCommand, formatDate } from "~/libs/helpers/helpers.js";
+import { executeCommand } from "~/libs/helpers/helpers.js";
 import { type GITService } from "~/libs/modules/git-service/git-service.js";
 import { logger } from "~/libs/modules/logger/logger.js";
 import { type AnalyticsScriptConfig } from "~/libs/types/types.js";
@@ -12,10 +12,7 @@ import {
 	FIRST_ARRAY_INDEX,
 } from "./libs/constants/constants.js";
 import { mergeStats } from "./libs/helpers/helpers.js";
-import {
-	type ActivityLogCreateItemRequestDto,
-	type CommitStatistics,
-} from "./libs/types/types.js";
+import { type ActivityLogCreateItemRequestDto } from "./libs/types/types.js";
 
 type Constructor = {
 	analyticsApi: typeof analyticsApi;
@@ -37,22 +34,34 @@ class AnalyticsService {
 	private async collectStatsByRepository(
 		repoPath: string,
 	): Promise<ActivityLogCreateItemRequestDto[]> {
-		const stats: ActivityLogCreateItemRequestDto[] = [];
+		const statsByDate = new Map<string, ActivityLogCreateItemRequestDto>();
 		const shortLogResult = await executeCommand(
-			this.gitService.getShortLogCommand("midnight"),
+			this.gitService.getShortLogCommand(),
 			repoPath,
 		);
 
-		const commitItems: CommitStatistics[] = [];
 		let match;
 
 		while (
 			(match = COMMIT_REGEX.exec(shortLogResult.stdout.toString())) !== null
 		) {
-			const [, commitsNumber, authorName, authorEmail] = match;
+			const [, commitsNumber, commitDate, authorName, authorEmail] = match;
+
+			if (!commitDate) {
+				logger.error("Invalid data from git log.");
+
+				continue;
+			}
+
+			let statsForCommitDate = statsByDate.get(commitDate);
+
+			if (!statsForCommitDate) {
+				statsForCommitDate = { date: commitDate, items: [] };
+				statsByDate.set(commitDate, statsForCommitDate);
+			}
 
 			if (commitsNumber && authorName && authorEmail) {
-				commitItems.push({
+				statsForCommitDate.items.push({
 					authorEmail,
 					authorName,
 					commitsNumber: Number.parseInt(commitsNumber, 10),
@@ -62,12 +71,7 @@ class AnalyticsService {
 			}
 		}
 
-		stats.push({
-			date: formatDate(new Date(), "yyyy-MM-dd"),
-			items: commitItems,
-		});
-
-		return stats;
+		return [...statsByDate.values()];
 	}
 
 	private async fetchRepository(repoPath: string): Promise<void> {

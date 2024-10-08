@@ -5,8 +5,8 @@ class BaseGITService implements GITService {
 		return "git fetch";
 	};
 
-	public getShortLogCommand = (since: string): string => {
-		return `git shortlog -sne --all --no-merges --since="${since}"`;
+	public getShortLogCommand = (): string => {
+		return "git shortlog -sne --all --no-merges --group='%cs %cn <%ce>' --since='1 week ago'";
 	};
 }
 
