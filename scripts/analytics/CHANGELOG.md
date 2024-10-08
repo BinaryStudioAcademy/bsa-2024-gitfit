@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.10.0...analytics-v1.11.0) (2024-10-08)
+
+
+### Features
+
+* upload statistics for the last week on each run gf-600 ([#601](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/601)) ([bafc5f4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/bafc5f4aa9998dc6722d4aa57e9d0418a73ce708))
+
 ## [1.10.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.9.0...analytics-v1.10.0) (2024-10-04)
 
 
