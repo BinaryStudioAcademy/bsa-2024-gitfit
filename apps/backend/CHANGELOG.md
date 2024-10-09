@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.41.4](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.41.3...backend-v1.41.4) (2024-10-09)
+
+
+### Bug Fixes
+
+* activity for specific date should be cleared on new analytics uploading gf-604 ([#605](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/605)) ([2210283](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/2210283c274ef3ae03436df0ced44df44047fbfe))
+* activity for specific date should be cleared on new analytics uploading gf-604 ([#605](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/605)) ([#607](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/607)) ([9b5798a](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/9b5798afaecdaaa8eeaa2b4a6fbc58fc5ebf624e))
+
 ## [1.41.3](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/backend-v1.41.2...backend-v1.41.3) (2024-09-28)
 
 
