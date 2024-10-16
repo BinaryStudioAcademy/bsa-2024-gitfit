@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.12.0...analytics-v1.12.1) (2024-10-16)
+
+
+### Bug Fixes
+
+* git shortlog command fails on windows with single quotes in parameter values gf-612 ([#613](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/613)) ([ccb001e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ccb001e2ffd9accf74a44ad337238919809c62e0))
+
 ## [1.12.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/analytics-v1.11.0...analytics-v1.12.0) (2024-10-09)
 
 
