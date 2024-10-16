@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.68.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.68.0...v1.68.1) (2024-10-16)
+
+
+### Bug Fixes
+
+* git shortlog command fails on windows with single quotes in parameter values gf-612 ([#613](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/613)) ([ccb001e](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/ccb001e2ffd9accf74a44ad337238919809c62e0))
+
 ## [1.68.0](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.67.0...v1.68.0) (2024-10-09)
 
 
