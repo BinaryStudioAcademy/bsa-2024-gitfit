@@ -6,7 +6,8 @@ class BaseGITService implements GITService {
 	};
 
 	public getShortLogCommand = (): string => {
-		return "git shortlog -sne --all --no-merges --group='%cs %cn <%ce>' --since='1 week ago'";
+		// eslint-disable-next-line quotes
+		return 'git shortlog -sne --all --no-merges --group="%cs %cn <%ce>" --since="1 week ago"';
 	};
 }
 
