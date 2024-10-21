@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.68.2](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.68.1...v1.68.2) (2024-10-21)
+
+
+### Bug Fixes
+
+* analytics deletion is buggy gf-615 ([#616](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/issues/616)) ([3a98d75](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/commit/3a98d752004d1c2a94feccd7f01f849f14eedf91))
+
 ## [1.68.1](https://github.com/BinaryStudioAcademy/bsa-2024-gitfit/compare/v1.68.0...v1.68.1) (2024-10-16)
 
 
