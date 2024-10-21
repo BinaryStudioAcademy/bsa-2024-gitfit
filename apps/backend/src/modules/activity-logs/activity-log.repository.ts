@@ -40,9 +40,10 @@ class ActivityLogRepository implements Repository {
 	public async deleteForDate(projectId: number, date: string): Promise<void> {
 		await this.activityLogModel
 			.query()
+			.delete()
 			.where("projectId", projectId)
 			.andWhere("date", date)
-			.delete();
+			.execute();
 	}
 
 	public find(): ReturnType<Repository["find"]> {
